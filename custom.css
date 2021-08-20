@@ -426,7 +426,6 @@ animation: rainbow 5s linear 0s infinite normal
     animation: pulsate-fwd 0.5s ease-in-out infinite both;
 }
 
-
 .stickerButton-3OEgwj:hover{
     animation: shake-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
     animation-iteration-count: infinite;
