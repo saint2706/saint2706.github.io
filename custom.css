@@ -449,13 +449,13 @@ animation: rainbow 5s linear 0s infinite normal
     animation: tracking-in-expand 0.8s cubic-bezier(.215,.61,.355,1.000)
 }
 
-.content-3YMskv:hover {
+.content-1Wq3SX:hover {
     transition: all 0.5s;
     -webkit-transform: translateX(-5px);
     transform: translateX(-5px);
 }
 
-.content-3YMskv {
+.content-1Wq3SX {
     transition: all 0.3s;
     -webkit-transform: translateX(0);
     transform: translateX(0);
