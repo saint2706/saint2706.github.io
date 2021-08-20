@@ -286,7 +286,7 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 /* Modify Chat Buttons */
-[aria-label$="Send a gift"]{
+.buttonWrapper-1ZmCpA{
     display: none;
 }
 
