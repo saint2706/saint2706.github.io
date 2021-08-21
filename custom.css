@@ -370,12 +370,11 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Modify Chat Buttons
+/* Modify Chat Buttons */
 
 .buttonWrapper-1ZmCpA {
     display: none;
 }
- */
 
 
 /* Fix Profile hints being off-center.
