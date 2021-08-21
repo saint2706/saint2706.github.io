@@ -898,14 +898,3 @@ animation: rainbow 5s linear 0s infinite normal
         transform: translate(0, 0px);
     }
 }
-
-
-/* Fix Twitch Emotes */
-
-img.emote {
-    text-indent: 0;
-    white-space: nowrap;
-    width: auto;
-    position: relative;
-    top: 0.25ex;
-}
