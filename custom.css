@@ -558,7 +558,8 @@ animation: rainbow 5s linear 0s infinite normal
     }
 }
 
-.buttonWrapper-1ZmCpA:hover .icon-3D60ES {
+
+/* .buttonWrapper-1ZmCpA:hover .icon-3D60ES {
     animation: shadow-pop-tl 0.3s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
 }
 
@@ -571,6 +572,7 @@ animation: rainbow 5s linear 0s infinite normal
     animation: shake-bottom 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
     animation-iteration-count: infinite;
 }
+*/
 
 [aria-label="Disconnect"]:hover .contents-18-Yxp {
     animation: wobble-ver-right 0.8s;
