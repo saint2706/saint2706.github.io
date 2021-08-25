@@ -558,7 +558,7 @@ CSS */
 }
 
 body:not([data-current-user-id])::after {
-    content: "please use 0BDFDB, it allows this theme to have more improvements!";
+    content: "please use 0BDFDB, it allows me to give more improvements!";
     width: 47ch;
     height: 25px;
     padding: 7px 5px 0 5px;
