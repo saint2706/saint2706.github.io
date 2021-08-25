@@ -82,17 +82,6 @@ img.emote {
 }
 
 
-/* Center category headers and remove the arrow on the left (collapsing still works) */
-
-.name-3l27Hl {
-    text-align: center;
-}
-
-.arrow-gKvcEx {
-    display: none;
-}
-
-
 /* Colorful Embeds */
 
 [href*="youtu.be"],
