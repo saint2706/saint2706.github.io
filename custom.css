@@ -195,8 +195,7 @@ Brighter Status #app-mount .wrapper-3t9DeA rect[fill="#593695"],
 
 /* Chat Buttons */
 
-[aria-label="Open sticker picker"],
-[aria-label="Send a gift"] {
+.button-38aScr {
     display: none
 }
 
