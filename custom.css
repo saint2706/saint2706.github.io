@@ -873,3 +873,387 @@ animation: rainbow 5s linear 0s infinite normal
         transform: translateY(0px);
     }
 }
+
+
+/* Rainbow Server Names */
+
+@keyframes rainbow-server-settings {
+    from {
+        color: #33FF00
+    }
+    25% {
+        color: #FFE600
+    }
+    50% {
+        color: red
+    }
+    75% {
+        color: #EA00FF
+    }
+    100% {
+        color: #008CFF
+    }
+}
+
+.button-1w5pas {
+    animation: rainbow-server-settings 4s ease-in-out infinite;
+}
+
+.name-1jkAdW {
+    animation: rainbow-server-settings 4s ease-in-out infinite;
+}
+
+
+/* Compact Reactions */
+
+.message-2qnXI6:hover .reactionCount-2mvXRV {
+    font-size: 14px;
+    transform: translate(0px);
+    transition-delay: 0s;
+}
+
+.message-2qnXI6:hover .reaction-1hd86g {
+    max-width: 90px;
+    width: auto;
+}
+
+.reaction-1hd86g {
+    max-width: 30px;
+    transition: 0.5s;
+    transition-timing-function: ease-out;
+}
+
+.reactionCount-2mvXRV {
+    font-size: 0px;
+    transition-duration: 0.2s;
+    transform: translate(-20px);
+    transition-timing-function: ease-out;
+    transition-delay: 0.1s;
+}
+
+
+/* Stops community server icons from shrinking in emoji popouts */
+
+.guildSection-1EoFKd>.flex-1xMQg5>svg {
+    flex-shrink: 0;
+}
+
+
+/* Small slide animation when switching channels */
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.message-2qnXI6 {
+    animation: slide-up 0.4s ease;
+}
+
+
+/* Makes colored banners consistent with premium banners */
+
+.popoutBanner-19WKGg {
+    height: 120px;
+}
+
+.profileBanner-33-uE1 {
+    height: 240px;
+}
+
+.avatarPositionNormal-aZjAsn {
+    top: 76px;
+}
+
+
+/* Colored Context Menu */
+
+#message-actions-pin,
+#message-pin,
+#message-unpin {
+    color: skyblue;
+}
+
+#message-actions-pin:hover,
+#message-pin:hover,
+#message-unpin:hover {
+    background-color: #67a7c0;
+    color: #fff;
+}
+
+#message-actions-reply,
+#message-reply {
+    color: khaki;
+}
+
+#message-actions-reply:hover,
+#message-reply:hover {
+    background-color: #c5bb5d;
+    color: #fff;
+}
+
+#message-actions-thread,
+#message-thread {
+    color: #69c069;
+}
+
+#message-actions-thread:hover,
+#message-thread:hover {
+    background-color: #5dbd5d;
+    color: #fff;
+}
+
+#message-actions-mark-unread,
+#message-mark-unread {
+    color: plum;
+}
+
+#message-actions-mark-unread:hover,
+#message-mark-unread:hover {
+    background-color: #c27ec2;
+    color: #fff;
+}
+
+#message-actions-copy-link,
+#message-copy-link {
+    color: lightseagreen;
+}
+
+#message-actions-copy-link:hover,
+#message-copy-link:hover {
+    background-color: #199c96;
+    color: #fff;
+}
+
+#message-actions-tts,
+#message-tts {
+    color: var(--brand-experiment);
+}
+
+#message-actions-tts:hover,
+#message-tts:hover {
+    background-color: var(--brand-experiment);
+    color: #fff;
+}
+
+#message-actions-copy-id,
+#message-devmode-copy-id {
+    color: lightsalmon;
+}
+
+#message-actions-copy-id:hover #message-devmode-copy-id:hover {
+    background-color: lightsalmon;
+    color: #fff;
+}
+
+#message-edit,
+#message-actions-edit {
+    color: steelblue;
+}
+
+#message-edit:hover,
+#message-actions-edit:hover {
+    background-color: steelblue;
+    color: #fff;
+}
+
+#message-add-reaction {
+    color: goldenrod;
+}
+
+#message-add-reaction:hover {
+    background-color: goldenrod;
+    color: #fff;
+}
+
+
+/* Green Text */
+
+[class*="blockquoteDivider-"] {
+    width: 0 !important;
+}
+
+[class*="blockquoteDivider-"]::before {
+    content: ">";
+}
+
+[class*="blockquoteContainer-"] blockquote,
+[class*="blockquoteDivider-"]::before {
+    color: lightgreen;
+}
+
+
+/* Remove new message timestamp syntax's custom styling */
+
+.timestamp-1Dd_pn {
+    background-color: transparent;
+    border-radius: inherit;
+    padding: inherit;
+}
+
+
+/* Fix pronoun-less names in chat having a space after it */
+
+.header-23xsNx>.pronoundb-pronouns:empty {
+    margin-right: 0 !important;
+}
+
+
+/* Center the custom status emoji if there's no status text. */
+
+.customStatus-oN4ZZY>.customStatusEmoji-3a2-Zo.customStatusSoloEmoji-1tDhmL:only-child {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* blurs the banner while its shrunk */
+
+.header-2V-4Sw {
+    backdrop-filter: blur(8 px) !important;
+}
+
+.hasBanner-2SrLR3 .header-2V-4Sw,
+.hasBanner-2SrLR3 .header-2V-4Sw:hover {
+    backdrop-filter: blur(0 px) !important;
+}
+
+
+/* 2-lined channel topic */
+
+[class*="chat-"]>[class*="title-"]>[class*="children-"]>[class*="topic-"] {
+    white-space: normal;
+    max-height: 2.4em;
+    font-size: .9em;
+    line-height: 1.2em;
+    text-overflow: ellipsis;
+    position: relative;
+}
+
+[class*="chat-"]>[class*="title-"]>[class*="children-"]::after {
+    content: unset;
+}
+
+[class*="chat-"]>[class*="title-"]>[class*="children-"]>[class*="topic-"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 1em;
+    background: linear-gradient(to right, transparent, var(--background-primary), var(--background-primary)) !important;
+    display: flex;
+    width: 130px;
+}
+
+
+/* Messenger Moment */
+
+
+/*message shape
+
+.cozy-3raOZG.wrapper-2a6GCs {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.cozyMessage-3V1Y8y:not(.groupStart-23k01U)>.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
+    border-radius: 6px 15px 15px 6px;
+}
+
+.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
+    display: inline-block;
+    max-width: 650px;
+    margin: 0;
+    padding: 8px 12px 7px;
+    border-radius: 15px 15px 15px 6px;
+    position: relative;
+    overflow: visible;
+}
+
+
+/*bubble color
+
+.theme-light [data-is-author-self=false] .markup-2BOw-j:not(:empty) {
+    background-color: #E4E6EB;
+}
+
+.theme-dark [data-is-author-self=false] .markup-2BOw-j:not(:empty) {
+    background-color: #313131;
+}
+
+[data-is-author-self=true]>.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
+    background-image: linear-gradient(#00c8d3 0%, #3654e8 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/*text style
+
+.container-3-pyIM *,
+.contents-2mQqc9>.markup-2BOw-j,
+.contents-2mQqc9>.markup-2BOw-j>* {
+    color: #fff!important;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.theme-light [data-is-author-self=false] .container-3-pyIM *,
+.theme-light [data-is-author-self=false] .markup-2BOw-j,
+.theme-light [data-is-author-self=false] .markup-2BOw-j>* {
+    color: #000!important;
+}
+
+
+/*last rounded corner
+
+.groupStart-23k01U:before,
+.hasContent-1cNJDh:before,
+.cozyMessage-3V1Y8y+.scrollerSpacer-avRLaA:before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    position: absolute;
+    border-bottom-left-radius: 20px;
+    border: 5px solid var(--background-primary);
+    border-right: 0;
+    border-top: 0;
+}
+
+.groupStart-23k01U:before {
+    transform: translate(-20%, -156%);
+}
+
+.hasContent-1cNJDh:before {
+    left: 51px;
+    transform: translateY(-132%);
+}
+
+.cozyMessage-3V1Y8y+.scrollerSpacer-avRLaA:before {
+    left: 67px;
+    transform: translateY(-84%);
+}
+
+.mentioned-xhSam7:before {
+    left: unset;
+    top: unset;
+    bottom: unset;
+}
+
+.mentioned-xhSam7+*:before,
+.isUnread-3Ef-o9.hasContent-1cNJDh+.groupStart-23k01U:before,
+.hasContent-1cNJDh+.groupStart-23k01U:before,
+.backgroundFlash-24qWLN:before {
+    visibility: hidden;
+}
+*/
