@@ -939,7 +939,7 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Small slide animation when switching channels */
+/* Small slide animation when switching channels
 
 @keyframes slide-up {
     0% {
@@ -954,7 +954,7 @@ animation: rainbow 5s linear 0s infinite normal
 
 .message-2qnXI6 {
     animation: slide-up 0.4s ease;
-}
+}  */
 
 
 /* Makes colored banners consistent with premium banners */
