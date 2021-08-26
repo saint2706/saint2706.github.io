@@ -1257,3 +1257,14 @@ animation: rainbow 5s linear 0s infinite normal
     visibility: hidden;
 }
 */
+
+
+/* Remove Thread Buttons (cringe) */
+
+.button-1ZiXG9[aria-label="Create thread"] {
+    display: none;
+}
+
+.icon-iDUzSK[aria-label="Threads"] {
+    display: none;
+}
