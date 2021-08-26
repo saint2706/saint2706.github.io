@@ -1270,22 +1270,6 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Server Banner fades into sidebar */
-
-.animatedContainer-1NSq4T {
-    box-shadow: none !important;
-}
-
-.animatedContainer-1NSq4T:after {
-    background: linear-gradient(00deg, var(--background-secondary) 30%, transparent 100%);
-    position: absolute;
-    content: '';
-    height: 30px;
-    width: 100%;
-    bottom: 0;
-}
-
-
 /* Nicer pin/unpin message icons */
 
 .button-1ZiXG9[aria-label="Pin Message"] path {
