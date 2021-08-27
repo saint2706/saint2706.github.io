@@ -56,13 +56,6 @@ img.emote {
 }
 
 
-/* Hide Discovery Button */
-
-[href="/discovery"] {
-    display: none;
-}
-
-
 /* Premium (120px/custom) banner height if the user has a banner, otherwise default (60px). */
 
 .userPopout-3XzG_A:not([style*="-user-background"]) .profileBanner-33-uE1 {
@@ -423,20 +416,6 @@ CSS */
 /* Hide GIFT button */
 
 .buttons-3JBrkn>.button-38aScr:not(.BD-TeX-plugin-button)> :not(.translateButton-DhP9x8):not(.quickToggleButton-P2xDh8) {
-    display: none
-}
-
-
-/* Hide GIF button */
-
-.buttonContainer-28fw2U:not(.send-button)> :not(.emojiButton-3uL3Aw):not(.fm-button)> :not(.stickerButton-3OEgwj) {
-    display: none
-}
-
-
-/* Hide Stickers button */
-
-.stickerButton-3OEgwj {
     display: none
 }
 
