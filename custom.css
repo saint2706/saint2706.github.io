@@ -1459,6 +1459,10 @@ animation: rainbow 5s linear 0s infinite normal
 
 /* Compact Friends, Stage Discovery, Library, and Nitro Store */
 
+[href="/library"] {
+    display: none;
+}
+
 .privateChannels-1nO12o .content-3YMskv {
     --columns: 4;
     display: grid;
