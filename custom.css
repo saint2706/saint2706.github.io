@@ -506,9 +506,6 @@ CSS */
 
 /* adds background to private user list, member list, user popout, and the module */
 
-
-/* also alerts user to use the 0BDFDB lib if they dont have it */
-
 .userPopout-xaxa6l:not([style*='--user-background']) .banner-2QYc2d,
 .root-3QyAh1:not([style*='--user-background']) .banner-2QYc2d {
     background: var(--ub) !important;
