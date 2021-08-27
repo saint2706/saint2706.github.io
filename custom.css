@@ -1466,9 +1466,12 @@ animation: rainbow 5s linear 0s infinite normal
     grid-column: auto;
 }
 
+
+/* 
 .privateChannels-1nO12o .content-3YMskv .channel-2QD9_O:not([aria-label]) .layout-2DM8Md .content-3QAtGj {
     display: none;
 }
+*/
 
 .privateChannels-1nO12o .content-3YMskv .channel-2QD9_O:not([aria-label]) .layout-2DM8Md .avatar-3uk_u9 {
     width: 100%;
