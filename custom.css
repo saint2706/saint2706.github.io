@@ -761,7 +761,9 @@ animation: rainbow 5s linear 0s infinite normal
 .avatar-1BDn8e:hover.clickable-1bVtEA:hover {
     filter: drop-shadow(0 0 8px cyan);
     color: pink;
+    /*
     transform: rotate(360deg);
+    */
     transition: width .5s ease, height .5s ease, transform .5s ease;
 }
 
