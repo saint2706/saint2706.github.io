@@ -324,7 +324,7 @@ CSS */
 }
 
 
-/* Pin Home Button 
+/* Pin Home Button */
 
 .guilds-1SWlCJ .tree-2wKJdG:focus {
     outline-color: transparent;
@@ -337,8 +337,8 @@ CSS */
 
 .guilds-1SWlCJ .scroller-1Bvpku .tutorialContainer-2sGCg9 {
     position: fixed;
-    transform: translatey( -100%);
-} */
+    transform: translatey(-100%);
+}
 
 
 /* Role Color Background in Role Management */
@@ -761,9 +761,7 @@ animation: rainbow 5s linear 0s infinite normal
 .avatar-1BDn8e:hover.clickable-1bVtEA:hover {
     filter: drop-shadow(0 0 8px cyan);
     color: pink;
-    /*
     transform: rotate(360deg);
-    */
     transition: width .5s ease, height .5s ease, transform .5s ease;
 }
 
@@ -1464,7 +1462,7 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 .privateChannels-1nO12o .content-3YMskv {
-    --columns: 4;
+    --columns: 3;
     display: grid;
     grid-template-columns: repeat(var(--columns), 1fr);
     grid-auto-rows: min-content;
@@ -1548,7 +1546,7 @@ animation: rainbow 5s linear 0s infinite normal
 /* audio filename scroll */
 
 .wrapperAudio-1jDe0Q {
-    width: 400px!important;
+    width: 400px !important;
 }
 
 
@@ -1774,7 +1772,7 @@ animation: rainbow 5s linear 0s infinite normal
 /* Show date of when message edited */
 
 .cozyMessage-3V1Y8y:not(.systemMessage-1I9LCe) .markup-2BOw-j .timestampInline-yHQ6fX>[aria-label]::after {
-    content: "(edited " attr(aria-label) ")";
+    content: "(edited "attr(aria-label) ")";
     text-transform: lowercase;
     font-size: 0.625rem;
     font-weight: 400;
@@ -1887,7 +1885,11 @@ animation: rainbow 5s linear 0s infinite normal
 
 /* Enlarged/grow on hover custom status emojis */
 
-.customStatusSoloEmoji-1tDhmL {
+.customStatusText-2wWmYP {
+    display: block;
+}
+
+.customStatusEmoji-1itGdP {
     --props: 1.1s ease-in-out;
     margin: -1px auto 5px;
     width: 60px !important;
@@ -1895,7 +1897,7 @@ animation: rainbow 5s linear 0s infinite normal
     transition: width var(--props), height var(--props);
 }
 
-.customStatusSoloEmoji-1tDhmL:hover {
+.customStatusEmoji-1itGdP:hover {
     margin-bottom: 9px;
     width: 120px !important;
     height: 120px !important;
@@ -1926,4 +1928,411 @@ animation: rainbow 5s linear 0s infinite normal
     background-color: #1d1d1d;
     background: transparent;
     color: var(--text-normal);
+}
+
+
+/* Hides the unread bar while discord isn't focused, makes using it on a 2nd monitor a little better */
+
+.isUnread-3Ef-o9 {
+    border-color: transparent !important;
+}
+
+.app-focused .isUnread-3Ef-o9 {
+    border-color: #f04747 !important;
+}
+
+
+/* Make Emojis larger/bigger on click */
+
+
+/* Resizing the Emoji and making it large */
+
+.emojiSection-3Fb9ix img {
+    margin: auto;
+    min-width: 80%;
+    height: auto !important;
+}
+
+
+/* Resizing the Emoji and making it large End */
+
+
+/* Text Wrapping */
+
+.emojiSection-3Fb9ix>.noWrap-3jynv6,
+.emojiSection-3Fb9ix {
+    flex: wrap;
+    flex-direction: column !important;
+}
+
+
+/* Text Wrapping End */
+
+
+/* Adjusting the text weight and aligning it to center */
+
+.emojiName-27Bjxw {
+    font-weight: 600;
+    margin-top: 8px;
+    text-align: center;
+}
+
+
+/* Adjusting the text weight and aligning it to center End */
+
+
+/* Fix for padding being added to voice connection */
+
+.connection-3KRENF {
+    padding-bottom: 0;
+}
+
+
+/* Small little CSS snippet to fix the username brightness */
+
+.username-1A8OIy,
+.roleColor-rz2vM0 {
+    filter: brightness(100%);
+}
+
+
+/* Blurred see through settings */
+
+.layers-3iHuyZ>.layer-3QrUeG:first-child {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+}
+
+.layers-3iHuyZ>.layer-3QrUeG:nth-child(2),
+.perksModal-fSYqOq {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(9px);
+}
+
+.contentRegionScroller-26nc1e,
+.contentRegion-3nDuYy,
+.standardSidebarView-3F1I7i,
+.sidebarRegionScroller-3MXcoP {
+    background: transparent;
+}
+
+
+/* make the search bar way smaller when inactive (also gives it a lil animation) */
+
+.search-36MZv- {
+    order: -1;
+}
+
+.searchBar-3dMhjb {
+    width: 28px;
+    transition: width 0.6s ease-in-out;
+    color: #fff;
+    background: none;
+}
+
+.focused-31_ccS .searchBar-3dMhjb,
+.open-6_Y_aH .searchBar-3dMhjb,
+.searchBar-3dMhjb:hover {
+    width: 240px;
+    background: var(--background-tertiary);
+}
+
+.icon-3cZ1F_ {
+    height: 24px;
+    width: 24px;
+    color: var(--interactive-normal);
+}
+
+.iconContainer-O4O2CN {
+    bottom: 3px;
+}
+
+.search-36MZv- {
+    margin-left: 0px;
+}
+
+
+/* Colorful Permissons */
+
+
+/* Permissons (Red) */
+
+.deny-3nAuT6 {
+    color: #F04747;
+}
+
+.deny-3nAuT6:hover {
+    background: #F04747 !important;
+    color: white;
+}
+
+.deny-3nAuT6.selected-2YhbGh {
+    background: #F04747 !important;
+}
+
+.deny-3nAuT6.selected-2YhbGh:hover {
+    background: #FF6660 !important;
+}
+
+
+/* Permissons (Yellow) */
+
+.passthrough-1c2ewQ {
+    color: #FAA61A;
+}
+
+.passthrough-1c2ewQ:hover {
+    background: #FAA61A !important;
+    color: white;
+}
+
+.passthrough-1c2ewQ.selected-2YhbGh {
+    background: #FAA61A !important;
+}
+
+.passthrough-1c2ewQ.selected-2YhbGh:hover {
+    background: #FFC23D !important;
+}
+
+
+/* Permissons (Green) */
+
+.allow-1PzSY3 {
+    color: #43B581;
+}
+
+.allow-1PzSY3:hover {
+    background: #43B581 !important;
+    color: white;
+}
+
+.allow-1PzSY3.selected-2YhbGh {
+    background: #43B581 !important;
+}
+
+.allow-1PzSY3.selected-2YhbGh:hover {
+    background: #61D09A !important;
+}
+
+
+/* allows selection of nearly all text in order to copy */
+
+
+/* text selection, text highlight hack */
+
+body,
+div,
+body::selection,
+div::selection {
+    user-select: auto !important;
+    -webkit-user-select: auto !important;
+}
+
+*::selection {
+    color: orange;
+    background: darkBlue;
+    background-color: darkBlue;
+}
+
+
+/* Hover Buttons */
+
+.buttons-3JBrkn {
+    opacity: 0;
+    transition: opacity 0.1s;
+}
+
+.channelTextArea-rNsIhG:hover .buttons-3JBrkn {
+    opacity: 1.0;
+}
+
+.attachWrapper-2TRKBi {
+    order: 1;
+    margin-left: 9px;
+}
+
+.attachButton-2WznTc {
+    padding-right: 0px
+}
+
+.uploadModal-2ifh8j .buttons-3JBrkn {
+    opacity: 1.0;
+}
+
+
+/* Make replies look like in Telegram */
+
+.repliedMessage-VokQwo {
+    flex-direction: column;
+    align-items: start;
+}
+
+.replyAvatar-1K9Wmr {
+    display: none;
+}
+
+.repliedMessage-VokQwo .username-1A8OIy {
+    opacity: 1;
+}
+
+.repliedTextContentIcon-1ivTae {
+    margin-left: 0;
+}
+
+
+/* Make images feel better i guess */
+
+.imageWrapper-2p5ogY:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--elevation-high);
+}
+
+.imageWrapper-2p5ogY {
+    transition: ease-in-out 0.4s;
+    box-shadow: none;
+}
+
+
+/* Better Scrollbar */
+
+:root {
+    --burple: rgb(114, 137, 218);
+    --scrollbar-thumb-dark: #f8f9fa !important;
+    --scrollbar-track-dark: --burple !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 25px;
+    background-color: var(--scrollbar-track-dark) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 25px;
+    background-color: var(--burple) !important;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+
+/* some cool thing for usernames, inverts color, as a bonus it helps prevent colors that are impossible to read on themes */
+
+.cozy-3raOZG .username-1A8OIy {
+    position: relative;
+    padding: 2px 6px 3px 6px;
+}
+
+.cozy-3raOZG .username-1A8OIy::after {
+    content: "";
+    background: linear-gradient(to left, currentColor, currentColor, rgba(0, 0, 0, 0.1), currentColor, currentColor);
+    background-size: 1800% 1800%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    opacity: 0.5;
+    border-radius: 5px;
+    z-index: -1;
+    animation: slide 5s infinite ease-in-out;
+    filter: invert(1);
+    border-radius: 0px 15px;
+    border-style: solid;
+    border-width: thin;
+}
+
+@keyframes slide {
+    0% {
+        background-position: 0% 82%
+    }
+    50% {
+        background-position: 100% 19%
+    }
+    100% {
+        background-position: 0% 82%
+    }
+}
+
+
+/* hover to unblur by server */
+
+[aria-label="Servers"] div img {
+    filter: blur(3px);
+    border-radius: 50px;
+    transition: all 0.5s ease-in-out;
+}
+
+[aria-label="Servers"] div:hover img,
+div.selected img {
+    filter: none
+}
+
+
+/* Light shadows under embedded messages, images, videos and code blocks. */
+
+.embedWrapper-lXpS3L {
+    box-shadow: 0px 8px 15px -8px rgba(0, 0, 0, 0.3);
+}
+
+code {
+    box-shadow: 0px 8px 15px -8px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Show full link on hyperlink hover */
+
+.grid-1nZz7S {
+    overflow: visible !important;
+}
+
+.markup-2BOw-j a {
+    position: relative;
+}
+
+.markup-2BOw-j a::before {
+    content: attr(href);
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    width: max-content;
+    max-width: 200px;
+    margin: auto;
+    background-color: black;
+    color: #dcddde !important;
+    font-weight: 500 !important;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 8px 12px;
+    border-radius: 5px;
+    z-index: 100;
+    transform: scale(.98) translateY(2px) translateX(-50%);
+    filter: opacity(0);
+    pointer-events: none;
+    box-shadow: var(--elevation-high);
+    transition: transform .1s, filter .1s;
+}
+
+.markup-2BOw-j a:hover:before {
+    transform: translateX(-50%);
+    filter: opacity(1);
+}
+
+
+/* Better Jump to Present Bar */
+
+.jumpToPresentBar-G1R9s6 {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+
+/* simple css to make it so you cant copy the user name and time stamps because its annoying */
+
+.header-23xsNx {
+    user-select: none;
 }
