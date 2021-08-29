@@ -56,25 +56,6 @@ img.emote {
 }
 
 
-/* Premium (120px/custom) banner height if the user has a banner, otherwise default (60px). */
-
-.userPopout-3XzG_A:not([style*="-user-background"]) .profileBanner-33-uE1 {
-    height: 60px;
-}
-
-.userPopout-3XzG_A:not([style*="-user-background"]) .avatarWrapperNormal-2tu8Ts {
-    top: 16px;
-}
-
-.userPopout-3XzG_A[style*="-user-background"] .profileBanner-33-uE1 {
-    height: var(--USRBG-banner-height, 120px);
-}
-
-.userPopout-3XzG_A[style*="-user-background"] .avatarWrapperNormal-2tu8Ts {
-    top: var(--USRBG-avatar-offset, 76px);
-}
-
-
 /* Colorful Embeds */
 
 [href*="youtu.be"],
@@ -506,12 +487,15 @@ CSS */
 
 /* adds background to private user list, member list, user popout, and the module */
 
+
+/*
 .userPopout-xaxa6l:not([style*='--user-background']) .banner-2QYc2d,
 .root-3QyAh1:not([style*='--user-background']) .banner-2QYc2d {
     background: var(--ub) !important;
     background-size: cover;
     background-position: center
 }
+*/
 
 .member-3-YXUe::before,
 .privateChannels-1nO12o a.channel-2QD9_O::before {
@@ -761,9 +745,7 @@ animation: rainbow 5s linear 0s infinite normal
 .avatar-1BDn8e:hover.clickable-1bVtEA:hover {
     filter: drop-shadow(0 0 8px cyan);
     color: pink;
-    /*
     transform: rotate(360deg);
-    */
     transition: width .5s ease, height .5s ease, transform .5s ease;
 }
 
@@ -2337,4 +2319,11 @@ code {
 
 .header-23xsNx {
     user-select: none;
+}
+
+
+/* Stop Discord from shoving treads and other shit that goes here down our throat */
+
+.container-3O_wAf {
+    display: none
 }
