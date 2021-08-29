@@ -1631,7 +1631,28 @@ animation: rainbow 5s linear 0s infinite normal
     font-weight: 400;
     font-size: 15px;
     color: grey;
+    animation: rainbow-watermark 5s ease-in-out infinite;
 }
+
+@keyframes rainbow-watermark {
+    from {
+        color: #6666ff
+    }
+    25% {
+        color: #0099ff
+    }
+    50% {
+        color: #00ff00
+    }
+    75% {
+        color: #ff3399
+    }
+    100% {
+        color: #6666ff
+    }
+}
+
+.wordmark-2iDDfm {}
 
 
 /* Nicer user area and status picker */
@@ -2326,4 +2347,366 @@ code {
 
 .container-3O_wAf {
     display: none
+}
+
+
+/* Badge Hover */
+
+.profileBadge-2niAfJ {
+    transition: 0.4s;
+}
+
+.profileBadge-2niAfJ:hover {
+    transform: translateY(-1px);
+}
+
+
+/* Dark Game Activity (With Spotify) */
+
+.activityUserPopout-2yItg2 {
+    background-color: rgb(28, 28, 28);
+}
+
+
+/* Dark Bot Tags */
+
+.botTagRegular-2HEhHi {
+    transition: .5s;
+    background: rgba(30, 0, 27, 0.1);
+    color: #ffffff;
+}
+
+.botTagRegular-2HEhHi:hover {
+    transition: .5s;
+    background: #444444;
+    color: #ffffff;
+}
+
+
+/* Add a background image for when you're in a DM call */
+
+:root {
+    --call-bg: url('https://cdn.discordapp.com/attachments/738968109288914976/769986893944979496/image0.jpg');
+    /* Replace with what background you want */
+}
+
+.minimum-28Z35l .root-217Brm,
+.video--KPXCT .root-217Brm {
+    background: var(--call-bg) center/100% no-repeat;
+}
+
+.minimum-28Z35l .root-217Brm::before,
+.video--KPXCT .root-217Brm::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(0, 0, 0, 0.65);
+    backdrop-filter: blur(3px);
+}
+
+
+/* Cool Member List */
+
+
+/* Cool Member List */
+
+:root {
+    --hover-animation-speed: 0.35s;
+    --seperator-color: var(--background-accent);
+}
+
+.membersWrap-2h-GB4 {
+    min-width: unset;
+    width: 65px;
+    justify-content: right;
+}
+
+.members-1998pB {
+    transition: transform var(--hover-animation-speed);
+}
+
+.membersWrap-2h-GB4:hover .members-1998pB {
+    transform: translateX(-190px);
+}
+
+.membersWrap-2h-GB4 .membersGroup-v9BXpm::after {
+    content: '';
+    width: 30px;
+    height: 2px;
+    border-radius: 50px;
+    background: unset;
+    background-color: var(--seperator-color);
+    position: absolute;
+    left: -36px;
+    top: 29px;
+    margin-left: 0px;
+}
+
+.membersWrap-2h-GB4 .members-1998pB .member-3-YXUe {
+    background-color: unset;
+    margin-left: 0px;
+    transition: margin-left var(--hover-animation-speed);
+}
+
+.membersWrap-2h-GB4:hover .members-1998pB .member-3-YXUe {
+    margin-left: 8px;
+}
+
+.membersWrap-2h-GB4:hover .membersGroup-v9BXpm {
+    transform: translateX(-6px);
+}
+
+.membersWrap-2h-GB4 .membersGroup-v9BXpm {
+    cursor: default;
+    transform: translateX(45px);
+    transition: transform var(--hover-animation-speed);
+    overflow: visible;
+}
+
+.members-1998pB {
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.membersWrap-2h-GB4,
+.members-1998pB {
+    left: 15px;
+    margin-right: 10px
+}
+
+.chat-3bRxxu {
+    background: var(--background-tertiary);
+}
+
+.chatContent-a9vAAp {
+    background-color: var(--background-primary);
+    border-radius: 0 15px 0 0 !important;
+    left: 25px;
+    margin-left: -25px
+}
+
+
+/* Light theme away */
+
+
+/* Light theme away */
+
+html.theme-dark .theme-light {
+    --header-primary: #fff;
+    --header-secondary: #b9bbbe;
+    --text-normal: #dcddde;
+    --text-muted: #72767d;
+    --text-link: #00b0f4;
+    --channels-default: #8e9297;
+    --interactive-normal: #b9bbbe;
+    --interactive-hover: #dcddde;
+    --interactive-active: #fff;
+    --interactive-muted: #4f545c;
+    --background-primary: #36393f;
+    --background-secondary: #2f3136;
+    --background-secondary-alt: #292b2f;
+    --background-tertiary: #202225;
+    --background-accent: #4f545c;
+    --background-floating: #18191c;
+    --background-mobile-primary: #36393f;
+    --background-mobile-secondary: #2f3136;
+    --background-modifier-hover: rgba(79, 84, 92, 0.16);
+    --background-modifier-active: rgba(79, 84, 92, 0.24);
+    --background-modifier-selected: rgba(79, 84, 92, 0.32);
+    --background-modifier-accent: hsla(0, 0%, 100%, 0.06);
+    --scrollbar-thin-thumb: #202225;
+    --scrollbar-thin-track: transparent;
+    --scrollbar-auto-thumb: #202225;
+    --scrollbar-auto-track: #2e3338;
+    --focus-primary: #00b0f4;
+}
+
+html.theme-dark .theme-light .root-1gCeng {
+    background-color: #36393f;
+    -webkit-box-shadow: 0 0 0 1px rgba(32, 34, 37, .6), 0 2px 10px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 0 0 1px rgba(32, 34, 37, .6), 0 2px 10px 0 rgba(0, 0, 0, .2);
+}
+
+html.theme-dark .theme-light .footer-2gL1pp {
+    background-color: #2f3136;
+    -webkit-box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6);
+    box-shadow: inset 0 1px 0 rgba(47, 49, 54, .6);
+    color: var(--text-normal);
+}
+
+
+/* Animated border around Discord */
+
+@keyframes bruh {
+    0% {
+        background-position: 2% 0%
+    }
+    50% {
+        background-position: 99% 100%
+    }
+    100% {
+        background-position: 2% 0%
+    }
+}
+
+ :root {
+    --margin: 5px;
+    --rounded-corners: 7px;
+    --color1: #00ff00;
+    --color2: #0000ff;
+    --degree: 10deg;
+    --animationDuration: 7s;
+    --titlebarOpacity: 0.6;
+    /* scale 0 to 1 */
+}
+
+.app-2rEoOp {
+    margin: var(--margin);
+    border-radius: var(--rounded-corners);
+    overflow: hidden;
+    box-shadow: var(--elevation-high);
+}
+
+.app-1q1i1E {
+    background: none;
+}
+
+.appMount-3lHmkl {
+    background: linear-gradient(var(--degree), var(--color1), var(--color2));
+    background-size: 300% 300%;
+    animation: bruh var(--animationDuration) ease-in-out infinite;
+}
+
+.withFrame-haYltI {
+    margin-top: 0 !important;
+    padding-top: 4px;
+}
+
+.titleBar-AC4pGV {
+    background: rgba(0, 0, 0, var(--titlebarOpacity));
+}
+
+.guilds-1SWlCJ {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.wordmarkWindows-1v0lYD {
+    color: #999999;
+}
+
+
+/* Display links on user modal */
+
+.connectedAccount-36nQx7 {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+}
+
+.connectedAccount-36nQx7 .connectedAccountIcon-3P3V6F {
+    width: 24px;
+    height: 24px;
+}
+
+.connectedAccount-36nQx7 .anchor-3Z-8Bb {
+    width: 100%;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+}
+
+.connectedAccount-36nQx7 .anchor-3Z-8Bb svg {
+    display: none;
+}
+
+.connectedAccount-36nQx7 .anchor-3Z-8Bb:after {
+    content: attr(href);
+    width: 100%;
+    white-space: nowrap;
+}
+
+
+/* make blockquotes look like embeds */
+
+.theme-dark .blockquoteContainer-U5TVEi blockquote {
+    background-color: #242337;
+    /*change if dark theme*/
+    border-color: #242337;
+    /*change if dark theme*/
+}
+
+.theme-light .blockquoteContainer-U5TVEi blockquote {
+    background-color: #413F65;
+    /*change if light theme*/
+    border-color: #413F65;
+    /*change if light theme*/
+}
+
+.blockquoteContainer-U5TVEi blockquote {
+    border: 1px solid;
+    border-radius: 0px 4px 4px 0px;
+    padding: 6px 10px 7px;
+}
+
+.blockquoteContainer-U5TVEi .blockquoteDivider-2hH8H6 {
+    border-radius: 4px 0px 0px 4px;
+}
+
+
+/* Better RTC Connection popout */
+
+
+/* Better RTC Connection popout */
+
+.layerContainer-yqaFcK .layer-v9HyYc[style*="position: absolute; left: 100px;"] {
+    left: 72px !important;
+}
+
+.container-2x5lvQ {
+    width: 240px;
+    box-shadow: none;
+}
+
+.layerContainer-yqaFcK .layer-v9HyYc[style*="position: absolute; left: 100px;"] .container-2x5lvQ header {
+    background-color: var(--toast-header);
+}
+
+.layerContainer-yqaFcK .layer-v9HyYc[style*="position: absolute; left: 100px;"] .container-2x5lvQ section {
+    background-color: var(--deprecated-panel-background);
+}
+
+.container-2x5lvQ section p:nth-of-type(1) {
+    font-size: 0;
+}
+
+.container-2x5lvQ section p:nth-of-type(2) {
+    display: none;
+}
+
+.container-2x5lvQ section strong {
+    font-size: 14px;
+    white-space: pre;
+}
+
+.container-2x5lvQ section strong::before {
+    font-weight: normal;
+}
+
+.container-2x5lvQ section strong:nth-of-type(1)::before {
+    content: 'Server: ';
+}
+
+.container-2x5lvQ section strong:nth-of-type(2)::before {
+    content: 'Average Ping: ';
+}
+
+.container-2x5lvQ section strong:nth-of-type(3)::before {
+    content: 'Last Ping: ';
+}
+
+.container-2x5lvQ section strong:nth-of-type(4)::before {
+    content: 'Packet Loss: ';
 }
