@@ -2222,7 +2222,7 @@ div::selection {
 }
 
 
-/* some cool thing for usernames, inverts color, as a bonus it helps prevent colors that are impossible to read on themes */
+/* some cool thing for usernames, inverts color, as a bonus it helps prevent colors that are impossible to read on themes
 
 .cozy-3raOZG .username-1A8OIy {
     position: relative;
@@ -2259,9 +2259,10 @@ div::selection {
         background-position: 0% 82%
     }
 }
+ */
 
 
-/* hover to unblur by server */
+/* hover to unblur by server 
 
 [aria-label="Servers"] div img {
     filter: blur(3px);
@@ -2273,6 +2274,7 @@ div::selection {
 div.selected img {
     filter: none
 }
+*/
 
 
 /* Light shadows under embedded messages, images, videos and code blocks. */
