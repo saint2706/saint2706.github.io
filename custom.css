@@ -1652,8 +1652,6 @@ animation: rainbow 5s linear 0s infinite normal
     }
 }
 
-.wordmark-2iDDfm {}
-
 
 /* Nicer user area and status picker */
 
@@ -2711,4 +2709,11 @@ html.theme-dark .theme-light .footer-2gL1pp {
 
 .container-2x5lvQ section strong:nth-of-type(4)::before {
     content: 'Packet Loss: ';
+}
+
+
+/* Hide "Add to Favourites" button on gifs */
+
+.imageAccessory-3uSIjZ {
+    display: none;
 }
