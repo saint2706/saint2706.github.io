@@ -1,33 +1,199 @@
-/* Better Settings */
+/* Blur Spoiler Text */
 
-@import url('https://xhylo.github.io/BetterSettings/BetterSettings.css');
+.spoilerText-3p6IlD,
+.spoilerText-3p6IlD.hidden-HHr2R9 {
+    background-color: transparent !important;
+}
 
-/* Win Mac Buttons */
-
-@import url('https://xhylo.github.io/WinMacbuttons/winmacbuttonssc.css');
-
-/* Import for Settings Icons */
-
-@import url('https://mwittrien.github.io/BetterDiscordAddons/Themes/_res/SettingsIcons.css');
-
-/* Import for adding UserBG to memberlist */
-
-@import url('https://usrbg.cyleja1234.repl.co/style.css?selector=.member-3-YXUe&.root-3QyAh1&.userPopout-xaxa6l&.channel-2QD9_O');
-
-/* Imports for Animated Rings */
+.spoilerText-3p6IlD.hidden-HHr2R9>.inlineContent-3ZjPuv {
+    opacity: 1 !important;
+    filter: blur(3px);
+    pointer-events: unset;
+}
 
 
-/* The base speaking rings */
+/* Fix File Icon Shrinking For Long Names */
 
-@import url('https://p0rtl6.github.io/BD-AnimatedSpeakingRings/src/base.css');
+.audioMetadata-3zOuGv::before {
+    min-width: 24px;
+}
 
-/* The voice connected panel */
 
-@import url('https://p0rtl6.github.io/BD-AnimatedSpeakingRings/src/voiceconnectedpanel.css');
+/* Special User Popout */
 
-/* The fullscreen user panels */
+#app-mount [data-user-id="448498908956590090"].userPopout-xaxa6l {
+    background-color: rgba(0, 0, 0, 0.158);
+    background-image: url('https://i.imgur.com/RTkmWWX.png');
+    width: 700px!important;
+    height: 359px!important;
+}
 
-@import url('https://p0rtl6.github.io/BD-AnimatedSpeakingRings/src/bigusers.css');
+#app-mount [data-user-id="448498908956590090"] .bodyInnerWrapper-26fQXj {
+    background: transparent;
+}
+
+#app-mount [data-user-id="448498908956590090"] .banner-2QYc2d {
+    background: transparent!important;
+}
+
+.divider-ewBQKj {
+    display: none;
+}
+
+#app-mount [data-user-id="448498908956590090"] .bannerOverlayPopout-1clJ34,
+.bannerOverlay-1uIerX {
+    width: 900px!important;
+    background-color: transparent;
+}
+
+#app-mount [data-user-id="448498908956590090"] .textarea-2r0oV8 {
+    width: 900px!important;
+    background: transparent;
+}
+
+#app-mount [data-user-id="448498908956590090"] .role-2irmRk {
+    background-color: transparent;
+}
+
+#app-mount [data-user-id="448498908956590090"] .avatar-37jOim {
+    border: 6px solid transparent;
+    background-color: transparent;
+}
+
+#app-mount [data-user-id="448498908956590090"] .colorLink-2vG20E {
+    display: none;
+}
+
+#app-mount [data-user-id="448498908956590090"] .nickname-3M3Jfa,
+.headerTagWithNickname-3l_x6x,
+.customStatus-oN4ZZY,
+.aboutMeSection-1Fw5Ia,
+.bodyTitle-1ySSKn,
+.headerTopWithCustomStatus-1DHAjX {
+    text-align: center!important;
+}
+
+#app-mount [data-user-id="448498908956590090"] .avatarPositionNormal-aZjAsn {
+    margin-left: 290px;
+}
+
+#app-mount [data-user-id="448498908956590090"] .aboutMeTitle-1IYtPE {
+    margin-left: 300px;
+}
+
+
+/* Profile Connection Borders */
+
+.connectedAccountIcon-3_EQqg~div::before {
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid var(--border-color);
+    position: absolute;
+    display: block;
+    pointer-events: none;
+}
+
+.connectedAccount-2Jb-Z0 {
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* Spotify */
+
+.connectedAccountIcon-3_EQqg[src="/assets/eaeac24163b35f7526704a3d9b3c7722.svg"]~div::before {
+    --border-color: #1ED760;
+}
+
+
+/* Github */
+
+.connectedAccountIcon-3_EQqg[src="/assets/6a853b4c87fce386cbfef4a2efbacb09.svg"]~div::before {
+    --border-color: #fff;
+}
+
+
+/* Twitch */
+
+.connectedAccountIcon-3_EQqg[src="/assets/ca71e0b8818221eea1deebbaf8dc6518.svg"]~div::before {
+    --border-color: #563194;
+}
+
+
+/* Twitter */
+
+.connectedAccountIcon-3_EQqg[src="/assets/85cf2b49d2a185c98ec8e383ad5a05d6.svg"]~div::before {
+    --border-color: #0099E4;
+}
+
+
+/* XBOX */
+
+.connectedAccountIcon-3_EQqg[src="/assets/1fa6585cbb8c0fe21188e26d19fc6609.svg"]~div::before {
+    --border-color: #5EC220;
+}
+
+
+/* Reddit */
+
+.connectedAccountIcon-3_EQqg[src="/assets/f3224f560c8f5974355596a4f7e9ce19.svg"]~div::before {
+    --border-color: #FF4500;
+}
+
+
+/* Battle.net */
+
+.connectedAccountIcon-3_EQqg[src="/assets/37f15a06d062bdd0fc252d2b35d0b0bb.svg"]~div::before {
+    --border-color: #0099E4;
+}
+
+
+/* Steam */
+
+.connectedAccountIcon-3_EQqg[src="/assets/d897626dfa2016ea3ad0af935acb6070.svg"]~div::before {
+    --border-color: #000000;
+}
+
+
+/* YouTube */
+
+.connectedAccountIcon-3_EQqg[src="/assets/57ee9535485efae7eb923ed4893abb57.svg"]~div::before {
+    --border-color: #D9252A;
+}
+
+
+/* Facebook */
+
+.connectedAccountIcon-3_EQqg[src="/assets/32045743cb7670855ae726743c949e0c.svg"]~div::before {
+    --border-color: #1877F2;
+}
+
+
+/* LOL */
+
+.connectedAccountIcon-3_EQqg[src="/assets/94dc6f30a819026fa295d85f1f72b4ab.svg"]~div::before {
+    --border-color: #CEA146;
+}
+
+
+/* Revert Discord Greeting System Messages */
+
+.welcomeCTAButtonOuter-2VwxSF {
+    display: none
+}
+
+
+/* Fix the channel icon being oversized in embeds and channel topics */
+
+.topic-TCb_qw>.wrapper-3WhCwL>.channelIcon-1MN1lz,
+.embedFooterText-28V_Wb>.wrapper-3WhCwL>.channelIcon-1MN1lz {
+    width: calc(1.05rem * 1.05 / 1.3);
+    height: 1.05rem;
+}
+
 
 /* Emote Fix */
 
@@ -37,116 +203,6 @@ img.emote {
     width: auto;
     position: relative;
     top: 0.25ex;
-}
-
-
-/* Settings Icons */
-
-:root {
-    --settingsiconssize: 18px;
-    --settingsiconsgap: 14px;
-}
-
-
-/* Remove Pencil Icon Banners */
-
-.banner-2QYc2d:hover .bannerOverlay-1uIerX,
-.banner-2QYc2d:hover .pencilIcon-XSi-VE {
-    display: none;
-}
-
-
-/* Colorful Embeds */
-
-[href*="youtu.be"],
-[href*="youtube.com"] {
-    color: #c4302b !important;
-    font-weight: 700;
-}
-
-[href*="twitch.tv"] {
-    color: #b700ff !important;
-    font-weight: 700;
-}
-
-[href*="spotify.com"] {
-    color: rgb(19, 185, 4) !important;
-    font-weight: 700;
-}
-
-[href*="discord.com/channels/"] {
-    color: #7289da !important;
-}
-
-[href*="discord.com/channels/"]::before {
-    content: 'Jump to Message : ';
-    font-size: 16px;
-    font-weight: 700;
-    color: #603cff;
-}
-
-[href*="reddit.com"] {
-    color: #e05a0c !important;
-    font-weight: 700;
-}
-
-[href*="instagram.com/"] {
-    background: -webkit-linear-gradient(80deg, rgb(255, 238, 0), rgb(255, 157, 11), #b700ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-}
-
-[href*="twitter.com/"] {
-    color: #00acee !important;
-    font-weight: 700;
-}
-
-[href*="betterdiscord.app/"],
-[href*="discord.gg/"] {
-    color: #7289da !important;
-    font-weight: 700;
-}
-
-[href*="github"] {
-    color: #00f0a8 !important;
-    font-weight: 700;
-}
-
-
-/* Hide disabled text area */
-
-.channelTextAreaDisabled-8rmlrp {
-    display: none;
-}
-
-
-/* Old Roles */
-
-.role-2irmRk {
-    background: transparent;
-    border: 1px solid;
-    border-radius: 11px;
-}
-
-.roleCircle-3xAZ1j {
-    margin-left: 0;
-}
-
-.addButton-pcyyf6.role-2irmRk {
-    border-color: #4f545c;
-}
-
-.addButtonIcon-1NMJ8u {
-    width: 10px;
-    height: 10px;
-}
-
-
-/* Hide the cursor when the video controls are hidden */
-
-.wrapperControlsHidden-35Gtol {
-    cursor: none;
 }
 
 
@@ -179,6 +235,27 @@ img.emote {
 .scrollableContainer-2NUZem {
     border: 1px solid transparent;
     border-radius: 25px;
+}
+
+
+/* Role Color Background */
+
+.role-2irmRk {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.roleCircle-3xAZ1j::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    opacity: 0.3;
+    z-index: -1
 }
 
 
@@ -215,7 +292,7 @@ img.emote {
 }
 
 
-/* Resizable Threads */
+/* resizable thread window */
 
 :root {
     --sidebar-width: 240px;
@@ -239,30 +316,7 @@ img.emote {
 }
 
 
-/*Rainbow wave mentions*/
-
-html .mention.wrapper-3WhCwL.mention.interactive {
-    background-image: linear-gradient(to left, rgb(51, 255, 0), rgb(255, 230, 0), red, rgb(234, 0, 255), rgb(0, 140, 255), rgb(51, 255, 0));
-    animation: gradient-border 3s linear infinite;
-    background-size: 400% 100%;
-    color: transparent !important;
-    -webkit-background-clip: text;
-    position: relative;
-    z-index: 1;
-}
-
-@keyframes gradient-border {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 130% 0;
-    }
-}
-
-
-/* Hide the red "NEW" Unread Mentions Indicator at the top and bottom of the Server List
-CSS */
+/* Hide the red "NEW" Unread Mentions Indicator at the top and bottom of the Server List */
 
 .unreadMentionsIndicatorBottom-2mDYbI,
 .unreadMentionsIndicatorTop-2-tcdU {
@@ -305,23 +359,6 @@ CSS */
 }
 
 
-/* Pin Home Button */
-
-.guilds-1SWlCJ .tree-2wKJdG:focus {
-    outline-color: transparent;
-}
-
-.guilds-1SWlCJ .scroller-1Bvpku {
-    contain: unset;
-    margin-top: 56px;
-}
-
-.guilds-1SWlCJ .scroller-1Bvpku .tutorialContainer-2sGCg9 {
-    position: fixed;
-    transform: translatey(-100%);
-}
-
-
 /* Role Color Background in Role Management */
 
 .roleName-2IkRdr {
@@ -341,7 +378,21 @@ CSS */
 }
 
 
-/* Smaller Stickers */
+/* Hide blocked messages */
+
+.groupStart-23k01U:not(.cozyMessage-3V1Y8y):not(.backgroundFlash-24qWLN) {
+    display: none
+}
+
+
+/* Do not mirror your camera preview in calls */
+
+.mirror-1Z13AJ {
+    transform: none
+}
+
+
+/* Makes stickers the same size as emojis */
 
 .cozy-3raOZG .assetWrapper-3GNt0z {
     max-width: 48px;
@@ -349,34 +400,7 @@ CSS */
 }
 
 
-/* Resizable Channel/DM List */
-
-:root {
-    --sidebar-initial-width: 240px;
-}
-
-.sidebar-2K8pFh {
-    resize: horizontal;
-    width: var(--sidebar-initial-width);
-}
-
-.sidebar-2K8pFh .channel-2QD9_O {
-    max-width: unset;
-}
-
-.bannerImage-3KhIJ6 {
-    width: 100%;
-}
-
-
-/* Hide nitro icon on banners */
-
-.bannerPremium-2hSAwz .premiumIconWrapper-1A-UH5 {
-    display: none;
-}
-
-
-/* Lag Less Settings */
+/* Disable discord's overcomplicated and extremely laggy settings animations. */
 
 .layer-3QrUeG {
     transform: none !important;
@@ -394,14 +418,7 @@ CSS */
 }
 
 
-/* Hide Floating Steam Previews */
-
-.pictureInPictureVideo-2iKsGg {
-    display: none;
-}
-
-
-/* No Nitro
+/* Delete everything relating to Nitro/Server boosts, while keeping useful features */
 
 [href="/store"],
 [aria-controls="Discord Nitro-tab"],
@@ -463,10 +480,60 @@ CSS */
 .settingsGroup-2NaPKC .item-3T2z1R:nth-child(2) {
     border-radius: 0 3px 3px 0;
 }
-*/
 
 
-/* Space Efficient Settings */
+/* Hide "DISCORD" text in top left corner. */
+
+.wordmarkWindows-1v0lYD {
+    display: none;
+}
+
+
+/* Minified search bar */
+
+.search-2oPWTC:not(.open-6_Y_aH) .searchBar-3dMhjb {
+    width: 27px;
+    transition: 0.25s;
+    background-color: transparent;
+}
+
+.search-2oPWTC:not(.open-6_Y_aH):hover .searchBar-3dMhjb {
+    width: 240px;
+    background-color: var(--background-tertiary);
+}
+
+.search-2oPWTC:not(.open-6_Y_aH) .iconContainer-O4O2CN {
+    transform: scale(1.3);
+    transition: 0.25s;
+}
+
+.search-2oPWTC:not(.open-6_Y_aH):hover .iconContainer-O4O2CN {
+    transform: scale(1);
+}
+
+.icon-3cZ1F_ {
+    color: var(--text-normal)
+}
+
+
+/* Custom right click menu animation */
+
+.menu-3sdvDG {
+    animation: custom-menu-animation 250ms ease;
+    transform-origin: top;
+}
+
+@keyframes custom-menu-animation {
+    0% {
+        transform: scaleY(0);
+    }
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+
+/* More space-efficient settings layout */
 
 .sidebarRegion-VFTUkN,
 .sidebarRegionScroller-3MXcoP {
@@ -478,361 +545,43 @@ CSS */
 }
 
 
-/* Recolor Thread Spine */
+/* Hide "Add to Favourites" button on gifs */
 
-.spine--Wla_O {
-    color: rgb(255, 255, 255);
+.imageAccessory-3uSIjZ {
+    display: none;
 }
 
 
-/* adds background to private user list, member list, user popout, and the module */
+/* Fix for channel mentions in channel topic */
 
-
-/*
-.userPopout-xaxa6l:not([style*='--user-background']) .banner-2QYc2d,
-.root-3QyAh1:not([style*='--user-background']) .banner-2QYc2d {
-    background: var(--ub) !important;
-    background-size: cover;
-    background-position: center
-}
-*/
-
-.member-3-YXUe::before,
-.privateChannels-1nO12o a.channel-2QD9_O::before {
-    background-size: cover;
-    background: var(--ub) center;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: 4px;
-    -webkit-mask: linear-gradient(90deg, transparent, black);
+.children-19S4PO .mention.iconMentionText-8GCluA {
+    padding-left: 1rem !important;
 }
 
 
-/*
-body:not([data-current-user-id])::after {
-    content: "please use 0BDFDB, it allows me to give more improvements!";
-    width: 47ch;
-    height: 25px;
-    padding: 7px 5px 0 5px;
-    border-radius: 0 0 0 10px;
-    background: #ff1f1fa6;
-    top: 22px;
-    right: 0;
-    z-index: 10000;
-    position: fixed;
-    backdrop-filter: blur(5px);
-    font-weight: bold;
+/* Semi-hidden blocked messages */
+
+main div[class^="groupStart-"] {
+    height: 0;
+    border-top: 1px solid var(--background-message-hover);
+    margin: calc((1.0625rem/2) - 1px) 0 calc(-1.0625rem/2)!important;
 }
-*/
 
+main div[class^="groupStart-"]>div {
+    opacity: 0;
+}
 
-/* Animated Rings */
+main div[class^="groupStart-"]:hover>div {
+    opacity: 1 !important;
+}
 
-:root {
-    --gradient1: #0575E6;
-    --gradient2: #00F260;
-    --gradientangle: 45deg;
-    --dmvoicebgcolor: #18191c
+main div[class^="groupStart-"]:hover {
+    height: initial;
+    margin-bottom: 1.0625rem!important;
 }
 
 
-/* Hide Scams */
-
-*[href^="http://steamcommrunity.com"],
-*[href^="https://rogarea"],
-*[href^="https://steamcomrnunity"],
-*[href^="https://dlscord.online"],
-*[href^="https://stearncmmmunyliy"],
-*[href^="https://steamcommunitya"],
-*[href^="https://steamcommunityc"],
-*[href^="https://dlscord-nitro"],
-*[href^="https://steamcommunutiy"],
-*[href^="https://discorcl"] {
-    display: none
-}
-
-
-/* Remove disabled emojis gray filter */
-
-.emojiItemDisabled-1FvFuF {
-    filter: grayscale(0%);
-}
-
-
-/*Brighter Status*/
-
-#app-mount .wrapper-3t9DeA rect[fill="#593695"],
-#app-mount .wrapper-3t9DeA rect[mask*=streaming] {
-    fill: purple
-}
-
-#app-mount .wrapper-3t9DeA rect[fill="#43b581"],
-#app-mount .wrapper-3t9DeA rect[mask*=online] {
-    fill: lime
-}
-
-#app-mount .wrapper-3t9DeA rect[fill="#faa61a"],
-#app-mount .wrapper-3t9DeA rect[mask*=idle] {
-    fill: yellow
-}
-
-#app-mount .wrapper-3t9DeA rect[fill="#f04747"],
-#app-mount .wrapper-3t9DeA rect[mask*=dnd] {
-    fill: red
-}
-
-#app-mount .wrapper-3t9DeA rect[fill="#747f8d"],
-#app-mount .wrapper-3t9DeA rect[mask*=offline],
-#app-mount .wrapper-3t9DeA rect[fill=NaN] {
-    fill: #A0A0A0
-}
-
-
-/* Rainbow Section*/
-
-
-/* UserIds
-.subtext-3CDbHg,
-.customStatus-3tC2ig,
-.hovered-d5PMVU,
-.title-eS5yk3 {
-    background-image: linear-gradient(to left,rgb(51, 255, 0), rgb(255, 230, 0), red, rgb(234, 0, 255), rgb(0, 140, 255), rgb(51, 255, 0));
-    animation: gradient-border 4s linear infinite;
-    background-size: 400% 100%;
-    color: transparent !important;
-    -webkit-background-clip: text;
-    position: relative;
-    z-index: 1;
-}
-@keyframes gradient-border {
-from {
-    background-position: 0 0;
-}
-to {
-    background-position: 130% 0;
-}
-} */
-
-
-/* Rainbow wave mentions */
-
-html .mention.wrapper-3WhCwL.mention.interactive {
-    background-image: linear-gradient(to left, rgb(51, 255, 0), rgb(255, 230, 0), red, rgb(234, 0, 255), rgb(0, 140, 255), rgb(51, 255, 0));
-    animation: gradient-border 3s linear infinite;
-    background-size: 400% 100%;
-    color: transparent !important;
-    -webkit-background-clip: text;
-    position: relative;
-    z-index: 1;
-}
-
-@keyframes gradient-border {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 130% 0;
-    }
-}
-
-
-/* Codeblocks */
-
-* {
-    --dark-shade: rgba(15, 0, 15, 0.95)
-}
-
-.contentWrapper-SvZHNd,
-.wrapper-1-Fsb8,
-.header-ywPcAE,
-.list-donH_Z,
-.inspector-S2gM3e,
-.inspector-3LQtX9 {
-    background: var(--dark-shade);
-}
-
-.guildIcon-3h-1IH:hover::before {
-    content: attr(alt);
-}
-
-.guildIcon-3h-11H {
-    border-bottom: 10px dashed #000;
-    pointer-events: all;
-}
-
-.titleSecondary-3Dh_RZ {
-    transform: translateX(90%);
-}
-
-#app-mount .edited-3sfAzf::before {
-    content: "is ";
-}
-
-code.hljs {
-    border-width: 2px !important;
-    border-color: red;
-    animation: test 18s ease infinite;
-    display: block;
-}
-
-@keyframes test {
-    0% {
-        border-color: #ff2400;
-    }
-    10% {
-        border-color: #e81d1d;
-    }
-    20% {
-        border-color: #e8b71d;
-    }
-    30% {
-        border-color: #e3e81d;
-    }
-    40% {
-        border-color: #1de840;
-    }
-    50% {
-        border-color: #1ddde8;
-    }
-    60% {
-        border-color: #2b1de8;
-    }
-    70% {
-        border-color: #dd00f3;
-    }
-    80% {
-        border-color: #dd00f4;
-    }
-    100% {
-        border-color: #ff2400;
-    }
-}
-
-
-/* Usernames 
-.username-1A8OIy,
-
-/* Text
-.markup-2BOw-j {
-animation: rainbow 5s linear 0s infinite normal
-}
-@keyframes rainbow {
-    0%    {color: #ff0000}
-    12%   {color: #ffbf00}
-    25%   {color: #80ff00}
-    37%   {color: #00ff40}
-    50%   {color: #00ffff}
-    62%   {color: #0040ff}
-    75%   {color: #8000ff}
-    87%   {color: #eb34bd}
-    100%  {color: #ff0000}
-} */
-
-
-/* Inbox -> @ */
-
-.search-36MZv-+.iconWrapper-2OrFZ1 path {
-    d: path("M12 2C6.486 2 2 6.486 2 12C2 17.515 6.486 22 12 22C14.039 22 15.993 21.398 17.652 20.259L16.521 18.611C15.195 19.519 13.633 20 12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12V12.782C20 14.17 19.402 15 18.4 15L18.398 15.018C18.338 15.005 18.273 15 18.209 15H18C17.437 15 16.6 14.182 16.6 13.631V12C16.6 9.464 14.537 7.4 12 7.4C9.463 7.4 7.4 9.463 7.4 12C7.4 14.537 9.463 16.6 12 16.6C13.234 16.6 14.35 16.106 15.177 15.313C15.826 16.269 16.93 17 18 17L18.002 16.981C18.064 16.994 18.129 17 18.195 17H18.4C20.552 17 22 15.306 22 12.782V12C22 6.486 17.514 2 12 2ZM12 14.599C10.566 14.599 9.4 13.433 9.4 11.999C9.4 10.565 10.566 9.399 12 9.399C13.434 9.399 14.6 10.565 14.6 11.999C14.6 13.433 13.434 14.599 12 14.599Z")
-}
-
-
-/* Avatar Improvements */
-
-.avatar-1BDn8e:hover.clickable-1bVtEA:hover {
-    filter: drop-shadow(0 0 8px cyan);
-    color: pink;
-    transform: rotate(360deg);
-    transition: width .5s ease, height .5s ease, transform .5s ease;
-}
-
-.avatar-1BDn8e.clickable-1bVtEA {
-    filter: drop-shadow(0 0 4px);
-    color: pink;
-}
-
-.setIdentityLink-OpBDR6 {
-    display: none
-}
-
-
-/* Remove the cringe "create thread" line */
-
-.threadSuggestionBar-2ufK2Z {
-    display: none !important;
-}
-
-
-/* Message Fade */
-
-.messagesWrapper-1sRNjr {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 28px);
-}
-
-.content-yTz4x3::before {
-    content: none !important;
-}
-
-
-/* Emoji Picker Improvements */
-
-[aria-label$="emoji-picker-tab"] {
-    background-color: black;
-}
-
-[aria-label$="recent"] {
-    background-color: black;
-}
-
-[aria-current$="page"] {
-    background-color: black;
-}
-
-.unicodeShortcut-15J8Ck {
-    background-color: black;
-}
-
-.header-8ilj5e {
-    background-color: black;
-}
-
-
-/* Hover Channels animated */
-
-.mainContent-u_9PKf:hover {
-    animation: UserModalButtons 0.5s normal ease;
-}
-
-.mainContent-u_9PKf .noWrap-3jynv6 {
-    width: 100px;
-    opacity: 1;
-}
-
-.mainContent-u_9PKf {
-    transition: 0.2s;
-}
-
-.mainContent-u_9PKf:hover {
-    transition: 0.2;
-}
-
-@keyframes UserModalButtons {
-    0% {
-        transform: translateY(0px);
-    }
-    45% {
-        transform: translateY(-5px);
-    }
-    90% {
-        transform: translateY(0px);
-    }
-}
-
-
-/* Rainbow Server Names */
+/* Rainbow Server Name & Settings */
 
 @keyframes rainbow-server-settings {
     from {
@@ -861,7 +610,7 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Compact Reactions */
+/* compact reactions */
 
 .message-2qnXI6:hover .reactionCount-2mvXRV {
     font-size: 14px;
@@ -896,22 +645,50 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Small slide animation when switching channels
+/* Colored profile modal border */
 
-@keyframes slide-up {
-    0% {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+:root {
+    --profile-border-width: 2px
 }
 
-.message-2qnXI6 {
-    animation: slide-up 0.4s ease;
-}  */
+.root-3QyAh1 {
+    padding: var(--profile-border-width);
+    border-radius: 10px;
+}
+
+.topSection-y3p-_D {
+    margin-top: 239px;
+}
+
+.topSection-y3p-_D .banner-2QYc2d {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    background-size: calc(100% - calc(var(--profile-border-width) * 2));
+    background-position: center var(--profile-border-width);
+    z-index: -1;
+}
+
+.topSection-y3p-_D .banner-2QYc2d:after {
+    margin: calc(var(--profile-border-width) - 2px);
+    content: "";
+    display: block;
+    background-color: inherit;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    width: 100%;
+    height: 244px;
+    clip-path: path("M 0 0 V 12 H 2 Q 2 2 12 2 V 0 Z M 604.5 0 V 12 H 602.5 Q 602.5 2 592.5 2 V 0 Z");
+}
+
+.header-4zuFdR {
+    top: -76px;
+}
+
+.body-r6_QPy {
+    border-radius: 0 0 8.5px 8.5px;
+}
 
 
 /* Makes colored banners consistent with premium banners */
@@ -1030,19 +807,125 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Green Text */
+/* MacOS Buttons That Spin On Hover */
 
-[class*="blockquoteDivider-"] {
-    width: 0 !important;
+.winButtonClose-1HsbF-:hover,
+.winButtonMinMax-PBQ2gm:nth-child(3):hover,
+.winButtonMinMax-PBQ2gm:nth-child(4):hover {
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite
 }
 
-[class*="blockquoteDivider-"]::before {
-    content: ">";
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg)
+    }
 }
 
-[class*="blockquoteContainer-"] blockquote,
-[class*="blockquoteDivider-"]::before {
-    color: lightgreen;
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.winButton-iRh8-Z {
+    width: 14px;
+    height: 14px;
+    margin: 4px;
+    border-radius: 11px;
+    position: relative;
+    transition: background-color ease-in-out .1s
+}
+
+.winButton-iRh8-Z::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    display: block;
+    position: fixed;
+    opacity: 0;
+    transition: opacity ease-in-out .2s, background-color ease-in-out .1s
+}
+
+.winButton-iRh8-Z:focus::after,
+.winButton-iRh8-Z:hover::after {
+    opacity: 1
+}
+
+.winButton-iRh8-Z svg {
+    width: 0;
+    height: 0
+}
+
+.winButton-iRh8-Z:nth-child(4) {
+    background-color: #fac536
+}
+
+.winButton-iRh8-Z:nth-child(4)::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Crect ry='1' y='6' x='3' height='2' width='8'/%3E%3C/svg%3E");
+    background-color: #7d631b
+}
+
+.winButton-iRh8-Z:nth-child(4)::after:focus {
+    background-color: #da9e10
+}
+
+.winButton-iRh8-Z:nth-child(4)::after:focus::after {
+    background-color: #6d4f08
+}
+
+.winButton-iRh8-Z:nth-child(3) {
+    background-color: #39ea49
+}
+
+.powercord.maximized .winButton-iRh8-Z:nth-child(3)::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath fill='%231D7525' d='M11.214 6.862H7.819A.821.821 0 017 6.043V2.648l4.214 4.214m-8.428 0h3.395c.45 0 .819.369.819.819v3.395L2.786 6.862'/%3E%3C/svg%3E");
+    background-color: #1d7525
+}
+
+.powercord:not(.maximized) .winButton-iRh8-Z:nth-child(3)::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath fill='%231D7525' d='M5.414 3.862L10 8.448V4.862c0-.415-.585-1-1-1zM4 5.276v3.586c0 .416.585 1 1 1h3.586z'/%3E%3C/svg%3E");
+    background-color: #1d7525
+}
+
+.winButton-iRh8-Z:nth-child(3):focus {
+    background-color: #13c11e
+}
+
+.winButton-iRh8-Z:nth-child(3):focus::after {
+    background-color: #0a610f
+}
+
+.winButton-iRh8-Z:nth-child(2) {
+    background-color: #f25056
+}
+
+.winButton-iRh8-Z:nth-child(2)::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14'%3E%3Cpath fill='%2379282B' d='M4.172 4.034a.998.998 0 000 1.414l1.414 1.414-1.414 1.414a.998.998 0 000 1.415.998.998 0 001.414 0L7 8.276l1.414 1.415a.998.998 0 001.414 0 .998.998 0 000-1.415L8.414 6.862l1.414-1.414a.998.998 0 000-1.414.998.998 0 00-1.414 0L7 5.448 5.586 4.034a.998.998 0 00-1.414 0z'/%3E%3C/svg%3E");
+    background-color: #79282b
+}
+
+.winButton-iRh8-Z:nth-child(2):focus {
+    background-color: #d52735
+}
+
+.winButton-iRh8-Z:nth-child(2):focus::after {
+    background-color: #6b141b
+}
+
+
+/* Don't truncate About Me to six lines */
+
+.clamped-IwJfxR {
+    -webkit-line-clamp: unset;
 }
 
 
@@ -1062,6 +945,70 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
+/* Actually better join server tab */
+
+.theme-light .root-1gCeng {
+    background-color: #181818;
+}
+
+.theme-light .footer-2gL1pp {
+    background-color: #181818;
+    border-color: rgba(0, 0, 0);
+    box-shadow: none;
+}
+
+.templatesList-2E6rTe {
+    height: 335px;
+}
+
+div[class*="colorHeaderSecondary-3Sp3Ft size16-1P40sf subtitle-Nw1LLR"],
+div[class*="colorHeaderSecondary-3Sp3Ft size12-3cLvbJ optionHeader-1-5lcp"],
+div[class*="colorHeaderSecondary-3Sp3Ft size16-1P40sf subtitle-1Q3BuX"],
+div[class*="colorHeaderSecondary-3Sp3Ft size14-e6ZScH skip-2o6MGG"],
+div[class*="colorHeaderSecondary-3Sp3Ft size16-1P40sf subtitle-1KdHaN"],
+div[class*="colorHeaderSecondary-3Sp3Ft size14-e6ZScH"],
+div[class*="colorMuted-HdFt4q size12-3cLvbJ guidelines-1NSoht"],
+h5[class*="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ formTitle-aeXUoN"],
+h5[class*="colorStandard-2KCXvj size14-e6ZScH h5-18_1nd title-3sZWYQ defaultMarginh5-2mL-bP"] {
+    color: white;
+}
+
+.container-UC8Ug1 {
+    background-color: #282828;
+    margin-bottom: 8px;
+}
+
+.container-UC8Ug1:hover {
+    background-color: black;
+}
+
+.container-UC8Ug1:active {
+    background-color: #2F3136;
+}
+
+.base-1x0h_U,
+.colorStandard-2KCXvj {
+    color: white;
+}
+
+.footerButton-ayFTfX.button-38aScr.lookFilled-1Gx00P.colorGrey-2DXtkV.sizeMedium-1AC_Sl.grow-q77ONN {
+    background-color: var(--accent);
+    color: black;
+}
+
+.sampleLink-2NLvZg {
+    color: gray;
+}
+
+button[class*="backButton-iA7KIs button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x grow-q77ONN"],
+button[class*="button-38aScr lookLink-9FtZy- lowSaturationUnderline-3svVxy colorPrimary-3b3xI6 sizeMin-1mJd1x grow-q77ONN"],
+button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x grow-q77ONN"],
+.theme-light .lookLink-9FtZy-.colorPrimary-3b3xI6,
+.anchor-3Z-8Bb {
+    color: var(--accent);
+}
+
+
 /* Center the custom status emoji if there's no status text. */
 
 .customStatus-oN4ZZY>.customStatusEmoji-3a2-Zo.customStatusSoloEmoji-1tDhmL:only-child {
@@ -1070,19 +1017,7 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* blurs the banner while its shrunk */
-
-.header-2V-4Sw {
-    backdrop-filter: blur(8 px) !important;
-}
-
-.hasBanner-2SrLR3 .header-2V-4Sw,
-.hasBanner-2SrLR3 .header-2V-4Sw:hover {
-    backdrop-filter: blur(0 px) !important;
-}
-
-
-/* 2-lined channel topic */
+/* 2-lined channel topic (1 line still works) */
 
 [class*="chat-"]>[class*="title-"]>[class*="children-"]>[class*="topic-"] {
     white-space: normal;
@@ -1109,146 +1044,62 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Messenger Moment */
+/* Avatar zoom on hover */
 
-
-/*message shape
-
-.cozy-3raOZG.wrapper-2a6GCs {
-    padding-top: 1px;
-    padding-bottom: 1px;
+.avatar-37jOim:hover {
+    transform: scale(1.6);
+    border: solid;
+    border-radius: 5px !important;
+    background-color: rgb(58, 58, 101) !important;
+    border-color: rgb(58, 58, 101) !Important;
+    border-width: 0.04cm;
+    margin-top: -25%;
+    margin-left: 30%;
+    transition: 250ms;
 }
 
-.cozyMessage-3V1Y8y:not(.groupStart-23k01U)>.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
-    border-radius: 6px 15px 15px 6px;
+.avatarHintInner-1TvA8u {
+    opacity: 0;
 }
 
-.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
-    display: inline-block;
-    max-width: 650px;
-    margin: 0;
-    padding: 8px 12px 7px;
-    border-radius: 15px 15px 15px 6px;
-    position: relative;
-    overflow: visible;
+.avatar-37jOim:hover .avatarHint-2A3RNb>foreignObject {
+    mask: none !important;
 }
 
-
-/*bubble color
-
-.theme-light [data-is-author-self=false] .markup-2BOw-j:not(:empty) {
-    background-color: #E4E6EB;
-}
-
-.theme-dark [data-is-author-self=false] .markup-2BOw-j:not(:empty) {
-    background-color: #313131;
-}
-
-[data-is-author-self=true]>.contents-2mQqc9>.markup-2BOw-j:not(:empty) {
-    background-image: linear-gradient(#00c8d3 0%, #3654e8 100%);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+.avatar-37jOim:hover .mask-1l8v16>foreignObject {
+    mask: none !important;
+    border-radius: 5px;
 }
 
 
-/*text style
+/* Makes Bot look better */
 
-.container-3-pyIM *,
-.contents-2mQqc9>.markup-2BOw-j,
-.contents-2mQqc9>.markup-2BOw-j>* {
-    color: #fff!important;
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 400;
+.botTag-2WPJ74 {
+    padding-right: 0;
+    background: transparent;
 }
 
-.theme-light [data-is-author-self=false] .container-3-pyIM *,
-.theme-light [data-is-author-self=false] .markup-2BOw-j,
-.theme-light [data-is-author-self=false] .markup-2BOw-j>* {
-    color: #000!important;
+.botTag-2WPJ74 .botText-1526X_ {
+    padding-right: 3px;
+    padding-left: 4px;
+    border-radius: 4px;
+    background: var(--brand-experiment);
 }
 
-
-/*last rounded corner
-
-.groupStart-23k01U:before,
-.hasContent-1cNJDh:before,
-.cozyMessage-3V1Y8y+.scrollerSpacer-avRLaA:before {
-    content: "";
-    display: block;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    position: absolute;
-    border-bottom-left-radius: 20px;
-    border: 5px solid var(--background-primary);
-    border-right: 0;
-    border-top: 0;
-}
-
-.groupStart-23k01U:before {
-    transform: translate(-20%, -156%);
-}
-
-.hasContent-1cNJDh:before {
-    left: 51px;
-    transform: translateY(-132%);
-}
-
-.cozyMessage-3V1Y8y+.scrollerSpacer-avRLaA:before {
-    left: 67px;
-    transform: translateY(-84%);
-}
-
-.mentioned-xhSam7:before {
-    left: unset;
-    top: unset;
-    bottom: unset;
-}
-
-.mentioned-xhSam7+*:before,
-.isUnread-3Ef-o9.hasContent-1cNJDh+.groupStart-23k01U:before,
-.hasContent-1cNJDh+.groupStart-23k01U:before,
-.backgroundFlash-24qWLN:before {
-    visibility: hidden;
-}
-*/
-
-
-/* Remove Thread Buttons (cringe) */
-
-.button-1ZiXG9[aria-label="Create thread"] {
+.botTag-2WPJ74 .botText-1526X_:not(:only-child) {
     display: none;
 }
 
-.icon-iDUzSK[aria-label="Threads"] {
-    display: none;
+.botTag-2WPJ74 .botTagVerified-1klIIt {
+    border-radius: 50%;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 15.2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m16 7.6c0 .79-1.28 1.38-1.52 2.09s.44 2 0 2.59-1.84.35-2.46.8-.79 1.84-1.54 2.09-1.67-.8-2.47-.8-1.75 1-2.47.8-.92-1.64-1.54-2.09-2-.18-2.46-.8.23-1.84 0-2.59-1.54-1.3-1.54-2.09 1.28-1.38 1.52-2.09-.44-2 0-2.59 1.85-.35 2.48-.8.78-1.84 1.53-2.12 1.67.83 2.47.83 1.75-1 2.47-.8.91 1.64 1.53 2.09 2 .18 2.46.8-.23 1.84 0 2.59 1.54 1.3 1.54 2.09z' fill='white'/%3E%3C/svg%3E%0A");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: 15px;
+    background: var(--brand-experiment);
 }
 
 
-/* Nicer pin/unpin message icons */
-
-.button-1ZiXG9[aria-label="Pin Message"] path {
-    d: path("M12 0c-5.522 0-10 4.395-10 9.815 0 5.505 4.375 9.268 10 14.185 5.625-4.917 10-8.68 10-14.185 0-5.42-4.478-9.815-10-9.815zm0 18c-4.419 0-8-3.582-8-8s3.581-8 8-8 8 3.582 8 8-3.581 8-8 8zm4-7h-3v3h-2v-3h-3v-2h3v-3h2v3h3v2z");
-}
-
-.button-1ZiXG9[aria-label="Unpin Message"] path {
-    d: path("M12 0c-5.522 0-10 4.395-10 9.815 0 5.505 4.375 9.268 10 14.185 5.625-4.917 10-8.68 10-14.185 0-5.42-4.478-9.815-10-9.815zm0 18c-4.419 0-8-3.582-8-8s3.581-8 8-8 8 3.582 8 8-3.581 8-8 8zm4-7h-8v-2h8v2z");
-}
-
-
-/* Rainbow names if no nickname/roles are present */
-
-.roleColor-rz2vM0:not([style]),
-.headerTagUsernameNoNickname-2-Y5Ct {
-    color: transparent;
-    -webkit-background-clip: text;
-    background-image: linear-gradient(to right, rgb(255, 67, 46), rgb(255, 172, 0), rgb(177, 235, 0), rgb(83, 187, 244), rgb(255, 133, 203));
-}
-
-
-/* grid for the autocomplete */
+/* Grid Autocomplete */
 
 .autocomplete-1vrmpx .scroller-lynW5A {
     padding-top: 2rem;
@@ -1274,110 +1125,21 @@ animation: rainbow 5s linear 0s infinite normal
     margin-right: 0;
 }
 
-.stickersHeaderWithEmojiResults-31W8SI {
-    display: none;
+
+/* Green Text */
+
+[class*="blockquoteDivider-"] {
+    width: 0 !important;
 }
 
-.contentTitle-2tG_sM {
-    display: none;
+[class*="blockquoteDivider-"]::before {
+    content: ">";
 }
 
-
-/* Changes the light theme background colour to the YouTube light theme background colour, a little easier on the eyes */
-
-.theme-light {
-    --background-primary: #F9F9F9;
+[class*="blockquoteContainer-"] blockquote,
+[class*="blockquoteDivider-"]::before {
+    color: lightgreen;
 }
-
-
-/* Colour The Channel Emblems */
-
-
-/* var(--interactive-muted); For Default */
-
-:root {
-    --hashtag-colour: var(--interactive-muted);
-    --announcement-colour: hsla(46, 94%, 52%, 0.75);
-    --rules-colour: hsla(2, 100%, 50%, 0.75);
-    --stages-colour: hsla(96, 94%, 52%, 0.75);
-    --voice-colour: hsla(303, 94%, 52%, 0.75);
-    --locked-colour: hsla(187, 94%, 52%, 0.75);
-}
-
-[d="M5.88657 21C5.57547 21 5.3399 20.7189 5.39427 20.4126L6.00001 17H2.59511C2.28449 17 2.04905 16.7198 2.10259 16.4138L2.27759 15.4138C2.31946 15.1746 2.52722 15 2.77011 15H6.35001L7.41001 9H4.00511C3.69449 9 3.45905 8.71977 3.51259 8.41381L3.68759 7.41381C3.72946 7.17456 3.93722 7 4.18011 7H7.76001L8.39677 3.41262C8.43914 3.17391 8.64664 3 8.88907 3H9.87344C10.1845 3 10.4201 3.28107 10.3657 3.58738L9.76001 7H15.76L16.3968 3.41262C16.4391 3.17391 16.6466 3 16.8891 3H17.8734C18.1845 3 18.4201 3.28107 18.3657 3.58738L17.76 7H21.1649C21.4755 7 21.711 7.28023 21.6574 7.58619L21.4824 8.58619C21.4406 8.82544 21.2328 9 20.9899 9H17.41L16.35 15H19.7549C20.0655 15 20.301 15.2802 20.2474 15.5862L20.0724 16.5862C20.0306 16.8254 19.8228 17 19.5799 17H16L15.3632 20.5874C15.3209 20.8261 15.1134 21 14.8709 21H13.8866C13.5755 21 13.3399 20.7189 13.3943 20.4126L14 17H8.00001L7.36325 20.5874C7.32088 20.8261 7.11337 21 6.87094 21H5.88657ZM9.41045 9L8.35045 15H14.3504L15.4104 9H9.41045Z"],
-[d="M14 8C14 7.44772 13.5523 7 13 7H9.76001L10.3657 3.58738C10.4201 3.28107 10.1845 3 9.87344 3H8.88907C8.64664 3 8.43914 3.17391 8.39677 3.41262L7.76001 7H4.18011C3.93722 7 3.72946 7.17456 3.68759 7.41381L3.51259 8.41381C3.45905 8.71977 3.69449 9 4.00511 9H7.41001L6.35001 15H2.77011C2.52722 15 2.31946 15.1746 2.27759 15.4138L2.10259 16.4138C2.04905 16.7198 2.28449 17 2.59511 17H6.00001L5.39427 20.4126C5.3399 20.7189 5.57547 21 5.88657 21H6.87094C7.11337 21 7.32088 20.8261 7.36325 20.5874L8.00001 17H14L13.3943 20.4126C13.3399 20.7189 13.5755 21 13.8866 21H14.8709C15.1134 21 15.3209 20.8261 15.3632 20.5874L16 17H19.5799C19.8228 17 20.0306 16.8254 20.0724 16.5862L20.2474 15.5862C20.301 15.2802 20.0655 15 19.7549 15H16.35L16.6758 13.1558C16.7823 12.5529 16.3186 12 15.7063 12C15.2286 12 14.8199 12.3429 14.7368 12.8133L14.3504 15H8.35045L9.41045 9H13C13.5523 9 14 8.55228 14 8Z"] {
-    fill: var(--hashtag-colour);
-}
-
-[d="M33 34.5833V7.49998H35V36.6666H9C6.791 36.6666 5 34.801 5 32.5V7.49998C5 5.19894 6.791 3.33331 9 3.33331H31V30.4166H9C7.8955 30.4166 7 31.3485 7 32.5C7 33.6515 7.8955 34.5833 9 34.5833H33ZM23.9718 9.99998L15.8889 17.9915L12.7086 14.8441L10 17.5058L15.8885 23.3333L26.6667 12.6669L23.9718 9.99998Z"] {
-    fill: var(--rules-colour);
-}
-
-[d="M19.1 4V5.12659L4.85 8.26447V18.1176C4.85 18.5496 5.1464 18.9252 5.5701 19.0315L9.3701 19.9727C9.4461 19.9906 9.524 20 9.6 20C9.89545 20 10.1776 19.8635 10.36 19.6235L12.7065 16.5242L19.1 17.9304V19.0588H21V4H19.1ZM9.2181 17.9944L6.75 17.3826V15.2113L10.6706 16.0753L9.2181 17.9944Z"],
-[d="M3.9 8.26H2V15.2941H3.9V8.26Z"],
-[d="M22.545 4.87988V5.87988H23.28C23.4126 5.87988 23.52 5.98733 23.52 6.11988V10.6399C23.52 10.7724 23.4126 10.8799 23.28 10.8799H17.76C17.6275 10.8799 17.52 10.7724 17.52 10.6399V6.11988C17.52 5.98733 17.6275 5.87988 17.76 5.87988H18.52V4.87988C18.52 3.75988 19.47 2.87988 20.52 2.87988C21.57 2.87988 22.545 3.75988 22.545 4.87988ZM19.52 5.87988H21.52V4.87988C21.52 4.30845 21.0534 3.87988 20.52 3.87988C19.9867 3.87988 19.52 4.30845 19.52 4.87988V5.87988Z"],
-[d="M4.85 8.26429L15.84 5.84426V10.5599C15.84 11.6202 16.6996 12.4799 17.76 12.4799H21V19.0586H19.1V17.9302L12.7065 16.524L10.36 19.6233C10.1776 19.8633 9.89545 19.9998 9.6 19.9998C9.524 19.9998 9.4461 19.9904 9.3701 19.9725L5.5701 19.0313C5.1464 18.925 4.85 18.5495 4.85 18.1175V8.26429ZM9.2181 17.9942L6.75 17.3824V15.2111L10.6706 16.0751L9.2181 17.9942Z"],
-[d="M3.9 8.25981H2V15.2939H3.9V8.25981Z"] {
-    fill: var(--announcement-colour);
-}
-
-[d="M12 2C5.93 2 1 6.93 1 13C1 15 1.55 16.88 2.48 18.49L3.77 17.74C2.97 16.35 2.5 14.73 2.5 13C2.5 7.75 6.75 3.5 12 3.5C17.25 3.5 21.5 7.75 21.5 13H23C23 6.93 18.07 2 12 2ZM5.5 13C5.5 9.42 8.42 6.5 12 6.5C15.58 6.5 18.5 9.42 18.5 13H17C17 10.24 14.76 8 12 8C9.24 8 7 10.24 7 13C7 13.91 7.26 14.75 7.69 15.49L6.38 16.25C5.82 15.29 5.5 14.18 5.5 13ZM12 15C13.1046 15 14 14.1046 14 13C14 11.8954 13.1046 11 12 11C10.8954 11 10 11.8954 10 13C10 14.1046 10.8954 15 12 15ZM12 16.5C9.94 16.5 8.5 17.8 8.5 19.5V20H13V16.62C12.69 16.55 12.36 16.5 12 16.5ZM17 15H22C23.1 15 24 15.9 24 17V22C24 23.1 23.1 24 22 24H17C15.9 24 15 23.1 15 22V17C15 15.9 15.9 15 17 15ZM17 22H22V21H17V22ZM17 20H22V19H17V20ZM17 18H22V17H17V18Z"],
-[d="M15 2.41495C14.0462 2.14467 13.0398 2 12 2C5.93 2 1 6.93 1 13C1 15 1.55 16.88 2.48 18.49L3.77 17.74C2.97 16.35 2.5 14.73 2.5 13C2.5 7.75 6.75 3.5 12 3.5C13.0485 3.5 14.0571 3.66952 15 3.98267V2.41495Z"],
-[d="M21.0173 10C21.3305 10.9429 21.5 11.9515 21.5 13C21.5 14.73 21.03 16.35 20.22 17.75L21.51 18.5C22.45 16.88 23 15 23 13C23 11.9602 22.8553 10.9538 22.585 10H21.0173Z"],
-[d="M14 13C14 14.1 13.1 15 12 15C10.9 15 10 14.1 10 13C10 11.9 10.9 11 12 11C13.1 11 14 11.9 14 13Z"],
-[d="M8.5 19.5V20H15.5V19.5C15.5 17.8 14.06 16.5 12 16.5C9.94 16.5 8.5 17.8 8.5 19.5Z"],
-[d="M7 13C7 10.24 9.24 8 12 8C14.76 8 17 10.24 17 13C17 13.91 16.74 14.75 16.31 15.49L17.62 16.25C18.17 15.29 18.5 14.19 18.5 13C18.5 9.42 15.58 6.5 12 6.5C8.42 6.5 5.5 9.42 5.5 13C5.5 14.18 5.82 15.29 6.38 16.25L7.69 15.49C7.26 14.75 7 13.91 7 13Z"] {
-    fill: var(--stages-colour);
-}
-
-[d="M15 12C15 12.0007 15 12.0013 15 12.002C15 12.553 14.551 13.002 14 13.002V15.002C15.654 15.002 17 13.657 17 12.002C17 12.0013 17 12.0007 17 12H15ZM19 12C19 12.0007 19 12.0013 19 12.002C19 14.759 16.757 17.002 14 17.002V19.002C17.86 19.002 21 15.863 21 12.002C21 12.0013 21 12.0007 21 12H19ZM10.293 3.29604C10.579 3.01004 11.009 2.92504 11.383 3.07904C11.757 3.23204 12 3.59904 12 4.00204V20.002C12 20.407 11.757 20.772 11.383 20.927C11.009 21.082 10.579 20.996 10.293 20.71L6 16.002H3C2.45 16.002 2 15.552 2 15.002V9.00204C2 8.45304 2.45 8.00204 3 8.00204H6L10.293 3.29604Z"],
-[d="M11.383 3.07904C11.009 2.92504 10.579 3.01004 10.293 3.29604L6 8.00204H3C2.45 8.00204 2 8.45304 2 9.00204V15.002C2 15.552 2.45 16.002 3 16.002H6L10.293 20.71C10.579 20.996 11.009 21.082 11.383 20.927C11.757 20.772 12 20.407 12 20.002V4.00204C12 3.59904 11.757 3.23204 11.383 3.07904ZM14 5.00195V7.00195C16.757 7.00195 19 9.24595 19 12.002C19 14.759 16.757 17.002 14 17.002V19.002C17.86 19.002 21 15.863 21 12.002C21 8.14295 17.86 5.00195 14 5.00195ZM14 9.00195C15.654 9.00195 17 10.349 17 12.002C17 13.657 15.654 15.002 14 15.002V13.002C14.551 13.002 15 12.553 15 12.002C15 11.451 14.551 11.002 14 11.002V9.00195Z"] {
-    fill: var(--voice-colour);
-}
-
-[d="M17 11V7C17 4.243 14.756 2 12 2C9.242 2 7 4.243 7 7V11C5.897 11 5 11.896 5 13V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V13C19 11.896 18.103 11 17 11ZM12 18C11.172 18 10.5 17.328 10.5 16.5C10.5 15.672 11.172 15 12 15C12.828 15 13.5 15.672 13.5 16.5C13.5 17.328 12.828 18 12 18ZM15 11H9V7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V11Z"] {
-    fill: var(--locked-colour);
-}
-
-
-/* Make the small lock badge yellow */
-
-[d="M21.025 5V4C21.025 2.88 20.05 2 19 2C17.95 2 17 2.88 17 4V5C16.4477 5 16 5.44772 16 6V9C16 9.55228 16.4477 10 17 10H19H21C21.5523 10 22 9.55228 22 9V5.975C22 5.43652 21.5635 5 21.025 5ZM20 5H18V4C18 3.42857 18.4667 3 19 3C19.5333 3 20 3.42857 20 4V5Z"] {
-    fill: hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%);
-}
-
-
-/* More compact emoji settings */
-
-.marginBottom40-2vIwTv>.marginBottom4-2qk4Hy {
-    display: none;
-}
-
-.emojiRow-zIc7ZX {
-    display: inline-flex;
-    margin-right: 50px;
-}
-
-#app-mount .emojiUploader-1f0pVx {
-    opacity: 0;
-    position: absolute;
-    transform: translateX(-11px);
-}
-
-#app-mount .emojiUploader-1f0pVx .avatar-2Hubm8 {
-    height: 32px !important;
-}
-
-#app-mount .emojiRow-zIc7ZX:hover>.emojiUploader-1f0pVx {
-    opacity: 1;
-}
-
-#app-mount .emojiRow-zIc7ZX:hover>.emojiImage-1hZi2F {
-    opacity: 0;
-}
-
-
-/* Make Nitro Perks look nicer */
 
 
 /* Feature description */
@@ -1441,12 +1203,8 @@ animation: rainbow 5s linear 0s infinite normal
 
 /* Compact Friends, Stage Discovery, Library, and Nitro Store */
 
-[href="/library"] {
-    display: none;
-}
-
 .privateChannels-1nO12o .content-3YMskv {
-    --columns: 3;
+    --columns: 4;
     display: grid;
     grid-template-columns: repeat(var(--columns), 1fr);
     grid-auto-rows: min-content;
@@ -1472,6 +1230,333 @@ animation: rainbow 5s linear 0s infinite normal
 .privateChannels-1nO12o .content-3YMskv .channel-2QD9_O:not([aria-label]) .layout-2DM8Md .children-gzQq2t {
     z-index: 1;
     margin: 0 !important;
+}
+
+
+/* Colorful Embeds */
+
+[href*="youtu.be"],
+[href*="youtube.com"] {
+    color: #c4302b !important;
+    font-weight: 700;
+}
+
+[href*="twitch.tv"] {
+    color: #b700ff !important;
+    font-weight: 700;
+}
+
+[href*="spotify.com"] {
+    color: rgb(19, 185, 4) !important;
+    font-weight: 700;
+}
+
+[href*="discord.com/channels/"] {
+    color: #7289da !important;
+}
+
+[href*="discord.com/channels/"]::before {
+    content: 'Jump to Message : ';
+    font-size: 16px;
+    font-weight: 700;
+    color: #603cff;
+}
+
+[href*="reddit.com"] {
+    color: #e05a0c !important;
+    font-weight: 700;
+}
+
+[href*="instagram.com/"] {
+    background: -webkit-linear-gradient(80deg, rgb(255, 238, 0), rgb(255, 157, 11), #b700ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+[href*="twitter.com/"] {
+    color: #00acee !important;
+    font-weight: 700;
+}
+
+[href*="betterdiscord.app/"],
+[href*="discord.gg/"] {
+    color: #7289da !important;
+    font-weight: 700;
+}
+
+[href*="github"] {
+    color: #00f0a8 !important;
+    font-weight: 700;
+}
+
+
+/* Hide disabled text area */
+
+.channelTextAreaDisabled-8rmlrp {
+    display: none;
+}
+
+
+/* Recolor Thread Spine */
+
+.spine--Wla_O {
+    color: rgb(255, 255, 255);
+}
+
+
+/* Hide Scams */
+
+*[href^="http://steamcommrunity.com"],
+*[href^="https://rogarea"],
+*[href^="https://steamcomrnunity"],
+*[href^="https://dlscord.online"],
+*[href^="https://stearncmmmunyliy"],
+*[href^="https://steamcommunitya"],
+*[href^="https://steamcommunityc"],
+*[href^="https://dlscord-nitro"],
+*[href^="https://steamcommunutiy"],
+*[href^="https://discorcl"] {
+    display: none
+}
+
+
+/*Brighter Status*/
+
+#app-mount .wrapper-3t9DeA rect[fill="#593695"],
+#app-mount .wrapper-3t9DeA rect[mask*=streaming] {
+    fill: purple
+}
+
+#app-mount .wrapper-3t9DeA rect[fill="#43b581"],
+#app-mount .wrapper-3t9DeA rect[mask*=online] {
+    fill: lime
+}
+
+#app-mount .wrapper-3t9DeA rect[fill="#faa61a"],
+#app-mount .wrapper-3t9DeA rect[mask*=idle] {
+    fill: yellow
+}
+
+#app-mount .wrapper-3t9DeA rect[fill="#f04747"],
+#app-mount .wrapper-3t9DeA rect[mask*=dnd] {
+    fill: red
+}
+
+#app-mount .wrapper-3t9DeA rect[fill="#747f8d"],
+#app-mount .wrapper-3t9DeA rect[mask*=offline],
+#app-mount .wrapper-3t9DeA rect[fill=NaN] {
+    fill: #A0A0A0
+}
+
+
+/* Codeblocks */
+
+* {
+    --dark-shade: rgba(15, 0, 15, 0.95)
+}
+
+.contentWrapper-SvZHNd,
+.wrapper-1-Fsb8,
+.header-ywPcAE,
+.list-donH_Z,
+.inspector-S2gM3e,
+.inspector-3LQtX9 {
+    background: var(--dark-shade);
+}
+
+.guildIcon-3h-1IH:hover::before {
+    content: attr(alt);
+}
+
+.guildIcon-3h-11H {
+    border-bottom: 10px dashed #000;
+    pointer-events: all;
+}
+
+.titleSecondary-3Dh_RZ {
+    transform: translateX(90%);
+}
+
+#app-mount .edited-3sfAzf::before {
+    content: "is ";
+}
+
+code.hljs {
+    border-width: 2px !important;
+    border-color: red;
+    animation: test 18s ease infinite;
+    display: block;
+}
+
+@keyframes test {
+    0% {
+        border-color: #ff2400;
+    }
+    10% {
+        border-color: #e81d1d;
+    }
+    20% {
+        border-color: #e8b71d;
+    }
+    30% {
+        border-color: #e3e81d;
+    }
+    40% {
+        border-color: #1de840;
+    }
+    50% {
+        border-color: #1ddde8;
+    }
+    60% {
+        border-color: #2b1de8;
+    }
+    70% {
+        border-color: #dd00f3;
+    }
+    80% {
+        border-color: #dd00f4;
+    }
+    100% {
+        border-color: #ff2400;
+    }
+}
+
+
+/* Inbox -> @ */
+
+.search-36MZv-+.iconWrapper-2OrFZ1 path {
+    d: path("M12 2C6.486 2 2 6.486 2 12C2 17.515 6.486 22 12 22C14.039 22 15.993 21.398 17.652 20.259L16.521 18.611C15.195 19.519 13.633 20 12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12V12.782C20 14.17 19.402 15 18.4 15L18.398 15.018C18.338 15.005 18.273 15 18.209 15H18C17.437 15 16.6 14.182 16.6 13.631V12C16.6 9.464 14.537 7.4 12 7.4C9.463 7.4 7.4 9.463 7.4 12C7.4 14.537 9.463 16.6 12 16.6C13.234 16.6 14.35 16.106 15.177 15.313C15.826 16.269 16.93 17 18 17L18.002 16.981C18.064 16.994 18.129 17 18.195 17H18.4C20.552 17 22 15.306 22 12.782V12C22 6.486 17.514 2 12 2ZM12 14.599C10.566 14.599 9.4 13.433 9.4 11.999C9.4 10.565 10.566 9.399 12 9.399C13.434 9.399 14.6 10.565 14.6 11.999C14.6 13.433 13.434 14.599 12 14.599Z")
+}
+
+
+/* Remove the cringe "create thread" line */
+
+.threadSuggestionBar-2ufK2Z {
+    display: none !important;
+}
+
+
+/* Message Fade */
+
+.messagesWrapper-1sRNjr {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 28px);
+}
+
+.content-yTz4x3::before {
+    content: none !important;
+}
+
+
+/* Emoji Picker Improvements */
+
+[aria-label$="emoji-picker-tab"] {
+    background-color: black;
+}
+
+[aria-label$="recent"] {
+    background-color: black;
+}
+
+[aria-current$="page"] {
+    background-color: black;
+}
+
+.unicodeShortcut-15J8Ck {
+    background-color: black;
+}
+
+.header-8ilj5e {
+    background-color: black;
+}
+
+
+/* Hover Channels animated */
+
+.mainContent-u_9PKf:hover {
+    animation: UserModalButtons 0.5s normal ease;
+}
+
+.mainContent-u_9PKf .noWrap-3jynv6 {
+    width: 100px;
+    opacity: 1;
+}
+
+.mainContent-u_9PKf {
+    transition: 0.2s;
+}
+
+.mainContent-u_9PKf:hover {
+    transition: 0.2;
+}
+
+@keyframes UserModalButtons {
+    0% {
+        transform: translateY(0px);
+    }
+    45% {
+        transform: translateY(-5px);
+    }
+    90% {
+        transform: translateY(0px);
+    }
+}
+
+
+/* Colour The Channel Emblems */
+
+
+/* var(--interactive-muted); For Default */
+
+:root {
+    --hashtag-colour: var(--interactive-muted);
+    --announcement-colour: hsla(46, 94%, 52%, 0.75);
+    --rules-colour: hsla(2, 100%, 50%, 0.75);
+    --stages-colour: hsla(96, 94%, 52%, 0.75);
+    --voice-colour: hsla(303, 94%, 52%, 0.75);
+    --locked-colour: hsla(187, 94%, 52%, 0.75);
+}
+
+[d="M5.88657 21C5.57547 21 5.3399 20.7189 5.39427 20.4126L6.00001 17H2.59511C2.28449 17 2.04905 16.7198 2.10259 16.4138L2.27759 15.4138C2.31946 15.1746 2.52722 15 2.77011 15H6.35001L7.41001 9H4.00511C3.69449 9 3.45905 8.71977 3.51259 8.41381L3.68759 7.41381C3.72946 7.17456 3.93722 7 4.18011 7H7.76001L8.39677 3.41262C8.43914 3.17391 8.64664 3 8.88907 3H9.87344C10.1845 3 10.4201 3.28107 10.3657 3.58738L9.76001 7H15.76L16.3968 3.41262C16.4391 3.17391 16.6466 3 16.8891 3H17.8734C18.1845 3 18.4201 3.28107 18.3657 3.58738L17.76 7H21.1649C21.4755 7 21.711 7.28023 21.6574 7.58619L21.4824 8.58619C21.4406 8.82544 21.2328 9 20.9899 9H17.41L16.35 15H19.7549C20.0655 15 20.301 15.2802 20.2474 15.5862L20.0724 16.5862C20.0306 16.8254 19.8228 17 19.5799 17H16L15.3632 20.5874C15.3209 20.8261 15.1134 21 14.8709 21H13.8866C13.5755 21 13.3399 20.7189 13.3943 20.4126L14 17H8.00001L7.36325 20.5874C7.32088 20.8261 7.11337 21 6.87094 21H5.88657ZM9.41045 9L8.35045 15H14.3504L15.4104 9H9.41045Z"],
+[d="M14 8C14 7.44772 13.5523 7 13 7H9.76001L10.3657 3.58738C10.4201 3.28107 10.1845 3 9.87344 3H8.88907C8.64664 3 8.43914 3.17391 8.39677 3.41262L7.76001 7H4.18011C3.93722 7 3.72946 7.17456 3.68759 7.41381L3.51259 8.41381C3.45905 8.71977 3.69449 9 4.00511 9H7.41001L6.35001 15H2.77011C2.52722 15 2.31946 15.1746 2.27759 15.4138L2.10259 16.4138C2.04905 16.7198 2.28449 17 2.59511 17H6.00001L5.39427 20.4126C5.3399 20.7189 5.57547 21 5.88657 21H6.87094C7.11337 21 7.32088 20.8261 7.36325 20.5874L8.00001 17H14L13.3943 20.4126C13.3399 20.7189 13.5755 21 13.8866 21H14.8709C15.1134 21 15.3209 20.8261 15.3632 20.5874L16 17H19.5799C19.8228 17 20.0306 16.8254 20.0724 16.5862L20.2474 15.5862C20.301 15.2802 20.0655 15 19.7549 15H16.35L16.6758 13.1558C16.7823 12.5529 16.3186 12 15.7063 12C15.2286 12 14.8199 12.3429 14.7368 12.8133L14.3504 15H8.35045L9.41045 9H13C13.5523 9 14 8.55228 14 8Z"] {
+    fill: var(--hashtag-colour);
+}
+
+[d="M33 34.5833V7.49998H35V36.6666H9C6.791 36.6666 5 34.801 5 32.5V7.49998C5 5.19894 6.791 3.33331 9 3.33331H31V30.4166H9C7.8955 30.4166 7 31.3485 7 32.5C7 33.6515 7.8955 34.5833 9 34.5833H33ZM23.9718 9.99998L15.8889 17.9915L12.7086 14.8441L10 17.5058L15.8885 23.3333L26.6667 12.6669L23.9718 9.99998Z"] {
+    fill: var(--rules-colour);
+}
+
+[d="M19.1 4V5.12659L4.85 8.26447V18.1176C4.85 18.5496 5.1464 18.9252 5.5701 19.0315L9.3701 19.9727C9.4461 19.9906 9.524 20 9.6 20C9.89545 20 10.1776 19.8635 10.36 19.6235L12.7065 16.5242L19.1 17.9304V19.0588H21V4H19.1ZM9.2181 17.9944L6.75 17.3826V15.2113L10.6706 16.0753L9.2181 17.9944Z"],
+[d="M3.9 8.26H2V15.2941H3.9V8.26Z"],
+[d="M22.545 4.87988V5.87988H23.28C23.4126 5.87988 23.52 5.98733 23.52 6.11988V10.6399C23.52 10.7724 23.4126 10.8799 23.28 10.8799H17.76C17.6275 10.8799 17.52 10.7724 17.52 10.6399V6.11988C17.52 5.98733 17.6275 5.87988 17.76 5.87988H18.52V4.87988C18.52 3.75988 19.47 2.87988 20.52 2.87988C21.57 2.87988 22.545 3.75988 22.545 4.87988ZM19.52 5.87988H21.52V4.87988C21.52 4.30845 21.0534 3.87988 20.52 3.87988C19.9867 3.87988 19.52 4.30845 19.52 4.87988V5.87988Z"],
+[d="M4.85 8.26429L15.84 5.84426V10.5599C15.84 11.6202 16.6996 12.4799 17.76 12.4799H21V19.0586H19.1V17.9302L12.7065 16.524L10.36 19.6233C10.1776 19.8633 9.89545 19.9998 9.6 19.9998C9.524 19.9998 9.4461 19.9904 9.3701 19.9725L5.5701 19.0313C5.1464 18.925 4.85 18.5495 4.85 18.1175V8.26429ZM9.2181 17.9942L6.75 17.3824V15.2111L10.6706 16.0751L9.2181 17.9942Z"],
+[d="M3.9 8.25981H2V15.2939H3.9V8.25981Z"] {
+    fill: var(--announcement-colour);
+}
+
+[d="M12 2C5.93 2 1 6.93 1 13C1 15 1.55 16.88 2.48 18.49L3.77 17.74C2.97 16.35 2.5 14.73 2.5 13C2.5 7.75 6.75 3.5 12 3.5C17.25 3.5 21.5 7.75 21.5 13H23C23 6.93 18.07 2 12 2ZM5.5 13C5.5 9.42 8.42 6.5 12 6.5C15.58 6.5 18.5 9.42 18.5 13H17C17 10.24 14.76 8 12 8C9.24 8 7 10.24 7 13C7 13.91 7.26 14.75 7.69 15.49L6.38 16.25C5.82 15.29 5.5 14.18 5.5 13ZM12 15C13.1046 15 14 14.1046 14 13C14 11.8954 13.1046 11 12 11C10.8954 11 10 11.8954 10 13C10 14.1046 10.8954 15 12 15ZM12 16.5C9.94 16.5 8.5 17.8 8.5 19.5V20H13V16.62C12.69 16.55 12.36 16.5 12 16.5ZM17 15H22C23.1 15 24 15.9 24 17V22C24 23.1 23.1 24 22 24H17C15.9 24 15 23.1 15 22V17C15 15.9 15.9 15 17 15ZM17 22H22V21H17V22ZM17 20H22V19H17V20ZM17 18H22V17H17V18Z"],
+[d="M15 2.41495C14.0462 2.14467 13.0398 2 12 2C5.93 2 1 6.93 1 13C1 15 1.55 16.88 2.48 18.49L3.77 17.74C2.97 16.35 2.5 14.73 2.5 13C2.5 7.75 6.75 3.5 12 3.5C13.0485 3.5 14.0571 3.66952 15 3.98267V2.41495Z"],
+[d="M21.0173 10C21.3305 10.9429 21.5 11.9515 21.5 13C21.5 14.73 21.03 16.35 20.22 17.75L21.51 18.5C22.45 16.88 23 15 23 13C23 11.9602 22.8553 10.9538 22.585 10H21.0173Z"],
+[d="M14 13C14 14.1 13.1 15 12 15C10.9 15 10 14.1 10 13C10 11.9 10.9 11 12 11C13.1 11 14 11.9 14 13Z"],
+[d="M8.5 19.5V20H15.5V19.5C15.5 17.8 14.06 16.5 12 16.5C9.94 16.5 8.5 17.8 8.5 19.5Z"],
+[d="M7 13C7 10.24 9.24 8 12 8C14.76 8 17 10.24 17 13C17 13.91 16.74 14.75 16.31 15.49L17.62 16.25C18.17 15.29 18.5 14.19 18.5 13C18.5 9.42 15.58 6.5 12 6.5C8.42 6.5 5.5 9.42 5.5 13C5.5 14.18 5.82 15.29 6.38 16.25L7.69 15.49C7.26 14.75 7 13.91 7 13Z"] {
+    fill: var(--stages-colour);
+}
+
+[d="M15 12C15 12.0007 15 12.0013 15 12.002C15 12.553 14.551 13.002 14 13.002V15.002C15.654 15.002 17 13.657 17 12.002C17 12.0013 17 12.0007 17 12H15ZM19 12C19 12.0007 19 12.0013 19 12.002C19 14.759 16.757 17.002 14 17.002V19.002C17.86 19.002 21 15.863 21 12.002C21 12.0013 21 12.0007 21 12H19ZM10.293 3.29604C10.579 3.01004 11.009 2.92504 11.383 3.07904C11.757 3.23204 12 3.59904 12 4.00204V20.002C12 20.407 11.757 20.772 11.383 20.927C11.009 21.082 10.579 20.996 10.293 20.71L6 16.002H3C2.45 16.002 2 15.552 2 15.002V9.00204C2 8.45304 2.45 8.00204 3 8.00204H6L10.293 3.29604Z"],
+[d="M11.383 3.07904C11.009 2.92504 10.579 3.01004 10.293 3.29604L6 8.00204H3C2.45 8.00204 2 8.45304 2 9.00204V15.002C2 15.552 2.45 16.002 3 16.002H6L10.293 20.71C10.579 20.996 11.009 21.082 11.383 20.927C11.757 20.772 12 20.407 12 20.002V4.00204C12 3.59904 11.757 3.23204 11.383 3.07904ZM14 5.00195V7.00195C16.757 7.00195 19 9.24595 19 12.002C19 14.759 16.757 17.002 14 17.002V19.002C17.86 19.002 21 15.863 21 12.002C21 8.14295 17.86 5.00195 14 5.00195ZM14 9.00195C15.654 9.00195 17 10.349 17 12.002C17 13.657 15.654 15.002 14 15.002V13.002C14.551 13.002 15 12.553 15 12.002C15 11.451 14.551 11.002 14 11.002V9.00195Z"] {
+    fill: var(--voice-colour);
+}
+
+[d="M17 11V7C17 4.243 14.756 2 12 2C9.242 2 7 4.243 7 7V11C5.897 11 5 11.896 5 13V20C5 21.103 5.897 22 7 22H17C18.103 22 19 21.103 19 20V13C19 11.896 18.103 11 17 11ZM12 18C11.172 18 10.5 17.328 10.5 16.5C10.5 15.672 11.172 15 12 15C12.828 15 13.5 15.672 13.5 16.5C13.5 17.328 12.828 18 12 18ZM15 11H9V7C9 5.346 10.346 4 12 4C13.654 4 15 5.346 15 7V11Z"] {
+    fill: var(--locked-colour);
+}
+
+
+/* Make the small lock badge yellow */
+
+[d="M21.025 5V4C21.025 2.88 20.05 2 19 2C17.95 2 17 2.88 17 4V5C16.4477 5 16 5.44772 16 6V9C16 9.55228 16.4477 10 17 10H19H21C21.5523 10 22 9.55228 22 9V5.975C22 5.43652 21.5635 5 21.025 5ZM20 5H18V4C18 3.42857 18.4667 3 19 3C19.5333 3 20 3.42857 20 4V5Z"] {
+    fill: hsl(38, calc(var(--saturation-factor, 1) * 95.7%), 54.1%);
 }
 
 
@@ -1512,50 +1597,6 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* evenly space and center users in voice display */
-
-
-/* lets try something with user spacing */
-
-.voiceUsers-2V7vuh {
-    width: 100%;
-    /* probably not needed but i'm adding this for good measure */
-    display: flex;
-    justify-content: space-evenly;
-    grid-template-columns: none;
-    /* also for good measure */
-}
-
-
-/* audio filename scroll */
-
-.wrapperAudio-1jDe0Q {
-    width: 400px !important;
-}
-
-
-/* slide keyframes */
-
-@keyframes marquee {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-100%, 0);
-    }
-}
-
-
-/* apply the animation */
-
-.metadataContent-3c_ZXw .metadataName-14STf-:hover {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 8s linear infinite;
-    /* adjust time as needed */
-}
-
-
 /* Embed Gradient */
 
 @keyframes gradient {
@@ -1592,19 +1633,6 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Better Quick Reactions */
-
-.button-F9qN4n {
-    background: url('https://i.imgur.com/POgVfbO.gif') 60% 30%;
-    background-size: 288px 200px;
-    background-repeat: no-repeat;
-}
-
-.button-F9qN4n:hover {
-    transform: scale(.9);
-}
-
-
 /* Better VC Buttons */
 
 .button-1YfofB.buttonColor-7qQbGO.buttonActive-3FrkXp,
@@ -1615,41 +1643,6 @@ animation: rainbow 5s linear 0s infinite normal
 
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
     background-color: #2c2f33;
-}
-
-
-/* Watermark */
-
-.wordmarkWindows-1v0lYD svg {
-    width: 0;
-}
-
-.wordmarkWindows-1v0lYD::after {
-    content: "Shitcord";
-    position: absolute;
-    width: max-content;
-    font-weight: 400;
-    font-size: 15px;
-    color: grey;
-    animation: rainbow-watermark 5s ease-in-out infinite;
-}
-
-@keyframes rainbow-watermark {
-    from {
-        color: #6666ff
-    }
-    25% {
-        color: #0099ff
-    }
-    50% {
-        color: #00ff00
-    }
-    75% {
-        color: #ff3399
-    }
-    100% {
-        color: #6666ff
-    }
 }
 
 
@@ -1719,15 +1712,6 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Apply this if you want to hide the Friends title as well */
-
-.tabBar-ZmDY9v {
-    right: 112px;
-    position: relative;
-    background-color: var(--background-primary);
-}
-
-
 /* Remove button shine on reduce motion */
 
 .reduce-motion .buttonShine-1CSUM8 {
@@ -1739,36 +1723,6 @@ animation: rainbow 5s linear 0s infinite normal
 
 .lookLink-9FtZy-.colorLink-35jkBc {
     color: #7289da;
-}
-
-
-/* Only Show Server Icons */
-
-#guild-header-popout {
-    width: fit-content;
-}
-
-#guild-header-popout .scroller-3BxosC,
-#guild-header-popout [role="group"] {
-    display: flex;
-    flex-direction: row;
-    -webkit-box-orient: horizontal;
-}
-
-#guild-header-popout .scroller-3BxosC .item-1tOPte,
-#guild-header-popout [role="group"] .item-1tOPte {
-    width: 32px;
-}
-
-#guild-header-popout .scroller-3BxosC .iconContainer-2-XQPY,
-#guild-header-popout [role="group"] .iconContainer-2-XQPY {
-    margin: 0;
-    transform: translate(-1px, 0);
-}
-
-#guild-header-popout .scroller-3BxosC .label-22pbtT,
-#guild-header-popout [role="group"] .label-22pbtT {
-    display: none;
 }
 
 
@@ -1907,90 +1861,6 @@ animation: rainbow 5s linear 0s infinite normal
 }
 
 
-/* Makes the quick selector Transparent and Blurred */
-
-.theme-dark .input-2VB9rf {
-    background: transparent;
-    background-color: #2929295e;
-    /*Yes this is a color code.*/
-    color: var(--text-normal);
-}
-
-.scroller-zPkAnE {
-    background: transparent;
-}
-
-.backdrop-1wrmKB {
-    opacity: .8 !important;
-}
-
-.theme-dark .quickswitcher-3JagVE {
-    opacity: 0.9;
-    backdrop-filter: blur(12px);
-    display: flex;
-    background-color: #1d1d1d;
-    background: transparent;
-    color: var(--text-normal);
-}
-
-
-/* Hides the unread bar while discord isn't focused, makes using it on a 2nd monitor a little better */
-
-.isUnread-3Ef-o9 {
-    border-color: transparent !important;
-}
-
-.app-focused .isUnread-3Ef-o9 {
-    border-color: #f04747 !important;
-}
-
-
-/* Make Emojis larger/bigger on click */
-
-
-/* Resizing the Emoji and making it large */
-
-.emojiSection-3Fb9ix img {
-    margin: auto;
-    min-width: 80%;
-    height: auto !important;
-}
-
-
-/* Resizing the Emoji and making it large End */
-
-
-/* Text Wrapping */
-
-.emojiSection-3Fb9ix>.noWrap-3jynv6,
-.emojiSection-3Fb9ix {
-    flex: wrap;
-    flex-direction: column !important;
-}
-
-
-/* Text Wrapping End */
-
-
-/* Adjusting the text weight and aligning it to center */
-
-.emojiName-27Bjxw {
-    font-weight: 600;
-    margin-top: 8px;
-    text-align: center;
-}
-
-
-/* Adjusting the text weight and aligning it to center End */
-
-
-/* Fix for padding being added to voice connection */
-
-.connection-3KRENF {
-    padding-bottom: 0;
-}
-
-
 /* Small little CSS snippet to fix the username brightness */
 
 .username-1A8OIy,
@@ -2017,41 +1887,6 @@ animation: rainbow 5s linear 0s infinite normal
 .standardSidebarView-3F1I7i,
 .sidebarRegionScroller-3MXcoP {
     background: transparent;
-}
-
-
-/* make the search bar way smaller when inactive (also gives it a lil animation) */
-
-.search-36MZv- {
-    order: -1;
-}
-
-.searchBar-3dMhjb {
-    width: 28px;
-    transition: width 0.6s ease-in-out;
-    color: #fff;
-    background: none;
-}
-
-.focused-31_ccS .searchBar-3dMhjb,
-.open-6_Y_aH .searchBar-3dMhjb,
-.searchBar-3dMhjb:hover {
-    width: 240px;
-    background: var(--background-tertiary);
-}
-
-.icon-3cZ1F_ {
-    height: 24px;
-    width: 24px;
-    color: var(--interactive-normal);
-}
-
-.iconContainer-O4O2CN {
-    bottom: 3px;
-}
-
-.search-36MZv- {
-    margin-left: 0px;
 }
 
 
@@ -2138,51 +1973,6 @@ div::selection {
 }
 
 
-/* Hover Buttons */
-
-.buttons-3JBrkn {
-    opacity: 0;
-    transition: opacity 0.1s;
-}
-
-.channelTextArea-rNsIhG:hover .buttons-3JBrkn {
-    opacity: 1.0;
-}
-
-.attachWrapper-2TRKBi {
-    order: 1;
-    margin-left: 9px;
-}
-
-.attachButton-2WznTc {
-    padding-right: 0px
-}
-
-.uploadModal-2ifh8j .buttons-3JBrkn {
-    opacity: 1.0;
-}
-
-
-/* Make replies look like in Telegram */
-
-.repliedMessage-VokQwo {
-    flex-direction: column;
-    align-items: start;
-}
-
-.replyAvatar-1K9Wmr {
-    display: none;
-}
-
-.repliedMessage-VokQwo .username-1A8OIy {
-    opacity: 1;
-}
-
-.repliedTextContentIcon-1ivTae {
-    margin-left: 0;
-}
-
-
 /* Make images feel better i guess */
 
 .imageWrapper-2p5ogY:hover {
@@ -2218,61 +2008,6 @@ div::selection {
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-
-
-/* some cool thing for usernames, inverts color, as a bonus it helps prevent colors that are impossible to read on themes
-
-.cozy-3raOZG .username-1A8OIy {
-    position: relative;
-    padding: 2px 6px 3px 6px;
-}
-
-.cozy-3raOZG .username-1A8OIy::after {
-    content: "";
-    background: linear-gradient(to left, currentColor, currentColor, rgba(0, 0, 0, 0.1), currentColor, currentColor);
-    background-size: 1800% 1800%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    opacity: 0.5;
-    border-radius: 5px;
-    z-index: -1;
-    animation: slide 5s infinite ease-in-out;
-    filter: invert(1);
-    border-radius: 0px 15px;
-    border-style: solid;
-    border-width: thin;
-}
-
-@keyframes slide {
-    0% {
-        background-position: 0% 82%
-    }
-    50% {
-        background-position: 100% 19%
-    }
-    100% {
-        background-position: 0% 82%
-    }
-}
- */
-
-
-/* hover to unblur by server 
-
-[aria-label="Servers"] div img {
-    filter: blur(3px);
-    border-radius: 50px;
-    transition: all 0.5s ease-in-out;
-}
-
-[aria-label="Servers"] div:hover img,
-div.selected img {
-    filter: none
-}
-*/
 
 
 /* Light shadows under embedded messages, images, videos and code blocks. */
@@ -2403,86 +2138,6 @@ code {
     width: 100%;
     background: rgb(0, 0, 0, 0.65);
     backdrop-filter: blur(3px);
-}
-
-
-/* Cool Member List */
-
-
-/* Cool Member List */
-
-:root {
-    --hover-animation-speed: 0.35s;
-    --seperator-color: var(--background-accent);
-}
-
-.membersWrap-2h-GB4 {
-    min-width: unset;
-    width: 65px;
-    justify-content: right;
-}
-
-.members-1998pB {
-    transition: transform var(--hover-animation-speed);
-}
-
-.membersWrap-2h-GB4:hover .members-1998pB {
-    transform: translateX(-190px);
-}
-
-.membersWrap-2h-GB4 .membersGroup-v9BXpm::after {
-    content: '';
-    width: 30px;
-    height: 2px;
-    border-radius: 50px;
-    background: unset;
-    background-color: var(--seperator-color);
-    position: absolute;
-    left: -36px;
-    top: 29px;
-    margin-left: 0px;
-}
-
-.membersWrap-2h-GB4 .members-1998pB .member-3-YXUe {
-    background-color: unset;
-    margin-left: 0px;
-    transition: margin-left var(--hover-animation-speed);
-}
-
-.membersWrap-2h-GB4:hover .members-1998pB .member-3-YXUe {
-    margin-left: 8px;
-}
-
-.membersWrap-2h-GB4:hover .membersGroup-v9BXpm {
-    transform: translateX(-6px);
-}
-
-.membersWrap-2h-GB4 .membersGroup-v9BXpm {
-    cursor: default;
-    transform: translateX(45px);
-    transition: transform var(--hover-animation-speed);
-    overflow: visible;
-}
-
-.members-1998pB {
-    border-radius: 15px 15px 0 0 !important;
-}
-
-.membersWrap-2h-GB4,
-.members-1998pB {
-    left: 15px;
-    margin-right: 10px
-}
-
-.chat-3bRxxu {
-    background: var(--background-tertiary);
-}
-
-.chatContent-a9vAAp {
-    background-color: var(--background-primary);
-    border-radius: 0 15px 0 0 !important;
-    left: 25px;
-    margin-left: -25px
 }
 
 
@@ -2709,11 +2364,4 @@ html.theme-dark .theme-light .footer-2gL1pp {
 
 .container-2x5lvQ section strong:nth-of-type(4)::before {
     content: 'Packet Loss: ';
-}
-
-
-/* Hide "Add to Favourites" button on gifs */
-
-.imageAccessory-3uSIjZ {
-    display: none;
 }
