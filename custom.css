@@ -6,13 +6,15 @@
 }
 
 .spoilerText-3p6IlD.hidden-HHr2R9>.inlineContent-3ZjPuv {
-    opacity: 1 !important;
     filter: blur(3px);
     pointer-events: unset;
+    opacity: 1 !important;
 }
 
 .spoilerText-3p6IlD.hidden-HHr2R9>.inlineContent-3ZjPuv:hover {
+    opacity: 1 !important;
     filter: unset;
+    pointer-events: unset;
 }
 
 
