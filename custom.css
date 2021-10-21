@@ -2367,3 +2367,11 @@ html.theme-dark .theme-light .footer-2gL1pp {
 .container-2x5lvQ section strong:nth-of-type(4)::before {
     content: 'Packet Loss: ';
 }
+
+
+/* Center Role Settings */
+
+.customScroller-26gWhv .contentRegionScroller-26nc1e .auto-Ge5KZx .scrollerBase-289Jih {
+    margin-right: auto;
+    margin-left: auto;
+}
