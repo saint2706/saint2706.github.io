@@ -2381,3 +2381,66 @@ html.theme-dark .theme-light .footer-2gL1pp {
 .customScroller-26gWhv>div {
     max-width: 95%
 }
+
+
+/* Blur Background of Dms until accepted */
+
+.firstDMSpamBanner-DKjHgv {
+    border-radius: 20px 20px 0px 20px;
+    background-color: transparent;
+    position: absolute;
+    width: 200px;
+    height: 30px;
+    bottom: 0;
+    right: 0;
+}
+
+.actionButtons-tk5wmT>button {
+    transform: translate(-25%, -125%);
+    top: 40%!important;
+    left: 50%;
+}
+
+.actionButtons-tk5wmT>button>div {
+    font-size: 0px;
+}
+
+.sizeMedium-1AC_Sl {
+    min-width: 40px!important;
+}
+
+.actionButtons-tk5wmT>button.colorRed-1TFJan::before {
+    font-size: 14px;
+    content: "!";
+}
+
+.actionButtons-tk5wmT>button.colorGrey-2DXtkV::before {
+    font-size: 14px;
+    content: "!?";
+}
+
+.actionButtons-tk5wmT>button.colorBrand-3pXr91::before {
+    font-size: 14px;
+    content: "✔";
+}
+
+.firstDMSpamBanner-DKjHgv::before {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    left: 312px!important;
+    position: fixed;
+    display: block;
+    content: "";
+    height: 100%;
+    width: 100%;
+    top: 70px;
+}
+
+.firstDMSpamBannerText-1f5M9Z {
+    display: none;
+}
+
+.firstDMSpamBannerIcon-1IIVEI {
+    position: relative;
+    top: -10%;
+}
