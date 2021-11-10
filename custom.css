@@ -45,57 +45,6 @@
   }
 }
 
-/*Glowing unread servers*/
-@keyframes unreadRainbow {
-  /*animation*/
-  50% {
-    background-position: 100% 50%;
-  }
-}
-.wrapper-25eVIn foreignObject {
-  /*Round server channels*/
-  mask: unset;
-  border-radius: 1000%;
-}
-.pill-1z4sAY {
-  /*Makes ring visible*/
-  overflow: visible !important;
-}
-.item-2hkk8m[style*="height: 8px"]::before {
-  /*Unread server ring*/
-  content: "";
-  position: absolute;
-  top: -22px;
-  left: 14px;
-  width: 52px;
-  height: 52px !important;
-  border-radius: 41%;
-  background: linear-gradient(
-    120deg,
-    rgb(0, 64, 255),
-    rgb(0, 64, 255),
-    rgb(0, 64, 255),
-    rgb(128, 0, 255),
-    rgb(255, 0, 0),
-    rgb(255, 145, 0),
-    rgb(2, 190, 2),
-    rgb(0, 64, 255),
-    rgb(128, 0, 255),
-    rgb(255, 0, 0),
-    rgb(255, 145, 0),
-    rgb(2, 190, 2),
-    rgb(0, 0, 0)
-  );
-  background-size: 200% 200%;
-  background-position: 0 50%;
-  animation: unreadRainbow 4s infinite;
-  transition: 0.25s ease;
-}
-.wrapper-1BJsBx {
-  /*Matches png server icons with default background*/
-  background-color: var(--background-tertiary);
-}
-
 /* Recolor the thread "Spine" */
 .spine--Wla_O {
   color: rgb(255, 255, 255);
@@ -653,58 +602,6 @@ rect[fill^="hsl(214,"] {
 /* Remove the add to favorites thing */
 .imageAccessory-3uSIjZ {
   display: none;
-}
-
-/* Replaces the new channel banner tabs with a single switch */
-.members-2upGyL {
-  height: 100%;
-}
-.toolbar-1t6TWx
-  > .iconWrapper-2OrFZ1.selected-1GqIat:nth-of-type(4)
-  ~ :last-child {
-  margin-right: 56px;
-}
-.container-2PDP7D > .tabs-3L9Rgq {
-  height: 0;
-  padding: 0;
-  border: none;
-}
-.container-2PDP7D > .tabs-3L9Rgq > .tab-XC_yrg {
-  font-size: 0;
-  position: absolute;
-  right: 6px;
-  top: -36px;
-  width: 40px;
-  height: 24px;
-  margin: 0 8px;
-  padding: 0;
-  z-index: 2;
-  border-radius: 12px;
-  background-color: hsl(
-    218,
-    calc(var(--saturation-factor, 1) * 4.6%),
-    46.9%
-  ) !important;
-}
-.container-2PDP7D > .tabs-3L9Rgq > .tab-XC_yrg::after {
-  position: absolute;
-  top: 3px;
-  width: 18px;
-  height: 18px;
-  background-color: white;
-  border-radius: 50%;
-}
-.container-2PDP7D > .tabs-3L9Rgq > .tab-XC_yrg:first-of-type::after {
-  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M11.8 6.6C11.8 8.154 10.54 9.4 9 9.4C7.46 9.4 6.2 8.154 6.2 6.6C6.2 5.06 7.46 3.8 9 3.8C10.54 3.8 11.8 5.06 11.8 6.6ZM3.4 14.3C3.4 11.836 5.71 10.1 9 10.1C12.304 10.1 14.6 11.836 14.6 14.3V15H3.4V14.3Z'/></svg>");
-  right: 3px;
-}
-.container-2PDP7D > .tabs-3L9Rgq > .tab-XC_yrg:last-of-type::after {
-  content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18px' height='18px' fill='rgb(114, 118, 125)'><path d='M9-1zm0 4.752a1.25 1.25 90 110 2.5a1.25 1.25 90 010-2.5zM12 14h-6v-2h2V9H7V7h2a1 1 90 011 1v4h2v2z'/></svg>");
-  left: 3px;
-}
-.container-2PDP7D > .tabs-3L9Rgq > .tab-XC_yrg.active-2SVYP5 {
-  pointer-events: none;
-  opacity: 0;
 }
 
 /* Compact status picker */
@@ -1396,6 +1293,18 @@ button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x g
   background: var(--brand-experiment);
 }
 
+.botTagRegular-2HEhHi {
+  transition: 0.5s;
+  background: rgba(30, 0, 27, 0.1);
+  color: #ffffff;
+}
+
+.botTagRegular-2HEhHi:hover {
+  transition: 0.5s;
+  background: #444444;
+  color: #ffffff;
+}
+
 /* grid for the autocomplete */
 .autocomplete-1vrmpx .scroller-lynW5A {
   padding-top: 2rem;
@@ -1440,4 +1349,296 @@ button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x g
 /* Avatar Roundness */
 img[class^="avatar"] {
   border-radius: 100%;
+}
+
+/* Tag */
+.avatar-1BDn8e[src*="648120101043961876"] + h2 .username-1A8OIy::after {
+  content: "Epicurus";
+  color: #fff;
+  background: #7289da;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  height: 1.28em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1.3;
+  margin-left: 4px;
+}
+
+/*Yellow Permission Ticks*/
+.passthroughSelected-1Eq0Kl {
+  background-color: #ffba00 !important;
+}
+
+.passthrough-1c2ewQ:not(.passthroughSelected-1Eq0Kl) img {
+  content: url("https://cdn.discordapp.com/attachments/729456400077422623/748313547800313906/yellow.svg");
+}
+
+/* Rainbow Bottom Left */
+@keyframes pride {
+  100%,
+  0% {
+    color: rgb(255, 0, 0);
+  }
+  8% {
+    color: rgb(255, 127, 0);
+  }
+  16% {
+    color: rgb(255, 255, 0);
+  }
+  25% {
+    color: rgb(127, 255, 0);
+  }
+  33% {
+    color: rgb(0, 255, 0);
+  }
+  41% {
+    color: rgb(0, 255, 127);
+  }
+  50% {
+    color: rgb(0, 255, 255);
+  }
+  58% {
+    color: rgb(0, 127, 255);
+  }
+  66% {
+    color: rgb(0, 0, 255);
+  }
+  75% {
+    color: rgb(127, 0, 255);
+  }
+  83% {
+    color: rgb(255, 0, 255);
+  }
+  91% {
+    color: rgb(255, 0, 127);
+  }
+}
+
+.button-14-BFJ {
+  transition: 0.2s;
+}
+.button-14-BFJ:hover {
+  padding-bottom: 5px;
+  transition: 0.2;
+  animation-name: pride;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
+}
+
+/* Remove Discord Watermark */
+.wordmark-2iDDfm > svg {
+  width: 0px;
+}
+
+/* Animated border around discord */
+@keyframes bruh {
+  0% {
+    background-position: 2% 0%;
+  }
+  50% {
+    background-position: 99% 100%;
+  }
+  100% {
+    background-position: 2% 0%;
+  }
+}
+:root {
+  --margin: 5px;
+  --rounded-corners: 7px;
+  --color1: #00ff00;
+  --color2: #0000ff;
+  --degree: 10deg;
+  --animationDuration: 7s;
+  --titlebarOpacity: 0.6; /* scale 0 to 1 */
+}
+.app-2rEoOp {
+  margin: var(--margin);
+  border-radius: var(--rounded-corners);
+  overflow: hidden;
+  box-shadow: var(--elevation-high);
+}
+.app-1q1i1E {
+  background: none;
+}
+.appMount-3lHmkl {
+  background: linear-gradient(var(--degree), var(--color1), var(--color2));
+  background-size: 300% 300%;
+  animation: bruh var(--animationDuration) ease-in-out infinite;
+}
+.withFrame-haYltI {
+  margin-top: 0 !important;
+  padding-top: 4px;
+}
+.titleBar-AC4pGV {
+  background: rgba(0, 0, 0, var(--titlebarOpacity));
+}
+.guilds-1SWlCJ {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.wordmarkWindows-1v0lYD {
+  color: #999999;
+}
+
+/* Background image for voice call */
+:root {
+  --call-bg: url("https://cdn.discordapp.com/attachments/738968109288914976/769986893944979496/image0.jpg"); /* Replace with what background you want */
+}
+
+.minimum-28Z35l .root-217Brm,
+.video--KPXCT .root-217Brm {
+  background: var(--call-bg) center/100% no-repeat;
+}
+.minimum-28Z35l .root-217Brm::before,
+.video--KPXCT .root-217Brm::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgb(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+/* Better Codeblocks */
+.hljs-name,
+.hljs-section,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-title {
+  color: #268bd2;
+  text-shadow: 0px 0px 15px #268bd2f0;
+}
+
+.hljs-addition,
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #859900;
+  text-shadow: 0px 0px 15px #859900f0;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-class .hljs-title,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable {
+  color: #b58900;
+  text-shadow: 0px 0px 15px #b58900f0;
+}
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-subst,
+.hljs-symbol {
+  color: #cb4b16;
+  text-shadow: 0px 0px 15px #cb4b16f0;
+}
+.hljs-built_in,
+.hljs-deletion {
+  color: #dc322f;
+  text-shadow: 0px 0px 15px #dc322ff0;
+}
+
+.hljs-doctag,
+.hljs-literal,
+.hljs-meta .hljs-meta-string,
+.hljs-number,
+.hljs-regexp,
+.hljs-string {
+  color: #2aa198;
+  text-shadow: 0px 0px 15px #2aa198f0;
+}
+
+.anchor-3Z-8Bb {
+  color: #5e2aa1;
+  text-shadow: 0px 0px 10px #5e2aa1f0;
+}
+
+*::selection {
+  color: #16b5f9;
+  text-shadow: 0px 0px 10px #16b5f9;
+  background: none !important;
+}
+
+/* Make images feel better i guess */
+.imageWrapper-2p5ogY:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--elevation-high);
+}
+.imageWrapper-2p5ogY {
+  transition: ease-in-out 0.4s;
+  box-shadow: none;
+}
+
+/* Good Home Button */
+@keyframes spinny-rainbow-logo {
+  0% {
+    transform: rotate(0deg);
+  }
+  5% {
+    color: mediumvioletred;
+  }
+  10% {
+    color: red;
+  }
+  15% {
+    color: orangered;
+  }
+  25% {
+    color: gold;
+  }
+  35% {
+    color: greenyellow;
+  }
+  40% {
+    color: limegreen;
+  }
+  45% {
+    color: mediumspringgreen;
+  }
+  50% {
+    color: aquamarine;
+  }
+  55% {
+    color: darkturquoise;
+  }
+  65% {
+    color: dodgerblue;
+  }
+  70% {
+    color: cornflowerblue;
+  }
+  75% {
+    color: mediumslateblue;
+  }
+  80% {
+    color: mediumorchid;
+  }
+  85% {
+    color: fuchsia;
+  }
+  90% {
+    color: plum;
+  }
+  95% {
+    color: deeppink;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.childWrapper-anI2G9:hover > .homeIcon-FuNwkv,
+.wrapper-1BJsBx.selected-bZ3Lue .childWrapper-anI2G9 > .homeIcon-FuNwkv {
+  animation: spinny-rainbow-logo 7.5s linear infinite;
+}
+.childWrapper-anI2G9,
+.childWrapper-anI2G9:hover {
+  background-color: rgba(0, 0, 0, 0.2) !important;
 }
