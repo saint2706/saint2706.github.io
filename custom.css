@@ -1642,3 +1642,21 @@ img[class^="avatar"] {
 .childWrapper-anI2G9:hover {
   background-color: rgba(0, 0, 0, 0.2) !important;
 }
+
+/* Blur Modal Background */
+#app-mount
+  div.layerContainer-yqaFcK.da-layerContainer
+  div.backdropWithLayer-3_uhz4.da-backdropWithLayer,
+.da-backdrop,
+#app-mount
+  .layer-3QrUeG[aria-label*="SETTINGS"]
+  .contentRegion-3nDuYy
+  .tools-3-3s-N
+  .closeButton-1tv5uR::after,
+#app-mount
+  .layer-3QrUeG[aria-label*="RTC"]
+  .contentRegion-3nDuYy
+  .tools-3-3s-N
+  .closeButton-1tv5uR::after {
+  backdrop-filter: blur(7px);
+}
