@@ -695,3 +695,14 @@ rect[fill^="hsl(214,"] {
 [aria-controls="0-tab"] {
   margin: 0px 0px 0px 10px !important;
 }
+
+/* extended user panel! because by default it has enough space for like half a letter
+NOTE: doesn't look right with BetterFolders nor spotify integration, no idea how to fix this */
+/* the main bit! */
+.container-3baos1 {
+    position: fixed;
+    left: 4px;
+    top: calc(100% - 52px);
+    width: 292px;
+    background-color: var(--background-tertiary);
+  }
