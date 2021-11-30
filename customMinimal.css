@@ -688,11 +688,11 @@ rect[fill^="hsl(214,"] {
   flex: 1;
 }
 
-[aria-controls="details-tab"] {
+[aria-controls="1-tab"] {
   margin: 0px 10px 0px 0px !important;
 }
 
-[aria-controls="members-tab"] {
+[aria-controls="0-tab"] {
   margin: 0px 0px 0px 10px !important;
 }
 
