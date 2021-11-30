@@ -706,3 +706,9 @@ NOTE: doesn't look right with BetterFolders nor spotify integration, no idea how
   width: 292px;
   background-color: var(--background-tertiary);
 }
+
+/* PATCH for scrollers above the user panel to make space */
+.guilds-1SWlCJ, /* servers */
+    .sidebar-2K8pFh /* channels */ {
+  height: calc(100% - 52px);
+}
