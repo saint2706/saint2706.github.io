@@ -162,7 +162,7 @@ rect[fill^="hsl(214,"] {
 
 /* No Nitro */
 [href="/store"],
-[aria-controls="Discord Nitro-tab"],
+[aria-controls="discord-nitro-tab"],
 [aria-controls="Billing-tab"],
 [aria-controls="Nitro Server Boost-tab"],
 #guild-header-popout > div > .separator-2I32lJ:nth-child(2),
@@ -688,11 +688,11 @@ rect[fill^="hsl(214,"] {
   flex: 1;
 }
 
-[aria-controls="1-tab"] {
+[aria-controls="details-tab"] {
   margin: 0px 10px 0px 0px !important;
 }
 
-[aria-controls="0-tab"] {
+[aria-controls="members-tab"] {
   margin: 0px 0px 0px 10px !important;
 }
 
@@ -700,9 +700,9 @@ rect[fill^="hsl(214,"] {
 NOTE: doesn't look right with BetterFolders nor spotify integration, no idea how to fix this */
 /* the main bit! */
 .container-3baos1 {
-    position: fixed;
-    left: 4px;
-    top: calc(100% - 52px);
-    width: 292px;
-    background-color: var(--background-tertiary);
-  }
+  position: fixed;
+  left: 4px;
+  top: calc(100% - 52px);
+  width: 292px;
+  background-color: var(--background-tertiary);
+}
