@@ -1660,3 +1660,20 @@ img[class^="avatar"] {
   .closeButton-1tv5uR::after {
   backdrop-filter: blur(7px);
 }
+
+/* Channel Tabs Order */
+.tabs-3L9Rgq {
+  flex-direction: row-reverse;
+}
+
+.tab-XC_yrg {
+  flex: 1;
+}
+
+[aria-controls="1-tab"] {
+  margin: 0px 10px 0px 0px !important;
+}
+
+[aria-controls="0-tab"] {
+  margin: 0px 0px 0px 10px !important;
+}
