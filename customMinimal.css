@@ -599,51 +599,69 @@ NOTE: doesn't look right with BetterFolders nor spotify integration, no idea how
 
 /* Horizontally listed media */
 [id*="message-accessories-"] {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
-[id*="message-accessories-"] > * {
-    margin-right: .4em !important;
-    min-height: 100% !important;
+
+[id*="message-accessories-"]>* {
+  margin-right: .4em !important;
+  min-height: 100% !important;
 }
-[id*="message-accessories-"] > div > a {
-    display: flex;
-    align-items: center;
-    min-height: 100%;
-    background-color: var(--background-secondary);
+
+[id*="message-accessories-"]>div>a {
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+  background-color: var(--background-secondary);
 }
+
 [id*="message-reactions"] {
-    width: 100%;
+  width: 100%;
 }
 
 
 /* Unclamp the About Me section, so it's not limited to just 6 lines. (normally it cuts off at 6 and adds a ...) */
-.clamped-IwJfxR{
-    -webkit-line-clamp: 190; /*Maximum amount of characters as new lines, unset just breaks links*/
-    max-height:112px;
-    overflow-x: hidden;
-    overflow-y:scroll;
+.clamped-IwJfxR {
+  -webkit-line-clamp: 190;
+  /*Maximum amount of characters as new lines, unset just breaks links*/
+  max-height: 112px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
+
 .clamped-IwJfxR::-webkit-scrollbar {
   width: 15px;
   height: 15px;
 }
+
 .clamped-IwJfxR::-webkit-scrollbar-track {
-  border-radius: 10px; /*How round you want the scrollbar to be. 0 is square, 10px is round.*/
-  background-color: rgb(255 255 255 / 10%); /*Edit this to what color you want the track to be.*/
+  border-radius: 10px;
+  /*How round you want the scrollbar to be. 0 is square, 10px is round.*/
+  background-color: rgb(255 255 255 / 10%);
+  /*Edit this to what color you want the track to be.*/
 }
+
 .clamped-IwJfxR::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #00aeff, #a68eff); /* Edit this to whatever color/colors you'd like*/
-  border-radius: 10px; /*How round you want the scrollbar thumb to be. 0 is square, 10px is round.*/
+  background: linear-gradient(45deg, #00aeff, #a68eff);
+  /* Edit this to whatever color/colors you'd like*/
+  border-radius: 10px;
+  /*How round you want the scrollbar thumb to be. 0 is square, 10px is round.*/
 }
 
 
 /* Removes Chatbox from channel that don't allow you to communicate */
-.channelTextAreaDisabled-8rmlrp, .channelTextAreaDisabled-8rmlrp > .scrollableContainer-2NUZem{
+.channelTextAreaDisabled-8rmlrp,
+.channelTextAreaDisabled-8rmlrp>.scrollableContainer-2NUZem {
   animation: nochat .000001ms forwards;
 }
-@keyframes nochat{
-  to{height: 0}
+
+@keyframes nochat {
+  to {
+    height: 0
+  }
 }
+
 /* Removes Follow banner on bottom of channels */
-.wrapper-39oAo3 {display: none;}
+.wrapper-39oAo3 {
+  display: none;
+}
