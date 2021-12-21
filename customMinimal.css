@@ -469,20 +469,6 @@ rect[fill^="hsl(214,"] {
   display: inline;
 }
 
-/* GreenText */
-[class*="blockquoteDivider-"] {
-  width: 0 !important;
-}
-
-[class*="blockquoteDivider-"]::before {
-  content: ">";
-}
-
-[class*="blockquoteContainer-"] blockquote,
-[class*="blockquoteDivider-"]::before {
-  color: lightgreen;
-}
-
 /* Tag */
 .avatar-1BDn8e[src*="648120101043961876"]+h2 .username-1A8OIy::after {
   content: "Epicurus";
