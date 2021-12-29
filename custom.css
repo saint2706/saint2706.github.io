@@ -1067,31 +1067,6 @@ button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x g
 	color: var(--accent);
 }
 
-/* 2 lined channel topic */
-[class*="chat-"]>[class*="title-"]>[class*="children-"]>[class*="topic-"] {
-	white-space: normal;
-	max-height: 2.4em;
-	font-size: .9em;
-	line-height: 1.2em;
-	text-overflow: ellipsis;
-	position: relative;
-}
-
-[class*="chat-"]>[class*="title-"]>[class*="children-"]::after {
-	content: unset;
-}
-
-[class*="chat-"]>[class*="title-"]>[class*="children-"]>[class*="topic-"]::after {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	height: 1em;
-	background: linear-gradient(to right, transparent, var(--background-primary), var(--background-primary)) !important;
-	display: flex;
-	width: 130px;
-}
-
 /* Avatar zoom on hover / Special thanks to Nao Tomori#1166 */
 .avatar-37jOim:hover {
 	transform: scale(1.6);
