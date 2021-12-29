@@ -567,7 +567,8 @@ div.footer-3UKYOU,
 	font-weight: 700;
 }
 
-[href*="discord.com/channels/"] {
+[href*="discord.com/channels/"],
+[href*="discordapp.com"] {
 	color: #7289da !important;
 }
 
@@ -607,5 +608,15 @@ div.footer-3UKYOU,
 
 [href*="github.com"] {
 	color: #00f0a8 !important;
+	font-weight: 700;
+}
+
+[href*="vtop.vit"] {
+	color: #2980B9 !important;
+	font-weight: 700;
+}
+
+[href*="teams.microsoft"] {
+	color: #464775 !important;
 	font-weight: 700;
 }
