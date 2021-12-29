@@ -436,18 +436,18 @@ rect[fill^="hsl(214,"] {
 /* Profile Modal Gradient */
 .userPopout-xaxa6l {
 	background: #000 45;
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px)
 }
 
 .userPopout-xaxa6l .avatarWrapperNormal-26WQIb>svg {
 	transform: scale(1.15);
-	margin: 6px;
+	margin: 6px
 }
 
 .userPopout-xaxa6l .banner-2QYc2d:not(.bannerPremium-2hSAwz) {
 	position: absolute;
 	height: 100%;
-	opacity: 0.5;
+	opacity: .5
 }
 
 .userPopout-xaxa6l .headerNormal-3KXFBt .banner-2QYc2d:not(.bannerPremium-2hSAwz):after {
@@ -456,7 +456,7 @@ rect[fill^="hsl(214,"] {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	border-radius: 8px;
+	border-radius: 8px
 }
 
 .userPopout-xaxa6l .headerNormal-3KXFBt .banner-2QYc2.bannerPremium-2hSAwz:after {
@@ -465,22 +465,22 @@ rect[fill^="hsl(214,"] {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	border-radius: 8px;
+	border-radius: 8px
 }
 
 .userPopout-xaxa6l .footer-3UKYOU,
 .userPopout-xaxa6l .bodyInnerWrapper-26fQXj {
-	background-color: transparent;
+	background-color: transparent
 }
 
 .userPopout-xaxa6l .headerNormal-3KXFBt {
-	height: 120px;
+	height: 120px
 }
 
 .userPopout-xaxa6l .avatar-37jOim {
 	border: none;
 	background: 0 0;
-	padding: 6px;
+	padding: 6px
 }
 
 /*transparent call background*/
