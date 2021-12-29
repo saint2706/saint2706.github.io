@@ -478,3 +478,215 @@ rect[fill^="hsl(214,"] {
 	height: 32px;
 	padding: 8px;
 }
+
+/* Username GLowies */
+.username-1A8OIy,
+.headerName-fajvi9,
+.usernameFont-23TX-h,
+.headerNameWrapper-3res2c {
+	font-weight: 1000 !important;
+	transition: filter 0.3s ease-in-out 0.3s;
+	filter: brightness(0) invert(1);
+	text-shadow: 0px 0px 5px;
+}
+
+.username-1A8OIy:hover,
+.headerName-fajvi9:hover,
+.usernameFont-23TX-h:hover,
+.headerNameWrapper-3res2c:hover {
+	filter: brightness(1) invert(0) !important;
+}
+
+/*Glowing unread servers*/
+@keyframes unreadRainbow {
+	/*animation*/
+	50% {
+		background-position: 100% 50%;
+	}
+}
+.wrapper-25eVIn foreignObject {
+	/*Round server channels*/
+	mask: unset;
+	border-radius: 1000%;
+}
+.pill-1z4sAY {
+	/*Makes ring visible*/
+	overflow: visible !important;
+}
+.item-2hkk8m[style*="height: 8px"]::before {
+	/*Unread server ring*/
+	content: "";
+	position: absolute;
+	top: -22px;
+	left: 14px;
+	width: 52px;
+	height: 52px !important;
+	border-radius: 41%;
+	background: linear-gradient(
+		120deg,
+		rgb(0, 64, 255),
+		rgb(0, 64, 255),
+		rgb(0, 64, 255),
+		rgb(128, 0, 255),
+		rgb(255, 0, 0),
+		rgb(255, 145, 0),
+		rgb(2, 190, 2),
+		rgb(0, 64, 255),
+		rgb(128, 0, 255),
+		rgb(255, 0, 0),
+		rgb(255, 145, 0),
+		rgb(2, 190, 2),
+		rgb(0, 0, 0)
+	);
+	background-size: 200% 200%;
+	background-position: 0 50%;
+	animation: unreadRainbow 4s infinite;
+	transition: 0.25s ease;
+}
+.wrapper-1BJsBx {
+	/*Matches png server icons with default background*/
+	background-color: var(--background-tertiary);
+}
+
+/* Brighter thread spine */
+.spine--Wla_O {
+	color: rgb(255, 255, 255);
+}
+
+/* Cooler Reactions */
+.reaction-1hd86g {
+	background: -webkit-linear-gradient(
+		120deg,
+		rgba(138, 157, 224, 0.125),
+		rgba(255, 255, 255, 0.152)
+	);
+	background-clip: border-box;
+	-webkit-background-clip: border-box;
+	border-color: #67686a;
+	border-width: 2px;
+	border-radius: 2px;
+}
+.reaction-1hd86g:hover {
+	background: -webkit-linear-gradient(
+		80deg,
+		rgb(146, 191, 221),
+		rgb(255, 255, 255)
+	);
+	background-clip: text;
+	-webkit-background-clip: text;
+}
+.reaction-1hd86g:hover {
+	background: -webkit-linear-gradient(
+		120deg,
+		rgba(138, 157, 224, 0.125),
+		rgba(255, 255, 255, 0.152)
+	);
+	background-clip: border-box;
+	-webkit-background-clip: border-box;
+}
+
+/* Big profile modal */
+.flex-1xMQg5[style*="https"],
+.flex-1xMQg5[style*="https"] div[class*="top"] {
+	background: transparent;
+}
+.flex-1xMQg5[style*="https"] .tabBarContainer-1s1u-z {
+	border: none !important;
+}
+.flex-1xMQg5[style*="https"] div[class*="top"]:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	pointer-events: none;
+	opacity: 0.5;
+	border-radius: 5px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: var(--user-popout-position) center;
+	background-image: var(--user-background);
+	-webkit-mask-image: linear-gradient(#000, transparent) !important;
+}
+
+/* Change hue of replies */
+:root {
+	--mention-hue: 187;
+}
+
+.mentioned-xhSam7 .repliedMessage-VokQwo:before {
+	border-color: hsla(var(--mention-hue), 73%, 46%);
+}
+.mentioned-xhSam7,
+.menu-3sdvDG,
+.mouse-mode.full-motion .mentioned-xhSam7:hover,
+.message-2qnXI6.mentioned-xhSam7.selected-2P5D_Z {
+	background-color: hsla(var(--mention-hue), 73%, 46%, 0.1);
+}
+.mentioned-xhSam7:before,
+.menu-3sdvDG:before {
+	background-color: hsla(var(--mention-hue), 73%, 46%);
+}
+
+/* Center categories */
+.name-3l27Hl {
+	text-align: center;
+}
+.arrow-gKvcEx {
+	display: none;
+}
+
+/* Beautiful Links */
+[href*="youtu.be"],
+[href*="youtube.com"] {
+	color: #c4302b !important;
+	font-weight: 700;
+}
+
+[href*="twitch.tv"] {
+	color: #b700ff !important;
+	font-weight: 700;
+}
+[href*="spotify.com"] {
+	color: rgb(19, 185, 4) !important;
+	font-weight: 700;
+}
+[href*="discord.com/channels/"] {
+	color: #7289da !important;
+}
+[href*="discord.com/channels/"]::before {
+	content: "Jump to Message : ";
+	font-size: 16px;
+	font-weight: 700;
+	color: #603cff;
+}
+[href*="reddit.com"] {
+	color: #e05a0c !important;
+	font-weight: 700;
+}
+[href*="instagram.com/"] {
+	background: -webkit-linear-gradient(
+		80deg,
+		rgb(255, 238, 0),
+		rgb(255, 157, 11),
+		#b700ff
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: 700;
+}
+[href*="twitter.com/"] {
+	color: #00acee !important;
+	font-weight: 700;
+}
+[href*="betterdiscord.app/"],
+[href*="discord.gg/"] {
+	color: #7289da !important;
+	font-weight: 700;
+}
+[href*="github.com"] {
+	color: #00f0a8 !important;
+	font-weight: 700;
+}
