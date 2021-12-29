@@ -469,7 +469,7 @@ div.footer-3UKYOU,
 }
 
 .headerNormal-3KXFBt {
-	height: 60px;
+	height: 120px;
 }
 
 .userPopout-xaxa6l .avatar-37jOim,
@@ -482,6 +482,10 @@ div.footer-3UKYOU,
 .layer-v9HyYc:not(.disabledPointerEvents-1ptgTB),
 .input-cIJ7To {
 	backdrop-filter: blur(5px);
+}
+
+.note-1oo11U {
+	display: none
 }
 
 /*transparent call background*/
