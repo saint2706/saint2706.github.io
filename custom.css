@@ -441,6 +441,7 @@ rect[fill^="hsl(214,"] {
 	width: 100%;
 	height: 100%;
 	position: absolute;
+	backdrop-filter: blur(5px);
 }
 
 .topSection-y3p-_D header {
@@ -479,8 +480,9 @@ div.footer-3UKYOU,
 	border-color: transparent;
 }
 
-.layer-v9HyYc:not(.disabledPointerEvents-1ptgTB),
-.input-cIJ7To {
+.headerTop-3vNv-a,
+.body-3HBlXn,
+.footer-3UKYOU {
 	backdrop-filter: blur(5px);
 }
 
