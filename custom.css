@@ -496,31 +496,6 @@ div.footer-3UKYOU,
 	backdrop-filter: blur(20px);
 }
 
-/* Animated vc options */
-.wrapper-24pKcD {
-	transition: all 0.5s ease;
-	transform: translateY(89px);
-	height: 0;
-}
-
-.panels-j1Uci_:hover .wrapper-24pKcD {
-	transform: none;
-	height: 89px;
-}
-
-.panel-24C3ux {
-	transition: all 0.5s ease;
-	height: 0;
-	padding: 0px 8px;
-	transform: translateY(49px);
-}
-
-.panels-j1Uci_:hover .panel-24C3ux {
-	transform: none;
-	height: 32px;
-	padding: 8px;
-}
-
 /* Brighter thread spine */
 .spine--Wla_O {
 	color: rgb(255, 255, 255);
