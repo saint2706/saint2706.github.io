@@ -26,11 +26,11 @@ html:not(.app-focused) {
 }
 
 html.app-focused {
-	transition: 550ms ease-out;
+	transition: 1000ms ease-out;
 }
 
 #app-mount:hover {
-	transition: 550ms ease-out;
+	transition: 1000ms ease-out;
 }
 
 html:not(.app-focused) #app-mount::after {
@@ -608,6 +608,7 @@ rect[fill^="hsl(214,"] {
 	background-repeat: no-repeat;
 	background-position: var(--user-popout-position) center;
 	background-image: var(--user-background);
+	mask-image: linear-gradient(#000, transparent) !important;
 	-webkit-mask-image: linear-gradient(#000, transparent) !important;
 }
 
@@ -673,6 +674,7 @@ rect[fill^="hsl(214,"] {
 		rgb(255, 157, 11),
 		#b700ff
 	);
+	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-weight: 700;
