@@ -1154,3 +1154,13 @@ button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x g
 .container-3auIfb[style*="opacity: 1; background-color: hsl(218, calc(var(--saturation-factor, 1) * 4.6%), 46.9%);"] path {
 	fill: #c13a3a !important;
 }
+
+/* Fixes discriminators */
+.peopleListItem-2nzedh:hover .userInfo-2zN2z8 .discriminator-22Okc1 {
+	display: block;
+	visibility: visible;
+}
+
+.discriminator-22Okc1 {
+	display: none;
+}
