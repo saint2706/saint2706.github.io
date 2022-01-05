@@ -19,29 +19,6 @@
 	transition: all 0.2s ease-in-out;
 }
 
-/* Blur discord when not focused */
-html:not(.app-focused) {
-	transition: filter 400ms ease-in;
-	filter: blur(6px);
-}
-
-html.app-focused {
-	transition: 1000ms ease-out;
-}
-
-#app-mount:hover {
-	transition: 1000ms ease-out;
-}
-
-html:not(.app-focused) #app-mount::after {
-	content: "";
-	z-index: 200;
-	position: fixed;
-	background: rgba(0, 0, 0, 0.5);
-	width: 100%;
-	height: 100%;
-}
-
 /* Unclamp the About Me section, so it's not limited to just 6 lines. (normally it cuts off at 6 and adds a ...) */
 .clamped-IwJfxR {
 	-webkit-line-clamp: 190;
