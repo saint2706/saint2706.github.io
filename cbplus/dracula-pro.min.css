@@ -1,3 +1,24 @@
+:root {
+	--background: #22212c;
+	--black: #22212c;
+	--blue: #9580ff;
+	--brightBlack: #504c67;
+	--brightBlue: #aa99ff;
+	--brightCyan: #99ffee;
+	--brightGreen: #a2ff99;
+	--brightPurple: #ff99cc;
+	--brightRed: #ffaa99;
+	--brightWhite: #ffffff;
+	--brightYellow: #ffff99;
+	--cyan: #80ffea;
+	--foreground: #f8f8f2;
+	--green: #8aff80;
+	--purple: #ff80bf;
+	--red: #ff9580;
+	--white: #f8f8f2;
+	--yellow: #ffff80;
+}
+
 pre code.hljs {
 	display: block;
 	overflow-x: auto;
@@ -8,26 +29,9 @@ code.hljs {
 	padding: 3px 5px;
 }
 
-/*!
-   Theme: Dracula Pro
-
-   #22212C
-   #99FFEE
-   #8AFF80
-   #F8F8F2
-   #A2FF99
-   #80FFEA
-   #A2FF99
-   #FF80BF
-   #FF9580
-   #FFAA99
-   #FFFF99
-   #FFFF99
-   #F8F8F2
-*/
 .hljs {
-	background: #22212c;
-	color: #f8f8f2;
+	background: var(--background);
+	color: var(--foreground);
 }
 
 .hljs-doctag,
@@ -44,86 +48,86 @@ code.hljs {
 
 .hljs-section,
 .hljs-tag {
-	color: #99ffee;
+	color: var(--brightCyan);
 }
 
 .hljs-selector-class,
 .hljs-selector-id,
 .hljs-template-variable,
 .hljs-variable {
-	color: #80ffea;
+	color: var(--cyan);
 }
 
 .hljs-meta-string,
 .hljs-string {
-	color: #a2ff99;
+	color: var(--brightGreen);
 }
 
 .hljs-attr,
 .hljs-quote,
 .hljs-selector-attr {
-	color: #8aff80;
+	color: var(--green);
 }
 
 .hljs-tag .hljs-attr {
-	color: inherit;
+	color: var(--brightBlue);
 }
 
 .hljs-attribute,
 .hljs-title,
 .hljs-type {
-	color: #ffff99;
+	color: var(--brightYellow);
 }
 
 .hljs-number,
 .hljs-symbol {
-	color: #ff9580;
+	color: var(--red);
 }
 
 .hljs-bullet,
 .hljs-template-tag {
-	color: #a2ff99;
+	color: var(--brightGreen);
 }
 
 .hljs-built_in,
 .hljs-keyword,
 .hljs-literal,
 .hljs-selector-tag {
-	color: #ffff99;
+	color: var(--brightYellow);
 }
 
 .hljs-code,
 .hljs-comment,
 .hljs-formula {
-	color: #f8f8f2;
+	color: var(--white);
 }
 
 .hljs-link,
 .hljs-regexp,
 .hljs-selector-pseudo {
-	color: #ff80bf;
+	color: var(--purple);
 }
 
 .hljs-meta {
-	color: #ffaa99;
+	color: var(--brightRed);
 }
 
 .hljs-deletion {
-	background: #ffaa99;
-	color: #22212c;
+	background: var(--brightRed);
+	color: var(--black);
 }
 
 .hljs-addition {
-	background: #a2ff99;
-	color: #22212c;
+	background: var(--brightGreen);
+	color: var(--black);
 }
 
 .hljs-subst {
-	color: #f8f8f2;
+	color: var(--white);
 }
 
 .hljs a {
-	color: inherit;
+	color: var(--blue);
 }
 
 .hljs a:focus,
@@ -133,6 +137,6 @@ code.hljs {
 }
 
 .hljs mark {
-	background: #22212c;
-	color: inherit;
+	background: var(--background);
+	color: var(--purple);
 }
