@@ -21,25 +21,7 @@
 
 /* Unclamp the About Me section, so it's not limited to just 6 lines. (normally it cuts off at 6 and adds a ...) */
 .clamped-2ZePhX {
-	-webkit-line-clamp: 190;
-	max-height: 112px;
-	overflow-x: hidden;
-	overflow-y: scroll;
-}
-
-.clamped-2ZePhX::-webkit-scrollbar {
-	width: 15px;
-	height: 15px;
-}
-
-.clamped-2ZePhX::-webkit-scrollbar-track {
-	border-radius: 6px;
-	background-color: rgb(255 255 255 / 10%);
-}
-
-.clamped-2ZePhX::-webkit-scrollbar-thumb {
-	background: linear-gradient(45deg, #ff0000, #0000ff);
-	border-radius: 6px;
+	-webkit-line-clamp: unset;
 }
 
 /* Removes Chatbox from channel that don't allow you to communicate */
@@ -269,30 +251,27 @@
 
 /*Everything Offline*/
 /*Offline Revamp*/
+/*Everything Offline*/
 .tipTitle-3FYEQp {
 	content: "";
 	font-size: 0px;
 }
-
 .tipTitle-3FYEQp::before {
 	content: "Hey...";
 	font-size: 12px;
 }
-
 .tip-1AwED_ {
 	content: "";
 	font-size: 0px;
 }
-
 .tip-1AwED_::before {
 	content: "You're Offline :c";
 	font-size: 16px;
 }
-
-.problems-CvGwpb.slideIn-VAD-dp {
+.problems-CvGwpb.slideIn-VAD-dp,
+.tip-1AwED_ > .keybindShortcut-3zF1P9.keybind-2rkdVo {
 	display: none;
 }
-
 .container-2RRFHK.fixClipping-3GOd_d {
 	background: rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(5px);
@@ -1196,4 +1175,46 @@ button[class*="button-38aScr lookBlank-3eh9lL colorBrand-3pXr91 sizeMin-1mJd1x g
 
 .discriminator-WV5K5s {
 	display: none;
+}
+
+/* Spotify Covers Go Wheeeee */
+/* profile */
+.assetsLargeImageSpotify-17ME3M {
+	animation: spin 3s linear infinite;
+	border-radius: 50%;
+}
+/* the animation  */
+@keyframes spin {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Rounded Context Menu */
+.menu-1QACrS,
+.colorDefault-CDqZdO {
+	border-radius: 15px;
+}
+
+/* Spin home button */
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	20% {
+		transform: rotate(-20deg);
+	}
+	70% {
+		transform: rotate(380deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.pill-L_aLMQ.bd-selected + .listItemWrapper-3d87LP .homeIcon-r0w4ny {
+	animation: spin 0.8s ease;
 }
