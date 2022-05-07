@@ -1,0 +1,2 @@
+(function(c){"use strict";let n;const s=()=>Math.random().toString(16).substring(2,8);var a={onLoad(){n=cumcord.patcher.after("sendMessage",c.webpackModules.findByProps("sendMessage"),e=>{if(e[1].content.startsWith("!prnt")){const d=e[1].content.replace("!prnt","").replace(" ",""),r=parseInt(d);if(r<=5){console.log("i have entered if statement");let t="";for(let o=0;o<r;o++)t+="https://prnt.sc/"+s()+`
+`;e[1].content=t}else{const t="https://prnt.sc/"+s();e[1].content=t}}return e})},onUnload(){n()}};return a})(cumcord.modules);
