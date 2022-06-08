@@ -1,41 +1,48 @@
-function copyBladeLink() {
+function copyBladeLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro-blade.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro-blade.min.css"
     )
 }
 
-function copyBuffyLink() {
+function copyBuffyLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro-buffy.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro-buffy.min.css"
     )
 }
 
-function copyLincolnLink() {
+function copyLincolnLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro-lincoln.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro-lincoln.min.css"
     )
 }
 
-function copyMorbiusLink() {
+function copyMorbiusLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro-morbius.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro-morbius.min.css"
     )
 }
 
-function copyVanHelsingLink() {
+function copyVanHelsingLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro-van-helsing.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro-van-helsing.min.css"
     )
 }
 
-function copyProLink() {
+function copyProLink ()
+{
     navigator.clipboard.writeText(
-        "https://saintwithataint.github.io/cbplus/dracula-pro.min.css"
+        "https://saint2706.github.io/cbplus/dracula-pro.min.css"
     )
 }
 
-function copyCustomCssImport() {
+function copyCustomCssImport ()
+{
     navigator.clipboard.writeText(
-        "@import url('https://saintwithataint.github.io/customCSS/custom.css');"
+        "@import url('https://saint2706.github.io/customCSS/custom.css');"
     )
 }
