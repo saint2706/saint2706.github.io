@@ -589,23 +589,23 @@ div.footer-3naVBw,
 /* Beautiful Links */
 
 [href*="youtu.be"],
-[href*="youtube"] {
+[href*="youtube.com"] {
     color: #c4302b !important;
     font-weight: 700;
 }
 
-[href*="twitch"] {
+[href*="twitch.tv"] {
     color: #b700ff !important;
     font-weight: 700;
 }
 
-[href*="spotify"] {
+[href*="spotify.com"] {
     color: rgb(29, 185, 84) !important;
     font-weight: 700;
 }
 
 [href*="discord.com/channels/"],
-[href*="discordapp"],
+[href*="discordapp.com"],
 [href*="discord.gg/"] {
     color: #7289da !important;
 }
@@ -617,12 +617,12 @@ div.footer-3naVBw,
     color: #603cff;
 }
 
-[href*="reddit"] {
+[href*="reddit.com"] {
     color: #e05a0c !important;
     font-weight: 700;
 }
 
-[href*="instagram"] {
+[href*="instagram.com"] {
     background: -webkit-linear-gradient(80deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
     background-clip: text;
     -webkit-background-clip: text;
@@ -630,7 +630,7 @@ div.footer-3naVBw,
     font-weight: 700;
 }
 
-[href*="twitter"] {
+[href*="twitter.com"] {
     color: #00acee !important;
     font-weight: 700;
 }
@@ -650,12 +650,12 @@ div.footer-3naVBw,
     font-weight: 700;
 }
 
-[href*="rentry"] {
+[href*="rentry.co"] {
     color: #dddddd !important;
     font-weight: 700;
 }
 
-[href*="letterboxd"] {
+[href*="letterboxd.com"] {
     background: -webkit-linear-gradient(80deg, #ff8000 0%, #40bcf4 50%, #00e054 100%);
     -webkit-background-clip: text;
     background-clip: text;
