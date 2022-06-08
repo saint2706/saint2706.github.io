@@ -1,17 +1,5 @@
 /* PLEASE NOTE THAT I DO NOT OWN ANY OF THESE SNIPPETS NEITHER DID I CREATE THESE */
 
-/* Server Rings */
-@import url("https://discordstyles.github.io/SoftX/ServerRings.css");
-
-/* Includes variables */
-:root {
-    --server-unread-colour: 255, 255, 255;
-    --server-hover-colour: 255, 255, 255;
-    --server-selected-colour: var(--accent, 0, 231, 169);
-    --server-spacing: 16px;
-    --server-glow-intensity: 1;
-}
-
 /* Hide user buttons until hover */
 
 .panels-3wFtMD>.container-YkUktl .flex-2S1XBF> :not(:last-child) {
@@ -589,7 +577,8 @@ div.footer-3naVBw,
 /* Beautiful Links */
 
 [href*="youtu.be"],
-[href*="youtube.com"] {
+[href*="youtube.com"],
+[href*="/invidious"] {
     color: #c4302b !important;
     font-weight: 700;
 }
@@ -617,12 +606,29 @@ div.footer-3naVBw,
     color: #603cff;
 }
 
-[href*="reddit.com"] {
+[href*="reddit.com"],
+[href*="/libreddit"],
+[href*="/teddit"],
+[href*="leddit"] {
     color: #e05a0c !important;
     font-weight: 700;
 }
 
-[href*="instagram.com"] {
+[href*="minecraft.tools"],
+[href*="minecraft.net"],
+[href*="minecraft.mojang.com"] {
+    background: -webkit-linear-gradient(80deg, #563123, #af543d, #04b213, #6dba00, #a39a9a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+[href*="instagram.com"],
+[href*="bibliogram.art"],
+[href*="bibliogram.pussthecat.org"],
+[href*="bibliogram.1d4.us"],
+[href*="bibliogram.froth.zone"] {
     background: -webkit-linear-gradient(80deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
     background-clip: text;
     -webkit-background-clip: text;
@@ -630,12 +636,14 @@ div.footer-3naVBw,
     font-weight: 700;
 }
 
-[href*="twitter.com"] {
+[href*="twitter.com"],
+[href*="/nitter"] {
     color: #00acee !important;
     font-weight: 700;
 }
 
-[href*="git"] {
+[href*="github.com"],
+[href*="gitlab.com"] {
     color: #00f0a8 !important;
     font-weight: 700;
 }
@@ -650,7 +658,8 @@ div.footer-3naVBw,
     font-weight: 700;
 }
 
-[href*="rentry.co"] {
+[href*="rentry.co"],
+[href*="rentry.org"] {
     color: #dddddd !important;
     font-weight: 700;
 }
@@ -663,6 +672,21 @@ div.footer-3naVBw,
     font-weight: 700;
 }
 
+[href*="google.co"] {
+    background: -webkit-linear-gradient(80deg, #18ff3e, #2571ff, #ff0232, #ffb927, #474749);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+[href*="imgur.com"] {
+    background: -webkit-linear-gradient(80deg, #ff8000 0%, #1cb76d, #f2f2f2, #34373c, #141518, #291765);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
 
 /** Role List Improvements */
 
@@ -1200,21 +1224,6 @@ button[class*="button-f2h6uQ lookBlank-21BCro colorBrand-I6CyqQ sizeMin-DfpWCE g
 .menu-1QACrS,
 .colorDefault-CDqZdO {
     border-radius: 15px;
-}
-
-/* Rounded User Panel */
-.container-YkUktl {
-    margin-right: 5px;
-    margin-bottom: 10px;
-    margin-left: 5px;
-    border: 1px solid rgb(78, 78, 81);
-    border-radius: 20px;
-    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.483);
-    background: rgba(0, 0, 0, 0.436);
-}
-
-.panels-3wFtMD {
-    background-color: #00000000;
 }
 
 /* Timestamp Icon */
