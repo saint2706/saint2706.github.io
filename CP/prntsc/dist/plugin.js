@@ -1,2 +1,0 @@
-(function(c){"use strict";let n;const s=()=>Math.random().toString(16).substring(2,8);var a={onLoad(){n=cumcord.patcher.after("sendMessage",c.webpackModules.findByProps("sendMessage"),t=>{if(t[1].content.startsWith("!prnt")){const p=t[1].content.replace("!prnt","").replace(" ",""),r=parseInt(p);if(r<=5){let e="";for(let o=0;o<r;o++)e+="https://prnt.sc/"+s()+`
-`;t[1].content=e}else{const e="https://prnt.sc/"+s();t[1].content=e}}return t})},onUnload(){n()}};return a})(cumcord.modules);
