@@ -1,152 +1,239 @@
 {
   "basics": {
-    "name": "Your Sidebar Name",
-    "email": "none@example.org",
-    "phone": "",
-    "website": "https://academicpages.github.io",
-    "summary": "Currently employed at Red Brick University. Short biography for the left-hand sidebar",
+    "name": "Rishabh Agrawal",
+    "email": "rishabh.agrawal25b@gim.ac.in",
+    "phone": "+91-9137095017",
+    "website": "https://saint2706.github.io",
+    "summary": "PGDM Big Data Analytics candidate with a computer science foundation, building insight-driven solutions across marketing, product, and analytics.",
     "location": {
-      "address": "",
-      "postalCode": "",
-      "city": "Earth",
-      "countryCode": "US",
-      "region": ""
+      "city": "Goa",
+      "countryCode": "IN",
+      "region": "Goa"
     },
     "profiles": [
       {
-        "network": "Google Scholar",
-        "username": "",
-        "url": "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
-      },
-      {
-        "network": "ORCID",
-        "username": "",
-        "url": "http://orcid.org/yourorcidurl"
+        "network": "LinkedIn",
+        "username": "rishabh-agrawal-1807321b9",
+        "url": "https://www.linkedin.com/in/rishabh-agrawal-1807321b9"
       },
       {
         "network": "GitHub",
-        "username": "academicpages",
-        "url": "https://github.com/academicpages"
+        "username": "saint2706",
+        "url": "https://github.com/saint2706"
+      },
+      {
+        "network": "Dev.to",
+        "username": "saint2706",
+        "url": "https://dev.to/saint2706"
+      },
+      {
+        "network": "Medium",
+        "username": "saint2706",
+        "url": "https://medium.com/@saint2706"
+      },
+      {
+        "network": "Twitter",
+        "username": "saint2706",
+        "url": "https://twitter.com/saint2706"
       }
     ]
   },
-  "work": [],
+  "work": [
+    {
+      "name": "TheSmartBridge",
+      "position": "Data Intern",
+      "startDate": "2023-05",
+      "endDate": "2023-07",
+      "summary": "Evaluated SaaS market opportunities and aligned stakeholders on a roadmap for a new analytics product.",
+      "highlights": [
+        "Researched product gaps and competitive benchmarks to shape the go-to-market plan.",
+        "Developed personas, positioning, and phased delivery milestones with a five-member intern cohort.",
+        "Presented recommendations to senior management and received commendation for the depth of analysis."
+      ]
+    },
+    {
+      "name": "Mood Indigo, IIT Bombay",
+      "position": "Indigo Squad Member",
+      "startDate": "2022-07",
+      "endDate": "2022-12",
+      "summary": "Drove experiential marketing, partnerships, and community engagement for Asia's largest college cultural festival.",
+      "highlights": [
+        "Amplified outreach to students from 1,700+ colleges through storytelling-led campaigns.",
+        "Boosted social engagement by 25% via coordinated multi-platform content strategies.",
+        "Secured three new sponsorships that increased the festival budget and funded new programming."
+      ]
+    }
+  ],
   "education": [
     {
-      "institution": "GitHub University",
-      "area": "Ph.D in Version Control Theory",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2018",
-      "gpa": null,
+      "institution": "Goa Institute of Management",
+      "area": "Big Data Analytics",
+      "studyType": "PGDM",
+      "startDate": "2025-06",
+      "endDate": "2027-05",
+      "score": null,
       "courses": []
     },
     {
-      "institution": "GitHub University",
-      "area": "M.S. in Jekyll",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2014",
-      "gpa": null,
+      "institution": "Vellore Institute of Technology",
+      "area": "Computer Science and Engineering",
+      "studyType": "B.Tech",
+      "startDate": "2020-07",
+      "endDate": "2024-06",
+      "score": "8.2/10",
       "courses": []
     },
     {
-      "institution": "GitHub University",
-      "area": "B.S. in GitHub",
-      "studyType": "",
-      "startDate": "",
-      "endDate": "2012",
-      "gpa": null,
+      "institution": "Delhi Public School",
+      "area": "Science",
+      "studyType": "CBSE",
+      "startDate": "2018-04",
+      "endDate": "2020-03",
+      "score": "90%",
+      "courses": []
+    },
+    {
+      "institution": "Ryan International School",
+      "area": "General Curriculum",
+      "studyType": "CBSE",
+      "startDate": "2005-04",
+      "endDate": "2018-03",
+      "score": "94%",
       "courses": []
     }
   ],
-  "skills": [],
-  "languages": [],
-  "interests": [],
-  "references": [],
-  "publications": [
+  "skills": [
     {
-      "name": "Paper Title Number 1",
-      "publisher": "Journal 1",
-      "releaseDate": "2009-10-01",
-      "website": "http://academicpages.github.io/files/paper1.pdf",
-      "summary": "This paper is about the number 1. The number 2 is left for future work."
+      "name": "Programming & Scripting",
+      "keywords": [
+        "Python",
+        "R",
+        "SQL",
+        "C",
+        "C++",
+        "Java",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
     },
     {
-      "name": "Paper Title Number 2",
-      "publisher": "Journal 1",
-      "releaseDate": "2010-10-01",
-      "website": "http://academicpages.github.io/files/paper2.pdf",
-      "summary": "This paper is about the number 2. The number 3 is left for future work."
+      "name": "Analytics & AI Platforms",
+      "keywords": [
+        "Tableau",
+        "Microsoft Power BI",
+        "IBM Watson",
+        "TensorFlow",
+        "PyTorch",
+        "Hugging Face"
+      ]
     },
     {
-      "name": "Paper Title Number 3",
-      "publisher": "Journal 1",
-      "releaseDate": "2015-10-01",
-      "website": "http://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about the number 3. The number 4 is left for future work."
-    },
-    {
-      "name": "Paper Title Number 4",
-      "publisher": "GitHub Journal of Bugs",
-      "releaseDate": "2024-02-17",
-      "website": "http://academicpages.github.io/files/paper3.pdf",
-      "summary": "This paper is about fixing template issue #693."
+      "name": "Data Engineering & Cloud",
+      "keywords": [
+        "Amazon Web Services",
+        "Oracle Cloud Infrastructure",
+        "MongoDB",
+        "PostgreSQL",
+        "MariaDB",
+        "NoSQL"
+      ]
     }
   ],
-  "presentations": [
+  "projects": [
     {
-      "name": "Talk 1 on Relevant Topic in Your Field",
-      "event": "UC San Francisco, Department of Testing",
-      "date": "2012-03-01",
-      "location": "San Francisco, CA, USA",
-      "description": ""
+      "name": "AI-Based Attendance Management",
+      "description": "Engineered a facial-recognition attendance platform that automates student and employee check-ins using human activity detection.",
+      "keywords": [
+        "Computer Vision",
+        "Facial Recognition",
+        "Automation"
+      ]
     },
     {
-      "name": "Tutorial 1 on Relevant Topic in Your Field",
-      "event": "UC-Berkeley Institute for Testing Science",
-      "date": "2013-03-01",
-      "location": "Berkeley, CA, USA",
-      "description": ""
+      "name": "Football Score Prediction & Visualization",
+      "description": "Modeled historical match data to forecast outcomes and built dashboards that surface actionable team insights.",
+      "keywords": [
+        "Predictive Analytics",
+        "Data Visualization",
+        "Sports Analytics"
+      ]
     },
     {
-      "name": "Talk 2 on Relevant Topic in Your Field",
-      "event": "London School of Testing",
-      "date": "2014-02-01",
-      "location": "London, UK",
-      "description": ""
+      "name": "AI Tool for TV Script Generation",
+      "description": "Trained a recurrent neural network to author episode scripts, demonstrating the creative potential of deep learning.",
+      "keywords": [
+        "Recurrent Neural Networks",
+        "Natural Language Processing",
+        "Creative AI"
+      ]
     },
     {
-      "name": "Conference Proceeding talk 3 on Relevant Topic in Your Field",
-      "event": "Testing Institute of America 2014 Annual Conference",
-      "date": "2014-03-01",
-      "location": "Los Angeles, CA, USA",
-      "description": ""
+      "name": "The Simpsons Data Analytics",
+      "description": "Mined long-running sitcom data to highlight trends in storytelling, ratings, and retention for business intelligence use cases.",
+      "keywords": [
+        "Business Intelligence",
+        "Data Storytelling",
+        "Media Analytics"
+      ]
     }
   ],
-  "teaching": [
+  "certifications": [
     {
-      "course": "Teaching experience 1",
-      "institution": "University 1, Department",
-      "date": "2014-01-01",
-      "role": "Undergraduate course",
-      "description": ""
+      "name": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services"
     },
     {
-      "course": "Teaching experience 2",
-      "institution": "University 1, Department",
-      "date": "2015-01-01",
-      "role": "Workshop",
-      "description": ""
+      "name": "Data Analytics, Storage, Mining & Visual Big Data Technologies",
+      "issuer": "Udemy"
+    },
+    {
+      "name": "Data Analytics",
+      "issuer": "IBM Skills Network"
+    },
+    {
+      "name": "Programming Foundations in Python, Java, HTML, CSS & JavaScript",
+      "issuer": "Udemy & Coursera"
     }
   ],
-  "portfolio": [
+  "awards": [
     {
-      "name": "Portfolio item number 1",
-      "category": "portfolio",
-      "date": "",
-      "url": "",
-      "description": "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+      "title": "TheSmartBridge Leadership Commendation",
+      "date": "2023-07",
+      "awarder": "TheSmartBridge",
+      "summary": "Recognized by senior leadership for comprehensive SaaS market analysis and roadmap recommendations."
+    },
+    {
+      "title": "Mood Indigo Sponsorship Achievement",
+      "date": "2022-12",
+      "awarder": "Mood Indigo, IIT Bombay",
+      "summary": "Acknowledged for securing three new sponsors that expanded the festival's budget and programming capacity."
     }
-  ]
+  ],
+  "interests": [
+    {
+      "name": "Statistics"
+    },
+    {
+      "name": "Marketing"
+    },
+    {
+      "name": "Analytics"
+    },
+    {
+      "name": "Creative Storytelling"
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Mood Indigo, IIT Bombay",
+      "position": "Indigo Squad Ambassador",
+      "startDate": "2022-07",
+      "endDate": "2022-12",
+      "summary": "Coordinated experiential marketing, partner relationships, and on-ground execution for Asia's largest cultural festival."
+    }
+  ],
+  "publications": [],
+  "presentations": [],
+  "teaching": []
 }

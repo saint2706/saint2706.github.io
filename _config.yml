@@ -12,8 +12,8 @@ site_theme               : "default" # Currently available options are "default"
 title                    : "Rishabh Agrawal's Portfolio"
 title_separator          : "-"
 name                     : &name "Rishabh Agrawal"
-description              : &description "A highly motivated and detail-oriented professional with a passion for data analytics and a strong foundation in computer science."   # Update this with a general description of your site, this is the default if not overridden by a page
-url                      : https://academicpages.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
+description              : &description "PGDM Big Data Analytics candidate translating data storytelling into measurable marketing and product impact."   # Update this with a general description of your site, this is the default if not overridden by a page
+url                      : https://saint2706.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "saint2706/saint2706.github.io"
@@ -26,11 +26,12 @@ author:
   avatar           : "bio-photo.jpg"
   name             : "Rishabh Agrawal"
   pronouns         : # example: "she/her"
-  bio              : "PGDM-Big Data Analytics student at Goa Institute of Management with a B.Tech in Computer Science and Engineering from Vellore Institute of Technology. Experienced in data analysis, machine learning, and software development."
+  bio              : "PGDM Big Data Analytics student pairing a VIT computer science foundation with hands-on SaaS research and large-scale campaign experience."
   location         : "Goa, India"
   employer         : "Goa Institute of Management"
   uri              : # URL
-  email            : "rishabh.agrawal22@vit.ac.in"
+  email            : "rishabh.agrawal25b@gim.ac.in"
+  phone            : "+91-9137095017"
 
   # Academic websites
   academia         : # URL
@@ -50,28 +51,28 @@ author:
   dribbble         : # Username
   github           : "saint2706"
   kaggle           : # Username
-  stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")
+  stackoverflow    : "10664221"
 
   # Social media
   artstation       : # Username
   bluesky          : # Username
-  facebook         : # Username
+  facebook         : "Saint.00000000000"
   flickr           : # Username
   foursquare       : # Username
   goodreads        : # Username
   google_plus      : # Username
   keybase          : # Username
-  instagram        : # Username
+  instagram        : "rishabhagrawal2706"
   lastfm           : # Username
-  linkedin         : # Username
+  linkedin         : "rishabh-agrawal-1807321b9"
   mastodon         : # URL
-  medium           : # URL
+  medium           : "saint2706"
   pinterest        : # Username
   soundcloud       : # Username
   steam            : # Username
   telegram         : # URL
   tumblr           : # Username
-  twitter          : # Username for X / Twitter
+  twitter          : "saint2706" # Username for X / Twitter
   vine             : # Username
   weibo            : # Username
   wikipedia        : # Username
@@ -145,9 +146,19 @@ og_description           :  # Social media default site image description
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
-  links: # An array of links to social media profiles
+  type                   : Person
+  name                   : *name
+  links:
+    - https://www.linkedin.com/in/rishabh-agrawal-1807321b9
+    - https://github.com/saint2706
+    - https://dev.to/saint2706
+    - https://medium.com/@saint2706
+    - https://twitter.com/saint2706
+    - https://instagram.com/rishabhagrawal2706
+    - https://facebook.com/Saint.00000000000
+    - https://stackoverflow.com/users/10664221
+    - https://twitch.tv/saint2706
+    - https://www.reddit.com/user/saintwithataint
 
 
 # Analytics

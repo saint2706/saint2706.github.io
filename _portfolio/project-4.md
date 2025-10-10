@@ -1,7 +1,13 @@
 ---
 title: "The Simpsons Data Analytics"
-excerpt: "Sourced data for the sitcom and derived actionable insights from it using data visualization techniques. This project focuses on the business prospect of good TV writing and important lessons in Business Intelligence Software.<br/><img src='/images/portfolio-placeholder.png'>"
+excerpt: "Investigated decades of The Simpsons episodes to extract storytelling, ratings, and character insights for media strategy teams."
 collection: portfolio
 ---
 
-This project involved sourcing and analyzing data from the long-running sitcom, The Simpsons, to derive actionable insights using advanced data visualization techniques. The analysis explored the business aspects of successful TV writing and provided important lessons in the application of Business Intelligence (BI) software. This project offered a unique opportunity to combine data analytics with media studies to understand the factors that contribute to a show's success.
+## Overview
+- **Objective:** Translate pop-culture data into business intelligence signals for content, marketing, and licensing teams.
+- **Approach:** Aggregated episode metadata, ratings, and script sentiment; built visual analyses that connected narrative patterns to audience reception.
+- **Impact:** Highlighted evergreen characters and themes that correlate with higher viewership, informing merchandising and campaign ideas.
+
+## Tools & Techniques
+Python · BeautifulSoup · SQL · Power BI · Storytelling with data

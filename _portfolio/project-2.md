@@ -1,7 +1,13 @@
 ---
-title: "Football Score Prediction and Visualization"
-excerpt: "Made an ML model that studies previous Football stats and results and predicts future trends. This project focuses on predictive analytics.<br/><img src='/images/portfolio-placeholder.png'>"
+title: "Football Score Prediction & Visualization"
+excerpt: "Modeled historical football data to forecast match outcomes and surface tactical insights through interactive dashboards."
 collection: portfolio
 ---
 
-This project involved the creation of a machine learning model designed to analyze historical football statistics and predict future match outcomes. The model was built using predictive analytics techniques to identify patterns and trends in the data. This project provided hands-on experience with data analysis, machine learning, and sports analytics.
+## Overview
+- **Objective:** Help analysts and fans anticipate match results by leveraging multi-season statistics and form indicators.
+- **Approach:** Engineered feature pipelines for team momentum, head-to-head history, and player metrics, then trained classification models to estimate win/draw probabilities.
+- **Impact:** Delivered dashboards that explained drivers of the predictions and enabled what-if scenario analysis for upcoming fixtures.
+
+## Tools & Techniques
+Python · Pandas · scikit-learn · Plotly · Tableau
