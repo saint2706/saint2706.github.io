@@ -1,7 +1,13 @@
 ---
 title: "AI Tool for TV Script Generation"
-excerpt: "Created an AI model that can generate a screenplay for a new episode of any TV show. This project explores creative writing and RNN technology.<br/><img src='/images/portfolio-placeholder.png'>"
+excerpt: "Designed a recurrent neural network writer that drafts episode scripts and accelerates ideation for television storytelling."
 collection: portfolio
 ---
 
-This project involved the development of an AI model capable of generating original screenplays for new episodes of any given TV show. The model was built using a Recurrent Neural Network (RNN) to learn the patterns and styles of existing scripts. This project provided a unique opportunity to explore the intersection of creative writing and artificial intelligence.
+## Overview
+- **Objective:** Explore how generative AI can co-create narrative arcs and dialogue for long-running series.
+- **Approach:** Curated training corpora from publicly available scripts, tokenized scenes, and fine-tuned an RNN language model to mirror show-specific tones.
+- **Impact:** Produced draft scripts that reduced blank-page time for writers and inspired experiments with character-driven plotlines.
+
+## Tools & Techniques
+Python · TensorFlow · NLP preprocessing · Prompt engineering · Version control
