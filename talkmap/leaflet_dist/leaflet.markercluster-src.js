@@ -473,7 +473,7 @@
 		//Overrides LayerGroup.getLayer, WARNING: Really bad performance
 		getLayer: function (id) {
 			var result = null;
-
+			
 			id = parseInt(id, 10);
 
 			this.eachLayer(function (l) {
@@ -511,7 +511,7 @@
 
 		//Zoom down to show the given layer (spiderfying if necessary) then calls the callback
 		zoomToShowLayer: function (layer, callback) {
-
+			
 			if (typeof callback !== 'function') {
 				callback = function () {};
 			}
@@ -879,7 +879,7 @@
 			var maxZoom = this._map.getMaxZoom(),
 				radius = this.options.maxClusterRadius,
 				radiusFn = radius;
-
+		
 			//If we just set maxClusterRadius to a single number, we need to create
 			//a simple function to return that number. Otherwise, we just have to
 			//use the function we've passed in.
@@ -893,7 +893,7 @@
 			this._maxZoom = maxZoom;
 			this._gridClusters = {};
 			this._gridUnclustered = {};
-
+		
 			//Set up DistanceGrids for each zoom
 			for (var zoom = maxZoom; zoom >= 0; zoom--) {
 				this._gridClusters[zoom] = new L.DistanceGrid(radiusFn(zoom));
@@ -1733,26 +1733,26 @@
 
 	/*
 	* Extends L.Marker to include two extra methods: clusterHide and clusterShow.
-	*
+	* 
 	* They work as setOpacity(0) and setOpacity(1) respectively, but
 	* they will remember the marker's opacity when hiding and showing it again.
-	*
+	* 
 	*/
 
 
 	L.Marker.include({
-
+		
 		clusterHide: function () {
 			this.options.opacityWhenUnclustered = this.options.opacity || 1;
 			return this.setOpacity(0);
 		},
-
+		
 		clusterShow: function () {
 			var ret = this.setOpacity(this.options.opacity || this.options.opacityWhenUnclustered);
 			delete this.options.opacityWhenUnclustered;
 			return ret;
 		}
-
+		
 	});
 
 
@@ -2011,7 +2011,7 @@
 						minLng = pt.lng;
 					}
 				}
-
+				
 				if (minLat !== maxLat) {
 					minPt = minLatPt;
 					maxPt = maxLatPt;
@@ -2276,7 +2276,7 @@
 				if (m.clusterHide) {
 					m.clusterHide();
 				}
-
+				
 				// Vectors just get immediately added
 				fg.addLayer(m);
 
@@ -2296,7 +2296,7 @@
 				//Move marker to new position
 				m._preSpiderfyLatlng = m._latlng;
 				m.setLatLng(newPos);
-
+				
 				if (m.clusterShow) {
 					m.clusterShow();
 				}
@@ -2624,3 +2624,4 @@
 
 
 	}(window, document));
+        
