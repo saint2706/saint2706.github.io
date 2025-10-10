@@ -32,17 +32,17 @@ jobs:
           echo "Event name: $GITHUB_EVENT_NAME"
           if [ -f "$GITHUB_EVENT_PATH" ]; then
             python3 - <<'PY'
-import json
-import os
+              import json
+              import os
 
-path = os.environ.get("GITHUB_EVENT_PATH")
-if not path or not os.path.exists(path):
-    print("Could not load event payload.")
-else:
-    with open(path, "r", encoding="utf-8") as handle:
-        data = json.load(handle)
-    title = data.get("issue", {}).get("title") or "N/A"
-    print(f"Issue title: {title}")
+              path = os.environ.get("GITHUB_EVENT_PATH")
+              if not path or not os.path.exists(path):
+                  print("Could not load event payload.")
+              else:
+                  with open(path, "r", encoding="utf-8") as handle:
+                      data = json.load(handle)
+                  title = data.get("issue", {}).get("title") or "N/A"
+                  print(f"Issue title: {title}")
 PY
           else
             echo "Event payload file not found."
