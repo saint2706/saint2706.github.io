@@ -11,6 +11,8 @@ const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME || 'saint2706';
 const SUBSTACK_USERNAME = process.env.SUBSTACK_USERNAME || 'saint2706';
 const OUTPUT_PATH = path.join(__dirname, '..', '_data', 'external_posts.json');
 const MAX_POSTS_PER_SOURCE = parseInt(process.env.MAX_EXTERNAL_POSTS || '10', 10);
+const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '3', 10);
+const INITIAL_RETRY_DELAY = parseInt(process.env.INITIAL_RETRY_DELAY || '1000', 10);
 
 const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || null;
 const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
@@ -27,6 +29,25 @@ function sanitizeDescription(rawHtml) {
     text = text.replace(/<[^>]+>/g, '');
   } while (text !== prevText);
   return text.replace(/\s+/g, ' ').trim();
+}
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function retryWithBackoff(fn, retries = MAX_RETRIES, delay = INITIAL_RETRY_DELAY) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === retries - 1) {
+        throw error;
+      }
+      const backoffDelay = delay * Math.pow(2, i);
+      console.log(`  Retry ${i + 1}/${retries - 1} after ${backoffDelay}ms...`);
+      await sleep(backoffDelay);
+    }
+  }
 }
 
 async function fetchJson(url, options = {}) {
@@ -105,13 +126,33 @@ async function fetchSubstackFeed(username) {
   }));
 }
 
+async function fetchWithFallback(fetchFn, sourceName) {
+  try {
+    console.log(`Fetching ${sourceName}...`);
+    const result = await retryWithBackoff(fetchFn);
+    console.log(`✓ Successfully fetched ${result.length} posts from ${sourceName}`);
+    return result;
+  } catch (error) {
+    console.error(`✗ Failed to fetch ${sourceName}: ${error.message}`);
+    return [];
+  }
+}
+
 async function buildDataset() {
   try {
     const [devto, medium, substack] = await Promise.all([
-      fetchDevToArticles(DEVTO_USERNAME),
-      fetchMediumFeed(MEDIUM_USERNAME),
-      fetchSubstackFeed(SUBSTACK_USERNAME)
+      fetchWithFallback(() => fetchDevToArticles(DEVTO_USERNAME), 'dev.to'),
+      fetchWithFallback(() => fetchMediumFeed(MEDIUM_USERNAME), 'Medium'),
+      fetchWithFallback(() => fetchSubstackFeed(SUBSTACK_USERNAME), 'Substack')
     ]);
+
+    const totalPosts = devto.length + medium.length + substack.length;
+    
+    if (totalPosts === 0) {
+      console.error('Unable to refresh external posts. All sources failed. Check network connectivity and API availability.');
+      process.exitCode = 1;
+      return;
+    }
 
     const payload = {
       generated_at: new Date().toISOString(),
@@ -122,9 +163,9 @@ async function buildDataset() {
 
     await fs.promises.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
-    console.log(`Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
+    console.log(`✓ Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
   } catch (error) {
-    console.error('Unable to refresh external posts. Check network connectivity and API availability.');
+    console.error('Unable to refresh external posts. Unexpected error occurred.');
     console.error('Error details:', error.message);
     console.error('Stack:', error.stack);
     process.exitCode = 1;
