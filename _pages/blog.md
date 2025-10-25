@@ -5,7 +5,7 @@ layout: single
 author_profile: true
 ---
 
-Stay up to date with my latest articles, including in-depth write-ups published on this site as well as posts syndicated from my Dev.to and Medium blogs.
+Stay up to date with my latest articles, including in-depth write-ups published on this site as well as posts syndicated from my Dev.to, Medium, and Substack blogs.
 
 {% assign local_posts = site.posts | sort: 'date' | reverse %}
 {% if local_posts.size > 0 %}
@@ -30,6 +30,7 @@ Stay up to date with my latest articles, including in-depth write-ups published 
 {% if external %}
   {% assign devto_posts = external.devto | default: empty %}
   {% assign medium_posts = external.medium | default: empty %}
+  {% assign substack_posts = external.substack | default: empty %}
   {% if devto_posts.size > 0 %}
 ### Featured from Dev.to
 
@@ -51,6 +52,22 @@ Stay up to date with my latest articles, including in-depth write-ups published 
 
 <ul class="posts-list">
   {% for article in medium_posts %}
+  <li>
+    <span class="post-meta">{{ article.published_at | date: "%B %d, %Y" }}</span>
+    <h3><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
+    {% if article.description %}
+    <p>{{ article.description | truncate: 200 }}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+  {% endif %}
+
+  {% if substack_posts.size > 0 %}
+### Featured from Substack
+
+<ul class="posts-list">
+  {% for article in substack_posts %}
   <li>
     <span class="post-meta">{{ article.published_at | date: "%B %d, %Y" }}</span>
     <h3><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
