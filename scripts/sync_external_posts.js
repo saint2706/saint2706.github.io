@@ -11,6 +11,9 @@ const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME || 'saint2706';
 const SUBSTACK_USERNAME = process.env.SUBSTACK_USERNAME || 'saint2706';
 const OUTPUT_PATH = path.join(__dirname, '..', '_data', 'external_posts.json');
 const MAX_POSTS_PER_SOURCE = parseInt(process.env.MAX_EXTERNAL_POSTS || '10', 10);
+const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '3', 10);
+const INITIAL_RETRY_DELAY = parseInt(process.env.INITIAL_RETRY_DELAY || '1000', 10);
+const TOTAL_SOURCES = 3; // dev.to, Medium, Substack
 
 const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || null;
 const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
@@ -27,6 +30,25 @@ function sanitizeDescription(rawHtml) {
     text = text.replace(/<[^>]+>/g, '');
   } while (text !== prevText);
   return text.replace(/\s+/g, ' ').trim();
+}
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function retryWithBackoff(fn, retries = MAX_RETRIES, delay = INITIAL_RETRY_DELAY) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === retries - 1) {
+        throw error;
+      }
+      const backoffDelay = delay * Math.pow(2, i);
+      console.log(`  Retry ${i + 1}/${retries - 1} after ${backoffDelay}ms...`);
+      await sleep(backoffDelay);
+    }
+  }
 }
 
 async function fetchJson(url, options = {}) {
@@ -105,26 +127,74 @@ async function fetchSubstackFeed(username) {
   }));
 }
 
+async function fetchWithFallback(fetchFn, sourceName) {
+  try {
+    console.log(`Fetching ${sourceName}...`);
+    const result = await retryWithBackoff(fetchFn);
+    console.log(`✓ Successfully fetched ${result.length} posts from ${sourceName}`);
+    return result;
+  } catch (error) {
+    // Sanitize error message to avoid logging sensitive data
+    // Note: This script only accesses public APIs without credentials,
+    // so error messages contain only network/HTTP errors and public URLs
+    const safeMessage = error.message?.replace(/api[_-]?key[=:]\s*\S+/gi, 'api_key=***') || 'Unknown error';
+    console.error(`✗ Failed to fetch ${sourceName}: ${safeMessage}`);
+    return [];
+  }
+}
+
 async function buildDataset() {
   try {
+    // Try to load existing data to preserve it if some sources fail
+    let existingData = { devto: [], medium: [], substack: [] };
+    try {
+      const existingContent = await fs.promises.readFile(OUTPUT_PATH, 'utf8');
+      existingData = JSON.parse(existingContent);
+    } catch (err) {
+      // File doesn't exist or is invalid, use empty arrays
+      console.log('No existing data found, starting fresh');
+    }
+
     const [devto, medium, substack] = await Promise.all([
-      fetchDevToArticles(DEVTO_USERNAME),
-      fetchMediumFeed(MEDIUM_USERNAME),
-      fetchSubstackFeed(SUBSTACK_USERNAME)
+      fetchWithFallback(() => fetchDevToArticles(DEVTO_USERNAME), 'dev.to'),
+      fetchWithFallback(() => fetchMediumFeed(MEDIUM_USERNAME), 'Medium'),
+      fetchWithFallback(() => fetchSubstackFeed(SUBSTACK_USERNAME), 'Substack')
     ]);
+
+    // Use new data if fetch succeeded (length > 0), otherwise preserve existing data
+    const finalDevto = devto.length > 0 ? devto : existingData.devto || [];
+    const finalMedium = medium.length > 0 ? medium : existingData.medium || [];
+    const finalSubstack = substack.length > 0 ? substack : existingData.substack || [];
+
+    const totalNewPosts = devto.length + medium.length + substack.length;
+    const totalFinalPosts = finalDevto.length + finalMedium.length + finalSubstack.length;
+    
+    if (totalNewPosts === 0) {
+      if (totalFinalPosts === 0) {
+        console.error('Unable to refresh external posts. All sources failed and no existing data available.');
+        process.exitCode = 1;
+        return;
+      }
+      console.log('⚠ All sources failed, but preserved existing data');
+    }
 
     const payload = {
       generated_at: new Date().toISOString(),
-      devto,
-      medium,
-      substack
+      devto: finalDevto,
+      medium: finalMedium,
+      substack: finalSubstack
     };
 
     await fs.promises.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
-    console.log(`Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
+    console.log(`✓ Saved ${finalDevto.length} dev.to, ${finalMedium.length} Medium, and ${finalSubstack.length} Substack posts to ${OUTPUT_PATH}`);
+    
+    if (totalNewPosts > 0 && totalNewPosts < TOTAL_SOURCES) {
+      console.log(`  (${totalNewPosts} source(s) updated, ${TOTAL_SOURCES - totalNewPosts} preserved from previous run)`);
+    }
   } catch (error) {
-    console.error('Unable to refresh external posts. Check network connectivity and API availability.');
+    console.error('Unable to refresh external posts. Unexpected error occurred.');
+    // Note: Detailed error already logged at source level by fetchWithFallback
     process.exitCode = 1;
   }
 }
