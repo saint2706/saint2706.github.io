@@ -13,6 +13,7 @@ const OUTPUT_PATH = path.join(__dirname, '..', '_data', 'external_posts.json');
 const MAX_POSTS_PER_SOURCE = parseInt(process.env.MAX_EXTERNAL_POSTS || '10', 10);
 const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '3', 10);
 const INITIAL_RETRY_DELAY = parseInt(process.env.INITIAL_RETRY_DELAY || '1000', 10);
+const SUBSTACK_FEED_URL_OVERRIDE = (process.env.SUBSTACK_FEED_URL || '').trim() || null;
 const TOTAL_SOURCES = 3; // dev.to, Medium, Substack
 
 const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || null;
@@ -104,17 +105,59 @@ async function fetchMediumFeed(username) {
 async function fetchSubstackFeed(username) {
   // Validate username to prevent subdomain injection
   if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-    throw new Error(`Invalid Substack username: ${username}. Only alphanumeric characters, hyphens, and underscores are allowed.`);
+    throw new Error(
+      `Invalid Substack username: ${username}. Only alphanumeric characters, hyphens, and underscores are allowed.`
+    );
   }
-  const feedUrl = `https://${username}.substack.com/feed`;
-  const response = await fetch(feedUrl, {
-    headers: { 'Accept': 'application/rss+xml', ...defaultHeaders },
-    agent: proxyAgent
-  });
-  if (!response.ok) {
-    throw new Error(`Request failed for ${feedUrl} with status ${response.status}`);
+
+  const feedUrl = SUBSTACK_FEED_URL_OVERRIDE || `https://${username}.substack.com/feed`;
+  if (SUBSTACK_FEED_URL_OVERRIDE) {
+    console.log(`  Using custom Substack feed URL: ${feedUrl}`);
   }
-  const xml = await response.text();
+
+  async function downloadFeed(url, label) {
+    const response = await fetch(url, {
+      headers: { 'Accept': 'application/rss+xml', ...defaultHeaders },
+      agent: proxyAgent
+    });
+
+    if (!response.ok) {
+      const error = new Error(`Request failed for ${url} with status ${response.status}`);
+      error.status = response.status;
+      error.url = url;
+      error.context = label;
+      throw error;
+    }
+
+    return response.text();
+  }
+
+  let xml;
+  try {
+    xml = await downloadFeed(feedUrl, 'direct');
+  } catch (error) {
+    if (error.status === 403) {
+      const proxyHint = proxyAgent
+        ? ' Substack often blocks requests that arrive through shared proxies or VPNs. Try running the script without a proxy or provide a mirror URL via SUBSTACK_FEED_URL.'
+        : ' Ensure that the publication is public and accessible without authentication.';
+      console.warn(`  Direct feed blocked with 403. Falling back to AllOrigins proxy.${proxyHint}`);
+
+      const proxiedUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
+      try {
+        xml = await downloadFeed(proxiedUrl, 'allorigins');
+      } catch (proxyError) {
+        if (proxyError.status === 403) {
+          throw new Error(
+            `Request failed for ${feedUrl} with status 403 (forbidden) even after using the AllOrigins proxy.${proxyHint}`
+          );
+        }
+        throw proxyError;
+      }
+    } else {
+      throw error;
+    }
+  }
+
   const parsed = await parseStringPromise(xml, { trim: true, explicitArray: true });
   const items = (((parsed || {}).rss || {}).channel || [])[0]?.item || [];
   return items.slice(0, MAX_POSTS_PER_SOURCE).map((item) => ({
