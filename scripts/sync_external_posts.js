@@ -135,6 +135,8 @@ async function fetchWithFallback(fetchFn, sourceName) {
     return result;
   } catch (error) {
     // Sanitize error message to avoid logging sensitive data
+    // Note: This script only accesses public APIs without credentials,
+    // so error messages contain only network/HTTP errors and public URLs
     const safeMessage = error.message?.replace(/api[_-]?key[=:]\s*\S+/gi, 'api_key=***') || 'Unknown error';
     console.error(`✗ Failed to fetch ${sourceName}: ${safeMessage}`);
     return [];
