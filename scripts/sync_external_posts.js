@@ -125,6 +125,8 @@ async function buildDataset() {
     console.log(`Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
   } catch (error) {
     console.error('Unable to refresh external posts. Check network connectivity and API availability.');
+    console.error('Error details:', error.message);
+    console.error('Stack:', error.stack);
     process.exitCode = 1;
   }
 }
