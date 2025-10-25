@@ -18,6 +18,10 @@ const defaultHeaders = {
   'User-Agent': 'Mozilla/5.0 (compatible; BlogSync/1.0; +https://saint2706.github.io)'
 };
 
+function sanitizeDescription(rawHtml) {
+  return (rawHtml || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+}
+
 async function fetchJson(url, options = {}) {
   const { headers: customHeaders = {}, ...rest } = options;
   const response = await fetch(url, {
@@ -62,14 +66,18 @@ async function fetchMediumFeed(username) {
     title: item.title?.[0] || 'Untitled',
     url: item.link?.[0],
     published_at: item.pubDate?.[0],
-    description: (item['content:encoded']?.[0] || item.description?.[0] || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+    description: sanitizeDescription(item['content:encoded']?.[0] || item.description?.[0]),
     tags: [],
     source: 'Medium'
   }));
 }
 
 async function fetchSubstackFeed(username) {
-  const feedUrl = `https://${encodeURIComponent(username)}.substack.com/feed`;
+  // Validate username to prevent subdomain injection
+  if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+    throw new Error(`Invalid Substack username: ${username}. Only alphanumeric characters, hyphens, and underscores are allowed.`);
+  }
+  const feedUrl = `https://${username}.substack.com/feed`;
   const response = await fetch(feedUrl, {
     headers: { 'Accept': 'application/rss+xml', ...defaultHeaders },
     agent: proxyAgent
@@ -84,7 +92,7 @@ async function fetchSubstackFeed(username) {
     title: item.title?.[0] || 'Untitled',
     url: item.link?.[0],
     published_at: item.pubDate?.[0],
-    description: (item['content:encoded']?.[0] || item.description?.[0] || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+    description: sanitizeDescription(item['content:encoded']?.[0] || item.description?.[0]),
     tags: [],
     source: 'Substack'
   }));
