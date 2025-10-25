@@ -8,6 +8,7 @@ const { HttpsProxyAgent } = require('https-proxy-agent');
 
 const DEVTO_USERNAME = process.env.DEVTO_USERNAME || 'saint2706';
 const MEDIUM_USERNAME = process.env.MEDIUM_USERNAME || 'saint2706';
+const SUBSTACK_USERNAME = process.env.SUBSTACK_USERNAME || 'saint2706';
 const OUTPUT_PATH = path.join(__dirname, '..', '_data', 'external_posts.json');
 const MAX_POSTS_PER_SOURCE = parseInt(process.env.MAX_EXTERNAL_POSTS || '10', 10);
 
@@ -67,22 +68,46 @@ async function fetchMediumFeed(username) {
   }));
 }
 
+async function fetchSubstackFeed(username) {
+  const feedUrl = `https://${encodeURIComponent(username)}.substack.com/feed`;
+  const response = await fetch(feedUrl, {
+    headers: { 'Accept': 'application/rss+xml', ...defaultHeaders },
+    agent: proxyAgent
+  });
+  if (!response.ok) {
+    throw new Error(`Request failed for ${feedUrl} with status ${response.status}`);
+  }
+  const xml = await response.text();
+  const parsed = await parseStringPromise(xml, { trim: true, explicitArray: true });
+  const items = (((parsed || {}).rss || {}).channel || [])[0]?.item || [];
+  return items.slice(0, MAX_POSTS_PER_SOURCE).map((item) => ({
+    title: item.title?.[0] || 'Untitled',
+    url: item.link?.[0],
+    published_at: item.pubDate?.[0],
+    description: (item['content:encoded']?.[0] || item.description?.[0] || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(),
+    tags: [],
+    source: 'Substack'
+  }));
+}
+
 async function buildDataset() {
   try {
-    const [devto, medium] = await Promise.all([
+    const [devto, medium, substack] = await Promise.all([
       fetchDevToArticles(DEVTO_USERNAME),
-      fetchMediumFeed(MEDIUM_USERNAME)
+      fetchMediumFeed(MEDIUM_USERNAME),
+      fetchSubstackFeed(SUBSTACK_USERNAME)
     ]);
 
     const payload = {
       generated_at: new Date().toISOString(),
       devto,
-      medium
+      medium,
+      substack
     };
 
     await fs.promises.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
-    console.log(`Saved ${devto.length} dev.to and ${medium.length} Medium posts to ${OUTPUT_PATH}`);
+    console.log(`Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
   } catch (error) {
     console.error('Unable to refresh external posts:', error.message);
     process.exitCode = 1;

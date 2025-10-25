@@ -73,5 +73,15 @@
       "tags": [],
       "source": "Medium"
     }
+  ],
+  "substack": [
+    {
+      "title": "Sample Substack Article",
+      "url": "https://saint2706.substack.com/p/sample-article",
+      "published_at": "Wed, 23 Oct 2025 12:00:00 GMT",
+      "description": "This is a sample Substack article to demonstrate the integration of Substack feed into the blog page.",
+      "tags": [],
+      "source": "Substack"
+    }
   ]
 }

@@ -18,7 +18,7 @@ This repository contains the source code for [saint2706.github.io](https://saint
 
 ## Syncing external blog posts
 
-My Dev.to and Medium articles are cached in `_data/external_posts.json`. Refresh the cache whenever a new article is published:
+My Dev.to, Medium, and Substack articles are cached in `_data/external_posts.json`. Refresh the cache whenever a new article is published:
 
 ```bash
 npm run sync:external-posts
