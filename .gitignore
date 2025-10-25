@@ -10,7 +10,6 @@ Gemfile.lock
 
 # Ignore files created by npm
 node_modules
-package-lock.json
 
 # Ignore the vendor file at root level and bundle for alternative installation
 /vendor/
