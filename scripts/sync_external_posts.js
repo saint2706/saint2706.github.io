@@ -134,7 +134,9 @@ async function fetchWithFallback(fetchFn, sourceName) {
     console.log(`✓ Successfully fetched ${result.length} posts from ${sourceName}`);
     return result;
   } catch (error) {
-    console.error(`✗ Failed to fetch ${sourceName}: ${error.message}`);
+    // Sanitize error message to avoid logging sensitive data
+    const safeMessage = error.message?.replace(/api[_-]?key[=:]\s*\S+/gi, 'api_key=***') || 'Unknown error';
+    console.error(`✗ Failed to fetch ${sourceName}: ${safeMessage}`);
     return [];
   }
 }
@@ -190,8 +192,7 @@ async function buildDataset() {
     }
   } catch (error) {
     console.error('Unable to refresh external posts. Unexpected error occurred.');
-    console.error('Error details:', error.message);
-    console.error('Stack:', error.stack);
+    // Note: Detailed error already logged at source level by fetchWithFallback
     process.exitCode = 1;
   }
 }
