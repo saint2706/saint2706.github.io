@@ -19,7 +19,14 @@ const defaultHeaders = {
 };
 
 function sanitizeDescription(rawHtml) {
-  return (rawHtml || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  // Remove HTML tags repeatedly to handle nested tags
+  let text = rawHtml || '';
+  let prevText;
+  do {
+    prevText = text;
+    text = text.replace(/<[^>]+>/g, '');
+  } while (text !== prevText);
+  return text.replace(/\s+/g, ' ').trim();
 }
 
 async function fetchJson(url, options = {}) {
@@ -117,7 +124,7 @@ async function buildDataset() {
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
     console.log(`Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
   } catch (error) {
-    console.error('Unable to refresh external posts:', error.message);
+    console.error('Unable to refresh external posts. Check network connectivity and API availability.');
     process.exitCode = 1;
   }
 }
