@@ -140,30 +140,53 @@ async function fetchWithFallback(fetchFn, sourceName) {
 
 async function buildDataset() {
   try {
+    // Try to load existing data to preserve it if some sources fail
+    let existingData = { devto: [], medium: [], substack: [] };
+    try {
+      const existingContent = await fs.promises.readFile(OUTPUT_PATH, 'utf8');
+      existingData = JSON.parse(existingContent);
+    } catch (err) {
+      // File doesn't exist or is invalid, use empty arrays
+      console.log('No existing data found, starting fresh');
+    }
+
     const [devto, medium, substack] = await Promise.all([
       fetchWithFallback(() => fetchDevToArticles(DEVTO_USERNAME), 'dev.to'),
       fetchWithFallback(() => fetchMediumFeed(MEDIUM_USERNAME), 'Medium'),
       fetchWithFallback(() => fetchSubstackFeed(SUBSTACK_USERNAME), 'Substack')
     ]);
 
-    const totalPosts = devto.length + medium.length + substack.length;
+    // Use new data if fetch succeeded (length > 0), otherwise preserve existing data
+    const finalDevto = devto.length > 0 ? devto : existingData.devto || [];
+    const finalMedium = medium.length > 0 ? medium : existingData.medium || [];
+    const finalSubstack = substack.length > 0 ? substack : existingData.substack || [];
+
+    const totalNewPosts = devto.length + medium.length + substack.length;
+    const totalFinalPosts = finalDevto.length + finalMedium.length + finalSubstack.length;
     
-    if (totalPosts === 0) {
-      console.error('Unable to refresh external posts. All sources failed. Check network connectivity and API availability.');
-      process.exitCode = 1;
-      return;
+    if (totalNewPosts === 0) {
+      if (totalFinalPosts === 0) {
+        console.error('Unable to refresh external posts. All sources failed and no existing data available.');
+        process.exitCode = 1;
+        return;
+      }
+      console.log('⚠ All sources failed, but preserved existing data');
     }
 
     const payload = {
       generated_at: new Date().toISOString(),
-      devto,
-      medium,
-      substack
+      devto: finalDevto,
+      medium: finalMedium,
+      substack: finalSubstack
     };
 
     await fs.promises.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
-    console.log(`✓ Saved ${devto.length} dev.to, ${medium.length} Medium, and ${substack.length} Substack posts to ${OUTPUT_PATH}`);
+    console.log(`✓ Saved ${finalDevto.length} dev.to, ${finalMedium.length} Medium, and ${finalSubstack.length} Substack posts to ${OUTPUT_PATH}`);
+    
+    if (totalNewPosts > 0 && totalNewPosts < 3) {
+      console.log(`  (${totalNewPosts} source(s) updated, ${3 - totalNewPosts} preserved from previous run)`);
+    }
   } catch (error) {
     console.error('Unable to refresh external posts. Unexpected error occurred.');
     console.error('Error details:', error.message);
