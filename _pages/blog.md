@@ -38,7 +38,7 @@ Stay up to date with my latest articles, including in-depth write-ups published 
   {% for article in devto_posts %}
   <li>
     <span class="post-meta">{{ article.published_at | date: "%B %d, %Y" }}</span>
-    <h3><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
+    <h3><a href="{{ article.url }}" target="_blank" rel="noopener noreferrer">{{ article.title }}</a></h3>
     {% if article.description %}
     <p>{{ article.description | truncate: 200 }}</p>
     {% endif %}
@@ -54,7 +54,7 @@ Stay up to date with my latest articles, including in-depth write-ups published 
   {% for article in medium_posts %}
   <li>
     <span class="post-meta">{{ article.published_at | date: "%B %d, %Y" }}</span>
-    <h3><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
+    <h3><a href="{{ article.url }}" target="_blank" rel="noopener noreferrer">{{ article.title }}</a></h3>
     {% if article.description %}
     <p>{{ article.description | truncate: 200 }}</p>
     {% endif %}
@@ -70,7 +70,7 @@ Stay up to date with my latest articles, including in-depth write-ups published 
   {% for article in substack_posts %}
   <li>
     <span class="post-meta">{{ article.published_at | date: "%B %d, %Y" }}</span>
-    <h3><a href="{{ article.url }}" target="_blank" rel="noopener">{{ article.title }}</a></h3>
+    <h3><a href="{{ article.url }}" target="_blank" rel="noopener noreferrer">{{ article.title }}</a></h3>
     {% if article.description %}
     <p>{{ article.description | truncate: 200 }}</p>
     {% endif %}
