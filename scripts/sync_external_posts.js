@@ -13,6 +13,7 @@ const OUTPUT_PATH = path.join(__dirname, '..', '_data', 'external_posts.json');
 const MAX_POSTS_PER_SOURCE = parseInt(process.env.MAX_EXTERNAL_POSTS || '10', 10);
 const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '3', 10);
 const INITIAL_RETRY_DELAY = parseInt(process.env.INITIAL_RETRY_DELAY || '1000', 10);
+const TOTAL_SOURCES = 3; // dev.to, Medium, Substack
 
 const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || null;
 const proxyAgent = proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined;
@@ -184,8 +185,8 @@ async function buildDataset() {
     await fs.promises.writeFile(OUTPUT_PATH, JSON.stringify(payload, null, 2));
     console.log(`✓ Saved ${finalDevto.length} dev.to, ${finalMedium.length} Medium, and ${finalSubstack.length} Substack posts to ${OUTPUT_PATH}`);
     
-    if (totalNewPosts > 0 && totalNewPosts < 3) {
-      console.log(`  (${totalNewPosts} source(s) updated, ${3 - totalNewPosts} preserved from previous run)`);
+    if (totalNewPosts > 0 && totalNewPosts < TOTAL_SOURCES) {
+      console.log(`  (${totalNewPosts} source(s) updated, ${TOTAL_SOURCES - totalNewPosts} preserved from previous run)`);
     }
   } catch (error) {
     console.error('Unable to refresh external posts. Unexpected error occurred.');
