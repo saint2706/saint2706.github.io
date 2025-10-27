@@ -1,6 +1,19 @@
 {
-  "generated_at": "2025-10-26T06:20:35.969Z",
+  "generated_at": "2025-10-27T06:25:07.109Z",
   "devto": [
+    {
+      "title": "Build Your First Movie Recommendation Engine in Python",
+      "url": "https://dev.to/saint2706/build-your-first-movie-recommendation-engine-in-python-5585",
+      "published_at": "2025-10-26T06:15:52Z",
+      "description": "Ever wonder how Netflix or Spotify seems to know exactly what you want to watch or listen to next?...",
+      "tags": [
+        "programming",
+        "beginners",
+        "python",
+        "machinelearning"
+      ],
+      "source": "dev.to"
+    },
     {
       "title": "A Beginner's Guide to Data Analysis with Python: Using Pandas and NumPy",
       "url": "https://dev.to/saint2706/a-beginners-guide-to-data-analysis-with-python-using-pandas-and-numpy-3gne",
