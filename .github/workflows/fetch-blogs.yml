@@ -77,13 +77,13 @@ jobs:
             cat <<'SUMMARY' >> "$GITHUB_STEP_SUMMARY"
           ## External blog sync
           
-          Changes were detected in \`_data/external_posts.json\` and have been prepared for commit.
+          Changes were detected in `_data/external_posts.json` and have been prepared for commit.
           SUMMARY
           else
             cat <<'SUMMARY' >> "$GITHUB_STEP_SUMMARY"
           ## External blog sync
           
-          No updates were required for \`_data/external_posts.json\` during this run.
+          No updates were required for `_data/external_posts.json` during this run.
           SUMMARY
           fi
 
