@@ -1,6 +1,8 @@
-______________________________________________________________________
-
-## title: "Coding for MBA" excerpt: "Curated a coding fundamentals curriculum that equips MBA cohorts with hands-on analytics and automation skills." collection: portfolio
+---
+title: "Coding for MBA"
+excerpt: "Curated a coding fundamentals curriculum that equips MBA cohorts with hands-on analytics and automation skills."
+collection: portfolio
+---
 
 ## Overview
 

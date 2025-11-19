@@ -1,6 +1,8 @@
-______________________________________________________________________
-
-## title: "The Simpsons Data Analytics" excerpt: "Investigated decades of The Simpsons episodes to extract storytelling, ratings, and character insights for media strategy teams." collection: portfolio
+---
+title: "The Simpsons Data Analytics"
+excerpt: "Investigated decades of The Simpsons episodes to extract storytelling, ratings, and character insights for media strategy teams."
+collection: portfolio
+---
 
 ## Overview
 
