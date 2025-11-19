@@ -1,11 +1,14 @@
----
+______________________________________________________________________
+
 layout: archive
 title: "CV"
 permalink: /cv/
 author_profile: true
 redirect_from:
-  - /resume
----
+
+- /resume
+
+______________________________________________________________________
 
 {% include base_path %}
 
@@ -19,11 +22,13 @@ redirect_from:
 ## Professional Experience
 
 ### Data Intern — TheSmartBridge *(May 2023 – Jul 2023)*
+
 - Evaluated SaaS market trends and product gaps to shape a data-driven go-to-market plan for an analytics platform.
 - Built user personas, competitive intelligence, and a phased roadmap with a five-member intern team to steer delivery milestones.
 - Presented the business case and recommendations to senior management, earning commendation for the solution's depth and clarity.
 
 ### Indigo Squad Member — Mood Indigo, IIT Bombay *(Jul 2022 – Dec 2022)*
+
 - Led campaign storytelling that reached students across 1,700+ colleges and amplified Mood Indigo's national footprint.
 - Devised multi-platform social media strategies that increased follower engagement by 25% during the festival cycle.
 - Closed sponsorships with three local businesses, expanding the operating budget to support new event formats.

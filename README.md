@@ -5,12 +5,12 @@ This repository contains the source code for [saint2706.github.io](https://saint
 ## Local development
 
 1. Install Ruby (>= 3.0), Bundler, and Node.js on your machine.
-2. Install Ruby gems and JavaScript dependencies:
+1. Install Ruby gems and JavaScript dependencies:
    ```bash
    bundle install
    npm install
    ```
-3. Start a local preview server:
+1. Start a local preview server:
    ```bash
    bundle exec jekyll serve --livereload
    ```
