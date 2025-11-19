@@ -1,6 +1,8 @@
-______________________________________________________________________
-
-## title: "AI-Based Attendance Management" excerpt: "Engineered a facial-recognition attendance platform that automates student and employee check-ins while maintaining secure, real-time records." collection: portfolio
+---
+title: "AI-Based Attendance Management"
+excerpt: "Engineered a facial-recognition attendance platform that automates student and employee check-ins while maintaining secure, real-time records."
+collection: portfolio
+---
 
 ## Overview
 

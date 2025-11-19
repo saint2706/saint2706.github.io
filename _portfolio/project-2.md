@@ -1,6 +1,8 @@
-______________________________________________________________________
-
-## title: "Football Score Prediction & Visualization" excerpt: "Modeled historical football data to forecast match outcomes and surface tactical insights through interactive dashboards." collection: portfolio
+---
+title: "Football Score Prediction & Visualization"
+excerpt: "Modeled historical football data to forecast match outcomes and surface tactical insights through interactive dashboards."
+collection: portfolio
+---
 
 ## Overview
 

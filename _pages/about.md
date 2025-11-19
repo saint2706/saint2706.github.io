@@ -1,14 +1,11 @@
-______________________________________________________________________
-
+---
 permalink: /
 title: "Rishabh Agrawal | Data Analytics Professional"
 author_profile: true
 redirect_from:
-
-- /about/
-- /about.html
-
-______________________________________________________________________
+  - /about/
+  - /about.html
+---
 
 Hi, I'm **Rishabh Agrawal**, a PGDM candidate in Big Data Analytics at the Goa Institute of Management. With a B.Tech in Computer
 Science and Engineering from VIT Vellore, I enjoy turning complex datasets into stories that unlock smarter marketing, product,

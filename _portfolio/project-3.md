@@ -1,6 +1,8 @@
-______________________________________________________________________
-
-## title: "AI Tool for TV Script Generation" excerpt: "Designed a recurrent neural network writer that drafts episode scripts and accelerates ideation for television storytelling." collection: portfolio
+---
+title: "AI Tool for TV Script Generation"
+excerpt: "Designed a recurrent neural network writer that drafts episode scripts and accelerates ideation for television storytelling."
+collection: portfolio
+---
 
 ## Overview
 

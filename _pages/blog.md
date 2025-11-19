@@ -1,6 +1,9 @@
-______________________________________________________________________
-
-## permalink: /blog/ title: "Blog" layout: single author_profile: true
+---
+permalink: /blog/
+title: "Blog"
+layout: single
+author_profile: true
+---
 
 Stay up to date with my latest articles, including in-depth write-ups published on this site as well as posts syndicated from my Dev.to, Medium, and Substack blogs.
 
