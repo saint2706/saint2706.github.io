@@ -1,6 +1,19 @@
 {
-  "generated_at": "2025-11-20T06:29:17.386Z",
+  "generated_at": "2025-11-21T06:30:50.956Z",
   "devto": [
+    {
+      "title": "Python Game Development: Create a Basic 2D Game with Pygame",
+      "url": "https://dev.to/saint2706/python-game-development-create-a-basic-2d-game-with-pygame-118l",
+      "published_at": "2025-11-19T10:22:54Z",
+      "description": "If you’ve ever looked at a game and thought, “How hard can it be?”—the answer is: not as hard as you...",
+      "tags": [
+        "python",
+        "pygame",
+        "gamedev",
+        "2d"
+      ],
+      "source": "dev.to"
+    },
     {
       "title": "Build Your First Movie Recommendation Engine in Python",
       "url": "https://dev.to/saint2706/build-your-first-movie-recommendation-engine-in-python-5585",
