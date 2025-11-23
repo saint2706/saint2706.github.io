@@ -1,6 +1,6 @@
 # Digital Rishabh Portfolio
 
-A Vite-powered React site for Rishabh Agrawal's portfolio, featuring a Gemini chatbot and roast mode.
+A Vite-powered React site for Rishabh Agrawal's portfolio, featuring a Gemini chatbot (powered by gemini-2.5-flash) and roast mode.
 
 ## Environment Variables
 

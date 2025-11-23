@@ -92,6 +92,8 @@ async function listModels() {
       console.log(`For the chatbot, recommend using: ${latestFlash.name}`);
       console.log(`This is a flash model that offers fast responses with good quality.`);
     }
+    console.log(`\nCurrent model in use: gemini-2.5-flash`);
+    console.log(`This model provides the best balance of speed and quality for the chatbot.`);
     
   } catch (error) {
     console.error("Error listing models:", error.message);
