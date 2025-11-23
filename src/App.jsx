@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import Hero from './components/home/Hero';
 import Projects from './components/pages/Projects';
 import Resume from './components/pages/Resume';
+import Blog from './components/pages/Blog';
 import Chatbot from './components/shared/Chatbot';
 import RoastMode from './components/shared/RoastMode';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Hero />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
 
         {/* Floating Interactions */}

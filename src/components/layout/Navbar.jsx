@@ -8,7 +8,7 @@ const Navbar = () => {
     { name: 'Home', path: '/', icon: <Terminal size={18} /> },
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
     { name: 'Resume', path: '/resume', icon: <User size={18} /> },
-    // { name: 'Blog', path: '/blog', icon: <FileText size={18} /> }, // Hidden until blog feature is ready
+    { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
   ];
 
   return (
