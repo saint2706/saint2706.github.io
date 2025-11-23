@@ -11,6 +11,7 @@ const Chatbot = () => {
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -20,6 +21,16 @@ const Chatbot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 640px)');
+    const handleChange = (event) => setIsMobile(event.matches);
+
+    setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +71,8 @@ const Chatbot = () => {
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 right-6 z-50 w-[90vw] md:w-[400px] max-h-[600px] h-[80vh] bg-secondary border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[400px] max-h-[70vh] md:max-h-[600px] h-[70vh] md:h-[80vh] bg-secondary border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            style={isMobile ? { height: 'min(calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)), 70vh)' } : undefined}
           >
             {/* Header */}
             <div className="bg-primary/50 p-4 flex justify-between items-center border-b border-slate-700 backdrop-blur-md">
@@ -115,7 +127,7 @@ const Chatbot = () => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 bg-primary/50 border-t border-slate-700">
+            <form onSubmit={handleSubmit} className="p-4 bg-primary/50 border-t border-slate-700 sticky bottom-0">
               <div className="flex gap-2">
                 <input
                   type="text"
