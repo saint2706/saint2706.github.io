@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Terminal, User, Briefcase, FileText, MessageSquare } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Terminal,
+  User,
+  Briefcase,
+  FileText,
+  Menu,
+  X,
+} from 'lucide-react';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navItems = [
     { name: 'Home', path: '/', icon: <Terminal size={18} /> },
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
@@ -11,18 +20,20 @@ const Navbar = () => {
     { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
   ];
 
+  const handleCloseMenu = () => setIsMenuOpen(false);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
-      <div className="max-w-4xl mx-auto bg-secondary/80 backdrop-blur-md border border-slate-700 rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-blue-500/10">
+      <div className="relative max-w-4xl mx-auto bg-secondary/80 backdrop-blur-md border border-slate-700 rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-blue-500/10">
         <NavLink to="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink font-mono">
           &lt;Rishabh /&gt;
         </NavLink>
 
-        <div className="flex gap-1 md:gap-2">
+        <div className="hidden md:flex gap-1 md:gap-2">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
@@ -40,6 +51,45 @@ const Navbar = () => {
             </NavLink>
           ))}
         </div>
+
+        <button
+          type="button"
+          className="md:hidden p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute right-4 top-full mt-3 w-64 rounded-2xl bg-secondary/95 border border-slate-700 shadow-lg shadow-blue-500/10 backdrop-blur-md md:hidden"
+            >
+              <div className="flex flex-col divide-y divide-white/5">
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.path}
+                    onClick={handleCloseMenu}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 px-5 py-4 text-base font-medium transition-colors duration-200
+                      ${isActive ? 'text-accent bg-accent/10' : 'text-slate-200 hover:text-white hover:bg-white/5'}`
+                    }
+                  >
+                    <span>{item.icon}</span>
+                    <span>{item.name}</span>
+                  </NavLink>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   );
