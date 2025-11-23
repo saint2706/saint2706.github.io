@@ -1,21 +1,16 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { resumeData } from "../data/resume";
 
-// NOTE: In a real production app, you should never expose API keys on the client side.
-// However, for a GitHub Pages personal site without a backend, this is a known trade-off.
-// The user is aware and has accepted this risk.
-// We will apply simple obfuscation to prevent automated scrapers from easily grabbing it.
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
 
-const P1 = "AIzaSyC5";
-const P2 = "wCXlziQE";
-const P3 = "fCvCmzNL";
-const P4 = "BcdTUwBA";
-const P5 = "aVIPDx8";
+const getModel = () => {
+  if (!API_KEY) {
+    return null;
+  }
 
-const API_KEY = `${P1}${P2}${P3}${P4}${P5}`;
-
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const genAI = new GoogleGenerativeAI(API_KEY);
+  return genAI.getGenerativeModel({ model: "gemini-pro" });
+};
 
 const SYSTEM_PROMPT = `
 You are "Digital Rishabh", an AI assistant for Rishabh Agrawal's portfolio website.
@@ -33,6 +28,11 @@ Instructions:
 `;
 
 export const chatWithGemini = async (userMessage, history = []) => {
+  const model = getModel();
+  if (!model) {
+    return "My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!";
+  }
+
   try {
     const chat = model.startChat({
       history: [
@@ -58,6 +58,11 @@ export const chatWithGemini = async (userMessage, history = []) => {
 };
 
 export const roastResume = async () => {
+    const model = getModel();
+    if (!model) {
+      return "Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!";
+    }
+
     const prompt = `
     Roast Rishabh's resume! Be funny, sarcastic, and lighthearted.
     Poke fun at the buzzwords (like "Data Storytelling" or "Synergy"), the number of certifications, or the fact that he's a "Data" person who also does "Marketing".
@@ -74,4 +79,4 @@ export const roastResume = async () => {
     } catch (error) {
         return "I can't roast right now, I'm too nice. (Error connecting to AI)";
     }
-}
+};
