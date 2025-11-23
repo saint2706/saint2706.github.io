@@ -64,9 +64,11 @@ The chatbot has been updated to use **gemini-2.5-flash** because:
 Due to network restrictions in the build environment, you can test available models locally:
 
 ```bash
-# Run the list-models script with your API key
+# Run the list-models script with your API key (required)
 GEMINI_API_KEY=your_api_key node scripts/list-models.js
 ```
+
+Note: The script requires the GEMINI_API_KEY environment variable to be set for security reasons.
 
 Or use curl directly:
 ```bash

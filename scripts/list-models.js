@@ -1,6 +1,12 @@
 import https from 'https';
 
-const API_KEY = process.env.GEMINI_API_KEY || "AIzaSyDTBKiEiWJbY79YZ15FiA4epeLkYYKnFr4";
+const API_KEY = process.env.GEMINI_API_KEY;
+
+if (!API_KEY) {
+  console.error("Error: GEMINI_API_KEY environment variable is not set.");
+  console.error("Usage: GEMINI_API_KEY=your_api_key node scripts/list-models.js");
+  process.exit(1);
+}
 
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
