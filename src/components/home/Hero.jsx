@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center items-center text-center max-w-4xl mx-auto">
+    <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-4xl mx-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -66,7 +66,7 @@ const Hero = () => {
       </motion.div>
 
       {/* Floating Icons Animation */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
         <FloatingIcon icon={<Database size={30} />} delay={0} x="10%" y="20%" />
         <FloatingIcon icon={<Code2 size={30} />} delay={2} x="85%" y="15%" />
         <FloatingIcon icon={<Bot size={30} />} delay={4} x="15%" y="80%" />
