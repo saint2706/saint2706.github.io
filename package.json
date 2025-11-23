@@ -1,39 +1,36 @@
 {
-  "name": "saint2706-site",
-  "version": "1.0.0",
-  "description": "Source for Rishabh Agrawal's personal GitHub Pages site.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/saint2706/saint2706.github.io"
-  },
-  "keywords": [
-    "jekyll",
-    "portfolio",
-    "analytics",
-    "blog"
-  ],
-  "author": "Rishabh Agrawal <rishabh.agrawal25b@gim.ac.in>",
-  "license": "MIT",
-  "homepage": "https://saint2706.github.io",
-  "bugs": {
-    "url": "https://github.com/saint2706/saint2706.github.io/issues"
+  "name": "rishabh-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "fitvids": "^2.1.1",
-    "jquery": "^3.7.1",
-    "jquery-smooth-scroll": "^2.2.0"
+    "@google/generative-ai": "^0.1.3",
+    "framer-motion": "^10.16.4",
+    "lucide-react": "^0.292.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.20.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
-    "https-proxy-agent": "^7.0.4",
-    "node-fetch": "^2.7.0",
-    "onchange": "^7.1.0",
-    "uglify-js": "^3.17.4",
-    "xml2js": "^0.6.2"
-  },
-  "scripts": {
-    "uglify": "uglifyjs node_modules/jquery/dist/jquery.min.js node_modules/fitvids/dist/fitvids.min.js node_modules/jquery-smooth-scroll/jquery.smooth-scroll.min.js assets/js/plugins/jquery.greedy-navigation.js assets/js/_main.js -c -m -o assets/js/main.min.js",
-    "watch:js": "onchange \"assets/js/**/*.js\" -e \"assets/js/main.min.js\" -- npm run build:js",
-    "build:js": "npm run uglify",
-    "sync:external-posts": "node scripts/sync_external_posts.js"
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "vite": "^5.0.0"
   }
 }
