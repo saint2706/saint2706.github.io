@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import KujaCounter from '../kuja/KujaCounter';
 import ResetForm from '../kuja/ResetForm';
 import LogList from '../kuja/LogList';
-import { getLogs, addLog, calculateDaysSince } from '../../services/kujaService';
+import { getLogs, addLog, calculateDaysSince, calculateLongestStreak } from '../../services/kujaService';
 import { RefreshCw } from 'lucide-react';
 
 const KujaPage = () => {
   const [logs, setLogs] = useState([]);
   const [days, setDays] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -20,8 +21,10 @@ const KujaPage = () => {
     if (fetchedLogs.length > 0) {
       const lastLostDate = fetchedLogs[0].timestamp;
       setDays(calculateDaysSince(lastLostDate));
+      setLongestStreak(calculateLongestStreak(fetchedLogs));
     } else {
       setDays(0); // Default if no logs
+      setLongestStreak(0);
     }
     setLoading(false);
   };
@@ -42,7 +45,7 @@ const KujaPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col items-center"
       >
-        <KujaCounter days={loading ? '...' : days} />
+        <KujaCounter days={loading ? '...' : days} longestStreak={loading ? '...' : longestStreak} />
 
         <button
           onClick={() => setIsFormOpen(true)}
