@@ -8,6 +8,7 @@ import {
   FileText,
   Menu,
   X,
+  Clock,
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -18,6 +19,7 @@ const Navbar = () => {
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
     { name: 'Resume', path: '/resume', icon: <User size={18} /> },
     { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
+    { name: 'Kuja Tracker', path: '/kuja', icon: <Clock size={18} /> },
   ];
 
   const handleCloseMenu = () => setIsMenuOpen(false);
