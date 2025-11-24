@@ -52,9 +52,13 @@ export const calculateDaysSince = (lastDate) => {
 
 export const calculateLongestStreak = (logs) => {
   if (!logs || logs.length === 0) return 0;
+  
+  // Calculate current streak (from most recent log to now)
+  const currentStreak = calculateDaysSince(logs[0].timestamp);
+  
   if (logs.length === 1) {
-    // If there's only one log, the longest streak is the time from that log to now
-    return calculateDaysSince(logs[0].timestamp);
+    // If there's only one log, the longest streak is the current streak
+    return currentStreak;
   }
 
   let longestStreak = 0;
@@ -78,11 +82,6 @@ export const calculateLongestStreak = (logs) => {
     }
   }
 
-  // Also check the current streak (from most recent log to now)
-  const currentStreak = calculateDaysSince(logs[0].timestamp);
-  if (currentStreak > longestStreak) {
-    longestStreak = currentStreak;
-  }
-
-  return longestStreak;
+  // Compare with current streak and return the maximum
+  return Math.max(longestStreak, currentStreak);
 };
