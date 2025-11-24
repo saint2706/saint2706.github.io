@@ -29,7 +29,7 @@ npm run dev
 
 The deployment workflow expects the following repository secrets to be configured:
 
-- `GEMINI_API_KEY` - Maps to `VITE_GEMINI_API_KEY` for the Gemini chatbot
+- `GEMINI_API_KEY` - Maps to `VITE_GEMINI_API_KEY` for the Gemini chatbot (use an HTTP referrer–restricted key scoped to `https://saint2706.github.io` so it doesn't get flagged as leaked)
 - `FIREBASE_API_KEY` - Maps to `VITE_FIREBASE_API_KEY`
 - `FIREBASE_AUTH_DOMAIN` - Maps to `VITE_FIREBASE_AUTH_DOMAIN`
 - `FIREBASE_PROJECT_ID` - Maps to `VITE_FIREBASE_PROJECT_ID`

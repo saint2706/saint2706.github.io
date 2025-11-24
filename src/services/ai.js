@@ -52,7 +52,15 @@ export const chatWithGemini = async (userMessage, history = []) => {
     const response = await result.response;
     return response.text();
   } catch (error) {
+    const errorMessage = error?.message || "Unknown error";
+    const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+
     console.error("Gemini Error:", error);
+
+    if (isLeakedKey) {
+      return "The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.";
+    }
+
     return "I seem to be having a connection glitch. Maybe my neural pathways are crossed? Try again later!";
   }
 };
@@ -77,6 +85,13 @@ export const roastResume = async () => {
         const response = await result.response;
         return response.text();
     } catch (error) {
+        const errorMessage = error?.message || "Unknown error";
+        const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+
+        if (isLeakedKey) {
+          return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
+        }
+
         return "I can't roast right now, I'm too nice. (Error connecting to AI)";
     }
 };
