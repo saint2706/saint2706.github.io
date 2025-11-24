@@ -68,7 +68,10 @@ export const calculateLongestStreak = (logs) => {
     const zonedOlder = toZonedTime(olderLog.timestamp, TIMEZONE);
     const zonedNewer = toZonedTime(newerLog.timestamp, TIMEZONE);
 
-    const streakDays = differenceInCalendarDays(zonedNewer, zonedOlder);
+    // Calculate days between losses, then subtract 1 to get the streak
+    // (days without losses between the two events)
+    const daysBetween = differenceInCalendarDays(zonedNewer, zonedOlder);
+    const streakDays = Math.max(0, daysBetween - 1);
     
     if (streakDays > longestStreak) {
       longestStreak = streakDays;
