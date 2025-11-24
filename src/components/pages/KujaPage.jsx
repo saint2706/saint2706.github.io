@@ -49,7 +49,7 @@ const KujaPage = () => {
           className="mt-8 group flex items-center gap-2 px-6 py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/50 text-red-400 rounded-full font-bold transition-all hover:scale-105"
         >
           <RefreshCw className="group-hover:rotate-180 transition-transform duration-500" />
-          He Lost Something Again...
+          She Lost Something Again...
         </button>
 
         <LogList logs={logs} />
