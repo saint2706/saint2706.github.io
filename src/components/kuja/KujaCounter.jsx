@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const KujaCounter = ({ days }) => {
+const KujaCounter = ({ days, longestStreak }) => {
   return (
     <div className="flex flex-col items-center justify-center py-12">
       <motion.div
@@ -16,6 +16,20 @@ const KujaCounter = ({ days }) => {
         <div className="text-2xl md:text-3xl text-text-primary font-bold">
           Days Since Kuja Lost Something
         </div>
+        
+        {longestStreak !== undefined && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="mt-8 p-4 bg-accent/10 border border-accent/30 rounded-lg"
+          >
+            <div className="text-sm text-text-secondary mb-1">🏆 Longest Streak</div>
+            <div className="text-4xl font-bold text-accent font-mono">
+              {longestStreak} {longestStreak === 1 ? 'day' : 'days'}
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );

@@ -49,3 +49,37 @@ export const calculateDaysSince = (lastDate) => {
 
   return differenceInCalendarDays(zonedNow, zonedLast);
 };
+
+export const calculateLongestStreak = (logs) => {
+  if (!logs || logs.length === 0) return 0;
+  if (logs.length === 1) {
+    // If there's only one log, the longest streak is the time from that log to now
+    return calculateDaysSince(logs[0].timestamp);
+  }
+
+  let longestStreak = 0;
+
+  // Logs are sorted by timestamp descending (newest first)
+  // So we need to iterate from the end (oldest) to the beginning (newest)
+  for (let i = logs.length - 1; i > 0; i--) {
+    const olderLog = logs[i];
+    const newerLog = logs[i - 1];
+
+    const zonedOlder = toZonedTime(olderLog.timestamp, TIMEZONE);
+    const zonedNewer = toZonedTime(newerLog.timestamp, TIMEZONE);
+
+    const streakDays = differenceInCalendarDays(zonedNewer, zonedOlder);
+    
+    if (streakDays > longestStreak) {
+      longestStreak = streakDays;
+    }
+  }
+
+  // Also check the current streak (from most recent log to now)
+  const currentStreak = calculateDaysSince(logs[0].timestamp);
+  if (currentStreak > longestStreak) {
+    longestStreak = currentStreak;
+  }
+
+  return longestStreak;
+};
