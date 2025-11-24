@@ -9,7 +9,7 @@ const getModel = () => {
   }
 
   const genAI = new GoogleGenerativeAI(API_KEY);
-  return genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  return genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 };
 
 const SYSTEM_PROMPT = `
