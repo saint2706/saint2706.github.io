@@ -2,3 +2,5 @@ node_modules/
 dist/
 legacy_backup/
 .DS_Store
+.env
+.env.local
