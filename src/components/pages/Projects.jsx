@@ -20,7 +20,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-12">
+    <div className="max-w-6xl mx-auto py-12 px-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -49,8 +49,19 @@ const Projects = () => {
             whileHover={{ y: -5 }}
             className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden hover:border-accent/50 transition-colors group flex flex-col h-full"
           >
-            {/* Project Header (could be an image placeholder if no image) */}
-            <div className="h-3 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
+            {/* Project Image or Gradient Placeholder */}
+            {project.image ? (
+              <div className="relative h-40 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />
+              </div>
+            ) : (
+              <div className="h-3 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
+            )}
 
             <div className="p-6 flex-grow flex flex-col">
               <div className="flex justify-between items-start mb-4">
@@ -58,11 +69,11 @@ const Projects = () => {
                   {project.title}
                 </h3>
                 {project.featured && (
-                   <Star size={16} className="text-fun-yellow fill-fun-yellow" />
+                  <Star size={16} className="text-fun-yellow fill-fun-yellow flex-shrink-0" />
                 )}
               </div>
 
-              <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
+              <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
                 {project.description}
               </p>
 
@@ -85,10 +96,16 @@ const Projects = () => {
                     <ExternalLink size={16} /> Live Demo
                   </a>
                 )}
-                {/* Assuming all might have a github link derived or explicit */}
-                {/* <a href="#" className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
-                  <Github size={16} /> Code
-                </a> */}
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                  >
+                    <Github size={16} /> Code
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
@@ -99,3 +116,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

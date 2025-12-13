@@ -6,6 +6,7 @@ import {
   User,
   Briefcase,
   FileText,
+  Mail,
   Menu,
   X,
 } from 'lucide-react';
@@ -18,6 +19,7 @@ const Navbar = () => {
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
     { name: 'Resume', path: '/resume', icon: <User size={18} /> },
     { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
+    { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
   ];
 
   const handleCloseMenu = () => setIsMenuOpen(false);

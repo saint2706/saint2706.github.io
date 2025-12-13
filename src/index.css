@@ -7,3 +7,39 @@
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
   }
 }
+
+/* Speech bubble with left pointer for RoastMode */
+.speech-bubble-left {
+  position: relative;
+}
+
+.speech-bubble-left::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+/* Custom scrollbar for chat */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #334155;
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-slate-700::-webkit-scrollbar-thumb {
+  background-color: #334155;
+}
+

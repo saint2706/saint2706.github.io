@@ -109,30 +109,37 @@ export const resumeData = {
       description: "A comprehensive coding curriculum designed specifically for MBA students to bridge the gap between business strategy and technical implementation.",
       tags: ["Education", "Curriculum", "GitHub Pages"],
       link: "https://saint2706.github.io/Coding-For-MBA/",
+      github: "https://github.com/saint2706/Coding-For-MBA",
+      image: "/images/projects/coding-for-mba.png",
       featured: true
     },
     {
       title: "AI-Based Attendance Management",
       description: "Facial-recognition attendance platform automating check-ins using human activity detection.",
       tags: ["Computer Vision", "Facial Recognition", "Automation"],
+      github: "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition",
+      image: "/images/projects/attendance-ai.png",
       featured: true
     },
     {
       title: "Football Score Prediction",
       description: "Modeled historical match data to forecast outcomes and built dashboards for team insights.",
       tags: ["Predictive Analytics", "Data Viz", "Sports"],
+      image: "/images/projects/football-prediction.png",
       featured: false
     },
     {
       title: "TV Script Generation AI",
       description: "Trained a recurrent neural network to author episode scripts, demonstrating creative AI potential.",
       tags: ["RNN", "NLP", "Creative AI"],
+      image: "/images/projects/tv-script-ai.png",
       featured: true
     },
     {
       title: "The Simpsons Data Analytics",
       description: "Mined long-running sitcom data to highlight trends in storytelling, ratings, and retention.",
       tags: ["Business Intelligence", "Storytelling", "Media"],
+      image: "/images/projects/simpsons-analytics.png",
       featured: false
     }
   ],

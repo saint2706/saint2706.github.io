@@ -1,18 +1,46 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Send, Sparkles } from 'lucide-react';
+import { Bot, X, Send, Sparkles, Command } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 
+const STORAGE_KEY = 'portfolio_chat_history';
+const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" }
-  ]);
+  const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // Load chat history from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load chat history:', e);
+    }
+  }, []);
+
+  // Save chat history to localStorage
+  useEffect(() => {
+    if (messages.length > 1) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      } catch (e) {
+        console.warn('Failed to save chat history:', e);
+      }
+    }
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -21,6 +49,13 @@ const Chatbot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
+
+  // Focus input when chat opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 640px)');
@@ -32,6 +67,23 @@ const Chatbot = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
+  // Keyboard shortcut: Cmd/Ctrl + K to toggle chat
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsOpen(prev => !prev);
+      }
+      // Escape to close
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -41,7 +93,6 @@ const Chatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    // Format history for Gemini (excluding the initial system prompt setup which is handled in service)
     const history = messages.map(m => ({
       role: m.role,
       parts: [{ text: m.text }]
@@ -53,15 +104,25 @@ const Chatbot = () => {
     setIsTyping(false);
   };
 
+  const clearHistory = useCallback(() => {
+    setMessages([DEFAULT_MESSAGE]);
+    localStorage.removeItem(STORAGE_KEY);
+  }, []);
+
   return (
     <>
       {/* Trigger Button */}
       <button
         id="ai-chat-trigger"
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-40 p-4 bg-accent text-primary rounded-full shadow-lg hover:shadow-accent/50 transition-all duration-300 ${isOpen ? 'hidden' : 'block'}`}
+        className={`fixed bottom-6 right-6 z-40 p-4 bg-accent text-primary rounded-full shadow-lg hover:shadow-accent/50 transition-all duration-300 group ${isOpen ? 'hidden' : 'block'}`}
+        aria-label="Open chat (Ctrl+K)"
       >
         <Bot size={28} />
+        {/* Keyboard hint */}
+        <span className="absolute -top-8 right-0 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap flex items-center gap-1">
+          <Command size={12} /> K
+        </span>
       </button>
 
       {/* Chat Interface */}
@@ -71,8 +132,7 @@ const Chatbot = () => {
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[400px] max-h-[70vh] md:max-h-[600px] h-[70vh] md:h-[80vh] bg-secondary border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-            style={isMobile ? { height: 'min(calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)), 70vh)' } : undefined}
+            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[400px] max-h-[60vh] md:max-h-[600px] h-[60vh] md:h-[70vh] bg-secondary border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-primary/50 p-4 flex justify-between items-center border-b border-slate-700 backdrop-blur-md">
@@ -88,12 +148,24 @@ const Chatbot = () => {
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-2">
+                {messages.length > 1 && (
+                  <button
+                    onClick={clearHistory}
+                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                    aria-label="Clear chat history"
+                  >
+                    Clear
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-slate-400 hover:text-white transition-colors p-1"
+                  aria-label="Close chat (Escape)"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Messages Area */}
@@ -104,22 +176,21 @@ const Chatbot = () => {
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed ${
-                      msg.role === 'user'
+                    className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
                         ? 'bg-accent text-primary rounded-br-none'
                         : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
-                    }`}
+                      }`}
                   >
-                   <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
                   </div>
                 </div>
               ))}
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-slate-800 p-3 rounded-2xl rounded-bl-none border border-slate-700 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce delay-0"></span>
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce delay-150"></span>
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce delay-300"></span>
+                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></span>
+                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></span>
+                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></span>
                   </div>
                 </div>
               )}
@@ -127,9 +198,10 @@ const Chatbot = () => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 bg-primary/50 border-t border-slate-700 sticky bottom-0">
+            <form onSubmit={handleSubmit} className="p-4 bg-primary/50 border-t border-slate-700">
               <div className="flex gap-2">
                 <input
+                  ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -140,6 +212,7 @@ const Chatbot = () => {
                   type="submit"
                   disabled={!input.trim() || isTyping}
                   className="p-2 bg-accent text-primary rounded-xl hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Send message"
                 >
                   <Send size={20} />
                 </button>
@@ -153,3 +226,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+

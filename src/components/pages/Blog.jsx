@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Tag, Calendar, User, Search } from 'lucide-react';
+import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import blogs from '../../data/blogs.json';
+
+const POSTS_PER_PAGE = 6;
 
 const Blog = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Extract unique sources for filter
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
 
-  const filteredBlogs = blogs.filter(blog => {
-    const matchesSource = filter === 'All' || blog.source === filter;
-    const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSource && matchesSearch;
-  });
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter(blog => {
+      const matchesSource = filter === 'All' || blog.source === filter;
+      const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesSource && matchesSearch;
+    });
+  }, [filter, searchTerm]);
+
+  // Reset to page 1 when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, searchTerm]);
+
+  const totalPages = Math.ceil(filteredBlogs.length / POSTS_PER_PAGE);
+  const paginatedBlogs = filteredBlogs.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
 
   const container = {
     hidden: { opacity: 0 },
@@ -85,14 +101,15 @@ const Blog = () => {
       </motion.div>
 
       <motion.div
+        key={currentPage} // Re-animate on page change
         variants={container}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {filteredBlogs.map((blog, idx) => (
+        {paginatedBlogs.map((blog, idx) => (
           <motion.div
-            key={idx}
+            key={`${blog.title}-${idx}`}
             variants={item}
             whileHover={{ y: -5 }}
             className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden hover:border-accent/50 transition-colors group flex flex-col h-full"
@@ -105,7 +122,7 @@ const Blog = () => {
                 <span className={`text-xs px-2 py-1 rounded border font-mono
                   ${blog.source === 'Dev.to' ? 'border-indigo-500 text-indigo-400 bg-indigo-500/10' :
                     blog.source === 'Medium' ? 'border-yellow-500 text-yellow-400 bg-yellow-500/10' :
-                    'border-orange-500 text-orange-400 bg-orange-500/10'
+                      'border-orange-500 text-orange-400 bg-orange-500/10'
                   }`}>
                   {blog.source}
                 </span>
@@ -153,8 +170,58 @@ const Blog = () => {
           </div>
         )}
       </motion.div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="flex justify-center items-center gap-4 mt-12"
+        >
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={18} /> Previous
+          </button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-10 h-10 rounded-lg font-medium transition-all duration-300
+                  ${page === currentPage
+                    ? 'bg-accent text-primary'
+                    : 'bg-secondary/50 text-slate-400 hover:text-white border border-slate-700 hover:border-accent/50'
+                  }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next <ChevronRight size={18} />
+          </button>
+        </motion.div>
+      )}
+
+      {/* Results info */}
+      {filteredBlogs.length > 0 && (
+        <p className="text-center text-slate-500 text-sm mt-6">
+          Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-{Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length} posts
+        </p>
+      )}
     </div>
   );
 };
 
 export default Blog;
+

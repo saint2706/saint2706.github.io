@@ -2,10 +2,37 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Database } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import FloatingIcon from './FloatingIcon';
 
 const Hero = () => {
   return (
     <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-4xl mx-auto">
+      {/* Mobile-friendly animated gradient background */}
+      <motion.div
+        className="absolute inset-0 -z-10 sm:hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-fun-pink/10 animate-pulse" />
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-fun-pink/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -65,7 +92,7 @@ const Hero = () => {
         </button>
       </motion.div>
 
-      {/* Floating Icons Animation */}
+      {/* Floating Icons Animation - Desktop only */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
         <FloatingIcon icon={<Database size={30} />} delay={0} x="10%" y="20%" />
         <FloatingIcon icon={<Code2 size={30} />} delay={2} x="85%" y="15%" />
@@ -75,25 +102,5 @@ const Hero = () => {
   );
 };
 
-const FloatingIcon = ({ icon, delay, x, y }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0 }}
-    animate={{
-      opacity: [0.2, 0.5, 0.2],
-      y: [0, -20, 0],
-      rotate: [0, 10, -10, 0]
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      delay: delay,
-      ease: "easeInOut"
-    }}
-    className="absolute text-slate-700"
-    style={{ left: x, top: y }}
-  >
-    {icon}
-  </motion.div>
-);
-
 export default Hero;
+
