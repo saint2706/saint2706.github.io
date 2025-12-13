@@ -1,58 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Send, Linkedin, Github, Twitter, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Github, Twitter, ExternalLink } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 
 const Contact = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-    const [status, setStatus] = useState(null); // 'success' | 'error' | null
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setStatus(null);
-
-        try {
-            // Using Formspree for serverless form handling
-            const response = await fetch('https://formspree.io/f/your-form-id', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    message: formData.message,
-                }),
-            });
-
-            if (response.ok) {
-                setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-            } else {
-                setStatus('error');
-            }
-        } catch (error) {
-            // For demo purposes, show success anyway (Formspree needs setup)
-            setStatus('success');
-            setFormData({ name: '', email: '', message: '' });
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
-
-    const handleChange = (e) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
-
     const socialLinks = [
         { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub' },
         { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn' },
@@ -145,98 +96,39 @@ const Contact = () => {
                     </motion.div>
                 </motion.div>
 
-                {/* Contact Form */}
+                {/* CTA Section */}
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 }}
+                    className="flex flex-col justify-center"
                 >
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                                className="w-full bg-secondary/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
-                                placeholder="John Doe"
-                            />
+                    <div className="bg-secondary/50 border border-slate-700 rounded-2xl p-8 text-center">
+                        <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-accent to-fun-pink rounded-full flex items-center justify-center">
+                            <Mail size={36} className="text-white" />
                         </div>
 
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="w-full bg-secondary/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors"
-                                placeholder="john@example.com"
-                            />
-                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-4">
+                            Ready to start a conversation?
+                        </h3>
 
-                        <div>
-                            <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
-                                Message
-                            </label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                required
-                                rows={5}
-                                className="w-full bg-secondary/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition-colors resize-none"
-                                placeholder="Tell me about your project..."
-                            />
-                        </div>
+                        <p className="text-slate-400 mb-8">
+                            Drop me an email and I'll get back to you as soon as possible. Let's create something amazing together!
+                        </p>
 
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-full py-3 px-6 bg-accent text-primary font-bold rounded-xl hover:bg-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        <a
+                            href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-primary font-bold rounded-xl hover:bg-white transition-colors"
                         >
-                            {isSubmitting ? (
-                                'Sending...'
-                            ) : (
-                                <>
-                                    Send Message <Send size={18} />
-                                </>
-                            )}
-                        </button>
+                            <Mail size={20} />
+                            Send me an Email
+                            <ExternalLink size={16} />
+                        </a>
 
-                        {/* Status Messages */}
-                        {status === 'success' && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="flex items-center gap-2 text-green-400 bg-green-400/10 p-3 rounded-lg"
-                            >
-                                <CheckCircle size={20} />
-                                <span>Message sent successfully! I'll get back to you soon.</span>
-                            </motion.div>
-                        )}
-
-                        {status === 'error' && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="flex items-center gap-2 text-red-400 bg-red-400/10 p-3 rounded-lg"
-                            >
-                                <AlertCircle size={20} />
-                                <span>Something went wrong. Please try again or email me directly.</span>
-                            </motion.div>
-                        )}
-                    </form>
+                        <p className="text-slate-500 text-sm mt-6">
+                            Or use the chatbot (Ctrl+K) to learn more about me first!
+                        </p>
+                    </div>
                 </motion.div>
             </div>
         </div>
