@@ -139,40 +139,69 @@ export const resumeData = {
   projects: [
     {
       title: "Coding-For-MBA",
-      description: "A comprehensive coding curriculum designed specifically for MBA students to bridge the gap between business strategy and technical implementation.",
-      tags: ["Education", "Curriculum", "GitHub Pages"],
+      description: "A comprehensive Python coding curriculum designed for MBA students - bridging business strategy and technical implementation. Features 15 structured lessons from basics to data analysis.",
+      tags: ["Python", "Education", "Data Analytics", "GitHub Pages"],
       link: "https://saint2706.github.io/Coding-For-MBA/",
       github: "https://github.com/saint2706/Coding-For-MBA",
       image: "/images/projects/coding-for-mba.png",
+      stars: 69,
       featured: true
     },
     {
-      title: "AI-Based Attendance Management",
-      description: "Facial-recognition attendance platform automating check-ins using human activity detection.",
-      tags: ["Computer Vision", "Facial Recognition", "Automation"],
+      title: "AI Attendance Management System",
+      description: "Full-stack facial recognition attendance platform with real-time face detection, automated check-ins, and comprehensive analytics dashboard.",
+      tags: ["Python", "Computer Vision", "Face Recognition", "OpenCV"],
       github: "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition",
       image: "/images/projects/attendance-ai.png",
       featured: true
     },
     {
-      title: "Football Score Prediction",
-      description: "Modeled historical match data to forecast outcomes and built dashboards for team insights.",
-      tags: ["Predictive Analytics", "Data Viz", "Sports"],
-      image: "/images/projects/football-prediction.png",
-      featured: false
-    },
-    {
-      title: "TV Script Generation AI",
-      description: "Trained a recurrent neural network to author episode scripts, demonstrating creative AI potential.",
-      tags: ["RNN", "NLP", "Creative AI"],
-      image: "/images/projects/tv-script-ai.png",
+      title: "Client Modding Guide",
+      description: "Comprehensive guide for Discord client modding with step-by-step tutorials. Most starred personal project with active community engagement.",
+      tags: ["Documentation", "Discord", "Modding", "Community"],
+      github: "https://github.com/saint2706/Client-Modding-Guide",
+      image: "/images/projects/modding-guide.png",
+      stars: 75,
       featured: true
     },
     {
-      title: "The Simpsons Data Analytics",
-      description: "Mined long-running sitcom data to highlight trends in storytelling, ratings, and retention.",
-      tags: ["Business Intelligence", "Storytelling", "Media"],
-      image: "/images/projects/simpsons-analytics.png",
+      title: "Scroll of Dharma",
+      description: "An interactive meditation journey application combining philosophy with technology for mindful experiences.",
+      tags: ["Python", "Meditation", "Interactive", "Wellness"],
+      github: "https://github.com/saint2706/scroll-of-dharma",
+      image: "/images/projects/scroll-dharma.png",
+      featured: true
+    },
+    {
+      title: "VITable",
+      description: "Elegant timetable viewer for VIT students built with Nim programming language. Clean UI for schedule management.",
+      tags: ["Nim", "Utility", "VIT", "Scheduling"],
+      github: "https://github.com/saint2706/vitable",
+      image: "/images/projects/vitable.png",
+      featured: false
+    },
+    {
+      title: "Geralt Discord Bot",
+      description: "Feature-rich Discord bot with custom commands, moderation tools, and entertainment features.",
+      tags: ["Python", "Discord.py", "Bot", "Automation"],
+      github: "https://github.com/saint2706/geralt",
+      image: "/images/projects/geralt-bot.png",
+      featured: false
+    },
+    {
+      title: "VIT Academics Enhancer",
+      description: "Chrome extension that enhances VIT's Academics Portal with improved UI/UX and additional features.",
+      tags: ["JavaScript", "Chrome Extension", "VIT", "UI/UX"],
+      github: "https://github.com/saint2706/Enhancer-for-VIT-Vellore-Academics",
+      image: "/images/projects/vit-enhancer.png",
+      featured: false
+    },
+    {
+      title: "Python Course - GIM BDA",
+      description: "Jupyter notebook-based Python course materials for Big Data Analytics students at GIM.",
+      tags: ["Python", "Jupyter", "Education", "Data Science"],
+      github: "https://github.com/saint2706/Python-Course-GIM-BDA",
+      image: "/images/projects/python-gim.png",
       featured: false
     }
   ],

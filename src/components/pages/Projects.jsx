@@ -84,9 +84,19 @@ const Projects = () => {
                 <h3 className="text-xl font-bold text-primary group-hover:text-accent transition-colors">
                   {project.title}
                 </h3>
-                {project.featured && (
-                  <Star size={16} className="text-fun-yellow fill-fun-yellow flex-shrink-0" />
-                )}
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {project.stars && (
+                    <span className="flex items-center gap-1 text-xs text-fun-yellow">
+                      <Star size={12} className="fill-fun-yellow" />
+                      {project.stars}
+                    </span>
+                  )}
+                  {project.featured && (
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+                      Featured
+                    </span>
+                  )}
+                </div>
               </div>
 
               <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3">

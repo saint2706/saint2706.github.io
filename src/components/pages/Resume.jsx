@@ -128,7 +128,7 @@ const Resume = () => {
             <Award size={24} className="text-fun-yellow" />
             <h2 className="text-xl font-bold">Certifications</h2>
           </div>
-          <ul className="space-y-4 max-h-96 overflow-y-auto pr-2">
+          <ul className="space-y-4">
             {resumeData.certifications.map((cert, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow flex-shrink-0" />
