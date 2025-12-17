@@ -15,13 +15,24 @@ const Blog = () => {
   // Extract unique sources for filter
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
 
+  // Helper function to format date as dd/mm/yyyy
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   const filteredBlogs = useMemo(() => {
-    return blogs.filter(blog => {
-      const matchesSource = filter === 'All' || blog.source === filter;
-      const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesSource && matchesSearch;
-    });
+    return blogs
+      .filter(blog => {
+        const matchesSource = filter === 'All' || blog.source === filter;
+        const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSource && matchesSearch;
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort newest first
   }, [filter, searchTerm]);
 
   // Reset to page 1 and show loading when filters change
@@ -150,7 +161,7 @@ const Blog = () => {
                 </span>
                 <span className="text-muted text-xs flex items-center gap-1">
                   <Calendar size={12} />
-                  {new Date(blog.date).toLocaleDateString()}
+                  {formatDate(blog.date)}
                 </span>
               </div>
 

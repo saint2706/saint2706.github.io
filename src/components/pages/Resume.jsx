@@ -128,16 +128,44 @@ const Resume = () => {
             <Award size={24} className="text-fun-yellow" />
             <h2 className="text-xl font-bold">Certifications</h2>
           </div>
-          <ul className="space-y-4">
+          <ul className="space-y-4 max-h-96 overflow-y-auto pr-2">
             {resumeData.certifications.map((cert, i) => (
               <li key={i} className="flex items-start gap-3">
-                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow" />
-                <span className="text-primary">{cert}</span>
+                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow flex-shrink-0" />
+                <div>
+                  <span className="text-primary block">{cert.name}</span>
+                  <span className="text-secondary text-sm">{cert.issuer}{cert.date && ` • ${cert.date}`}</span>
+                </div>
               </li>
             ))}
           </ul>
         </div>
       </motion.div>
+
+      {/* Languages Section */}
+      {resumeData.basics.languages && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-8"
+        >
+          <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-2xl">🌐</span>
+              <h2 className="text-xl font-bold">Languages</h2>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {resumeData.basics.languages.map((lang, i) => (
+                <div key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50 rounded-xl border border-slate-700">
+                  <span className="text-primary font-medium">{lang.name}</span>
+                  <span className="text-accent text-sm">{lang.proficiency}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };

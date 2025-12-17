@@ -6,7 +6,7 @@ export const resumeData = {
     email: "rishabh.agrawal25b@gim.ac.in",
     phone: "+91-9137095017",
     website: "https://saint2706.github.io",
-    summary: "PGDM Big Data Analytics candidate pairing a VIT computer science foundation with hands-on SaaS research and large-scale campaign experience. I translate data storytelling into measurable marketing and product impact.",
+    summary: "Big Data Analytics postgraduate at Goa Institute of Management with a Computer Science background. I thrive at the intersection of data, technology, and creativity—using analytics, AI, and software development to turn complex challenges into actionable insights. Skilled in Python, SQL, R, AWS, Tableau, Power BI, TensorFlow, and PyTorch. I'm passionate about using data and AI not just to solve problems, but to tell stories, create value, and enable smarter decisions.",
     location: {
       city: "Goa",
       country: "India",
@@ -21,46 +21,43 @@ export const resumeData = {
         network: "GitHub",
         url: "https://github.com/saint2706",
         icon: "Github"
-      },
-      {
-        network: "Dev.to",
-        url: "https://dev.to/saint2706",
-        icon: "Code2"
-      },
-      {
-        network: "Medium",
-        url: "https://medium.com/@saint2706",
-        icon: "BookOpen"
-      },
-      {
-        network: "Twitter",
-        url: "https://twitter.com/saint2706",
-        icon: "Twitter"
       }
+    ],
+    languages: [
+      { name: "English", proficiency: "Native/Bilingual" },
+      { name: "Hindi", proficiency: "Native/Bilingual" },
+      { name: "Marathi", proficiency: "Native/Bilingual" },
+      { name: "Marwari", proficiency: "Native/Bilingual" },
+      { name: "French", proficiency: "Professional Working" },
+      { name: "South American Indian", proficiency: "Limited Working" }
     ]
   },
   education: [
     {
-      institution: "Goa Institute of Management",
-      area: "Big Data Analytics (PGDM)",
-      startDate: "2025",
-      endDate: "2027",
+      institution: "Goa Institute of Management (GIM)",
+      area: "PGDM - Big Data Analytics",
+      startDate: "Jun 2025",
+      endDate: "Jul 2027",
       description: "Focusing on data-driven decision making and advanced analytics.",
     },
     {
       institution: "Vellore Institute of Technology",
-      area: "Computer Science and Engineering (B.Tech)",
+      area: "Bachelor of Technology (B.Tech) - Computer Science",
       startDate: "2020",
       endDate: "2024",
-      score: "8.2/10",
       description: "Core foundation in algorithms, software development, and data science.",
     },
     {
-      institution: "Delhi Public School",
-      area: "Science",
+      institution: "Delhi Public School - India",
+      area: "12th, Schooling",
       startDate: "2018",
       endDate: "2020",
-      score: "90%",
+    },
+    {
+      institution: "Ryan International School",
+      area: "Schooling",
+      startDate: "2004",
+      endDate: "2018",
     },
   ],
   experience: [
@@ -93,34 +90,49 @@ export const resumeData = {
     {
       category: "Programming",
       items: [
-        { name: "Python", proficiency: 95 },
-        { name: "R", proficiency: 85 },
-        { name: "SQL", proficiency: 85 },
-        { name: "Java", proficiency: 80 },
-        { name: "C++", proficiency: 80 },
-        { name: "JavaScript", proficiency: 80 },
-        { name: "HTML/CSS", proficiency: 85 }
+        { name: "Python", proficiency: 95, verified: true },
+        { name: "Java", proficiency: 85, verified: true },
+        { name: "C++", proficiency: 80, verified: true },
+        { name: "JavaScript", proficiency: 85, verified: true },
+        { name: "SQL", proficiency: 90 },
+        { name: "HTML/CSS", proficiency: 85, verified: true },
+        { name: "R", proficiency: 80 }
       ]
     },
     {
-      category: "Analytics & AI",
+      category: "Data Science & AI",
       items: [
+        { name: "Data Analytics", proficiency: 95 },
+        { name: "Machine Learning", proficiency: 85 },
+        { name: "Pandas", proficiency: 90 },
+        { name: "NumPy", proficiency: 90 },
+        { name: "Scikit-learn", proficiency: 85 },
+        { name: "Matplotlib/Seaborn", proficiency: 85 },
         { name: "Tableau", proficiency: 90 },
-        { name: "Power BI", proficiency: 80 },
-        { name: "TensorFlow", proficiency: 70 },
-        { name: "PyTorch", proficiency: 90 },
-        { name: "Hugging Face", proficiency: 70 },
-        { name: "IBM Watson", proficiency: 55 }
+        { name: "Power BI", proficiency: 80 }
       ]
     },
     {
-      category: "Data Engineering",
+      category: "Frameworks & Cloud",
       items: [
-        { name: "AWS", proficiency: 80 },
-        { name: "Oracle Cloud", proficiency: 80 },
-        { name: "MongoDB", proficiency: 70 },
-        { name: "PostgreSQL", proficiency: 80 },
-        { name: "NoSQL", proficiency: 85 }
+        { name: "AWS", proficiency: 85 },
+        { name: "Azure", proficiency: 70 },
+        { name: "Google Cloud", proficiency: 70 },
+        { name: "TensorFlow", proficiency: 75 },
+        { name: "PyTorch", proficiency: 85 },
+        { name: "React", proficiency: 75 },
+        { name: "Node.js", proficiency: 70 },
+        { name: "Hugging Face", proficiency: 70 }
+      ]
+    },
+    {
+      category: "Soft Skills",
+      items: [
+        { name: "Business Strategy", proficiency: 85 },
+        { name: "Leadership", proficiency: 85 },
+        { name: "Project Management", proficiency: 80 },
+        { name: "Communication", proficiency: 90 },
+        { name: "Problem Solving", proficiency: 90 }
       ]
     }
   ],
@@ -165,8 +177,16 @@ export const resumeData = {
     }
   ],
   certifications: [
-    "AWS Certified Cloud Practitioner",
-    "Data Analytics (IBM Skills Network)",
-    "Visual Big Data Technologies (Udemy)",
+    { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services (AWS)", date: "Jul 2023", expires: "Jul 2026" },
+    { name: "Data Analytics powered by IBM", issuer: "SmartInternz", date: "Jul 2023" },
+    { name: "AWS Academy Graduate - Cloud Foundations", issuer: "Amazon Web Services (AWS)", date: "Jun 2023" },
+    { name: "JavaScript Algorithms and Data Structures", issuer: "freeCodeCamp", date: "Jan 2023" },
+    { name: "Java Programming: Solving Problems with Software (with Honors)", issuer: "Coursera", date: "Nov 2021" },
+    { name: "Programming Foundations with JavaScript, HTML and CSS", issuer: "Coursera", date: "Nov 2020" },
+    { name: "Programming for Everybody (Getting Started with Python)", issuer: "Coursera", date: "Sep 2020" },
+    { name: "Beginner's Guide to Cyber Security", issuer: "Udemy", date: "2022" },
+    { name: "Blockchain Mastery 2022", issuer: "Udemy", date: "2022" },
+    { name: "Data Analytics, Storage, Mining & Visual Big Data Technologies", issuer: "Udemy" },
+    { name: "Learn Big Data Basics", issuer: "Udemy" }
   ]
 };

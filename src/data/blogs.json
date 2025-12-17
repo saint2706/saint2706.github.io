@@ -1,33 +1,5 @@
 [
   {
-    "title": "A Comprehensive Guide to Stoic Philosophy",
-    "link": "https://saint2706.substack.com/p/a-comprehensive-guide-to-stoic-philosophy",
-    "date": "2025-12-15T00:00:00Z",
-    "summary": "Stoicism is an ancient Greek and Roman philosophy focused on living a virtuous and tranquil life by understanding and focusing on what we can control. This guide introduces you to its core ideas through the practical wisdom of Marcus Aurelius, Epictetus, and Cicero.",
-    "source": "Substack",
-    "tags": [
-      "philosophy",
-      "stoicism",
-      "self-improvement",
-      "ancient-wisdom"
-    ],
-    "coverImage": null
-  },
-  {
-    "title": "Ciceronian Governance: A Framework for Principled Public Administration",
-    "link": "https://saint2706.substack.com/p/ciceronian-governance",
-    "date": "2025-12-14T00:00:00Z",
-    "summary": "The Ciceronian model provides a clear and compelling framework for principled governance built upon universal natural law, the four cardinal virtues (Justice, Fortitude, Prudence, Temperance), and the unity of morality and true expediency.",
-    "source": "Substack",
-    "tags": [
-      "philosophy",
-      "governance",
-      "ethics",
-      "leadership"
-    ],
-    "coverImage": null
-  },
-  {
     "title": "Python Game Development: Create a Basic 2D Game with Pygame",
     "link": "https://dev.to/saint2706/python-game-development-create-a-basic-2d-game-with-pygame-118l",
     "date": "2025-11-19T10:22:54Z",
@@ -69,6 +41,24 @@
       "machinelearning"
     ],
     "coverImage": null
+  },
+  {
+    "title": "A Beginner's Guide to Stoicism: Finding Calm and Strength in a Hectic World",
+    "link": "https://saint2706.substack.com/p/a-beginners-guide-to-stoicism-finding",
+    "date": "Sat, 25 Oct 2025 07:15:56 GMT",
+    "summary": "An Ancient Philosophy for Modern Problems",
+    "source": "Substack",
+    "tags": [],
+    "coverImage": "https://substackcdn.com/image/fetch/$s_!tURv!,w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1a729d1-21ec-4c4f-b418-ab6df82c26c7_96x96.png"
+  },
+  {
+    "title": "Policy Memorandum: The Ciceronian Principles of Just Governance",
+    "link": "https://saint2706.substack.com/p/policy-memorandum-the-ciceronian",
+    "date": "Sat, 25 Oct 2025 06:37:42 GMT",
+    "summary": "The Foundation of Legitimate Authority: The Supremacy of Natural Law",
+    "source": "Substack",
+    "tags": [],
+    "coverImage": "https://substackcdn.com/image/fetch/$s_!tURv!,w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1a729d1-21ec-4c4f-b418-ab6df82c26c7_96x96.png"
   },
   {
     "title": "A Beginner's Guide to Data Analysis with Python: Using Pandas and NumPy",

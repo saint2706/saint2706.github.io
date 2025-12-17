@@ -1,13 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, Twitter, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Github, ExternalLink } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 
 const Contact = () => {
     const socialLinks = [
         { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub' },
         { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn' },
-        { icon: <Twitter size={24} />, url: 'https://twitter.com/saint2706', label: 'Twitter' },
     ];
 
     return (
@@ -23,7 +22,7 @@ const Contact = () => {
                     </span>
                 </h1>
                 <p className="text-secondary text-lg max-w-xl mx-auto">
-                    Have a project in mind or just want to chat? I'd love to hear from you.
+                    Interested in building data-driven solutions that make an impact? Let's connect!
                 </p>
             </motion.div>
 
@@ -113,7 +112,7 @@ const Contact = () => {
                         </h3>
 
                         <p className="text-secondary mb-8">
-                            Drop me an email and I'll get back to you as soon as possible. Let's create something amazing together!
+                            Whether it's making sense of messy data, designing AI/ML solutions, or bridging technical depth with business impact - let's create something amazing together!
                         </p>
 
                         <a

@@ -63,11 +63,10 @@ const Hero = () => {
         transition={{ delay: 0.4 }}
         className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
       >
-        I bridge the gap between
-        <strong className="text-primary mx-1">Computer Science</strong>
-        and
-        <strong className="text-primary mx-1">Business Strategy</strong>.
-        Currently decoding patterns at Goa Institute of Management.
+        Turning <strong className="text-primary mx-1">messy data</strong> into
+        <strong className="text-primary mx-1">clear strategies</strong> and
+        <strong className="text-primary mx-1">AI/ML solutions</strong> into real-world impact.
+        Big Data Analytics at GIM.
       </motion.p>
 
       <motion.div

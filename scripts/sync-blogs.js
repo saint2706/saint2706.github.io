@@ -12,8 +12,8 @@ async function fetchDevTo() {
   try {
     const response = await fetch('https://dev.to/api/articles?username=saint2706');
     if (!response.ok) {
-        console.error('Failed to fetch Dev.to articles:', response.statusText);
-        return [];
+      console.error('Failed to fetch Dev.to articles:', response.statusText);
+      return [];
     }
     const articles = await response.json();
     return articles.map(article => ({
@@ -52,16 +52,53 @@ async function fetchMedium() {
 
 async function fetchSubstack() {
   try {
-    const feed = await parser.parseURL('https://saint2706.substack.com/feed');
-    return feed.items.map(item => ({
-      title: item.title,
-      link: item.link,
-      date: item.pubDate || item.isoDate,
-      summary: item.contentSnippet,
-      source: 'Substack',
-      tags: [], // Substack RSS tags might be different
-      coverImage: item.enclosure?.url || extractImage(item['content:encoded'])
-    }));
+    // Import the Substack mapping
+    let substackMapping = {};
+    try {
+      const mappingModule = await import('./substack-mapping.js');
+      substackMapping = mappingModule.substackMapping || {};
+    } catch (e) {
+      console.warn('No substack-mapping.js found, using RSS links directly');
+    }
+
+    // Use custom fields to capture GUID
+    const customParser = new Parser({
+      customFields: {
+        item: ['guid']
+      }
+    });
+
+    const feed = await customParser.parseURL('https://saint2706.substack.com/feed');
+    return feed.items.map(item => {
+      // Extract slug from RSS link: https://saint2706.substack.com/p/post-slug
+      const linkMatch = item.link.match(/\/p\/([^\/\?]+)/);
+      const slug = linkMatch ? linkMatch[1] : null;
+
+      // Check if we have a mapping for this slug
+      let postLink = item.link; // Default to RSS link
+      if (slug && substackMapping[slug]) {
+        postLink = `https://substack.com/home/post/p-${substackMapping[slug]}`;
+      }
+
+      // Extract summary - use contentSnippet or content
+      let summary = item.contentSnippet || '';
+      if (summary.length > 200) {
+        summary = summary.substring(0, 200) + '...';
+      }
+
+      // Try to extract tags from categories if available
+      const tags = item.categories || [];
+
+      return {
+        title: item.title,
+        link: postLink,
+        date: item.pubDate || item.isoDate,
+        summary: summary,
+        source: 'Substack',
+        tags: tags,
+        coverImage: item.enclosure?.url || extractImage(item['content:encoded'])
+      };
+    });
   } catch (error) {
     console.error('Error fetching Substack:', error);
     return [];
@@ -76,9 +113,9 @@ function extractSummary(content) {
 }
 
 function extractImage(content) {
-    if (!content) return null;
-    const match = content.match(/<img[^>]+src="([^">]+)"/);
-    return match ? match[1] : null;
+  if (!content) return null;
+  const match = content.match(/<img[^>]+src="([^">]+)"/);
+  return match ? match[1] : null;
 }
 
 async function syncBlogs() {
