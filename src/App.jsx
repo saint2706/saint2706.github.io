@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Layout from './components/layout/Layout';
 import Hero from './components/home/Hero';
 import Projects from './components/pages/Projects';
@@ -9,6 +10,7 @@ import Contact from './components/pages/Contact';
 import KujaPage from './components/pages/KujaPage';
 import Chatbot from './components/shared/Chatbot';
 import RoastMode from './components/shared/RoastMode';
+import PageWrapper from './components/shared/PageWrapper';
 
 const ScrollToTopHelper = () => {
   const { pathname } = useLocation();
@@ -18,19 +20,30 @@ const ScrollToTopHelper = () => {
   return null;
 }
 
+// Animated routes component that uses location for AnimatePresence
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
+        <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+        <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
+        <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="/kuja" element={<PageWrapper><KujaPage /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 function App() {
   return (
     <Router>
       <ScrollToTopHelper />
       <Layout>
-        <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/kuja" element={<KujaPage />} />
-        </Routes>
+        <AnimatedRoutes />
 
         {/* Floating Interactions */}
         <Chatbot />
@@ -41,4 +54,3 @@ function App() {
 }
 
 export default App;
-

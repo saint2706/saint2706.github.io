@@ -92,15 +92,36 @@ export const resumeData = {
   skills: [
     {
       category: "Programming",
-      items: ["Python", "R", "SQL", "Java", "C++", "JavaScript", "HTML/CSS"]
+      items: [
+        { name: "Python", proficiency: 95 },
+        { name: "R", proficiency: 85 },
+        { name: "SQL", proficiency: 85 },
+        { name: "Java", proficiency: 80 },
+        { name: "C++", proficiency: 80 },
+        { name: "JavaScript", proficiency: 80 },
+        { name: "HTML/CSS", proficiency: 85 }
+      ]
     },
     {
       category: "Analytics & AI",
-      items: ["Tableau", "Power BI", "TensorFlow", "PyTorch", "Hugging Face", "IBM Watson"]
+      items: [
+        { name: "Tableau", proficiency: 90 },
+        { name: "Power BI", proficiency: 80 },
+        { name: "TensorFlow", proficiency: 70 },
+        { name: "PyTorch", proficiency: 90 },
+        { name: "Hugging Face", proficiency: 70 },
+        { name: "IBM Watson", proficiency: 55 }
+      ]
     },
     {
       category: "Data Engineering",
-      items: ["AWS", "Oracle Cloud", "MongoDB", "PostgreSQL", "NoSQL"]
+      items: [
+        { name: "AWS", proficiency: 80 },
+        { name: "Oracle Cloud", proficiency: 80 },
+        { name: "MongoDB", proficiency: 70 },
+        { name: "PostgreSQL", proficiency: 80 },
+        { name: "NoSQL", proficiency: 85 }
+      ]
     }
   ],
   projects: [

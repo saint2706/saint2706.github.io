@@ -7,11 +7,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#0f172a',
-        'secondary': '#1e293b',
-        'accent': '#38bdf8',
-        'fun-pink': '#ec4899',
-        'fun-yellow': '#eab308',
+        'primary': 'var(--color-primary)',
+        'secondary': 'var(--color-secondary)',
+        'accent': 'var(--color-accent)',
+        'fun-pink': 'var(--color-fun-pink)',
+        'fun-yellow': 'var(--color-fun-yellow)',
+      },
+      textColor: {
+        'primary': 'var(--color-text-primary)',
+        'secondary': 'var(--color-text-secondary)',
+        'muted': 'var(--color-text-muted)',
+      },
+      borderColor: {
+        'default': 'var(--color-border)',
+      },
+      backgroundColor: {
+        'card': 'var(--color-card-bg)',
+        'overlay': 'var(--color-overlay)',
+        'skeleton': 'var(--color-skeleton)',
       },
       fontFamily: {
         'sans': ['Inter', 'sans-serif'],
@@ -23,4 +36,3 @@ export default {
     require('@tailwindcss/line-clamp'),
   ],
 }
-

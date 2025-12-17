@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink, Star } from 'lucide-react';
 import { resumeData } from '../../data/resume';
+import { ProjectSkeleton } from '../shared/SkeletonLoader';
 
 const Projects = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state for initial mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -42,7 +51,14 @@ const Projects = () => {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {resumeData.projects.map((project, idx) => (
+        {/* Skeleton loaders during initial load */}
+        {isLoading ? (
+          <>
+            {[...Array(6)].map((_, idx) => (
+              <ProjectSkeleton key={`skeleton-${idx}`} />
+            ))}
+          </>
+        ) : resumeData.projects.map((project, idx) => (
           <motion.div
             key={idx}
             variants={item}

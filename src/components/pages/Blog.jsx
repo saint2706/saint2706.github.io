@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import blogs from '../../data/blogs.json';
+import { BlogSkeleton } from '../shared/SkeletonLoader';
 
 const POSTS_PER_PAGE = 6;
 
@@ -9,6 +10,7 @@ const Blog = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Extract unique sources for filter
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
@@ -22,9 +24,12 @@ const Blog = () => {
     });
   }, [filter, searchTerm]);
 
-  // Reset to page 1 when filters change
-  React.useEffect(() => {
+  // Reset to page 1 and show loading when filters change
+  useEffect(() => {
     setCurrentPage(1);
+    setIsLoading(true);
+    const timer = setTimeout(() => setIsLoading(false), 300);
+    return () => clearTimeout(timer);
   }, [filter, searchTerm]);
 
   const totalPages = Math.ceil(filteredBlogs.length / POSTS_PER_PAGE);
@@ -46,6 +51,20 @@ const Blog = () => {
   const item = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 }
+  };
+
+  // Source color helper
+  const getSourceStyles = (source) => {
+    switch (source) {
+      case 'Dev.to':
+        return 'border-indigo-500 text-indigo-400 bg-indigo-500/10';
+      case 'Medium':
+        return 'border-yellow-500 text-yellow-400 bg-yellow-500/10';
+      case 'Substack':
+        return 'border-orange-500 text-orange-400 bg-orange-500/10';
+      default:
+        return 'border-slate-500 text-slate-400 bg-slate-500/10';
+    }
   };
 
   return (
@@ -107,7 +126,14 @@ const Blog = () => {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
-        {paginatedBlogs.map((blog, idx) => (
+        {/* Skeleton loaders during filtering */}
+        {isLoading ? (
+          <>
+            {[...Array(6)].map((_, idx) => (
+              <BlogSkeleton key={`skeleton-${idx}`} />
+            ))}
+          </>
+        ) : paginatedBlogs.map((blog, idx) => (
           <motion.div
             key={`${blog.title}-${idx}`}
             variants={item}
@@ -119,11 +145,7 @@ const Blog = () => {
 
             <div className="p-6 flex-grow flex flex-col">
               <div className="flex justify-between items-start mb-3">
-                <span className={`text-xs px-2 py-1 rounded border font-mono
-                  ${blog.source === 'Dev.to' ? 'border-indigo-500 text-indigo-400 bg-indigo-500/10' :
-                    blog.source === 'Medium' ? 'border-yellow-500 text-yellow-400 bg-yellow-500/10' :
-                      'border-orange-500 text-orange-400 bg-orange-500/10'
-                  }`}>
+                <span className={`text-xs px-2 py-1 rounded border font-mono ${getSourceStyles(blog.source)}`}>
                   {blog.source}
                 </span>
                 <span className="text-slate-500 text-xs flex items-center gap-1">

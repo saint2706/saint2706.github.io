@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, X, Send, Sparkles, Command } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
+import { ChatSkeleton } from './SkeletonLoader';
 
 const STORAGE_KEY = 'portfolio_chat_history';
 const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
@@ -177,23 +178,15 @@ const Chatbot = () => {
                 >
                   <div
                     className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
-                        ? 'bg-accent text-primary rounded-br-none'
-                        : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
+                      ? 'bg-accent text-primary rounded-br-none'
+                      : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
                       }`}
                   >
                     <ReactMarkdown>{msg.text}</ReactMarkdown>
                   </div>
                 </div>
               ))}
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-slate-800 p-3 rounded-2xl rounded-bl-none border border-slate-700 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></span>
-                    <span className="w-2 h-2 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></span>
-                  </div>
-                </div>
-              )}
+              {isTyping && <ChatSkeleton />}
               <div ref={messagesEndRef} />
             </div>
 

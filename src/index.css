@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme CSS Variables */
+:root {
+  /* Dark theme (default) */
+  --color-primary: #0f172a;
+  --color-secondary: #1e293b;
+  --color-accent: #38bdf8;
+  --color-fun-pink: #ec4899;
+  --color-fun-yellow: #eab308;
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  
+  --color-border: #334155;
+  --color-card-bg: rgba(30, 41, 59, 0.5);
+  --color-overlay: rgba(15, 23, 42, 0.8);
+  
+  /* Skeleton colors */
+  --color-skeleton: rgba(51, 65, 85, 0.5);
+}
+
+/* Light theme */
+:root.light {
+  --color-primary: #f8fafc;
+  --color-secondary: #e2e8f0;
+  --color-accent: #0284c7;
+  --color-fun-pink: #db2777;
+  --color-fun-yellow: #ca8a04;
+  
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  
+  --color-border: #cbd5e1;
+  --color-card-bg: rgba(226, 232, 240, 0.5);
+  --color-overlay: rgba(248, 250, 252, 0.8);
+  
+  /* Skeleton colors */
+  --color-skeleton: rgba(203, 213, 225, 0.5);
+}
+
 @layer utilities {
   .text-glow {
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);

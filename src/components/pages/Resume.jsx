@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, Code, Award } from 'lucide-react';
 import { resumeData } from '../../data/resume';
+import SkillBar from '../shared/SkillBar';
 
 const Section = ({ title, icon, children, delay = 0 }) => (
   <motion.div
@@ -34,11 +35,11 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
       <div className="text-slate-400 text-sm leading-relaxed max-w-2xl mb-4">
         {/* Handle both string description and array of bullets */}
         {Array.isArray(description) ? (
-            <ul className="list-disc list-inside space-y-1">
-                {description.map((d, i) => <li key={i}>{d}</li>)}
-            </ul>
+          <ul className="list-disc list-inside space-y-1">
+            {description.map((d, i) => <li key={i}>{d}</li>)}
+          </ul>
         ) : (
-            <p>{description}</p>
+          <p>{description}</p>
         )}
       </div>
     )}
@@ -57,7 +58,7 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
 const Resume = () => {
   return (
     <div className="max-w-4xl mx-auto py-12">
-       <motion.div
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="mb-16 text-center"
@@ -104,17 +105,20 @@ const Resume = () => {
             <h2 className="text-xl font-bold">Technical Skills</h2>
           </div>
           <div className="space-y-6">
-            {resumeData.skills.map((skillGroup, i) => (
-                <div key={i}>
-                    <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">{skillGroup.category}</h4>
-                    <div className="flex flex-wrap gap-2">
-                        {skillGroup.items.map(skill => (
-                            <span key={skill} className="px-3 py-1 bg-slate-800 rounded-full text-sm text-slate-200 hover:bg-fun-pink hover:text-white transition-colors cursor-default">
-                                {skill}
-                            </span>
-                        ))}
-                    </div>
+            {resumeData.skills.map((skillGroup, groupIdx) => (
+              <div key={groupIdx}>
+                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">{skillGroup.category}</h4>
+                <div className="space-y-2">
+                  {skillGroup.items.map((skill, skillIdx) => (
+                    <SkillBar
+                      key={skill.name}
+                      name={skill.name}
+                      proficiency={skill.proficiency}
+                      delay={groupIdx * 0.1 + skillIdx * 0.05}
+                    />
+                  ))}
                 </div>
+              </div>
             ))}
           </div>
         </div>
@@ -126,10 +130,10 @@ const Resume = () => {
           </div>
           <ul className="space-y-4">
             {resumeData.certifications.map((cert, i) => (
-                <li key={i} className="flex items-start gap-3">
-                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow" />
-                    <span className="text-slate-300">{cert}</span>
-                </li>
+              <li key={i} className="flex items-start gap-3">
+                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow" />
+                <span className="text-slate-300">{cert}</span>
+              </li>
             ))}
           </ul>
         </div>

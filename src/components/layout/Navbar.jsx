@@ -9,10 +9,14 @@ import {
   Mail,
   Menu,
   X,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { useTheme } from '../shared/ThemeContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, toggleTheme, isDark } = useTheme();
 
   const navItems = [
     { name: 'Home', path: '/', icon: <Terminal size={18} /> },
@@ -54,15 +58,36 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button
-          type="button"
-          className="md:hidden p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          aria-expanded={isMenuOpen}
-          aria-label="Toggle navigation menu"
-        >
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Theme Toggle and Mobile Menu container */}
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle Button */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all duration-300"
+            aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+          >
+            <motion.div
+              key={theme}
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </motion.div>
+          </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            type="button"
+            className="md:hidden p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation menu"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
 
         <AnimatePresence>
           {isMenuOpen && (
