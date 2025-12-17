@@ -12,8 +12,8 @@ const SkillBar = ({ name, proficiency, delay = 0 }) => {
     return (
         <div className="mb-4">
             <div className="flex justify-between items-center mb-1.5">
-                <span className="text-sm font-medium text-slate-200">{name}</span>
-                <span className="text-xs font-mono text-slate-400">{proficiency}%</span>
+                <span className="text-sm font-medium text-primary">{name}</span>
+                <span className="text-xs font-mono text-muted">{proficiency}%</span>
             </div>
             <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                 <motion.div

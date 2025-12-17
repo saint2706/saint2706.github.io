@@ -79,7 +79,7 @@ const Blog = () => {
             Written Thoughts
           </span>
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">
+        <p className="text-secondary max-w-2xl mx-auto">
           Musings on code, life, and everything in between. Synced from Dev.to, Medium, and Substack.
         </p>
       </motion.div>
@@ -96,10 +96,10 @@ const Blog = () => {
             <button
               key={source}
               onClick={() => setFilter(source)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-slate-700
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-secondary
                 ${filter === source
                   ? 'bg-accent text-primary font-bold shadow-[0_0_10px_rgba(56,189,248,0.5)]'
-                  : 'bg-secondary/50 text-slate-400 hover:text-white hover:bg-white/5'
+                  : 'bg-secondary/50 text-secondary hover:text-primary hover:bg-secondary'
                 }`}
             >
               {source}
@@ -108,13 +108,13 @@ const Blog = () => {
         </div>
 
         <div className="relative w-full md:w-64">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500" size={18} />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted" size={18} />
           <input
             type="text"
             placeholder="Search blogs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-secondary/50 border border-slate-700 rounded-full py-2 pl-10 pr-4 text-slate-300 focus:outline-none focus:border-accent transition-colors"
+            className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-4 text-primary placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
           />
         </div>
       </motion.div>
@@ -148,24 +148,24 @@ const Blog = () => {
                 <span className={`text-xs px-2 py-1 rounded border font-mono ${getSourceStyles(blog.source)}`}>
                   {blog.source}
                 </span>
-                <span className="text-slate-500 text-xs flex items-center gap-1">
+                <span className="text-muted text-xs flex items-center gap-1">
                   <Calendar size={12} />
                   {new Date(blog.date).toLocaleDateString()}
                 </span>
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors line-clamp-2">
+              <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors line-clamp-2">
                 {blog.title}
               </h3>
 
-              <p className="text-slate-400 text-sm mb-4 line-clamp-3 flex-grow">
+              <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow">
                 {blog.summary}
               </p>
 
               {blog.tags && blog.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-6">
                   {blog.tags.slice(0, 3).map(tag => (
-                    <span key={tag} className="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400">
+                    <span key={tag} className="text-xs px-2 py-1 rounded bg-secondary text-secondary">
                       #{tag}
                     </span>
                   ))}
@@ -204,7 +204,7 @@ const Blog = () => {
           <button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft size={18} /> Previous
           </button>
@@ -217,7 +217,7 @@ const Blog = () => {
                 className={`w-10 h-10 rounded-lg font-medium transition-all duration-300
                   ${page === currentPage
                     ? 'bg-accent text-primary'
-                    : 'bg-secondary/50 text-slate-400 hover:text-white border border-slate-700 hover:border-accent/50'
+                    : 'bg-secondary/50 text-secondary hover:text-accent border border-secondary hover:border-accent/50'
                   }`}
               >
                 {page}
@@ -228,7 +228,7 @@ const Blog = () => {
           <button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-slate-700 rounded-lg text-slate-400 hover:text-white hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next <ChevronRight size={18} />
           </button>
@@ -237,7 +237,7 @@ const Blog = () => {
 
       {/* Results info */}
       {filteredBlogs.length > 0 && (
-        <p className="text-center text-slate-500 text-sm mt-6">
+        <p className="text-center text-muted text-sm mt-6">
           Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-{Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length} posts
         </p>
       )}

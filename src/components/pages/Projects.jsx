@@ -40,7 +40,7 @@ const Projects = () => {
             Creative Experiments
           </span>
         </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">
+        <p className="text-secondary max-w-2xl mx-auto">
           From data science models to full-stack applications. Here is what I have been building.
         </p>
       </motion.div>
@@ -81,7 +81,7 @@ const Projects = () => {
 
             <div className="p-6 flex-grow flex flex-col">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-bold text-white group-hover:text-accent transition-colors">
+                <h3 className="text-xl font-bold text-primary group-hover:text-accent transition-colors">
                   {project.title}
                 </h3>
                 {project.featured && (
@@ -89,13 +89,13 @@ const Projects = () => {
                 )}
               </div>
 
-              <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
+              <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
                 {project.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.tags.map(tag => (
-                  <span key={tag} className="text-xs px-2 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                  <span key={tag} className="text-xs px-2 py-1 rounded bg-secondary text-primary border border-secondary">
                     {tag}
                   </span>
                 ))}
@@ -107,7 +107,7 @@ const Projects = () => {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-bold text-white hover:text-accent transition-colors"
+                    className="flex items-center gap-2 text-sm font-bold text-primary hover:text-accent transition-colors"
                   >
                     <ExternalLink size={16} /> Live Demo
                   </a>
@@ -117,7 +117,7 @@ const Projects = () => {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-sm text-secondary hover:text-accent transition-colors"
                   >
                     <Github size={16} /> Code
                   </a>

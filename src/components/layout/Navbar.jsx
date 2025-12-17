@@ -48,7 +48,7 @@ const Navbar = () => {
                 `flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
                 ${isActive
                   ? 'bg-accent/20 text-accent shadow-[0_0_10px_rgba(56,189,248,0.3)]'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  : 'text-secondary hover:text-accent hover:bg-secondary/50'
                 }`
               }
             >
@@ -64,7 +64,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all duration-300"
+            className="p-2.5 rounded-full bg-secondary/30 hover:bg-secondary/50 text-secondary hover:text-accent transition-all duration-300"
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           >
             <motion.div
@@ -106,7 +106,7 @@ const Navbar = () => {
                     onClick={handleCloseMenu}
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-5 py-4 text-base font-medium transition-colors duration-200
-                      ${isActive ? 'text-accent bg-accent/10' : 'text-slate-200 hover:text-white hover:bg-white/5'}`
+                      ${isActive ? 'text-accent bg-accent/10' : 'text-primary hover:text-accent hover:bg-secondary/50'}`
                     }
                   >
                     <span>{item.icon}</span>

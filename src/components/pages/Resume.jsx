@@ -15,7 +15,7 @@ const Section = ({ title, icon, children, delay = 0 }) => (
       <div className="p-2 bg-accent/10 rounded-lg text-accent">
         {icon}
       </div>
-      <h2 className="text-2xl font-bold text-white">{title}</h2>
+      <h2 className="text-2xl font-bold text-primary">{title}</h2>
     </div>
     <div className="border-l-2 border-slate-800 ml-4 pl-8 space-y-10">
       {children}
@@ -27,12 +27,12 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
   <div className="relative">
     <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-slate-900 border-2 border-accent/50"></div>
     <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-      <h3 className="text-xl font-bold text-slate-100">{title}</h3>
+      <h3 className="text-xl font-bold text-primary">{title}</h3>
       <span className="font-mono text-sm text-accent">{date}</span>
     </div>
-    <p className="text-lg text-slate-400 mb-2">{subtitle}</p>
+    <p className="text-lg text-secondary mb-2">{subtitle}</p>
     {description && (
-      <div className="text-slate-400 text-sm leading-relaxed max-w-2xl mb-4">
+      <div className="text-secondary text-sm leading-relaxed max-w-2xl mb-4">
         {/* Handle both string description and array of bullets */}
         {Array.isArray(description) ? (
           <ul className="list-disc list-inside space-y-1">
@@ -46,7 +46,7 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
     {tags && (
       <div className="flex flex-wrap gap-2">
         {tags.map((tag, i) => (
-          <span key={i} className="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400">
+          <span key={i} className="text-xs px-2 py-1 rounded bg-secondary text-secondary">
             {tag}
           </span>
         ))}
@@ -107,7 +107,7 @@ const Resume = () => {
           <div className="space-y-6">
             {resumeData.skills.map((skillGroup, groupIdx) => (
               <div key={groupIdx}>
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">{skillGroup.category}</h4>
+                <h4 className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{skillGroup.category}</h4>
                 <div className="space-y-2">
                   {skillGroup.items.map((skill, skillIdx) => (
                     <SkillBar
@@ -132,7 +132,7 @@ const Resume = () => {
             {resumeData.certifications.map((cert, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow" />
-                <span className="text-slate-300">{cert}</span>
+                <span className="text-primary">{cert}</span>
               </li>
             ))}
           </ul>

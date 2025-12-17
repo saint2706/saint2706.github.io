@@ -51,7 +51,7 @@ const Hero = () => {
         transition={{ delay: 0.2 }}
         className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
       >
-        <span className="block text-white mb-2">Data Storyteller</span>
+        <span className="block text-primary mb-2">Data Storyteller</span>
         <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent via-fun-pink to-fun-yellow">
           & Creative Analyst
         </span>
@@ -61,12 +61,12 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-slate-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
+        className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
       >
         I bridge the gap between
-        <strong className="text-white mx-1">Computer Science</strong>
+        <strong className="text-primary mx-1">Computer Science</strong>
         and
-        <strong className="text-white mx-1">Business Strategy</strong>.
+        <strong className="text-primary mx-1">Business Strategy</strong>.
         Currently decoding patterns at Goa Institute of Management.
       </motion.p>
 
@@ -85,7 +85,7 @@ const Hero = () => {
         </Link>
         <button
           onClick={() => document.getElementById('ai-chat-trigger')?.click()}
-          className="px-8 py-3 border border-slate-700 text-white rounded-lg hover:bg-white/5 transition-all duration-300 flex items-center gap-2"
+          className="px-8 py-3 border border-secondary text-primary rounded-lg hover:bg-secondary/50 transition-all duration-300 flex items-center gap-2"
         >
           <Bot size={18} className="text-fun-pink" />
           Talk to Digital Rishabh

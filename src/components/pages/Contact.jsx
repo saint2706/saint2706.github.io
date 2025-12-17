@@ -22,7 +22,7 @@ const Contact = () => {
                         Let's Connect
                     </span>
                 </h1>
-                <p className="text-slate-400 text-lg max-w-xl mx-auto">
+                <p className="text-secondary text-lg max-w-xl mx-auto">
                     Have a project in mind or just want to chat? I'd love to hear from you.
                 </p>
             </motion.div>
@@ -36,7 +36,7 @@ const Contact = () => {
                     className="space-y-8"
                 >
                     <div>
-                        <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
+                        <h2 className="text-2xl font-bold text-primary mb-6">Get in Touch</h2>
 
                         <div className="space-y-4">
                             <a
@@ -47,8 +47,8 @@ const Contact = () => {
                                     <Mail size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-400">Email</p>
-                                    <p className="text-white font-medium">{resumeData.basics.email}</p>
+                                    <p className="text-sm text-secondary">Email</p>
+                                    <p className="text-primary font-medium">{resumeData.basics.email}</p>
                                 </div>
                             </a>
 
@@ -57,15 +57,15 @@ const Contact = () => {
                                     <MapPin size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-slate-400">Location</p>
-                                    <p className="text-white font-medium">{resumeData.basics.location.city}, {resumeData.basics.location.country}</p>
+                                    <p className="text-sm text-secondary">Location</p>
+                                    <p className="text-primary font-medium">{resumeData.basics.location.city}, {resumeData.basics.location.country}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 className="text-lg font-bold text-white mb-4">Follow Me</h3>
+                        <h3 className="text-lg font-bold text-primary mb-4">Follow Me</h3>
                         <div className="flex gap-4">
                             {socialLinks.map((social) => (
                                 <a
@@ -73,7 +73,7 @@ const Contact = () => {
                                     href={social.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 bg-secondary/50 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:border-accent/50 transition-colors"
+                                    className="p-3 bg-secondary/50 rounded-xl border border-secondary text-secondary hover:text-accent hover:border-accent/50 transition-colors"
                                     aria-label={social.label}
                                 >
                                     {social.icon}
@@ -91,7 +91,7 @@ const Contact = () => {
                     >
                         <div className="flex items-center gap-3">
                             <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-                            <span className="text-white font-medium">Available for freelance & collaborations</span>
+                            <span className="text-primary font-medium">Available for freelance & collaborations</span>
                         </div>
                     </motion.div>
                 </motion.div>
@@ -108,11 +108,11 @@ const Contact = () => {
                             <Mail size={36} className="text-white" />
                         </div>
 
-                        <h3 className="text-2xl font-bold text-white mb-4">
+                        <h3 className="text-2xl font-bold text-primary mb-4">
                             Ready to start a conversation?
                         </h3>
 
-                        <p className="text-slate-400 mb-8">
+                        <p className="text-secondary mb-8">
                             Drop me an email and I'll get back to you as soon as possible. Let's create something amazing together!
                         </p>
 
@@ -125,7 +125,7 @@ const Contact = () => {
                             <ExternalLink size={16} />
                         </a>
 
-                        <p className="text-slate-500 text-sm mt-6">
+                        <p className="text-muted text-sm mt-6">
                             Or use the chatbot (Ctrl+K) to learn more about me first!
                         </p>
                     </div>
