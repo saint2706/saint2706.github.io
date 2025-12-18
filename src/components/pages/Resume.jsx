@@ -28,7 +28,7 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
     <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-slate-900 border-2 border-accent/50"></div>
     <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
       <h3 className="text-xl font-bold text-primary">{title}</h3>
-      <span className="font-mono text-sm text-accent">{date}</span>
+      <span className="font-mono text-sm text-slate-600 dark:text-accent">{date}</span>
     </div>
     <p className="text-lg text-secondary mb-2">{subtitle}</p>
     {description && (

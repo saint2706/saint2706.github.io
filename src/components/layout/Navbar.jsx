@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -17,6 +17,20 @@ import { useTheme } from '../shared/ThemeContext';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme, isDark } = useTheme();
+
+  // Close chatbot when mobile menu opens
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.dispatchEvent(new CustomEvent('closeChatbot'));
+    }
+  }, [isMenuOpen]);
+
+  // Listen for close event from chatbot
+  useEffect(() => {
+    const handleCloseMobileMenu = () => setIsMenuOpen(false);
+    document.addEventListener('closeMobileMenu', handleCloseMobileMenu);
+    return () => document.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
+  }, []);
 
   const navItems = [
     { name: 'Home', path: '/', icon: <Terminal size={18} /> },
@@ -96,7 +110,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
-              className="absolute right-4 top-full mt-3 w-64 rounded-2xl bg-secondary/95 border border-slate-700 shadow-lg shadow-blue-500/10 backdrop-blur-md md:hidden"
+              className="absolute right-4 top-full mt-3 w-64 rounded-2xl bg-secondary border border-slate-700 shadow-lg shadow-blue-500/10 md:hidden"
             >
               <div className="flex flex-col divide-y divide-white/5">
                 {navItems.map((item) => (

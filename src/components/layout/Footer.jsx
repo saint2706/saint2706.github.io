@@ -6,10 +6,10 @@ const Footer = () => {
     <footer className="py-8 mt-20 border-t border-secondary bg-primary">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <div className="flex justify-center gap-6 mb-6">
-          <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent transition-colors" title="GitHub">
+          <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent transition-colors p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50" aria-label="Visit my GitHub profile">
             <Github size={24} />
           </a>
-          <a href="https://www.linkedin.com/in/rishabh-agrawal-1807321b9" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent transition-colors" title="LinkedIn">
+          <a href="https://www.linkedin.com/in/rishabh-agrawal-1807321b9" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-accent transition-colors p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50" aria-label="Visit my LinkedIn profile">
             <Linkedin size={24} />
           </a>
         </div>

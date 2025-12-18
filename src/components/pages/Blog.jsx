@@ -119,13 +119,16 @@ const Blog = () => {
         </div>
 
         <div className="relative w-full md:w-64">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted" size={18} />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted" size={18} aria-hidden="true" />
+          <label htmlFor="blog-search" className="sr-only">Search blogs</label>
           <input
+            id="blog-search"
             type="text"
+            aria-label="Search blogs"
             placeholder="Search blogs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-4 text-primary placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
+            className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-4 text-primary placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
           />
         </div>
       </motion.div>

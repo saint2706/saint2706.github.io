@@ -65,7 +65,7 @@ const Hero = () => {
       >
         Turning <strong className="text-primary mx-1">messy data</strong> into
         <strong className="text-primary mx-1">clear strategies</strong> and
-        <strong className="text-primary mx-1">AI/ML solutions</strong> into real-world impact.
+        <strong className="text-primary mx-1">AI/ML solutions</strong> into <strong className="text-primary mx-1">real-world impact.</strong>
         Big Data Analytics at GIM.
       </motion.p>
 

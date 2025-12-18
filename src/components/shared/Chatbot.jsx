@@ -68,6 +68,20 @@ const Chatbot = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
+  // Listen for close event from mobile menu
+  useEffect(() => {
+    const handleCloseChatbot = () => setIsOpen(false);
+    document.addEventListener('closeChatbot', handleCloseChatbot);
+    return () => document.removeEventListener('closeChatbot', handleCloseChatbot);
+  }, []);
+
+  // Close mobile menu when chatbot opens
+  useEffect(() => {
+    if (isOpen) {
+      document.dispatchEvent(new CustomEvent('closeMobileMenu'));
+    }
+  }, [isOpen]);
+
   // Keyboard shortcut: Cmd/Ctrl + K to toggle chat
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -196,10 +210,12 @@ const Chatbot = () => {
                 <input
                   ref={inputRef}
                   type="text"
+                  id="chatbot-input"
+                  aria-label="Type a message to chat with Digital Rishabh"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about my skills..."
-                  className="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-accent transition-colors"
+                  className="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
                 />
                 <button
                   type="submit"
