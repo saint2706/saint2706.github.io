@@ -71,7 +71,7 @@ async function fetchSubstack() {
     const feed = await customParser.parseURL('https://saint2706.substack.com/feed');
     return feed.items.map(item => {
       // Extract slug from RSS link: https://saint2706.substack.com/p/post-slug
-      const linkMatch = item.link.match(/\/p\/([^\/\?]+)/);
+      const linkMatch = item.link.match(/\/p\/([^/?]+)/);
       const slug = linkMatch ? linkMatch[1] : null;
 
       // Check if we have a mapping for this slug

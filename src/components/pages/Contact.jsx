@@ -18,11 +18,11 @@ const Contact = () => {
             >
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
-                        Let's Connect
+                        Let&apos;s Connect
                     </span>
                 </h1>
                 <p className="text-secondary text-lg max-w-xl mx-auto">
-                    Interested in building data-driven solutions that make an impact? Let's connect!
+                    Interested in building data-driven solutions that make an impact? Let&apos;s connect!
                 </p>
             </motion.div>
 
@@ -112,7 +112,7 @@ const Contact = () => {
                         </h3>
 
                         <p className="text-secondary mb-8">
-                            Whether it's making sense of messy data, designing AI/ML solutions, or bridging technical depth with business impact - let's create something amazing together!
+                            Whether it&apos;s making sense of messy data, designing AI/ML solutions, or bridging technical depth with business impact - let&apos;s create something amazing together!
                         </p>
 
                         <a
