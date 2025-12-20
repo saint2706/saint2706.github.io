@@ -15,6 +15,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const triggerRef = useRef(null);
 
   // Load chat history from localStorage
   useEffect(() => {
@@ -50,10 +51,14 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  // Focus input when chat opens
+  // Focus management
   useEffect(() => {
     if (isOpen && inputRef.current) {
+      // Focus input when chat opens
       setTimeout(() => inputRef.current?.focus(), 100);
+    } else if (!isOpen && triggerRef.current) {
+      // Return focus to trigger when chat closes
+      triggerRef.current.focus();
     }
   }, [isOpen]);
 
@@ -117,6 +122,7 @@ const Chatbot = () => {
     <>
       {/* Trigger Button */}
       <button
+        ref={triggerRef}
         id="ai-chat-trigger"
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-40 p-4 bg-accent text-primary rounded-full shadow-lg hover:shadow-accent/50 transition-all duration-300 group ${isOpen ? 'hidden' : 'block'}`}
@@ -173,7 +179,13 @@ const Chatbot = () => {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700">
+            <div
+              className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700"
+              role="log"
+              aria-live="polite"
+              aria-atomic="false"
+              aria-busy={isTyping}
+            >
               {messages.map((msg, index) => (
                 <div
                   key={index}

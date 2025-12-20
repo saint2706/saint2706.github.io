@@ -59,7 +59,7 @@ const RoastMode = () => {
               </button>
             </div>
             <p className="text-sm italic font-medium leading-relaxed">
-              "{roast}"
+              &quot;{roast}&quot;
             </p>
           </motion.div>
         )}
