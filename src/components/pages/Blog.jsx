@@ -127,6 +127,7 @@ const Blog = () => {
             aria-label="Search blogs"
             placeholder="Search blogs..."
             value={searchTerm}
+            maxLength={100}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-4 text-primary placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
           />
