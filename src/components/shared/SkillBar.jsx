@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { motion } from 'framer-motion';
 
 /**
@@ -9,13 +9,23 @@ import { motion } from 'framer-motion';
  * @param {number} props.delay - Animation delay in seconds
  */
 const SkillBar = ({ name, proficiency, delay = 0 }) => {
+    const id = useId();
+
     return (
         <div className="mb-4">
             <div className="flex justify-between items-center mb-1.5">
-                <span className="text-sm font-medium text-primary">{name}</span>
-                <span className="text-xs font-mono text-muted">{proficiency}%</span>
+                <span id={id} className="text-sm font-medium text-primary">{name}</span>
+                <span className="text-xs font-mono text-muted" aria-hidden="true">{proficiency}%</span>
             </div>
-            <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+            <div
+                className="h-2 bg-slate-800 rounded-full overflow-hidden"
+                role="progressbar"
+                aria-labelledby={id}
+                aria-valuenow={proficiency}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuetext={`${proficiency}% proficiency`}
+            >
                 <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-accent to-fun-pink"
                     initial={{ width: 0 }}
