@@ -29,10 +29,10 @@ export const addLog = async (name, reason) => {
     // Security: Input validation to prevent abuse/spam
     // Type check first to prevent TypeError when accessing .trim() or .length
     if (typeof name !== 'string') {
-      throw new Error("Invalid name: Must be a string of 50 characters or less");
+      throw new Error("Invalid name: Must be a string");
     }
     if (typeof reason !== 'string') {
-      throw new Error("Invalid reason: Must be a string of 200 characters or less");
+      throw new Error("Invalid reason: Must be a string");
     }
 
     // Trim whitespace for validation and storage
@@ -41,10 +41,10 @@ export const addLog = async (name, reason) => {
 
     // Validate trimmed values for length and empty strings
     if (trimmedName.length === 0 || trimmedName.length > 50) {
-      throw new Error("Invalid name: Must be a string of 50 characters or less");
+      throw new Error("Invalid name: Cannot be empty and must be 50 characters or less");
     }
     if (trimmedReason.length === 0 || trimmedReason.length > 200) {
-      throw new Error("Invalid reason: Must be a string of 200 characters or less");
+      throw new Error("Invalid reason: Cannot be empty and must be 200 characters or less");
     }
 
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
