@@ -78,7 +78,7 @@ const Navbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="p-2.5 rounded-full bg-secondary/30 hover:bg-secondary/50 text-secondary hover:text-accent transition-all duration-300"
+            className="group relative p-2.5 rounded-full bg-secondary/30 hover:bg-secondary/50 text-secondary hover:text-accent transition-all duration-300"
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           >
             <motion.div
@@ -89,6 +89,11 @@ const Navbar = () => {
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </motion.div>
+
+            {/* Tooltip */}
+            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+              {isDark ? 'Light Mode' : 'Dark Mode'}
+            </span>
           </button>
 
           {/* Mobile Menu Button */}
