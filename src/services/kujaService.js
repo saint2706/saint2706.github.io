@@ -26,9 +26,17 @@ export const getLogs = async () => {
 
 export const addLog = async (name, reason) => {
   try {
+    // Security: Input validation to prevent abuse/spam
+    if (typeof name !== 'string' || name.length > 50) {
+      throw new Error("Invalid name: Must be a string under 50 chars");
+    }
+    if (typeof reason !== 'string' || reason.length > 200) {
+      throw new Error("Invalid reason: Must be a string under 200 chars");
+    }
+
     const docRef = await addDoc(collection(db, COLLECTION_NAME), {
-      name,
-      reason,
+      name: name.trim(), // Security: Sanitize whitespace
+      reason: reason.trim(), // Security: Sanitize whitespace
       timestamp: serverTimestamp()
     });
     return docRef.id;
