@@ -17,4 +17,4 @@
         l.pathname.slice(0, -1) + decoded + l.hash
     );
   }
-}(window.location))
+}(window.location));
