@@ -9,7 +9,7 @@
 // the correct url will be waiting in the browser's history for
 // the single page app to route accordingly.
 (function(l) {
-  if (l.search[1] === '/' ) {
+  if (l.search[1] === '/') {
     var decoded = l.search.slice(1).split('&').map(function(s) {
       return s.replace(/~and~/g, '&')
     }).join('?');
