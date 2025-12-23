@@ -118,6 +118,7 @@ const Projects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm font-bold text-primary hover:text-accent transition-colors"
+                    aria-label={`Live Demo for ${project.title}`}
                   >
                     <ExternalLink size={16} /> Live Demo
                   </a>
@@ -128,6 +129,7 @@ const Projects = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm text-secondary hover:text-accent transition-colors"
+                    aria-label={`View source code for ${project.title}`}
                   >
                     <Github size={16} /> Code
                   </a>
