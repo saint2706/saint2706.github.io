@@ -8,6 +8,21 @@ import { ChatSkeleton } from './SkeletonLoader';
 const STORAGE_KEY = 'portfolio_chat_history';
 const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
 
+// Security: Custom renderer for links to prevent tabnabbing and ensure new tab opening
+const LinkRenderer = ({ href, children, ...rest }) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-accent hover:underline break-all"
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+};
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
@@ -197,7 +212,9 @@ const Chatbot = () => {
                       : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
                       }`}
                   >
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    <ReactMarkdown components={{ a: LinkRenderer }}>
+                      {msg.text}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
@@ -238,4 +255,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
