@@ -118,6 +118,20 @@ const Chatbot = () => {
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
+  // Security: Custom renderer for links to prevent tabnabbing and ensure new tab opening
+  const LinkRenderer = (props) => {
+    return (
+      <a
+        href={props.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-accent hover:underline break-all"
+      >
+        {props.children}
+      </a>
+    );
+  };
+
   return (
     <>
       {/* Trigger Button */}
@@ -197,7 +211,9 @@ const Chatbot = () => {
                       : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
                       }`}
                   >
-                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                    <ReactMarkdown components={{ a: LinkRenderer }}>
+                      {msg.text}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
@@ -238,4 +254,3 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
