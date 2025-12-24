@@ -49,7 +49,11 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div className="relative max-w-4xl mx-auto bg-secondary/80 backdrop-blur-md border border-slate-700 rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-blue-500/10">
-        <NavLink to="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink font-mono">
+        <NavLink
+          to="/"
+          className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink font-mono"
+          aria-label="Rishabh Agrawal - Home page"
+        >
           &lt;Rishabh /&gt;
         </NavLink>
 
@@ -66,7 +70,7 @@ const Navbar = () => {
                 }`
               }
             >
-              <span className="hidden md:inline">{item.icon}</span>
+              <span className="hidden md:inline" aria-hidden="true">{item.icon}</span>
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -102,15 +106,17 @@ const Navbar = () => {
             className="md:hidden p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav-menu"
             aria-label="Toggle navigation menu"
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
 
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
+              id="mobile-nav-menu"
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
@@ -128,7 +134,7 @@ const Navbar = () => {
                       ${isActive ? 'text-accent bg-accent/10' : 'text-primary hover:text-accent hover:bg-secondary/50'}`
                     }
                   >
-                    <span>{item.icon}</span>
+                    <span aria-hidden="true">{item.icon}</span>
                     <span>{item.name}</span>
                   </NavLink>
                 ))}
