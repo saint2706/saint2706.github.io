@@ -52,7 +52,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink font-mono"
-          aria-label="Rishabh Agrawal, Home"
+          aria-label="Rishabh Agrawal - Home page"
         >
           &lt;Rishabh /&gt;
         </NavLink>
@@ -109,7 +109,7 @@ const Navbar = () => {
             aria-controls="mobile-nav-menu"
             aria-label="Toggle navigation menu"
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
 
