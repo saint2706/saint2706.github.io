@@ -117,7 +117,9 @@ const Chatbot = () => {
     setInput('');
     setIsTyping(true);
 
-    const history = messages.map(m => ({
+    // Security/Performance: Limit context window to prevent token exhaustion and DoS
+    const MAX_HISTORY_CONTEXT = 30;
+    const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
       role: m.role,
       parts: [{ text: m.text }]
     }));

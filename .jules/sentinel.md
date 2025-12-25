@@ -16,3 +16,8 @@
 2. Added `frame-ancestors 'none'` to prevent clickjacking.
 3. Added `object-src 'none'` to block plugin-based attacks.
 4. Added `base-uri 'self'` to prevent base tag hijacking.
+
+## 2025-05-23 - Chatbot History Truncation
+**Vulnerability:** Unbounded chat history sent to Gemini API
+**Learning:** Sending the full chat history to an LLM API not only risks hitting token limits (Availability/DoS) but also increases costs and latency.
+**Prevention:** Implement a sliding window approach for chat history, only sending the last N messages to the API while preserving the full history in the UI for the user.
