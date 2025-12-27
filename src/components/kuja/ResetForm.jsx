@@ -24,6 +24,9 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-form-title"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
@@ -31,12 +34,13 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
           >
             <button
               onClick={onClose}
+              aria-label="Close form"
               className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors"
             >
               <X size={24} />
             </button>
 
-            <h2 className="text-2xl font-bold text-text-primary mb-6">Record a Loss</h2>
+            <h2 id="reset-form-title" className="text-2xl font-bold text-text-primary mb-6">Record a Loss</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
