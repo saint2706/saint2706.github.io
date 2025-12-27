@@ -215,10 +215,13 @@ const Blog = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
           className="flex justify-center items-center gap-4 mt-12"
+          role="navigation"
+          aria-label="Pagination"
         >
           <button
             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
+            aria-label="Go to previous page"
             className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft size={18} /> Previous
@@ -229,6 +232,8 @@ const Blog = () => {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
+                aria-label={`Go to page ${page}`}
+                aria-current={page === currentPage ? 'page' : undefined}
                 className={`w-10 h-10 rounded-lg font-medium transition-all duration-300
                   ${page === currentPage
                     ? 'bg-accent text-primary'
@@ -243,6 +248,7 @@ const Blog = () => {
           <button
             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
+            aria-label="Go to next page"
             className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next <ChevronRight size={18} />
