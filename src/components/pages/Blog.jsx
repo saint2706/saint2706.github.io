@@ -102,12 +102,17 @@ const Blog = () => {
         transition={{ delay: 0.2 }}
         className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4"
       >
-        <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+        <div
+          className="flex flex-wrap gap-2 justify-center md:justify-start"
+          role="group"
+          aria-label="Filter blogs by source"
+        >
           {sources.map(source => (
             <button
               key={source}
               onClick={() => setFilter(source)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-secondary
+              aria-pressed={filter === source}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-secondary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent
                 ${filter === source
                   ? 'bg-accent text-primary font-bold shadow-[0_0_10px_rgba(56,189,248,0.5)]'
                   : 'bg-secondary/50 text-secondary hover:text-primary hover:bg-secondary'
@@ -202,7 +207,10 @@ const Blog = () => {
         ))}
 
         {filteredBlogs.length === 0 && (
-          <div className="col-span-full text-center py-20 text-slate-500">
+          <div
+            className="col-span-full text-center py-20 text-slate-500"
+            role="status"
+          >
             No blogs found matching your criteria.
           </div>
         )}
