@@ -23,7 +23,8 @@ const RoastMode = () => {
             else handleRoast();
           }}
           className="p-4 bg-fun-pink text-white rounded-full shadow-lg hover:shadow-fun-pink/50 transition-all duration-300"
-          aria-label={roast ? "Close roast" : "Roast my resume"}
+          aria-label={loading ? "Roasting your resume..." : (roast ? "Close roast" : "Roast my resume")}
+          aria-busy={loading}
         >
           {loading ? (
             <RefreshCw size={28} className="animate-spin" />
@@ -45,6 +46,10 @@ const RoastMode = () => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             className="absolute bottom-full right-0 mb-4 w-64 md:w-80 bg-white text-slate-900 p-4 rounded-xl shadow-2xl origin-bottom-right"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            tabIndex="-1"
           >
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-bold text-fun-pink flex items-center gap-1">
