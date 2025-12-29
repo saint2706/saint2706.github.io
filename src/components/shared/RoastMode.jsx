@@ -49,7 +49,6 @@ const RoastMode = () => {
             role="status"
             aria-live="polite"
             aria-atomic="true"
-            tabIndex="-1"
           >
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-bold text-fun-pink flex items-center gap-1">
