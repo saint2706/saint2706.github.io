@@ -56,7 +56,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={50}
-                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent text-text-primary transition-colors"
+                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent text-text-primary transition-colors"
                   placeholder="Your name"
                   required
                 />
@@ -71,7 +71,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   maxLength={200}
-                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent text-text-primary transition-colors min-h-[100px]"
+                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent text-text-primary transition-colors min-h-[100px]"
                   placeholder="Keys, wallet, sanity..."
                   required
                 />
