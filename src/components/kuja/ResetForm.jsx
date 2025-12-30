@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -6,6 +6,9 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
   const [name, setName] = useState('');
   const [reason, setReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const nameId = useId();
+  const reasonId = useId();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
             <button
               onClick={onClose}
               aria-label="Close form"
-              className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors"
+              className="absolute top-4 right-4 text-text-secondary hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-full p-1"
             >
               <X size={24} />
             </button>
@@ -44,29 +47,31 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
+                <label htmlFor={nameId} className="block text-sm font-medium text-text-secondary mb-1">
                   Who are you?
                 </label>
                 <input
+                  id={nameId}
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={50}
-                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none text-text-primary transition-colors"
+                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent text-text-primary transition-colors"
                   placeholder="Your name"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
+                <label htmlFor={reasonId} className="block text-sm font-medium text-text-secondary mb-1">
                   What did Kuja lose?
                 </label>
                 <textarea
+                  id={reasonId}
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   maxLength={200}
-                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none text-text-primary transition-colors min-h-[100px]"
+                  className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent text-text-primary transition-colors min-h-[100px]"
                   placeholder="Keys, wallet, sanity..."
                   required
                 />
@@ -75,7 +80,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-bg-primary font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-bg-primary font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-secondary"
               >
                 {isSubmitting ? 'Resetting Counter...' : 'Reset Counter'}
               </button>
