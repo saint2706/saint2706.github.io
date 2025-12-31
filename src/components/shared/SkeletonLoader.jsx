@@ -6,7 +6,7 @@ import React from 'react';
 
 // Base skeleton with pulse animation
 const SkeletonBase = ({ className = '' }) => (
-    <div className={`animate-pulse bg-slate-700/50 rounded ${className}`} />
+    <div className={`animate-pulse bg-slate-700/50 rounded ${className}`} aria-hidden="true" />
 );
 
 // Blog card skeleton
