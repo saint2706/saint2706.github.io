@@ -146,7 +146,6 @@ const Blog = () => {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         role="status"
-        aria-live="polite"
         aria-busy={isLoading}
       >
         {/* Skeleton loaders during filtering */}
