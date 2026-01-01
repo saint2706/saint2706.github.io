@@ -7,6 +7,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     let timeoutId = null;
+    let lastRan = null;
 
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
@@ -17,11 +18,22 @@ const ScrollToTop = () => {
     };
 
     const throttledToggleVisibility = () => {
-      if (timeoutId === null) {
+      const now = Date.now();
+      
+      if (lastRan === null) {
+        // First call - execute immediately
+        toggleVisibility();
+        lastRan = now;
+      } else if (timeoutId === null) {
+        // Set up next execution after throttle delay
+        const timeSinceLastRan = now - lastRan;
+        const delay = Math.max(0, 100 - timeSinceLastRan);
+        
         timeoutId = setTimeout(() => {
           toggleVisibility();
+          lastRan = Date.now();
           timeoutId = null;
-        }, 100);
+        }, delay);
       }
     };
 
@@ -31,6 +43,7 @@ const ScrollToTop = () => {
       window.removeEventListener('scroll', throttledToggleVisibility);
       if (timeoutId !== null) {
         clearTimeout(timeoutId);
+        timeoutId = null;
       }
     };
   }, []);
