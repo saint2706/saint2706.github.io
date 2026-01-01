@@ -31,6 +31,10 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const triggerRef = useRef(null);
+  const clearButtonRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const titleId = 'chatbot-title';
+  const dialogId = 'chatbot-dialog';
 
   // Load chat history from localStorage
   useEffect(() => {
@@ -76,6 +80,27 @@ const Chatbot = () => {
       triggerRef.current.focus();
     }
   }, [isOpen]);
+
+  const handleTrapFocus = (event) => {
+    if (event.key !== 'Tab') return;
+
+    const focusableElements = [clearButtonRef.current, closeButtonRef.current, inputRef.current]
+      .filter(Boolean);
+
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const isShiftPressed = event.shiftKey;
+
+    if (isShiftPressed && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!isShiftPressed && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
 
   // Listen for close event from mobile menu
   useEffect(() => {
@@ -144,6 +169,8 @@ const Chatbot = () => {
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-40 p-4 bg-accent text-primary rounded-full shadow-lg hover:shadow-accent/50 transition-all duration-300 group ${isOpen ? 'hidden' : 'block'}`}
         aria-label="Open chat (Ctrl+K)"
+        aria-controls={dialogId}
+        aria-expanded={isOpen}
       >
         <Bot size={28} />
         {/* Keyboard hint */}
@@ -160,6 +187,11 @@ const Chatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
             className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[400px] max-h-[60vh] md:max-h-[600px] h-[60vh] md:h-[70vh] bg-secondary border border-slate-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            id={dialogId}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            onKeyDown={handleTrapFocus}
           >
             {/* Header */}
             <div className="bg-primary/50 p-4 flex justify-between items-center border-b border-slate-700 backdrop-blur-md">
@@ -168,7 +200,7 @@ const Chatbot = () => {
                   <Bot size={20} className="text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white">Digital Rishabh</h3>
+                  <h3 className="font-bold text-white" id={titleId}>Digital Rishabh</h3>
                   <p className="text-xs text-green-400 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                     Online
@@ -181,6 +213,7 @@ const Chatbot = () => {
                     onClick={clearHistory}
                     className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
                     aria-label="Clear chat history"
+                    ref={clearButtonRef}
                   >
                     Clear
                   </button>
@@ -189,6 +222,7 @@ const Chatbot = () => {
                   onClick={() => setIsOpen(false)}
                   className="text-slate-400 hover:text-white transition-colors p-1"
                   aria-label="Close chat (Escape)"
+                  ref={closeButtonRef}
                 >
                   <X size={20} />
                 </button>
