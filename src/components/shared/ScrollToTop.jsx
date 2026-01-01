@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const THROTTLE_DELAY = 100;
+
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const THROTTLE_DELAY = 100;
     let timeoutId = null;
     let lastRan = null;
 
@@ -25,16 +26,25 @@ const ScrollToTop = () => {
         // First call - execute immediately
         toggleVisibility();
         lastRan = now;
-      } else if (timeoutId === null) {
-        // Set up next execution after throttle delay
+      } else {
         const timeSinceLastRan = now - lastRan;
-        const delay = Math.max(0, THROTTLE_DELAY - timeSinceLastRan);
 
-        timeoutId = setTimeout(() => {
+        if (timeSinceLastRan >= THROTTLE_DELAY) {
+          // Enough time has passed - execute immediately
           toggleVisibility();
-          lastRan = Date.now();
-          timeoutId = null;
-        }, delay);
+          lastRan = now;
+          if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+          }
+        } else if (timeoutId === null) {
+          // Schedule execution for remaining time
+          timeoutId = setTimeout(() => {
+            toggleVisibility();
+            lastRan = Date.now();
+            timeoutId = null;
+          }, THROTTLE_DELAY - timeSinceLastRan);
+        }
       }
     };
 
