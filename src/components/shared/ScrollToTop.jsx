@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const THROTTLE_DELAY = 100;
+
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let timeoutId = null;
+    let lastRan = null;
+
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
         setIsVisible(true);
@@ -14,9 +19,44 @@ const ScrollToTop = () => {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    const throttledToggleVisibility = () => {
+      const now = Date.now();
 
-    return () => window.removeEventListener('scroll', toggleVisibility);
+      if (lastRan === null) {
+        // First call - execute immediately
+        toggleVisibility();
+        lastRan = now;
+      } else {
+        const timeSinceLastRan = now - lastRan;
+
+        if (timeSinceLastRan >= THROTTLE_DELAY) {
+          // Enough time has passed - execute immediately
+          toggleVisibility();
+          lastRan = now;
+          if (timeoutId !== null) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+          }
+        } else if (timeoutId === null) {
+          // Schedule execution for remaining time
+          timeoutId = setTimeout(() => {
+            toggleVisibility();
+            lastRan = Date.now();
+            timeoutId = null;
+          }, THROTTLE_DELAY - timeSinceLastRan);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', throttledToggleVisibility);
+
+    return () => {
+      window.removeEventListener('scroll', throttledToggleVisibility);
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -38,7 +78,6 @@ const ScrollToTop = () => {
           aria-label="Scroll to top"
         >
           <ArrowUp size={20} />
-          <span className="sr-only">Scroll to top</span>
         </motion.button>
       )}
     </AnimatePresence>
