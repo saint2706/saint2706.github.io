@@ -6,6 +6,7 @@ const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const THROTTLE_DELAY = 100;
     let timeoutId = null;
     let lastRan = null;
 
@@ -19,7 +20,7 @@ const ScrollToTop = () => {
 
     const throttledToggleVisibility = () => {
       const now = Date.now();
-      
+
       if (lastRan === null) {
         // First call - execute immediately
         toggleVisibility();
@@ -27,8 +28,8 @@ const ScrollToTop = () => {
       } else if (timeoutId === null) {
         // Set up next execution after throttle delay
         const timeSinceLastRan = now - lastRan;
-        const delay = Math.max(0, 100 - timeSinceLastRan);
-        
+        const delay = Math.max(0, THROTTLE_DELAY - timeSinceLastRan);
+
         timeoutId = setTimeout(() => {
           toggleVisibility();
           lastRan = Date.now();
