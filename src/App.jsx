@@ -11,6 +11,7 @@ import KujaPage from './components/pages/KujaPage';
 import Chatbot from './components/shared/Chatbot';
 import RoastMode from './components/shared/RoastMode';
 import PageWrapper from './components/shared/PageWrapper';
+import ScrollToTop from './components/shared/ScrollToTop';
 
 const ScrollToTopHelper = () => {
   const { pathname } = useLocation();
@@ -48,6 +49,7 @@ function App() {
         {/* Floating Interactions */}
         <Chatbot />
         <RoastMode />
+        <ScrollToTop />
       </Layout>
     </Router>
   );
