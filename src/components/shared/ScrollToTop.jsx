@@ -6,6 +6,8 @@ const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let timeoutId = null;
+
     const toggleVisibility = () => {
       if (window.scrollY > 300) {
         setIsVisible(true);
@@ -14,9 +16,23 @@ const ScrollToTop = () => {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    const throttledToggleVisibility = () => {
+      if (timeoutId === null) {
+        timeoutId = setTimeout(() => {
+          toggleVisibility();
+          timeoutId = null;
+        }, 100);
+      }
+    };
 
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', throttledToggleVisibility);
+
+    return () => {
+      window.removeEventListener('scroll', throttledToggleVisibility);
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -38,7 +54,6 @@ const ScrollToTop = () => {
           aria-label="Scroll to top"
         >
           <ArrowUp size={20} />
-          <span className="sr-only">Scroll to top</span>
         </motion.button>
       )}
     </AnimatePresence>
