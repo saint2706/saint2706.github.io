@@ -185,7 +185,16 @@ const Blog = () => {
               className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden hover:border-accent/50 transition-colors group flex flex-col h-full"
             >
               {/* Header / Cover */}
-              <div className="h-2 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
+              {blog.coverImage ? (
+                <img
+                  src={blog.coverImage}
+                  alt={blog.title}
+                  loading="lazy"
+                  className="h-40 w-full object-cover"
+                />
+              ) : (
+                <div className="h-2 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
+              )}
 
               <div className="p-6 flex-grow flex flex-col">
                 <div className="flex justify-between items-start mb-3">
