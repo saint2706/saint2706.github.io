@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap, Code, Award } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import SkillBar from '../shared/SkillBar';
 
@@ -56,117 +57,139 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
 );
 
 const Resume = () => {
+  const canonicalUrl = `${resumeData.basics.website}/resume`;
+  const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
+  const title = `Resume | ${resumeData.basics.name}`;
+
   return (
-    <div className="max-w-4xl mx-auto py-12">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-16 text-center"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">My Journey</h1>
-        <p className="text-slate-400 text-lg">
-          A timeline of my education, experience, and technical milestones.
-        </p>
-      </motion.div>
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={description} />
+        <meta name="author" content={resumeData.basics.name} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={resumeData.basics.name} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:site" content={resumeData.basics.name} />
+        <meta name="twitter:creator" content={resumeData.basics.name} />
+      </Helmet>
+      <div className="max-w-4xl mx-auto py-12">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-16 text-center"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">My Journey</h1>
+          <p className="text-slate-400 text-lg">
+            A timeline of my education, experience, and technical milestones.
+          </p>
+        </motion.div>
 
-      <Section title="Experience" icon={<Briefcase size={24} />} delay={0.2}>
-        {resumeData.experience.map((job, i) => (
-          <TimelineItem
-            key={i}
-            title={job.company}
-            subtitle={job.position}
-            date={`${job.startDate} - ${job.endDate}`}
-            description={job.highlights || job.summary}
-          />
-        ))}
-      </Section>
+        <Section title="Experience" icon={<Briefcase size={24} />} delay={0.2}>
+          {resumeData.experience.map((job, i) => (
+            <TimelineItem
+              key={i}
+              title={job.company}
+              subtitle={job.position}
+              date={`${job.startDate} - ${job.endDate}`}
+              description={job.highlights || job.summary}
+            />
+          ))}
+        </Section>
 
-      <Section title="Education" icon={<GraduationCap size={24} />} delay={0.4}>
-        {resumeData.education.map((edu, i) => (
-          <TimelineItem
-            key={i}
-            title={edu.institution}
-            subtitle={edu.area}
-            date={`${edu.startDate} - ${edu.endDate}`}
-            description={edu.description}
-          />
-        ))}
-      </Section>
+        <Section title="Education" icon={<GraduationCap size={24} />} delay={0.4}>
+          {resumeData.education.map((edu, i) => (
+            <TimelineItem
+              key={i}
+              title={edu.institution}
+              subtitle={edu.area}
+              date={`${edu.startDate} - ${edu.endDate}`}
+              description={edu.description}
+            />
+          ))}
+        </Section>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-        className="grid md:grid-cols-2 gap-8"
-      >
-        <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-3 mb-6">
-            <Code size={24} className="text-fun-pink" />
-            <h2 className="text-xl font-bold">Technical Skills</h2>
-          </div>
-          <div className="space-y-6">
-            {resumeData.skills.map((skillGroup, groupIdx) => (
-              <div key={groupIdx}>
-                <h4 className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{skillGroup.category}</h4>
-                <div className="space-y-2">
-                  {skillGroup.items.map((skill, skillIdx) => (
-                    <SkillBar
-                      key={skill.name}
-                      name={skill.name}
-                      proficiency={skill.proficiency}
-                      delay={groupIdx * 0.1 + skillIdx * 0.05}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-3 mb-6">
-            <Award size={24} className="text-fun-yellow" />
-            <h2 className="text-xl font-bold">Certifications</h2>
-          </div>
-          <ul className="space-y-4">
-            {resumeData.certifications.map((cert, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow flex-shrink-0" />
-                <div>
-                  <span className="text-primary block">{cert.name}</span>
-                  <span className="text-secondary text-sm">{cert.issuer}{cert.date && ` • ${cert.date}`}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.div>
-
-      {/* Languages Section */}
-      {resumeData.basics.languages && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8"
+          transition={{ delay: 0.6 }}
+          className="grid md:grid-cols-2 gap-8"
         >
           <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-2xl">🌐</span>
-              <h2 className="text-xl font-bold">Languages</h2>
+              <Code size={24} className="text-fun-pink" />
+              <h2 className="text-xl font-bold">Technical Skills</h2>
             </div>
-            <div className="flex flex-wrap gap-4">
-              {resumeData.basics.languages.map((lang, i) => (
-                <div key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50 rounded-xl border border-slate-700">
-                  <span className="text-primary font-medium">{lang.name}</span>
-                  <span className="text-accent text-sm">{lang.proficiency}</span>
+            <div className="space-y-6">
+              {resumeData.skills.map((skillGroup, groupIdx) => (
+                <div key={groupIdx}>
+                  <h4 className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{skillGroup.category}</h4>
+                  <div className="space-y-2">
+                    {skillGroup.items.map((skill, skillIdx) => (
+                      <SkillBar
+                        key={skill.name}
+                        name={skill.name}
+                        proficiency={skill.proficiency}
+                        delay={groupIdx * 0.1 + skillIdx * 0.05}
+                      />
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
+
+          <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
+            <div className="flex items-center gap-3 mb-6">
+              <Award size={24} className="text-fun-yellow" />
+              <h2 className="text-xl font-bold">Certifications</h2>
+            </div>
+            <ul className="space-y-4">
+              {resumeData.certifications.map((cert, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow flex-shrink-0" />
+                  <div>
+                    <span className="text-primary block">{cert.name}</span>
+                    <span className="text-secondary text-sm">{cert.issuer}{cert.date && ` • ${cert.date}`}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </motion.div>
-      )}
-    </div>
+
+        {/* Languages Section */}
+        {resumeData.basics.languages && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="mt-8"
+          >
+            <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl">🌐</span>
+                <h2 className="text-xl font-bold">Languages</h2>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                {resumeData.basics.languages.map((lang, i) => (
+                  <div key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50 rounded-xl border border-slate-700">
+                    <span className="text-primary font-medium">{lang.name}</span>
+                    <span className="text-accent text-sm">{lang.proficiency}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </>
   );
 };
 
