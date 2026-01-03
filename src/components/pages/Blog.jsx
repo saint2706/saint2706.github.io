@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
@@ -156,8 +156,17 @@ const Blog = () => {
               value={searchTerm}
               maxLength={100}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-4 text-primary placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
+              className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-10 text-primary placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
             />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-accent transition-colors p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/50"
+                aria-label="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
         </motion.div>
 
