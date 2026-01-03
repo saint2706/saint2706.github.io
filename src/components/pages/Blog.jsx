@@ -145,7 +145,7 @@ const Blog = () => {
             ))}
           </div>
 
-          <div className="relative w-full md:w-64 group">
+          <div className="relative w-full md:w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted" size={18} aria-hidden="true" />
             <label htmlFor="blog-search" className="sr-only">Search blogs</label>
             <input
