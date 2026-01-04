@@ -1,6 +1,6 @@
 import React, { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 
 const ResetForm = ({ onSubmit, isOpen, onClose }) => {
   const [name, setName] = useState('');
@@ -80,9 +80,17 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-bg-primary font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-secondary"
+                aria-busy={isSubmitting}
+                className="w-full py-3 px-4 bg-accent hover:bg-accent/90 text-bg-primary font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg-secondary flex items-center justify-center gap-2"
               >
-                {isSubmitting ? 'Resetting Counter...' : 'Reset Counter'}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="animate-spin" size={20} />
+                    <span>Resetting Counter...</span>
+                  </>
+                ) : (
+                  <span>Reset Counter</span>
+                )}
               </button>
             </form>
           </motion.div>
