@@ -56,6 +56,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={50}
+                  autoFocus
                   className="w-full px-4 py-2 rounded-lg bg-bg-primary border border-border focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent text-text-primary transition-colors"
                   placeholder="Your name"
                   required
