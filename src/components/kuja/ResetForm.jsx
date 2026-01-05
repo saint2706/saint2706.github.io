@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react';
+import React, { useState, useId, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -9,6 +9,14 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
 
   const nameId = useId();
   const reasonId = useId();
+  const nameInputRef = useRef(null);
+
+  // Focus management - focus input after modal animation completes
+  useEffect(() => {
+    if (isOpen && nameInputRef.current) {
+      setTimeout(() => nameInputRef.current?.focus(), 100);
+    }
+  }, [isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +35,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <motion.div
+            id="reset-form-dialog"
             role="dialog"
             aria-modal="true"
             aria-labelledby="reset-form-title"
@@ -52,6 +61,7 @@ const ResetForm = ({ onSubmit, isOpen, onClose }) => {
                 </label>
                 <input
                   id={nameId}
+                  ref={nameInputRef}
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
