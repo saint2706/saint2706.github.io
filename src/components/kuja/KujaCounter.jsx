@@ -10,11 +10,17 @@ const KujaCounter = ({ days, longestStreak }) => {
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className="text-center"
       >
-        <div className="text-9xl font-bold text-accent font-mono mb-4">
-          {days}
-        </div>
-        <div className="text-2xl md:text-3xl text-text-primary font-bold">
-          Days Since Kuja Lost Something
+        <div
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <div className="text-9xl font-bold text-accent font-mono mb-4">
+            {days}
+          </div>
+          <div className="text-2xl md:text-3xl text-text-primary font-bold">
+            Days Since Kuja Lost Something
+          </div>
         </div>
         
         {longestStreak !== undefined && (
