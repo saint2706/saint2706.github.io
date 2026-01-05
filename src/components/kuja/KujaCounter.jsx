@@ -3,12 +3,7 @@ import { motion } from 'framer-motion';
 
 const KujaCounter = ({ days, longestStreak }) => {
   return (
-    <div
-      className="flex flex-col items-center justify-center py-12"
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-    >
+    <div className="flex flex-col items-center justify-center py-12">
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -16,13 +11,16 @@ const KujaCounter = ({ days, longestStreak }) => {
         className="text-center"
       >
         <div
-          className="text-9xl font-bold text-accent font-mono mb-4"
-          aria-label={`${days} days since Kuja lost something`}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          {days}
-        </div>
-        <div className="text-2xl md:text-3xl text-text-primary font-bold" aria-hidden="true">
-          Days Since Kuja Lost Something
+          <div className="text-9xl font-bold text-accent font-mono mb-4">
+            {days}
+          </div>
+          <div className="text-2xl md:text-3xl text-text-primary font-bold">
+            Days Since Kuja Lost Something
+          </div>
         </div>
         
         {longestStreak !== undefined && (
@@ -33,10 +31,7 @@ const KujaCounter = ({ days, longestStreak }) => {
             className="mt-8 p-4 bg-accent/10 border border-accent/30 rounded-lg"
           >
             <div className="text-sm text-text-secondary mb-1">🏆 Longest Streak</div>
-            <div
-              className="text-4xl font-bold text-accent font-mono"
-              aria-label={`Longest streak: ${longestStreak} days`}
-            >
+            <div className="text-4xl font-bold text-accent font-mono">
               {longestStreak} {longestStreak === 1 ? 'day' : 'days'}
             </div>
           </motion.div>
