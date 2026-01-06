@@ -251,6 +251,8 @@ const Blog = () => {
           {!isLoading && filteredBlogs.length === 0 && (
             <div
               className="col-span-full flex flex-col items-center justify-center py-20 text-center"
+              role="status"
+              aria-live="polite"
             >
               <div className="bg-secondary/50 p-4 rounded-full mb-4">
                 <FileQuestion size={48} className="text-muted" aria-hidden="true" />
