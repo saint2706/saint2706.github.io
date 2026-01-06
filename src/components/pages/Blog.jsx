@@ -259,7 +259,8 @@ const Blog = () => {
               </div>
               <h3 className="text-xl font-bold text-primary mb-2">No articles found</h3>
               <p className="text-secondary mb-6 max-w-md">
-                We couldn&apos;t find any posts matching &quot;{searchTerm}&quot;
+                We couldn&apos;t find any posts
+                {searchTerm && <> matching &quot;{searchTerm}&quot;</>}
                 {filter !== 'All' && <span> in <strong>{filter}</strong></span>}.
               </p>
               <button
