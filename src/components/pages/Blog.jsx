@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
@@ -248,12 +248,27 @@ const Blog = () => {
             </motion.div>
           ))}
 
-          {filteredBlogs.length === 0 && (
+          {!isLoading && filteredBlogs.length === 0 && (
             <div
-              className="col-span-full text-center py-20 text-slate-500"
-              role="status"
+              className="col-span-full flex flex-col items-center justify-center py-20 text-center"
             >
-              No blogs found matching your criteria.
+              <div className="bg-secondary/50 p-4 rounded-full mb-4">
+                <FileQuestion size={48} className="text-muted" aria-hidden="true" />
+              </div>
+              <h3 className="text-xl font-bold text-primary mb-2">No articles found</h3>
+              <p className="text-secondary mb-6 max-w-md">
+                We couldn&apos;t find any posts matching &quot;{searchTerm}&quot;
+                {filter !== 'All' && <span> in <strong>{filter}</strong></span>}.
+              </p>
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setFilter('All');
+                }}
+                className="px-6 py-2 bg-accent text-primary font-bold rounded-xl hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50"
+              >
+                Clear all filters
+              </button>
             </div>
           )}
         </motion.div>
