@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import Layout from './components/layout/Layout';
 import Hero from './components/home/Hero';
 import Projects from './components/pages/Projects';
+import Games from './components/pages/Games';
 import Resume from './components/pages/Resume';
 import Blog from './components/pages/Blog';
 import Contact from './components/pages/Contact';
@@ -29,6 +30,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
         <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+        <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
         <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
