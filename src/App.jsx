@@ -7,7 +7,6 @@ import Projects from './components/pages/Projects';
 import Resume from './components/pages/Resume';
 import Blog from './components/pages/Blog';
 import Contact from './components/pages/Contact';
-import KujaPage from './components/pages/KujaPage';
 import Chatbot from './components/shared/Chatbot';
 import RoastMode from './components/shared/RoastMode';
 import PageWrapper from './components/shared/PageWrapper';
@@ -33,7 +32,6 @@ const AnimatedRoutes = () => {
         <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-        <Route path="/kuja" element={<PageWrapper><KujaPage /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
