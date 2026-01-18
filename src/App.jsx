@@ -7,10 +7,13 @@ import Projects from './components/pages/Projects';
 import Resume from './components/pages/Resume';
 import Blog from './components/pages/Blog';
 import Contact from './components/pages/Contact';
+import Games from './components/pages/Games';
 import Chatbot from './components/shared/Chatbot';
 import RoastMode from './components/shared/RoastMode';
 import PageWrapper from './components/shared/PageWrapper';
 import ScrollToTop from './components/shared/ScrollToTop';
+import KonamiNotification from './components/shared/KonamiNotification';
+import useKonamiCode from './hooks/useKonamiCode';
 
 const ScrollToTopHelper = () => {
   const { pathname } = useLocation();
@@ -32,12 +35,15 @@ const AnimatedRoutes = () => {
         <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
 };
 
 function App() {
+  const [isRetroMode, resetRetroMode] = useKonamiCode();
+
   return (
     <Router>
       <ScrollToTopHelper />
@@ -48,9 +54,13 @@ function App() {
         <Chatbot />
         <RoastMode />
         <ScrollToTop />
+
+        {/* Konami Code Easter Egg */}
+        <KonamiNotification isActive={isRetroMode} onClose={resetRetroMode} />
       </Layout>
     </Router>
   );
 }
 
 export default App;
+

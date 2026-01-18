@@ -1,10 +1,13 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import CustomCursor from '../shared/CustomCursor';
 
 const Layout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative">
+      {/* Custom interactive cursor */}
+      <CustomCursor />
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent/5 rounded-full blur-[100px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-fun-pink/5 rounded-full blur-[100px]" />
