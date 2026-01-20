@@ -4,3 +4,4 @@ legacy_backup/
 .DS_Store
 .env
 .env.local
+.vscode
