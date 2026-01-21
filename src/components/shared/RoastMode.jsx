@@ -15,7 +15,7 @@ const RoastMode = () => {
   };
 
   return (
-    <div className="fixed bottom-24 right-6 z-40">
+    <div className="fixed bottom-24 left-6 z-40">
       <div className="relative group">
         <button
           onClick={() => {
@@ -35,7 +35,7 @@ const RoastMode = () => {
 
         {/* Tooltip */}
         {!roast && (
-          <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
             Roast My Resume
           </span>
         )}
@@ -45,7 +45,7 @@ const RoastMode = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="absolute bottom-full right-0 mb-4 w-64 md:w-80 bg-white text-slate-900 p-4 rounded-xl shadow-2xl origin-bottom-right"
+            className="absolute bottom-full left-0 mb-4 w-64 md:w-80 bg-white text-slate-900 p-4 rounded-xl shadow-2xl origin-bottom-left"
             role="status"
             aria-live="polite"
             aria-atomic="true"
