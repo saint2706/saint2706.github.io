@@ -14,7 +14,7 @@ const Footer = () => {
           </a>
         </div>
         <p className="text-muted font-mono text-sm flex items-center justify-center gap-2">
-          Made with <Coffee size={14} className="text-fun-yellow" /> by Rishabh Agrawal
+          Made with <Coffee size={14} className="text-fun-yellow" aria-hidden="true" /><span className="sr-only">coffee</span> by Rishabh Agrawal
         </p>
       </div>
     </footer>

@@ -20,6 +20,8 @@ const KonamiNotification = ({ isActive, onClose }) => {
                         duration: 0.6
                     }}
                     className="fixed bottom-20 left-4 z-50"
+                    role="alert"
+                    aria-live="assertive"
                 >
                     <motion.div
                         className="relative overflow-hidden"

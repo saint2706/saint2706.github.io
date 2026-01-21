@@ -62,9 +62,10 @@ const Contact = () => {
                                 <a
                                     href={`mailto:${resumeData.basics.email}`}
                                     className="flex items-center gap-4 p-4 bg-secondary/50 rounded-xl border border-slate-700 hover:border-accent/50 transition-colors group"
+                                    aria-label={`Send email to ${resumeData.basics.email}`}
                                 >
                                     <div className="p-3 bg-accent/10 rounded-lg text-accent group-hover:bg-accent group-hover:text-primary transition-colors">
-                                        <Mail size={24} />
+                                        <Mail size={24} aria-hidden="true" />
                                     </div>
                                     <div>
                                         <p className="text-sm text-secondary">Email</p>

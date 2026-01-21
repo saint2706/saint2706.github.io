@@ -107,11 +107,11 @@ const Blog = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-4xl font-bold mb-4">
+          <h1 className="text-4xl font-bold mb-4">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
               Written Thoughts
             </span>
-          </h2>
+          </h1>
           <p className="text-secondary max-w-2xl mx-auto">
             Musings on code, life, and everything in between. Synced from Dev.to, Medium, and Substack.
           </p>
@@ -170,13 +170,17 @@ const Blog = () => {
           </div>
         </motion.div>
 
+        {/* Screen reader loading announcement */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {isLoading ? 'Loading articles...' : `${filteredBlogs.length} articles found`}
+        </div>
+
         <motion.div
           key={currentPage} // Re-animate on page change
           variants={container}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          role="status"
           aria-busy={isLoading}
         >
           {/* Skeleton loaders during filtering */}
@@ -197,7 +201,7 @@ const Blog = () => {
               {blog.coverImage ? (
                 <img
                   src={blog.coverImage}
-                  alt={blog.title}
+                  alt={`Cover image for article: ${blog.title}`}
                   loading="lazy"
                   className="h-40 w-full object-cover"
                 />
@@ -239,9 +243,10 @@ const Blog = () => {
                     href={blog.link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
                     className="inline-flex items-center gap-2 text-sm font-bold text-accent hover:text-white transition-colors"
                   >
-                    Read on {blog.source} <ExternalLink size={16} />
+                    Read on {blog.source} <ExternalLink size={16} aria-hidden="true" />
                   </a>
                 </div>
               </div>

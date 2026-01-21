@@ -109,6 +109,13 @@ const Chatbot = () => {
     return () => document.removeEventListener('closeChatbot', handleCloseChatbot);
   }, []);
 
+  // Listen for open event from other components (e.g., Hero button)
+  useEffect(() => {
+    const handleOpenChatbot = () => setIsOpen(true);
+    document.addEventListener('openChatbot', handleOpenChatbot);
+    return () => document.removeEventListener('openChatbot', handleOpenChatbot);
+  }, []);
+
   // Close mobile menu when chatbot opens
   useEffect(() => {
     if (isOpen) {

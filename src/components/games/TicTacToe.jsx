@@ -182,17 +182,44 @@ const TicTacToe = () => {
         { id: 'hard', label: 'Hard', color: 'from-red-400 to-rose-500' }
     ];
 
+    // Helper to get cell position description for screen readers
+    const getCellLabel = (index, cell) => {
+        const row = Math.floor(index / 3) + 1;
+        const col = (index % 3) + 1;
+        const state = cell ? (cell === 'X' ? 'marked by you' : 'marked by AI') : 'empty';
+        return `Row ${row}, Column ${col}, ${state}`;
+    };
+
+    // Get game status announcement for screen readers
+    const getStatusAnnouncement = () => {
+        if (gameStatus === 'won') return 'Congratulations! You won the game!';
+        if (gameStatus === 'lost') return 'Game over. AI wins!';
+        if (gameStatus === 'draw') return "Game over. It's a draw!";
+        if (!isPlayerTurn) return 'AI is thinking...';
+        return 'Your turn. Select an empty cell to place your X.';
+    };
+
     return (
         <div className="flex flex-col items-center gap-6">
+            {/* Screen reader announcements */}
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                {getStatusAnnouncement()}
+            </div>
+
             {/* Difficulty Selector */}
-            <div className="flex gap-2 p-1 bg-secondary/30 rounded-xl border border-slate-700">
+            <div
+                className="flex gap-2 p-1 bg-secondary/30 rounded-xl border border-slate-700"
+                role="group"
+                aria-label="Select difficulty level"
+            >
                 {difficulties.map(diff => (
                     <button
                         key={diff.id}
                         onClick={() => changeDifficulty(diff.id)}
+                        aria-pressed={difficulty === diff.id}
                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${difficulty === diff.id
-                                ? `bg-gradient-to-r ${diff.color} text-white shadow-lg`
-                                : 'text-secondary hover:text-primary hover:bg-secondary/50'
+                            ? `bg-gradient-to-r ${diff.color} text-white shadow-lg`
+                            : 'text-secondary hover:text-primary hover:bg-secondary/50'
                             }`}
                     >
                         {diff.label}
@@ -230,12 +257,16 @@ const TicTacToe = () => {
                     className="grid grid-cols-3 gap-2 p-4 bg-secondary/30 backdrop-blur border border-slate-700 rounded-2xl"
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
+                    role="grid"
+                    aria-label="Tic Tac Toe game board"
                 >
                     {board.map((cell, index) => (
                         <motion.button
                             key={index}
                             onClick={() => handleCellClick(index)}
                             disabled={!!cell || !isPlayerTurn || gameStatus !== 'playing'}
+                            aria-label={getCellLabel(index, cell)}
+                            aria-describedby={winningLine?.includes(index) ? 'winning-cell' : undefined}
                             className={`w-20 h-20 md:w-24 md:h-24 rounded-xl text-4xl md:text-5xl font-bold flex items-center justify-center transition-all duration-200
                 ${winningLine?.includes(index)
                                     ? 'bg-gradient-to-br from-accent/40 to-fun-pink/40 border-2 border-accent'
@@ -252,6 +283,7 @@ const TicTacToe = () => {
                                         animate={{ scale: 1, rotate: 0 }}
                                         exit={{ scale: 0 }}
                                         className={cell === 'X' ? 'text-accent' : 'text-fun-pink'}
+                                        aria-hidden="true"
                                     >
                                         {cell}
                                     </motion.span>
@@ -260,6 +292,7 @@ const TicTacToe = () => {
                         </motion.button>
                     ))}
                 </motion.div>
+                <span id="winning-cell" className="sr-only">Part of the winning combination</span>
 
                 {/* Game Over Overlay */}
                 <AnimatePresence>
@@ -269,6 +302,9 @@ const TicTacToe = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             className="absolute inset-0 bg-primary/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-4"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="game-result"
                         >
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -277,15 +313,15 @@ const TicTacToe = () => {
                             >
                                 {gameStatus === 'won' && (
                                     <>
-                                        <Trophy className="w-16 h-16 text-fun-yellow mx-auto mb-2" />
-                                        <div className="text-2xl font-bold text-fun-yellow">You Won!</div>
+                                        <Trophy className="w-16 h-16 text-fun-yellow mx-auto mb-2" aria-hidden="true" />
+                                        <div id="game-result" className="text-2xl font-bold text-fun-yellow">You Won!</div>
                                     </>
                                 )}
                                 {gameStatus === 'lost' && (
-                                    <div className="text-2xl font-bold text-fun-pink">AI Wins!</div>
+                                    <div id="game-result" className="text-2xl font-bold text-fun-pink">AI Wins!</div>
                                 )}
                                 {gameStatus === 'draw' && (
-                                    <div className="text-2xl font-bold text-secondary">It's a Draw!</div>
+                                    <div id="game-result" className="text-2xl font-bold text-secondary">It's a Draw!</div>
                                 )}
                             </motion.div>
                             <motion.button
@@ -294,8 +330,9 @@ const TicTacToe = () => {
                                 transition={{ delay: 0.2 }}
                                 onClick={resetGame}
                                 className="px-6 py-2 bg-accent text-primary font-bold rounded-lg hover:bg-white transition-colors flex items-center gap-2"
+                                autoFocus
                             >
-                                <RotateCcw size={18} />
+                                <RotateCcw size={18} aria-hidden="true" />
                                 Play Again
                             </motion.button>
                         </motion.div>

@@ -63,14 +63,22 @@ const Games = () => {
                     transition={{ delay: 0.2 }}
                     className="flex justify-center mb-8"
                 >
-                    <div className="flex gap-2 p-1.5 bg-secondary/30 backdrop-blur border border-slate-700 rounded-xl">
+                    <div
+                        className="flex gap-2 p-1.5 bg-secondary/30 backdrop-blur border border-slate-700 rounded-xl"
+                        role="tablist"
+                        aria-label="Select a game to play"
+                    >
                         {games.map(game => (
                             <button
                                 key={game.id}
                                 onClick={() => setActiveGame(game.id)}
+                                role="tab"
+                                aria-selected={activeGame === game.id}
+                                aria-controls={`${game.id}-panel`}
+                                id={`${game.id}-tab`}
                                 className={`relative flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${activeGame === game.id
-                                        ? 'text-primary'
-                                        : 'text-secondary hover:text-primary'
+                                    ? 'text-primary'
+                                    : 'text-secondary hover:text-primary'
                                     }`}
                             >
                                 {activeGame === game.id && (
@@ -80,7 +88,7 @@ const Games = () => {
                                         transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
                                     />
                                 )}
-                                <game.icon size={18} className={activeGame === game.id ? 'text-accent' : ''} />
+                                <game.icon size={18} className={activeGame === game.id ? 'text-accent' : ''} aria-hidden="true" />
                                 <span className="relative z-10">{game.label}</span>
                             </button>
                         ))}
@@ -101,6 +109,9 @@ const Games = () => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
                             transition={{ duration: 0.2 }}
+                            role="tabpanel"
+                            id={`${activeGame}-panel`}
+                            aria-labelledby={`${activeGame}-tab`}
                         >
                             {activeGame === 'tictactoe' && <TicTacToe />}
                             {activeGame === 'snake' && <SnakeGame />}

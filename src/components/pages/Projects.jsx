@@ -56,22 +56,26 @@ const Projects = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-4xl font-bold mb-4">
+          <h1 className="text-4xl font-bold mb-4">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
               Creative Experiments
             </span>
-          </h2>
+          </h1>
           <p className="text-secondary max-w-2xl mx-auto">
             From data science models to full-stack applications. Here is what I have been building.
           </p>
         </motion.div>
+
+        {/* Screen reader loading announcement */}
+        <div className="sr-only" role="status" aria-live="polite">
+          {isLoading ? 'Loading projects...' : `${resumeData.projects.length} projects loaded`}
+        </div>
 
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          role="status"
           aria-busy={isLoading}
         >
           {/* Skeleton loaders during initial load */}
@@ -93,7 +97,7 @@ const Projects = () => {
                 <div className="relative h-40 overflow-hidden">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={`Screenshot of ${project.title} project`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />
@@ -141,9 +145,9 @@ const Projects = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 text-sm font-bold text-primary hover:text-accent transition-colors"
-                      aria-label={`Live Demo for ${project.title}`}
+                      aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
-                      <ExternalLink size={16} /> Live Demo
+                      <ExternalLink size={16} aria-hidden="true" /> Live Demo
                     </a>
                   )}
                   {project.github && (
@@ -152,9 +156,9 @@ const Projects = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 text-sm text-secondary hover:text-accent transition-colors"
-                      aria-label={`View source code for ${project.title}`}
+                      aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >
-                      <Github size={16} /> Code
+                      <Github size={16} aria-hidden="true" /> Code
                     </a>
                   )}
                 </div>

@@ -106,10 +106,11 @@ const Hero = () => {
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <button
-            onClick={() => document.getElementById('ai-chat-trigger')?.click()}
+            onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
             className="px-8 py-3 border border-secondary text-primary rounded-lg hover:bg-secondary/50 transition-all duration-300 flex items-center gap-2"
+            aria-label="Open chat with Digital Rishabh"
           >
-            <Bot size={18} className="text-fun-pink" />
+            <Bot size={18} className="text-fun-pink" aria-hidden="true" />
             Talk to Digital Rishabh
           </button>
         </motion.div>

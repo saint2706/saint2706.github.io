@@ -306,8 +306,22 @@ const SnakeGame = () => {
         setGameState(prev => prev === 'playing' ? 'paused' : 'playing');
     };
 
+    // Get game status for screen reader
+    const getGameAnnouncement = () => {
+        if (gameState === 'idle') return 'Snake game ready. Press Start Game to begin.';
+        if (gameState === 'playing') return `Playing. Score: ${score}. Use arrow keys or WASD to control the snake.`;
+        if (gameState === 'paused') return 'Game paused. Press Resume to continue.';
+        if (gameState === 'gameOver') return `Game over! Final score: ${score}. ${score >= highScore && score > 0 ? 'New high score!' : ''}`;
+        return '';
+    };
+
     return (
         <div className="flex flex-col items-center gap-6">
+            {/* Screen reader announcements */}
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                {getGameAnnouncement()}
+            </div>
+
             {/* Score Board */}
             <div className="flex gap-8 text-center">
                 <div>
@@ -322,7 +336,7 @@ const SnakeGame = () => {
                     </motion.div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Trophy size={18} className="text-fun-yellow" />
+                    <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
                     <div>
                         <div className="text-xs text-muted">Best</div>
                         <div className="text-2xl font-bold text-fun-yellow">{highScore}</div>
@@ -346,6 +360,8 @@ const SnakeGame = () => {
                         width={GRID_SIZE * CELL_SIZE}
                         height={GRID_SIZE * CELL_SIZE}
                         className="rounded-lg"
+                        role="img"
+                        aria-label={`Snake game board. Score: ${score}. ${gameState === 'playing' ? 'Game in progress.' : gameState === 'paused' ? 'Game paused.' : gameState === 'gameOver' ? 'Game over.' : 'Press Start to play.'}`}
                     />
                 </motion.div>
 
@@ -357,8 +373,11 @@ const SnakeGame = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             className="absolute inset-0 bg-primary/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-4"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="snake-start-title"
                         >
-                            <div className="text-xl font-bold text-primary">Snake Game</div>
+                            <div id="snake-start-title" className="text-xl font-bold text-primary">Snake Game</div>
                             <div className="text-sm text-secondary text-center px-4">
                                 Use arrow keys or swipe to control<br />
                                 <span className="text-muted">Space to pause</span>
@@ -368,8 +387,9 @@ const SnakeGame = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={startGame}
                                 className="px-6 py-3 bg-gradient-to-r from-accent to-fun-pink text-white font-bold rounded-lg flex items-center gap-2 shadow-lg"
+                                autoFocus
                             >
-                                <Play size={20} />
+                                <Play size={20} aria-hidden="true" />
                                 Start Game
                             </motion.button>
                         </motion.div>
@@ -381,16 +401,20 @@ const SnakeGame = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             className="absolute inset-0 bg-primary/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-4"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="snake-paused-title"
                         >
-                            <Pause className="w-12 h-12 text-accent" />
-                            <div className="text-xl font-bold text-primary">Paused</div>
+                            <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
+                            <div id="snake-paused-title" className="text-xl font-bold text-primary">Paused</div>
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={togglePause}
                                 className="px-6 py-2 bg-accent text-primary font-bold rounded-lg flex items-center gap-2"
+                                autoFocus
                             >
-                                <Play size={18} />
+                                <Play size={18} aria-hidden="true" />
                                 Resume
                             </motion.button>
                         </motion.div>
@@ -402,6 +426,9 @@ const SnakeGame = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             className="absolute inset-0 bg-primary/80 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-4"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="snake-gameover-title"
                         >
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -409,7 +436,7 @@ const SnakeGame = () => {
                                 transition={{ type: 'spring', bounce: 0.5 }}
                                 className="text-center"
                             >
-                                <div className="text-2xl font-bold text-fun-pink mb-2">Game Over!</div>
+                                <div id="snake-gameover-title" className="text-2xl font-bold text-fun-pink mb-2">Game Over!</div>
                                 <div className="text-lg text-secondary">Score: <span className="text-accent font-bold">{score}</span></div>
                                 {score >= highScore && score > 0 && (
                                     <motion.div
@@ -417,7 +444,7 @@ const SnakeGame = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         className="flex items-center justify-center gap-2 mt-2 text-fun-yellow"
                                     >
-                                        <Trophy size={18} />
+                                        <Trophy size={18} aria-hidden="true" />
                                         <span className="font-bold">New High Score!</span>
                                     </motion.div>
                                 )}
@@ -430,8 +457,9 @@ const SnakeGame = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={startGame}
                                 className="px-6 py-2 bg-accent text-primary font-bold rounded-lg flex items-center gap-2"
+                                autoFocus
                             >
-                                <RotateCcw size={18} />
+                                <RotateCcw size={18} aria-hidden="true" />
                                 Play Again
                             </motion.button>
                         </motion.div>
@@ -451,8 +479,9 @@ const SnakeGame = () => {
                     animate={{ opacity: 1 }}
                     onClick={togglePause}
                     className="md:hidden px-4 py-2 bg-secondary/50 border border-slate-700 rounded-lg text-secondary flex items-center gap-2"
+                    aria-label="Pause game"
                 >
-                    <Pause size={16} />
+                    <Pause size={16} aria-hidden="true" />
                     Pause
                 </motion.button>
             )}
