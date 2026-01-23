@@ -13,8 +13,8 @@ const Games = () => {
     const title = `Games | ${resumeData.basics.name}`;
 
     const games = [
-        { id: 'tictactoe', label: 'Tic Tac Toe', icon: Grid3X3 },
-        { id: 'snake', label: 'Snake', icon: Sparkles }
+        { id: 'tictactoe', label: 'Tic Tac Toe', icon: Grid3X3, color: 'bg-accent' },
+        { id: 'snake', label: 'Snake', icon: Sparkles, color: 'bg-fun-pink' }
     ];
 
     return (
@@ -36,27 +36,32 @@ const Games = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-12 text-center"
                 >
+                    {/* Easter Egg Badge */}
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: 'spring', bounce: 0.5, delay: 0.1 }}
-                        className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-secondary/50 backdrop-blur border border-slate-700 rounded-full"
+                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-[3px] border-[color:var(--color-border)]"
+                        style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
-                        <Gamepad2 className="w-5 h-5 text-fun-pink" />
-                        <span className="text-sm font-mono text-accent">Easter Egg Found!</span>
+                        <Gamepad2 className="w-5 h-5" />
+                        <span className="text-sm">Easter Egg Found!</span>
                     </motion.div>
 
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-fun-pink to-fun-yellow">
+                    <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+                        <span
+                            className="inline-block bg-fun-yellow text-black px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
+                        >
                             Game Zone
                         </span>
                     </h1>
-                    <p className="text-secondary max-w-xl mx-auto">
+                    <p className="text-secondary max-w-xl mx-auto mt-6 font-sans">
                         You discovered the secret games page! Take a break and have some fun.
                     </p>
                 </motion.div>
 
-                {/* Game Selector Tabs */}
+                {/* Game Selector Tabs - Neubrutalism Style */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -64,7 +69,7 @@ const Games = () => {
                     className="flex justify-center mb-8"
                 >
                     <div
-                        className="flex gap-2 p-1.5 bg-secondary/30 backdrop-blur border border-slate-700 rounded-xl"
+                        className="flex gap-3"
                         role="tablist"
                         aria-label="Select a game to play"
                     >
@@ -76,20 +81,15 @@ const Games = () => {
                                 aria-selected={activeGame === game.id}
                                 aria-controls={`${game.id}-panel`}
                                 id={`${game.id}-tab`}
-                                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 ${activeGame === game.id
-                                    ? 'text-primary'
-                                    : 'text-secondary hover:text-primary'
+                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform
+                                    ${activeGame === game.id
+                                        ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
+                                        : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                                     }`}
+                                style={{ boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
                             >
-                                {activeGame === game.id && (
-                                    <motion.div
-                                        layoutId="activeGameTab"
-                                        className="absolute inset-0 bg-gradient-to-r from-accent/20 to-fun-pink/20 border border-accent/30 rounded-lg"
-                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
-                                    />
-                                )}
-                                <game.icon size={18} className={activeGame === game.id ? 'text-accent' : ''} aria-hidden="true" />
-                                <span className="relative z-10">{game.label}</span>
+                                <game.icon size={18} aria-hidden="true" />
+                                <span>{game.label}</span>
                             </button>
                         ))}
                     </div>
@@ -102,32 +102,44 @@ const Games = () => {
                     transition={{ delay: 0.3 }}
                     className="flex justify-center"
                 >
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={activeGame}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.2 }}
-                            role="tabpanel"
-                            id={`${activeGame}-panel`}
-                            aria-labelledby={`${activeGame}-tab`}
-                        >
-                            {activeGame === 'tictactoe' && <TicTacToe />}
-                            {activeGame === 'snake' && <SnakeGame />}
-                        </motion.div>
-                    </AnimatePresence>
+                    <div
+                        className="bg-card border-[3px] border-[color:var(--color-border)] p-6 md:p-8"
+                        style={{ boxShadow: 'var(--nb-shadow)' }}
+                    >
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeGame}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.2 }}
+                                role="tabpanel"
+                                id={`${activeGame}-panel`}
+                                aria-labelledby={`${activeGame}-tab`}
+                            >
+                                {activeGame === 'tictactoe' && <TicTacToe />}
+                                {activeGame === 'snake' && <SnakeGame />}
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </motion.div>
 
                 {/* Footer hint */}
-                <motion.p
+                <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="text-center text-muted text-xs mt-12"
+                    className="flex justify-center mt-12"
                 >
-                    Psst... you found this page by going to /games. Keep it a secret! 🤫
-                </motion.p>
+                    <div
+                        className="bg-secondary border-[3px] border-[color:var(--color-border)] px-6 py-3"
+                        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    >
+                        <p className="text-muted text-xs font-mono text-center">
+                            Psst... you found this page by going to /games. Keep it a secret! 🤫
+                        </p>
+                    </div>
+                </motion.div>
             </div>
         </>
     );

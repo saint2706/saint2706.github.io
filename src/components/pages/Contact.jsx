@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
 const Contact = () => {
     const socialLinks = [
-        { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub' },
-        { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn' },
+        { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub', color: 'hover:bg-fun-yellow' },
+        { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn', color: 'hover:bg-accent' },
     ];
     const canonicalUrl = `${resumeData.basics.website}/contact`;
     const description = 'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
@@ -31,62 +31,91 @@ const Contact = () => {
                 <meta name="twitter:site" content={resumeData.basics.name} />
                 <meta name="twitter:creator" content={resumeData.basics.name} />
             </Helmet>
-            <div className="max-w-4xl mx-auto py-12 px-4">
+
+            <div className="max-w-5xl mx-auto py-12 px-4">
+                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-12 text-center"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
+                    <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+                        <span
+                            className="inline-block bg-accent text-white px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
+                        >
                             Let&apos;s Connect
                         </span>
                     </h1>
-                    <p className="text-secondary text-lg max-w-xl mx-auto">
+                    <p className="text-secondary text-lg max-w-xl mx-auto mt-6 font-sans">
                         Interested in building data-driven solutions that make an impact? Let&apos;s connect!
                     </p>
                 </motion.div>
 
-                <div className="grid md:grid-cols-2 gap-12">
+                <div className="grid md:grid-cols-2 gap-8">
                     {/* Contact Info */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="space-y-8"
+                        className="space-y-6"
                     >
-                        <div>
-                            <h2 className="text-2xl font-bold text-primary mb-6">Get in Touch</h2>
+                        {/* Get in Touch Card */}
+                        <div
+                            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
+                        >
+                            <h2
+                                className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6"
+                                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                            >
+                                Get in Touch
+                            </h2>
 
                             <div className="space-y-4">
+                                {/* Email */}
                                 <a
                                     href={`mailto:${resumeData.basics.email}`}
-                                    className="flex items-center gap-4 p-4 bg-secondary/50 rounded-xl border border-slate-700 hover:border-accent/50 transition-colors group"
+                                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group"
+                                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                     aria-label={`Send email to ${resumeData.basics.email}`}
                                 >
-                                    <div className="p-3 bg-accent/10 rounded-lg text-accent group-hover:bg-accent group-hover:text-primary transition-colors">
+                                    <div className="p-3 bg-accent text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
                                         <Mail size={24} aria-hidden="true" />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-secondary">Email</p>
-                                        <p className="text-primary font-medium">{resumeData.basics.email}</p>
+                                        <p className="text-sm text-muted font-heading font-bold uppercase">Email</p>
+                                        <p className="text-primary font-sans font-medium">{resumeData.basics.email}</p>
                                     </div>
                                 </a>
 
-                                <div className="flex items-center gap-4 p-4 bg-secondary/50 rounded-xl border border-slate-700">
-                                    <div className="p-3 bg-fun-pink/10 rounded-lg text-fun-pink">
+                                {/* Location */}
+                                <div
+                                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                                >
+                                    <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)]">
                                         <MapPin size={24} />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-secondary">Location</p>
-                                        <p className="text-primary font-medium">{resumeData.basics.location.city}, {resumeData.basics.location.country}</p>
+                                        <p className="text-sm text-muted font-heading font-bold uppercase">Location</p>
+                                        <p className="text-primary font-sans font-medium">{resumeData.basics.location.city}, {resumeData.basics.location.country}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div>
-                            <h3 className="text-lg font-bold text-primary mb-4">Follow Me</h3>
+                        {/* Follow Me */}
+                        <div
+                            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
+                        >
+                            <h3
+                                className="inline-block font-heading text-lg font-bold text-black bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6 text-white"
+                                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                            >
+                                Follow Me
+                            </h3>
                             <div className="flex gap-4">
                                 {socialLinks.map((social) => (
                                     <a
@@ -94,7 +123,8 @@ const Contact = () => {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-3 bg-secondary/50 rounded-xl border border-secondary text-secondary hover:text-accent hover:border-accent/50 transition-colors"
+                                        className={`p-4 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 ${social.color}`}
+                                        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                         aria-label={social.label}
                                     >
                                         {social.icon}
@@ -108,11 +138,12 @@ const Contact = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.4 }}
-                            className="p-4 bg-gradient-to-r from-accent/10 to-fun-pink/10 rounded-xl border border-accent/30"
+                            className="bg-fun-yellow border-[3px] border-[color:var(--color-border)] p-4"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <div className="flex items-center gap-3">
-                                <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-                                <span className="text-primary font-medium">Available for freelance & collaborations</span>
+                                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse"></span>
+                                <span className="text-black font-heading font-bold">Available for freelance & collaborations</span>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -124,31 +155,44 @@ const Contact = () => {
                         transition={{ delay: 0.3 }}
                         className="flex flex-col justify-center"
                     >
-                        <div className="bg-secondary/50 border border-slate-700 rounded-2xl p-8 text-center">
-                            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-accent to-fun-pink rounded-full flex items-center justify-center">
-                                <Mail size={36} className="text-white" />
+                        <div
+                            className="bg-card border-[3px] border-[color:var(--color-border)] p-8 text-center"
+                            style={{ boxShadow: 'var(--nb-shadow)' }}
+                        >
+                            {/* Icon */}
+                            <div
+                                className="w-24 h-24 mx-auto mb-6 bg-accent border-[3px] border-[color:var(--color-border)] flex items-center justify-center"
+                                style={{ boxShadow: 'var(--nb-shadow)' }}
+                            >
+                                <Mail size={40} className="text-white" />
                             </div>
 
-                            <h3 className="text-2xl font-bold text-primary mb-4">
+                            <h3 className="font-heading text-2xl font-bold text-primary mb-4">
                                 Ready to start a conversation?
                             </h3>
 
-                            <p className="text-secondary mb-8">
+                            <p className="text-secondary mb-8 font-sans">
                                 Whether it&apos;s making sense of messy data, designing AI/ML solutions, or bridging technical depth with business impact - let&apos;s create something amazing together!
                             </p>
 
                             <a
                                 href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-primary font-bold rounded-xl hover:bg-white transition-colors"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                                style={{ boxShadow: 'var(--nb-shadow)' }}
                             >
-                                <Mail size={20} />
+                                <Send size={20} />
                                 Send me an Email
-                                <ExternalLink size={16} />
                             </a>
 
-                            <p className="text-muted text-sm mt-6">
-                                Or use the chatbot (Ctrl+K) to learn more about me first!
-                            </p>
+                            <div
+                                className="mt-8 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                            >
+                                <p className="text-muted text-sm font-sans flex items-center justify-center gap-2">
+                                    <Sparkles size={16} className="text-fun-yellow" />
+                                    Or use the chatbot (Ctrl+K) to learn more about me first!
+                                </p>
+                            </div>
                         </div>
                     </motion.div>
                 </div>

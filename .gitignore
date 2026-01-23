@@ -5,3 +5,4 @@ legacy_backup/
 .env
 .env.local
 .vscode
+.agent

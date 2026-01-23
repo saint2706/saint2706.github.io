@@ -1,53 +1,84 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap, Code, Award } from 'lucide-react';
+import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
-import SkillBar from '../shared/SkillBar';
 
-const Section = ({ title, icon, children, delay = 0 }) => (
+// Neubrutalism Section Component
+const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0 }) => (
   <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    animate={{ opacity: 1, x: 0 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ delay }}
     className="mb-12"
   >
-    <div className="flex items-center gap-3 mb-6">
-      <div className="p-2 bg-accent/10 rounded-lg text-accent">
-        {icon}
-      </div>
-      <h2 className="text-2xl font-bold text-primary">{title}</h2>
+    <div
+      className={`inline-flex items-center gap-3 ${color} text-black px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6`}
+      style={{ boxShadow: 'var(--nb-shadow)' }}
+    >
+      {icon}
+      <h2 className="text-xl font-heading font-bold">{title}</h2>
     </div>
-    <div className="border-l-2 border-slate-800 ml-4 pl-8 space-y-10">
+    <div className="space-y-6">
       {children}
     </div>
   </motion.div>
 );
 
-const TimelineItem = ({ title, subtitle, date, description, tags }) => (
-  <div className="relative">
-    <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-slate-900 border-2 border-accent/50"></div>
-    <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
-      <h3 className="text-xl font-bold text-primary">{title}</h3>
-      <span className="font-mono text-sm text-slate-600 dark:text-accent">{date}</span>
+// Neubrutalism Timeline Card
+const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
+  <div
+    className="bg-card border-[3px] border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+    style={{ boxShadow: 'var(--nb-shadow)' }}
+  >
+    {/* Color accent bar */}
+    <div className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-[3px] border-[color:var(--color-border)]`} />
+
+    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
+      <div>
+        <h3 className="text-xl font-heading font-bold text-primary">{title}</h3>
+        <p className="text-lg text-secondary font-sans">{subtitle}</p>
+      </div>
+      <div className="flex flex-col items-start md:items-end gap-1">
+        <span
+          className="inline-flex items-center gap-1 text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
+        >
+          <Calendar size={12} />
+          {date}
+        </span>
+        {location && (
+          <span className="text-xs text-muted flex items-center gap-1">
+            <MapPin size={12} />
+            {location}
+          </span>
+        )}
+      </div>
     </div>
-    <p className="text-lg text-secondary mb-2">{subtitle}</p>
+
     {description && (
-      <div className="text-secondary text-sm leading-relaxed max-w-2xl mb-4">
-        {/* Handle both string description and array of bullets */}
+      <div className="text-secondary text-sm leading-relaxed mb-4 font-sans">
         {Array.isArray(description) ? (
-          <ul className="list-disc list-inside space-y-1">
-            {description.map((d, i) => <li key={i}>{d}</li>)}
+          <ul className="space-y-2">
+            {description.map((d, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="w-2 h-2 bg-accent mt-1.5 flex-shrink-0" />
+                <span>{d}</span>
+              </li>
+            ))}
           </ul>
         ) : (
           <p>{description}</p>
         )}
       </div>
     )}
-    {tags && (
+
+    {tags && tags.length > 0 && (
       <div className="flex flex-wrap gap-2">
         {tags.map((tag, i) => (
-          <span key={i} className="text-xs px-2 py-1 rounded bg-secondary text-secondary">
+          <span
+            key={i}
+            className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+          >
             {tag}
           </span>
         ))}
@@ -55,6 +86,26 @@ const TimelineItem = ({ title, subtitle, date, description, tags }) => (
     )}
   </div>
 );
+
+// Neubrutalism Skill Badge
+const SkillBadge = ({ name, proficiency }) => {
+  const getColor = (p) => {
+    if (p >= 90) return 'bg-fun-yellow';
+    if (p >= 75) return 'bg-accent';
+    if (p >= 60) return 'bg-fun-pink';
+    return 'bg-secondary';
+  };
+
+  return (
+    <div
+      className={`inline-flex items-center gap-2 ${getColor(proficiency)} text-black px-3 py-2 border-2 border-[color:var(--color-border)] font-heading font-bold text-sm`}
+      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+    >
+      {name}
+      <span className="text-xs opacity-70">{proficiency}%</span>
+    </div>
+  );
+};
 
 const Resume = () => {
   const canonicalUrl = `${resumeData.basics.website}/resume`;
@@ -79,64 +130,98 @@ const Resume = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
       </Helmet>
-      <div className="max-w-4xl mx-auto py-12">
+
+      <div className="max-w-5xl mx-auto py-12 px-4">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-16 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">My Journey</h1>
-          <p className="text-slate-400 text-lg">
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <span
+              className="inline-block bg-accent text-white px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
+            >
+              My Journey
+            </span>
+          </h1>
+          <p className="text-secondary text-lg mt-6 font-sans max-w-2xl mx-auto">
             A timeline of my education, experience, and technical milestones.
           </p>
         </motion.div>
 
-        <Section title="Experience" icon={<Briefcase size={24} />} delay={0.2}>
+        {/* Experience Section */}
+        <Section
+          title="Experience"
+          icon={<Briefcase size={24} />}
+          color="bg-fun-pink"
+          delay={0.2}
+        >
           {resumeData.experience.map((job, i) => (
-            <TimelineItem
+            <TimelineCard
               key={i}
               title={job.company}
               subtitle={job.position}
               date={`${job.startDate} - ${job.endDate}`}
+              location={job.location}
               description={job.highlights || job.summary}
+              accentColor="bg-fun-pink"
             />
           ))}
         </Section>
 
-        <Section title="Education" icon={<GraduationCap size={24} />} delay={0.4}>
+        {/* Education Section */}
+        <Section
+          title="Education"
+          icon={<GraduationCap size={24} />}
+          color="bg-accent"
+          delay={0.4}
+        >
           {resumeData.education.map((edu, i) => (
-            <TimelineItem
+            <TimelineCard
               key={i}
               title={edu.institution}
               subtitle={edu.area}
               date={`${edu.startDate} - ${edu.endDate}`}
               description={edu.description}
+              accentColor="bg-accent"
             />
           ))}
         </Section>
 
+        {/* Skills & Certifications Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="grid md:grid-cols-2 gap-8"
+          className="grid md:grid-cols-2 gap-6 mb-12"
         >
-          <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
-            <div className="flex items-center gap-3 mb-6">
-              <Code size={24} className="text-fun-pink" />
-              <h2 className="text-xl font-bold">Technical Skills</h2>
+          {/* Technical Skills */}
+          <div
+            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          >
+            <div
+              className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            >
+              <Code size={20} />
+              <h2 className="text-lg font-heading font-bold">Technical Skills</h2>
             </div>
+
             <div className="space-y-6">
               {resumeData.skills.map((skillGroup, groupIdx) => (
                 <div key={groupIdx}>
-                  <h4 className="text-sm font-bold text-secondary uppercase tracking-wider mb-3">{skillGroup.category}</h4>
-                  <div className="space-y-2">
-                    {skillGroup.items.map((skill, skillIdx) => (
-                      <SkillBar
+                  <h4 className="text-sm font-heading font-bold text-primary uppercase tracking-wider mb-3 border-b-2 border-[color:var(--color-border)] pb-1">
+                    {skillGroup.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skillGroup.items.map((skill) => (
+                      <SkillBadge
                         key={skill.name}
                         name={skill.name}
                         proficiency={skill.proficiency}
-                        delay={groupIdx * 0.1 + skillIdx * 0.05}
                       />
                     ))}
                   </div>
@@ -145,18 +230,31 @@ const Resume = () => {
             </div>
           </div>
 
-          <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
-            <div className="flex items-center gap-3 mb-6">
-              <Award size={24} className="text-fun-yellow" />
-              <h2 className="text-xl font-bold">Certifications</h2>
+          {/* Certifications */}
+          <div
+            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          >
+            <div
+              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            >
+              <Award size={20} />
+              <h2 className="text-lg font-heading font-bold">Certifications</h2>
             </div>
+
             <ul className="space-y-4">
               {resumeData.certifications.map((cert, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-fun-yellow flex-shrink-0" />
+                <li
+                  key={i}
+                  className="flex items-start gap-3 p-3 bg-secondary border-2 border-[color:var(--color-border)]"
+                >
+                  <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
                   <div>
-                    <span className="text-primary block">{cert.name}</span>
-                    <span className="text-secondary text-sm">{cert.issuer}{cert.date && ` • ${cert.date}`}</span>
+                    <span className="text-primary font-heading font-bold block">{cert.name}</span>
+                    <span className="text-muted text-sm font-sans">
+                      {cert.issuer}{cert.date && ` • ${cert.date}`}
+                    </span>
                   </div>
                 </li>
               ))}
@@ -170,18 +268,32 @@ const Resume = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="mt-8"
           >
-            <div className="bg-secondary/30 p-6 rounded-2xl border border-slate-800">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl">🌐</span>
-                <h2 className="text-xl font-bold">Languages</h2>
+            <div
+              className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
+            >
+              <div
+                className="inline-flex items-center gap-2 bg-accent text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
+                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+              >
+                <Globe size={20} />
+                <h2 className="text-lg font-heading font-bold">Languages</h2>
               </div>
+
               <div className="flex flex-wrap gap-4">
                 {resumeData.basics.languages.map((lang, i) => (
-                  <div key={i} className="flex items-center gap-3 px-4 py-3 bg-secondary/50 rounded-xl border border-slate-700">
-                    <span className="text-primary font-medium">{lang.name}</span>
-                    <span className="text-accent text-sm">{lang.proficiency}</span>
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 px-4 py-3 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  >
+                    <span className="text-primary font-heading font-bold">{lang.name}</span>
+                    <span
+                      className="text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
+                    >
+                      {lang.proficiency}
+                    </span>
                   </div>
                 ))}
               </div>

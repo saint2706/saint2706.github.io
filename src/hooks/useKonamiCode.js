@@ -14,38 +14,43 @@ const KONAMI_CODE = [
 
 /**
  * Custom hook that listens for the Konami Code sequence.
+ * When activated, switches to the classic (old) theme.
  * Returns [isActivated, reset] where:
- * - isActivated: boolean indicating if the code was entered
- * - reset: function to reset the activation state
+ * - isActivated: boolean indicating if classic mode is on
+ * - reset: function to reset back to Neubrutalism
  */
 const useKonamiCode = () => {
     const [inputSequence, setInputSequence] = useState([]);
     const [isActivated, setIsActivated] = useState(() => {
         // Check localStorage for persisted state
-        return localStorage.getItem('konami-mode') === 'true';
+        return localStorage.getItem('classic_mode') === 'true';
     });
 
     const reset = useCallback(() => {
         setIsActivated(false);
         setInputSequence([]);
-        localStorage.removeItem('konami-mode');
-        document.documentElement.classList.remove('retro-mode');
+        localStorage.setItem('classic_mode', 'false');
+        // Remove classic class, keep dark/light preference
+        document.documentElement.classList.remove('classic', 'retro-mode');
     }, []);
 
     const activate = useCallback(() => {
         setIsActivated(true);
-        localStorage.setItem('konami-mode', 'true');
-        document.documentElement.classList.add('retro-mode');
+        localStorage.setItem('classic_mode', 'true');
+        // Add classic class for old theme
+        document.documentElement.classList.add('classic');
+        // Remove retro-mode if it was there
+        document.documentElement.classList.remove('retro-mode');
     }, []);
 
-    // Apply retro mode on mount if already activated
+    // Apply classic mode on mount if already activated
     useEffect(() => {
         if (isActivated) {
-            document.documentElement.classList.add('retro-mode');
+            document.documentElement.classList.add('classic');
         }
         return () => {
             // Cleanup on unmount
-            document.documentElement.classList.remove('retro-mode');
+            document.documentElement.classList.remove('classic');
         };
     }, []);
 

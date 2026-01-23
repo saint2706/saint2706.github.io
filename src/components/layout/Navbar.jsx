@@ -48,13 +48,18 @@ const Navbar = () => {
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
-      <div className="relative max-w-4xl mx-auto bg-secondary/80 backdrop-blur-md border border-slate-700 rounded-full px-6 py-3 flex justify-between items-center shadow-lg shadow-blue-500/10">
+      <div
+        className="relative max-w-4xl mx-auto bg-card border-[3px] border-[color:var(--color-border)] px-6 py-3 flex justify-between items-center"
+        style={{ boxShadow: 'var(--nb-shadow)' }}
+      >
         <NavLink
           to="/"
-          className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink font-mono"
+          className="text-xl font-heading font-bold text-primary"
           aria-label="Rishabh Agrawal - Home page"
         >
-          &lt;Rishabh /&gt;
+          <span className="bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
+            &lt;Rishabh /&gt;
+          </span>
         </NavLink>
 
         <div className="hidden md:flex gap-1 md:gap-2">
@@ -63,14 +68,15 @@ const Navbar = () => {
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+                `flex items-center gap-2 px-4 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2
                 ${isActive
-                  ? 'bg-accent/20 text-accent shadow-[0_0_10px_rgba(56,189,248,0.3)]'
-                  : 'text-secondary hover:text-accent hover:bg-secondary/50'
+                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
+                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'
                 }`
               }
+              style={({ isActive }) => isActive ? { boxShadow: '2px 2px 0 var(--color-border)' } : {}}
             >
-              <span className="hidden md:inline" aria-hidden="true">{item.icon}</span>
+              <span className="hidden lg:inline" aria-hidden="true">{item.icon}</span>
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -82,7 +88,8 @@ const Navbar = () => {
           <button
             type="button"
             onClick={toggleTheme}
-            className="group relative p-2.5 rounded-full bg-secondary/30 hover:bg-secondary/50 text-secondary hover:text-accent transition-all duration-300"
+            className="group relative p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5"
+            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           >
             <motion.div
@@ -95,7 +102,7 @@ const Navbar = () => {
             </motion.div>
 
             {/* Tooltip */}
-            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
+            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans">
               {isDark ? 'Light Mode' : 'Dark Mode'}
             </span>
           </button>
@@ -103,7 +110,8 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="md:hidden p-3 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+            className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer"
+            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
@@ -121,17 +129,19 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
-              className="absolute right-4 top-full mt-3 w-64 rounded-2xl bg-secondary border border-slate-700 shadow-lg shadow-blue-500/10 md:hidden"
+              className="absolute right-4 top-full mt-3 w-64 bg-card border-[3px] border-[color:var(--color-border)] md:hidden"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
             >
-              <div className="flex flex-col divide-y divide-white/5">
-                {navItems.map((item) => (
+              <div className="flex flex-col">
+                {navItems.map((item, index) => (
                   <NavLink
                     key={item.name}
                     to={item.path}
                     onClick={handleCloseMenu}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-5 py-4 text-base font-medium transition-colors duration-200
-                      ${isActive ? 'text-accent bg-accent/10' : 'text-primary hover:text-accent hover:bg-secondary/50'}`
+                      `flex items-center gap-3 px-5 py-4 text-base font-heading font-semibold transition-colors duration-200
+                      ${index !== navItems.length - 1 ? 'border-b-2 border-[color:var(--color-border)]' : ''}
+                      ${isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary'}`
                     }
                   >
                     <span aria-hidden="true">{item.icon}</span>

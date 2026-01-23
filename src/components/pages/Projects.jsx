@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Star } from 'lucide-react';
+import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { ProjectSkeleton } from '../shared/SkeletonLoader';
@@ -32,6 +32,9 @@ const Projects = () => {
     show: { opacity: 1, y: 0 }
   };
 
+  // Color rotation for card accents
+  const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+
   return (
     <>
       <Helmet>
@@ -56,12 +59,15 @@ const Projects = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="text-4xl font-bold mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <span
+              className="inline-block bg-fun-yellow text-black px-4 py-2 border-[3px] border-[color:var(--color-border)]"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
+            >
               Creative Experiments
             </span>
           </h1>
-          <p className="text-secondary max-w-2xl mx-auto">
+          <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             From data science models to full-stack applications. Here is what I have been building.
           </p>
         </motion.div>
@@ -86,53 +92,62 @@ const Projects = () => {
               ))}
             </>
           ) : resumeData.projects.map((project, idx) => (
-            <motion.div
+            <motion.article
               key={idx}
               variants={item}
-              whileHover={{ y: -5 }}
-              className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden hover:border-accent/50 transition-colors group flex flex-col h-full"
+              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
+              whileHover={{ boxShadow: 'var(--nb-shadow-hover)' }}
             >
-              {/* Project Image or Gradient Placeholder */}
-              {project.image ? (
-                <div className="relative h-40 overflow-hidden">
+              {/* Color accent bar */}
+              <div className={`h-3 ${cardColors[idx % cardColors.length]}`} />
+
+              {/* Project Image */}
+              {project.image && (
+                <div className="relative h-40 overflow-hidden border-b-[3px] border-[color:var(--color-border)]">
                   <img
                     src={project.image}
                     alt={`Screenshot of ${project.title} project`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 to-transparent" />
                 </div>
-              ) : (
-                <div className="h-3 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
               )}
 
               <div className="p-6 flex-grow flex flex-col">
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-primary group-hover:text-accent transition-colors">
-                    {project.title}
-                  </h3>
+                  <div className="flex items-start gap-2">
+                    <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
+                    <h3 className="text-xl font-heading font-bold text-primary">
+                      {project.title}
+                    </h3>
+                  </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
-                      <span className="flex items-center gap-1 text-xs text-fun-yellow">
-                        <Star size={12} className="fill-fun-yellow" />
+                      <span
+                        className="flex items-center gap-1 text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
+                      >
+                        <Star size={12} className="fill-black" />
                         {project.stars}
                       </span>
                     )}
                     {project.featured && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-accent/20 text-accent border border-accent/30">
+                      <span className="text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)]">
                         Featured
                       </span>
                     )}
                   </div>
                 </div>
 
-                <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
+                <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3 font-sans">
                   {project.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.map(tag => (
-                    <span key={tag} className="text-xs px-2 py-1 rounded bg-secondary text-primary border border-secondary">
+                    <span
+                      key={tag}
+                      className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -144,10 +159,11 @@ const Projects = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-bold text-primary hover:text-accent transition-colors"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
-                      <ExternalLink size={16} aria-hidden="true" /> Live Demo
+                      <ExternalLink size={14} aria-hidden="true" /> Demo
                     </a>
                   )}
                   {project.github && (
@@ -155,15 +171,16 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm text-secondary hover:text-accent transition-colors"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >
-                      <Github size={16} aria-hidden="true" /> Code
+                      <Github size={14} aria-hidden="true" /> Code
                     </a>
                   )}
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
       </div>

@@ -12,6 +12,12 @@ export default {
         'accent': 'var(--color-accent)',
         'fun-pink': 'var(--color-fun-pink)',
         'fun-yellow': 'var(--color-fun-yellow)',
+        // Neubrutalism palette
+        'nb-yellow': '#FFEB3B',
+        'nb-red': '#FF5252',
+        'nb-blue': '#2196F3',
+        'nb-black': '#000000',
+        'nb-white': '#FFFFFF',
       },
       textColor: {
         'primary': 'var(--color-text-primary)',
@@ -27,8 +33,19 @@ export default {
         'skeleton': 'var(--color-skeleton)',
       },
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'],
+        'sans': ['DM Sans', 'sans-serif'],
+        'heading': ['Space Grotesk', 'sans-serif'],
         'mono': ['Fira Code', 'monospace'],
+      },
+      boxShadow: {
+        'nb': 'var(--nb-shadow)',
+        'nb-hover': 'var(--nb-shadow-hover)',
+      },
+      borderRadius: {
+        'nb': 'var(--nb-radius)',
+      },
+      borderWidth: {
+        'nb': 'var(--nb-border-width)',
       },
     },
   },

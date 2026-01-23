@@ -4,7 +4,57 @@
 
 /* Theme CSS Variables */
 :root {
-  /* Dark theme (default) */
+  /* NEUBRUTALISM THEME (default) */
+  --color-primary: #FAFAFA;
+  --color-secondary: #F5F5F5;
+  --color-accent: #2196F3;
+  --color-fun-pink: #FF5252;
+  --color-fun-yellow: #FFEB3B;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #333333;
+  --color-text-muted: #666666;
+
+  --color-border: #000000;
+  --color-card-bg: #FFFFFF;
+  --color-overlay: rgba(250, 250, 250, 0.95);
+
+  /* Neubrutalism specific */
+  --nb-border-width: 3px;
+  --nb-shadow-offset: 4px;
+  --nb-shadow: 4px 4px 0 #000000;
+  --nb-shadow-hover: 6px 6px 0 #000000;
+  --nb-radius: 0px;
+
+  /* Skeleton colors */
+  --color-skeleton: rgba(0, 0, 0, 0.1);
+}
+
+/* Neubrutalism Dark Mode */
+:root.dark {
+  --color-primary: #1A1A1A;
+  --color-secondary: #2D2D2D;
+  --color-accent: #00E5FF;
+  --color-fun-pink: #FF4081;
+  --color-fun-yellow: #FFEA00;
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E0E0E0;
+  --color-text-muted: #9E9E9E;
+
+  --color-border: #FFFFFF;
+  --color-card-bg: #2D2D2D;
+  --color-overlay: rgba(26, 26, 26, 0.95);
+
+  /* Neubrutalism specific - dark variant */
+  --nb-shadow: 4px 4px 0 #FFFFFF;
+  --nb-shadow-hover: 6px 6px 0 #FFFFFF;
+
+  --color-skeleton: rgba(255, 255, 255, 0.1);
+}
+
+/* CLASSIC THEME (old theme - activated via Konami Code) */
+:root.classic {
   --color-primary: #0f172a;
   --color-secondary: #1e293b;
   --color-accent: #38bdf8;
@@ -19,12 +69,18 @@
   --color-card-bg: rgba(30, 41, 59, 0.5);
   --color-overlay: rgba(15, 23, 42, 0.8);
 
-  /* Skeleton colors */
+  /* Classic mode - restore rounded corners and soft shadows */
+  --nb-border-width: 1px;
+  --nb-shadow-offset: 0px;
+  --nb-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --nb-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --nb-radius: 12px;
+
   --color-skeleton: rgba(51, 65, 85, 0.5);
 }
 
-/* Light theme */
-:root.light {
+/* Classic Light theme (old light mode) */
+:root.classic.light {
   --color-primary: #f8fafc;
   --color-secondary: #e2e8f0;
   --color-accent: #0284c7;
@@ -39,7 +95,6 @@
   --color-card-bg: rgba(226, 232, 240, 0.5);
   --color-overlay: rgba(248, 250, 252, 0.8);
 
-  /* Skeleton colors */
   --color-skeleton: rgba(203, 213, 225, 0.5);
 }
 

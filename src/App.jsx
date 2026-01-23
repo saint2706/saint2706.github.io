@@ -9,7 +9,6 @@ import Blog from './components/pages/Blog';
 import Contact from './components/pages/Contact';
 import Games from './components/pages/Games';
 import Chatbot from './components/shared/Chatbot';
-import RoastMode from './components/shared/RoastMode';
 import PageWrapper from './components/shared/PageWrapper';
 import ScrollToTop from './components/shared/ScrollToTop';
 import KonamiNotification from './components/shared/KonamiNotification';
@@ -50,9 +49,8 @@ function App() {
       <Layout>
         <AnimatedRoutes />
 
-        {/* Floating Interactions */}
+        {/* Floating Interactions - Combined FAB */}
         <Chatbot />
-        <RoastMode />
         <ScrollToTop />
 
         {/* Konami Code Easter Egg */}

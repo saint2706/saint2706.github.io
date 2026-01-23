@@ -1,10 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Code2, Database } from 'lucide-react';
+import { ArrowRight, Bot, Code2, Database, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
-import FloatingIcon from './FloatingIcon';
 
 const Hero = () => {
   const canonicalUrl = resumeData.basics.website;
@@ -29,69 +28,81 @@ const Hero = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
       </Helmet>
-      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-4xl mx-auto">
-        {/* Mobile-friendly animated gradient background */}
-        <motion.div
-          className="absolute inset-0 -z-10 sm:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-fun-pink/10 animate-pulse" />
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-fun-pink/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-        </motion.div>
 
+      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12">
+        {/* Neubrutalism Decorative Shapes */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          {/* Yellow block - top left */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-[3px] border-[color:var(--color-border)]"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          />
+          {/* Red block - bottom left */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-[3px] border-[color:var(--color-border)]"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          />
+          {/* Blue block - top right */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-[3px] border-[color:var(--color-border)]"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          />
+        </div>
+
+        {/* Status Badge - Neubrutalism style */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="mb-6 relative inline-block"
+          className="mb-8"
         >
-          <span className="absolute -inset-1 bg-gradient-to-r from-accent to-fun-pink rounded-full blur opacity-25 animate-pulse"></span>
-          <div className="relative bg-secondary/50 backdrop-blur border border-slate-700 rounded-full px-4 py-1 text-sm font-mono text-accent">
+          <div
+            className="inline-flex items-center gap-2 bg-fun-yellow text-black font-heading font-semibold px-5 py-2 border-[3px] border-[color:var(--color-border)]"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          >
+            <Sparkles size={18} className="text-black" />
             Available for hire & collaborations
           </div>
         </motion.div>
 
+        {/* Main Heading - Bold Neubrutalism Typography */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
           <span className="block text-primary mb-2">Data Storyteller</span>
-          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent via-fun-pink to-fun-yellow">
+          <span
+            className="block text-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)] inline-block bg-primary"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          >
             & Creative Analyst
           </span>
         </motion.h1>
 
+        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed"
+          className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
-          Turning <strong className="text-primary mx-1">messy data</strong> into
-          <strong className="text-primary mx-1">clear strategies</strong> and
-          <strong className="text-primary mx-1">AI/ML solutions</strong> into <strong className="text-primary mx-1">real-world impact.</strong>
-          Big Data Analytics at GIM.
+          Turning <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">messy data</strong> into
+          <strong className="text-primary font-bold border-b-[3px] border-accent mx-1">clear strategies</strong> and
+          <strong className="text-primary font-bold border-b-[3px] border-fun-pink mx-1">AI/ML solutions</strong> into real-world impact.
         </motion.p>
 
+        {/* CTA Buttons - Neubrutalism style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,14 +111,20 @@ const Hero = () => {
         >
           <Link
             to="/projects"
-            className="group relative px-8 py-3 bg-accent text-primary font-bold rounded-lg hover:bg-white transition-all duration-300 flex items-center gap-2"
+            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
           >
             View Projects
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <button
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-            className="px-8 py-3 border border-secondary text-primary rounded-lg hover:bg-secondary/50 transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-4 bg-card text-primary font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
             aria-label="Open chat with Digital Rishabh"
           >
             <Bot size={18} className="text-fun-pink" aria-hidden="true" />
@@ -115,12 +132,31 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Floating Icons Animation - Desktop only */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden hidden sm:block">
-          <FloatingIcon icon={<Database size={30} />} delay={0} x="10%" y="20%" />
-          <FloatingIcon icon={<Code2 size={30} />} delay={2} x="85%" y="15%" />
-          <FloatingIcon icon={<Bot size={30} />} delay={4} x="15%" y="80%" />
-        </div>
+        {/* Code Snippet Card - Neubrutalism style */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-16 w-full max-w-md"
+        >
+          <div
+            className="bg-fun-yellow text-black p-6 border-[3px] border-[color:var(--color-border)] text-left font-mono text-sm"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+          >
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
+              <Code2 size={16} />
+              <span className="font-heading font-bold">developer.js</span>
+            </div>
+            <pre className="whitespace-pre-wrap">
+              {`const developer = {
+  name: 'Rishabh Agrawal',
+  stack: ['React', 'Node.js', 'Python'],
+  currentStatus: 'Building awesome things.',
+  openToWork: true
+};`}
+            </pre>
+          </div>
+        </motion.div>
       </div>
     </>
   );

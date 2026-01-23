@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion } from 'lucide-react';
+import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion, BookOpen } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
@@ -17,10 +17,8 @@ const Blog = () => {
   const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
 
-  // Extract unique sources for filter
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
 
-  // Helper function to format date as dd/mm/yyyy
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     const day = date.getDate().toString().padStart(2, '0');
@@ -37,10 +35,9 @@ const Blog = () => {
           blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesSource && matchesSearch;
       })
-      .sort((a, b) => new Date(b.date) - new Date(a.date)); // Sort newest first
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
   }, [filter, searchTerm]);
 
-  // Reset to page 1 and show loading when filters change
   useEffect(() => {
     setCurrentPage(1);
     setIsLoading(true);
@@ -58,9 +55,7 @@ const Blog = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
@@ -69,17 +64,20 @@ const Blog = () => {
     show: { opacity: 1, y: 0 }
   };
 
-  // Source color helper
-  const getSourceStyles = (source) => {
+  // Neubrutalism source colors
+  const getSourceColor = (source) => {
     switch (source) {
-      case 'Dev.to':
-        return 'border-indigo-500 text-indigo-400 bg-indigo-500/10';
-      case 'Medium':
-        return 'border-yellow-500 text-yellow-400 bg-yellow-500/10';
-      case 'Substack':
-        return 'border-orange-500 text-orange-400 bg-orange-500/10';
-      default:
-        return 'border-slate-500 text-slate-400 bg-slate-500/10';
+      case 'Dev.to': return 'bg-accent';
+      case 'Medium': return 'bg-fun-yellow';
+      case 'Substack': return 'bg-fun-pink';
+      default: return 'bg-secondary';
+    }
+  };
+
+  const getSourceTextColor = (source) => {
+    switch (source) {
+      case 'Medium': return 'text-black';
+      default: return 'text-white';
     }
   };
 
@@ -101,23 +99,28 @@ const Blog = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
       </Helmet>
+
       <div className="max-w-6xl mx-auto py-12 px-4">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="text-4xl font-bold mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fun-pink">
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
+            <span
+              className="inline-block bg-fun-pink text-white px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
+            >
               Written Thoughts
             </span>
           </h1>
-          <p className="text-secondary max-w-2xl mx-auto">
+          <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             Musings on code, life, and everything in between. Synced from Dev.to, Medium, and Substack.
           </p>
         </motion.div>
 
-        {/* Filters and Search */}
+        {/* Filters and Search - Neubrutalism Style */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,19 +137,20 @@ const Blog = () => {
                 key={source}
                 onClick={() => setFilter(source)}
                 aria-pressed={filter === source}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-secondary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent
+                className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer
                   ${filter === source
-                    ? 'bg-accent text-primary font-bold shadow-[0_0_10px_rgba(56,189,248,0.5)]'
-                    : 'bg-secondary/50 text-secondary hover:text-primary hover:bg-secondary'
+                    ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
+                style={{ boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
               >
                 {source}
               </button>
             ))}
           </div>
 
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted" size={18} aria-hidden="true" />
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted" size={18} aria-hidden="true" />
             <label htmlFor="blog-search" className="sr-only">Search blogs</label>
             <input
               id="blog-search"
@@ -156,15 +160,16 @@ const Blog = () => {
               value={searchTerm}
               maxLength={100}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-secondary border border-slate-700 dark:border-slate-600 rounded-full py-2 pl-10 pr-10 text-primary placeholder:text-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/50 transition-colors"
+              className="w-full bg-card border-[3px] border-[color:var(--color-border)] py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted hover:text-accent transition-colors p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1"
                 aria-label="Clear search"
               >
-                <X size={14} />
+                <X size={16} />
               </button>
             )}
           </div>
@@ -175,15 +180,15 @@ const Blog = () => {
           {isLoading ? 'Loading articles...' : `${filteredBlogs.length} articles found`}
         </div>
 
+        {/* Blog Cards Grid */}
         <motion.div
-          key={currentPage} // Re-animate on page change
+          key={currentPage}
           variants={container}
           initial="hidden"
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           aria-busy={isLoading}
         >
-          {/* Skeleton loaders during filtering */}
           {isLoading ? (
             <>
               {[...Array(6)].map((_, idx) => (
@@ -191,79 +196,89 @@ const Blog = () => {
               ))}
             </>
           ) : paginatedBlogs.map((blog, idx) => (
-            <motion.div
+            <motion.article
               key={`${blog.title}-${idx}`}
               variants={item}
-              whileHover={{ y: -5 }}
-              className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden hover:border-accent/50 transition-colors group flex flex-col h-full"
+              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              style={{ boxShadow: 'var(--nb-shadow)' }}
             >
-              {/* Header / Cover */}
-              {blog.coverImage ? (
-                <img
-                  src={blog.coverImage}
-                  alt={`Cover image for article: ${blog.title}`}
-                  loading="lazy"
-                  className="h-40 w-full object-cover"
-                />
-              ) : (
-                <div className="h-2 bg-gradient-to-r from-accent to-fun-pink opacity-50 group-hover:opacity-100 transition-opacity" />
-              )}
+              {/* Color accent bar based on source */}
+              <div className={`h-3 ${getSourceColor(blog.source)}`} />
 
               <div className="p-6 flex-grow flex flex-col">
-                <div className="flex justify-between items-start mb-3">
-                  <span className={`text-xs px-2 py-1 rounded border font-mono ${getSourceStyles(blog.source)}`}>
+                {/* Source and Date */}
+                <div className="flex justify-between items-start mb-4">
+                  <span
+                    className={`text-xs font-heading font-bold px-3 py-1 border-2 border-[color:var(--color-border)] ${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}
+                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  >
                     {blog.source}
                   </span>
-                  <span className="text-muted text-xs flex items-center gap-1">
+                  <span className="text-muted text-xs font-mono flex items-center gap-1 bg-secondary px-2 py-1 border-2 border-[color:var(--color-border)]">
                     <Calendar size={12} />
                     {formatDate(blog.date)}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                  {blog.title}
-                </h3>
+                {/* Title */}
+                <div className="flex items-start gap-2 mb-3">
+                  <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
+                  <h3 className="text-lg font-heading font-bold text-primary line-clamp-2">
+                    {blog.title}
+                  </h3>
+                </div>
 
-                <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow">
+                {/* Summary */}
+                <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow font-sans">
                   {blog.summary}
                 </p>
 
+                {/* Tags */}
                 {blog.tags && blog.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {blog.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="text-xs px-2 py-1 rounded bg-secondary text-secondary">
+                      <span
+                        key={tag}
+                        className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+                      >
                         #{tag}
                       </span>
                     ))}
                   </div>
                 )}
 
+                {/* Read Link */}
                 <div className="mt-auto">
                   <a
                     href={blog.link}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-accent hover:text-white transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
-                    Read on {blog.source} <ExternalLink size={16} aria-hidden="true" />
+                    Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
 
+          {/* Empty State */}
           {!isLoading && filteredBlogs.length === 0 && (
             <div
               className="col-span-full flex flex-col items-center justify-center py-20 text-center"
               role="status"
               aria-live="polite"
             >
-              <div className="bg-secondary/50 p-4 rounded-full mb-4">
+              <div
+                className="bg-secondary p-6 border-[3px] border-[color:var(--color-border)] mb-6"
+                style={{ boxShadow: 'var(--nb-shadow)' }}
+              >
                 <FileQuestion size={48} className="text-muted" aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-bold text-primary mb-2">No articles found</h3>
-              <p className="text-secondary mb-6 max-w-md">
+              <h3 className="text-xl font-heading font-bold text-primary mb-2">No articles found</h3>
+              <p className="text-secondary mb-6 max-w-md font-sans">
                 We couldn&apos;t find any posts
                 {searchTerm && <> matching &quot;{searchTerm}&quot;</>}
                 {filter !== 'All' && <span> in <strong>{filter}</strong></span>}.
@@ -273,7 +288,8 @@ const Blog = () => {
                   setSearchTerm('');
                   setFilter('All');
                 }}
-                className="px-6 py-2 bg-accent text-primary font-bold rounded-xl hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="px-6 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5"
+                style={{ boxShadow: 'var(--nb-shadow)' }}
               >
                 Clear all filters
               </button>
@@ -281,13 +297,13 @@ const Blog = () => {
           )}
         </motion.div>
 
-        {/* Pagination */}
+        {/* Pagination - Neubrutalism Style */}
         {totalPages > 1 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="flex justify-center items-center gap-4 mt-12"
+            className="flex justify-center items-center gap-3 mt-12"
             role="navigation"
             aria-label="Pagination"
           >
@@ -295,9 +311,10 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label="Go to previous page"
-              className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
-              <ChevronLeft size={18} /> Previous
+              <ChevronLeft size={18} /> Prev
             </button>
 
             <div className="flex items-center gap-2">
@@ -307,11 +324,12 @@ const Blog = () => {
                   onClick={() => setCurrentPage(page)}
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
-                  className={`w-10 h-10 rounded-lg font-medium transition-all duration-300
+                  className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform
                     ${page === currentPage
-                      ? 'bg-accent text-primary'
-                      : 'bg-secondary/50 text-secondary hover:text-accent border border-secondary hover:border-accent/50'
+                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                      : 'bg-card text-primary hover:-translate-y-0.5'
                     }`}
+                  style={{ boxShadow: page === currentPage ? 'var(--nb-shadow-hover)' : '2px 2px 0 var(--color-border)' }}
                 >
                   {page}
                 </button>
@@ -322,7 +340,8 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               aria-label="Go to next page"
-              className="flex items-center gap-1 px-4 py-2 bg-secondary/50 border border-secondary rounded-lg text-secondary hover:text-accent hover:border-accent/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               Next <ChevronRight size={18} />
             </button>
@@ -331,7 +350,7 @@ const Blog = () => {
 
         {/* Results info */}
         {filteredBlogs.length > 0 && (
-          <p className="text-center text-muted text-sm mt-6">
+          <p className="text-center text-muted text-sm mt-6 font-mono">
             Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-{Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length} posts
           </p>
         )}
