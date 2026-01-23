@@ -30,6 +30,26 @@ const Contact = () => {
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:site" content={resumeData.basics.name} />
                 <meta name="twitter:creator" content={resumeData.basics.name} />
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": resumeData.basics.website
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Contact",
+                                "item": canonicalUrl
+                            }
+                        ]
+                    })}
+                </script>
             </Helmet>
 
             <div className="max-w-5xl mx-auto py-12 px-4">
@@ -111,7 +131,7 @@ const Contact = () => {
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <h3
-                                className="inline-block font-heading text-lg font-bold text-black bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6 text-white"
+                                className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6 text-white"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                             >
                                 Follow Me

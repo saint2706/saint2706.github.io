@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Code2, Database, Sparkles } from 'lucide-react';
+import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
@@ -27,6 +27,34 @@ const Hero = () => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": resumeData.basics.name,
+            "url": resumeData.basics.website,
+            "sameAs": [
+              "https://github.com/saint2706",
+              "https://www.linkedin.com/in/rishabh-agrawal-1807321b9"
+            ],
+            "jobTitle": resumeData.basics.title,
+            "description": description,
+            "image": `${resumeData.basics.website}/og-image.png`
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": `${resumeData.basics.name} Portfolio`,
+            "url": resumeData.basics.website,
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": `${resumeData.basics.website}/blog?q={search_term_string}`,
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12">

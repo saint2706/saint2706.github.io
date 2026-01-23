@@ -31,7 +31,7 @@ const CustomCursor = () => {
     // Detect hover target and update cursor style
     const updateCursorVariant = useCallback((e) => {
         const target = e.target;
-        const computedStyle = window.getComputedStyle(target);
+
 
         // Check for interactive elements
         const isClickable = target.matches('a, button, [role="button"], input, textarea, select, [onclick]') ||
@@ -41,8 +41,7 @@ const CustomCursor = () => {
         const isImage = target.matches('img, [class*="image"], [class*="avatar"]');
 
         // Get background color to determine cursor color
-        let bgColor = computedStyle.backgroundColor;
-        const parentBg = target.closest('[class*="bg-"]');
+
 
         if (isClickable) {
             setCursorVariant('pointer');

@@ -27,6 +27,26 @@ const Games = () => {
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:url" content={canonicalUrl} />
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": resumeData.basics.website
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Games",
+                                "item": canonicalUrl
+                            }
+                        ]
+                    })}
+                </script>
             </Helmet>
 
             <div className="max-w-4xl mx-auto py-12 px-4">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bot, X, Send, Command, Flame, RefreshCw, MessageCircle } from 'lucide-react';
+import { Bot, X, Send, Flame, RefreshCw, MessageCircle } from 'lucide-react';
 import { chatWithGemini, roastResume } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
@@ -381,7 +381,7 @@ const Chatbot = () => {
                 </div>
               ) : roast ? (
                 <p className="text-black font-sans text-base italic leading-relaxed">
-                  "{roast}"
+                  &quot;{roast}&quot;
                 </p>
               ) : null}
             </div>

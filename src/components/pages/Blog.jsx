@@ -87,6 +87,23 @@ const Blog = () => {
         <title>{title}</title>
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": resumeData.basics.website
+            }, {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": canonicalUrl
+            }]
+          })}
+        </script>
         <meta name="author" content={resumeData.basics.name} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />

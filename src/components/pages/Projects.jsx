@@ -52,6 +52,23 @@ const Projects = () => {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": resumeData.basics.website
+            }, {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Projects",
+              "item": canonicalUrl
+            }]
+          })}
+        </script>
       </Helmet>
       <div className="max-w-6xl mx-auto py-12 px-4">
         <motion.div

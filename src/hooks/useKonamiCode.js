@@ -52,7 +52,7 @@ const useKonamiCode = () => {
             // Cleanup on unmount
             document.documentElement.classList.remove('classic');
         };
-    }, []);
+    }, [isActivated]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
