@@ -11,8 +11,6 @@ import Games from './components/pages/Games';
 import Chatbot from './components/shared/Chatbot';
 import PageWrapper from './components/shared/PageWrapper';
 import ScrollToTop from './components/shared/ScrollToTop';
-import KonamiNotification from './components/shared/KonamiNotification';
-import useKonamiCode from './hooks/useKonamiCode';
 
 const ScrollToTopHelper = () => {
   const { pathname } = useLocation();
@@ -41,8 +39,6 @@ const AnimatedRoutes = () => {
 };
 
 function App() {
-  const [isRetroMode, resetRetroMode] = useKonamiCode();
-
   return (
     <Router>
       <ScrollToTopHelper />
@@ -52,9 +48,6 @@ function App() {
         {/* Floating Interactions - Combined FAB */}
         <Chatbot />
         <ScrollToTop />
-
-        {/* Konami Code Easter Egg */}
-        <KonamiNotification isActive={isRetroMode} onClose={resetRetroMode} />
       </Layout>
     </Router>
   );
