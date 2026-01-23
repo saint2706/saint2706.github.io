@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 /**
  * Page wrapper component for consistent page transitions
@@ -30,12 +30,15 @@ const pageVariants = {
 };
 
 const PageWrapper = ({ children }) => {
+    const shouldReduceMotion = useReducedMotion();
+
     return (
         <motion.div
             variants={pageVariants}
-            initial="initial"
+            initial={shouldReduceMotion ? false : 'initial'}
             animate="animate"
-            exit="exit"
+            exit={shouldReduceMotion ? undefined : 'exit'}
+            transition={shouldReduceMotion ? { duration: 0 } : undefined}
             style={{ minHeight: '100vh' }}
         >
             {children}

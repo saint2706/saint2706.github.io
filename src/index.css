@@ -7,9 +7,9 @@
   /* NEUBRUTALISM THEME (default) */
   --color-primary: #FAFAFA;
   --color-secondary: #F5F5F5;
-  --color-accent: #2196F3;
-  --color-fun-pink: #FF5252;
-  --color-fun-yellow: #FFEB3B;
+  --color-accent: #0052CC;
+  --color-fun-pink: #9C0E4B;
+  --color-fun-yellow: #FFD54F;
 
   --color-text-primary: #000000;
   --color-text-secondary: #333333;
@@ -34,9 +34,9 @@
 :root.dark {
   --color-primary: #1A1A1A;
   --color-secondary: #2D2D2D;
-  --color-accent: #00E5FF;
-  --color-fun-pink: #FF4081;
-  --color-fun-yellow: #FFEA00;
+  --color-accent: #0066E0;
+  --color-fun-pink: #9C0E4B;
+  --color-fun-yellow: #FFD54F;
 
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #E0E0E0;

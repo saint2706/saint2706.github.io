@@ -158,6 +158,19 @@ const TicTacToe = () => {
         }
     }, [isPlayerTurn, gameStatus, board, getAIMove]);
 
+    // Allow Escape to restart when a dialog is open
+    useEffect(() => {
+        if (gameStatus === 'playing') return;
+        const handler = (event) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                resetGame();
+            }
+        };
+        document.addEventListener('keydown', handler);
+        return () => document.removeEventListener('keydown', handler);
+    }, [gameStatus]);
+
     const resetGame = () => {
         setBoard(Array(9).fill(null));
         setIsPlayerTurn(true);
@@ -303,6 +316,7 @@ const TicTacToe = () => {
                             role="dialog"
                             aria-modal="true"
                             aria-labelledby="game-result"
+                            aria-describedby="game-result-desc"
                         >
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -341,6 +355,7 @@ const TicTacToe = () => {
                                     </div>
                                 )}
                             </motion.div>
+                            <p id="game-result-desc" className="sr-only">Game over dialog. Press Tab to stay inside and Escape to reset.</p>
                             <motion.button
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}

@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
 
 const Layout = ({ children }) => {
+  const [cursorEnabled, setCursorEnabled] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('custom_cursor_enabled');
+    setCursorEnabled(stored !== 'false');
+  }, []);
+
+  const toggleCursor = () => {
+    const next = !cursorEnabled;
+    setCursorEnabled(next);
+    document.dispatchEvent(new CustomEvent('customCursorToggle', { detail: { enabled: next } }));
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative">
       {/* Custom interactive cursor */}
@@ -30,6 +43,16 @@ const Layout = ({ children }) => {
       >
         Skip to main content
       </a>
+
+      {/* Cursor preference toggle for accessibility */}
+      <button
+        type="button"
+        onClick={toggleCursor}
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-secondary focus:text-primary focus:px-4 focus:py-2 focus:border-2 focus:border-[color:var(--color-border)] focus:z-[100] focus:font-heading focus:font-bold"
+        aria-pressed={cursorEnabled}
+      >
+        {cursorEnabled ? 'Disable custom cursor' : 'Enable custom cursor'}
+      </button>
 
       <Navbar />
 

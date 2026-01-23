@@ -1,11 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = resumeData.basics.website;
   const description = 'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
@@ -62,25 +63,25 @@ const Hero = () => {
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           {/* Yellow block - top left */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
             className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-[3px] border-[color:var(--color-border)]"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
           {/* Red block - bottom left */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
             className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-[3px] border-[color:var(--color-border)]"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
           {/* Blue block - top right */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
             className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-[3px] border-[color:var(--color-border)]"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
@@ -88,9 +89,9 @@ const Hero = () => {
 
         {/* Status Badge - Neubrutalism style */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           className="mb-8"
         >
           <div
@@ -104,9 +105,9 @@ const Hero = () => {
 
         {/* Main Heading - Bold Neubrutalism Typography */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
           <span className="block text-primary mb-2">Data Storyteller</span>
@@ -120,9 +121,9 @@ const Hero = () => {
 
         {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
           Turning <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">messy data</strong> into
@@ -132,9 +133,9 @@ const Hero = () => {
 
         {/* CTA Buttons - Neubrutalism style */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
           className="flex flex-col md:flex-row gap-4 justify-center"
         >
           <Link
@@ -162,9 +163,9 @@ const Hero = () => {
 
         {/* Code Snippet Card - Neubrutalism style */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
           className="mt-16 w-full max-w-md"
         >
           <div

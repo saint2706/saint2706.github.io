@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Bot, X, Send, Flame, RefreshCw, MessageCircle } from 'lucide-react';
 import { chatWithGemini, roastResume } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
@@ -41,8 +41,13 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fabRef = useRef(null);
+  const chatDialogRef = useRef(null);
+  const roastDialogRef = useRef(null);
+  const roastCloseRef = useRef(null);
+  const lastFocusedRef = useRef(null);
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
+  const prefersReducedMotion = useReducedMotion();
 
   // Load chat history
   useEffect(() => {
@@ -82,7 +87,10 @@ const Chatbot = () => {
     if (isChatOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [isChatOpen]);
+    if (isRoastOpen && roastCloseRef.current) {
+      setTimeout(() => roastCloseRef.current?.focus(), 100);
+    }
+  }, [isChatOpen, isRoastOpen]);
 
   // Close FAB when clicking outside
   useEffect(() => {
@@ -162,12 +170,14 @@ const Chatbot = () => {
   };
 
   const openChat = () => {
+    lastFocusedRef.current = document.activeElement;
     setIsChatOpen(true);
     setIsRoastOpen(false);
     setIsFabOpen(false);
   };
 
   const openRoast = () => {
+    lastFocusedRef.current = document.activeElement;
     setIsRoastOpen(true);
     setIsChatOpen(false);
     setIsFabOpen(false);
@@ -175,6 +185,59 @@ const Chatbot = () => {
   };
 
   const anyDialogOpen = isChatOpen || isRoastOpen;
+
+  // Manage background inertness and focus return
+  useEffect(() => {
+    const main = document.getElementById('main-content');
+    if (anyDialogOpen) {
+      if (!lastFocusedRef.current) {
+        lastFocusedRef.current = document.activeElement;
+      }
+      if (main) main.setAttribute('aria-hidden', 'true');
+    } else {
+      if (main) main.removeAttribute('aria-hidden');
+      lastFocusedRef.current?.focus?.();
+      lastFocusedRef.current = null;
+    }
+  }, [anyDialogOpen]);
+
+  // Focus trap and Escape handling for dialogs
+  useEffect(() => {
+    const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    const handleKeyDown = (event) => {
+      if (!anyDialogOpen) return;
+      const container = isChatOpen ? chatDialogRef.current : roastDialogRef.current;
+      if (!container) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsChatOpen(false);
+        setIsRoastOpen(false);
+        setIsFabOpen(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const focusable = container.querySelectorAll(focusSelectors);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey) {
+        if (document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [anyDialogOpen, isChatOpen]);
 
   return (
     <>
@@ -184,6 +247,12 @@ const Chatbot = () => {
         className={`fixed bottom-6 right-6 z-40 ${anyDialogOpen ? 'hidden' : 'block'}`}
         onMouseEnter={() => setIsFabOpen(true)}
         onMouseLeave={() => setIsFabOpen(false)}
+        onFocusCapture={() => setIsFabOpen(true)}
+        onBlurCapture={(e) => {
+          if (!fabRef.current?.contains(e.relatedTarget)) {
+            setIsFabOpen(false);
+          }
+        }}
       >
         <div className="relative flex flex-col-reverse items-end gap-3">
           {/* Main FAB Button */}
@@ -191,7 +260,9 @@ const Chatbot = () => {
             className="p-4 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-label="Open chat options"
+            aria-haspopup="menu"
             aria-expanded={isFabOpen}
+            onClick={() => setIsFabOpen(prev => !prev)}
           >
             <MessageCircle size={28} />
           </button>
@@ -239,15 +310,17 @@ const Chatbot = () => {
       <AnimatePresence>
         {isChatOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.9 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.9 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-[3px] border-[color:var(--color-border)] flex flex-col overflow-hidden"
             style={{ boxShadow: 'var(--nb-shadow-hover)' }}
             id={dialogId}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
+            aria-describedby="chatbot-helper"
+            ref={chatDialogRef}
           >
             {/* Header */}
             <div className="bg-accent p-4 flex justify-between items-center border-b-[3px] border-[color:var(--color-border)]">
@@ -282,6 +355,8 @@ const Chatbot = () => {
                 </button>
               </div>
             </div>
+
+            <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
 
             {/* Messages Area */}
             <div
@@ -346,14 +421,16 @@ const Chatbot = () => {
       <AnimatePresence>
         {isRoastOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.9 }}
+            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 100, scale: 0.9 }}
+            exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-[3px] border-[color:var(--color-border)] overflow-hidden"
             style={{ boxShadow: 'var(--nb-shadow-hover)' }}
             role="dialog"
             aria-modal="true"
             aria-labelledby="roast-title"
+            aria-describedby="roast-helper"
+            ref={roastDialogRef}
           >
             {/* Header */}
             <div className="p-4 flex justify-between items-center border-b-[3px] border-[color:var(--color-border)] bg-fun-pink">
@@ -364,6 +441,7 @@ const Chatbot = () => {
                 <h3 className="font-heading font-bold text-white" id="roast-title">Resume Roasted 🔥</h3>
               </div>
               <button
+                ref={roastCloseRef}
                 onClick={() => setIsRoastOpen(false)}
                 className="p-1 text-white hover:bg-white/20 transition-colors"
                 aria-label="Close roast"
@@ -385,6 +463,8 @@ const Chatbot = () => {
                 </p>
               ) : null}
             </div>
+
+            <p id="roast-helper" className="sr-only">Resume roast dialog. Press Escape to close. Focus remains inside until closed.</p>
 
             {/* Actions */}
             <div className="p-4 bg-secondary border-t-[3px] border-[color:var(--color-border)] flex gap-2">

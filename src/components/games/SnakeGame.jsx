@@ -318,14 +318,17 @@ const SnakeGame = () => {
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
                             aria-modal="true"
+                            aria-labelledby="snake-start-title"
+                            aria-describedby="snake-start-desc"
                         >
                             <div
+                                id="snake-start-title"
                                 className="text-xl font-heading font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)]"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                             >
                                 Snake Game
                             </div>
-                            <div className="text-sm text-secondary text-center px-4 font-sans">
+                            <div id="snake-start-desc" className="text-sm text-secondary text-center px-4 font-sans">
                                 Use arrow keys or swipe to control<br />
                                 <span className="text-muted">Space to pause</span>
                             </div>
@@ -351,9 +354,11 @@ const SnakeGame = () => {
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
                             aria-modal="true"
+                            aria-labelledby="snake-pause-title"
                         >
                             <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
                             <div
+                                id="snake-pause-title"
                                 className="text-xl font-heading font-bold text-white bg-accent px-4 py-2 border-[3px] border-[color:var(--color-border)]"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                             >
@@ -381,6 +386,8 @@ const SnakeGame = () => {
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
                             aria-modal="true"
+                            aria-labelledby="snake-gameover-title"
+                            aria-describedby="snake-gameover-desc"
                         >
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -389,12 +396,13 @@ const SnakeGame = () => {
                                 className="text-center"
                             >
                                 <div
+                                    id="snake-gameover-title"
                                     className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
                                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                 >
                                     Game Over!
                                 </div>
-                                <div className="text-lg text-secondary font-sans">
+                                <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
                                     Score: <span className="font-heading font-bold text-accent">{score}</span>
                                 </div>
                                 {score >= highScore && score > 0 && (

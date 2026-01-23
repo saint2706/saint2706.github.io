@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
@@ -8,6 +8,7 @@ import SnakeGame from '../games/SnakeGame';
 
 const Games = () => {
     const [activeGame, setActiveGame] = useState('tictactoe');
+    const shouldReduceMotion = useReducedMotion();
     const canonicalUrl = `${resumeData.basics.website}/games`;
     const description = 'A secret games easter egg! Play Tic Tac Toe against AI or challenge yourself with Snake.';
     const title = `Games | ${resumeData.basics.name}`;
@@ -52,15 +53,15 @@ const Games = () => {
             <div className="max-w-4xl mx-auto py-12 px-4">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-12 text-center"
                 >
                     {/* Easter Egg Badge */}
                     <motion.div
-                        initial={{ scale: 0 }}
+                        initial={shouldReduceMotion ? undefined : { scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ type: 'spring', bounce: 0.5, delay: 0.1 }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }}
                         className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-[3px] border-[color:var(--color-border)]"
                         style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
@@ -82,10 +83,10 @@ const Games = () => {
                 </motion.div>
 
                 {/* Game Selector Tabs - Neubrutalism Style */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+                    <motion.div
+                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                     className="flex justify-center mb-8"
                 >
                     <div
@@ -117,9 +118,9 @@ const Games = () => {
 
                 {/* Game Container */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
                     className="flex justify-center"
                 >
                     <div
@@ -146,9 +147,9 @@ const Games = () => {
 
                 {/* Footer hint */}
                 <motion.div
-                    initial={{ opacity: 0 }}
+                    initial={shouldReduceMotion ? undefined : { opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
                     className="flex justify-center mt-12"
                 >
                     <div

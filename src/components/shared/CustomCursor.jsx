@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useSpring, useMotionValue } from 'framer-motion';
+import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
 
 /**
  * Interactive custom cursor with spotlight effect.
@@ -8,10 +8,14 @@ import { motion, useSpring, useMotionValue } from 'framer-motion';
  * - Creates a spotlight that reveals hidden text
  * - Only shows on devices with pointer (no touch)
  */
+const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
+
 const CustomCursor = () => {
+    const prefersReducedMotion = useReducedMotion();
     const [isVisible, setIsVisible] = useState(false);
     const [cursorVariant, setCursorVariant] = useState('default');
     const [cursorColor, setCursorColor] = useState('rgba(56, 189, 248, 0.5)'); // accent color
+    const [isEnabled, setIsEnabled] = useState(false);
     const cursorRef = useRef(null);
 
     // Mouse position with spring physics for smooth following
@@ -61,17 +65,34 @@ const CustomCursor = () => {
         }
     }, []);
 
+    // Load preference and respect motion preference / coarse pointers
     useEffect(() => {
-        // Only show custom cursor on devices with fine pointer (mouse)
         const hasPointer = window.matchMedia('(pointer: fine)').matches;
-        if (!hasPointer) return;
+        const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
+        const shouldEnable = hasPointer && !prefersReducedMotion && stored !== 'false';
+        setIsEnabled(shouldEnable);
+    }, [prefersReducedMotion]);
+
+    // Manage document class so we only hide the native cursor when enabled
+    useEffect(() => {
+        const root = document.documentElement;
+        if (isEnabled) {
+            root.classList.add('custom-cursor-enabled');
+        } else {
+            root.classList.remove('custom-cursor-enabled');
+        }
+        return () => root.classList.remove('custom-cursor-enabled');
+    }, [isEnabled]);
+
+    // Only attach listeners when enabled
+    useEffect(() => {
+        if (!isEnabled) return;
 
         setIsVisible(true);
 
         window.addEventListener('mousemove', moveCursor);
         window.addEventListener('mouseover', updateCursorVariant);
 
-        // Hide cursor when leaving window
         const handleMouseLeave = () => setIsVisible(false);
         const handleMouseEnter = () => setIsVisible(true);
 
@@ -84,10 +105,26 @@ const CustomCursor = () => {
             document.removeEventListener('mouseleave', handleMouseLeave);
             document.removeEventListener('mouseenter', handleMouseEnter);
         };
-    }, [moveCursor, updateCursorVariant]);
+    }, [isEnabled, moveCursor, updateCursorVariant]);
 
-    // Don't render on touch devices
-    if (!isVisible) return null;
+    const handleToggle = useCallback((next) => {
+        const value = typeof next === 'boolean' ? next : !isEnabled;
+        setIsEnabled(value);
+        localStorage.setItem(CURSOR_STORAGE_KEY, value ? 'true' : 'false');
+    }, [isEnabled]);
+
+    // Allow external toggle (e.g., from a settings button)
+    useEffect(() => {
+        const handler = (event) => {
+            const requested = event.detail?.enabled;
+            handleToggle(typeof requested === 'boolean' ? requested : !isEnabled);
+        };
+        document.addEventListener('customCursorToggle', handler);
+        return () => document.removeEventListener('customCursorToggle', handler);
+    }, [handleToggle, isEnabled]);
+
+    // Don't render when disabled or on touch/reduced-motion
+    if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
     const variants = {
         default: {
@@ -126,12 +163,12 @@ const CustomCursor = () => {
 
     return (
         <>
-            {/* Hide default cursor globally */}
-            <style>{`
-        * {
-          cursor: none !important;
-        }
-      `}</style>
+                        {/* Hide default cursor only when enabled */}
+                        <style>{`
+                .custom-cursor-enabled * {
+                    cursor: none !important;
+                }
+            `}</style>
 
             {/* Main cursor dot */}
             <motion.div

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   Terminal,
   User,
@@ -16,7 +16,11 @@ import { useTheme } from '../shared/ThemeContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [lastFocus, setLastFocus] = useState(null);
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
   const { theme, toggleTheme, isDark } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
 
   // Close chatbot when mobile menu opens
   useEffect(() => {
@@ -24,6 +28,45 @@ const Navbar = () => {
       document.dispatchEvent(new CustomEvent('closeChatbot'));
     }
   }, [isMenuOpen]);
+
+  // Trap focus inside mobile menu when open
+  const trapFocus = useCallback((event) => {
+    if (!isMenuOpen || !menuRef.current) return;
+    const focusable = menuRef.current.querySelectorAll('a, button');
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.key === 'Tab') {
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setIsMenuOpen(false);
+      menuButtonRef.current?.focus();
+    }
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      setLastFocus(document.activeElement);
+      const main = document.getElementById('main-content');
+      if (main) main.setAttribute('aria-hidden', 'true');
+      document.addEventListener('keydown', trapFocus);
+      setTimeout(() => menuRef.current?.querySelector('a, button')?.focus(), 0);
+    } else {
+      const main = document.getElementById('main-content');
+      if (main) main.removeAttribute('aria-hidden');
+      document.removeEventListener('keydown', trapFocus);
+      lastFocus?.focus?.();
+    }
+    return () => document.removeEventListener('keydown', trapFocus);
+  }, [isMenuOpen, trapFocus, lastFocus]);
 
   // Listen for close event from chatbot
   useEffect(() => {
@@ -44,7 +87,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
+      initial={shouldReduceMotion ? undefined : { y: -100 }}
       animate={{ y: 0 }}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
@@ -110,6 +153,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             type="button"
+            ref={menuButtonRef}
             className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -131,6 +175,7 @@ const Navbar = () => {
               transition={{ duration: 0.15 }}
               className="absolute right-4 top-full mt-3 w-64 bg-card border-[3px] border-[color:var(--color-border)] md:hidden"
               style={{ boxShadow: 'var(--nb-shadow)' }}
+              ref={menuRef}
             >
               <div className="flex flex-col">
                 {navItems.map((item, index) => (
