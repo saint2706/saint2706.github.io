@@ -1,23 +1,30 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import * as d3 from 'd3';
 import { useTheme } from '../shared/ThemeContext';
+import { resumeData } from '../../data/resume';
 
 /**
  * SkillRadar - Interactive D3.js radar chart for skills visualization
  * Only renders in dark mode for the analytics dashboard aesthetic
+ * Uses actual skills from resumeData
  */
-const SkillRadar = ({ skills }) => {
+const SkillRadar = () => {
     const { isDark } = useTheme();
     const svgRef = useRef(null);
 
-    const defaultSkills = useMemo(() => skills || [
-        { name: 'React', value: 90 },
-        { name: 'Python', value: 85 },
-        { name: 'Data Analysis', value: 88 },
-        { name: 'SQL', value: 80 },
-        { name: 'Machine Learning', value: 75 },
-        { name: 'TypeScript', value: 82 },
-    ], [skills]);
+    // Get top skills from resume data (pick highest proficiency from each category)
+    const radarSkills = useMemo(() => {
+        const topSkills = [];
+        resumeData.skills.forEach(category => {
+            // Get top 2 skills from each category
+            const sorted = [...category.items].sort((a, b) => b.proficiency - a.proficiency);
+            sorted.slice(0, 2).forEach(skill => {
+                topSkills.push({ name: skill.name, value: skill.proficiency });
+            });
+        });
+        // Return top 8 skills for a balanced radar
+        return topSkills.slice(0, 8);
+    }, []);
 
     useEffect(() => {
         if (!svgRef.current || !isDark) return;
@@ -36,7 +43,7 @@ const SkillRadar = ({ skills }) => {
             .append('g')
             .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-        const angleSlice = (Math.PI * 2) / defaultSkills.length;
+        const angleSlice = (Math.PI * 2) / radarSkills.length;
 
         // Scale for the radius
         const rScale = d3.scaleLinear()
@@ -54,7 +61,7 @@ const SkillRadar = ({ skills }) => {
         }
 
         // Draw the axis lines
-        defaultSkills.forEach((skill, i) => {
+        radarSkills.forEach((skill, i) => {
             const angle = angleSlice * i - Math.PI / 2;
             svg.append('line')
                 .attr('x1', 0)
@@ -72,7 +79,7 @@ const SkillRadar = ({ skills }) => {
                 .attr('text-anchor', 'middle')
                 .attr('dominant-baseline', 'middle')
                 .style('fill', 'rgba(255, 255, 255, 0.7)')
-                .style('font-size', '11px')
+                .style('font-size', '10px')
                 .style('font-family', 'Space Grotesk, sans-serif')
                 .text(skill.name);
         });
@@ -103,7 +110,7 @@ const SkillRadar = ({ skills }) => {
             .attr('stop-opacity', 0.6);
 
         svg.append('path')
-            .datum(defaultSkills)
+            .datum(radarSkills)
             .attr('d', radarLine)
             .style('fill', 'url(#radarGradient)')
             .style('stroke', '#8b5cf6')
@@ -114,7 +121,7 @@ const SkillRadar = ({ skills }) => {
             .style('opacity', 1);
 
         // Draw data points
-        defaultSkills.forEach((skill, i) => {
+        radarSkills.forEach((skill, i) => {
             const angle = angleSlice * i - Math.PI / 2;
             const x = rScale(skill.value) * Math.cos(angle);
             const y = rScale(skill.value) * Math.sin(angle);
@@ -143,7 +150,7 @@ const SkillRadar = ({ skills }) => {
                 });
         });
 
-    }, [isDark, defaultSkills]);
+    }, [isDark, radarSkills]);
 
     // Only render in dark mode
     if (!isDark) return null;
@@ -162,4 +169,3 @@ const SkillRadar = ({ skills }) => {
 };
 
 export default SkillRadar;
-

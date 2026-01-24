@@ -1,25 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Star, GitFork, Eye, TrendingUp } from 'lucide-react';
+import { Star, GitFork, Eye, TrendingUp, Loader2 } from 'lucide-react';
 import { useTheme } from '../shared/ThemeContext';
+import { resumeData } from '../../data/resume';
+
+const GITHUB_USERNAME = 'saint2706';
 
 /**
- * ProjectMetrics - Animated counters for project stats
- * Only renders in dark mode for the analytics dashboard aesthetic
+ * ProjectMetrics - Animated counters for real project stats
+ * Fetches live data from GitHub API and uses resumeData
  */
-const ProjectMetrics = ({ metrics }) => {
+const ProjectMetrics = () => {
     const { isDark } = useTheme();
     const shouldReduceMotion = useReducedMotion();
+    const [metrics, setMetrics] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchMetrics = async () => {
+            try {
+                // Fetch repos to get real stats
+                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                const repos = await reposRes.json();
+
+                const totalStars = repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);
+                const totalForks = repos.reduce((acc, repo) => acc + (repo.forks_count || 0), 0);
+                const totalWatchers = repos.reduce((acc, repo) => acc + (repo.watchers_count || 0), 0);
+
+                // Calculate growth (repos created this year)
+                const thisYear = new Date().getFullYear();
+                const reposThisYear = repos.filter(repo => {
+                    const createdYear = new Date(repo.created_at).getFullYear();
+                    return createdYear === thisYear;
+                }).length;
+
+                setMetrics([
+                    { label: 'Total Stars', value: totalStars, icon: Star, color: 'text-fun-yellow' },
+                    { label: 'Total Forks', value: totalForks, icon: GitFork, color: 'text-accent' },
+                    { label: 'Watchers', value: totalWatchers, icon: Eye, color: 'text-fun-pink' },
+                    { label: 'New Repos', value: reposThisYear, suffix: ` in ${thisYear}`, icon: TrendingUp, color: 'text-green-400' },
+                ]);
+            } catch (error) {
+                console.error('Failed to fetch project metrics:', error);
+                // Use data from resumeData projects as fallback
+                const totalStars = resumeData.projects.reduce((acc, p) => acc + (p.stars || 0), 0);
+                setMetrics([
+                    { label: 'Project Stars', value: totalStars, icon: Star, color: 'text-fun-yellow' },
+                    { label: 'Featured Projects', value: resumeData.projects.filter(p => p.featured).length, icon: GitFork, color: 'text-accent' },
+                    { label: 'Total Projects', value: resumeData.projects.length, icon: Eye, color: 'text-fun-pink' },
+                    { label: 'Certifications', value: resumeData.certifications.length, icon: TrendingUp, color: 'text-green-400' },
+                ]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (isDark) {
+            fetchMetrics();
+        }
+    }, [isDark]);
 
     // Only render in dark mode
     if (!isDark) return null;
 
-    const defaultMetrics = metrics || [
-        { label: 'Stars', value: 127, icon: Star, color: 'text-fun-yellow' },
-        { label: 'Forks', value: 34, icon: GitFork, color: 'text-accent' },
-        { label: 'Views', value: 2840, icon: Eye, color: 'text-fun-pink' },
-        { label: 'Growth', value: 23, suffix: '%', icon: TrendingUp, color: 'text-green-400' },
-    ];
+    if (loading) {
+        return (
+            <div className="glass-panel p-6 rounded-glass flex items-center justify-center gap-2 text-muted">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span className="text-sm">Loading metrics...</span>
+            </div>
+        );
+    }
 
     return (
         <div className="glass-panel p-6 rounded-glass">
@@ -29,7 +80,7 @@ const ProjectMetrics = ({ metrics }) => {
             </h3>
 
             <div className="grid grid-cols-2 gap-4">
-                {defaultMetrics.map((metric, index) => (
+                {metrics.map((metric, index) => (
                     <MetricCard
                         key={metric.label}
                         metric={metric}
@@ -51,7 +102,7 @@ const MetricCard = ({ metric, index, shouldReduceMotion }) => {
             return;
         }
 
-        const duration = 2000; // 2 seconds
+        const duration = 2000;
         const steps = 60;
         const increment = metric.value / steps;
         let current = 0;
