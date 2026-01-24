@@ -115,12 +115,15 @@ const Games = () => {
                                     <span>
                                         {game.label}
                                     </span>
-                                    {activeGame === game.id && (
-                                        <span className="inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary">
-                                            <Check className="h-3 w-3" aria-hidden="true" />
-                                            Selected
-                                        </span>
-                                    )}
+                                    <span
+                                        className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
+                                            activeGame === game.id ? 'opacity-100' : 'opacity-0'
+                                        }`}
+                                        aria-hidden={activeGame !== game.id}
+                                    >
+                                        <Check className="h-3 w-3" aria-hidden="true" />
+                                        Selected
+                                    </span>
                                 </span>
                             </button>
                         ))}
