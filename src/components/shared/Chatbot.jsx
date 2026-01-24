@@ -284,7 +284,7 @@ const Chatbot = () => {
         <div className="relative flex flex-col-reverse items-end gap-3">
           {/* Main FAB Button */}
           <button
-            className="p-4 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+            className="p-4 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-label="Open chat options"
             aria-haspopup="menu"
@@ -305,7 +305,7 @@ const Chatbot = () => {
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0 }}
                   onClick={openRoast}
-                  className="p-3 bg-fun-pink text-white border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none"
+                  className="p-3 bg-fun-pink text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-transparent dark:shadow-glow-pink"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
                   aria-label="Roast my resume"
                 >
@@ -320,7 +320,7 @@ const Chatbot = () => {
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0.05 }}
                   onClick={openChat}
-                  className="p-3 bg-accent text-white border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none"
+                  className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-transparent dark:shadow-glow-purple"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
                   aria-label="Chat with Digital Rishabh (Ctrl+K)"
                 >
@@ -340,7 +340,7 @@ const Chatbot = () => {
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-[3px] border-[color:var(--color-border)] flex flex-col overflow-hidden"
+            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-nb border-[color:var(--color-border)] flex flex-col overflow-hidden rounded-nb glass-panel dark:border-glass-border"
             style={{ boxShadow: 'var(--nb-shadow-hover)' }}
             id={dialogId}
             role="dialog"
@@ -350,10 +350,10 @@ const Chatbot = () => {
             ref={chatDialogRef}
           >
             {/* Header */}
-            <div className="bg-accent p-4 flex justify-between items-center border-b-[3px] border-[color:var(--color-border)]">
+            <div className="bg-accent p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] dark:border-glass-border">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white border-2 border-[color:var(--color-border)]">
-                  <Bot size={20} className="text-black" />
+                <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border">
+                  <Bot size={20} className="text-black dark:text-white" />
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-white" id={titleId}>Digital Rishabh</h3>
@@ -415,7 +415,7 @@ const Chatbot = () => {
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-[3px] border-[color:var(--color-border)]">
+            <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">
               <div className="flex gap-2">
                 <input
                   ref={inputRef}
@@ -427,12 +427,12 @@ const Chatbot = () => {
                   maxLength={500}
                   disabled={isTyping}
                   placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-                  className="flex-grow bg-card border-[3px] border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted"
+                  className="flex-grow bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isTyping}
-                  className="p-3 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
+                  className="p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   aria-label="Send message"
                 >
@@ -451,7 +451,7 @@ const Chatbot = () => {
             initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-[3px] border-[color:var(--color-border)] overflow-hidden"
+            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb dark:border-transparent dark:shadow-glow-pink"
             style={{ boxShadow: 'var(--nb-shadow-hover)' }}
             role="dialog"
             aria-modal="true"
@@ -460,9 +460,9 @@ const Chatbot = () => {
             ref={roastDialogRef}
           >
             {/* Header */}
-            <div className="p-4 flex justify-between items-center border-b-[3px] border-[color:var(--color-border)] bg-fun-pink">
+            <div className="p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] bg-fun-pink dark:border-transparent">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-white border-2 border-[color:var(--color-border)]">
+                <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-transparent">
                   <Flame size={20} className="text-fun-pink" />
                 </div>
                 <h3 className="font-heading font-bold text-white" id="roast-title">Resume Roasted 🔥</h3>
@@ -494,11 +494,11 @@ const Chatbot = () => {
             <p id="roast-helper" className="sr-only">Resume roast dialog. Press Escape to close. Focus remains inside until closed.</p>
 
             {/* Actions */}
-            <div className="p-4 bg-secondary border-t-[3px] border-[color:var(--color-border)] flex gap-2">
+            <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2 dark:border-glass-border">
               <button
                 onClick={handleRoast}
                 disabled={roastLoading}
-                className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none"
+                className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
@@ -506,7 +506,7 @@ const Chatbot = () => {
               </button>
               <button
                 onClick={() => setIsRoastOpen(false)}
-                className="py-3 px-6 bg-card text-primary font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+                className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 Close
