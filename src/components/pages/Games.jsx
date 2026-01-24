@@ -114,7 +114,6 @@ const Games = () => {
                                 <span className="flex items-center gap-2">
                                     <span>
                                         {game.label}
-                                        {activeGame === game.id && <span className="sr-only"> (selected)</span>}
                                     </span>
                                     {activeGame === game.id && (
                                         <span className="inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary">
