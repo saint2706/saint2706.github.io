@@ -337,7 +337,7 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label="Go to previous page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               <ChevronLeft size={18} /> Prev
@@ -366,7 +366,7 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               aria-label="Go to next page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               Next <ChevronRight size={18} />

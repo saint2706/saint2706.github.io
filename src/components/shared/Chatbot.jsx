@@ -400,12 +400,12 @@ const Chatbot = () => {
                   maxLength={500}
                   disabled={isTyping}
                   placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-                  className="flex-grow bg-card border-[3px] border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                  className="flex-grow bg-card border-[3px] border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isTyping}
-                  className="p-3 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
+                  className="p-3 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   aria-label="Send message"
                 >
@@ -471,7 +471,7 @@ const Chatbot = () => {
               <button
                 onClick={handleRoast}
                 disabled={roastLoading}
-                className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:opacity-50 flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none"
+                className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
