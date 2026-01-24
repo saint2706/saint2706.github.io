@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
+import { Check, Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import TicTacToe from '../games/TicTacToe';
@@ -111,7 +111,20 @@ const Games = () => {
                                 style={{ boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
                             >
                                 <game.icon size={18} aria-hidden="true" />
-                                <span>{game.label}</span>
+                                <span className="flex items-center gap-2">
+                                    <span>
+                                        {game.label}
+                                    </span>
+                                    <span
+                                        className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
+                                            activeGame === game.id ? 'opacity-100' : 'opacity-0'
+                                        }`}
+                                        aria-hidden={activeGame !== game.id}
+                                    >
+                                        <Check className="h-3 w-3" aria-hidden="true" />
+                                        Selected
+                                    </span>
+                                </span>
                             </button>
                         ))}
                     </div>
