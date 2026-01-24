@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Cpu, User } from 'lucide-react';
 
 const WINNING_COMBINATIONS = [
@@ -63,6 +63,7 @@ const getWinningLine = (board) => {
 };
 
 const TicTacToe = () => {
+    const shouldReduceMotion = useReducedMotion();
     const [board, setBoard] = useState(Array(9).fill(null));
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [difficulty, setDifficulty] = useState('medium');
@@ -222,7 +223,7 @@ const TicTacToe = () => {
                         key={diff.id}
                         onClick={() => changeDifficulty(diff.id)}
                         aria-pressed={difficulty === diff.id}
-                        className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform
+                        className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                             ${difficulty === diff.id
                                 ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} -translate-x-0.5 -translate-y-0.5`
                                 : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
@@ -266,8 +267,9 @@ const TicTacToe = () => {
                 <motion.div
                     className="grid grid-cols-3 gap-2 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
                     style={{ boxShadow: 'var(--nb-shadow)' }}
-                    initial={{ scale: 0.9, opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     role="grid"
                     aria-label="Tic Tac Toe game board"
                 >
@@ -277,7 +279,7 @@ const TicTacToe = () => {
                             onClick={() => handleCellClick(index)}
                             disabled={!!cell || !isPlayerTurn || gameStatus !== 'playing'}
                             aria-label={getCellLabel(index, cell)}
-                            className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl font-heading font-bold flex items-center justify-center transition-transform border-[3px] border-[color:var(--color-border)]
+                            className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl font-heading font-bold flex items-center justify-center transition-transform border-[3px] border-[color:var(--color-border)] motion-reduce:transform-none motion-reduce:transition-none
                                 ${winningLine?.includes(index)
                                     ? 'bg-fun-yellow'
                                     : 'bg-card'
@@ -285,14 +287,15 @@ const TicTacToe = () => {
                                 ${!cell && isPlayerTurn && gameStatus === 'playing' ? 'cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5' : 'cursor-default'}
                             `}
                             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                            whileTap={!cell && isPlayerTurn && gameStatus === 'playing' ? { scale: 0.95 } : {}}
+                            whileTap={!cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion ? { scale: 0.95 } : undefined}
                         >
                             <AnimatePresence mode="wait">
                                 {cell && (
                                     <motion.span
-                                        initial={{ scale: 0, rotate: -180 }}
+                                        initial={shouldReduceMotion ? false : { scale: 0, rotate: -180 }}
                                         animate={{ scale: 1, rotate: 0 }}
-                                        exit={{ scale: 0 }}
+                                        exit={shouldReduceMotion ? undefined : { scale: 0 }}
+                                        transition={shouldReduceMotion ? { duration: 0 } : undefined}
                                         className={cell === 'X' ? 'text-accent' : 'text-fun-pink'}
                                         aria-hidden="true"
                                     >
@@ -308,9 +311,10 @@ const TicTacToe = () => {
                 <AnimatePresence>
                     {gameStatus !== 'playing' && (
                         <motion.div
-                            initial={{ opacity: 0 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : undefined}
                             className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
@@ -319,9 +323,9 @@ const TicTacToe = () => {
                             aria-describedby="game-result-desc"
                         >
                             <motion.div
-                                initial={{ scale: 0 }}
+                                initial={shouldReduceMotion ? false : { scale: 0 }}
                                 animate={{ scale: 1 }}
-                                transition={{ type: 'spring', bounce: 0.5 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
                                 className="text-center"
                             >
                                 {gameStatus === 'won' && (
@@ -357,11 +361,11 @@ const TicTacToe = () => {
                             </motion.div>
                             <p id="game-result-desc" className="sr-only">Game over dialog. Press Tab to stay inside and Escape to reset.</p>
                             <motion.button
-                                initial={{ y: 20, opacity: 0 }}
+                                initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                                 onClick={resetGame}
-                                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                 autoFocus
                             >
@@ -377,8 +381,9 @@ const TicTacToe = () => {
             {gameStatus === 'playing' && (
                 <motion.div
                     key={isPlayerTurn ? 'player' : 'ai'}
-                    initial={{ opacity: 0, y: -10 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     className="px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-heading font-bold"
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
@@ -387,8 +392,8 @@ const TicTacToe = () => {
                     ) : (
                         <span className="text-fun-pink flex items-center gap-2">
                             <motion.span
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                                animate={shouldReduceMotion ? { rotate: 0 } : { rotate: 360 }}
+                                transition={{ duration: 1, repeat: shouldReduceMotion ? 0 : Infinity, ease: 'linear' }}
                             >
                                 <Cpu size={14} />
                             </motion.span>

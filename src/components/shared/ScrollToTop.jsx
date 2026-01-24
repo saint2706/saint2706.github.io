@@ -71,7 +71,7 @@ const ScrollToTop = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.8 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}

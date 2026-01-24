@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
@@ -7,6 +7,7 @@ import { ProjectSkeleton } from '../shared/SkeletonLoader';
 
 const Projects = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description = 'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
   const title = `Projects | ${resumeData.basics.name}`;
@@ -22,14 +23,19 @@ const Projects = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+        duration: shouldReduceMotion ? 0 : undefined
       }
     }
   };
 
   const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: shouldReduceMotion ? { duration: 0 } : undefined
+    }
   };
 
   // Color rotation for card accents
@@ -72,8 +78,9 @@ const Projects = () => {
       </Helmet>
       <div className="max-w-6xl mx-auto py-12 px-4">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
@@ -96,7 +103,7 @@ const Projects = () => {
 
         <motion.div
           variants={container}
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           aria-busy={isLoading}
@@ -112,9 +119,9 @@ const Projects = () => {
             <motion.article
               key={idx}
               variants={item}
-              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: 'var(--nb-shadow)' }}
-              whileHover={{ boxShadow: 'var(--nb-shadow-hover)' }}
+              whileHover={shouldReduceMotion ? undefined : { boxShadow: 'var(--nb-shadow-hover)' }}
             >
               {/* Color accent bar */}
               <div className={`h-3 ${cardColors[idx % cardColors.length]}`} />
@@ -176,7 +183,7 @@ const Projects = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
@@ -188,7 +195,7 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >

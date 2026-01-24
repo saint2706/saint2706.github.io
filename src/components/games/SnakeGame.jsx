@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Pause } from 'lucide-react';
 
 const GRID_SIZE = 20;
@@ -26,6 +26,7 @@ const getRandomFood = (snake) => {
 };
 
 const SnakeGame = () => {
+    const shouldReduceMotion = useReducedMotion();
     const [snake, setSnake] = useState(getInitialSnake());
     const [food, setFood] = useState({ x: 15, y: 10 });
     const [direction, setDirection] = useState({ x: 1, y: 0 });
@@ -269,8 +270,9 @@ const SnakeGame = () => {
                     <div className="text-xs text-muted font-heading">Score</div>
                     <motion.div
                         key={score}
-                        initial={{ scale: 1.2 }}
+                        initial={shouldReduceMotion ? false : { scale: 1.2 }}
                         animate={{ scale: 1 }}
+                        transition={shouldReduceMotion ? { duration: 0 } : undefined}
                         className="text-2xl font-heading font-bold text-accent"
                     >
                         {score}
@@ -293,8 +295,9 @@ const SnakeGame = () => {
                 onTouchEnd={handleTouchEnd}
             >
                 <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     className="p-3 bg-card border-[3px] border-[color:var(--color-border)]"
                     style={{ boxShadow: 'var(--nb-shadow)' }}
                 >
@@ -311,9 +314,10 @@ const SnakeGame = () => {
                 <AnimatePresence>
                     {gameState === 'idle' && (
                         <motion.div
-                            initial={{ opacity: 0 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : undefined}
                             className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
@@ -333,9 +337,9 @@ const SnakeGame = () => {
                                 <span className="text-muted">Space to pause</span>
                             </div>
                             <motion.button
-                                whileTap={{ scale: 0.95 }}
+                                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                                 onClick={startGame}
-                                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                 autoFocus
                             >
@@ -347,9 +351,10 @@ const SnakeGame = () => {
 
                     {gameState === 'paused' && (
                         <motion.div
-                            initial={{ opacity: 0 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : undefined}
                             className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
@@ -365,9 +370,9 @@ const SnakeGame = () => {
                                 Paused
                             </div>
                             <motion.button
-                                whileTap={{ scale: 0.95 }}
+                                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                                 onClick={togglePause}
-                                className="px-6 py-2 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                                className="px-6 py-2 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                 autoFocus
                             >
@@ -379,9 +384,10 @@ const SnakeGame = () => {
 
                     {gameState === 'gameOver' && (
                         <motion.div
-                            initial={{ opacity: 0 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
+                            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : undefined}
                             className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                             role="dialog"
@@ -390,9 +396,9 @@ const SnakeGame = () => {
                             aria-describedby="snake-gameover-desc"
                         >
                             <motion.div
-                                initial={{ scale: 0 }}
+                                initial={shouldReduceMotion ? false : { scale: 0 }}
                                 animate={{ scale: 1 }}
-                                transition={{ type: 'spring', bounce: 0.5 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
                                 className="text-center"
                             >
                                 <div
@@ -405,10 +411,11 @@ const SnakeGame = () => {
                                 <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
                                     Score: <span className="font-heading font-bold text-accent">{score}</span>
                                 </div>
-                                {score >= highScore && score > 0 && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
+                                    {score >= highScore && score > 0 && (
+                                        <motion.div
+                                        initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
+                                        transition={shouldReduceMotion ? { duration: 0 } : undefined}
                                         className="flex items-center justify-center gap-2 mt-2"
                                     >
                                         <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
@@ -421,12 +428,12 @@ const SnakeGame = () => {
                                 )}
                             </motion.div>
                             <motion.button
-                                initial={{ y: 20, opacity: 0 }}
+                                initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 }}
-                                whileTap={{ scale: 0.95 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+                                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                                 onClick={startGame}
-                                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5"
+                                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                 autoFocus
                             >
@@ -449,8 +456,9 @@ const SnakeGame = () => {
             {/* Pause button for mobile */}
             {gameState === 'playing' && (
                 <motion.button
-                    initial={{ opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     onClick={togglePause}
                     className="md:hidden px-4 py-2 bg-card border-[3px] border-[color:var(--color-border)] text-primary font-heading font-bold flex items-center gap-2 cursor-pointer"
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { roastResume } from '../../services/ai';
 import { Flame, RefreshCw, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const RoastMode = () => {
+  const shouldReduceMotion = useReducedMotion();
   const [roast, setRoast] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,12 +23,12 @@ const RoastMode = () => {
             if (roast) setRoast(null);
             else handleRoast();
           }}
-          className="p-4 bg-fun-pink text-white rounded-full shadow-lg hover:shadow-fun-pink/50 transition-all duration-300"
+          className="p-4 bg-fun-pink text-white rounded-full shadow-lg hover:shadow-fun-pink/50 transition-all duration-300 motion-reduce:transition-none"
           aria-label={loading ? "Roasting your resume..." : (roast ? "Close roast" : "Roast my resume")}
           aria-busy={loading}
         >
           {loading ? (
-            <RefreshCw size={28} className="animate-spin" />
+            <RefreshCw size={28} className="animate-spin motion-reduce:animate-none" />
           ) : (
             <Flame size={28} />
           )}
@@ -43,8 +44,9 @@ const RoastMode = () => {
         {/* Roast Popup */}
         {roast && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : undefined}
             className="absolute bottom-full left-0 mb-4 w-64 md:w-80 bg-white text-slate-900 p-4 rounded-xl shadow-2xl origin-bottom-left"
             role="status"
             aria-live="polite"
@@ -73,4 +75,3 @@ const RoastMode = () => {
 };
 
 export default RoastMode;
-

@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 /**
  * Animated skill progress bar component
@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
  */
 const SkillBar = ({ name, proficiency, delay = 0 }) => {
     const id = useId();
+    const shouldReduceMotion = useReducedMotion();
 
     return (
         <div className="mb-4">
@@ -28,12 +29,29 @@ const SkillBar = ({ name, proficiency, delay = 0 }) => {
             >
                 <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-accent to-fun-pink"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${proficiency}%` }}
-                    viewport={{ once: true, margin: "-50px" }}
+                    initial={
+                        shouldReduceMotion
+                            ? { width: `${proficiency}%` }
+                            : { width: 0 }
+                    }
+                    animate={
+                        shouldReduceMotion
+                            ? { width: `${proficiency}%` }
+                            : undefined
+                    }
+                    whileInView={
+                        shouldReduceMotion
+                            ? undefined
+                            : { width: `${proficiency}%` }
+                    }
+                    viewport={
+                        shouldReduceMotion
+                            ? undefined
+                            : { once: true, margin: "-50px" }
+                    }
                     transition={{
-                        duration: 0.8,
-                        delay: delay,
+                        duration: shouldReduceMotion ? 0 : 0.8,
+                        delay: shouldReduceMotion ? 0 : delay,
                         ease: "easeOut"
                     }}
                 />

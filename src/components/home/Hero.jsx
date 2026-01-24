@@ -63,7 +63,7 @@ const Hero = () => {
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           {/* Yellow block - top left */}
           <motion.div
-            initial={shouldReduceMotion ? undefined : { opacity: 0, x: -50 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
             className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-[3px] border-[color:var(--color-border)]"
@@ -71,7 +71,7 @@ const Hero = () => {
           />
           {/* Red block - bottom left */}
           <motion.div
-            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 50 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
             className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-[3px] border-[color:var(--color-border)]"
@@ -79,7 +79,7 @@ const Hero = () => {
           />
           {/* Blue block - top right */}
           <motion.div
-            initial={shouldReduceMotion ? undefined : { opacity: 0, x: 50 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
             className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-[3px] border-[color:var(--color-border)]"
@@ -89,7 +89,7 @@ const Hero = () => {
 
         {/* Status Badge - Neubrutalism style */}
         <motion.div
-          initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.9 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           className="mb-8"
@@ -105,7 +105,7 @@ const Hero = () => {
 
         {/* Main Heading - Bold Neubrutalism Typography */}
         <motion.h1
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
@@ -121,7 +121,7 @@ const Hero = () => {
 
         {/* Description */}
         <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
@@ -133,24 +133,24 @@ const Hero = () => {
 
         {/* CTA Buttons - Neubrutalism style */}
         <motion.div
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
           className="flex flex-col md:flex-row gap-4 justify-center"
         >
           <Link
             to="/projects"
-            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
             onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
           >
             View Projects
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none" />
           </Link>
           <button
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-            className="px-8 py-4 bg-card text-primary font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="px-8 py-4 bg-card text-primary font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
             onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
@@ -163,7 +163,7 @@ const Hero = () => {
 
         {/* Code Snippet Card - Neubrutalism style */}
         <motion.div
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
           className="mt-16 w-full max-w-md"

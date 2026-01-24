@@ -53,13 +53,14 @@ const Games = () => {
             <div className="max-w-4xl mx-auto py-12 px-4">
                 {/* Header */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: -20 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     className="mb-12 text-center"
                 >
                     {/* Easter Egg Badge */}
                     <motion.div
-                        initial={shouldReduceMotion ? undefined : { scale: 0 }}
+                        initial={shouldReduceMotion ? false : { scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }}
                         className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-[3px] border-[color:var(--color-border)]"
@@ -84,7 +85,7 @@ const Games = () => {
 
                 {/* Game Selector Tabs - Neubrutalism Style */}
                     <motion.div
-                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                     className="flex justify-center mb-8"
@@ -102,7 +103,7 @@ const Games = () => {
                                 aria-selected={activeGame === game.id}
                                 aria-controls={`${game.id}-panel`}
                                 id={`${game.id}-tab`}
-                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform
+                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                                     ${activeGame === game.id
                                         ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
                                         : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
@@ -118,7 +119,7 @@ const Games = () => {
 
                 {/* Game Container */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.95 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
                     className="flex justify-center"
@@ -130,10 +131,10 @@ const Games = () => {
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeGame}
-                                initial={{ opacity: 0, x: 20 }}
+                                initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.2 }}
+                                exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                                 role="tabpanel"
                                 id={`${activeGame}-panel`}
                                 aria-labelledby={`${activeGame}-tab`}
@@ -147,7 +148,7 @@ const Games = () => {
 
                 {/* Footer hint */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
                     className="flex justify-center mt-12"
