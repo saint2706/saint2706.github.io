@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Pause } from 'lucide-react';
+import { useTheme } from '../shared/ThemeContext';
 
 const GRID_SIZE = 20;
 const CELL_SIZE = 16;
@@ -27,6 +28,7 @@ const getRandomFood = (snake) => {
 
 const SnakeGame = () => {
     const shouldReduceMotion = useReducedMotion();
+    const { isDark } = useTheme();
     const [snake, setSnake] = useState(getInitialSnake());
     const [food, setFood] = useState({ x: 15, y: 10 });
     const [direction, setDirection] = useState({ x: 1, y: 0 });
@@ -169,13 +171,45 @@ const SnakeGame = () => {
         const ctx = canvas.getContext('2d');
         const width = GRID_SIZE * CELL_SIZE;
         const height = GRID_SIZE * CELL_SIZE;
+        const rootStyles = getComputedStyle(document.documentElement);
+        const primaryColor = rootStyles.getPropertyValue('--color-primary').trim() || '#F5F5F5';
+        const borderColor = rootStyles.getPropertyValue('--color-border').trim() || '#000000';
+        const accentColor = rootStyles.getPropertyValue('--color-accent').trim() || '#0052CC';
+        const funPinkColor = rootStyles.getPropertyValue('--color-fun-pink').trim() || '#9C0E4B';
+        const funYellowColor = rootStyles.getPropertyValue('--color-fun-yellow').trim() || '#FFEB3B';
+
+        const parseColor = (value, fallback) => {
+            if (!value) return fallback;
+            const trimmed = value.trim();
+            if (trimmed.startsWith('#')) {
+                const hex = trimmed.replace('#', '');
+                const normalized = hex.length === 3
+                    ? hex.split('').map((char) => char + char).join('')
+                    : hex;
+                if (normalized.length !== 6) return fallback;
+                const r = parseInt(normalized.slice(0, 2), 16);
+                const g = parseInt(normalized.slice(2, 4), 16);
+                const b = parseInt(normalized.slice(4, 6), 16);
+                return { r, g, b };
+            }
+            if (trimmed.startsWith('rgb')) {
+                const matches = trimmed.match(/\d+(\.\d+)?/g);
+                if (!matches || matches.length < 3) return fallback;
+                const [r, g, b] = matches.map(Number);
+                return { r, g, b };
+            }
+            return fallback;
+        };
+
+        const accentRgb = parseColor(accentColor, { r: 33, g: 150, b: 243 });
+        const funPinkRgb = parseColor(funPinkColor, { r: 255, g: 82, b: 82 });
 
         // Clear canvas - use CSS variable compatible color
-        ctx.fillStyle = '#F5F5F5';
+        ctx.fillStyle = isDark ? primaryColor : '#F5F5F5';
         ctx.fillRect(0, 0, width, height);
 
         // Draw grid lines
-        ctx.strokeStyle = '#000000';
+        ctx.strokeStyle = isDark ? borderColor : '#000000';
         ctx.lineWidth = 1;
         for (let i = 0; i <= GRID_SIZE; i++) {
             ctx.beginPath();
@@ -192,12 +226,12 @@ const SnakeGame = () => {
         snake.forEach((segment, index) => {
             // Gradient from accent to fun-pink
             const progress = index / snake.length;
-            const r = Math.round(33 + (255 - 33) * progress);
-            const g = Math.round(150 + (82 - 150) * progress);
-            const b = Math.round(243 + (82 - 243) * progress);
+            const r = Math.round(accentRgb.r + (funPinkRgb.r - accentRgb.r) * progress);
+            const g = Math.round(accentRgb.g + (funPinkRgb.g - accentRgb.g) * progress);
+            const b = Math.round(accentRgb.b + (funPinkRgb.b - accentRgb.b) * progress);
 
             ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-            ctx.strokeStyle = '#000000';
+            ctx.strokeStyle = borderColor;
             ctx.lineWidth = 2;
 
             // Sharp rectangles for Neubrutalism
@@ -216,8 +250,8 @@ const SnakeGame = () => {
         });
 
         // Draw food - Yellow square for Neubrutalism
-        ctx.fillStyle = '#FFEB3B';
-        ctx.strokeStyle = '#000000';
+        ctx.fillStyle = funYellowColor;
+        ctx.strokeStyle = borderColor;
         ctx.lineWidth = 2;
         ctx.fillRect(
             food.x * CELL_SIZE + 2,
@@ -232,7 +266,7 @@ const SnakeGame = () => {
             CELL_SIZE - 4
         );
 
-    }, [snake, food]);
+    }, [snake, food, isDark]);
 
     const startGame = () => {
         setSnake(getInitialSnake());
