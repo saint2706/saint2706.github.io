@@ -7,7 +7,7 @@ const GITHUB_USERNAME = 'saint2706';
 
 /**
  * ActivityHeatmap - GitHub-style contribution grid
- * Fetches real contribution data approximation from GitHub events API
+ * Shows actual commit activity: blank = 0 commits, filled = has commits
  */
 const ActivityHeatmap = () => {
     const { isDark } = useTheme();
@@ -16,18 +16,22 @@ const ActivityHeatmap = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchActivity = async () => {
+        const fetchCommitActivity = async () => {
             try {
-                // Fetch recent events to approximate activity
+                // Fetch push events (commits) from GitHub API
                 const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events?per_page=100`);
                 const events = await eventsRes.json();
 
-                // Create a map of activity by date
-                const activityMap = new Map();
+                // Filter for PushEvents and count commits per day
+                const commitMap = new Map();
 
                 events.forEach(event => {
-                    const date = new Date(event.created_at).toISOString().split('T')[0];
-                    activityMap.set(date, (activityMap.get(date) || 0) + 1);
+                    if (event.type === 'PushEvent') {
+                        const date = new Date(event.created_at).toISOString().split('T')[0];
+                        // Each PushEvent has payload.commits array with actual commits
+                        const commitCount = event.payload?.commits?.length || 1;
+                        commitMap.set(date, (commitMap.get(date) || 0) + commitCount);
+                    }
                 });
 
                 // Generate last 20 weeks of data
@@ -42,15 +46,15 @@ const ActivityHeatmap = () => {
                         const dateStr = date.toISOString().split('T')[0];
                         days.push({
                             date,
-                            count: activityMap.get(dateStr) || 0,
+                            count: commitMap.get(dateStr) || 0,
                         });
                     }
                 }
 
                 setActivityData(days);
             } catch (error) {
-                console.error('Failed to fetch activity:', error);
-                // Generate placeholder with some patterns
+                console.error('Failed to fetch commit activity:', error);
+                // Empty fallback
                 const today = new Date();
                 const weeks = 20;
                 const days = [];
@@ -59,12 +63,9 @@ const ActivityHeatmap = () => {
                     for (let d = 0; d < 7; d++) {
                         const date = new Date(today);
                         date.setDate(date.getDate() - (w * 7 + (6 - d)));
-                        // Create realistic-looking pattern (more activity on weekdays)
-                        const isWeekend = d === 0 || d === 6;
-                        const baseActivity = isWeekend ? 1 : 3;
                         days.push({
                             date,
-                            count: Math.floor(Math.random() * baseActivity),
+                            count: 0,
                         });
                     }
                 }
@@ -75,7 +76,7 @@ const ActivityHeatmap = () => {
         };
 
         if (isDark) {
-            fetchActivity();
+            fetchCommitActivity();
         }
     }, [isDark]);
 
@@ -86,23 +87,21 @@ const ActivityHeatmap = () => {
         return (
             <div className="glass-panel p-6 rounded-glass flex items-center justify-center gap-2 text-muted">
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="text-sm">Loading activity...</span>
+                <span className="text-sm">Loading commit activity...</span>
             </div>
         );
     }
 
+    // Binary coloring: blank for 0, filled for >0
     const getColor = (count) => {
-        if (count === 0) return 'bg-glass-bg';
-        if (count <= 1) return 'bg-accent/30';
-        if (count <= 2) return 'bg-accent/50';
-        if (count <= 4) return 'bg-accent/70';
-        return 'bg-accent';
+        return count === 0 ? 'bg-glass-bg' : 'bg-accent';
     };
 
     const formatDate = (date) => {
         return new Intl.DateTimeFormat('en-US', {
             month: 'short',
             day: 'numeric',
+            year: 'numeric',
         }).format(date);
     };
 
@@ -111,12 +110,16 @@ const ActivityHeatmap = () => {
         weeks.push(activityData.slice(i, i + 7));
     }
 
+    // Calculate total commits
+    const totalCommits = activityData.reduce((sum, day) => sum + day.count, 0);
+
     return (
         <div className="glass-panel p-6 rounded-glass">
-            <h3 className="text-lg font-heading font-bold text-primary mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-heading font-bold text-primary mb-2 flex items-center gap-2">
                 <span className="w-2 h-2 bg-fun-pink rounded-full animate-pulse" />
-                Activity Heatmap
+                Commit Activity
             </h3>
+            <p className="text-xs text-muted mb-4">{totalCommits} commits in the last 20 weeks</p>
 
             <div className="overflow-x-auto">
                 <div className="flex gap-1">
@@ -132,7 +135,7 @@ const ActivityHeatmap = () => {
                                         duration: 0.15,
                                     }}
                                     className={`w-3 h-3 rounded-sm ${getColor(day.count)} border border-glass-border transition-all hover:scale-150 hover:z-10 cursor-pointer`}
-                                    title={`${formatDate(day.date)}: ${day.count} contributions`}
+                                    title={`${formatDate(day.date)}: ${day.count} commit${day.count !== 1 ? 's' : ''}`}
                                 />
                             ))}
                         </div>
@@ -142,15 +145,10 @@ const ActivityHeatmap = () => {
 
             {/* Legend */}
             <div className="flex items-center gap-2 mt-4 text-xs text-muted">
-                <span>Less</span>
-                <div className="flex gap-1">
-                    <div className="w-3 h-3 rounded-sm bg-glass-bg border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/30 border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/50 border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/70 border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent border border-glass-border" />
-                </div>
-                <span>More</span>
+                <span>No commits</span>
+                <div className="w-3 h-3 rounded-sm bg-glass-bg border border-glass-border" />
+                <div className="w-3 h-3 rounded-sm bg-accent border border-glass-border" />
+                <span>Has commits</span>
             </div>
         </div>
     );
