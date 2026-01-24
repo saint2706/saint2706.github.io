@@ -16,7 +16,7 @@ const SkillBar = ({ name, proficiency, delay = 0 }) => {
         <div className="mb-4">
             <div className="flex justify-between items-center mb-1.5">
                 <span id={id} className="text-sm font-medium text-primary">{name}</span>
-                <span className="text-xs font-mono text-muted" aria-hidden="true">{proficiency}%</span>
+                <span className="text-sm md:text-xs font-sans text-secondary" aria-hidden="true">{proficiency}%</span>
             </div>
             <div
                 className="h-2 bg-slate-800 rounded-full overflow-hidden"

@@ -148,14 +148,14 @@ const Projects = () => {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
                       <span
-                        className="flex items-center gap-1 text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
+                        className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
                       >
                         <Star size={12} className="fill-black" />
                         {project.stars}
                       </span>
                     )}
                     {project.featured && (
-                      <span className="text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)]">
+                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)]">
                         Featured
                       </span>
                     )}
@@ -170,7 +170,7 @@ const Projects = () => {
                   {project.tags.map(tag => (
                     <span
                       key={tag}
-                      className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+                      className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
                     >
                       {tag}
                     </span>

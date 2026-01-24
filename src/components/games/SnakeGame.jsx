@@ -267,7 +267,7 @@ const SnakeGame = () => {
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
                 <div className="px-4">
-                    <div className="text-xs text-muted font-heading">Score</div>
+                    <div className="text-sm md:text-xs text-secondary font-heading">Score</div>
                     <motion.div
                         key={score}
                         initial={shouldReduceMotion ? false : { scale: 1.2 }}
@@ -282,7 +282,7 @@ const SnakeGame = () => {
                 <div className="flex items-center gap-2 px-4">
                     <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
                     <div>
-                        <div className="text-xs text-muted font-heading">Best</div>
+                        <div className="text-sm md:text-xs text-secondary font-heading">Best</div>
                         <div className="text-2xl font-heading font-bold text-fun-yellow">{highScore}</div>
                     </div>
                 </div>
@@ -447,7 +447,7 @@ const SnakeGame = () => {
 
             {/* Controls hint for mobile */}
             <div
-                className="text-xs text-muted text-center md:hidden px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-mono"
+                className="text-sm md:text-xs text-secondary text-center md:hidden px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-sans leading-relaxed"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
                 Swipe to change direction

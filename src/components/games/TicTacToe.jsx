@@ -243,19 +243,19 @@ const TicTacToe = () => {
                 <div className="flex items-center gap-2 px-3">
                     <User size={18} className="text-accent" />
                     <div>
-                        <div className="text-xs text-muted font-heading">You</div>
+                        <div className="text-sm md:text-xs text-secondary font-heading">You</div>
                         <div className="text-xl font-heading font-bold text-accent">{scores.player}</div>
                     </div>
                 </div>
                 <div className="w-[3px] bg-[color:var(--color-border)]" />
                 <div className="px-3">
-                    <div className="text-xs text-muted font-heading">Draws</div>
-                    <div className="text-xl font-heading font-bold text-muted">{scores.draws}</div>
+                    <div className="text-sm md:text-xs text-secondary font-heading">Draws</div>
+                    <div className="text-xl font-heading font-bold text-secondary">{scores.draws}</div>
                 </div>
                 <div className="w-[3px] bg-[color:var(--color-border)]" />
                 <div className="flex items-center gap-2 px-3">
                     <div>
-                        <div className="text-xs text-muted font-heading">AI</div>
+                        <div className="text-sm md:text-xs text-secondary font-heading">AI</div>
                         <div className="text-xl font-heading font-bold text-fun-pink">{scores.ai}</div>
                     </div>
                     <Cpu size={18} className="text-fun-pink" />
