@@ -1,10 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
 const Contact = () => {
+    const shouldReduceMotion = useReducedMotion();
     const socialLinks = [
         { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub', color: 'hover:bg-fun-yellow' },
         { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn', color: 'hover:bg-accent' },
@@ -55,8 +56,9 @@ const Contact = () => {
             <div className="max-w-5xl mx-auto py-12 px-4">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     className="mb-12 text-center"
                 >
                     <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
@@ -75,9 +77,9 @@ const Contact = () => {
                 <div className="grid md:grid-cols-2 gap-8">
                     {/* Contact Info */}
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                         className="space-y-6"
                     >
                         {/* Get in Touch Card */}
@@ -96,7 +98,7 @@ const Contact = () => {
                                 {/* Email */}
                                 <a
                                     href={`mailto:${resumeData.basics.email}`}
-                                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group"
+                                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
                                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                     aria-label={`Send email to ${resumeData.basics.email}`}
                                 >
@@ -143,7 +145,7 @@ const Contact = () => {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`p-4 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 ${social.color}`}
+                                        className={`p-4 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none ${social.color}`}
                                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                         aria-label={social.label}
                                     >
@@ -155,14 +157,14 @@ const Contact = () => {
 
                         {/* Availability Badge */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
+                            initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.4 }}
+                            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
                             className="bg-fun-yellow border-[3px] border-[color:var(--color-border)] p-4"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <div className="flex items-center gap-3">
-                                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse"></span>
+                                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none"></span>
                                 <span className="text-black font-heading font-bold">Available for freelance & collaborations</span>
                             </div>
                         </motion.div>
@@ -170,9 +172,9 @@ const Contact = () => {
 
                     {/* CTA Section */}
                     <motion.div
-                        initial={{ opacity: 0, x: 20 }}
+                        initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
+                        transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
                         className="flex flex-col justify-center"
                     >
                         <div
@@ -197,7 +199,7 @@ const Contact = () => {
 
                             <a
                                 href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                                 style={{ boxShadow: 'var(--nb-shadow)' }}
                             >
                                 <Send size={20} />

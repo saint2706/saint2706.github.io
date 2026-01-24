@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion, BookOpen } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
@@ -13,6 +13,7 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/blog`;
   const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
@@ -55,13 +56,20 @@ const Blog = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+        duration: shouldReduceMotion ? 0 : undefined
+      }
     }
   };
 
   const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: shouldReduceMotion ? { duration: 0 } : undefined
+    }
   };
 
   // Neubrutalism source colors
@@ -120,8 +128,9 @@ const Blog = () => {
       <div className="max-w-6xl mx-auto py-12 px-4">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
@@ -139,9 +148,9 @@ const Blog = () => {
 
         {/* Filters and Search - Neubrutalism Style */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4"
         >
           <div
@@ -154,7 +163,7 @@ const Blog = () => {
                 key={source}
                 onClick={() => setFilter(source)}
                 aria-pressed={filter === source}
-                className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer
+                className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer motion-reduce:transform-none motion-reduce:transition-none
                   ${filter === source
                     ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
                     : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
@@ -183,7 +192,7 @@ const Blog = () => {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1 motion-reduce:transition-none"
                 aria-label="Clear search"
               >
                 <X size={16} />
@@ -201,7 +210,7 @@ const Blog = () => {
         <motion.div
           key={currentPage}
           variants={container}
-          initial="hidden"
+          initial={shouldReduceMotion ? false : "hidden"}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           aria-busy={isLoading}
@@ -216,7 +225,7 @@ const Blog = () => {
             <motion.article
               key={`${blog.title}-${idx}`}
               variants={item}
-              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               {/* Color accent bar based on source */}
@@ -271,7 +280,7 @@ const Blog = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
-                    className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
                     Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
@@ -305,7 +314,7 @@ const Blog = () => {
                   setSearchTerm('');
                   setFilter('All');
                 }}
-                className="px-6 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5"
+                className="px-6 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
                 style={{ boxShadow: 'var(--nb-shadow)' }}
               >
                 Clear all filters
@@ -317,9 +326,9 @@ const Blog = () => {
         {/* Pagination - Neubrutalism Style */}
         {totalPages > 1 && (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
             className="flex justify-center items-center gap-3 mt-12"
             role="navigation"
             aria-label="Pagination"
@@ -328,7 +337,7 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label="Go to previous page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               <ChevronLeft size={18} /> Prev
@@ -341,7 +350,7 @@ const Blog = () => {
                   onClick={() => setCurrentPage(page)}
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
-                  className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform
+                  className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform motion-reduce:transform-none motion-reduce:transition-none
                     ${page === currentPage
                       ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
                       : 'bg-card text-primary hover:-translate-y-0.5'
@@ -357,7 +366,7 @@ const Blog = () => {
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               aria-label="Go to next page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               Next <ChevronRight size={18} />

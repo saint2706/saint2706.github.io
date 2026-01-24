@@ -1,15 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
 // Neubrutalism Section Component
-const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0 }) => (
+const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, shouldReduceMotion = false }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay }}
+    transition={shouldReduceMotion ? { duration: 0 } : { delay }}
     className="mb-12"
   >
     <div
@@ -28,7 +28,7 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0 }) 
 // Neubrutalism Timeline Card
 const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
   <div
-    className="bg-card border-[3px] border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+    className="bg-card border-[3px] border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
     style={{ boxShadow: 'var(--nb-shadow)' }}
   >
     {/* Color accent bar */}
@@ -108,6 +108,7 @@ const SkillBadge = ({ name, proficiency }) => {
 };
 
 const Resume = () => {
+  const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
@@ -151,8 +152,9 @@ const Resume = () => {
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-16 text-center"
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
@@ -174,6 +176,7 @@ const Resume = () => {
           icon={<Briefcase size={24} />}
           color="bg-fun-pink"
           delay={0.2}
+          shouldReduceMotion={shouldReduceMotion}
         >
           {resumeData.experience.map((job, i) => (
             <TimelineCard
@@ -194,6 +197,7 @@ const Resume = () => {
           icon={<GraduationCap size={24} />}
           color="bg-accent"
           delay={0.4}
+          shouldReduceMotion={shouldReduceMotion}
         >
           {resumeData.education.map((edu, i) => (
             <TimelineCard
@@ -209,9 +213,9 @@ const Resume = () => {
 
         {/* Skills & Certifications Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
           className="grid md:grid-cols-2 gap-6 mb-12"
         >
           {/* Technical Skills */}
@@ -282,9 +286,9 @@ const Resume = () => {
         {/* Languages Section */}
         {resumeData.basics.languages && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
           >
             <div
               className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
