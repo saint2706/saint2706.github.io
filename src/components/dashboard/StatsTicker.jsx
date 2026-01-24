@@ -4,10 +4,11 @@ import { GitCommit, GitPullRequest, Star, Users, Loader2 } from 'lucide-react';
 import { useTheme } from '../shared/ThemeContext';
 
 const GITHUB_USERNAME = 'saint2706';
+const GITHUB_PAT = import.meta.env.VITE_GITHUB_PAT;
 
 /**
  * StatsTicker - A scrolling banner of real GitHub stats for dark mode only
- * Fetches live data from GitHub API
+ * Fetches live data from GitHub API with PAT authentication
  */
 const StatsTicker = () => {
     const { isDark } = useTheme();
@@ -18,12 +19,16 @@ const StatsTicker = () => {
     useEffect(() => {
         const fetchGitHubStats = async () => {
             try {
+                const headers = GITHUB_PAT
+                    ? { 'Authorization': `Bearer ${GITHUB_PAT}` }
+                    : {};
+
                 // Fetch user data
-                const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+                const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers });
                 const userData = await userRes.json();
 
                 // Fetch repos to calculate total stars
-                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`, { headers });
                 const repos = await reposRes.json();
 
                 const totalStars = repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);

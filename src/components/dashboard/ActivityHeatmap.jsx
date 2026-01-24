@@ -153,9 +153,9 @@ const ActivityHeatmap = () => {
                 <span>Less</span>
                 <div className="flex gap-1">
                     <div className="w-3 h-3 rounded-sm bg-glass-bg border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/30 border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/50 border border-glass-border" />
-                    <div className="w-3 h-3 rounded-sm bg-accent/70 border border-glass-border" />
+                    <div className="w-3 h-3 rounded-sm bg-accent/300 border border-glass-border" />
+                    <div className="w-3 h-3 rounded-sm bg-accent/500 border border-glass-border" />
+                    <div className="w-3 h-3 rounded-sm bg-accent/700 border border-glass-border" />
                     <div className="w-3 h-3 rounded-sm bg-accent border border-glass-border" />
                 </div>
                 <span>More</span>

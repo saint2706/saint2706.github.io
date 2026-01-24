@@ -5,10 +5,11 @@ import { useTheme } from '../shared/ThemeContext';
 import { resumeData } from '../../data/resume';
 
 const GITHUB_USERNAME = 'saint2706';
+const GITHUB_PAT = import.meta.env.VITE_GITHUB_PAT;
 
 /**
  * ProjectMetrics - Animated counters for real project stats
- * Fetches live data from GitHub API and uses resumeData
+ * Fetches live data from GitHub API with PAT authentication
  */
 const ProjectMetrics = () => {
     const { isDark } = useTheme();
@@ -19,8 +20,12 @@ const ProjectMetrics = () => {
     useEffect(() => {
         const fetchMetrics = async () => {
             try {
+                const headers = GITHUB_PAT
+                    ? { 'Authorization': `Bearer ${GITHUB_PAT}` }
+                    : {};
+
                 // Fetch repos to get real stats
-                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`, { headers });
                 const repos = await reposRes.json();
 
                 const totalStars = repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);

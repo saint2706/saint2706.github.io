@@ -32,9 +32,9 @@ const SkillRadar = () => {
         // Clear previous chart
         d3.select(svgRef.current).selectAll('*').remove();
 
-        const width = 300;
-        const height = 300;
-        const margin = 40;
+        const width = 360;
+        const height = 360;
+        const margin = 70;
         const radius = Math.min(width, height) / 2 - margin;
 
         const svg = d3.select(svgRef.current)
