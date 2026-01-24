@@ -10,6 +10,13 @@ const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me 
 
 // Security: Custom renderer for links
 const LinkRenderer = ({ href, children, ...rest }) => {
+  // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
+  const isValidHref = href && /^(https?:\/\/|mailto:)/i.test(href);
+
+  if (!isValidHref) {
+    return <span {...rest}>{children}</span>;
+  }
+
   return (
     <a
       href={href}
