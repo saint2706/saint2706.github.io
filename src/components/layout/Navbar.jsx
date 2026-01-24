@@ -138,15 +138,17 @@ const Navbar = ({
           <button
             type="button"
             onClick={onToggleCursor}
-            className="group relative hidden md:flex items-center gap-2 px-3 py-2 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
+            className="group relative hidden md:flex p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-pressed={cursorEnabled}
+            aria-label={cursorToggleLabel}
             disabled={cursorToggleDisabled}
-            title={cursorToggleLabel}
           >
             <MousePointer2 size={18} aria-hidden="true" />
-            <span className="text-xs font-heading font-semibold">
-              Cursor: {cursorEnabled ? 'On' : 'Off'}
+
+            {/* Tooltip */}
+            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans">
+              {cursorEnabled ? 'Disable Custom Cursor' : 'Enable Custom Cursor'}
             </span>
           </button>
 
