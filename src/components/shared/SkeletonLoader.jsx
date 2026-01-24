@@ -11,7 +11,7 @@ const SkeletonBase = ({ className = '' }) => (
 
 // Blog card skeleton
 export const BlogSkeleton = () => (
-    <div className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-secondary/50 backdrop-blur border border-[color:var(--color-border)] rounded-xl overflow-hidden flex flex-col h-full">
         {/* Header bar */}
         <div className="h-2 bg-gradient-to-r from-slate-700/50 to-slate-600/50" />
 
@@ -48,7 +48,7 @@ export const BlogSkeleton = () => (
 
 // Project card skeleton
 export const ProjectSkeleton = () => (
-    <div className="bg-secondary/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-secondary/50 backdrop-blur border border-[color:var(--color-border)] rounded-xl overflow-hidden flex flex-col h-full">
         {/* Image placeholder */}
         <SkeletonBase className="h-40 w-full rounded-none" />
 
@@ -83,7 +83,7 @@ export const ProjectSkeleton = () => (
 // Chat message skeleton (typing indicator replacement)
 export const ChatSkeleton = () => (
     <div className="flex justify-start">
-        <div className="bg-slate-800 p-4 rounded-2xl rounded-bl-none border border-slate-700 max-w-[80%]">
+        <div className="bg-slate-800 p-4 rounded-2xl rounded-bl-none border border-[color:var(--color-border)] max-w-[80%]">
             <div className="flex items-center gap-2 mb-2">
                 <SkeletonBase className="h-3 w-3 rounded-full" />
                 <SkeletonBase className="h-3 w-20" />
