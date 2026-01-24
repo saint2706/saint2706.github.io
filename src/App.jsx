@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/layout/Layout';
 import Hero from './components/home/Hero';
-import Projects from './components/pages/Projects';
-import Resume from './components/pages/Resume';
-import Blog from './components/pages/Blog';
-import Contact from './components/pages/Contact';
-import Games from './components/pages/Games';
 import Chatbot from './components/shared/Chatbot';
 import PageWrapper from './components/shared/PageWrapper';
 import ScrollToTop from './components/shared/ScrollToTop';
+import PageLoading from './components/shared/PageLoading';
+
+// Lazy load page components to improve initial bundle size and load time
+const Projects = lazy(() => import('./components/pages/Projects'));
+const Resume = lazy(() => import('./components/pages/Resume'));
+const Blog = lazy(() => import('./components/pages/Blog'));
+const Contact = lazy(() => import('./components/pages/Contact'));
+const Games = lazy(() => import('./components/pages/Games'));
 
 const ScrollToTopHelper = () => {
   const { pathname } = useLocation();
@@ -26,14 +29,17 @@ const AnimatedRoutes = () => {
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
-        <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
-        <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
-        <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
-        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-        <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
-      </Routes>
+      {/* Suspense wrapper with fallback UI handles loading state for lazy routes */}
+      <Suspense fallback={<PageLoading />} key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
+          <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+          <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
+          <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
+          <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+          <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 };
