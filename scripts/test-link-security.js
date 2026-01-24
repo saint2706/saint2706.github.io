@@ -10,13 +10,13 @@ const tests = [
   { input: 'ftp://example.com', expected: false },
   { input: '/relative/path', expected: false },
   { input: '//protocol-relative', expected: false },
-  { input: 'https://', expected: true },
+  { input: 'https://', expected: false },
 ];
 
 const validate = (href) => {
   if (!href) return false;
   // This is the logic we will inject into the component
-  return /^(https?:\/\/|mailto:)/i.test(href);
+  return /^(https?:\/\/\S+|mailto:\S+)/i.test(href);
 };
 
 let failed = false;
