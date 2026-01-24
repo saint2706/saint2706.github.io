@@ -287,7 +287,7 @@ const TicTacToe = () => {
                                 ${!cell && isPlayerTurn && gameStatus === 'playing' ? 'cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5' : 'cursor-default'}
                             `}
                             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                            whileTap={!cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion ? { scale: 0.95 } : {}}
+                            whileTap={!cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion ? { scale: 0.95 } : undefined}
                         >
                             <AnimatePresence mode="wait">
                                 {cell && (
