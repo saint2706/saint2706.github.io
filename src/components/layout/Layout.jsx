@@ -19,25 +19,25 @@ const Layout = ({ children }) => {
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contrastMoreQuery = window.matchMedia('(prefers-contrast: more)');
-    const contrastHighQuery = window.matchMedia('(prefers-contrast: high)');
+    const forcedColorsQuery = window.matchMedia('(forced-colors: active)');
     const pointerFineQuery = window.matchMedia('(pointer: fine)');
 
     const updatePreferences = () => {
       setPrefersReducedMotion(reducedMotionQuery.matches);
-      setPrefersContrast(contrastMoreQuery.matches || contrastHighQuery.matches);
+      setPrefersContrast(contrastMoreQuery.matches || forcedColorsQuery.matches);
       setHasFinePointer(pointerFineQuery.matches);
     };
 
     updatePreferences();
     reducedMotionQuery.addEventListener('change', updatePreferences);
     contrastMoreQuery.addEventListener('change', updatePreferences);
-    contrastHighQuery.addEventListener('change', updatePreferences);
+    forcedColorsQuery.addEventListener('change', updatePreferences);
     pointerFineQuery.addEventListener('change', updatePreferences);
 
     return () => {
       reducedMotionQuery.removeEventListener('change', updatePreferences);
       contrastMoreQuery.removeEventListener('change', updatePreferences);
-      contrastHighQuery.removeEventListener('change', updatePreferences);
+      forcedColorsQuery.removeEventListener('change', updatePreferences);
       pointerFineQuery.removeEventListener('change', updatePreferences);
     };
   }, []);
