@@ -18,7 +18,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-12 mt-20 border-t-[3px] border-[color:var(--color-border)] bg-primary">
+    <footer className="py-12 mt-20 border-t-nb border-[color:var(--color-border)] bg-primary dark:border-glass-border">
       <div className="max-w-4xl mx-auto px-4">
         {/* Social Links */}
         <div className="flex justify-center gap-4 mb-8">
@@ -28,7 +28,7 @@ const Footer = () => {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`p-3 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none ${link.hoverColor}`}
+              className={`p-3 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple ${link.hoverColor}`}
               style={{ boxShadow: 'var(--nb-shadow)' }}
               aria-label={link.label}
             >
@@ -40,10 +40,10 @@ const Footer = () => {
         {/* Made with love - Centered */}
         <div className="flex justify-center">
           <div
-            className="bg-fun-yellow border-[3px] border-[color:var(--color-border)] px-6 py-3"
+            className="bg-fun-yellow border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb dark:bg-accent dark:border-transparent dark:shadow-glow-purple"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
-            <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2">
+            <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2 dark:text-white">
               Made with <Coffee size={16} className="text-black" aria-hidden="true" />
               <span className="sr-only">coffee</span>
               + <Heart size={16} className="text-fun-pink" aria-hidden="true" />

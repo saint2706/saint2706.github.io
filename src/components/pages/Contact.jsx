@@ -63,7 +63,7 @@ const Contact = () => {
                 >
                     <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
                         <span
-                            className="inline-block bg-accent text-white px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+                            className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb dark:border-transparent dark:shadow-glow-purple"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             Let&apos;s Connect
@@ -84,11 +84,11 @@ const Contact = () => {
                     >
                         {/* Get in Touch Card */}
                         <div
-                            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+                            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb glass-panel dark:border-glass-border"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <h2
-                                className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6"
+                                className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                             >
                                 Get in Touch
@@ -129,11 +129,11 @@ const Contact = () => {
 
                         {/* Follow Me */}
                         <div
-                            className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+                            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb glass-panel dark:border-glass-border"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <h3
-                                className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-6 text-white"
+                                className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb dark:border-transparent dark:shadow-glow-pink"
                                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                             >
                                 Follow Me
@@ -145,7 +145,7 @@ const Contact = () => {
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className={`p-4 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none ${social.color}`}
+                                        className={`p-4 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple ${social.color}`}
                                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                                         aria-label={social.label}
                                     >
@@ -160,12 +160,12 @@ const Contact = () => {
                             initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
-                            className="bg-fun-yellow border-[3px] border-[color:var(--color-border)] p-4"
+                            className="bg-fun-yellow border-nb border-[color:var(--color-border)] p-4 rounded-nb dark:bg-accent dark:border-transparent dark:shadow-glow-purple"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             <div className="flex items-center gap-3">
-                                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none"></span>
-                                <span className="text-black font-heading font-bold">Available for freelance & collaborations</span>
+                                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none rounded-nb dark:border-transparent"></span>
+                                <span className="text-black font-heading font-bold dark:text-white">Available for freelance & collaborations</span>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -178,12 +178,12 @@ const Contact = () => {
                         className="flex flex-col justify-center"
                     >
                         <div
-                            className="bg-card border-[3px] border-[color:var(--color-border)] p-8 text-center"
+                            className="bg-card border-nb border-[color:var(--color-border)] p-8 text-center rounded-nb glass-panel dark:border-glass-border"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             {/* Icon */}
                             <div
-                                className="w-24 h-24 mx-auto mb-6 bg-accent border-[3px] border-[color:var(--color-border)] flex items-center justify-center"
+                                className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb dark:border-transparent dark:shadow-glow-purple"
                                 style={{ boxShadow: 'var(--nb-shadow)' }}
                             >
                                 <Mail size={40} className="text-white" />
@@ -199,7 +199,7 @@ const Contact = () => {
 
                             <a
                                 href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+                                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
                                 style={{ boxShadow: 'var(--nb-shadow)' }}
                             >
                                 <Send size={20} />

@@ -99,7 +99,7 @@ const Navbar = ({
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
-        className="relative max-w-4xl mx-auto bg-card border-[3px] border-[color:var(--color-border)] px-6 py-3 flex justify-between items-center"
+        className="relative max-w-4xl mx-auto bg-card border-nb border-[color:var(--color-border)] px-6 py-3 flex justify-between items-center rounded-nb glass-panel dark:border-glass-border"
         style={{ boxShadow: 'var(--nb-shadow)' }}
       >
         <NavLink
@@ -118,10 +118,10 @@ const Navbar = ({
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2
+                `flex items-center gap-2 px-4 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
                 ${isActive
-                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
-                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'
+                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)] dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple'
+                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary dark:hover:bg-glass-bg dark:hover:border-glass-border'
                 }`
               }
               style={({ isActive }) => isActive ? { boxShadow: '2px 2px 0 var(--color-border)' } : {}}
@@ -138,8 +138,8 @@ const Navbar = ({
           <button
             type="button"
             onClick={onToggleCursor}
-            className="group relative hidden md:flex p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            className="group relative hidden md:flex p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-pressed={cursorEnabled}
             aria-label={cursorToggleLabel}
             disabled={cursorToggleDisabled}
@@ -156,8 +156,8 @@ const Navbar = ({
           <button
             type="button"
             onClick={toggleTheme}
-            className="group relative p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            className="group relative p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           >
             <motion.div
@@ -179,8 +179,8 @@ const Navbar = ({
           <button
             type="button"
             ref={menuButtonRef}
-            className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer rounded-nb dark:border-glass-border"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
             onClick={() => setIsMenuOpen((prev) => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
@@ -198,7 +198,7 @@ const Navbar = ({
               animate={{ opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
-              className="absolute right-4 top-full mt-3 w-64 bg-card border-[3px] border-[color:var(--color-border)] md:hidden"
+              className="absolute right-4 top-full mt-3 w-64 bg-card border-nb border-[color:var(--color-border)] md:hidden rounded-nb glass-panel dark:border-glass-border"
               style={{ boxShadow: 'var(--nb-shadow)' }}
               ref={menuRef}
             >
@@ -210,8 +210,8 @@ const Navbar = ({
                     onClick={handleCloseMenu}
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-5 py-4 text-base font-heading font-semibold transition-colors duration-200
-                      ${index !== navItems.length - 1 ? 'border-b-2 border-[color:var(--color-border)]' : ''}
-                      ${isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary'}`
+                      ${index !== navItems.length - 1 ? 'border-b-2 border-[color:var(--color-border)] dark:border-glass-border' : ''}
+                      ${isActive ? 'bg-fun-yellow text-black dark:bg-accent dark:text-white' : 'text-primary hover:bg-secondary dark:hover:bg-glass-highlight'}`
                     }
                   >
                     <span aria-hidden="true">{item.icon}</span>

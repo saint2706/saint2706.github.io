@@ -63,7 +63,7 @@ const Games = () => {
                         initial={shouldReduceMotion ? false : { scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }}
-                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-[3px] border-[color:var(--color-border)]"
+                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb dark:border-transparent dark:shadow-glow-pink"
                         style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
                         <Gamepad2 className="w-5 h-5" />
@@ -72,7 +72,7 @@ const Games = () => {
 
                     <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
                         <span
-                            className="inline-block bg-fun-yellow text-black px-6 py-3 border-[3px] border-[color:var(--color-border)]"
+                            className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             Game Zone
@@ -84,10 +84,10 @@ const Games = () => {
                 </motion.div>
 
                 {/* Game Selector Tabs - Neubrutalism Style */}
-                    <motion.div
-                        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+                <motion.div
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                     className="flex justify-center mb-8"
                 >
                     <div
@@ -103,10 +103,10 @@ const Games = () => {
                                 aria-selected={activeGame === game.id}
                                 aria-controls={`${game.id}-panel`}
                                 id={`${game.id}-tab`}
-                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
+                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
                                     ${activeGame === game.id
-                                        ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
-                                        : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                                        ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5 dark:shadow-glow-purple`
+                                        : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5 dark:border-glass-border'
                                     }`}
                                 style={{ boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
                             >
@@ -116,9 +116,8 @@ const Games = () => {
                                         {game.label}
                                     </span>
                                     <span
-                                        className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
-                                            activeGame === game.id ? 'opacity-100' : 'opacity-0'
-                                        }`}
+                                        className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${activeGame === game.id ? 'opacity-100' : 'opacity-0'
+                                            }`}
                                         aria-hidden={activeGame !== game.id}
                                     >
                                         <Check className="h-3 w-3" aria-hidden="true" />
@@ -138,7 +137,7 @@ const Games = () => {
                     className="flex justify-center"
                 >
                     <div
-                        className="bg-card border-[3px] border-[color:var(--color-border)] p-6 md:p-8"
+                        className="bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb glass-panel dark:border-glass-border"
                         style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
                         <AnimatePresence mode="wait">
@@ -167,7 +166,7 @@ const Games = () => {
                     className="flex justify-center mt-12"
                 >
                     <div
-                        className="bg-secondary border-[3px] border-[color:var(--color-border)] px-6 py-3"
+                        className="bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb dark:bg-glass-bg dark:border-glass-border"
                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                     >
                         <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
