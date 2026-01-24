@@ -11,10 +11,16 @@ import {
   X,
   Sun,
   Moon,
+  MousePointer2,
 } from 'lucide-react';
 import { useTheme } from '../shared/ThemeContext';
 
-const Navbar = () => {
+const Navbar = ({
+  cursorEnabled,
+  cursorToggleDisabled,
+  cursorToggleLabel,
+  onToggleCursor,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lastFocus, setLastFocus] = useState(null);
   const menuRef = useRef(null);
@@ -87,8 +93,9 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={shouldReduceMotion ? undefined : { y: -100 }}
+      initial={shouldReduceMotion ? false : { y: -100 }}
       animate={{ y: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : undefined}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
@@ -127,19 +134,35 @@ const Navbar = () => {
 
         {/* Theme Toggle and Mobile Menu container */}
         <div className="flex items-center gap-2">
+          {/* Cursor Toggle Button */}
+          <button
+            type="button"
+            onClick={onToggleCursor}
+            className="group relative hidden md:flex items-center gap-2 px-3 py-2 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none"
+            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            aria-pressed={cursorEnabled}
+            disabled={cursorToggleDisabled}
+            title={cursorToggleLabel}
+          >
+            <MousePointer2 size={18} aria-hidden="true" />
+            <span className="text-xs font-heading font-semibold">
+              Cursor: {cursorEnabled ? 'On' : 'Off'}
+            </span>
+          </button>
+
           {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
-            className="group relative p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5"
+            className="group relative p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           >
             <motion.div
               key={theme}
-              initial={{ rotate: -90, opacity: 0 }}
+              initial={shouldReduceMotion ? false : { rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </motion.div>
@@ -169,10 +192,10 @@ const Navbar = () => {
           {isMenuOpen && (
             <motion.div
               id="mobile-nav-menu"
-              initial={{ opacity: 0, y: -8 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.15 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
               className="absolute right-4 top-full mt-3 w-64 bg-card border-[3px] border-[color:var(--color-border)] md:hidden"
               style={{ boxShadow: 'var(--nb-shadow)' }}
               ref={menuRef}

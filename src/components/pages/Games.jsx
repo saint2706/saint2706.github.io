@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
+import { Check, Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import TicTacToe from '../games/TicTacToe';
@@ -53,13 +53,14 @@ const Games = () => {
             <div className="max-w-4xl mx-auto py-12 px-4">
                 {/* Header */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: -20 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
                     className="mb-12 text-center"
                 >
                     {/* Easter Egg Badge */}
                     <motion.div
-                        initial={shouldReduceMotion ? undefined : { scale: 0 }}
+                        initial={shouldReduceMotion ? false : { scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }}
                         className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-[3px] border-[color:var(--color-border)]"
@@ -84,7 +85,7 @@ const Games = () => {
 
                 {/* Game Selector Tabs - Neubrutalism Style */}
                     <motion.div
-                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
                     className="flex justify-center mb-8"
@@ -102,7 +103,7 @@ const Games = () => {
                                 aria-selected={activeGame === game.id}
                                 aria-controls={`${game.id}-panel`}
                                 id={`${game.id}-tab`}
-                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform
+                                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                                     ${activeGame === game.id
                                         ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
                                         : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
@@ -110,7 +111,20 @@ const Games = () => {
                                 style={{ boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
                             >
                                 <game.icon size={18} aria-hidden="true" />
-                                <span>{game.label}</span>
+                                <span className="flex items-center gap-2">
+                                    <span>
+                                        {game.label}
+                                    </span>
+                                    <span
+                                        className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
+                                            activeGame === game.id ? 'opacity-100' : 'opacity-0'
+                                        }`}
+                                        aria-hidden={activeGame !== game.id}
+                                    >
+                                        <Check className="h-3 w-3" aria-hidden="true" />
+                                        Selected
+                                    </span>
+                                </span>
                             </button>
                         ))}
                     </div>
@@ -118,7 +132,7 @@ const Games = () => {
 
                 {/* Game Container */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.95 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
                     className="flex justify-center"
@@ -130,10 +144,10 @@ const Games = () => {
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeGame}
-                                initial={{ opacity: 0, x: 20 }}
+                                initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.2 }}
+                                exit={shouldReduceMotion ? undefined : { opacity: 0, x: -20 }}
+                                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                                 role="tabpanel"
                                 id={`${activeGame}-panel`}
                                 aria-labelledby={`${activeGame}-tab`}
@@ -147,7 +161,7 @@ const Games = () => {
 
                 {/* Footer hint */}
                 <motion.div
-                    initial={shouldReduceMotion ? undefined : { opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
                     className="flex justify-center mt-12"
@@ -156,7 +170,7 @@ const Games = () => {
                         className="bg-secondary border-[3px] border-[color:var(--color-border)] px-6 py-3"
                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                     >
-                        <p className="text-muted text-xs font-mono text-center">
+                        <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
                             Psst... you found this page by going to /games. Keep it a secret! 🤫
                         </p>
                     </div>

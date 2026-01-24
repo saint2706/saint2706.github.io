@@ -1,15 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin, Printer } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
 // Neubrutalism Section Component
-const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0 }) => (
+const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, shouldReduceMotion = false }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay }}
+    transition={shouldReduceMotion ? { duration: 0 } : { delay }}
     className="mb-12"
   >
     <div
@@ -28,7 +28,7 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0 }) 
 // Neubrutalism Timeline Card
 const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
   <div
-    className="bg-card border-[3px] border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5"
+    className="bg-card border-[3px] border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
     style={{ boxShadow: 'var(--nb-shadow)' }}
   >
     {/* Color accent bar */}
@@ -41,13 +41,13 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
       </div>
       <div className="flex flex-col items-start md:items-end gap-1">
         <span
-          className="inline-flex items-center gap-1 text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
+          className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
         >
           <Calendar size={12} />
           {date}
         </span>
         {location && (
-          <span className="text-xs text-muted flex items-center gap-1">
+          <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
             <MapPin size={12} />
             {location}
           </span>
@@ -77,7 +77,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
         {tags.map((tag, i) => (
           <span
             key={i}
-            className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+            className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
           >
             {tag}
           </span>
@@ -102,15 +102,20 @@ const SkillBadge = ({ name, proficiency }) => {
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
       {name}
-      <span className="text-xs opacity-70">{proficiency}%</span>
+      <span className="text-sm md:text-xs opacity-70">{proficiency}%</span>
     </div>
   );
 };
 
 const Resume = () => {
+  const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
     <>
@@ -151,8 +156,9 @@ const Resume = () => {
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-16 text-center"
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
@@ -166,6 +172,16 @@ const Resume = () => {
           <p className="text-secondary text-lg mt-6 font-sans max-w-2xl mx-auto">
             A timeline of my education, experience, and technical milestones.
           </p>
+
+          <button
+            onClick={handlePrint}
+            className="mt-6 inline-flex items-center gap-2 bg-card text-primary px-5 py-2.5 border-[3px] border-[color:var(--color-border)] font-heading font-bold transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none print:hidden"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+            aria-label="Print resume"
+          >
+            <Printer size={20} aria-hidden="true" />
+            <span>Print Resume</span>
+          </button>
         </motion.div>
 
         {/* Experience Section */}
@@ -174,6 +190,7 @@ const Resume = () => {
           icon={<Briefcase size={24} />}
           color="bg-fun-pink"
           delay={0.2}
+          shouldReduceMotion={shouldReduceMotion}
         >
           {resumeData.experience.map((job, i) => (
             <TimelineCard
@@ -194,6 +211,7 @@ const Resume = () => {
           icon={<GraduationCap size={24} />}
           color="bg-accent"
           delay={0.4}
+          shouldReduceMotion={shouldReduceMotion}
         >
           {resumeData.education.map((edu, i) => (
             <TimelineCard
@@ -209,9 +227,9 @@ const Resume = () => {
 
         {/* Skills & Certifications Grid */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
           className="grid md:grid-cols-2 gap-6 mb-12"
         >
           {/* Technical Skills */}
@@ -269,7 +287,7 @@ const Resume = () => {
                   <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
                   <div>
                     <span className="text-primary font-heading font-bold block">{cert.name}</span>
-                    <span className="text-muted text-sm font-sans">
+                    <span className="text-secondary text-sm font-sans leading-relaxed">
                       {cert.issuer}{cert.date && ` • ${cert.date}`}
                     </span>
                   </div>
@@ -282,9 +300,9 @@ const Resume = () => {
         {/* Languages Section */}
         {resumeData.basics.languages && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
           >
             <div
               className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
@@ -307,7 +325,7 @@ const Resume = () => {
                   >
                     <span className="text-primary font-heading font-bold">{lang.name}</span>
                     <span
-                      className="text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
+                      className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
                     >
                       {lang.proficiency}
                     </span>

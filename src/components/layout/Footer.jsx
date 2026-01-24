@@ -28,7 +28,7 @@ const Footer = () => {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`p-3 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 ${link.hoverColor}`}
+              className={`p-3 bg-card border-[3px] border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none ${link.hoverColor}`}
               style={{ boxShadow: 'var(--nb-shadow)' }}
               aria-label={link.label}
             >
@@ -54,7 +54,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <p className="text-muted font-mono text-xs mt-6 text-center">
+        <p className="text-secondary font-sans text-sm md:text-xs mt-6 text-center leading-relaxed">
           © {new Date().getFullYear()} All rights reserved.
         </p>
       </div>
