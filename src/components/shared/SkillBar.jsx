@@ -29,9 +29,26 @@ const SkillBar = ({ name, proficiency, delay = 0 }) => {
             >
                 <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-accent to-fun-pink"
-                    initial={shouldReduceMotion ? false : { width: 0 }}
-                    whileInView={{ width: `${proficiency}%` }}
-                    viewport={{ once: true, margin: "-50px" }}
+                    initial={
+                        shouldReduceMotion
+                            ? { width: `${proficiency}%` }
+                            : { width: 0 }
+                    }
+                    animate={
+                        shouldReduceMotion
+                            ? { width: `${proficiency}%` }
+                            : undefined
+                    }
+                    whileInView={
+                        shouldReduceMotion
+                            ? undefined
+                            : { width: `${proficiency}%` }
+                    }
+                    viewport={
+                        shouldReduceMotion
+                            ? undefined
+                            : { once: true, margin: "-50px" }
+                    }
                     transition={{
                         duration: shouldReduceMotion ? 0 : 0.8,
                         delay: shouldReduceMotion ? 0 : delay,
