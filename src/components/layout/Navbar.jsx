@@ -142,6 +142,7 @@ const Navbar = ({
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-pressed={cursorEnabled}
             disabled={cursorToggleDisabled}
+            title={cursorToggleLabel}
           >
             <MousePointer2 size={18} aria-hidden="true" />
             <span className="text-xs font-heading font-semibold">

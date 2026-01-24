@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin } from 'lucide-react';
+import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin, Printer } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 
@@ -113,6 +113,10 @@ const Resume = () => {
   const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <>
       <Helmet>
@@ -168,6 +172,16 @@ const Resume = () => {
           <p className="text-secondary text-lg mt-6 font-sans max-w-2xl mx-auto">
             A timeline of my education, experience, and technical milestones.
           </p>
+
+          <button
+            onClick={handlePrint}
+            className="mt-6 inline-flex items-center gap-2 bg-card text-primary px-5 py-2.5 border-[3px] border-[color:var(--color-border)] font-heading font-bold transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none print:hidden"
+            style={{ boxShadow: 'var(--nb-shadow)' }}
+            aria-label="Print resume"
+          >
+            <Printer size={20} aria-hidden="true" />
+            <span>Print Resume</span>
+          </button>
         </motion.div>
 
         {/* Experience Section */}
