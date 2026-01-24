@@ -8,7 +8,7 @@ const PageLoading = () => {
       role="status"
       aria-label="Loading content"
     >
-      <Loader2 className="w-12 h-12 animate-spin text-fun-yellow" />
+      <Loader2 className="w-12 h-12 animate-spin motion-reduce:animate-none text-fun-yellow" />
     </div>
   );
 };
