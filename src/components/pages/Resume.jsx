@@ -41,13 +41,13 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
       </div>
       <div className="flex flex-col items-start md:items-end gap-1">
         <span
-          className="inline-flex items-center gap-1 text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
+          className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]"
         >
           <Calendar size={12} />
           {date}
         </span>
         {location && (
-          <span className="text-xs text-muted flex items-center gap-1">
+          <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
             <MapPin size={12} />
             {location}
           </span>
@@ -77,7 +77,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
         {tags.map((tag, i) => (
           <span
             key={i}
-            className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+            className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
           >
             {tag}
           </span>
@@ -102,7 +102,7 @@ const SkillBadge = ({ name, proficiency }) => {
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
       {name}
-      <span className="text-xs opacity-70">{proficiency}%</span>
+      <span className="text-sm md:text-xs opacity-70">{proficiency}%</span>
     </div>
   );
 };
@@ -273,7 +273,7 @@ const Resume = () => {
                   <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
                   <div>
                     <span className="text-primary font-heading font-bold block">{cert.name}</span>
-                    <span className="text-muted text-sm font-sans">
+                    <span className="text-secondary text-sm font-sans leading-relaxed">
                       {cert.issuer}{cert.date && ` • ${cert.date}`}
                     </span>
                   </div>
@@ -311,7 +311,7 @@ const Resume = () => {
                   >
                     <span className="text-primary font-heading font-bold">{lang.name}</span>
                     <span
-                      className="text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
+                      className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
                     >
                       {lang.proficiency}
                     </span>

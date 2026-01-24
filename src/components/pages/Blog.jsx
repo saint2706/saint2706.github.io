@@ -235,12 +235,12 @@ const Blog = () => {
                 {/* Source and Date */}
                 <div className="flex justify-between items-start mb-4">
                   <span
-                    className={`text-xs font-heading font-bold px-3 py-1 border-2 border-[color:var(--color-border)] ${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}
+                    className={`text-sm md:text-xs font-heading font-bold px-3 py-1 border-2 border-[color:var(--color-border)] ${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
                     {blog.source}
                   </span>
-                  <span className="text-muted text-xs font-mono flex items-center gap-1 bg-secondary px-2 py-1 border-2 border-[color:var(--color-border)]">
+                  <span className="text-secondary text-sm md:text-xs font-sans flex items-center gap-1 bg-secondary px-2 py-1 border-2 border-[color:var(--color-border)]">
                     <Calendar size={12} />
                     {formatDate(blog.date)}
                   </span>
@@ -255,7 +255,7 @@ const Blog = () => {
                 </div>
 
                 {/* Summary */}
-                <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow font-sans">
+                <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow font-sans leading-relaxed">
                   {blog.summary}
                 </p>
 
@@ -265,7 +265,7 @@ const Blog = () => {
                     {blog.tags.slice(0, 3).map(tag => (
                       <span
                         key={tag}
-                        className="text-xs font-mono px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+                        className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
                       >
                         #{tag}
                       </span>

@@ -157,7 +157,7 @@ const Games = () => {
                         className="bg-secondary border-[3px] border-[color:var(--color-border)] px-6 py-3"
                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                     >
-                        <p className="text-muted text-xs font-mono text-center">
+                        <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
                             Psst... you found this page by going to /games. Keep it a secret! 🤫
                         </p>
                     </div>
