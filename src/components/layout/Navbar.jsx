@@ -11,10 +11,16 @@ import {
   X,
   Sun,
   Moon,
+  MousePointer2,
 } from 'lucide-react';
 import { useTheme } from '../shared/ThemeContext';
 
-const Navbar = () => {
+const Navbar = ({
+  cursorEnabled,
+  cursorToggleDisabled,
+  cursorToggleLabel,
+  onToggleCursor,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lastFocus, setLastFocus] = useState(null);
   const menuRef = useRef(null);
@@ -127,6 +133,21 @@ const Navbar = () => {
 
         {/* Theme Toggle and Mobile Menu container */}
         <div className="flex items-center gap-2">
+          {/* Cursor Toggle Button */}
+          <button
+            type="button"
+            onClick={onToggleCursor}
+            className="group relative hidden md:flex items-center gap-2 px-3 py-2 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed"
+            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            aria-pressed={cursorEnabled}
+            disabled={cursorToggleDisabled}
+          >
+            <MousePointer2 size={18} aria-hidden="true" />
+            <span className="text-xs font-heading font-semibold">
+              Cursor: {cursorEnabled ? 'On' : 'Off'}
+            </span>
+          </button>
+
           {/* Theme Toggle Button */}
           <button
             type="button"

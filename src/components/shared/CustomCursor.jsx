@@ -8,14 +8,11 @@ import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-moti
  * - Creates a spotlight that reveals hidden text
  * - Only shows on devices with pointer (no touch)
  */
-const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
-
-const CustomCursor = () => {
+const CustomCursor = ({ enabled }) => {
     const prefersReducedMotion = useReducedMotion();
     const [isVisible, setIsVisible] = useState(false);
     const [cursorVariant, setCursorVariant] = useState('default');
     const [cursorColor, setCursorColor] = useState('rgba(56, 189, 248, 0.5)'); // accent color
-    const [isEnabled, setIsEnabled] = useState(false);
     const cursorRef = useRef(null);
 
     // Mouse position with spring physics for smooth following
@@ -65,13 +62,7 @@ const CustomCursor = () => {
         }
     }, []);
 
-    // Load preference and respect motion preference / coarse pointers
-    useEffect(() => {
-        const hasPointer = window.matchMedia('(pointer: fine)').matches;
-        const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
-        const shouldEnable = hasPointer && !prefersReducedMotion && stored !== 'false';
-        setIsEnabled(shouldEnable);
-    }, [prefersReducedMotion]);
+    const isEnabled = enabled && !prefersReducedMotion;
 
     // Manage document class so we only hide the native cursor when enabled
     useEffect(() => {
@@ -86,7 +77,10 @@ const CustomCursor = () => {
 
     // Only attach listeners when enabled
     useEffect(() => {
-        if (!isEnabled) return;
+        if (!isEnabled) {
+            setIsVisible(false);
+            return;
+        }
 
         setIsVisible(true);
 
@@ -106,22 +100,6 @@ const CustomCursor = () => {
             document.removeEventListener('mouseenter', handleMouseEnter);
         };
     }, [isEnabled, moveCursor, updateCursorVariant]);
-
-    const handleToggle = useCallback((next) => {
-        const value = typeof next === 'boolean' ? next : !isEnabled;
-        setIsEnabled(value);
-        localStorage.setItem(CURSOR_STORAGE_KEY, value ? 'true' : 'false');
-    }, [isEnabled]);
-
-    // Allow external toggle (e.g., from a settings button)
-    useEffect(() => {
-        const handler = (event) => {
-            const requested = event.detail?.enabled;
-            handleToggle(typeof requested === 'boolean' ? requested : !isEnabled);
-        };
-        document.addEventListener('customCursorToggle', handler);
-        return () => document.removeEventListener('customCursorToggle', handler);
-    }, [handleToggle, isEnabled]);
 
     // Don't render when disabled or on touch/reduced-motion
     if (!isVisible || !isEnabled || prefersReducedMotion) return null;
