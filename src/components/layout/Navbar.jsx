@@ -107,7 +107,7 @@ const Navbar = ({
           className="text-xl font-heading font-bold text-primary"
           aria-label="Rishabh Agrawal - Home page"
         >
-          <span className="bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
+          <span className="bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb dark:bg-transparent dark:border-transparent dark:bg-gradient-to-r dark:from-accent dark:to-fun-pink dark:bg-clip-text dark:text-transparent dark:drop-shadow-[0_0_10px_rgba(139,92,246,0.5)]">
             &lt;Rishabh /&gt;
           </span>
         </NavLink>
