@@ -1,54 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Bot, X, Send, Flame, RefreshCw, MessageCircle } from 'lucide-react';
-import { chatWithGemini, roastResume } from '../../services/ai';
-import ReactMarkdown from 'react-markdown';
-import { ChatSkeleton } from './SkeletonLoader';
+import { Bot, MessageCircle, Flame } from 'lucide-react';
 
-const STORAGE_KEY = 'portfolio_chat_history';
-const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
-
-// Security: Custom renderer for links
-
-// Security: Validate href after decoding to prevent URL-encoded protocol bypasses
-const isSafeHref = (href) => {
-  if (!href || typeof href !== 'string') {
-    return false;
-  }
-
-  let normalizedHref = href;
-  try {
-    // Decode percent-encoded characters once to catch encoded protocols like javascript:
-    normalizedHref = decodeURIComponent(href);
-  } catch (e) {
-    // If decoding fails, fall back to the original value
-    normalizedHref = href;
-  }
-
-  // Only allow http, https, and mailto protocols
-  return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
-};
-
-const LinkRenderer = ({ href, children, ...rest }) => {
-  // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
-  const isValidHref = isSafeHref(href);
-
-  if (!isValidHref) {
-    return <span {...rest}>{children}</span>;
-  }
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-accent underline font-bold"
-      {...rest}
-    >
-      {children}
-    </a>
-  );
-};
+const ChatInterface = lazy(() => import('./ChatInterface'));
+const RoastInterface = lazy(() => import('./RoastInterface'));
 
 const Chatbot = () => {
   // FAB state
@@ -56,68 +11,14 @@ const Chatbot = () => {
 
   // Chatbot state
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
-  const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
 
   // Roast state
   const [isRoastOpen, setIsRoastOpen] = useState(false);
-  const [roast, setRoast] = useState(null);
-  const [roastLoading, setRoastLoading] = useState(false);
+  const [roastContent, setRoastContent] = useState(null);
 
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
   const fabRef = useRef(null);
-  const chatDialogRef = useRef(null);
-  const roastDialogRef = useRef(null);
-  const roastCloseRef = useRef(null);
   const lastFocusedRef = useRef(null);
-  const titleId = 'chatbot-title';
-  const dialogId = 'chatbot-dialog';
   const prefersReducedMotion = useReducedMotion();
-
-  // Load chat history
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-        }
-      }
-    } catch (e) {
-      console.warn('Failed to load chat history:', e);
-    }
-  }, []);
-
-  // Save chat history
-  useEffect(() => {
-    if (messages.length > 1) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-      } catch (e) {
-        console.warn('Failed to save chat history:', e);
-      }
-    }
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isChatOpen]);
-
-  useEffect(() => {
-    if (isChatOpen && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-    if (isRoastOpen && roastCloseRef.current) {
-      setTimeout(() => roastCloseRef.current?.focus(), 100);
-    }
-  }, [isChatOpen, isRoastOpen]);
 
   // Close FAB when clicking outside
   useEffect(() => {
@@ -151,6 +52,7 @@ const Chatbot = () => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
+        lastFocusedRef.current = document.activeElement;
         setIsChatOpen(prev => !prev);
         setIsRoastOpen(false);
       }
@@ -164,38 +66,6 @@ const Chatbot = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMsg = { role: 'user', text: input };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setIsTyping(true);
-
-    const MAX_HISTORY_CONTEXT = 30;
-    const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
-      role: m.role,
-      parts: [{ text: m.text }]
-    }));
-
-    const responseText = await chatWithGemini(userMsg.text, history);
-    setMessages(prev => [...prev, { role: 'model', text: responseText }]);
-    setIsTyping(false);
-  };
-
-  const clearHistory = useCallback(() => {
-    setMessages([DEFAULT_MESSAGE]);
-    localStorage.removeItem(STORAGE_KEY);
-  }, []);
-
-  const handleRoast = async () => {
-    setRoastLoading(true);
-    const text = await roastResume();
-    setRoast(text);
-    setRoastLoading(false);
-  };
-
   const openChat = () => {
     lastFocusedRef.current = document.activeElement;
     setIsChatOpen(true);
@@ -208,7 +78,6 @@ const Chatbot = () => {
     setIsRoastOpen(true);
     setIsChatOpen(false);
     setIsFabOpen(false);
-    if (!roast) handleRoast();
   };
 
   const anyDialogOpen = isChatOpen || isRoastOpen;
@@ -227,44 +96,6 @@ const Chatbot = () => {
       lastFocusedRef.current = null;
     }
   }, [anyDialogOpen]);
-
-  // Focus trap and Escape handling for dialogs
-  useEffect(() => {
-    const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    const handleKeyDown = (event) => {
-      if (!anyDialogOpen) return;
-      const container = isChatOpen ? chatDialogRef.current : roastDialogRef.current;
-      if (!container) return;
-
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        setIsChatOpen(false);
-        setIsRoastOpen(false);
-        setIsFabOpen(false);
-        return;
-      }
-
-      if (event.key !== 'Tab') return;
-      const focusable = container.querySelectorAll(focusSelectors);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (event.shiftKey) {
-        if (document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        }
-      } else if (document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [anyDialogOpen, isChatOpen]);
 
   return (
     <>
@@ -333,188 +164,24 @@ const Chatbot = () => {
         </div>
       </div>
 
-      {/* Chat Interface - Neubrutalism Style */}
-      <AnimatePresence>
-        {isChatOpen && (
-          <motion.div
-            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-nb border-[color:var(--color-border)] flex flex-col overflow-hidden rounded-nb glass-panel dark:border-glass-border"
-            style={{ boxShadow: 'var(--nb-shadow-hover)' }}
-            id={dialogId}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={titleId}
-            aria-describedby="chatbot-helper"
-            ref={chatDialogRef}
-          >
-            {/* Header */}
-            <div className="bg-accent p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] dark:border-glass-border">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border">
-                  <Bot size={20} className="text-black dark:text-white" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold text-white" id={titleId}>Digital Rishabh</h3>
-                  <p className="text-xs text-white/80 flex items-center gap-1 font-sans">
-                    <span className="w-2 h-2 bg-fun-yellow rounded-full animate-pulse motion-reduce:animate-none"></span>
-                    Online
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {messages.length > 1 && (
-                  <button
-                    onClick={clearHistory}
-                    className="text-xs text-white/70 hover:text-white transition-colors font-heading font-bold px-2 py-1 border-2 border-white/30 hover:border-white"
-                    aria-label="Clear chat history"
-                  >
-                    Clear
-                  </button>
-                )}
-                <button
-                  onClick={() => setIsChatOpen(false)}
-                  className="p-1 text-white hover:bg-white/20 transition-colors"
-                  aria-label="Close chat (Escape)"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-            </div>
-
-            <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
-
-            {/* Messages Area */}
-            <div
-              className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
-              role="log"
-              aria-live="polite"
-              aria-busy={isTyping}
-            >
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
-                      ? 'bg-fun-yellow text-black'
-                      : 'bg-card text-primary'
-                      }`}
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                  >
-                    <ReactMarkdown components={{ a: LinkRenderer }}>
-                      {msg.text}
-                    </ReactMarkdown>
-                  </div>
-                </div>
-              ))}
-              {isTyping && <ChatSkeleton />}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">
-              <div className="flex gap-2">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  id="chatbot-input"
-                  aria-label="Type a message"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  maxLength={500}
-                  disabled={isTyping}
-                  placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-                  className="flex-grow bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
-                />
-                <button
-                  type="submit"
-                  disabled={!input.trim() || isTyping}
-                  className="p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                  aria-label="Send message"
-                >
-                  <Send size={20} />
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Roast Interface - Neubrutalism Style */}
-      <AnimatePresence>
-        {isRoastOpen && (
-          <motion.div
-            initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-            className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb dark:border-transparent dark:shadow-glow-pink"
-            style={{ boxShadow: 'var(--nb-shadow-hover)' }}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="roast-title"
-            aria-describedby="roast-helper"
-            ref={roastDialogRef}
-          >
-            {/* Header */}
-            <div className="p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] bg-fun-pink dark:border-transparent">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-transparent">
-                  <Flame size={20} className="text-fun-pink" />
-                </div>
-                <h3 className="font-heading font-bold text-white" id="roast-title">Resume Roasted 🔥</h3>
-              </div>
-              <button
-                ref={roastCloseRef}
-                onClick={() => setIsRoastOpen(false)}
-                className="p-1 text-white hover:bg-white/20 transition-colors"
-                aria-label="Close roast"
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 bg-white">
-              {roastLoading ? (
-                <div className="flex items-center gap-3 text-fun-pink">
-                  <RefreshCw size={20} className="animate-spin motion-reduce:animate-none" />
-                  <span className="font-heading font-bold">Roasting your resume...</span>
-                </div>
-              ) : roast ? (
-                <p className="text-black font-sans text-base italic leading-relaxed">
-                  &quot;{roast}&quot;
-                </p>
-              ) : null}
-            </div>
-
-            <p id="roast-helper" className="sr-only">Resume roast dialog. Press Escape to close. Focus remains inside until closed.</p>
-
-            {/* Actions */}
-            <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2 dark:border-glass-border">
-              <button
-                onClick={handleRoast}
-                disabled={roastLoading}
-                className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
-                Roast Again
-              </button>
-              <button
-                onClick={() => setIsRoastOpen(false)}
-                className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                Close
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Suspense fallback={null}>
+        <AnimatePresence>
+          {isChatOpen && (
+            <ChatInterface
+              key="chat-interface"
+              onClose={() => setIsChatOpen(false)}
+            />
+          )}
+          {isRoastOpen && (
+            <RoastInterface
+              key="roast-interface"
+              onClose={() => setIsRoastOpen(false)}
+              roastContent={roastContent}
+              onRoastComplete={setRoastContent}
+            />
+          )}
+        </AnimatePresence>
+      </Suspense>
     </>
   );
 };
