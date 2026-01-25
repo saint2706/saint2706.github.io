@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
+import { useTheme } from './ThemeContext';
 
 /**
  * Interactive custom cursor with spotlight effect.
@@ -10,6 +11,7 @@ import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-moti
  */
 const CustomCursor = ({ enabled }) => {
     const prefersReducedMotion = useReducedMotion();
+    const { isDark, isLight } = useTheme();
     const [isVisible, setIsVisible] = useState(false);
     const [cursorVariant, setCursorVariant] = useState('default');
     const [cursorColor, setCursorColor] = useState('rgba(56, 189, 248, 0.5)'); // accent color
@@ -41,26 +43,24 @@ const CustomCursor = ({ enabled }) => {
         const isCard = target.closest('[class*="card"], article, [class*="project"]');
         const isImage = target.matches('img, [class*="image"], [class*="avatar"]');
 
-        // Get background color to determine cursor color
-
-
+        // Choose color based on theme-specific palette (set via CSS vars)
         if (isClickable) {
             setCursorVariant('pointer');
-            setCursorColor('rgba(236, 72, 153, 0.6)'); // fun-pink
+            setCursorColor(themeColors.funPinkAlpha(0.6));
         } else if (isImage) {
             setCursorVariant('zoom');
-            setCursorColor('rgba(234, 179, 8, 0.5)'); // fun-yellow
+            setCursorColor(themeColors.funYellowAlpha(0.5));
         } else if (isCard) {
             setCursorVariant('card');
-            setCursorColor('rgba(56, 189, 248, 0.4)'); // accent
+            setCursorColor(themeColors.accentAlpha(0.4));
         } else if (isText) {
             setCursorVariant('text');
-            setCursorColor('rgba(148, 163, 184, 0.3)'); // secondary text
+            setCursorColor(themeColors.textMutedAlpha(0.3));
         } else {
             setCursorVariant('default');
-            setCursorColor('rgba(56, 189, 248, 0.5)'); // accent
+            setCursorColor(themeColors.accentAlpha(isDark ? 0.5 : 0.35));
         }
-    }, []);
+    }, [isDark, themeColors]);
 
     const isEnabled = enabled && !prefersReducedMotion;
 
@@ -101,15 +101,56 @@ const CustomCursor = ({ enabled }) => {
         };
     }, [isEnabled, moveCursor, updateCursorVariant]);
 
+    // Build theme palette from CSS variables
+    const themeColors = useMemo(() => {
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+
+        const hexToRgba = (hex, alpha = 1) => {
+            let h = hex.trim();
+            if (!h) return `rgba(0,0,0,${alpha})`;
+            if (h.startsWith('#')) h = h.slice(1);
+            if (h.length === 3) {
+                h = h.split('').map(c => c + c).join('');
+            }
+            const r = parseInt(h.slice(0, 2), 16);
+            const g = parseInt(h.slice(2, 4), 16);
+            const b = parseInt(h.slice(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        };
+
+        const accent = styles.getPropertyValue('--color-accent') || '#3b82f6';
+        const funPink = styles.getPropertyValue('--color-fun-pink') || '#ec4899';
+        const funYellow = styles.getPropertyValue('--color-fun-yellow') || '#fbbf24';
+        const textPrimary = styles.getPropertyValue('--color-text-primary') || (isDark ? '#f8fafc' : '#000000');
+        const textMuted = styles.getPropertyValue('--color-text-muted') || (isDark ? '#64748b' : '#666666');
+        const glow = styles.getPropertyValue('--glow-color') || 'rgba(139, 92, 246, 0.4)';
+
+        return {
+            accent,
+            funPink,
+            funYellow,
+            textPrimary,
+            textMuted,
+            glow,
+            accentAlpha: (a) => hexToRgba(accent, a),
+            funPinkAlpha: (a) => hexToRgba(funPink, a),
+            funYellowAlpha: (a) => hexToRgba(funYellow, a),
+            textPrimaryAlpha: (a) => hexToRgba(textPrimary, a),
+            textMutedAlpha: (a) => hexToRgba(textMuted, a),
+        };
+    }, [isDark]);
+
     // Don't render when disabled or on touch/reduced-motion
     if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
+    const blendDefault = isLight ? 'difference' : 'screen';
     const variants = {
         default: {
             width: 32,
             height: 32,
             backgroundColor: cursorColor,
-            mixBlendMode: 'difference',
+            mixBlendMode: blendDefault,
         },
         pointer: {
             width: 48,
@@ -120,7 +161,7 @@ const CustomCursor = ({ enabled }) => {
         text: {
             width: 4,
             height: 24,
-            backgroundColor: 'rgba(56, 189, 248, 0.8)',
+            backgroundColor: themeColors.accentAlpha(isDark ? 0.9 : 0.8),
             borderRadius: '2px',
             mixBlendMode: 'normal',
         },
@@ -135,7 +176,7 @@ const CustomCursor = ({ enabled }) => {
             width: 56,
             height: 56,
             backgroundColor: cursorColor,
-            mixBlendMode: 'difference',
+            mixBlendMode: blendDefault,
         },
     };
 
@@ -173,11 +214,11 @@ const CustomCursor = ({ enabled }) => {
                     translateY: '-50%',
                     width: 120,
                     height: 120,
-                    background: `radial-gradient(circle, ${cursorColor.replace('0.5', '0.15')} 0%, transparent 70%)`,
+                    background: `radial-gradient(circle, ${cursorColor.replace(/rgba\((.*?)\s*,\s*([0-9]*\.?[0-9]+)\)/, (m, rgb) => `rgba(${rgb}, ${isDark ? 0.12 : 0.15})`)} 0%, transparent 70%)`,
                 }}
                 animate={{
                     scale: cursorVariant === 'pointer' ? 1.5 : 1,
-                    opacity: cursorVariant === 'text' ? 0 : 0.8,
+                    opacity: cursorVariant === 'text' ? 0 : (isDark ? 0.7 : 0.8),
                 }}
                 transition={{ type: 'spring', damping: 15, stiffness: 200 }}
             />
@@ -192,6 +233,7 @@ const CustomCursor = ({ enabled }) => {
                     translateY: '-50%',
                     width: 4,
                     height: 4,
+                    backgroundColor: themeColors.textPrimary,
                 }}
                 animate={{
                     scale: cursorVariant === 'pointer' ? 0 : 1,
