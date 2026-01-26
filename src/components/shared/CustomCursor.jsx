@@ -31,6 +31,44 @@ const CustomCursor = ({ enabled }) => {
         cursorY.set(e.clientY);
     }, [cursorX, cursorY]);
 
+    // Build theme palette from CSS variables
+    const themeColors = useMemo(() => {
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+
+        const hexToRgba = (hex, alpha = 1) => {
+            let h = hex.trim();
+            if (!h) return `rgba(0,0,0,${alpha})`;
+            if (h.startsWith('#')) h = h.slice(1);
+            if (h.length === 3) {
+                h = h.split('').map(c => c + c).join('');
+            }
+            const r = parseInt(h.slice(0, 2), 16);
+            const g = parseInt(h.slice(2, 4), 16);
+            const b = parseInt(h.slice(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        };
+
+        const accent = styles.getPropertyValue('--color-accent').trim() || '#3b82f6';
+        const funPink = styles.getPropertyValue('--color-fun-pink').trim() || '#ec4899';
+        const funYellow = styles.getPropertyValue('--color-fun-yellow').trim() || '#fbbf24';
+        const textPrimary = styles.getPropertyValue('--color-text-primary').trim() || (isDark ? '#f8fafc' : '#000000');
+        const textMuted = styles.getPropertyValue('--color-text-muted').trim() || (isDark ? '#64748b' : '#666666');
+
+        return {
+            accent,
+            funPink,
+            funYellow,
+            textPrimary,
+            textMuted,
+            accentAlpha: (a) => hexToRgba(accent, a),
+            funPinkAlpha: (a) => hexToRgba(funPink, a),
+            funYellowAlpha: (a) => hexToRgba(funYellow, a),
+            textPrimaryAlpha: (a) => hexToRgba(textPrimary, a),
+            textMutedAlpha: (a) => hexToRgba(textMuted, a),
+        };
+    }, [isDark]);
+
     // Detect hover target and update cursor style
     const updateCursorVariant = useCallback((e) => {
         const target = e.target;
@@ -100,46 +138,6 @@ const CustomCursor = ({ enabled }) => {
             document.removeEventListener('mouseenter', handleMouseEnter);
         };
     }, [isEnabled, moveCursor, updateCursorVariant]);
-
-    // Build theme palette from CSS variables
-    const themeColors = useMemo(() => {
-        const root = document.documentElement;
-        const styles = getComputedStyle(root);
-
-        const hexToRgba = (hex, alpha = 1) => {
-            let h = hex.trim();
-            if (!h) return `rgba(0,0,0,${alpha})`;
-            if (h.startsWith('#')) h = h.slice(1);
-            if (h.length === 3) {
-                h = h.split('').map(c => c + c).join('');
-            }
-            const r = parseInt(h.slice(0, 2), 16);
-            const g = parseInt(h.slice(2, 4), 16);
-            const b = parseInt(h.slice(4, 6), 16);
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        };
-
-        const accent = styles.getPropertyValue('--color-accent') || '#3b82f6';
-        const funPink = styles.getPropertyValue('--color-fun-pink') || '#ec4899';
-        const funYellow = styles.getPropertyValue('--color-fun-yellow') || '#fbbf24';
-        const textPrimary = styles.getPropertyValue('--color-text-primary') || (isDark ? '#f8fafc' : '#000000');
-        const textMuted = styles.getPropertyValue('--color-text-muted') || (isDark ? '#64748b' : '#666666');
-        const glow = styles.getPropertyValue('--glow-color') || 'rgba(139, 92, 246, 0.4)';
-
-        return {
-            accent,
-            funPink,
-            funYellow,
-            textPrimary,
-            textMuted,
-            glow,
-            accentAlpha: (a) => hexToRgba(accent, a),
-            funPinkAlpha: (a) => hexToRgba(funPink, a),
-            funYellowAlpha: (a) => hexToRgba(funYellow, a),
-            textPrimaryAlpha: (a) => hexToRgba(textPrimary, a),
-            textMutedAlpha: (a) => hexToRgba(textMuted, a),
-        };
-    }, [isDark]);
 
     // Don't render when disabled or on touch/reduced-motion
     if (!isVisible || !isEnabled || prefersReducedMotion) return null;
