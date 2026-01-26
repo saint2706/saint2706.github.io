@@ -5,6 +5,56 @@ import { Bot, MessageCircle, Flame } from 'lucide-react';
 const ChatInterface = lazy(() => import('./ChatInterface'));
 const RoastInterface = lazy(() => import('./RoastInterface'));
 
+// Minimal loading fallback for Suspense
+const LoadingDialog = ({ type }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const isChat = type === 'chat';
+  
+  return (
+    <motion.div
+      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className={`fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto ${
+        isChat ? 'md:w-[420px]' : 'md:w-[380px]'
+      } ${
+        isChat ? 'bg-card' : 'bg-fun-pink'
+      } border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb ${
+        isChat ? 'dark:border-glass-border' : 'dark:border-transparent dark:shadow-glow-pink'
+      }`}
+      style={{ boxShadow: 'var(--nb-shadow-hover)' }}
+      role="dialog"
+      aria-modal="true"
+      aria-busy="true"
+      aria-label={isChat ? "Loading chat..." : "Loading roast..."}
+    >
+      <div className={`p-4 flex items-center gap-3 ${
+        isChat ? 'bg-accent' : 'bg-fun-pink'
+      } border-b-nb border-[color:var(--color-border)] ${
+        isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
+      }`}>
+        <div className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
+          isChat ? 'dark:bg-glass-bg dark:border-glass-border' : 'dark:bg-glass-bg dark:border-transparent'
+        }`}>
+          {isChat ? (
+            <Bot size={20} className="text-black dark:text-white" />
+          ) : (
+            <Flame size={20} className="text-fun-pink" />
+          )}
+        </div>
+        <h3 className="font-heading font-bold text-white">
+          {isChat ? 'Loading chat...' : 'Loading roast...'}
+        </h3>
+      </div>
+      <div className="p-6 bg-white">
+        <div className="animate-pulse motion-reduce:animate-none space-y-3">
+          <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Chatbot = () => {
   // FAB state
   const [isFabOpen, setIsFabOpen] = useState(false);
@@ -95,7 +145,7 @@ const Chatbot = () => {
       lastFocusedRef.current?.focus?.();
       lastFocusedRef.current = null;
     }
-  }, [anyDialogOpen]);
+  }, [anyDialogOpen, isChatOpen, isRoastOpen]);
 
   return (
     <>
@@ -164,24 +214,26 @@ const Chatbot = () => {
         </div>
       </div>
 
-      <Suspense fallback={null}>
-        <AnimatePresence>
-          {isChatOpen && (
+      <AnimatePresence>
+        {isChatOpen && (
+          <Suspense fallback={<LoadingDialog type="chat" />}>
             <ChatInterface
               key="chat-interface"
               onClose={() => setIsChatOpen(false)}
             />
-          )}
-          {isRoastOpen && (
+          </Suspense>
+        )}
+        {isRoastOpen && (
+          <Suspense fallback={<LoadingDialog type="roast" />}>
             <RoastInterface
               key="roast-interface"
               onClose={() => setIsRoastOpen(false)}
               roastContent={roastContent}
               onRoastComplete={setRoastContent}
             />
-          )}
-        </AnimatePresence>
-      </Suspense>
+          </Suspense>
+        )}
+      </AnimatePresence>
     </>
   );
 };
