@@ -1,0 +1,288 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Bot, X, Send } from 'lucide-react';
+import { chatWithGemini } from '../../services/ai';
+import ReactMarkdown from 'react-markdown';
+import { ChatSkeleton } from './SkeletonLoader';
+
+const STORAGE_KEY = 'portfolio_chat_history';
+const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
+
+// Security: Validate href after decoding to prevent URL-encoded protocol bypasses
+const isSafeHref = (href) => {
+  if (!href || typeof href !== 'string') {
+    return false;
+  }
+
+  let normalizedHref;
+  try {
+    // Decode percent-encoded characters once to catch encoded protocols like javascript:
+    normalizedHref = decodeURIComponent(href);
+  } catch (e) {
+    // If decoding fails, fall back to the original value
+    normalizedHref = href;
+  }
+
+  // Only allow http, https, and mailto protocols
+  return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
+};
+
+const LinkRenderer = ({ href, children, ...rest }) => {
+  // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
+  const isValidHref = isSafeHref(href);
+
+  if (!isValidHref) {
+    return <span {...rest}>{children}</span>;
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-accent underline font-bold"
+      {...rest}
+    >
+      {children}
+    </a>
+  );
+};
+
+const ChatInterface = ({ onClose }) => {
+  const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+  const chatDialogRef = useRef(null);
+  const isMountedRef = useRef(true);
+  const prefersReducedMotion = useReducedMotion();
+  const titleId = 'chatbot-title';
+  const dialogId = 'chatbot-dialog';
+
+  // Track mount status
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  // Load chat history
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load chat history:', e);
+    }
+  }, []);
+
+  // Save chat history
+  useEffect(() => {
+    if (messages.length > 1) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      } catch (e) {
+        console.warn('Failed to save chat history:', e);
+      }
+    }
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMsg = { role: 'user', text: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setIsTyping(true);
+
+    const MAX_HISTORY_CONTEXT = 30;
+    const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
+      role: m.role,
+      parts: [{ text: m.text }]
+    }));
+
+    try {
+      const responseText = await chatWithGemini(userMsg.text, history);
+      if (isMountedRef.current) {
+        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsTyping(false);
+      }
+    }
+  };
+
+  const clearHistory = useCallback(() => {
+    setMessages([DEFAULT_MESSAGE]);
+    localStorage.removeItem(STORAGE_KEY);
+  }, []);
+
+  // Focus trap and Escape handling
+  useEffect(() => {
+    const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const container = chatDialogRef.current;
+      if (!container) return;
+
+      const focusable = container.querySelectorAll(focusSelectors);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey) {
+        if (document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
+      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-nb border-[color:var(--color-border)] flex flex-col overflow-hidden rounded-nb glass-panel dark:border-glass-border"
+      style={{ boxShadow: 'var(--nb-shadow-hover)' }}
+      id={dialogId}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      aria-describedby="chatbot-helper"
+      ref={chatDialogRef}
+    >
+      {/* Header */}
+      <div className="bg-accent p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] dark:border-glass-border">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border">
+            <Bot size={20} className="text-black dark:text-white" />
+          </div>
+          <div>
+            <h3 className="font-heading font-bold text-white" id={titleId}>Digital Rishabh</h3>
+            <p className="text-xs text-white/80 flex items-center gap-1 font-sans">
+              <span className="w-2 h-2 bg-fun-yellow rounded-full animate-pulse motion-reduce:animate-none"></span>
+              Online
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          {messages.length > 1 && (
+            <button
+              onClick={clearHistory}
+              className="text-xs text-white/70 hover:text-white transition-colors font-heading font-bold px-2 py-1 border-2 border-white/30 hover:border-white"
+              aria-label="Clear chat history"
+            >
+              Clear
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="p-1 text-white hover:bg-white/20 transition-colors"
+            aria-label="Close chat (Escape)"
+          >
+            <X size={20} />
+          </button>
+        </div>
+      </div>
+
+      <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
+
+      {/* Messages Area */}
+      <div
+        className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
+        role="log"
+        aria-live="polite"
+        aria-busy={isTyping}
+      >
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
+                ? 'bg-fun-yellow text-black'
+                : 'bg-card text-primary'
+                }`}
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            >
+              <ReactMarkdown components={{ a: LinkRenderer }}>
+                {msg.text}
+              </ReactMarkdown>
+            </div>
+          </div>
+        ))}
+        {isTyping && <ChatSkeleton />}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input Area */}
+      <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">
+        <div className="flex gap-2">
+          <input
+            ref={inputRef}
+            type="text"
+            id="chatbot-input"
+            aria-label="Type a message"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            maxLength={500}
+            disabled={isTyping}
+            placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
+            className="flex-grow bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || isTyping}
+            className="p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
+            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            aria-label="Send message"
+          >
+            <Send size={20} />
+          </button>
+        </div>
+      </form>
+    </motion.div>
+  );
+};
+
+export default ChatInterface;
