@@ -7,13 +7,29 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const [roastLoading, setRoastLoading] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
+  const isMountedRef = useRef(true);
   const prefersReducedMotion = useReducedMotion();
+
+  // Track mount status
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const handleRoast = useCallback(async () => {
     setRoastLoading(true);
-    const text = await roastResume();
-    onRoastComplete(text);
-    setRoastLoading(false);
+    try {
+      const text = await roastResume();
+      if (isMountedRef.current) {
+        onRoastComplete(text);
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setRoastLoading(false);
+      }
+    }
   }, [onRoastComplete]);
 
   useEffect(() => {
@@ -26,15 +42,6 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     if (roastCloseRef.current) {
       setTimeout(() => roastCloseRef.current?.focus(), 100);
     }
-  }, []);
-
-  // Manage background inertness
-  useEffect(() => {
-      const main = document.getElementById('main-content');
-      if (main) main.setAttribute('aria-hidden', 'true');
-      return () => {
-        if (main) main.removeAttribute('aria-hidden');
-      };
   }, []);
 
   // Focus trap and Escape handling

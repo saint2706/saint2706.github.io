@@ -14,7 +14,7 @@ const isSafeHref = (href) => {
     return false;
   }
 
-  let normalizedHref = href;
+  let normalizedHref;
   try {
     // Decode percent-encoded characters once to catch encoded protocols like javascript:
     normalizedHref = decodeURIComponent(href);
@@ -56,9 +56,18 @@ const ChatInterface = ({ onClose }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatDialogRef = useRef(null);
+  const isMountedRef = useRef(true);
   const prefersReducedMotion = useReducedMotion();
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
+
+  // Track mount status
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   // Load chat history
   useEffect(() => {
@@ -115,9 +124,16 @@ const ChatInterface = ({ onClose }) => {
       parts: [{ text: m.text }]
     }));
 
-    const responseText = await chatWithGemini(userMsg.text, history);
-    setMessages(prev => [...prev, { role: 'model', text: responseText }]);
-    setIsTyping(false);
+    try {
+      const responseText = await chatWithGemini(userMsg.text, history);
+      if (isMountedRef.current) {
+        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsTyping(false);
+      }
+    }
   };
 
   const clearHistory = useCallback(() => {
@@ -159,15 +175,6 @@ const ChatInterface = ({ onClose }) => {
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
-
-  // Manage background inertness
-  useEffect(() => {
-      const main = document.getElementById('main-content');
-      if (main) main.setAttribute('aria-hidden', 'true');
-      return () => {
-        if (main) main.removeAttribute('aria-hidden');
-      };
-  }, []);
 
   return (
     <motion.div
