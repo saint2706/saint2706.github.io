@@ -85,7 +85,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
-    const isTimeout = error?.name === "TimeoutError";
+    const isTimeout = error instanceof TimeoutError;
 
     console.error("Gemini Error:", error);
 
@@ -124,7 +124,7 @@ export const roastResume = async () => {
     } catch (error) {
         const errorMessage = error?.message || "Unknown error";
         const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
-        const isTimeout = error?.name === "TimeoutError";
+        const isTimeout = error instanceof TimeoutError;
 
         if (isLeakedKey) {
           return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
