@@ -3,6 +3,30 @@ import { resumeData } from "../data/resume";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
 
+// Security: Input limits to prevent DoS and abuse
+const MAX_INPUT_LENGTH = 1000;
+const API_TIMEOUT = 15000;
+
+const validateInput = (input) => {
+  if (typeof input !== 'string') {
+    throw new Error("Input must be a text string");
+  }
+  if (!input.trim()) {
+    throw new Error("Input cannot be empty");
+  }
+  if (input.length > MAX_INPUT_LENGTH) {
+    throw new Error(`Input exceeds maximum length of ${MAX_INPUT_LENGTH} characters`);
+  }
+};
+
+const withTimeout = (promise, ms) => {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error("Request timed out")), ms);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
+};
+
 const getModel = () => {
   if (!API_KEY) {
     return null;
@@ -28,6 +52,12 @@ Instructions:
 `;
 
 export const chatWithGemini = async (userMessage, history = []) => {
+  try {
+    validateInput(userMessage);
+  } catch (e) {
+    return e.message; // Return validation error to user
+  }
+
   const model = getModel();
   if (!model) {
     return "My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!";
@@ -48,7 +78,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
       ],
     });
 
-    const result = await chat.sendMessage(userMessage);
+    const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
     const response = await result.response;
     return response.text();
   } catch (error) {
@@ -56,6 +86,10 @@ export const chatWithGemini = async (userMessage, history = []) => {
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
 
     console.error("Gemini Error:", error);
+
+    if (errorMessage === "Request timed out") {
+      return "I'm taking a bit too long to think. Please try asking in a different way.";
+    }
 
     if (isLeakedKey) {
       return "The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.";
