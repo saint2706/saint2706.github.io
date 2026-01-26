@@ -14,10 +14,22 @@ const getModel = () => {
   return genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 };
 
+class TimeoutError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "TimeoutError";
+  }
+}
+
 const withTimeout = (promise, ms) => {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new TimeoutError("Request timed out")), ms);
+  });
+
   return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error("Request timed out")), ms))
+    promise.finally(() => clearTimeout(timeoutId)),
+    timeoutPromise
   ]);
 };
 
@@ -43,7 +55,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
   }
 
   if (userMessage.length > MAX_INPUT_LENGTH) {
-    return "Whoa, that's a lot of text! My neural circuits are overloaded. Can you keep it under 1000 characters?";
+    return `Whoa, that's a lot of text! My neural circuits are overloaded. Can you keep it under ${MAX_INPUT_LENGTH} characters?`;
   }
 
   const model = getModel();
@@ -73,7 +85,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
-    const isTimeout = errorMessage === "Request timed out";
+    const isTimeout = error?.name === "TimeoutError";
 
     console.error("Gemini Error:", error);
 
@@ -112,7 +124,7 @@ export const roastResume = async () => {
     } catch (error) {
         const errorMessage = error?.message || "Unknown error";
         const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
-        const isTimeout = errorMessage === "Request timed out";
+        const isTimeout = error?.name === "TimeoutError";
 
         if (isLeakedKey) {
           return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
