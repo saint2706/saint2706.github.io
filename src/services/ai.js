@@ -2,6 +2,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { resumeData } from "../data/resume";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
+const API_TIMEOUT = 15000;
+const MAX_INPUT_LENGTH = 1000;
 
 const getModel = () => {
   if (!API_KEY) {
@@ -10,6 +12,25 @@ const getModel = () => {
 
   const genAI = new GoogleGenerativeAI(API_KEY);
   return genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+};
+
+class TimeoutError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "TimeoutError";
+  }
+}
+
+const withTimeout = (promise, ms) => {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new TimeoutError("Request timed out")), ms);
+  });
+
+  return Promise.race([
+    promise.finally(() => clearTimeout(timeoutId)),
+    timeoutPromise
+  ]);
 };
 
 const SYSTEM_PROMPT = `
@@ -28,6 +49,15 @@ Instructions:
 `;
 
 export const chatWithGemini = async (userMessage, history = []) => {
+  // Input Validation: Check type and length to prevent DoS/token exhaustion
+  if (!userMessage || typeof userMessage !== 'string') {
+    return "I didn't catch that. Could you say it again?";
+  }
+
+  if (userMessage.length > MAX_INPUT_LENGTH) {
+    return `Whoa, that's a lot of text! My neural circuits are overloaded. Can you keep it under ${MAX_INPUT_LENGTH} characters?`;
+  }
+
   const model = getModel();
   if (!model) {
     return "My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!";
@@ -48,17 +78,23 @@ export const chatWithGemini = async (userMessage, history = []) => {
       ],
     });
 
-    const result = await chat.sendMessage(userMessage);
+    // Timeout protection against hanging requests
+    const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
     const response = await result.response;
     return response.text();
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+    const isTimeout = error instanceof TimeoutError;
 
     console.error("Gemini Error:", error);
 
     if (isLeakedKey) {
       return "The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.";
+    }
+
+    if (isTimeout) {
+      return "I'm thinking really hard, but my connection seems to be slow. Try asking me again!";
     }
 
     return "I seem to be having a connection glitch. Maybe my neural pathways are crossed? Try again later!";
@@ -81,15 +117,21 @@ export const roastResume = async () => {
     `;
 
     try {
-        const result = await model.generateContent(prompt);
+        // Timeout protection
+        const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
         const response = await result.response;
         return response.text();
     } catch (error) {
         const errorMessage = error?.message || "Unknown error";
         const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+        const isTimeout = error instanceof TimeoutError;
 
         if (isLeakedKey) {
           return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
+        }
+
+        if (isTimeout) {
+            return "I was brewing a really good roast, but it took too long. Try again!";
         }
 
         return "I can't roast right now, I'm too nice. (Error connecting to AI)";
