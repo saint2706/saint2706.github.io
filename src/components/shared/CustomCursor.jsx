@@ -49,12 +49,11 @@ const CustomCursor = ({ enabled }) => {
             return `rgba(${r}, ${g}, ${b}, ${alpha})`;
         };
 
-        const accent = styles.getPropertyValue('--color-accent') || '#3b82f6';
-        const funPink = styles.getPropertyValue('--color-fun-pink') || '#ec4899';
-        const funYellow = styles.getPropertyValue('--color-fun-yellow') || '#fbbf24';
-        const textPrimary = styles.getPropertyValue('--color-text-primary') || (isDark ? '#f8fafc' : '#000000');
-        const textMuted = styles.getPropertyValue('--color-text-muted') || (isDark ? '#64748b' : '#666666');
-        const glow = styles.getPropertyValue('--glow-color') || 'rgba(139, 92, 246, 0.4)';
+        const accent = styles.getPropertyValue('--color-accent').trim() || '#3b82f6';
+        const funPink = styles.getPropertyValue('--color-fun-pink').trim() || '#ec4899';
+        const funYellow = styles.getPropertyValue('--color-fun-yellow').trim() || '#fbbf24';
+        const textPrimary = styles.getPropertyValue('--color-text-primary').trim() || (isDark ? '#f8fafc' : '#000000');
+        const textMuted = styles.getPropertyValue('--color-text-muted').trim() || (isDark ? '#64748b' : '#666666');
 
         return {
             accent,
@@ -62,7 +61,6 @@ const CustomCursor = ({ enabled }) => {
             funYellow,
             textPrimary,
             textMuted,
-            glow,
             accentAlpha: (a) => hexToRgba(accent, a),
             funPinkAlpha: (a) => hexToRgba(funPink, a),
             funYellowAlpha: (a) => hexToRgba(funYellow, a),
