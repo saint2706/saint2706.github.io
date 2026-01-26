@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useId } from 'react';
 import * as d3 from 'd3';
 import { useTheme } from '../shared/ThemeContext';
 import { resumeData } from '../../data/resume';
@@ -11,6 +11,8 @@ import { resumeData } from '../../data/resume';
 const SkillRadar = () => {
     const { isDark } = useTheme();
     const svgRef = useRef(null);
+    const titleId = useId();
+    const descId = useId();
 
     // Get top skills from resume data (pick highest proficiency from each category)
     const radarSkills = useMemo(() => {
@@ -37,10 +39,22 @@ const SkillRadar = () => {
         const margin = 70;
         const radius = Math.min(width, height) / 2 - margin;
 
-        const svg = d3.select(svgRef.current)
+        const container = d3.select(svgRef.current)
             .attr('width', width)
             .attr('height', height)
-            .append('g')
+            .attr('role', 'img')
+            .attr('aria-labelledby', `${titleId} ${descId}`);
+
+        // Append accessibility tags
+        container.append('title')
+            .attr('id', titleId)
+            .text('Skill Proficiency Radar Chart');
+
+        container.append('desc')
+            .attr('id', descId)
+            .text(`A radar chart displaying proficiency levels for: ${radarSkills.map(s => `${s.name} (${s.value}%)`).join(', ')}.`);
+
+        const svg = container.append('g')
             .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
         const angleSlice = (Math.PI * 2) / radarSkills.length;
@@ -150,7 +164,7 @@ const SkillRadar = () => {
                 });
         });
 
-    }, [isDark, radarSkills]);
+    }, [isDark, radarSkills, titleId, descId]);
 
     // Only render in dark mode
     if (!isDark) return null;
@@ -163,6 +177,15 @@ const SkillRadar = () => {
             </h3>
             <div className="flex justify-center">
                 <svg ref={svgRef} />
+            </div>
+            {/* Screen reader only list as fallback */}
+            <div className="sr-only">
+                <h4>Skill Proficiency Data</h4>
+                <ul>
+                    {radarSkills.map(skill => (
+                        <li key={skill.name}>{skill.name}: {skill.value}%</li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
