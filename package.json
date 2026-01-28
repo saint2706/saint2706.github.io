@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 1",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:security": "node scripts/test-security-utils.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.1.3",
