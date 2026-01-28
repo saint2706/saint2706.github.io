@@ -5,3 +5,7 @@
 ## 2024-05-23 - Icon-Only Button Accessibility
 **Learning:** Icon-only buttons (like ScrollToTop) often lack visual labels for mouse users, relying only on aria-labels. Adding tooltips improves clarity and consistency with other nav elements.
 **Action:** Always pair icon-only buttons with a tooltip on hover/focus, using the standard `bg-black text-white text-xs` pattern seen in Navbar.
+
+## 2024-05-24 - Input Character Counts
+**Learning:** Limited inputs (like chat messages) need visibility of system status. Users shouldn't guess when they'll hit a limit.
+**Action:** For inputs with `maxLength`, always add a small, non-intrusive character counter (e.g., `text-[10px] text-muted`) nearby to manage user expectations.
