@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin, Printer } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
+import { safeJSONStringify } from '../../utils/security';
 
 // Neubrutalism Section Component
 const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, shouldReduceMotion = false }) => (
@@ -124,7 +125,7 @@ const Resume = () => {
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJSONStringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [{

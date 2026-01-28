@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
+import { safeJSONStringify } from '../../utils/security';
 
 const Contact = () => {
     const shouldReduceMotion = useReducedMotion();
@@ -32,7 +33,7 @@ const Contact = () => {
                 <meta name="twitter:site" content={resumeData.basics.name} />
                 <meta name="twitter:creator" content={resumeData.basics.name} />
                 <script type="application/ld+json">
-                    {JSON.stringify({
+                    {safeJSONStringify({
                         "@context": "https://schema.org",
                         "@type": "BreadcrumbList",
                         "itemListElement": [

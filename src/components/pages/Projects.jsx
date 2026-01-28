@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
+import { safeJSONStringify } from '../../utils/security';
 import { ProjectSkeleton } from '../shared/SkeletonLoader';
 
 const Projects = () => {
@@ -59,7 +60,7 @@ const Projects = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJSONStringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [{
