@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Check, Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
+import { safeJSONStringify } from '../../utils/security';
 import TicTacToe from '../games/TicTacToe';
 import SnakeGame from '../games/SnakeGame';
 
@@ -29,7 +30,7 @@ const Games = () => {
                 <meta property="og:description" content={description} />
                 <meta property="og:url" content={canonicalUrl} />
                 <script type="application/ld+json">
-                    {JSON.stringify({
+                    {safeJSONStringify({
                         "@context": "https://schema.org",
                         "@type": "BreadcrumbList",
                         "itemListElement": [

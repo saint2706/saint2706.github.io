@@ -48,6 +48,39 @@ const LinkRenderer = ({ href, children, ...rest }) => {
   );
 };
 
+// Optimization: Extract message list and use React.memo to prevent re-rendering
+// the entire chat history (and expensive Markdown parsing) on every keystroke.
+const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
+  <div
+    className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
+    role="log"
+    aria-live="polite"
+    aria-busy={isTyping}
+  >
+    {messages.map((msg, index) => (
+      <div
+        key={index}
+        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+      >
+        <div
+          className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
+            ? 'bg-fun-yellow text-black'
+            : 'bg-card text-primary'
+            }`}
+          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        >
+          <ReactMarkdown components={{ a: LinkRenderer }}>
+            {msg.text}
+          </ReactMarkdown>
+        </div>
+      </div>
+    ))}
+    {isTyping && <ChatSkeleton />}
+    <div ref={messagesEndRef} />
+  </div>
+));
+MessageList.displayName = 'MessageList';
+
 const ChatInterface = ({ onClose }) => {
   const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
   const [input, setInput] = useState('');
@@ -233,33 +266,7 @@ const ChatInterface = ({ onClose }) => {
       <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
 
       {/* Messages Area */}
-      <div
-        className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
-        role="log"
-        aria-live="polite"
-        aria-busy={isTyping}
-      >
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
-                ? 'bg-fun-yellow text-black'
-                : 'bg-card text-primary'
-                }`}
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-            >
-              <ReactMarkdown components={{ a: LinkRenderer }}>
-                {msg.text}
-              </ReactMarkdown>
-            </div>
-          </div>
-        ))}
-        {isTyping && <ChatSkeleton />}
-        <div ref={messagesEndRef} />
-      </div>
+      <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
 
       {/* Input Area */}
       <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">

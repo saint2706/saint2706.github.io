@@ -9,3 +9,7 @@
 ## 2024-05-24 - Input Character Counts
 **Learning:** Limited inputs (like chat messages) need visibility of system status. Users shouldn't guess when they'll hit a limit.
 **Action:** For inputs with `maxLength`, always add a small, non-intrusive character counter (e.g., `text-[10px] text-muted`) nearby to manage user expectations.
+
+## 2024-05-24 - Dynamic Content Accessibility
+**Learning:** Dynamic content updates in modals (like the Roast Mode status) are silent to screen readers unless explicitly marked with `aria-live`. Since the content replaces the previous state entirely, `aria-atomic="true"` is also needed.
+**Action:** Wrap dynamic content containers in `aria-live="polite"` `aria-atomic="true"` and toggle `aria-busy={isLoading}` to prevent partial announcements.

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useMemo } from 'react';
-import * as d3 from 'd3';
+// Optimized imports to enable tree-shaking
+import { select, scaleLinear, lineRadial, curveLinearClosed, transition } from 'd3';
 import { useTheme } from '../shared/ThemeContext';
 import { resumeData } from '../../data/resume';
 
@@ -30,14 +31,14 @@ const SkillRadar = () => {
         if (!svgRef.current || !isDark) return;
 
         // Clear previous chart
-        d3.select(svgRef.current).selectAll('*').remove();
+        select(svgRef.current).selectAll('*').remove();
 
         const width = 360;
         const height = 360;
         const margin = 70;
         const radius = Math.min(width, height) / 2 - margin;
 
-        const svg = d3.select(svgRef.current)
+        const svg = select(svgRef.current)
             .attr('width', width)
             .attr('height', height)
             .append('g')
@@ -46,7 +47,7 @@ const SkillRadar = () => {
         const angleSlice = (Math.PI * 2) / radarSkills.length;
 
         // Scale for the radius
-        const rScale = d3.scaleLinear()
+        const rScale = scaleLinear()
             .domain([0, 100])
             .range([0, radius]);
 
@@ -85,10 +86,10 @@ const SkillRadar = () => {
         });
 
         // Create the radar area
-        const radarLine = d3.lineRadial()
+        const radarLine = lineRadial()
             .angle((d, i) => angleSlice * i)
             .radius(d => rScale(d.value))
-            .curve(d3.curveLinearClosed);
+            .curve(curveLinearClosed);
 
         // Draw the radar area with gradient
         const gradient = svg.append('defs')
@@ -135,14 +136,14 @@ const SkillRadar = () => {
                 .style('stroke-width', 2)
                 .style('cursor', 'pointer')
                 .on('mouseover', function () {
-                    d3.select(this)
+                    select(this)
                         .transition()
                         .duration(200)
                         .attr('r', 8)
                         .style('filter', 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.8))');
                 })
                 .on('mouseout', function () {
-                    d3.select(this)
+                    select(this)
                         .transition()
                         .duration(200)
                         .attr('r', 5)
