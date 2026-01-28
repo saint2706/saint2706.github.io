@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
 import { BlogSkeleton } from '../shared/SkeletonLoader';
+import { safeJSONStringify } from '../../utils/security';
 
 const POSTS_PER_PAGE = 6;
 
@@ -96,7 +97,7 @@ const Blog = () => {
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJSONStringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [{

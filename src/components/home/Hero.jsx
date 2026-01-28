@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { useTheme } from '../shared/ThemeContext';
+import { safeJSONStringify } from '../../utils/security';
 
 // Lazy load Dashboard to exclude heavy D3 dependencies from the main bundle
 const Dashboard = lazy(() => import('../dashboard/Dashboard'));
@@ -34,7 +35,7 @@ const Hero = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJSONStringify({
             "@context": "https://schema.org",
             "@type": "Person",
             "name": resumeData.basics.name,
@@ -49,7 +50,7 @@ const Hero = () => {
           })}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJSONStringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
             "name": `${resumeData.basics.name} Portfolio`,
