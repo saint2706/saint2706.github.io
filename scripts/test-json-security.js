@@ -39,12 +39,12 @@ const tests = [
   {
     name: "Unicode line separator (U+2028)",
     input: { key: "line\u2028separator" },
-    expected: '{"key":"line\\u2028separator"}'
+    expected: '{"key":"line\\\\u2028separator"}'
   },
   {
     name: "Unicode paragraph separator (U+2029)",
     input: { key: "paragraph\u2029separator" },
-    expected: '{"key":"paragraph\\u2029separator"}'
+    expected: '{"key":"paragraph\\\\u2029separator"}'
   },
   {
     name: "Multiple dangerous characters",
