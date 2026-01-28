@@ -48,6 +48,39 @@ const LinkRenderer = ({ href, children, ...rest }) => {
   );
 };
 
+// Optimization: Extract message list and use React.memo to prevent re-rendering
+// the entire chat history (and expensive Markdown parsing) on every keystroke.
+const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
+  <div
+    className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
+    role="log"
+    aria-live="polite"
+    aria-busy={isTyping}
+  >
+    {messages.map((msg, index) => (
+      <div
+        key={index}
+        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+      >
+        <div
+          className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
+            ? 'bg-fun-yellow text-black'
+            : 'bg-card text-primary'
+            }`}
+          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        >
+          <ReactMarkdown components={{ a: LinkRenderer }}>
+            {msg.text}
+          </ReactMarkdown>
+        </div>
+      </div>
+    ))}
+    {isTyping && <ChatSkeleton />}
+    <div ref={messagesEndRef} />
+  </div>
+));
+MessageList.displayName = 'MessageList';
+
 const ChatInterface = ({ onClose }) => {
   const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
   const [input, setInput] = useState('');
@@ -216,10 +249,16 @@ const ChatInterface = ({ onClose }) => {
           )}
           <button
             onClick={onClose}
-            className="p-1 text-white hover:bg-white/20 transition-colors"
+            className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-accent rounded-sm"
             aria-label="Close chat (Escape)"
           >
             <X size={20} />
+            <span
+              className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+              aria-hidden="true"
+            >
+              Close
+            </span>
           </button>
         </div>
       </div>
@@ -227,57 +266,42 @@ const ChatInterface = ({ onClose }) => {
       <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
 
       {/* Messages Area */}
-      <div
-        className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
-        role="log"
-        aria-live="polite"
-        aria-busy={isTyping}
-      >
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
-                ? 'bg-fun-yellow text-black'
-                : 'bg-card text-primary'
-                }`}
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-            >
-              <ReactMarkdown components={{ a: LinkRenderer }}>
-                {msg.text}
-              </ReactMarkdown>
-            </div>
-          </div>
-        ))}
-        {isTyping && <ChatSkeleton />}
-        <div ref={messagesEndRef} />
-      </div>
+      <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
 
       {/* Input Area */}
       <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">
-        <div className="flex gap-2">
-          <input
-            ref={inputRef}
-            type="text"
-            id="chatbot-input"
-            aria-label="Type a message"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            maxLength={500}
-            disabled={isTyping}
-            placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-            className="flex-grow bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
-          />
+        <div className="flex gap-2 items-start">
+          <div className="flex-grow relative">
+            <input
+              ref={inputRef}
+              type="text"
+              id="chatbot-input"
+              aria-label="Type a message"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              maxLength={500}
+              disabled={isTyping}
+              placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
+              className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
+            />
+            <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
+              {input.length}/500
+            </div>
+          </div>
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className="p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
+            className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-label="Send message"
           >
             <Send size={20} />
+            <span
+              className="absolute bottom-full mb-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+              aria-hidden="true"
+            >
+              Send
+            </span>
           </button>
         </div>
       </form>
