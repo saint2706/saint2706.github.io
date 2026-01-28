@@ -9,17 +9,47 @@ const tests = [
   {
     name: "Object with script tag",
     input: { key: "<script>alert(1)</script>" },
-    expected: '{"key":"\\u003cscript>alert(1)\\u003c/script>"}'
+    expected: '{"key":"\\u003cscript\\u003ealert(1)\\u003c/script\\u003e"}'
   },
   {
     name: "Nested object with script tag",
     input: { nested: { key: "</script>" } },
-    expected: '{"nested":{"key":"\\u003c/script>"}}'
+    expected: '{"nested":{"key":"\\u003c/script\\u003e"}}'
   },
   {
     name: "Array with script tag",
     input: ["<script>"],
-    expected: '["\\u003cscript>"]'
+    expected: '["\\u003cscript\\u003e"]'
+  },
+  {
+    name: "Greater than character",
+    input: { key: '">attribute' },
+    expected: '{"key":"\\"\\u003eattribute"}'
+  },
+  {
+    name: "Ampersand character",
+    input: { key: "Tom & Jerry" },
+    expected: '{"key":"Tom \\u0026 Jerry"}'
+  },
+  {
+    name: "HTML event handler injection",
+    input: { key: '<img src=x onerror=alert(1)>' },
+    expected: '{"key":"\\u003cimg src=x onerror=alert(1)\\u003e"}'
+  },
+  {
+    name: "Unicode line separator (U+2028)",
+    input: { key: "line\u2028separator" },
+    expected: '{"key":"line\\\\u2028separator"}'
+  },
+  {
+    name: "Unicode paragraph separator (U+2029)",
+    input: { key: "paragraph\u2029separator" },
+    expected: '{"key":"paragraph\\\\u2029separator"}'
+  },
+  {
+    name: "Multiple dangerous characters",
+    input: { key: "<script>alert('XSS')</script> & more" },
+    expected: '{"key":"\\u003cscript\\u003ealert(\'XSS\')\\u003c/script\\u003e \\u0026 more"}'
   }
 ];
 
