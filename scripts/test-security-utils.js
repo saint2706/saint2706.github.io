@@ -2,6 +2,11 @@ import { safeJSONStringify } from '../src/utils/security.js';
 
 const tests = [
   {
+    name: 'Escapes closing script tag',
+    input: { key: '</script><script>alert(1)</script>' },
+    expectedContains: '\\u003c/script\\u003e\\u003cscript\\u003ealert(1)\\u003c/script\\u003e'
+  },
+  {
     name: 'Escapes <script>',
     input: { key: '<script>alert(1)</script>' },
     expectedContains: '\\u003cscript\\u003ealert(1)\\u003c/script\\u003e'
