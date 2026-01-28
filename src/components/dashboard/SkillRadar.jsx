@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 // Optimized imports to enable tree-shaking
-import { select, scaleLinear, lineRadial, curveLinearClosed } from 'd3';
+import { select, scaleLinear, lineRadial, curveLinearClosed, transition } from 'd3';
 import { useTheme } from '../shared/ThemeContext';
 import { resumeData } from '../../data/resume';
 
