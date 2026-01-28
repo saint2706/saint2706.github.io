@@ -111,9 +111,14 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       </div>
 
       {/* Content */}
-      <div className="p-6 bg-white">
+      <div
+        className="p-6 bg-white"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-busy={roastLoading}
+      >
         {roastLoading ? (
-          <div className="flex items-center gap-3 text-fun-pink">
+          <div className="flex items-center gap-3 text-fun-pink" role="status">
             <RefreshCw size={20} className="animate-spin motion-reduce:animate-none" />
             <span className="font-heading font-bold">Roasting your resume...</span>
           </div>
