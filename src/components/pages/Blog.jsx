@@ -12,6 +12,7 @@ const POSTS_PER_PAGE = 6;
 const Blog = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const shouldReduceMotion = useReducedMotion();
@@ -30,15 +31,24 @@ const Blog = () => {
   };
 
   const filteredBlogs = useMemo(() => {
+    const lowerSearchTerm = searchTerm.toLowerCase();
     return blogs
       .filter(blog => {
         const matchesSource = filter === 'All' || blog.source === filter;
-        const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = blog.title.toLowerCase().includes(lowerSearchTerm) ||
+          blog.summary.toLowerCase().includes(lowerSearchTerm);
         return matchesSource && matchesSearch;
       })
       .sort((a, b) => new Date(b.date) - new Date(a.date));
   }, [filter, searchTerm]);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchTerm(inputValue);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [inputValue]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -184,15 +194,18 @@ const Blog = () => {
               type="text"
               aria-label="Search blogs"
               placeholder="Search blogs..."
-              value={searchTerm}
+              value={inputValue}
               maxLength={100}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setInputValue(e.target.value)}
               className="w-full bg-card border-[3px] border-[color:var(--color-border)] py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             />
-            {searchTerm && (
+            {inputValue && (
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={() => {
+                  setInputValue('');
+                  setSearchTerm('');
+                }}
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1 motion-reduce:transition-none"
                 aria-label="Clear search"
               >
@@ -312,6 +325,7 @@ const Blog = () => {
               </p>
               <button
                 onClick={() => {
+                  setInputValue('');
                   setSearchTerm('');
                   setFilter('All');
                 }}
