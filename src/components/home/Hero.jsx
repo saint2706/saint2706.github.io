@@ -64,7 +64,7 @@ const Hero = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12">
+      <div className={`${isDark ? 'min-h-0' : 'min-h-[80vh]'} relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12`}>
         {/* Neubrutalism Decorative Shapes */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           {/* Yellow block - top left */}

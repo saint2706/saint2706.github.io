@@ -39,7 +39,6 @@ const PageWrapper = ({ children }) => {
             animate="animate"
             exit={shouldReduceMotion ? undefined : 'exit'}
             transition={shouldReduceMotion ? { duration: 0 } : undefined}
-            style={{ minHeight: '100vh' }}
         >
             {children}
         </motion.div>

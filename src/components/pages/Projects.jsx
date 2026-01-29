@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import { ProjectSkeleton } from '../shared/SkeletonLoader';
-import { safeJSONStringify } from '../../utils/security';
 
 const Projects = () => {
   const [isLoading, setIsLoading] = useState(true);
