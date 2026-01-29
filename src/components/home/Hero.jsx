@@ -1,17 +1,12 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
-import { useTheme } from '../shared/ThemeContext';
 import { safeJSONStringify } from '../../utils/security';
 
-// Lazy load Dashboard to exclude heavy D3 dependencies from the main bundle
-const Dashboard = lazy(() => import('../dashboard/Dashboard'));
-
 const Hero = () => {
-  const { isDark } = useTheme();
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = resumeData.basics.website;
   const description = 'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
@@ -64,7 +59,7 @@ const Hero = () => {
         </script>
       </Helmet>
 
-      <div className={`${isDark ? 'min-h-0' : 'min-h-[80vh]'} relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12`}>
+      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12">
         {/* Neubrutalism Decorative Shapes */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           {/* Yellow block - top left */}
@@ -72,7 +67,7 @@ const Hero = () => {
             initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
-            className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb dark:bg-glow-purple/30 dark:border-transparent dark:blur-2xl dark:rounded-full"
+            className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
           {/* Red block - bottom left */}
@@ -80,7 +75,7 @@ const Hero = () => {
             initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
-            className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb dark:bg-glow-pink/30 dark:border-transparent dark:blur-2xl dark:rounded-full"
+            className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
           {/* Blue block - top right */}
@@ -88,7 +83,7 @@ const Hero = () => {
             initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
-            className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb dark:bg-glow-cyan/30 dark:border-transparent dark:blur-2xl dark:rounded-full"
+            className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           />
         </div>
@@ -101,10 +96,10 @@ const Hero = () => {
           className="mb-8"
         >
           <div
-            className="inline-flex items-center gap-2 bg-fun-yellow text-black font-heading font-semibold px-5 py-2 border-nb border-[color:var(--color-border)] rounded-nb glass-panel dark:bg-accent/20 dark:text-white dark:border-glass-border dark:shadow-glow-purple"
+            className="inline-flex items-center gap-2 bg-fun-yellow text-black font-heading font-semibold px-5 py-2 border-nb border-[color:var(--color-border)] rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
-            <Sparkles size={18} className="text-black dark:text-accent" />
+            <Sparkles size={18} className="text-black" />
             Available for hire & collaborations
           </div>
         </motion.div>
@@ -118,7 +113,7 @@ const Hero = () => {
         >
           <span className="block text-primary mb-2">Data Storyteller</span>
           <span
-            className="block text-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-primary rounded-nb dark:bg-transparent dark:border-transparent dark:bg-gradient-to-r dark:from-glow-purple dark:to-glow-pink dark:bg-clip-text dark:text-transparent"
+            className="text-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-primary rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
             & Creative Analyst
@@ -146,7 +141,7 @@ const Hero = () => {
         >
           <Link
             to="/projects"
-            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
+            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
             onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
@@ -156,7 +151,7 @@ const Hero = () => {
           </Link>
           <button
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-            className="px-8 py-4 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb glass-panel dark:border-glass-border dark:hover:shadow-glow-pink"
+            className="px-8 py-4 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
             onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
@@ -175,12 +170,12 @@ const Hero = () => {
           className="mt-16 w-full max-w-md"
         >
           <div
-            className="bg-fun-yellow text-black p-6 border-nb border-[color:var(--color-border)] text-left font-mono text-sm rounded-nb glass-panel dark:bg-glass-bg dark:text-primary dark:border-glass-border"
+            className="bg-fun-yellow text-black p-6 border-nb border-[color:var(--color-border)] text-left font-mono text-sm rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20 dark:border-glass-border">
-              <Code2 size={16} className="dark:text-accent" />
-              <span className="font-heading font-bold dark:text-accent">developer.js</span>
+            <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
+              <Code2 size={16} />
+              <span className="font-heading font-bold">developer.js</span>
             </div>
             <pre className="whitespace-pre-wrap">
               {`const developer = {
@@ -192,13 +187,6 @@ const Hero = () => {
             </pre>
           </div>
         </motion.div>
-
-        {/* Dark Mode Only: Analytics Dashboard Section */}
-        {isDark && (
-          <Suspense fallback={<div className="mt-16 w-full max-w-4xl min-h-[500px] animate-pulse bg-glass-bg rounded-glass" />}>
-            <Dashboard />
-          </Suspense>
-        )}
       </div>
     </>
   );

@@ -66,11 +66,10 @@ const Layout = ({ children }) => {
       {/* Custom interactive cursor */}
       <CustomCursor enabled={effectiveCursorEnabled} />
 
-      {/* Light mode: subtle grid | Dark mode: gradient mesh with floating orbs */}
+      {/* Subtle grid background pattern */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Light mode grid pattern */}
         <div
-          className="w-full h-full opacity-[0.03] dark:opacity-0 transition-opacity duration-500"
+          className="w-full h-full opacity-[0.03]"
           style={{
             backgroundImage: `
               linear-gradient(var(--color-border) 1px, transparent 1px),
@@ -79,14 +78,6 @@ const Layout = ({ children }) => {
             backgroundSize: '40px 40px'
           }}
         />
-
-        {/* Dark mode gradient mesh */}
-        <div className="absolute inset-0 opacity-0 dark:opacity-100 transition-opacity duration-500 gradient-mesh">
-          {/* Animated floating orbs */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-glow-purple/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-glow-pink/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '-2s' }} />
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-glow-cyan/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '-4s' }} />
-        </div>
       </div>
 
       {/* Skip navigation link for keyboard users */}

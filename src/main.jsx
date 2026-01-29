@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App.jsx'
 import './index.css'
-import { ThemeProvider } from './components/shared/ThemeContext'
-
 // 🎉 Easter egg for curious developers and recruiters!
 console.log(
   `%c
@@ -18,8 +16,6 @@ console.log(
   ║   🔗 GitHub: https://github.com/saint2706                    ║
   ║   💼 LinkedIn: Let's connect!                                ║
   ║   ☕ Buy me a coffee if you liked what you saw!              ║
-  ║                                                              ║
-  ║   P.S. Try the Konami Code: ↑↑↓↓←→←→                         ║
   ║                                                              ║
   ╚══════════════════════════════════════════════════════════════╝
   `,
@@ -39,9 +35,7 @@ console.log(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
     </HelmetProvider>
   </React.StrictMode>,
 )

@@ -64,7 +64,7 @@ const Games = () => {
                         initial={shouldReduceMotion ? false : { scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }}
-                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb dark:border-transparent dark:shadow-glow-pink"
+                        className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb"
                         style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
                         <Gamepad2 className="w-5 h-5" />
@@ -73,7 +73,7 @@ const Games = () => {
 
                     <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
                         <span
-                            className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
+                            className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
                             style={{ boxShadow: 'var(--nb-shadow)' }}
                         >
                             Game Zone
@@ -106,8 +106,8 @@ const Games = () => {
                                 id={`${game.id}-tab`}
                                 className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
                                     ${activeGame === game.id
-                                        ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5 dark:shadow-glow-purple`
-                                        : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5 dark:border-glass-border'
+                                        ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
+                                        : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                                     }`}
                                 style={{ boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
                             >
@@ -138,7 +138,7 @@ const Games = () => {
                     className="flex justify-center"
                 >
                     <div
-                        className="bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb glass-panel dark:border-glass-border"
+                        className="bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb"
                         style={{ boxShadow: 'var(--nb-shadow)' }}
                     >
                         <AnimatePresence mode="wait">
@@ -167,7 +167,7 @@ const Games = () => {
                     className="flex justify-center mt-12"
                 >
                     <div
-                        className="bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb dark:bg-glass-bg dark:border-glass-border"
+                        className="bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                     >
                         <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">

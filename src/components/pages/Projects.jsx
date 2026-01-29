@@ -86,7 +86,7 @@ const Projects = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-fun-yellow text-black px-4 py-2 border-nb border-[color:var(--color-border)] rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
+              className="inline-block bg-fun-yellow text-black px-4 py-2 border-nb border-[color:var(--color-border)] rounded-nb"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               Creative Experiments
@@ -120,16 +120,16 @@ const Projects = () => {
             <motion.article
               key={idx}
               variants={item}
-              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb glass-panel dark:border-glass-border dark:hover:shadow-glow-purple"
+              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
               style={{ boxShadow: 'var(--nb-shadow)' }}
               whileHover={shouldReduceMotion ? undefined : { boxShadow: 'var(--nb-shadow-hover)' }}
             >
               {/* Color accent bar */}
-              <div className={`h-3 ${cardColors[idx % cardColors.length]} dark:opacity-60 rounded-t-nb`} />
+              <div className={`h-3 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
 
               {/* Project Image */}
               {project.image && (
-                <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)] dark:border-glass-border">
+                <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
                   <img
                     src={project.image}
                     alt={`Screenshot of ${project.title} project`}
@@ -149,14 +149,14 @@ const Projects = () => {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
                       <span
-                        className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb dark:bg-accent dark:text-white dark:border-transparent"
+                        className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb"
                       >
-                        <Star size={12} className="fill-black dark:fill-white" />
+                        <Star size={12} className="fill-black" />
                         {project.stars}
                       </span>
                     )}
                     {project.featured && (
-                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb dark:border-transparent dark:shadow-glow-purple">
+                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb">
                         Featured
                       </span>
                     )}
@@ -171,7 +171,7 @@ const Projects = () => {
                   {project.tags.map(tag => (
                     <span
                       key={tag}
-                      className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border"
+                      className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb"
                     >
                       {tag}
                     </span>
@@ -184,7 +184,7 @@ const Projects = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
@@ -196,7 +196,7 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-cyan"
+                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >

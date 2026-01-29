@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
-import { useTheme } from './ThemeContext';
 
 /**
  * Interactive custom cursor with spotlight effect.
@@ -11,7 +10,6 @@ import { useTheme } from './ThemeContext';
  */
 const CustomCursor = ({ enabled }) => {
     const prefersReducedMotion = useReducedMotion();
-    const { isDark, isLight } = useTheme();
     const [isVisible, setIsVisible] = useState(false);
     const [cursorVariant, setCursorVariant] = useState('default');
     const [cursorColor, setCursorColor] = useState('rgba(56, 189, 248, 0.5)'); // accent color
@@ -31,7 +29,7 @@ const CustomCursor = ({ enabled }) => {
         cursorY.set(e.clientY);
     }, [cursorX, cursorY]);
 
-    // Build theme palette from CSS variables
+    // Build theme palette from CSS variables (always light mode)
     const themeColors = useMemo(() => {
         const root = document.documentElement;
         const styles = getComputedStyle(root);
@@ -52,8 +50,8 @@ const CustomCursor = ({ enabled }) => {
         const accent = styles.getPropertyValue('--color-accent').trim() || '#3b82f6';
         const funPink = styles.getPropertyValue('--color-fun-pink').trim() || '#ec4899';
         const funYellow = styles.getPropertyValue('--color-fun-yellow').trim() || '#fbbf24';
-        const textPrimary = styles.getPropertyValue('--color-text-primary').trim() || (isDark ? '#f8fafc' : '#000000');
-        const textMuted = styles.getPropertyValue('--color-text-muted').trim() || (isDark ? '#64748b' : '#666666');
+        const textPrimary = styles.getPropertyValue('--color-text-primary').trim() || '#000000';
+        const textMuted = styles.getPropertyValue('--color-text-muted').trim() || '#666666';
 
         return {
             accent,
@@ -67,12 +65,11 @@ const CustomCursor = ({ enabled }) => {
             textPrimaryAlpha: (a) => hexToRgba(textPrimary, a),
             textMutedAlpha: (a) => hexToRgba(textMuted, a),
         };
-    }, [isDark]);
+    }, []);
 
     // Detect hover target and update cursor style
     const updateCursorVariant = useCallback((e) => {
         const target = e.target;
-
 
         // Check for interactive elements
         const isClickable = target.matches('a, button, [role="button"], input, textarea, select, [onclick]') ||
@@ -81,7 +78,7 @@ const CustomCursor = ({ enabled }) => {
         const isCard = target.closest('[class*="card"], article, [class*="project"]');
         const isImage = target.matches('img, [class*="image"], [class*="avatar"]');
 
-        // Choose color based on theme-specific palette (set via CSS vars)
+        // Choose color based on element type
         if (isClickable) {
             setCursorVariant('pointer');
             setCursorColor(themeColors.funPinkAlpha(0.6));
@@ -96,9 +93,9 @@ const CustomCursor = ({ enabled }) => {
             setCursorColor(themeColors.textMutedAlpha(0.3));
         } else {
             setCursorVariant('default');
-            setCursorColor(themeColors.accentAlpha(isDark ? 0.5 : 0.35));
+            setCursorColor(themeColors.accentAlpha(0.35));
         }
-    }, [isDark, themeColors]);
+    }, [themeColors]);
 
     const isEnabled = enabled && !prefersReducedMotion;
 
@@ -142,7 +139,7 @@ const CustomCursor = ({ enabled }) => {
     // Don't render when disabled or on touch/reduced-motion
     if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
-    const blendDefault = isLight ? 'difference' : 'screen';
+    const blendDefault = 'difference';
     const variants = {
         default: {
             width: 32,
@@ -159,7 +156,7 @@ const CustomCursor = ({ enabled }) => {
         text: {
             width: 4,
             height: 24,
-            backgroundColor: themeColors.accentAlpha(isDark ? 0.9 : 0.8),
+            backgroundColor: themeColors.accentAlpha(0.8),
             borderRadius: '2px',
             mixBlendMode: 'normal',
         },
@@ -180,8 +177,8 @@ const CustomCursor = ({ enabled }) => {
 
     return (
         <>
-                        {/* Hide default cursor only when enabled */}
-                        <style>{`
+            {/* Hide default cursor only when enabled */}
+            <style>{`
                 .custom-cursor-enabled * {
                     cursor: none !important;
                 }
@@ -212,11 +209,11 @@ const CustomCursor = ({ enabled }) => {
                     translateY: '-50%',
                     width: 120,
                     height: 120,
-                    background: `radial-gradient(circle, ${cursorColor.replace(/rgba\((.*?)\s*,\s*([0-9]*\.?[0-9]+)\)/, (m, rgb) => `rgba(${rgb}, ${isDark ? 0.12 : 0.15})`)} 0%, transparent 70%)`,
+                    background: `radial-gradient(circle, ${cursorColor.replace(/rgba\((.*?)\s*,\s*([0-9]*\.?[0-9]+)\)/, (m, rgb) => `rgba(${rgb}, 0.15)`)} 0%, transparent 70%)`,
                 }}
                 animate={{
                     scale: cursorVariant === 'pointer' ? 1.5 : 1,
-                    opacity: cursorVariant === 'text' ? 0 : (isDark ? 0.7 : 0.8),
+                    opacity: cursorVariant === 'text' ? 0 : 0.8,
                 }}
                 transition={{ type: 'spring', damping: 15, stiffness: 200 }}
             />

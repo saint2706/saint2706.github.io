@@ -214,7 +214,7 @@ const ChatInterface = ({ onClose }) => {
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-nb border-[color:var(--color-border)] flex flex-col overflow-hidden rounded-nb glass-panel dark:border-glass-border"
+      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[420px] max-h-[70vh] md:max-h-[600px] h-[65vh] md:h-[70vh] bg-card border-nb border-[color:var(--color-border)] flex flex-col overflow-hidden rounded-nb"
       style={{ boxShadow: 'var(--nb-shadow-hover)' }}
       id={dialogId}
       role="dialog"
@@ -224,10 +224,10 @@ const ChatInterface = ({ onClose }) => {
       ref={chatDialogRef}
     >
       {/* Header */}
-      <div className="bg-accent p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] dark:border-glass-border">
+      <div className="bg-accent p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)]">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border">
-            <Bot size={20} className="text-black dark:text-white" />
+          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb">
+            <Bot size={20} className="text-black" />
           </div>
           <div>
             <h3 className="font-heading font-bold text-white" id={titleId}>Digital Rishabh</h3>
@@ -269,7 +269,7 @@ const ChatInterface = ({ onClose }) => {
       <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
 
       {/* Input Area */}
-      <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] dark:border-glass-border">
+      <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)]">
         <div className="flex gap-2 items-start">
           <div className="flex-grow relative">
             <input
@@ -282,7 +282,7 @@ const ChatInterface = ({ onClose }) => {
               maxLength={500}
               disabled={isTyping}
               placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-              className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb dark:border-glass-border"
+              className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb"
             />
             <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
               {input.length}/500
@@ -291,7 +291,7 @@ const ChatInterface = ({ onClose }) => {
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
+            className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-label="Send message"
           >

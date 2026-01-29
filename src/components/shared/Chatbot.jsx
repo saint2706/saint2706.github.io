@@ -19,7 +19,7 @@ const LoadingDialog = ({ type }) => {
       } ${
         isChat ? 'bg-card' : 'bg-fun-pink'
       } border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb ${
-        isChat ? 'dark:border-glass-border' : 'dark:border-transparent dark:shadow-glow-pink'
+        isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
       }`}
       style={{ boxShadow: 'var(--nb-shadow-hover)' }}
       role="dialog"
@@ -33,10 +33,10 @@ const LoadingDialog = ({ type }) => {
         isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
       }`}>
         <div className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
-          isChat ? 'dark:bg-glass-bg dark:border-glass-border' : 'dark:bg-glass-bg dark:border-transparent'
+          isChat ? 'dark:bg-glass-bg' : 'dark:bg-glass-bg'
         }`}>
           {isChat ? (
-            <Bot size={20} className="text-black dark:text-white" />
+            <Bot size={20} className="text-black" />
           ) : (
             <Flame size={20} className="text-fun-pink" />
           )}
@@ -165,7 +165,7 @@ const Chatbot = () => {
         <div className="relative flex flex-col-reverse items-end gap-3">
           {/* Main FAB Button */}
           <button
-            className="p-4 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
+            className="p-4 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-label="Open chat options"
             aria-haspopup="menu"
@@ -186,7 +186,7 @@ const Chatbot = () => {
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0 }}
                   onClick={openRoast}
-                  className="p-3 bg-fun-pink text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-transparent dark:shadow-glow-pink"
+                  className="p-3 bg-fun-pink text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
                   aria-label="Roast my resume"
                 >
@@ -201,7 +201,7 @@ const Chatbot = () => {
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0.05 }}
                   onClick={openChat}
-                  className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-transparent dark:shadow-glow-purple"
+                  className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
                   aria-label="Chat with Digital Rishabh (Ctrl+K)"
                 >

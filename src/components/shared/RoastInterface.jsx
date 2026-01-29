@@ -84,7 +84,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb dark:border-transparent dark:shadow-glow-pink"
+      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb"
       style={{ boxShadow: 'var(--nb-shadow-hover)' }}
       role="dialog"
       aria-modal="true"
@@ -93,9 +93,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       ref={roastDialogRef}
     >
       {/* Header */}
-      <div className="p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] bg-fun-pink dark:border-transparent">
+      <div className="p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] bg-fun-pink">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-transparent">
+          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb">
             <Flame size={20} className="text-fun-pink" />
           </div>
           <h3 className="font-heading font-bold text-white" id="roast-title">Resume Roasted 🔥</h3>
@@ -132,11 +132,11 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       <p id="roast-helper" className="sr-only">Resume roast dialog. Press Escape to close. Focus remains inside until closed.</p>
 
       {/* Actions */}
-      <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2 dark:border-glass-border">
+      <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2">
         <button
           onClick={handleRoast}
           disabled={roastLoading}
-          className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:hover:shadow-glow-purple"
+          className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
@@ -144,7 +144,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         </button>
         <button
           onClick={onClose}
-          className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb dark:border-glass-border dark:hover:shadow-glow-purple"
+          className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           Close

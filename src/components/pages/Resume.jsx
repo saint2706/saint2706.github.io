@@ -14,7 +14,7 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, sh
     className="mb-12"
   >
     <div
-      className={`inline-flex items-center gap-3 ${color} text-black px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb dark:bg-accent/20 dark:text-white dark:border-glass-border dark:shadow-glow-purple`}
+      className={`inline-flex items-center gap-3 ${color} text-black px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb`}
       style={{ boxShadow: 'var(--nb-shadow)' }}
     >
       {icon}
@@ -29,11 +29,11 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, sh
 // Neubrutalism Timeline Card
 const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
   <div
-    className="bg-card border-nb border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb glass-panel dark:border-glass-border dark:hover:shadow-glow-purple"
+    className="bg-card border-nb border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
     style={{ boxShadow: 'var(--nb-shadow)' }}
   >
     {/* Color accent bar */}
-    <div className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb dark:opacity-60 dark:border-glass-border`} />
+    <div className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`} />
 
     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
       <div>
@@ -42,7 +42,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
       </div>
       <div className="flex flex-col items-start md:items-end gap-1">
         <span
-          className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb dark:bg-accent dark:text-white dark:border-transparent"
+          className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb"
         >
           <Calendar size={12} />
           {date}
@@ -78,7 +78,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
         {tags.map((tag, i) => (
           <span
             key={i}
-            className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb dark:bg-glass-bg dark:border-glass-border"
+            className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb"
           >
             {tag}
           </span>
@@ -99,7 +99,7 @@ const SkillBadge = ({ name, proficiency }) => {
 
   return (
     <div
-      className={`inline-flex items-center gap-2 ${getColor(proficiency)} text-black px-3 py-2 border-2 border-[color:var(--color-border)] font-heading font-bold text-sm rounded-nb dark:text-white dark:border-transparent`}
+      className={`inline-flex items-center gap-2 ${getColor(proficiency)} text-black px-3 py-2 border-2 border-[color:var(--color-border)] font-heading font-bold text-sm rounded-nb`}
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
       {name}
@@ -164,7 +164,7 @@ const Resume = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb dark:border-transparent dark:shadow-glow-purple"
+              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               My Journey
@@ -176,7 +176,7 @@ const Resume = () => {
 
           <button
             onClick={handlePrint}
-            className="mt-6 inline-flex items-center gap-2 bg-card text-primary px-5 py-2.5 border-nb border-[color:var(--color-border)] font-heading font-bold transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none print:hidden rounded-nb glass-panel dark:border-glass-border dark:hover:shadow-glow-purple"
+            className="mt-6 inline-flex items-center gap-2 bg-card text-primary px-5 py-2.5 border-nb border-[color:var(--color-border)] font-heading font-bold transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none print:hidden rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
             aria-label="Print resume"
           >
@@ -235,11 +235,11 @@ const Resume = () => {
         >
           {/* Technical Skills */}
           <div
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb glass-panel dark:border-glass-border"
+            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
             <div
-              className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb dark:border-transparent dark:shadow-glow-pink"
+              className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               <Code size={20} />
@@ -268,11 +268,11 @@ const Resume = () => {
 
           {/* Certifications */}
           <div
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb glass-panel dark:border-glass-border"
+            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
             <div
-              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb dark:bg-accent dark:text-white dark:border-transparent dark:shadow-glow-purple"
+              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               <Award size={20} />
