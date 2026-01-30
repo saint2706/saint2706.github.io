@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/layout/Layout';
 import Hero from './components/home/Hero';
-import Chatbot from './components/shared/Chatbot';
 import PageWrapper from './components/shared/PageWrapper';
 import ScrollToTop from './components/shared/ScrollToTop';
 import PageLoading from './components/shared/PageLoading';
 
 // Lazy load page components to improve initial bundle size and load time
+const Chatbot = lazy(() => import('./components/shared/Chatbot'));
 const Projects = lazy(() => import('./components/pages/Projects'));
 const Resume = lazy(() => import('./components/pages/Resume'));
 const Blog = lazy(() => import('./components/pages/Blog'));
@@ -55,7 +55,9 @@ function App() {
         <AnimatedRoutes />
 
         {/* Floating Interactions - Combined FAB */}
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
         <ScrollToTop />
       </Layout>
     </Router>
