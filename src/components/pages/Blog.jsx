@@ -199,6 +199,9 @@ const Blog = () => {
                 <X size={16} />
               </button>
             )}
+            <div className="absolute top-full right-0 mt-2 text-[10px] text-muted font-sans z-10" aria-hidden="true">
+              {searchTerm.length}/100
+            </div>
           </div>
         </motion.div>
 
