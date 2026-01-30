@@ -23,3 +23,28 @@ export const safeJSONStringify = (value, replacer, space) => {
     }
   );
 };
+
+/**
+ * Validates a URL to ensure it uses a safe protocol (http, https, mailto).
+ * Handles URL-encoded characters to prevent protocol bypasses (e.g., javascript:).
+ *
+ * @param {string} href - The URL to validate.
+ * @returns {boolean} True if the URL is considered safe, false otherwise.
+ */
+export const isSafeHref = (href) => {
+  if (!href || typeof href !== 'string') {
+    return false;
+  }
+
+  let normalizedHref;
+  try {
+    // Decode percent-encoded characters once to catch encoded protocols like javascript:
+    normalizedHref = decodeURIComponent(href);
+  } catch (e) {
+    // If decoding fails, fall back to the original value
+    normalizedHref = href;
+  }
+
+  // Only allow http, https, and mailto protocols
+  return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
+};
