@@ -103,10 +103,16 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         <button
           ref={roastCloseRef}
           onClick={onClose}
-          className="p-1 text-white hover:bg-white/20 transition-colors"
+          className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-fun-pink rounded-sm"
           aria-label="Close roast"
         >
           <X size={20} />
+          <span
+            className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+            aria-hidden="true"
+          >
+            Close
+          </span>
         </button>
       </div>
 
@@ -136,7 +142,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         <button
           onClick={handleRoast}
           disabled={roastLoading}
-          className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
+          className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
@@ -144,7 +150,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         </button>
         <button
           onClick={onClose}
-          className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
+          className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           Close
