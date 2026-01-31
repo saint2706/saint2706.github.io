@@ -107,8 +107,10 @@ async function fetchSubstack() {
 
 function extractSummary(content) {
   if (!content) return '';
-  // Strip HTML and take first 200 chars
-  const text = content.replace(/<[^>]*>?/gm, '');
+  // Strip HTML tags, then remove any remaining angle brackets, and take first 200 chars
+  const text = content
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/[<>]/g, '');
   return text.substring(0, 200) + '...';
 }
 
