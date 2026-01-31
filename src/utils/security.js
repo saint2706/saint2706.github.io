@@ -40,7 +40,7 @@ export const isSafeHref = (href) => {
   try {
     // Decode percent-encoded characters once to catch encoded protocols like javascript:
     normalizedHref = decodeURIComponent(href);
-  } catch (e) {
+  } catch {
     // If decoding fails, fall back to the original value
     normalizedHref = href;
   }
