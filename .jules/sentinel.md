@@ -4,6 +4,6 @@
 **Prevention:** Always validate potentially dangerous props (like `href`, `src`) in custom renderers against a strict allowlist (e.g., `http`, `https`, `mailto`) before rendering them.
 
 ## 2025-01-23 - RFC 9116 Compliance (Expires Field)
-**Vulnerability:** `security.txt` file missing the mandatory `Expires` field.
-**Learning:** RFC 9116 (security.txt standard) explicitly requires the `Expires` field (Section 2.5.5) to ensure security policies don't become stale. Tools and researchers may consider the file invalid without it.
-**Prevention:** Always include `Expires: <ISO-8601-Date>` when creating `security.txt` files.
+**Vulnerability:** Risk of deploying a non-compliant `security.txt` that omits the mandatory `Expires` field.
+**Learning:** When creating a new `security.txt`, RFC 9116 (security.txt standard) explicitly requires the `Expires` field (Section 2.5.5) to ensure security policies don't become stale. Tools and researchers may consider the file invalid without it.
+**Prevention:** Always include an `Expires: <ISO-8601-Date>` line when creating `security.txt` files.
