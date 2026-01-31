@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
-import { ProjectSkeleton } from '../shared/SkeletonLoader';
 
 const Projects = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description = 'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
   const title = `Projects | ${resumeData.basics.name}`;
-
-  // Simulate loading state for initial mount
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -99,7 +91,7 @@ const Projects = () => {
 
         {/* Screen reader loading announcement */}
         <div className="sr-only" role="status" aria-live="polite">
-          {isLoading ? 'Loading projects...' : `${resumeData.projects.length} projects loaded`}
+          {`${resumeData.projects.length} projects loaded`}
         </div>
 
         <motion.div
@@ -107,16 +99,8 @@ const Projects = () => {
           initial={shouldReduceMotion ? false : "hidden"}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          aria-busy={isLoading}
         >
-          {/* Skeleton loaders during initial load */}
-          {isLoading ? (
-            <>
-              {[...Array(6)].map((_, idx) => (
-                <ProjectSkeleton key={`skeleton-${idx}`} />
-              ))}
-            </>
-          ) : resumeData.projects.map((project, idx) => (
+          {resumeData.projects.map((project, idx) => (
             <motion.article
               key={idx}
               variants={item}
@@ -134,6 +118,8 @@ const Projects = () => {
                     src={project.image}
                     alt={`Screenshot of ${project.title} project`}
                     className="w-full h-full object-cover"
+                    loading={idx < 3 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                 </div>
               )}
