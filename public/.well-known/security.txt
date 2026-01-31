@@ -1,4 +1,4 @@
 Contact: mailto:rishabh.agrawal25b@gim.ac.in
 Contact: https://github.com/saint2706
-Expires: 2026-01-01T00:00:00.000Z
+Expires: 2027-01-01T00:00:00.000Z
 Preferred-Languages: en
