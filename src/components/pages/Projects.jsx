@@ -89,8 +89,8 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        {/* Screen reader loading announcement */}
-        <div className="sr-only" role="status" aria-live="polite">
+        {/* Screen reader summary (no live region since content is static) */}
+        <div className="sr-only">
           {`${resumeData.projects.length} projects loaded`}
         </div>
 
