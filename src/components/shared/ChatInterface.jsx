@@ -176,7 +176,11 @@ const ChatInterface = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSendMessage(input);
+    try {
+      await handleSendMessage(input);
+    } catch (error) {
+      console.error('Failed to send message', error);
+    }
   };
 
   const clearHistory = useCallback(() => {
