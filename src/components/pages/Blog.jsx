@@ -1,10 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion, BookOpen } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
-import { BlogSkeleton } from '../shared/SkeletonLoader';
 import { safeJSONStringify } from '../../utils/security';
 
 const POSTS_PER_PAGE = 6;
@@ -12,8 +11,8 @@ const POSTS_PER_PAGE = 6;
 const Blog = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const deferredSearchTerm = useDeferredValue(searchTerm);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/blog`;
   const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
@@ -30,22 +29,20 @@ const Blog = () => {
   };
 
   const filteredBlogs = useMemo(() => {
+    const normalizedSearch = deferredSearchTerm.toLowerCase();
     return blogs
       .filter(blog => {
         const matchesSource = filter === 'All' || blog.source === filter;
-        const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          blog.summary.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = blog.title.toLowerCase().includes(normalizedSearch) ||
+          blog.summary.toLowerCase().includes(normalizedSearch);
         return matchesSource && matchesSearch;
       })
       .sort((a, b) => new Date(b.date) - new Date(a.date));
-  }, [filter, searchTerm]);
+  }, [filter, deferredSearchTerm]);
 
   useEffect(() => {
     setCurrentPage(1);
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 300);
-    return () => clearTimeout(timer);
-  }, [filter, searchTerm]);
+  }, [filter, deferredSearchTerm]);
 
   const totalPages = Math.ceil(filteredBlogs.length / POSTS_PER_PAGE);
   const paginatedBlogs = filteredBlogs.slice(
@@ -210,7 +207,7 @@ const Blog = () => {
 
         {/* Screen reader loading announcement */}
         <div className="sr-only" role="status" aria-live="polite">
-          {isLoading ? 'Loading articles...' : `${filteredBlogs.length} articles found`}
+          {`${filteredBlogs.length} articles found`}
         </div>
 
         {/* Blog Cards Grid */}
@@ -220,15 +217,8 @@ const Blog = () => {
           initial={shouldReduceMotion ? false : "hidden"}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          aria-busy={isLoading}
         >
-          {isLoading ? (
-            <>
-              {[...Array(6)].map((_, idx) => (
-                <BlogSkeleton key={`skeleton-${idx}`} />
-              ))}
-            </>
-          ) : paginatedBlogs.map((blog, idx) => (
+          {paginatedBlogs.map((blog, idx) => (
             <motion.article
               key={`${blog.title}-${idx}`}
               variants={item}
@@ -298,7 +288,7 @@ const Blog = () => {
           ))}
 
           {/* Empty State */}
-          {!isLoading && filteredBlogs.length === 0 && (
+          {filteredBlogs.length === 0 && (
             <div
               className="col-span-full flex flex-col items-center justify-center py-20 text-center"
               role="status"
