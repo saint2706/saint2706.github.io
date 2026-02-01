@@ -11,3 +11,9 @@
 **Vulnerability:** Risk of deploying a non-compliant `security.txt` that omits the mandatory `Expires` field.
 **Learning:** When creating a new `security.txt`, RFC 9116 (security.txt standard) explicitly requires the `Expires` field (Section 2.5.5) to ensure security policies don't become stale. Tools and researchers may consider the file invalid without it.
 **Prevention:** Always include an `Expires: <ISO-8601-Date>` line when creating `security.txt` files.
+
+## 2025-02-05 - Client-Side AI Rate Limiting
+
+**Vulnerability:** Lack of rate limiting on the AI service allowed potential abuse of the Gemini API key (quota exhaustion) via rapid manual requests from a single client.
+**Learning:** In client-side-only applications (like this GitHub Pages site) where API keys must be exposed in the bundle, server-side rate limiting (by IP) is not possible without a backend proxy.
+**Prevention:** Implement client-side rate limiting (throttling) in the service layer as a defense-in-depth measure to slow down potential abuse and improve UX by preventing accidental double-submissions, even if it doesn't fully prevent distributed attacks.
