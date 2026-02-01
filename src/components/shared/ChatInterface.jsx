@@ -8,6 +8,12 @@ import { ChatSkeleton } from './SkeletonLoader';
 const STORAGE_KEY = 'portfolio_chat_history';
 const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
 
+const QUICK_REPLIES = [
+  "Tell me about your projects",
+  "What are your top skills?",
+  "How can I contact you?"
+];
+
 // Security: Validate href after decoding to prevent URL-encoded protocol bypasses
 const isSafeHref = (href) => {
   if (!href || typeof href !== 'string') {
@@ -142,13 +148,12 @@ const ChatInterface = ({ onClose }) => {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+  const handleSendMessage = async (text) => {
+    if (!text.trim()) return;
 
-    const userMsg = { role: 'user', text: input };
+    const userMsg = { role: 'user', text: text };
     setMessages(prev => [...prev, userMsg]);
-    setInput('');
+    if (text === input) setInput('');
     setIsTyping(true);
 
     const MAX_HISTORY_CONTEXT = 30;
@@ -167,6 +172,11 @@ const ChatInterface = ({ onClose }) => {
         setIsTyping(false);
       }
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    handleSendMessage(input);
   };
 
   const clearHistory = useCallback(() => {
@@ -269,9 +279,26 @@ const ChatInterface = ({ onClose }) => {
       <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
 
       {/* Input Area */}
-      <form onSubmit={handleSubmit} className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)]">
-        <div className="flex gap-2 items-start">
-          <div className="flex-grow relative">
+      <div className="bg-secondary border-t-nb border-[color:var(--color-border)]">
+        {messages.length === 1 && !isTyping && (
+          <div className="px-4 pt-4 pb-0 flex gap-2 overflow-x-auto scrollbar-none">
+            {QUICK_REPLIES.map((reply, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleSendMessage(reply)}
+                className="bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
+                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                aria-label={`Ask: ${reply}`}
+              >
+                {reply}
+              </button>
+            ))}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className={`p-4 ${messages.length === 1 && !isTyping ? 'pt-3' : ''}`}>
+          <div className="flex gap-2 items-start">
+            <div className="flex-grow relative">
             <input
               ref={inputRef}
               type="text"
@@ -284,27 +311,28 @@ const ChatInterface = ({ onClose }) => {
               placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
               className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb"
             />
-            <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
-              {input.length}/500
+              <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
+                {input.length}/500
+              </div>
             </div>
-          </div>
-          <button
-            type="submit"
+            <button
+              type="submit"
             disabled={!input.trim() || isTyping}
             className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
             style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             aria-label="Send message"
-          >
-            <Send size={20} />
-            <span
-              className="absolute bottom-full mb-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
-              aria-hidden="true"
             >
-              Send
-            </span>
-          </button>
-        </div>
-      </form>
+              <Send size={20} />
+              <span
+                className="absolute bottom-full mb-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                aria-hidden="true"
+              >
+                Send
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
     </motion.div>
   );
 };
