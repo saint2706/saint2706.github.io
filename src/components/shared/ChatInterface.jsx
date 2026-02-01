@@ -281,7 +281,7 @@ const ChatInterface = ({ onClose }) => {
       {/* Input Area */}
       <div className="bg-secondary border-t-nb border-[color:var(--color-border)]">
         {messages.length === 1 && !isTyping && (
-          <div className="px-4 pt-4 pb-0 flex gap-2 overflow-x-auto scrollbar-none">
+          <div className="px-4 pt-4 pb-0 flex gap-2 overflow-x-auto scrollbar-thin">
             {QUICK_REPLIES.map((reply, index) => (
               <button
                 key={index}
