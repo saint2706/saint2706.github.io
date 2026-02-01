@@ -4,6 +4,10 @@ import { resumeData } from "../data/resume";
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
 const API_TIMEOUT = 15000;
 const MAX_INPUT_LENGTH = 1000;
+const RATE_LIMIT_MS = 2000;
+
+let lastChatRequestTime = 0;
+let lastRoastRequestTime = 0;
 
 const getModel = () => {
   if (!API_KEY) {
@@ -58,6 +62,11 @@ export const chatWithGemini = async (userMessage, history = []) => {
     return `Whoa, that's a lot of text! My neural circuits are overloaded. Can you keep it under ${MAX_INPUT_LENGTH} characters?`;
   }
 
+  const now = Date.now();
+  if (now - lastChatRequestTime < RATE_LIMIT_MS) {
+    return "I'm processing a lot of thoughts right now! Please give me a moment to catch my breath.";
+  }
+
   const model = getModel();
   if (!model) {
     return "My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!";
@@ -81,7 +90,9 @@ export const chatWithGemini = async (userMessage, history = []) => {
     // Timeout protection against hanging requests
     const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
     const response = await result.response;
-    return response.text();
+    const responseText = await response.text();
+    lastChatRequestTime = Date.now();
+    return responseText;
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
@@ -102,12 +113,17 @@ export const chatWithGemini = async (userMessage, history = []) => {
 };
 
 export const roastResume = async () => {
-    const model = getModel();
-    if (!model) {
-      return "Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!";
-    }
+  const now = Date.now();
+  if (now - lastRoastRequestTime < RATE_LIMIT_MS) {
+    return "Roast oven is cooling down! Give it a second.";
+  }
 
-    const prompt = `
+  const model = getModel();
+  if (!model) {
+    return "Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!";
+  }
+
+  const prompt = `
     Roast Rishabh's resume! Be funny, sarcastic, and lighthearted.
     Poke fun at the buzzwords (like "Data Storytelling" or "Synergy"), the number of certifications, or the fact that he's a "Data" person who also does "Marketing".
     Keep it under 100 words.
@@ -116,24 +132,26 @@ export const roastResume = async () => {
     ${JSON.stringify(resumeData)}
     `;
 
-    try {
-        // Timeout protection
-        const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
-        const response = await result.response;
-        return response.text();
-    } catch (error) {
-        const errorMessage = error?.message || "Unknown error";
-        const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
-        const isTimeout = error instanceof TimeoutError;
+  try {
+    // Timeout protection
+    const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
+    const response = await result.response;
+    const responseText = await response.text();
+    lastRoastRequestTime = Date.now();
+    return responseText;
+  } catch (error) {
+    const errorMessage = error?.message || "Unknown error";
+    const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+    const isTimeout = error instanceof TimeoutError;
 
-        if (isLeakedKey) {
-          return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
-        }
-
-        if (isTimeout) {
-            return "I was brewing a really good roast, but it took too long. Try again!";
-        }
-
-        return "I can't roast right now, I'm too nice. (Error connecting to AI)";
+    if (isLeakedKey) {
+      return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
     }
+
+    if (isTimeout) {
+      return "I was brewing a really good roast, but it took too long. Try again!";
+    }
+
+    return "I can't roast right now, I'm too nice. (Error connecting to AI)";
+  }
 };
