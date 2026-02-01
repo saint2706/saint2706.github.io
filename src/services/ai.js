@@ -90,7 +90,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
     // Timeout protection against hanging requests
     const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
     const response = await result.response;
-    const responseText = response.text();
+    const responseText = await response.text();
     lastChatRequestTime = Date.now();
     return responseText;
   } catch (error) {
@@ -136,7 +136,7 @@ export const roastResume = async () => {
     // Timeout protection
     const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
     const response = await result.response;
-    const responseText = response.text();
+    const responseText = await response.text();
     lastRoastRequestTime = Date.now();
     return responseText;
   } catch (error) {
