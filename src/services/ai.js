@@ -6,7 +6,8 @@ const API_TIMEOUT = 15000;
 const MAX_INPUT_LENGTH = 1000;
 const RATE_LIMIT_MS = 2000;
 
-let lastRequestTime = 0;
+let lastChatRequestTime = 0;
+let lastRoastRequestTime = 0;
 
 const getModel = () => {
   if (!API_KEY) {
@@ -62,10 +63,9 @@ export const chatWithGemini = async (userMessage, history = []) => {
   }
 
   const now = Date.now();
-  if (now - lastRequestTime < RATE_LIMIT_MS) {
+  if (now - lastChatRequestTime < RATE_LIMIT_MS) {
     return "I'm processing a lot of thoughts right now! Please give me a moment to catch my breath.";
   }
-  lastRequestTime = now;
 
   const model = getModel();
   if (!model) {
@@ -90,7 +90,9 @@ export const chatWithGemini = async (userMessage, history = []) => {
     // Timeout protection against hanging requests
     const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
     const response = await result.response;
-    return response.text();
+    const responseText = response.text();
+    lastChatRequestTime = Date.now();
+    return responseText;
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
@@ -112,10 +114,9 @@ export const chatWithGemini = async (userMessage, history = []) => {
 
 export const roastResume = async () => {
   const now = Date.now();
-  if (now - lastRequestTime < RATE_LIMIT_MS) {
+  if (now - lastRoastRequestTime < RATE_LIMIT_MS) {
     return "Roast oven is cooling down! Give it a second.";
   }
-  lastRequestTime = now;
 
   const model = getModel();
   if (!model) {
@@ -135,7 +136,9 @@ export const roastResume = async () => {
     // Timeout protection
     const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
     const response = await result.response;
-    return response.text();
+    const responseText = response.text();
+    lastRoastRequestTime = Date.now();
+    return responseText;
   } catch (error) {
     const errorMessage = error?.message || "Unknown error";
     const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
