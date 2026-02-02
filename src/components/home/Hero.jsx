@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
+  const navigate = useNavigate();
+
+  // Easter egg state
+  const [clickCount, setClickCount] = useState(0);
+  const [isGlitching, setIsGlitching] = useState(false);
+  const CLICKS_REQUIRED = 3;
+
+  // Reset click count after inactivity
+  useEffect(() => {
+    if (clickCount > 0 && clickCount < CLICKS_REQUIRED) {
+      const timeout = setTimeout(() => setClickCount(0), 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [clickCount]);
+
+  // Handle easter egg activation
+  const handleEasterEggClick = useCallback(() => {
+    if (isGlitching) return;
+
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+
+    if (newCount >= CLICKS_REQUIRED) {
+      setIsGlitching(true);
+      // Navigate after glitch animation plays
+      setTimeout(() => {
+        navigate('/games');
+      }, 1500);
+    }
+  }, [clickCount, isGlitching, navigate]);
+
+  // Keyboard handler for accessibility
+  const handleEasterEggKeyDown = useCallback((e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleEasterEggClick();
+    }
+  }, [handleEasterEggClick]);
   const canonicalUrl = resumeData.basics.website;
   const description = 'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
@@ -162,7 +200,7 @@ const Hero = () => {
           </button>
         </motion.div>
 
-        {/* Code Snippet Card - Neubrutalism style */}
+        {/* Code Snippet Card - Neubrutalism style + Easter Egg */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -170,20 +208,43 @@ const Hero = () => {
           className="mt-16 w-full max-w-md"
         >
           <div
-            className="bg-fun-yellow text-black p-6 border-nb border-[color:var(--color-border)] text-left font-mono text-sm rounded-nb"
+            className={`bg-fun-yellow text-black p-6 border-nb border-[color:var(--color-border)] text-left font-mono text-sm rounded-nb transition-all duration-300 ${isGlitching ? 'animate-glitch' : ''}`}
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
             <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
               <Code2 size={16} />
-              <span className="font-heading font-bold">developer.js</span>
+              <span className="font-heading font-bold">
+                {isGlitching ? 'game_mode.js' : 'developer.js'}
+              </span>
             </div>
             <pre className="whitespace-pre-wrap">
-              {`const developer = {
+              {isGlitching ? (
+                // Glitched "gamer mode" content
+                <>{`const developer = {
+  mode: `}<span className="text-fun-pink font-bold">'GAMER'</span>{`,
+  status: `}<span className="text-accent font-bold">'Ready Player One'</span>{`,
+  launching: `}<span className="text-green-600 font-bold">true</span>{`
+};`}</>
+              ) : (
+                // Normal content with clickable stack items
+                <>{`const developer = {
   name: 'Rishabh Agrawal',
-  stack: ['React', 'Node.js', 'Python'],
+  stack: [`}
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={handleEasterEggClick}
+                    onKeyDown={handleEasterEggKeyDown}
+                    className="cursor-pointer hover:text-fun-pink hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-fun-pink focus:ring-offset-1"
+                    aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
+                  >
+                    'React', 'Node.js', 'Python'
+                  </span>
+                  {`],
   currentStatus: 'Building awesome things.',
   openToWork: true
-};`}
+};`}</>
+              )}
             </pre>
           </div>
         </motion.div>
