@@ -54,8 +54,24 @@ VITE_GEMINI_API_KEY=your_gemini_api_key_here
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
+- `npm run lint:fix` - Run ESLint with auto-fix
+- `npm run format` - Format all code with Prettier
+- `npm run format:check` - Check if code is formatted correctly
 - `npm run test:security` - Run security tests
 - `node scripts/sync-blogs.js` - Sync blog posts from external platforms
+
+## 🎨 Code Style
+
+This project uses ESLint and Prettier for code quality and consistency:
+
+- **ESLint**: Configured for React 18 with modern JavaScript (ES2020+)
+- **Prettier**: Enforces consistent code formatting across all files
+- **Pre-commit**: Code is automatically linted and formatted
+
+Configuration files:
+- `eslint.config.js` - ESLint v9 configuration
+- `.prettierrc.json` - Prettier configuration
+- `.prettierignore` - Files to exclude from formatting
 
 ## 🗂️ Project Structure
 
