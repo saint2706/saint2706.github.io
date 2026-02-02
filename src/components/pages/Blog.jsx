@@ -30,7 +30,7 @@ const Blog = () => {
     })).sort((a, b) => b.parsedDate - a.parsedDate);
   }, [blogs]);
 
-  const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
+  const sources = ['All', ...new Set(processedBlogs.map(blog => blog.source))];
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
