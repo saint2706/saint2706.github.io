@@ -19,7 +19,7 @@ const Blog = () => {
   const title = `Blog | ${resumeData.basics.name}`;
 
   // Performance: Pre-process blogs to avoid repetitive expensive operations (sorting, lowercasing)
-  // This runs once when the module loads, not on every render.
+  // This runs once when the component mounts (with empty deps), not on every render.
   const processedBlogs = useMemo(() => {
     return blogs.map(blog => ({
       ...blog,
