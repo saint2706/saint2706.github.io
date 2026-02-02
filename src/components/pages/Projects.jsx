@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Projects showcase page displaying portfolio projects with filtering.
+ */
+
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
@@ -5,12 +9,27 @@ import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
+/**
+ * Projects showcase page component
+ * 
+ * Features:
+ * - Grid layout of project cards
+ * - Project images with lazy loading
+ * - Star counts and featured badges
+ * - Tech stack tags
+ * - Links to live demos and source code
+ * - Rotating accent colors for visual interest
+ * 
+ * @component
+ * @returns {JSX.Element} Projects page with portfolio showcase
+ */
 const Projects = () => {
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description = 'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
   const title = `Projects | ${resumeData.basics.name}`;
 
+  // Animation variants for stagger effect
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -31,7 +50,7 @@ const Projects = () => {
     }
   };
 
-  // Color rotation for card accents
+  /** Rotating color classes for project card accent bars */
   const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
 
   return (

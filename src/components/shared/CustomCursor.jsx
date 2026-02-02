@@ -2,38 +2,67 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
 
 /**
- * Neubrutalist Custom Cursor
+ * @fileoverview Neubrutalist custom cursor with geometric shapes and bold styling.
+ * Adapts appearance based on hover target (clickable, text, card, input).
+ */
+
+/**
+ * Custom cursor component with neubrutalist design
+ * 
+ * Features:
  * - Bold geometric shapes with thick black borders
- * - Sharp corners (no rounded edges)
- * - High contrast solid colors
- * - Playful offset shadow effect
+ * - Dynamic cursor variants (default, pointer, text, card, input)
+ * - Smooth spring physics animation
+ * - Shadow/trail element for depth effect
+ * - Click ripple animation
+ * - Respects reduced motion preference
+ * - Auto-disabled on touch devices
+ * - Hides native cursor when enabled
+ * 
+ * Cursor Variants:
+ * - default: Small square (20x20px, yellow)
+ * - pointer: Larger rotated square (32x32px, pink) for clickable elements
+ * - text: Thin vertical line (4x28px, blue) for text selection
+ * - card: Large square (48x48px, blue) for hovering cards
+ * - input: Thin vertical line (3x24px, black) for text inputs
+ * 
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.enabled - Whether custom cursor is enabled
+ * @returns {JSX.Element|null} Custom cursor elements or null if disabled
  */
 const CustomCursor = ({ enabled }) => {
     const prefersReducedMotion = useReducedMotion();
     const [isVisible, setIsVisible] = useState(false);
-    const [cursorVariant, setCursorVariant] = useState('default');
+    const [cursorVariant, setCursorVariant] = useState('default'); // Current cursor style
     const [isClicking, setIsClicking] = useState(false);
 
-    // Mouse position with snappy spring physics
+    // Mouse position motion values with spring physics
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
 
+    // Snappy spring for main cursor
     const springConfig = { damping: 30, stiffness: 500, mass: 0.3 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
-    // Slower spring for the shadow/trail element
+    // Slower spring for shadow/trail element (creates depth)
     const shadowSpringConfig = { damping: 20, stiffness: 200, mass: 0.5 };
     const shadowXSpring = useSpring(cursorX, shadowSpringConfig);
     const shadowYSpring = useSpring(cursorY, shadowSpringConfig);
 
-    // Handle mouse movement
+    /**
+     * Update cursor position on mouse move
+     */
     const moveCursor = useCallback((e) => {
         cursorX.set(e.clientX);
         cursorY.set(e.clientY);
     }, [cursorX, cursorY]);
 
-    // Detect hover target and update cursor style
+    /**
+     * Detect hover target and update cursor style accordingly
+     * Checks element type and sets appropriate cursor variant
+     */
     const updateCursorVariant = useCallback((e) => {
         const target = e.target;
 
@@ -58,7 +87,7 @@ const CustomCursor = ({ enabled }) => {
 
     const isEnabled = enabled && !prefersReducedMotion;
 
-    // Manage document class for hiding native cursor
+    // Add/remove CSS class to hide native cursor when custom cursor is enabled
     useEffect(() => {
         const root = document.documentElement;
         if (isEnabled) {
@@ -69,7 +98,7 @@ const CustomCursor = ({ enabled }) => {
         return () => root.classList.remove('custom-cursor-enabled');
     }, [isEnabled]);
 
-    // Attach event listeners
+    // Attach mouse event listeners for cursor behavior
     useEffect(() => {
         if (!isEnabled) {
             setIsVisible(false);
@@ -102,7 +131,7 @@ const CustomCursor = ({ enabled }) => {
 
     if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
-    // Neubrutalist cursor variants - bold, geometric, high contrast
+    /** Cursor size/rotation variants for different hover states */
     const variants = {
         default: {
             width: 20,
@@ -131,7 +160,7 @@ const CustomCursor = ({ enabled }) => {
         },
     };
 
-    // Color mapping for different states
+    /** Color mapping for different cursor states (neubrutalist palette) */
     const colorMap = {
         default: '#FFD54F', // fun-yellow
         pointer: '#9C0E4B', // fun-pink

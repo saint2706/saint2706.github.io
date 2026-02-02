@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Contact page with email/location information and social links.
+ * Features call-to-action and availability status.
+ */
+
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
@@ -5,8 +10,23 @@ import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
+/**
+ * Contact page component
+ * 
+ * Features:
+ * - Email and location display with interactive cards
+ * - Social media links (GitHub, LinkedIn)
+ * - Availability status badge with pulse animation
+ * - CTA section with email prompt
+ * - Neubrutalist card designs with hover effects
+ * 
+ * @component
+ * @returns {JSX.Element} Contact page with information and links
+ */
 const Contact = () => {
     const shouldReduceMotion = useReducedMotion();
+    
+    /** Social media links configuration */
     const socialLinks = [
         { icon: <Github size={24} />, url: 'https://github.com/saint2706', label: 'GitHub', color: 'hover:bg-fun-yellow' },
         { icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9', label: 'LinkedIn', color: 'hover:bg-accent' },

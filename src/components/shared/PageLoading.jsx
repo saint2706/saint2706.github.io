@@ -1,6 +1,22 @@
+/**
+ * @fileoverview Simple page loading component with spinning icon.
+ */
+
 import React from 'react';
 import { Loader2 } from 'lucide-react';
 
+/**
+ * Page loading spinner component
+ * 
+ * Features:
+ * - Centered spinner in min-height container
+ * - Accessible loading state with aria-label
+ * - Respects reduced motion preference (stops animation)
+ * - Yellow accent color matching theme
+ * 
+ * @component
+ * @returns {JSX.Element} Loading spinner centered in container
+ */
 const PageLoading = () => {
   return (
     <div

@@ -1,13 +1,34 @@
+/**
+ * @fileoverview Roast mode floating action button (alternative/deprecated version).
+ * Standalone roast button with inline popup display.
+ */
+
 import React, { useState } from 'react';
 import { roastResume } from '../../services/ai';
 import { Flame, RefreshCw, X } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 
+/**
+ * Roast mode floating button component
+ * 
+ * Features:
+ * - Floating action button with flame icon
+ * - Inline popup to display roast
+ * - Loading state with spinner
+ * - Tooltip on hover
+ * 
+ * Note: This is an alternative version. The main roast feature
+ * is handled by RoastInterface component.
+ * 
+ * @component
+ * @returns {JSX.Element} Floating roast button with popup
+ */
 const RoastMode = () => {
   const shouldReduceMotion = useReducedMotion();
   const [roast, setRoast] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  /** Generate roast using AI service */
   const handleRoast = async () => {
     setLoading(true);
     const text = await roastResume();

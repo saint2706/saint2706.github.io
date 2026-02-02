@@ -1,3 +1,12 @@
+/**
+ * ESLint Configuration
+ * 
+ * Configures linting rules for the React application.
+ * This ensures code quality and catches common errors during development.
+ * 
+ * @see https://eslint.org/docs/user-guide/configuring
+ */
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true, node: true },

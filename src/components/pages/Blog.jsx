@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Blog listing page with filtering, search, and pagination.
+ * Displays blog posts from multiple sources (Dev.to, Medium, Substack).
+ */
+
 import React, { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion, BookOpen } from 'lucide-react';
@@ -6,20 +11,39 @@ import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
+/** Number of blog posts to display per page */
 const POSTS_PER_PAGE = 6;
 
+/**
+ * Blog listing page component
+ * 
+ * Features:
+ * - Filter by source (Dev.to, Medium, Substack, All)
+ * - Real-time search with deferred value for performance
+ * - Pagination with keyboard navigation
+ * - Responsive card grid layout
+ * - Pre-computed search strings for O(1) filtering
+ * - Dynamic color coding by source
+ * 
+ * @component
+ * @returns {JSX.Element} Blog listing page with filters and posts
+ */
 const Blog = () => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-  const deferredSearchTerm = useDeferredValue(searchTerm);
+  const deferredSearchTerm = useDeferredValue(searchTerm); // Deferred for better UX during typing
   const [currentPage, setCurrentPage] = useState(1);
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/blog`;
   const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
 
-  // Performance: Pre-process blogs to avoid repetitive expensive operations (sorting, lowercasing)
-  // This runs once when the component mounts (with empty deps), not on every render.
+  /**
+   * Pre-process blogs once on mount for performance optimization
+   * - Pre-computes lowercase search strings to avoid repeated toLowerCase() calls
+   * - Pre-parses dates for efficient sorting
+   * - Sorts by date descending
+   */
   const processedBlogs = useMemo(() => {
     return blogs.map(blog => ({
       ...blog,
@@ -30,8 +54,14 @@ const Blog = () => {
     })).sort((a, b) => b.parsedDate - a.parsedDate);
   }, [blogs]);
 
+  /** Extract unique blog sources for filter buttons */
   const sources = ['All', ...new Set(processedBlogs.map(blog => blog.source))];
 
+  /**
+   * Format date string to DD/MM/YYYY format
+   * @param {string} dateStr - ISO date string
+   * @returns {string} Formatted date
+   */
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     const day = date.getDate().toString().padStart(2, '0');
@@ -40,6 +70,10 @@ const Blog = () => {
     return `${day}/${month}/${year}`;
   };
 
+  /**
+   * Filter and search blogs based on current filter and search term
+   * Uses pre-computed search strings for optimal performance
+   */
   const filteredBlogs = useMemo(() => {
     const normalizedSearch = deferredSearchTerm.toLowerCase();
 
@@ -56,16 +90,19 @@ const Blog = () => {
     });
   }, [filter, deferredSearchTerm, processedBlogs]);
 
+  // Reset to page 1 when filter or search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [filter, deferredSearchTerm]);
 
+  // Calculate pagination values
   const totalPages = Math.ceil(filteredBlogs.length / POSTS_PER_PAGE);
   const paginatedBlogs = filteredBlogs.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
   );
 
+  // Animation variants for stagger effect
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -86,7 +123,11 @@ const Blog = () => {
     }
   };
 
-  // Neubrutalism source colors
+  /**
+   * Get background color class for blog source badge
+   * @param {string} source - Blog source name
+   * @returns {string} Tailwind background color class
+   */
   const getSourceColor = (source) => {
     switch (source) {
       case 'Dev.to': return 'bg-accent';
@@ -96,6 +137,11 @@ const Blog = () => {
     }
   };
 
+  /**
+   * Get text color class for blog source badge
+   * @param {string} source - Blog source name
+   * @returns {string} Tailwind text color class
+   */
   const getSourceTextColor = (source) => {
     switch (source) {
       case 'Medium': return 'text-black';

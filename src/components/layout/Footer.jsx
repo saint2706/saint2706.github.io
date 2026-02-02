@@ -1,7 +1,24 @@
+/**
+ * @fileoverview Footer component displaying social links and copyright information.
+ */
+
 import React from 'react';
 import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 
+/**
+ * Footer component with social links and attribution
+ * 
+ * Features:
+ * - Social media links (GitHub, LinkedIn) with hover effects
+ * - "Made with coffee + love" badge with neubrutalist styling
+ * - Dynamic copyright year
+ * - Accessible link labels
+ * 
+ * @component
+ * @returns {JSX.Element} Footer with social links and copyright
+ */
 const Footer = () => {
+  /** Social media links configuration */
   const socialLinks = [
     {
       href: "https://github.com/saint2706",

@@ -1,41 +1,102 @@
+/**
+ * Tic Tac Toe Game Component Module
+ * 
+ * A fully-featured Tic Tac Toe game with AI opponent using the minimax algorithm.
+ * Includes three difficulty levels, score tracking, and comprehensive accessibility support.
+ * 
+ * AI Implementation:
+ * - Uses minimax algorithm with alpha-beta pruning for optimal play
+ * - Three difficulty levels: easy (random), medium (70% optimal), hard (100% optimal)
+ * - Hard mode is unbeatable when AI goes first
+ * 
+ * Features:
+ * - Three AI difficulty levels with different strategies
+ * - Score persistence across games
+ * - Win detection with visual highlighting
+ * - Keyboard shortcuts (Escape to restart)
+ * - Full accessibility with ARIA labels and screen reader support
+ * - Neubrutalism design system styling
+ * 
+ * @module components/games/TicTacToe
+ */
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Cpu, User } from 'lucide-react';
 
+// All possible winning combinations (rows, columns, diagonals)
 const WINNING_COMBINATIONS = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
     [0, 4, 8], [2, 4, 6]             // Diagonals
 ];
 
+/**
+ * Minimax algorithm with alpha-beta pruning for optimal AI play.
+ * 
+ * The minimax algorithm is a recursive decision-making algorithm used in game theory.
+ * It explores all possible future game states to find the optimal move. Alpha-beta
+ * pruning significantly improves performance by eliminating branches that cannot
+ * possibly affect the final decision.
+ * 
+ * How it works:
+ * 1. Maximizing player (AI, 'O') tries to maximize the score
+ * 2. Minimizing player (human, 'X') tries to minimize the score
+ * 3. Algorithm recursively explores all possible moves
+ * 4. Returns the best score achievable from current position
+ * 5. Alpha-beta pruning cuts off branches that won't affect the outcome
+ * 
+ * Scoring:
+ * - AI win: +10 (adjusted by depth for faster wins)
+ * - Player win: -10 (adjusted by depth)
+ * - Draw: 0
+ * 
+ * Alpha-Beta Pruning:
+ * - Alpha: best score maximizer can guarantee
+ * - Beta: best score minimizer can guarantee
+ * - If beta <= alpha, remaining branches are pruned (won't affect outcome)
+ * 
+ * @param {Array<string|null>} board - Current board state (9 cells: 'X', 'O', or null)
+ * @param {number} depth - Current recursion depth (for scoring preference)
+ * @param {boolean} isMaximizing - True if maximizing player's turn (AI), false for minimizing (human)
+ * @param {number} alpha - Best score maximizer can guarantee
+ * @param {number} beta - Best score minimizer can guarantee
+ * @returns {number} Best score achievable from this position
+ * @private
+ */
 const minimax = (board, depth, isMaximizing, alpha, beta) => {
+    // Check terminal conditions (game over states)
     const winner = checkWinner(board);
-    if (winner === 'O') return 10 - depth;
-    if (winner === 'X') return depth - 10;
-    if (board.every(cell => cell !== null)) return 0;
+    if (winner === 'O') return 10 - depth; // AI wins (prefer faster wins)
+    if (winner === 'X') return depth - 10; // Player wins (prefer longer games if losing)
+    if (board.every(cell => cell !== null)) return 0; // Draw
 
     if (isMaximizing) {
+        // Maximizing player (AI) - try to get highest score
         let maxEval = -Infinity;
         for (let i = 0; i < 9; i++) {
             if (board[i] === null) {
                 board[i] = 'O';
                 const evalScore = minimax(board, depth + 1, false, alpha, beta);
-                board[i] = null;
+                board[i] = null; // Undo move
                 maxEval = Math.max(maxEval, evalScore);
                 alpha = Math.max(alpha, evalScore);
+                // Beta cutoff: minimizer will avoid this branch
                 if (beta <= alpha) break;
             }
         }
         return maxEval;
     } else {
+        // Minimizing player (human) - try to get lowest score
         let minEval = Infinity;
         for (let i = 0; i < 9; i++) {
             if (board[i] === null) {
                 board[i] = 'X';
                 const evalScore = minimax(board, depth + 1, true, alpha, beta);
-                board[i] = null;
+                board[i] = null; // Undo move
                 minEval = Math.min(minEval, evalScore);
                 beta = Math.min(beta, evalScore);
+                // Alpha cutoff: maximizer will avoid this branch
                 if (beta <= alpha) break;
             }
         }
@@ -43,6 +104,16 @@ const minimax = (board, depth, isMaximizing, alpha, beta) => {
     }
 };
 
+/**
+ * Checks if there is a winner on the board.
+ * 
+ * Iterates through all winning combinations and checks if any line
+ * has three matching symbols ('X' or 'O').
+ * 
+ * @param {Array<string|null>} board - Current board state
+ * @returns {string|null} 'X' if player wins, 'O' if AI wins, null if no winner
+ * @private
+ */
 const checkWinner = (board) => {
     for (const [a, b, c] of WINNING_COMBINATIONS) {
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -52,6 +123,14 @@ const checkWinner = (board) => {
     return null;
 };
 
+/**
+ * Gets the winning line indices if there is a winner.
+ * Used for highlighting the winning cells visually.
+ * 
+ * @param {Array<string|null>} board - Current board state
+ * @returns {Array<number>|null} Array of winning cell indices [a, b, c] or null
+ * @private
+ */
 const getWinningLine = (board) => {
     for (const combo of WINNING_COMBINATIONS) {
         const [a, b, c] = combo;
@@ -62,15 +141,48 @@ const getWinningLine = (board) => {
     return null;
 };
 
+/**
+ * Tic Tac Toe game component with AI opponent.
+ * 
+ * Game States:
+ * - 'playing': game is in progress
+ * - 'won': player has won
+ * - 'lost': AI has won
+ * - 'draw': no winner, board full
+ * 
+ * Difficulty Levels:
+ * - Easy: AI makes random moves (no strategy)
+ * - Medium: AI makes random moves 30% of time, optimal moves 70% of time
+ * - Hard: AI always makes optimal moves using minimax (unbeatable)
+ * 
+ * @component
+ * @returns {JSX.Element} Complete Tic Tac Toe game interface
+ */
 const TicTacToe = () => {
     const shouldReduceMotion = useReducedMotion();
-    const [board, setBoard] = useState(Array(9).fill(null));
+    
+    // Game state
+    const [board, setBoard] = useState(Array(9).fill(null)); // 9 cells: 'X', 'O', or null
     const [isPlayerTurn, setIsPlayerTurn] = useState(true);
     const [difficulty, setDifficulty] = useState('medium');
-    const [scores, setScores] = useState({ player: 0, ai: 0, draws: 0 });
-    const [gameStatus, setGameStatus] = useState('playing');
-    const [winningLine, setWinningLine] = useState(null);
+    const [scores, setScores] = useState({ player: 0, ai: 0, draws: 0 }); // Score tracking
+    const [gameStatus, setGameStatus] = useState('playing'); // 'playing' | 'won' | 'lost' | 'draw'
+    const [winningLine, setWinningLine] = useState(null); // Indices of winning cells for highlighting
 
+    /**
+     * Calculates the best move for the AI based on difficulty level.
+     * 
+     * Difficulty Strategies:
+     * - Easy: Always makes random moves (no intelligence)
+     * - Medium: 30% random, 70% optimal (makes game challenging but winnable)
+     * - Hard: Always optimal using minimax (unbeatable with perfect play)
+     * 
+     * For hard mode, evaluates all empty cells using minimax and selects
+     * the move with the highest score.
+     * 
+     * @param {Array<string|null>} currentBoard - Current board state
+     * @returns {number|null} Index of best move (0-8), or null if board is full
+     */
     const getAIMove = useCallback((currentBoard) => {
         const emptyIndices = currentBoard
             .map((cell, idx) => cell === null ? idx : null)
@@ -78,19 +190,23 @@ const TicTacToe = () => {
 
         if (emptyIndices.length === 0) return null;
 
+        // Easy mode: always random
         if (difficulty === 'easy') {
             return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
         }
 
+        // Medium mode: 30% random, 70% optimal
         if (difficulty === 'medium') {
             if (Math.random() < 0.3) {
                 return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
             }
         }
 
+        // Hard mode (or medium's optimal moves): use minimax
         let bestMove = emptyIndices[0];
         let bestScore = -Infinity;
 
+        // Try each possible move and evaluate with minimax
         for (const idx of emptyIndices) {
             const newBoard = [...currentBoard];
             newBoard[idx] = 'O';
@@ -104,13 +220,27 @@ const TicTacToe = () => {
         return bestMove;
     }, [difficulty]);
 
+    /**
+     * Handles player's move when a cell is clicked.
+     * 
+     * Process:
+     * 1. Validate move (cell empty, player's turn, game in progress)
+     * 2. Place player's mark ('X')
+     * 3. Check for win or draw
+     * 4. If game continues, trigger AI's turn
+     * 
+     * @param {number} index - Board index (0-8) of clicked cell
+     */
     const handleCellClick = useCallback((index) => {
+        // Ignore clicks on occupied cells, during AI turn, or when game is over
         if (board[index] || !isPlayerTurn || gameStatus !== 'playing') return;
 
+        // Place player's mark
         const newBoard = [...board];
         newBoard[index] = 'X';
         setBoard(newBoard);
 
+        // Check for player win
         const winner = checkWinner(newBoard);
         if (winner === 'X') {
             setWinningLine(getWinningLine(newBoard));
@@ -119,15 +249,25 @@ const TicTacToe = () => {
             return;
         }
 
+        // Check for draw (board full, no winner)
         if (newBoard.every(cell => cell !== null)) {
             setGameStatus('draw');
             setScores(prev => ({ ...prev, draws: prev.draws + 1 }));
             return;
         }
 
+        // Game continues: trigger AI turn
         setIsPlayerTurn(false);
     }, [board, isPlayerTurn, gameStatus]);
 
+    /**
+     * AI turn: calculates and executes AI's move after a short delay.
+     * 
+     * The 500ms delay makes the AI feel more natural (like it's "thinking")
+     * and gives the player time to see their move before the AI responds.
+     * 
+     * Process identical to player's turn but uses getAIMove for intelligence.
+     */
     useEffect(() => {
         if (!isPlayerTurn && gameStatus === 'playing') {
             const timer = setTimeout(() => {
@@ -137,6 +277,7 @@ const TicTacToe = () => {
                     newBoard[aiMove] = 'O';
                     setBoard(newBoard);
 
+                    // Check for AI win
                     const winner = checkWinner(newBoard);
                     if (winner === 'O') {
                         setWinningLine(getWinningLine(newBoard));
@@ -145,21 +286,26 @@ const TicTacToe = () => {
                         return;
                     }
 
+                    // Check for draw
                     if (newBoard.every(cell => cell !== null)) {
                         setGameStatus('draw');
                         setScores(prev => ({ ...prev, draws: prev.draws + 1 }));
                         return;
                     }
 
+                    // Game continues: return control to player
                     setIsPlayerTurn(true);
                 }
-            }, 500);
+            }, 500); // Delay makes AI feel more natural
 
             return () => clearTimeout(timer);
         }
     }, [isPlayerTurn, gameStatus, board, getAIMove]);
 
-    // Allow Escape to restart when a dialog is open
+    /**
+     * Keyboard shortcut: Escape key resets game when game is over.
+     * Only active when game is in terminal state (won/lost/draw).
+     */
     useEffect(() => {
         if (gameStatus === 'playing') return;
         const handler = (event) => {
@@ -172,6 +318,10 @@ const TicTacToe = () => {
         return () => document.removeEventListener('keydown', handler);
     }, [gameStatus]);
 
+    /**
+     * Resets the game board for a new round.
+     * Preserves scores and difficulty setting.
+     */
     const resetGame = () => {
         setBoard(Array(9).fill(null));
         setIsPlayerTurn(true);
@@ -179,6 +329,12 @@ const TicTacToe = () => {
         setWinningLine(null);
     };
 
+    /**
+     * Changes difficulty level and resets both game and scores.
+     * Scores are reset because different difficulties are not comparable.
+     * 
+     * @param {string} newDifficulty - 'easy' | 'medium' | 'hard'
+     */
     const changeDifficulty = (newDifficulty) => {
         setDifficulty(newDifficulty);
         setScores({ player: 0, ai: 0, draws: 0 });

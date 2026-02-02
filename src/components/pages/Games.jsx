@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Games page - Easter egg feature with Tic Tac Toe and Snake games.
+ */
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Check, Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
@@ -7,6 +11,19 @@ import { safeJSONStringify } from '../../utils/security';
 import TicTacToe from '../games/TicTacToe';
 import SnakeGame from '../games/SnakeGame';
 
+/**
+ * Games page component (easter egg feature)
+ * 
+ * Features:
+ * - Hidden games page (noindex in SEO)
+ * - Tab interface to switch between games
+ * - Tic Tac Toe with AI opponent
+ * - Classic Snake game
+ * - Easter egg badge and messaging
+ * 
+ * @component
+ * @returns {JSX.Element} Games page with playable games
+ */
 const Games = () => {
     const [activeGame, setActiveGame] = useState('tictactoe');
     const shouldReduceMotion = useReducedMotion();
@@ -14,6 +31,7 @@ const Games = () => {
     const description = 'A secret games easter egg! Play Tic Tac Toe against AI or challenge yourself with Snake.';
     const title = `Games | ${resumeData.basics.name}`;
 
+    /** Available games configuration */
     const games = [
         { id: 'tictactoe', label: 'Tic Tac Toe', icon: Grid3X3, color: 'bg-accent' },
         { id: 'snake', label: 'Snake', icon: Sparkles, color: 'bg-fun-pink' }

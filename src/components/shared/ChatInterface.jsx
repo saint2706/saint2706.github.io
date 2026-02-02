@@ -1,3 +1,23 @@
+/**
+ * Chat Interface Component Module
+ * 
+ * Provides an interactive chat interface powered by Google's Gemini AI.
+ * This component manages message history, handles user input, renders markdown responses,
+ * and implements accessibility features including focus trapping and keyboard navigation.
+ * 
+ * Features:
+ * - Persistent chat history stored in localStorage
+ * - Markdown rendering with safe link handling (XSS prevention)
+ * - Quick reply buttons for common questions
+ * - Real-time typing indicators
+ * - Message history limiting to prevent token exhaustion
+ * - Focus trap for modal dialog behavior
+ * - Auto-scrolling to latest messages
+ * - Character counter for input validation
+ * 
+ * @module components/shared/ChatInterface
+ */
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Bot, X, Send } from 'lucide-react';
@@ -6,19 +26,35 @@ import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
 import { isSafeHref } from '../../utils/security';
 
+// localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
+
+// Default greeting message shown on first load
 const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
 
+// Quick reply suggestions shown when chat history is empty
 const QUICK_REPLIES = [
   "Tell me about your projects",
   "What are your top skills?",
   "How can I contact you?"
 ];
 
+/**
+ * Custom link renderer for ReactMarkdown that validates URLs for security.
+ * Prevents XSS attacks by only allowing safe protocols (http, https, mailto).
+ * Unsafe links are rendered as plain text instead of clickable anchors.
+ * 
+ * @component
+ * @param {object} props
+ * @param {string} props.href - The URL to link to
+ * @param {React.ReactNode} props.children - Link text content
+ * @returns {JSX.Element} Either a safe anchor tag or plain text span
+ */
 const LinkRenderer = ({ href, children, ...rest }) => {
   // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
   const isValidHref = isSafeHref(href);
 
+  // If URL is unsafe, render as plain text to prevent execution
   if (!isValidHref) {
     return <span {...rest}>{children}</span>;
   }
@@ -36,8 +72,21 @@ const LinkRenderer = ({ href, children, ...rest }) => {
   );
 };
 
-// Optimization: Extract message list and use React.memo to prevent re-rendering
-// the entire chat history (and expensive Markdown parsing) on every keystroke.
+/**
+ * Memoized message list component that renders the chat history.
+ * 
+ * Performance optimization: This component is wrapped in React.memo to prevent
+ * re-rendering the entire message history (and expensive Markdown parsing) when
+ * only the input field changes. Markdown parsing is computationally expensive,
+ * so we only re-render when the messages array or typing state actually changes.
+ * 
+ * @component
+ * @param {object} props
+ * @param {Array<{role: string, text: string}>} props.messages - Array of chat messages
+ * @param {boolean} props.isTyping - Whether the AI is currently generating a response
+ * @param {React.RefObject} props.messagesEndRef - Ref for auto-scrolling to bottom
+ * @returns {JSX.Element} Scrollable message list with markdown rendering
+ */
 const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
   <div
     className="flex-grow overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-slate-700 bg-primary"
@@ -69,20 +118,49 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
 ));
 MessageList.displayName = 'MessageList';
 
+/**
+ * Main chat interface component.
+ * 
+ * Provides a complete chat experience with message history persistence, AI responses,
+ * and full accessibility support. Messages are stored in localStorage and restored
+ * on subsequent visits. The interface includes quick reply buttons, typing indicators,
+ * and a focus trap for modal behavior.
+ * 
+ * Message Flow:
+ * 1. User types message and submits
+ * 2. Message is added to history and sent to AI service
+ * 3. While waiting, typing indicator is shown
+ * 4. AI response is received and added to history
+ * 5. Messages are persisted to localStorage
+ * 6. UI auto-scrolls to show latest message
+ * 
+ * @component
+ * @param {object} props
+ * @param {Function} props.onClose - Callback to close the chat interface
+ * @returns {JSX.Element} Animated chat dialog with full functionality
+ */
 const ChatInterface = ({ onClose }) => {
+  // Chat state: messages array with role ('user' | 'model') and text
   const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
   const [input, setInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // AI response loading state
 
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
-  const chatDialogRef = useRef(null);
-  const isMountedRef = useRef(true);
+  // Refs for DOM manipulation and lifecycle tracking
+  const messagesEndRef = useRef(null); // For auto-scrolling to bottom
+  const inputRef = useRef(null); // For auto-focusing input field
+  const chatDialogRef = useRef(null); // For focus trapping
+  const isMountedRef = useRef(true); // Prevents state updates after unmount
   const prefersReducedMotion = useReducedMotion();
+  
+  // ARIA identifiers for accessibility
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
 
-  // Track mount status
+  /**
+   * Track component mount status to prevent state updates after unmount.
+   * This prevents memory leaks and React warnings when async operations complete
+   * after the component has been unmounted.
+   */
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -90,7 +168,11 @@ const ChatInterface = ({ onClose }) => {
     };
   }, []);
 
-  // Load chat history
+  /**
+   * Load chat history from localStorage on component mount.
+   * This provides continuity across page refreshes and return visits.
+   * Gracefully handles JSON parsing errors and invalid data.
+   */
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -105,7 +187,11 @@ const ChatInterface = ({ onClose }) => {
     }
   }, []);
 
-  // Save chat history
+  /**
+   * Persist chat history to localStorage whenever messages change.
+   * Only saves if there's more than just the default greeting message.
+   * Handles localStorage quota exceeded errors gracefully.
+   */
   useEffect(() => {
     if (messages.length > 1) {
       try {
@@ -116,28 +202,60 @@ const ChatInterface = ({ onClose }) => {
     }
   }, [messages]);
 
+  /**
+   * Smoothly scrolls to the bottom of the message list.
+   * Uses the messagesEndRef which is positioned at the end of the message list.
+   */
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  /**
+   * Auto-scroll to bottom whenever messages change (new message added).
+   * This ensures users always see the latest message without manual scrolling.
+   */
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  /**
+   * Auto-focus the input field when the chat interface opens.
+   * Short delay ensures the dialog animation has started before focusing.
+   */
   useEffect(() => {
     if (inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, []);
 
+  /**
+   * Sends a message to the AI and handles the response.
+   * 
+   * This function:
+   * 1. Adds the user message to the chat history
+   * 2. Shows typing indicator
+   * 3. Converts recent message history to AI API format
+   * 4. Sends message to AI service with context
+   * 5. Adds AI response to chat history
+   * 6. Hides typing indicator
+   * 
+   * Context Management: Only sends the last 30 messages to prevent exceeding
+   * token limits and to keep API costs manageable. This still provides enough
+   * context for coherent conversations.
+   * 
+   * @async
+   * @param {string} text - The message text to send
+   */
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
 
+    // Add user message to UI immediately for responsive feel
     const userMsg = { role: 'user', text: text };
     setMessages(prev => [...prev, userMsg]);
-    if (text === input) setInput('');
+    if (text === input) setInput(''); // Clear input if this is from the input field
     setIsTyping(true);
 
+    // Limit context to last 30 messages to prevent token exhaustion
     const MAX_HISTORY_CONTEXT = 30;
     const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
       role: m.role,
@@ -146,6 +264,7 @@ const ChatInterface = ({ onClose }) => {
 
     try {
       const responseText = await chatWithGemini(userMsg.text, history);
+      // Only update state if component is still mounted
       if (isMountedRef.current) {
         setMessages(prev => [...prev, { role: 'model', text: responseText }]);
       }
@@ -165,37 +284,59 @@ const ChatInterface = ({ onClose }) => {
     }
   };
 
+  /**
+   * Clears the chat history and resets to default greeting message.
+   * Also removes the saved history from localStorage.
+   */
   const clearHistory = useCallback(() => {
     setMessages([DEFAULT_MESSAGE]);
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
-  // Focus trap and Escape handling
+  /**
+   * Implements focus trap and keyboard navigation for modal dialog accessibility.
+   * 
+   * Focus Trap: When Tab is pressed on the last focusable element, focus wraps
+   * to the first element. When Shift+Tab is pressed on the first element, focus
+   * wraps to the last element. This keeps keyboard focus contained within the dialog.
+   * 
+   * Escape Handling: Pressing Escape closes the dialog, a standard pattern for modals.
+   * 
+   * This ensures keyboard-only users can navigate the dialog properly and matches
+   * WAI-ARIA dialog best practices.
+   */
   useEffect(() => {
+    // Selector for all focusable elements (for focus trap)
     const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
     const handleKeyDown = (event) => {
+      // Close dialog on Escape key
       if (event.key === 'Escape') {
         event.preventDefault();
         onClose();
         return;
       }
 
+      // Focus trap: only handle Tab key
       if (event.key !== 'Tab') return;
       const container = chatDialogRef.current;
       if (!container) return;
 
+      // Get all focusable elements within the dialog
       const focusable = container.querySelectorAll(focusSelectors);
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
 
+      // Handle Shift+Tab on first element: wrap to last
       if (event.shiftKey) {
         if (document.activeElement === first) {
           event.preventDefault();
           last.focus();
         }
-      } else if (document.activeElement === last) {
+      } 
+      // Handle Tab on last element: wrap to first
+      else if (document.activeElement === last) {
         event.preventDefault();
         first.focus();
       }

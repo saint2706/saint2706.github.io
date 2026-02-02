@@ -1,11 +1,39 @@
+/**
+ * Chatbot Component Module
+ * 
+ * Provides a floating action button (FAB) that expands to reveal chat and roast options.
+ * This component implements lazy loading for optimal performance, only loading the chat
+ * and roast interfaces when needed. It also manages focus and accessibility for modals.
+ * 
+ * Features:
+ * - Expandable FAB with hover and focus interactions
+ * - Lazy-loaded chat and roast interfaces with suspense fallbacks
+ * - Keyboard shortcuts (Ctrl/Cmd+K for chat, Escape to close)
+ * - Focus management and restoration when dialogs open/close
+ * - Click-outside detection to close the FAB
+ * - Custom event listeners for programmatic control
+ * - ARIA attributes for screen reader accessibility
+ * 
+ * @module components/shared/Chatbot
+ */
+
 import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Bot, MessageCircle, Flame } from 'lucide-react';
 
+// Lazy load chat and roast interfaces for code-splitting and performance
 const ChatInterface = lazy(() => import('./ChatInterface'));
 const RoastInterface = lazy(() => import('./RoastInterface'));
 
-// Minimal loading fallback for Suspense
+/**
+ * Loading fallback component shown during Suspense lazy loading.
+ * Displays a skeleton UI with loading animation while the chat/roast interface loads.
+ * 
+ * @component
+ * @param {object} props
+ * @param {'chat'|'roast'} props.type - Type of dialog being loaded (affects styling)
+ * @returns {JSX.Element} Loading skeleton with appropriate styling
+ */
 const LoadingDialog = ({ type }) => {
   const prefersReducedMotion = useReducedMotion();
   const isChat = type === 'chat';
@@ -55,22 +83,51 @@ const LoadingDialog = ({ type }) => {
   );
 };
 
+/**
+ * Chatbot component with expandable floating action button (FAB).
+ * 
+ * This component provides a persistent UI element for accessing the chatbot and resume roast
+ * features. It uses lazy loading to defer loading of the chat and roast interfaces until needed,
+ * improving initial page load performance.
+ * 
+ * The component manages three states:
+ * 1. FAB closed - showing just the main button
+ * 2. FAB open - showing the main button plus chat and roast options
+ * 3. Dialog open - showing the full chat or roast interface
+ * 
+ * Keyboard Shortcuts:
+ * - Ctrl/Cmd+K: Toggle chat interface
+ * - Escape: Close all dialogs and FAB
+ * 
+ * Accessibility:
+ * - Focus is trapped within open dialogs
+ * - Focus is restored to the previously focused element when closing
+ * - Main content is marked as aria-hidden when dialogs are open
+ * - Proper ARIA labels and roles throughout
+ * 
+ * @component
+ * @returns {JSX.Element} The chatbot FAB and lazy-loaded interfaces
+ */
 const Chatbot = () => {
-  // FAB state
+  // FAB (Floating Action Button) expansion state
   const [isFabOpen, setIsFabOpen] = useState(false);
 
-  // Chatbot state
+  // Chat interface visibility state
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // Roast state
+  // Roast interface visibility and content state
   const [isRoastOpen, setIsRoastOpen] = useState(false);
   const [roastContent, setRoastContent] = useState(null);
 
+  // Refs for DOM access and focus management
   const fabRef = useRef(null);
-  const lastFocusedRef = useRef(null);
+  const lastFocusedRef = useRef(null); // Stores element to restore focus to on close
   const prefersReducedMotion = useReducedMotion();
 
-  // Close FAB when clicking outside
+  /**
+   * Close FAB when clicking outside of it.
+   * Only closes if no dialog is currently open (chat or roast).
+   */
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (fabRef.current && !fabRef.current.contains(e.target) && !isChatOpen && !isRoastOpen) {
@@ -81,7 +138,11 @@ const Chatbot = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isChatOpen, isRoastOpen]);
 
-  // Listen for events
+  /**
+   * Listen for custom events for programmatic control of the chatbot.
+   * This allows other parts of the application to trigger the chatbot.
+   * Events: 'openChatbot', 'closeChatbot'
+   */
   useEffect(() => {
     const handleOpenChatbot = () => {
       setIsChatOpen(true);
@@ -97,15 +158,21 @@ const Chatbot = () => {
     };
   }, []);
 
-  // Keyboard shortcut: Cmd/Ctrl + K
+  /**
+   * Global keyboard shortcuts for chatbot control.
+   * - Cmd/Ctrl+K: Toggle chat interface (common pattern for search/help)
+   * - Escape: Close all open dialogs and collapse FAB
+   */
   useEffect(() => {
     const handleKeyDown = (e) => {
+      // Toggle chat with Cmd/Ctrl+K
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         lastFocusedRef.current = document.activeElement;
         setIsChatOpen(prev => !prev);
         setIsRoastOpen(false);
       }
+      // Close everything with Escape
       if (e.key === 'Escape') {
         setIsChatOpen(false);
         setIsRoastOpen(false);
@@ -116,6 +183,10 @@ const Chatbot = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  /**
+   * Opens the chat interface and closes other dialogs.
+   * Stores the currently focused element for restoration later.
+   */
   const openChat = () => {
     lastFocusedRef.current = document.activeElement;
     setIsChatOpen(true);
@@ -123,6 +194,10 @@ const Chatbot = () => {
     setIsFabOpen(false);
   };
 
+  /**
+   * Opens the roast interface and closes other dialogs.
+   * Stores the currently focused element for restoration later.
+   */
   const openRoast = () => {
     lastFocusedRef.current = document.activeElement;
     setIsRoastOpen(true);
@@ -130,18 +205,35 @@ const Chatbot = () => {
     setIsFabOpen(false);
   };
 
+  // Track whether any dialog is currently open
   const anyDialogOpen = isChatOpen || isRoastOpen;
 
-  // Manage background inertness and focus return
+  /**
+   * Manage accessibility when dialogs open/close.
+   * 
+   * When a dialog opens:
+   * - Store the currently focused element
+   * - Mark main content as aria-hidden to hide it from screen readers
+   * 
+   * When all dialogs close:
+   * - Remove aria-hidden from main content
+   * - Restore focus to the previously focused element
+   * 
+   * This ensures proper screen reader experience and keyboard navigation.
+   */
   useEffect(() => {
     const main = document.getElementById('main-content');
     if (anyDialogOpen) {
+      // Dialog is opening
       if (!lastFocusedRef.current) {
         lastFocusedRef.current = document.activeElement;
       }
+      // Hide main content from screen readers while dialog is open
       if (main) main.setAttribute('aria-hidden', 'true');
     } else {
+      // All dialogs are closed
       if (main) main.removeAttribute('aria-hidden');
+      // Restore focus to element that was focused before dialog opened
       lastFocusedRef.current?.focus?.();
       lastFocusedRef.current = null;
     }

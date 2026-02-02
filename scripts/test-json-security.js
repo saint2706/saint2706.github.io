@@ -1,5 +1,22 @@
+/**
+ * JSON Security Test Suite
+ * 
+ * Tests the safeJSONStringify security utility function to ensure it correctly escapes
+ * dangerous characters that could lead to XSS attacks when JSON is embedded in HTML.
+ * 
+ * This test suite verifies proper escaping of:
+ * - HTML tags (< and >)
+ * - Script closing tags
+ * - Ampersands (&)
+ * - Single quotes (')
+ * - Unicode line/paragraph separators (U+2028, U+2029)
+ * 
+ * @module scripts/test-json-security
+ */
+
 import { safeJSONStringify } from '../src/utils/security.js';
 
+// Comprehensive test cases for XSS prevention in JSON strings
 const tests = [
   {
     name: "Standard object",

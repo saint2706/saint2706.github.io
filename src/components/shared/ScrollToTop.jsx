@@ -1,13 +1,34 @@
+/**
+ * @fileoverview Scroll to top button with visibility based on scroll position.
+ * Appears after scrolling down 300px with throttled scroll listener.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
+/** Throttle delay in milliseconds for scroll event handler */
 const THROTTLE_DELAY = 100;
 
+/**
+ * Scroll to top floating action button
+ * 
+ * Features:
+ * - Appears after scrolling 300px down
+ * - Throttled scroll listener for performance (100ms)
+ * - Smooth scroll to top (respects reduced motion)
+ * - Tooltip on hover
+ * - Fade in/out animation
+ * - Positioned at bottom-left
+ * 
+ * @component
+ * @returns {JSX.Element|null} Scroll to top button (hidden when at top)
+ */
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
+  // Throttled scroll listener to show/hide button
   useEffect(() => {
     let timeoutId = null;
     let lastRan = null;
@@ -20,6 +41,11 @@ const ScrollToTop = () => {
       }
     };
 
+    /**
+     * Throttle scroll events for better performance
+     * - First call executes immediately
+     * - Subsequent calls wait for throttle delay
+     */
     const throttledToggleVisibility = () => {
       const now = Date.now();
 
@@ -60,6 +86,7 @@ const ScrollToTop = () => {
     };
   }, []);
 
+  /** Scroll to top with smooth behavior (or instant if reduced motion) */
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

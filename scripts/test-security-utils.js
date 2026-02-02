@@ -1,3 +1,18 @@
+/**
+ * Security Utilities Test Suite
+ * 
+ * Comprehensive test suite for the safeJSONStringify function from the security utilities.
+ * Tests various scenarios where dangerous characters need to be escaped to prevent XSS attacks.
+ * 
+ * This test validates:
+ * - Script tag escaping
+ * - HTML entity escaping
+ * - Unicode line separator handling
+ * - Complex nested objects
+ * 
+ * @module scripts/test-security-utils
+ */
+
 import { safeJSONStringify } from '../src/utils/security.js';
 
 const tests = [
