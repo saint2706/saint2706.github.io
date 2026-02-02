@@ -1,33 +1,58 @@
+/**
+ * @fileoverview Main layout wrapper component providing consistent structure across all pages.
+ * Manages the custom cursor feature, accessibility preferences, and renders header/footer/content.
+ */
+
 import React, { useEffect, useMemo, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
 
+/** Local storage key for persisting custom cursor preference */
 const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
 
+/**
+ * Layout component that wraps all page content
+ * 
+ * Provides:
+ * - Custom cursor with accessibility-aware auto-disable
+ * - Neubrutalist grid background pattern
+ * - Skip navigation link for keyboard users
+ * - Consistent header/footer structure
+ * 
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Page content to render within the layout
+ * @returns {JSX.Element} Complete page layout with header, content, and footer
+ */
 const Layout = ({ children }) => {
+  // State for custom cursor toggle and accessibility preferences
   const [cursorEnabled, setCursorEnabled] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [prefersContrast, setPrefersContrast] = useState(false);
   const [hasFinePointer, setHasFinePointer] = useState(true);
 
+  // Load cursor preference from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
     setCursorEnabled(stored === 'true');
   }, []);
 
+  // Monitor system accessibility preferences via media queries
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contrastMoreQuery = window.matchMedia('(prefers-contrast: more)');
     const forcedColorsQuery = window.matchMedia('(forced-colors: active)');
     const pointerFineQuery = window.matchMedia('(pointer: fine)');
 
+    /** Update accessibility preference states based on media query matches */
     const updatePreferences = () => {
       setPrefersReducedMotion(reducedMotionQuery.matches);
       setPrefersContrast(contrastMoreQuery.matches || forcedColorsQuery.matches);
       setHasFinePointer(pointerFineQuery.matches);
     };
 
+    // Initial check and subscribe to changes
     updatePreferences();
     reducedMotionQuery.addEventListener('change', updatePreferences);
     contrastMoreQuery.addEventListener('change', updatePreferences);
@@ -42,11 +67,15 @@ const Layout = ({ children }) => {
     };
   }, []);
 
+  // Determine if cursor should be disabled due to accessibility preferences
   const cursorForcedOff = prefersReducedMotion || prefersContrast || !hasFinePointer;
+  
+  // Memoized effective cursor state (respects both user preference and accessibility)
   const effectiveCursorEnabled = useMemo(() => (
     cursorEnabled && !cursorForcedOff
   ), [cursorEnabled, cursorForcedOff]);
 
+  // Auto-disable cursor when accessibility settings change
   useEffect(() => {
     if (cursorForcedOff && cursorEnabled) {
       setCursorEnabled(false);
@@ -54,6 +83,10 @@ const Layout = ({ children }) => {
     }
   }, [cursorForcedOff, cursorEnabled]);
 
+  /**
+   * Toggle custom cursor on/off (unless disabled by accessibility preferences)
+   * Persists preference to localStorage
+   */
   const toggleCursor = () => {
     if (cursorForcedOff) return;
     const next = !cursorEnabled;

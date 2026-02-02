@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Hero section for homepage with interactive elements and animations.
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
@@ -6,16 +10,31 @@ import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
+/**
+ * Hero section component for homepage
+ * 
+ * Features:
+ * - Bold typography with neubrutalist styling
+ * - Availability status badge
+ * - CTA buttons (View Projects, Talk to Bot)
+ * - Interactive code snippet card with easter egg
+ * - Click stack array 3 times to reveal /games page
+ * - Decorative background shapes
+ * - SEO optimization with structured data
+ * 
+ * @component
+ * @returns {JSX.Element} Hero section with heading, CTAs, and code snippet
+ */
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
 
-  // Easter egg state
+  // Easter egg state (click stack array to unlock games page)
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
   const CLICKS_REQUIRED = 3;
 
-  // Reset click count after inactivity
+  // Reset click count after 2 seconds of inactivity
   useEffect(() => {
     if (clickCount > 0 && clickCount < CLICKS_REQUIRED) {
       const timeout = setTimeout(() => setClickCount(0), 2000);
@@ -23,7 +42,10 @@ const Hero = () => {
     }
   }, [clickCount]);
 
-  // Handle easter egg activation
+  /**
+   * Handle easter egg activation
+   * After 3 clicks, glitch animation plays and navigates to /games
+   */
   const handleEasterEggClick = useCallback(() => {
     if (isGlitching) return;
 
@@ -39,13 +61,17 @@ const Hero = () => {
     }
   }, [clickCount, isGlitching, navigate]);
 
-  // Keyboard handler for accessibility
+  /**
+   * Keyboard handler for easter egg accessibility
+   * Activates on Enter or Space key
+   */
   const handleEasterEggKeyDown = useCallback((e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleEasterEggClick();
     }
   }, [handleEasterEggClick]);
+  
   const canonicalUrl = resumeData.basics.website;
   const description = 'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;

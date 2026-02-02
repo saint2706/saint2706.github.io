@@ -2,10 +2,11 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 /**
- * Page wrapper component for consistent page transitions
- * Provides fade and slide animations on enter/exit
+ * @fileoverview Page wrapper component providing consistent page transition animations.
+ * Wraps page content with fade and slide animations on route changes.
  */
 
+/** Animation variants for page enter/exit transitions */
 const pageVariants = {
     initial: {
         opacity: 0,
@@ -29,6 +30,22 @@ const pageVariants = {
     }
 };
 
+/**
+ * Page wrapper with animated transitions
+ * 
+ * Features:
+ * - Fade in/out animation on route change
+ * - Slide up on enter, slide down on exit
+ * - Respects reduced motion preference
+ * - Works with React Router route transitions
+ * 
+ * Usage: Wrap each page component for consistent transitions
+ * 
+ * @component
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Page content to animate
+ * @returns {JSX.Element} Animated wrapper around page content
+ */
 const PageWrapper = ({ children }) => {
     const shouldReduceMotion = useReducedMotion();
 

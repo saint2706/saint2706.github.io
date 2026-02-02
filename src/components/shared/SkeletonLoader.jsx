@@ -1,15 +1,29 @@
+/**
+ * @fileoverview Skeleton loader components for loading states.
+ * Provides placeholder UI while content is being fetched.
+ */
+
 import React from 'react';
 
 /**
- * Skeleton loader components for loading states
+ * Base skeleton with pulse animation
+ * 
+ * @component
+ * @param {Object} props
+ * @param {string} [props.className=''] - Additional CSS classes for sizing/positioning
+ * @returns {JSX.Element} Pulsing skeleton placeholder
  */
-
-// Base skeleton with pulse animation
 const SkeletonBase = ({ className = '' }) => (
     <div className={`animate-pulse motion-reduce:animate-none bg-slate-700/50 rounded ${className}`} aria-hidden="true" />
 );
 
-// Blog card skeleton
+/**
+ * Blog card skeleton loader
+ * Matches the structure and layout of blog cards
+ * 
+ * @component
+ * @returns {JSX.Element} Blog card skeleton placeholder
+ */
 export const BlogSkeleton = () => (
     <div className="bg-secondary/50 backdrop-blur border border-[color:var(--color-border)] rounded-xl overflow-hidden flex flex-col h-full">
         {/* Header bar */}
@@ -46,7 +60,13 @@ export const BlogSkeleton = () => (
     </div>
 );
 
-// Project card skeleton
+/**
+ * Project card skeleton loader
+ * Matches the structure and layout of project cards including image
+ * 
+ * @component
+ * @returns {JSX.Element} Project card skeleton placeholder
+ */
 export const ProjectSkeleton = () => (
     <div className="bg-secondary/50 backdrop-blur border border-[color:var(--color-border)] rounded-xl overflow-hidden flex flex-col h-full">
         {/* Image placeholder */}
@@ -80,7 +100,13 @@ export const ProjectSkeleton = () => (
     </div>
 );
 
-// Chat message skeleton (typing indicator replacement)
+/**
+ * Chat message skeleton loader (typing indicator)
+ * Shows a placeholder while bot is generating response
+ * 
+ * @component
+ * @returns {JSX.Element} Chat message skeleton placeholder
+ */
 export const ChatSkeleton = () => (
     <div className="flex justify-start">
         <div className="bg-slate-800 p-4 rounded-2xl rounded-bl-none border border-[color:var(--color-border)] max-w-[80%]">

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Resume page displaying professional experience, education, and skills.
+ */
+
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin, Printer } from 'lucide-react';
@@ -5,7 +9,19 @@ import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
-// Neubrutalism Section Component
+/**
+ * Reusable section component with neubrutalist styling
+ * 
+ * @component
+ * @param {Object} props
+ * @param {string} props.title - Section heading
+ * @param {React.ReactNode} props.icon - Icon element
+ * @param {string} props.color - Tailwind background color class
+ * @param {React.ReactNode} props.children - Section content
+ * @param {number} props.delay - Animation delay
+ * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
+ * @returns {JSX.Element} Styled section with header and content
+ */
 const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, shouldReduceMotion = false }) => (
   <motion.div
     initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
@@ -26,7 +42,20 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, sh
   </motion.div>
 );
 
-// Neubrutalism Timeline Card
+/**
+ * Timeline card for experience/education entries
+ * 
+ * @component
+ * @param {Object} props
+ * @param {string} props.title - Job title or institution name
+ * @param {string} props.subtitle - Company or degree
+ * @param {string} props.date - Date range
+ * @param {string} props.location - Location
+ * @param {string|string[]} props.description - Description or highlights
+ * @param {string[]} props.tags - Tech stack or skills
+ * @param {string} props.accentColor - Tailwind color class for accent bar
+ * @returns {JSX.Element} Timeline card with details
+ */
 const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
   <div
     className="bg-card border-nb border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
@@ -88,8 +117,21 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
   </div>
 );
 
-// Neubrutalism Skill Badge
+/**
+ * Skill badge with proficiency-based color coding
+ * 
+ * @component
+ * @param {Object} props
+ * @param {string} props.name - Skill name
+ * @param {number} props.proficiency - Proficiency percentage (0-100)
+ * @returns {JSX.Element} Color-coded skill badge
+ */
 const SkillBadge = ({ name, proficiency }) => {
+  /**
+   * Get color based on proficiency level
+   * @param {number} p - Proficiency percentage
+   * @returns {string} Tailwind background color class
+   */
   const getColor = (p) => {
     if (p >= 90) return 'bg-fun-yellow';
     if (p >= 75) return 'bg-accent';
@@ -108,12 +150,27 @@ const SkillBadge = ({ name, proficiency }) => {
   );
 };
 
+/**
+ * Resume page component
+ * 
+ * Features:
+ * - Timeline-based experience and education display
+ * - Skill categorization with proficiency levels
+ * - Certifications list
+ * - Language proficiency
+ * - Print-friendly layout
+ * - Neubrutalist card designs
+ * 
+ * @component
+ * @returns {JSX.Element} Resume page with professional information
+ */
 const Resume = () => {
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
 
+  /** Trigger browser print dialog */
   const handlePrint = () => {
     window.print();
   };

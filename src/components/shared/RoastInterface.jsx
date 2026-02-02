@@ -1,16 +1,39 @@
+/**
+ * @fileoverview Roast interface component showing AI-generated resume roasts.
+ * Displays roast results in a modal dialog with regeneration capability.
+ */
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { X, Flame, RefreshCw } from 'lucide-react';
 import { roastResume } from '../../services/ai';
 
+/**
+ * Roast interface dialog component
+ * 
+ * Features:
+ * - Modal dialog with focus trap for accessibility
+ * - Auto-loads roast on mount if not provided
+ * - Regenerate roast button
+ * - Escape key to close
+ * - Restores focus on close
+ * - Prevents memory leaks with mount tracking
+ * 
+ * @component
+ * @param {Object} props
+ * @param {Function} props.onClose - Callback to close the roast interface
+ * @param {string} props.roastContent - Current roast text to display
+ * @param {Function} props.onRoastComplete - Callback when new roast is generated
+ * @returns {JSX.Element} Roast interface modal dialog
+ */
 const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const [roastLoading, setRoastLoading] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
-  const isMountedRef = useRef(true);
+  const isMountedRef = useRef(true); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
 
-  // Track mount status
+  // Track component mount status
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -18,6 +41,10 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     };
   }, []);
 
+  /**
+   * Generate roast using AI service
+   * Only updates state if component is still mounted
+   */
   const handleRoast = useCallback(async () => {
     setRoastLoading(true);
     try {
@@ -32,19 +59,25 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     }
   }, [onRoastComplete]);
 
+  // Auto-load roast on mount if not provided
   useEffect(() => {
     if (!roastContent && !roastLoading) {
       handleRoast();
     }
   }, [roastContent, roastLoading, handleRoast]);
 
+  // Auto-focus close button on mount
   useEffect(() => {
     if (roastCloseRef.current) {
       setTimeout(() => roastCloseRef.current?.focus(), 100);
     }
   }, []);
 
-  // Focus trap and Escape handling
+  /**
+   * Trap focus within dialog and handle keyboard navigation
+   * - Tab cycles through focusable elements
+   * - Escape closes dialog
+   */
   useEffect(() => {
     const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 

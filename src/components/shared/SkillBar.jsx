@@ -1,12 +1,28 @@
+/**
+ * @fileoverview Animated skill progress bar component with gradient fill.
+ * Displays skill proficiency with animated progress bar that fills on viewport entry.
+ */
+
 import React, { useId } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 /**
  * Animated skill progress bar component
+ * 
+ * Features:
+ * - Animated progress bar fill on scroll into view
+ * - Gradient color (accent blue to pink)
+ * - Respects reduced motion preference
+ * - ARIA progressbar role for accessibility
+ * - Unique ID generation for label association
+ * - Configurable animation delay for staggered appearance
+ * 
+ * @component
  * @param {Object} props
  * @param {string} props.name - Skill name
  * @param {number} props.proficiency - Skill proficiency level (0-100)
- * @param {number} props.delay - Animation delay in seconds
+ * @param {number} [props.delay=0] - Animation delay in seconds
+ * @returns {JSX.Element} Animated progress bar with label
  */
 const SkillBar = ({ name, proficiency, delay = 0 }) => {
     const id = useId();

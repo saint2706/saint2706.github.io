@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Code playground page showcasing Python one-liners and CSS snippets.
+ * Features live previews, code copying, and interactive Python execution.
+ */
+
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
@@ -9,6 +14,20 @@ import PythonRunner from '../shared/PythonRunner';
 import SyntaxHighlighter from '../shared/SyntaxHighlighter';
 import Modal from '../shared/Modal';
 
+/**
+ * Playground page for code snippets and interactive demos
+ * 
+ * Features:
+ * - Filter by language (Python, CSS, All)
+ * - Copy code to clipboard with visual feedback
+ * - Live CSS preview in modal
+ * - Interactive Python code runner
+ * - Syntax highlighting for all snippets
+ * - Tag-based categorization
+ * 
+ * @component
+ * @returns {JSX.Element} Playground page with filterable code snippets
+ */
 const Playground = () => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [copiedId, setCopiedId] = useState(null);
@@ -22,15 +41,21 @@ const Playground = () => {
 
     const filteredSnippets = getSnippetsByLanguage(activeFilter);
 
+    /** Filter tabs configuration */
     const filters = [
         { id: 'all', label: 'All', icon: Code2, color: 'bg-fun-yellow' },
         { id: 'python', label: 'Python', icon: Terminal, color: 'bg-accent' },
         { id: 'css', label: 'CSS', icon: Palette, color: 'bg-fun-pink' }
     ];
 
-    // Color rotation for cards
+    /** Color classes for snippet card accent bars */
     const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
 
+    /**
+     * Copy code to clipboard and show visual feedback
+     * @param {string} code - Code string to copy
+     * @param {string} id - Snippet ID for tracking copied state
+     */
     const handleCopy = useCallback(async (code, id) => {
         try {
             await navigator.clipboard.writeText(code);
@@ -41,16 +66,19 @@ const Playground = () => {
         }
     }, []);
 
+    /** Open CSS live preview modal */
     const openPreviewModal = useCallback((snippet) => {
         setModalSnippet(snippet);
         setModalType('preview');
     }, []);
 
+    /** Open Python runner modal */
     const openRunnerModal = useCallback((snippet) => {
         setModalSnippet(snippet);
         setModalType('runner');
     }, []);
 
+    /** Close modal */
     const closeModal = useCallback(() => {
         setModalSnippet(null);
         setModalType(null);
@@ -241,7 +269,21 @@ const Playground = () => {
     );
 };
 
-// Snippet Card Component
+/**
+ * Individual snippet card component
+ * 
+ * @component
+ * @param {Object} props
+ * @param {Object} props.snippet - Snippet data object
+ * @param {string} props.colorClass - Tailwind color class for accent bar
+ * @param {Object} props.variants - Framer Motion variants for animation
+ * @param {string|null} props.copiedId - ID of currently copied snippet
+ * @param {Function} props.onCopy - Callback to copy code
+ * @param {Function} props.onOpenPreview - Callback to open preview modal
+ * @param {Function} props.onOpenRunner - Callback to open runner modal
+ * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
+ * @returns {JSX.Element} Snippet card with code and actions
+ */
 const SnippetCard = ({
     snippet,
     colorClass,
@@ -354,7 +396,14 @@ const SnippetCard = ({
     );
 };
 
-// Live Preview Component
+/**
+ * Live CSS preview component using iframe for isolation
+ * 
+ * @component
+ * @param {Object} props
+ * @param {Object} props.preview - Preview configuration with html and css
+ * @returns {JSX.Element} Isolated CSS preview in iframe
+ */
 const LivePreview = ({ preview }) => {
     const iframeRef = useRef(null);
 

@@ -1,3 +1,7 @@
+/**
+ * @fileoverview 404 Not Found page with interactive animations and quick navigation.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
@@ -5,17 +9,31 @@ import { Helmet } from 'react-helmet-async';
 import { Home, ArrowLeft, Compass, Rocket, Star, Sparkles, Ghost, Map } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 
+/**
+ * 404 Not Found page component
+ * 
+ * Features:
+ * - Glitchy 404 text animation
+ * - Floating ghost icon with easter egg (click 5 times)
+ * - Animated background particles
+ * - Quick navigation links to main pages
+ * - Displays attempted path
+ * - Helpful chatbot hint
+ * 
+ * @component
+ * @returns {JSX.Element} 404 error page with navigation options
+ */
 const NotFound = () => {
     const shouldReduceMotion = useReducedMotion();
     const location = useLocation();
     const [glitchText, setGlitchText] = useState('404');
     const [showEasterEgg, setShowEasterEgg] = useState(false);
-    const [clickCount, setClickCount] = useState(0);
+    const [clickCount, setClickCount] = useState(0); // Track ghost clicks for easter egg
 
     const title = `404 - Page Not Found | ${resumeData.basics.name}`;
     const description = "Oops! The page you're looking for seems to have wandered off into the digital void.";
 
-    // Glitch effect for 404 text
+    // Glitch effect for 404 text (random character substitution)
     useEffect(() => {
         if (shouldReduceMotion) return;
 
@@ -37,7 +55,10 @@ const NotFound = () => {
         return () => clearInterval(interval);
     }, [shouldReduceMotion]);
 
-    // Easter egg click handler
+    /**
+     * Handle ghost icon click for easter egg
+     * Shows message after 5 clicks
+     */
     const handleGhostClick = () => {
         setClickCount(prev => prev + 1);
         if (clickCount >= 4) {
@@ -47,7 +68,7 @@ const NotFound = () => {
         }
     };
 
-    // Floating particles/stars
+    /** Generate random floating particles for background animation */
     const particles = Array.from({ length: 8 }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
@@ -56,7 +77,7 @@ const NotFound = () => {
         duration: 3 + Math.random() * 2,
     }));
 
-    // Quick navigation links
+    /** Quick navigation links to main pages */
     const quickLinks = [
         { path: '/', label: 'Home', icon: <Home size={18} /> },
         { path: '/projects', label: 'Projects', icon: <Rocket size={18} /> },

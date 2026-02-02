@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Navigation bar component with responsive design and accessibility features.
+ * Features mobile menu, custom cursor toggle, and active link highlighting.
+ */
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
@@ -13,6 +18,25 @@ import {
   Code2,
 } from 'lucide-react';
 
+/**
+ * Navigation bar component with desktop and mobile layouts
+ * 
+ * Features:
+ * - Responsive navigation menu (desktop horizontal, mobile dropdown)
+ * - Active link highlighting with neubrutalist styling
+ * - Custom cursor toggle button
+ * - Focus trap in mobile menu for accessibility
+ * - Automatic close on route change
+ * - Communicates with chatbot to prevent UI conflicts
+ * 
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.cursorEnabled - Whether custom cursor is currently enabled
+ * @param {boolean} props.cursorToggleDisabled - Whether cursor toggle should be disabled
+ * @param {string} props.cursorToggleLabel - Accessible label for cursor toggle button
+ * @param {Function} props.onToggleCursor - Callback to toggle cursor on/off
+ * @returns {JSX.Element} Navigation bar with menu and controls
+ */
 const Navbar = ({
   cursorEnabled,
   cursorToggleDisabled,
@@ -20,19 +44,23 @@ const Navbar = ({
   onToggleCursor,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [lastFocus, setLastFocus] = useState(null);
+  const [lastFocus, setLastFocus] = useState(null); // Stores element to restore focus to
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Close chatbot when mobile menu opens
+  // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
     if (isMenuOpen) {
       document.dispatchEvent(new CustomEvent('closeChatbot'));
     }
   }, [isMenuOpen]);
 
-  // Trap focus inside mobile menu when open
+  /**
+   * Trap focus within mobile menu for keyboard navigation
+   * Handles Tab key to cycle through focusable elements
+   * Handles Escape key to close menu
+   */
   const trapFocus = useCallback((event) => {
     if (!isMenuOpen || !menuRef.current) return;
     const focusable = menuRef.current.querySelectorAll('a, button');
@@ -55,29 +83,36 @@ const Navbar = ({
     }
   }, [isMenuOpen]);
 
+  // Manage focus, aria-hidden, and event listeners when menu toggles
   useEffect(() => {
     if (isMenuOpen) {
+      // Store current focus to restore later
       setLastFocus(document.activeElement);
+      // Hide main content from screen readers
       const main = document.getElementById('main-content');
       if (main) main.setAttribute('aria-hidden', 'true');
       document.addEventListener('keydown', trapFocus);
+      // Auto-focus first interactive element in menu
       setTimeout(() => menuRef.current?.querySelector('a, button')?.focus(), 0);
     } else {
+      // Show main content to screen readers
       const main = document.getElementById('main-content');
       if (main) main.removeAttribute('aria-hidden');
       document.removeEventListener('keydown', trapFocus);
+      // Restore focus to trigger element
       lastFocus?.focus?.();
     }
     return () => document.removeEventListener('keydown', trapFocus);
   }, [isMenuOpen, trapFocus, lastFocus]);
 
-  // Listen for close event from chatbot
+  // Listen for custom event from chatbot to close this menu
   useEffect(() => {
     const handleCloseMobileMenu = () => setIsMenuOpen(false);
     document.addEventListener('closeMobileMenu', handleCloseMobileMenu);
     return () => document.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
   }, []);
 
+  /** Navigation menu items with icons */
   const navItems = [
     { name: 'Home', path: '/', icon: <Terminal size={18} /> },
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
@@ -87,6 +122,7 @@ const Navbar = ({
     { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
   ];
 
+  /** Close mobile menu (called on nav link click) */
   const handleCloseMenu = () => setIsMenuOpen(false);
 
   return (
