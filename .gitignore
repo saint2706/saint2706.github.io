@@ -6,3 +6,4 @@ legacy_backup/
 .env.local
 .vscode
 .agent
+/brainstorm.md

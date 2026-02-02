@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   MousePointer2,
+  Code2,
 } from 'lucide-react';
 
 const Navbar = ({
@@ -82,6 +83,7 @@ const Navbar = ({
     { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
     { name: 'Resume', path: '/resume', icon: <User size={18} /> },
     { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
+    { name: 'Playground', path: '/playground', icon: <Code2 size={18} /> },
     { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
   ];
 
@@ -95,7 +97,7 @@ const Navbar = ({
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
-        className="relative max-w-4xl mx-auto bg-card border-nb border-[color:var(--color-border)] px-6 py-3 flex justify-between items-center rounded-nb"
+        className="relative max-w-5xl mx-auto bg-card border-nb border-[color:var(--color-border)] px-4 py-3 flex justify-between items-center rounded-nb"
         style={{ boxShadow: 'var(--nb-shadow)' }}
       >
         <NavLink
@@ -114,7 +116,7 @@ const Navbar = ({
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-2 px-4 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
+                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
                 ${isActive
                   ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
                   : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'

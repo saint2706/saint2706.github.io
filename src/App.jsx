@@ -14,6 +14,7 @@ const Resume = lazy(() => import('./components/pages/Resume'));
 const Blog = lazy(() => import('./components/pages/Blog'));
 const Contact = lazy(() => import('./components/pages/Contact'));
 const Games = lazy(() => import('./components/pages/Games'));
+const Playground = lazy(() => import('./components/pages/Playground'));
 const NotFound = lazy(() => import('./components/pages/NotFound'));
 
 const ScrollToTopHelper = () => {
@@ -39,6 +40,7 @@ const AnimatedRoutes = () => {
           <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
           <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
           <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
+          <Route path="/playground" element={<PageWrapper><Playground /></PageWrapper>} />
           {/* Catch-all 404 route */}
           <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>
