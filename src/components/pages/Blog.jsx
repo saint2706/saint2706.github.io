@@ -5,7 +5,16 @@
 
 import React, { useState, useMemo, useEffect, useDeferredValue } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ExternalLink, Calendar, Search, ChevronLeft, ChevronRight, X, FileQuestion, BookOpen } from 'lucide-react';
+import {
+  ExternalLink,
+  Calendar,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  FileQuestion,
+  BookOpen,
+} from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
@@ -16,7 +25,7 @@ const POSTS_PER_PAGE = 6;
 
 /**
  * Blog listing page component
- * 
+ *
  * Features:
  * - Filter by source (Dev.to, Medium, Substack, All)
  * - Real-time search with deferred value for performance
@@ -24,7 +33,7 @@ const POSTS_PER_PAGE = 6;
  * - Responsive card grid layout
  * - Pre-computed search strings for O(1) filtering
  * - Dynamic color coding by source
- * 
+ *
  * @component
  * @returns {JSX.Element} Blog listing page with filters and posts
  */
@@ -35,7 +44,8 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/blog`;
-  const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
+  const description =
+    'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
 
   /**
@@ -45,13 +55,15 @@ const Blog = () => {
    * - Sorts by date descending
    */
   const processedBlogs = useMemo(() => {
-    return blogs.map(blog => ({
-      ...blog,
-      // Pre-compute lowercase search string to avoid O(N) .toLowerCase() calls during filtering
-      searchStr: `${blog.title} ${blog.summary}`.toLowerCase(),
-      // Pre-parse date for sorting
-      parsedDate: new Date(blog.date)
-    })).sort((a, b) => b.parsedDate - a.parsedDate);
+    return blogs
+      .map(blog => ({
+        ...blog,
+        // Pre-compute lowercase search string to avoid O(N) .toLowerCase() calls during filtering
+        searchStr: `${blog.title} ${blog.summary}`.toLowerCase(),
+        // Pre-parse date for sorting
+        parsedDate: new Date(blog.date),
+      }))
+      .sort((a, b) => b.parsedDate - a.parsedDate);
   }, [blogs]);
 
   /** Extract unique blog sources for filter buttons */
@@ -62,7 +74,7 @@ const Blog = () => {
    * @param {string} dateStr - ISO date string
    * @returns {string} Formatted date
    */
-  const formatDate = (dateStr) => {
+  const formatDate = dateStr => {
     const date = new Date(dateStr);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -109,9 +121,9 @@ const Blog = () => {
       opacity: 1,
       transition: {
         staggerChildren: shouldReduceMotion ? 0 : 0.1,
-        duration: shouldReduceMotion ? 0 : undefined
-      }
-    }
+        duration: shouldReduceMotion ? 0 : undefined,
+      },
+    },
   };
 
   const item = {
@@ -119,8 +131,8 @@ const Blog = () => {
     show: {
       opacity: 1,
       y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined
-    }
+      transition: shouldReduceMotion ? { duration: 0 } : undefined,
+    },
   };
 
   /**
@@ -128,12 +140,16 @@ const Blog = () => {
    * @param {string} source - Blog source name
    * @returns {string} Tailwind background color class
    */
-  const getSourceColor = (source) => {
+  const getSourceColor = source => {
     switch (source) {
-      case 'Dev.to': return 'bg-accent';
-      case 'Medium': return 'bg-fun-yellow';
-      case 'Substack': return 'bg-fun-pink';
-      default: return 'bg-secondary';
+      case 'Dev.to':
+        return 'bg-accent';
+      case 'Medium':
+        return 'bg-fun-yellow';
+      case 'Substack':
+        return 'bg-fun-pink';
+      default:
+        return 'bg-secondary';
     }
   };
 
@@ -142,10 +158,12 @@ const Blog = () => {
    * @param {string} source - Blog source name
    * @returns {string} Tailwind text color class
    */
-  const getSourceTextColor = (source) => {
+  const getSourceTextColor = source => {
     switch (source) {
-      case 'Medium': return 'text-black';
-      default: return 'text-white';
+      case 'Medium':
+        return 'text-black';
+      default:
+        return 'text-white';
     }
   };
 
@@ -157,19 +175,22 @@ const Blog = () => {
         <meta name="description" content={description} />
         <script type="application/ld+json">
           {safeJSONStringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": resumeData.basics.website
-            }, {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Blog",
-              "item": canonicalUrl
-            }]
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: resumeData.basics.website,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog',
+                item: canonicalUrl,
+              },
+            ],
           })}
         </script>
         <meta name="author" content={resumeData.basics.name} />
@@ -202,7 +223,8 @@ const Blog = () => {
             </span>
           </h1>
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
-            Musings on code, life, and everything in between. Synced from Dev.to, Medium, and Substack.
+            Musings on code, life, and everything in between. Synced from Dev.to, Medium, and
+            Substack.
           </p>
         </motion.div>
 
@@ -224,11 +246,14 @@ const Blog = () => {
                 onClick={() => setFilter(source)}
                 aria-pressed={filter === source}
                 className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer motion-reduce:transform-none motion-reduce:transition-none
-                  ${filter === source
-                    ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                  ${
+                    filter === source
+                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
-                style={{ boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)' }}
+                style={{
+                  boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
+                }}
               >
                 {source}
               </button>
@@ -236,8 +261,14 @@ const Blog = () => {
           </div>
 
           <div className="relative w-full md:w-72">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted" size={18} aria-hidden="true" />
-            <label htmlFor="blog-search" className="sr-only">Search blogs</label>
+            <Search
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted"
+              size={18}
+              aria-hidden="true"
+            />
+            <label htmlFor="blog-search" className="sr-only">
+              Search blogs
+            </label>
             <input
               id="blog-search"
               type="text"
@@ -245,7 +276,7 @@ const Blog = () => {
               placeholder="Search blogs..."
               value={searchTerm}
               maxLength={100}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               className="w-full bg-card border-[3px] border-[color:var(--color-border)] py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             />
@@ -276,7 +307,7 @@ const Blog = () => {
         <motion.div
           key={currentPage}
           variants={container}
-          initial={shouldReduceMotion ? false : "hidden"}
+          initial={shouldReduceMotion ? false : 'hidden'}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
@@ -362,11 +393,19 @@ const Blog = () => {
               >
                 <FileQuestion size={48} className="text-muted" aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-heading font-bold text-primary mb-2">No articles found</h3>
+              <h3 className="text-xl font-heading font-bold text-primary mb-2">
+                No articles found
+              </h3>
               <p className="text-secondary mb-6 max-w-md font-sans">
                 We couldn&apos;t find any posts
                 {searchTerm && <> matching &quot;{searchTerm}&quot;</>}
-                {filter !== 'All' && <span> in <strong>{filter}</strong></span>}.
+                {filter !== 'All' && (
+                  <span>
+                    {' '}
+                    in <strong>{filter}</strong>
+                  </span>
+                )}
+                .
               </p>
               <button
                 onClick={() => {
@@ -410,11 +449,17 @@ const Blog = () => {
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
                   className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform motion-reduce:transform-none motion-reduce:transition-none
-                    ${page === currentPage
-                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                      : 'bg-card text-primary hover:-translate-y-0.5'
+                    ${
+                      page === currentPage
+                        ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                        : 'bg-card text-primary hover:-translate-y-0.5'
                     }`}
-                  style={{ boxShadow: page === currentPage ? 'var(--nb-shadow-hover)' : '2px 2px 0 var(--color-border)' }}
+                  style={{
+                    boxShadow:
+                      page === currentPage
+                        ? 'var(--nb-shadow-hover)'
+                        : '2px 2px 0 var(--color-border)',
+                  }}
                 >
                   {page}
                 </button>
@@ -436,7 +481,9 @@ const Blog = () => {
         {/* Results info */}
         {filteredBlogs.length > 0 && (
           <p className="text-center text-muted text-sm mt-6 font-mono">
-            Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-{Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length} posts
+            Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-
+            {Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length}{' '}
+            posts
           </p>
         )}
       </div>

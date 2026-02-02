@@ -10,16 +10,16 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 /**
  * Roast mode floating button component
- * 
+ *
  * Features:
  * - Floating action button with flame icon
  * - Inline popup to display roast
  * - Loading state with spinner
  * - Tooltip on hover
- * 
+ *
  * Note: This is an alternative version. The main roast feature
  * is handled by RoastInterface component.
- * 
+ *
  * @component
  * @returns {JSX.Element} Floating roast button with popup
  */
@@ -45,7 +45,9 @@ const RoastMode = () => {
             else handleRoast();
           }}
           className="p-4 bg-fun-pink text-white rounded-full shadow-lg hover:shadow-fun-pink/50 transition-all duration-300 motion-reduce:transition-none"
-          aria-label={loading ? "Roasting your resume..." : (roast ? "Close roast" : "Roast my resume")}
+          aria-label={
+            loading ? 'Roasting your resume...' : roast ? 'Close roast' : 'Roast my resume'
+          }
           aria-busy={loading}
         >
           {loading ? (
@@ -85,9 +87,7 @@ const RoastMode = () => {
                 <X size={16} />
               </button>
             </div>
-            <p className="text-sm italic font-medium leading-relaxed">
-              &quot;{roast}&quot;
-            </p>
+            <p className="text-sm italic font-medium leading-relaxed">&quot;{roast}&quot;</p>
           </motion.div>
         )}
       </div>

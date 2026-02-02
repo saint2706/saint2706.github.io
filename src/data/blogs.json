@@ -23,12 +23,7 @@
     "date": "2025-11-19T10:22:54Z",
     "summary": "If you’ve ever looked at a game and thought, “How hard can it be?”—the answer is: not as hard as you...",
     "source": "Dev.to",
-    "tags": [
-      "python",
-      "pygame",
-      "gamedev",
-      "2d"
-    ],
+    "tags": ["python", "pygame", "gamedev", "2d"],
     "coverImage": null
   },
   {
@@ -37,13 +32,7 @@
     "date": "Tue, 18 Nov 2025 10:06:02 GMT",
     "summary": "A Narrative Unravelling of the Epic’s Political, Philosophical, and Military CoreIntroduction: The Gravity of the VoidTo ask what the Mahabharata would be without Krishna is to ask what Hamlet would b...",
     "source": "Medium",
-    "tags": [
-      "fantasy",
-      "fiction",
-      "india",
-      "mahabharata",
-      "mythology"
-    ],
+    "tags": ["fantasy", "fiction", "india", "mahabharata", "mythology"],
     "coverImage": "https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=ca62f62b4802"
   },
   {
@@ -52,12 +41,7 @@
     "date": "2025-10-26T06:15:52Z",
     "summary": "Ever wonder how Netflix or Spotify seems to know exactly what you want to watch or listen to next?...",
     "source": "Dev.to",
-    "tags": [
-      "programming",
-      "beginners",
-      "python",
-      "machinelearning"
-    ],
+    "tags": ["programming", "beginners", "python", "machinelearning"],
     "coverImage": null
   },
   {
@@ -66,12 +50,7 @@
     "date": "2025-10-25T05:13:39Z",
     "summary": "Data is everywhere, and Python is the go-to language for making sense of it all. Its simple syntax...",
     "source": "Dev.to",
-    "tags": [
-      "programming",
-      "python",
-      "tutorial",
-      "database"
-    ],
+    "tags": ["programming", "python", "tutorial", "database"],
     "coverImage": null
   },
   {
@@ -80,13 +59,7 @@
     "date": "Sat, 25 Oct 2025 05:00:18 GMT",
     "summary": "If you scroll through Netflix or Amazon Prime Video in India today, you’ll notice a quiet but seismic shift. For years, the landscape was dominated by two giants: big-budget Bollywood blockbusters and...",
     "source": "Medium",
-    "tags": [
-      "regional",
-      "amazon",
-      "netflix",
-      "bollywood",
-      "india"
-    ],
+    "tags": ["regional", "amazon", "netflix", "bollywood", "india"],
     "coverImage": "https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=34f28396f634"
   },
   {
@@ -95,12 +68,7 @@
     "date": "2025-09-24T06:58:19Z",
     "summary": "Programming Mastery: Solving Diverse Challenges with Pro-g-rammingChallenges4   Greetings,...",
     "source": "Dev.to",
-    "tags": [
-      "programming",
-      "algorithms",
-      "showdev",
-      "tutorial"
-    ],
+    "tags": ["programming", "algorithms", "showdev", "tutorial"],
     "coverImage": null
   },
   {
@@ -109,11 +77,7 @@
     "date": "2025-09-24T06:39:17Z",
     "summary": "Building 'The Scroll of Dharma': A Technical Deep Dive into an Interactive Meditation...",
     "source": "Dev.to",
-    "tags": [
-      "python",
-      "webdevstreamlit",
-      "opensource"
-    ],
+    "tags": ["python", "webdevstreamlit", "opensource"],
     "coverImage": null
   },
   {
@@ -122,13 +86,7 @@
     "date": "Wed, 24 Sep 2025 06:20:55 GMT",
     "summary": "My Technical Journey: Building the saint2706/saint2706 RepositoryIntroductionThis blog post chronicles my personal technical journey and the development of my saint2706/saint2706 GitHub repository — a...",
     "source": "Medium",
-    "tags": [
-      "github",
-      "software-development",
-      "portfolio",
-      "open-source",
-      "python"
-    ],
+    "tags": ["github", "software-development", "portfolio", "open-source", "python"],
     "coverImage": "https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=2688ee2df00b"
   },
   {
@@ -137,12 +95,7 @@
     "date": "Mon, 22 Sep 2025 07:39:13 GMT",
     "summary": "Bollywood and Bhojpuri songs have become the defining pulse of India’s YouTube trending charts in 2025, making them a powerful lens for understanding the nation’s media habits. This blog explores why ...",
     "source": "Medium",
-    "tags": [
-      "youtube",
-      "music",
-      "bollywood",
-      "india"
-    ],
+    "tags": ["youtube", "music", "bollywood", "india"],
     "coverImage": "https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=006e72db9c98"
   },
   {
@@ -151,13 +104,7 @@
     "date": "Fri, 19 Sep 2025 17:32:46 GMT",
     "summary": "Beyond the Myth: 6 Radical Ideas from Ancient Greece That Still Shake Us TodayYeah, we’re in a time flooded with advice. It’s everywhere, from quick tips to crazy long plans for success. We’re all cha...",
     "source": "Medium",
-    "tags": [
-      "philosophy",
-      "thinking",
-      "intelligence",
-      "psychology",
-      "leadership"
-    ],
+    "tags": ["philosophy", "thinking", "intelligence", "psychology", "leadership"],
     "coverImage": "https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=2db5dfedce11"
   }
 ]

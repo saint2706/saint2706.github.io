@@ -23,7 +23,7 @@ const ScrollToTopHelper = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
-}
+};
 
 // Animated routes component that uses location for AnimatePresence
 const AnimatedRoutes = () => {
@@ -34,15 +34,71 @@ const AnimatedRoutes = () => {
       {/* Suspense wrapper with fallback UI handles loading state for lazy routes */}
       <Suspense fallback={<PageLoading />} key={location.pathname}>
         <Routes location={location}>
-          <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
-          <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
-          <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
-          <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
-          <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-          <Route path="/games" element={<PageWrapper><Games /></PageWrapper>} />
-          <Route path="/playground" element={<PageWrapper><Playground /></PageWrapper>} />
+          <Route
+            path="/"
+            element={
+              <PageWrapper>
+                <Hero />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/projects"
+            element={
+              <PageWrapper>
+                <Projects />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/resume"
+            element={
+              <PageWrapper>
+                <Resume />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <PageWrapper>
+                <Blog />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <PageWrapper>
+                <Contact />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/games"
+            element={
+              <PageWrapper>
+                <Games />
+              </PageWrapper>
+            }
+          />
+          <Route
+            path="/playground"
+            element={
+              <PageWrapper>
+                <Playground />
+              </PageWrapper>
+            }
+          />
           {/* Catch-all 404 route */}
-          <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+          <Route
+            path="*"
+            element={
+              <PageWrapper>
+                <NotFound />
+              </PageWrapper>
+            }
+          />
         </Routes>
       </Suspense>
     </AnimatePresence>
@@ -67,4 +123,3 @@ function App() {
 }
 
 export default App;
-

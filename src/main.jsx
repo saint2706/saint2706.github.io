@@ -1,8 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { HelmetProvider } from 'react-helmet-async'
-import App from './App.jsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
+import App from './App.jsx';
+import './index.css';
 // 🎉 Easter egg for curious developers and recruiters!
 console.log(
   `%c
@@ -37,5 +37,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <HelmetProvider>
       <App />
     </HelmetProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

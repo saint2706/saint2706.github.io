@@ -5,18 +5,18 @@
 /* Theme CSS Variables */
 :root {
   /* NEUBRUTALISM THEME */
-  --color-primary: #FAFAFA;
-  --color-secondary: #F5F5F5;
-  --color-accent: #0052CC;
-  --color-fun-pink: #9C0E4B;
-  --color-fun-yellow: #FFD54F;
+  --color-primary: #fafafa;
+  --color-secondary: #f5f5f5;
+  --color-accent: #0052cc;
+  --color-fun-pink: #9c0e4b;
+  --color-fun-yellow: #ffd54f;
 
   --color-text-primary: #000000;
   --color-text-secondary: #333333;
   --color-text-muted: #666666;
 
   --color-border: #000000;
-  --color-card-bg: #FFFFFF;
+  --color-card-bg: #ffffff;
   --color-overlay: rgba(250, 250, 250, 0.95);
 
   /* Neubrutalism specific */
@@ -127,7 +127,7 @@
 }
 
 /* Interactive element hover states for custom cursor */
-[data-cursor="pointer"] {
+[data-cursor='pointer'] {
   cursor: none !important;
 }
 

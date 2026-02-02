@@ -12,7 +12,7 @@ const THROTTLE_DELAY = 100;
 
 /**
  * Scroll to top floating action button
- * 
+ *
  * Features:
  * - Appears after scrolling 300px down
  * - Throttled scroll listener for performance (100ms)
@@ -20,7 +20,7 @@ const THROTTLE_DELAY = 100;
  * - Tooltip on hover
  * - Fade in/out animation
  * - Positioned at bottom-left
- * 
+ *
  * @component
  * @returns {JSX.Element|null} Scroll to top button (hidden when at top)
  */

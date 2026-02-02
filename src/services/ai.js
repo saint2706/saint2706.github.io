@@ -1,15 +1,15 @@
 /**
  * AI Service Module
- * 
+ *
  * Provides AI-powered chat and roasting functionality using Google's Gemini API.
  * This service handles chatbot interactions and resume roasting features with
  * built-in security measures including rate limiting, input validation, and timeout protection.
- * 
+ *
  * @module services/ai
  */
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { resumeData } from "../data/resume";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { resumeData } from '../data/resume';
 
 // API Configuration
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
@@ -23,7 +23,7 @@ let lastRoastRequestTime = 0;
 
 /**
  * Gets an instance of the Gemini AI model.
- * 
+ *
  * @returns {object|null} The Gemini model instance, or null if API key is not configured
  * @private
  */
@@ -33,27 +33,27 @@ const getModel = () => {
   }
 
   const genAI = new GoogleGenerativeAI(API_KEY);
-  return genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  return genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 };
 
 /**
  * Custom error class for timeout handling.
  * Used to distinguish timeout errors from other API errors.
- * 
+ *
  * @class TimeoutError
  * @extends Error
  */
 class TimeoutError extends Error {
   constructor(message) {
     super(message);
-    this.name = "TimeoutError";
+    this.name = 'TimeoutError';
   }
 }
 
 /**
  * Wraps a promise with a timeout mechanism.
  * Creates a race condition between the original promise and a timeout promise.
- * 
+ *
  * @param {Promise} promise - The promise to wrap with timeout
  * @param {number} ms - Timeout duration in milliseconds
  * @returns {Promise} A promise that rejects with TimeoutError if timeout is reached
@@ -62,14 +62,11 @@ class TimeoutError extends Error {
 const withTimeout = (promise, ms) => {
   let timeoutId;
   const timeoutPromise = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => reject(new TimeoutError("Request timed out")), ms);
+    timeoutId = setTimeout(() => reject(new TimeoutError('Request timed out')), ms);
   });
 
   // Race between the original promise and timeout, cleaning up the timer when done
-  return Promise.race([
-    promise.finally(() => clearTimeout(timeoutId)),
-    timeoutPromise
-  ]);
+  return Promise.race([promise.finally(() => clearTimeout(timeoutId)), timeoutPromise]);
 };
 
 /**
@@ -93,22 +90,22 @@ Instructions:
 
 /**
  * Sends a chat message to the Gemini AI and returns a response.
- * 
+ *
  * This function implements several security and performance measures:
  * - Input validation (type checking and length limits)
  * - Rate limiting to prevent API abuse
  * - Timeout protection to prevent hanging requests
  * - Comprehensive error handling for various failure scenarios
- * 
+ *
  * @async
  * @param {string} userMessage - The user's message to send to the AI
  * @param {Array<object>} [history=[]] - Optional chat history for context (array of {role, parts} objects)
  * @returns {Promise<string>} The AI's response text or an error message
- * 
+ *
  * @example
  * const response = await chatWithGemini("What are Rishabh's skills?");
  * console.log(response); // "Rishabh has expertise in..."
- * 
+ *
  * @example
  * // With history for multi-turn conversation
  * const history = [
@@ -135,7 +132,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
 
   const model = getModel();
   if (!model) {
-    return "My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!";
+    return 'My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!';
   }
 
   try {
@@ -143,14 +140,14 @@ export const chatWithGemini = async (userMessage, history = []) => {
     const chat = model.startChat({
       history: [
         {
-          role: "user",
+          role: 'user',
           parts: [{ text: SYSTEM_PROMPT }],
         },
         {
-          role: "model",
-          parts: [{ text: "Understood. I am Digital Rishabh. Ask me anything about Rishabh!" }],
+          role: 'model',
+          parts: [{ text: 'Understood. I am Digital Rishabh. Ask me anything about Rishabh!' }],
         },
-        ...history
+        ...history,
       ],
     });
 
@@ -162,15 +159,15 @@ export const chatWithGemini = async (userMessage, history = []) => {
     return responseText;
   } catch (error) {
     // Comprehensive error handling with specific messages for different failure modes
-    const errorMessage = error?.message || "Unknown error";
-    const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+    const errorMessage = error?.message || 'Unknown error';
+    const isLeakedKey = errorMessage.toLowerCase().includes('reported as leaked');
     const isTimeout = error instanceof TimeoutError;
 
-    console.error("Gemini Error:", error);
+    console.error('Gemini Error:', error);
 
     // Handle leaked API key scenario (requires key rotation)
     if (isLeakedKey) {
-      return "The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.";
+      return 'The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.';
     }
 
     // Handle timeout scenario
@@ -179,22 +176,22 @@ export const chatWithGemini = async (userMessage, history = []) => {
     }
 
     // Generic error fallback
-    return "I seem to be having a connection glitch. Maybe my neural pathways are crossed? Try again later!";
+    return 'I seem to be having a connection glitch. Maybe my neural pathways are crossed? Try again later!';
   }
 };
 
 /**
  * Generates a humorous "roast" of the resume using Gemini AI.
- * 
+ *
  * This function provides an entertaining feature that pokes fun at resume buzzwords
  * and common tropes. Implements the same security measures as chatWithGemini:
  * - Rate limiting
  * - Timeout protection
  * - Error handling
- * 
+ *
  * @async
  * @returns {Promise<string>} A funny roast of the resume or an error message
- * 
+ *
  * @example
  * const roast = await roastResume();
  * console.log(roast); // "Oh wow, 'Data Storytelling'? So you make spreadsheets with feelings?"
@@ -203,12 +200,12 @@ export const roastResume = async () => {
   // Rate limiting: Prevent spam roast requests
   const now = Date.now();
   if (now - lastRoastRequestTime < RATE_LIMIT_MS) {
-    return "Roast oven is cooling down! Give it a second.";
+    return 'Roast oven is cooling down! Give it a second.';
   }
 
   const model = getModel();
   if (!model) {
-    return "Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!";
+    return 'Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!';
   }
 
   const prompt = `
@@ -229,16 +226,16 @@ export const roastResume = async () => {
     return responseText;
   } catch (error) {
     // Same error handling as chatWithGemini for consistency
-    const errorMessage = error?.message || "Unknown error";
-    const isLeakedKey = errorMessage.toLowerCase().includes("reported as leaked");
+    const errorMessage = error?.message || 'Unknown error';
+    const isLeakedKey = errorMessage.toLowerCase().includes('reported as leaked');
     const isTimeout = error instanceof TimeoutError;
 
     if (isLeakedKey) {
-      return "Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.";
+      return 'Roast mode is offline because the Gemini key was flagged as leaked. Please rotate the key, restrict it to the site domain, and redeploy.';
     }
 
     if (isTimeout) {
-      return "I was brewing a really good roast, but it took too long. Try again!";
+      return 'I was brewing a really good roast, but it took too long. Try again!';
     }
 
     return "I can't roast right now, I'm too nice. (Error connecting to AI)";
