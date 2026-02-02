@@ -20,7 +20,7 @@ import {
 
 /**
  * Navigation bar component with desktop and mobile layouts
- * 
+ *
  * Features:
  * - Responsive navigation menu (desktop horizontal, mobile dropdown)
  * - Active link highlighting with neubrutalist styling
@@ -28,7 +28,7 @@ import {
  * - Focus trap in mobile menu for accessibility
  * - Automatic close on route change
  * - Communicates with chatbot to prevent UI conflicts
- * 
+ *
  * @component
  * @param {Object} props
  * @param {boolean} props.cursorEnabled - Whether custom cursor is currently enabled
@@ -37,12 +37,7 @@ import {
  * @param {Function} props.onToggleCursor - Callback to toggle cursor on/off
  * @returns {JSX.Element} Navigation bar with menu and controls
  */
-const Navbar = ({
-  cursorEnabled,
-  cursorToggleDisabled,
-  cursorToggleLabel,
-  onToggleCursor,
-}) => {
+const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lastFocus, setLastFocus] = useState(null); // Stores element to restore focus to
   const menuRef = useRef(null);
@@ -61,27 +56,30 @@ const Navbar = ({
    * Handles Tab key to cycle through focusable elements
    * Handles Escape key to close menu
    */
-  const trapFocus = useCallback((event) => {
-    if (!isMenuOpen || !menuRef.current) return;
-    const focusable = menuRef.current.querySelectorAll('a, button');
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.key === 'Tab') {
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
+  const trapFocus = useCallback(
+    event => {
+      if (!isMenuOpen || !menuRef.current) return;
+      const focusable = menuRef.current.querySelectorAll('a, button');
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.key === 'Tab') {
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
-    }
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      setIsMenuOpen(false);
-      menuButtonRef.current?.focus();
-    }
-  }, [isMenuOpen]);
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    },
+    [isMenuOpen]
+  );
 
   // Manage focus, aria-hidden, and event listeners when menu toggles
   useEffect(() => {
@@ -147,20 +145,25 @@ const Navbar = ({
         </NavLink>
 
         <div className="hidden md:flex gap-1 md:gap-2">
-          {navItems.map((item) => (
+          {navItems.map(item => (
             <NavLink
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
-                ${isActive
-                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
-                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'
+                ${
+                  isActive
+                    ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
+                    : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'
                 }`
               }
-              style={({ isActive }) => isActive ? { boxShadow: '2px 2px 0 var(--color-border)' } : {}}
+              style={({ isActive }) =>
+                isActive ? { boxShadow: '2px 2px 0 var(--color-border)' } : {}
+              }
             >
-              <span className="hidden lg:inline" aria-hidden="true">{item.icon}</span>
+              <span className="hidden lg:inline" aria-hidden="true">
+                {item.icon}
+              </span>
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -192,12 +195,16 @@ const Navbar = ({
             ref={menuButtonRef}
             className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
             aria-label="Toggle navigation menu"
           >
-            {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+            {isMenuOpen ? (
+              <X size={20} aria-hidden="true" />
+            ) : (
+              <Menu size={20} aria-hidden="true" />
+            )}
           </button>
         </div>
 

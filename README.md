@@ -81,9 +81,11 @@ VITE_GEMINI_API_KEY=your_gemini_api_key_here
 ## 🎨 Design Systems
 
 ### Neubrutalism
+
 Bold, high-contrast design with thick borders and offset shadows for a playful, brutalist aesthetic.
 
 ### Glassmorphism
+
 Frosted glass effect with blur and transparency, providing a modern look in dark mode.
 
 ## 🔒 Security Features

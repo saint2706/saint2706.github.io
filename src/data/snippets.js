@@ -6,7 +6,8 @@ export const snippets = [
   {
     id: 'py-flatten',
     title: 'Recursive List Flattening',
-    description: 'Flatten arbitrarily nested lists using recursion in a single expression. Try different nested structures!',
+    description:
+      'Flatten arbitrarily nested lists using recursion in a single expression. Try different nested structures!',
     code: `flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
 # Example:
 data = [1, [2, 3, [4, 5]], [6, [7, 8, [9]]]]
@@ -18,16 +19,18 @@ print(flatten(data))`,
       type: 'python-runner',
       defaultInput: '[1, [2, 3, [4, 5]], [6, [7, 8, [9]]]]',
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
-      codeTemplate: (input) => `flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
+      codeTemplate:
+        input => `flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
 data = ${input}
 print(f"Input: {data}")
-print(f"Flattened: {flatten(data)}")`
-    }
+print(f"Flattened: {flatten(data)}")`,
+    },
   },
   {
     id: 'py-fizzbuzz',
     title: 'FizzBuzz One-Liner',
-    description: 'The classic interview problem solved in a single list comprehension. Change the range!',
+    description:
+      'The classic interview problem solved in a single list comprehension. Change the range!',
     code: `print(*[("Fizz"*(i%3==0)+"Buzz"*(i%5==0)) or i for i in range(1,101)], sep="\\n")`,
     language: 'python',
     category: 'Algorithms',
@@ -36,10 +39,10 @@ print(f"Flattened: {flatten(data)}")`
       type: 'python-runner',
       defaultInput: '30',
       inputLabel: 'FizzBuzz up to N',
-      codeTemplate: (n) => `n = ${n}
+      codeTemplate: n => `n = ${n}
 result = [("Fizz"*(i%3==0)+"Buzz"*(i%5==0)) or i for i in range(1, n+1)]
-print("\\n".join(str(x) for x in result))`
-    }
+print("\\n".join(str(x) for x in result))`,
+    },
   },
   {
     id: 'py-quicksort',
@@ -53,16 +56,18 @@ print("\\n".join(str(x) for x in result))`
       type: 'python-runner',
       defaultInput: '64, 34, 25, 12, 22, 11, 90',
       inputLabel: 'Enter numbers (comma-separated)',
-      codeTemplate: (nums) => `qsort = lambda x: [] if not x else qsort([i for i in x[1:] if i < x[0]]) + [x[0]] + qsort([i for i in x[1:] if i >= x[0]])
+      codeTemplate:
+        nums => `qsort = lambda x: [] if not x else qsort([i for i in x[1:] if i < x[0]]) + [x[0]] + qsort([i for i in x[1:] if i >= x[0]])
 data = [${nums}]
 print(f"Unsorted: {data}")
-print(f"Sorted:   {qsort(data)}")`
-    }
+print(f"Sorted:   {qsort(data)}")`,
+    },
   },
   {
     id: 'py-primes',
     title: 'Prime Number Generator',
-    description: 'Generate primes using the Sieve of Eratosthenes in one line. Find all primes up to N!',
+    description:
+      'Generate primes using the Sieve of Eratosthenes in one line. Find all primes up to N!',
     code: `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]`,
     language: 'python',
     category: 'Math',
@@ -71,11 +76,12 @@ print(f"Sorted:   {qsort(data)}")`
       type: 'python-runner',
       defaultInput: '50',
       inputLabel: 'Find primes up to N',
-      codeTemplate: (n) => `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]
+      codeTemplate:
+        n => `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]
 result = primes(${n})
 print(f"Primes up to ${n}: {result}")
-print(f"Count: {len(result)} primes")`
-    }
+print(f"Count: {len(result)} primes")`,
+    },
   },
   {
     id: 'py-transpose',
@@ -89,14 +95,14 @@ print(f"Count: {len(result)} primes")`
       type: 'python-runner',
       defaultInput: '[[1, 2, 3], [4, 5, 6], [7, 8, 9]]',
       inputLabel: 'Enter 2D matrix',
-      codeTemplate: (matrix) => `transpose = lambda m: list(map(list, zip(*m)))
+      codeTemplate: matrix => `transpose = lambda m: list(map(list, zip(*m)))
 matrix = ${matrix}
 result = transpose(matrix)
 print("Original:")
 for row in matrix: print(row)
 print("\\nTransposed:")
-for row in result: print(row)`
-    }
+for row in result: print(row)`,
+    },
   },
   {
     id: 'py-memoize',
@@ -110,7 +116,7 @@ for row in result: print(row)`
       type: 'python-runner',
       defaultInput: '35',
       inputLabel: 'Calculate Fibonacci of N',
-      codeTemplate: (n) => `import time
+      codeTemplate: n => `import time
 memoize = lambda f: (d := {}) or (lambda *a: d.setdefault(a, f(*a)))
 
 # Without memoization (slow!)
@@ -126,8 +132,8 @@ fast_time = (time.time() - start) * 1000
 
 print(f"Fibonacci({n}) = {result}")
 print(f"Memoized time: {fast_time:.3f}ms")
-print("(Without memoization, this would take MUCH longer for large N!)")`
-    }
+print("(Without memoization, this would take MUCH longer for large N!)")`,
+    },
   },
   {
     id: 'py-groupby',
@@ -141,7 +147,7 @@ print("(Without memoization, this would take MUCH longer for large N!)")`
       type: 'python-runner',
       defaultInput: 'apple, banana, cherry, date, elderberry, fig',
       inputLabel: 'Enter words (comma-separated)',
-      codeTemplate: (words) => `from functools import reduce
+      codeTemplate: words => `from functools import reduce
 group_by = lambda f, xs: reduce(lambda d, x: d.setdefault(f(x), []).append(x) or d, xs, {})
 
 words = [w.strip() for w in "${words}".split(",")]
@@ -149,13 +155,14 @@ grouped = group_by(len, words)
 
 print("Grouped by word length:")
 for length, items in sorted(grouped.items()):
-    print(f"  {length} letters: {items}")`
-    }
+    print(f"  {length} letters: {items}")`,
+    },
   },
   {
     id: 'py-combinations',
     title: 'All Combinations',
-    description: 'Generate all combinations using recursive list comprehension. Pick r items from a set!',
+    description:
+      'Generate all combinations using recursive list comprehension. Pick r items from a set!',
     code: `combos = lambda l, n: [l[:i] for i in range(n+1)] if n <= 1 else [[x]+y for i,x in enumerate(l) for y in combos(l[i+1:], n-1)]`,
     language: 'python',
     category: 'Algorithms',
@@ -164,7 +171,8 @@ for length, items in sorted(grouped.items()):
       type: 'python-runner',
       defaultInput: 'A, B, C, D',
       inputLabel: 'Enter items (comma-separated)',
-      codeTemplate: (items) => `combos = lambda l, n: [[]] if n == 0 else [[x]+y for i,x in enumerate(l) for y in combos(l[i+1:], n-1)]
+      codeTemplate:
+        items => `combos = lambda l, n: [[]] if n == 0 else [[x]+y for i,x in enumerate(l) for y in combos(l[i+1:], n-1)]
 
 items = [x.strip() for x in "${items}".split(",")]
 print(f"Items: {items}\\n")
@@ -173,13 +181,14 @@ for r in range(len(items)+1):
     c = combos(items, r)
     print(f"Choose {r}: {len(c)} combinations")
     if len(c) <= 15:
-        for combo in c: print(f"  {combo}")`
-    }
+        for combo in c: print(f"  {combo}")`,
+    },
   },
   {
     id: 'py-heart',
     title: 'ASCII Heart Generator',
-    description: 'Print a love heart filled with any name using mathematical equations. Enter your name and run real Python code! ❤️',
+    description:
+      'Print a love heart filled with any name using mathematical equations. Enter your name and run real Python code! ❤️',
     code: `name = "Saint"
 print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 <= 0 else ' ') for x in range(-30, 30)]) for y in range(15, -15, -1)]))`,
     language: 'python',
@@ -189,9 +198,9 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       type: 'python-runner',
       defaultInput: 'Saint',
       inputLabel: 'Enter your name',
-      codeTemplate: (name) => `name = "${name}"
-print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 <= 0 else ' ') for x in range(-30, 30)]) for y in range(15, -15, -1)]))`
-    }
+      codeTemplate: name => `name = "${name}"
+print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 <= 0 else ' ') for x in range(-30, 30)]) for y in range(15, -15, -1)]))`,
+    },
   },
 
   // ===== CSS SNIPPETS =====
@@ -234,8 +243,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
         color: white;
         font-weight: bold;
         font-size: 14px;
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-gradient-text',
@@ -272,8 +281,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       @keyframes gradient-flow {
         0%, 100% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-neon',
@@ -313,8 +322,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       @keyframes neon-pulse {
         from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #0ff, 0 0 40px #0ff; }
         to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ff, 0 0 80px #0ff; }
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-hover-underline',
@@ -371,8 +380,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       .hover-underline:hover::after {
         transform: scaleX(1);
         transform-origin: bottom left;
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-card-3d',
@@ -425,8 +434,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
         opacity: 0;
         transition: opacity 0.3s;
       }
-      .card-3d:hover::before { opacity: 1; }`
-    }
+      .card-3d:hover::before { opacity: 1; }`,
+    },
   },
   {
     id: 'css-skeleton',
@@ -471,8 +480,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       @keyframes shimmer {
         0% { background-position: -200% 0; }
         100% { background-position: 200% 0; }
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-scroll-snap',
@@ -524,8 +533,8 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
         color: white;
         font-weight: bold;
         font-size: 24px;
-      }`
-    }
+      }`,
+    },
   },
   {
     id: 'css-responsive-clamp',
@@ -555,13 +564,13 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
         background-clip: text;
         color: transparent;
         text-align: center;
-      }`
-    }
-  }
+      }`,
+    },
+  },
 ];
 
 // Helper to get snippets by language
-export const getSnippetsByLanguage = (language) => {
+export const getSnippetsByLanguage = language => {
   if (language === 'all') return snippets;
   return snippets.filter(s => s.language === language);
 };

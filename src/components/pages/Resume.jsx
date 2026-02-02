@@ -4,14 +4,23 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Briefcase, GraduationCap, Code, Award, Globe, Calendar, MapPin, Printer } from 'lucide-react';
+import {
+  Briefcase,
+  GraduationCap,
+  Code,
+  Award,
+  Globe,
+  Calendar,
+  MapPin,
+  Printer,
+} from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 
 /**
  * Reusable section component with neubrutalist styling
- * 
+ *
  * @component
  * @param {Object} props
  * @param {string} props.title - Section heading
@@ -22,7 +31,14 @@ import { safeJSONStringify } from '../../utils/security';
  * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Styled section with header and content
  */
-const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, shouldReduceMotion = false }) => (
+const Section = ({
+  title,
+  icon,
+  color = 'bg-fun-yellow',
+  children,
+  delay = 0,
+  shouldReduceMotion = false,
+}) => (
   <motion.div
     initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -36,15 +52,13 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, sh
       {icon}
       <h2 className="text-xl font-heading font-bold">{title}</h2>
     </div>
-    <div className="space-y-6">
-      {children}
-    </div>
+    <div className="space-y-6">{children}</div>
   </motion.div>
 );
 
 /**
  * Timeline card for experience/education entries
- * 
+ *
  * @component
  * @param {Object} props
  * @param {string} props.title - Job title or institution name
@@ -56,13 +70,23 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children, delay = 0, sh
  * @param {string} props.accentColor - Tailwind color class for accent bar
  * @returns {JSX.Element} Timeline card with details
  */
-const TimelineCard = ({ title, subtitle, date, location, description, tags, accentColor = 'bg-accent' }) => (
+const TimelineCard = ({
+  title,
+  subtitle,
+  date,
+  location,
+  description,
+  tags,
+  accentColor = 'bg-accent',
+}) => (
   <div
     className="bg-card border-nb border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
     style={{ boxShadow: 'var(--nb-shadow)' }}
   >
     {/* Color accent bar */}
-    <div className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`} />
+    <div
+      className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`}
+    />
 
     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
       <div>
@@ -70,9 +94,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
         <p className="text-lg text-secondary font-sans">{subtitle}</p>
       </div>
       <div className="flex flex-col items-start md:items-end gap-1">
-        <span
-          className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb"
-        >
+        <span className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
           <Calendar size={12} />
           {date}
         </span>
@@ -119,7 +141,7 @@ const TimelineCard = ({ title, subtitle, date, location, description, tags, acce
 
 /**
  * Skill badge with proficiency-based color coding
- * 
+ *
  * @component
  * @param {Object} props
  * @param {string} props.name - Skill name
@@ -132,7 +154,7 @@ const SkillBadge = ({ name, proficiency }) => {
    * @param {number} p - Proficiency percentage
    * @returns {string} Tailwind background color class
    */
-  const getColor = (p) => {
+  const getColor = p => {
     if (p >= 90) return 'bg-fun-yellow';
     if (p >= 75) return 'bg-accent';
     if (p >= 60) return 'bg-fun-pink';
@@ -152,7 +174,7 @@ const SkillBadge = ({ name, proficiency }) => {
 
 /**
  * Resume page component
- * 
+ *
  * Features:
  * - Timeline-based experience and education display
  * - Skill categorization with proficiency levels
@@ -160,14 +182,15 @@ const SkillBadge = ({ name, proficiency }) => {
  * - Language proficiency
  * - Print-friendly layout
  * - Neubrutalist card designs
- * 
+ *
  * @component
  * @returns {JSX.Element} Resume page with professional information
  */
 const Resume = () => {
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/resume`;
-  const description = 'Review my education, experience, and skills in analytics, AI, and product strategy.';
+  const description =
+    'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
 
   /** Trigger browser print dialog */
@@ -183,19 +206,22 @@ const Resume = () => {
         <meta name="description" content={description} />
         <script type="application/ld+json">
           {safeJSONStringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": resumeData.basics.website
-            }, {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Resume",
-              "item": canonicalUrl
-            }]
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: resumeData.basics.website,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Resume',
+                item: canonicalUrl,
+              },
+            ],
           })}
         </script>
         <meta name="author" content={resumeData.basics.name} />
@@ -310,7 +336,7 @@ const Resume = () => {
                     {skillGroup.category}
                   </h4>
                   <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill) => (
+                    {skillGroup.items.map(skill => (
                       <SkillBadge
                         key={skill.name}
                         name={skill.name}
@@ -346,7 +372,8 @@ const Resume = () => {
                   <div>
                     <span className="text-primary font-heading font-bold block">{cert.name}</span>
                     <span className="text-secondary text-sm font-sans leading-relaxed">
-                      {cert.issuer}{cert.date && ` • ${cert.date}`}
+                      {cert.issuer}
+                      {cert.date && ` • ${cert.date}`}
                     </span>
                   </div>
                 </li>
@@ -382,9 +409,7 @@ const Resume = () => {
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
                     <span className="text-primary font-heading font-bold">{lang.name}</span>
-                    <span
-                      className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold"
-                    >
+                    <span className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold">
                       {lang.proficiency}
                     </span>
                   </div>

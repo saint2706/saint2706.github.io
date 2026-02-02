@@ -7,13 +7,13 @@ import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 
 /**
  * Footer component with social links and attribution
- * 
+ *
  * Features:
  * - Social media links (GitHub, LinkedIn) with hover effects
  * - "Made with coffee + love" badge with neubrutalist styling
  * - Dynamic copyright year
  * - Accessible link labels
- * 
+ *
  * @component
  * @returns {JSX.Element} Footer with social links and copyright
  */
@@ -21,16 +21,16 @@ const Footer = () => {
   /** Social media links configuration */
   const socialLinks = [
     {
-      href: "https://github.com/saint2706",
+      href: 'https://github.com/saint2706',
       icon: <Github size={24} />,
-      label: "Visit my GitHub profile",
-      hoverColor: "hover:bg-fun-yellow"
+      label: 'Visit my GitHub profile',
+      hoverColor: 'hover:bg-fun-yellow',
     },
     {
-      href: "https://www.linkedin.com/in/rishabh-agrawal-1807321b9",
+      href: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9',
       icon: <Linkedin size={24} />,
-      label: "Visit my LinkedIn profile",
-      hoverColor: "hover:bg-accent"
+      label: 'Visit my LinkedIn profile',
+      hoverColor: 'hover:bg-accent',
     },
   ];
 

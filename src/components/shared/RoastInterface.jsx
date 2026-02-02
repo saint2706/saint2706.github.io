@@ -10,7 +10,7 @@ import { roastResume } from '../../services/ai';
 
 /**
  * Roast interface dialog component
- * 
+ *
  * Features:
  * - Modal dialog with focus trap for accessibility
  * - Auto-loads roast on mount if not provided
@@ -18,7 +18,7 @@ import { roastResume } from '../../services/ai';
  * - Escape key to close
  * - Restores focus on close
  * - Prevents memory leaks with mount tracking
- * 
+ *
  * @component
  * @param {Object} props
  * @param {Function} props.onClose - Callback to close the roast interface
@@ -79,9 +79,10 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
    * - Escape closes dialog
    */
   useEffect(() => {
-    const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusSelectors =
+      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = event => {
       const container = roastDialogRef.current;
       if (!container) return;
 
@@ -131,7 +132,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb">
             <Flame size={20} className="text-fun-pink" />
           </div>
-          <h3 className="font-heading font-bold text-white" id="roast-title">Resume Roasted 🔥</h3>
+          <h3 className="font-heading font-bold text-white" id="roast-title">
+            Resume Roasted 🔥
+          </h3>
         </div>
         <button
           ref={roastCloseRef}
@@ -150,12 +153,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       </div>
 
       {/* Content */}
-      <div
-        className="p-6 bg-white"
-        aria-live="polite"
-        aria-atomic="true"
-        aria-busy={roastLoading}
-      >
+      <div className="p-6 bg-white" aria-live="polite" aria-atomic="true" aria-busy={roastLoading}>
         {roastLoading ? (
           <div className="flex items-center gap-3 text-fun-pink" role="status">
             <RefreshCw size={20} className="animate-spin motion-reduce:animate-none" />
@@ -168,7 +166,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         ) : null}
       </div>
 
-      <p id="roast-helper" className="sr-only">Resume roast dialog. Press Escape to close. Focus remains inside until closed.</p>
+      <p id="roast-helper" className="sr-only">
+        Resume roast dialog. Press Escape to close. Focus remains inside until closed.
+      </p>
 
       {/* Actions */}
       <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2">
@@ -178,7 +178,10 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
-          <RefreshCw size={16} className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''} />
+          <RefreshCw
+            size={16}
+            className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''}
+          />
           Roast Again
         </button>
         <button

@@ -12,7 +12,7 @@ import { safeJSONStringify } from '../../utils/security';
 
 /**
  * Hero section component for homepage
- * 
+ *
  * Features:
  * - Bold typography with neubrutalist styling
  * - Availability status badge
@@ -21,7 +21,7 @@ import { safeJSONStringify } from '../../utils/security';
  * - Click stack array 3 times to reveal /games page
  * - Decorative background shapes
  * - SEO optimization with structured data
- * 
+ *
  * @component
  * @returns {JSX.Element} Hero section with heading, CTAs, and code snippet
  */
@@ -65,15 +65,19 @@ const Hero = () => {
    * Keyboard handler for easter egg accessibility
    * Activates on Enter or Space key
    */
-  const handleEasterEggKeyDown = useCallback((e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleEasterEggClick();
-    }
-  }, [handleEasterEggClick]);
-  
+  const handleEasterEggKeyDown = useCallback(
+    e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleEasterEggClick();
+      }
+    },
+    [handleEasterEggClick]
+  );
+
   const canonicalUrl = resumeData.basics.website;
-  const description = 'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
+  const description =
+    'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
 
   return (
@@ -95,30 +99,30 @@ const Hero = () => {
         <meta name="twitter:creator" content={resumeData.basics.name} />
         <script type="application/ld+json">
           {safeJSONStringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": resumeData.basics.name,
-            "url": resumeData.basics.website,
-            "sameAs": [
-              "https://github.com/saint2706",
-              "https://www.linkedin.com/in/rishabh-agrawal-1807321b9"
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: resumeData.basics.name,
+            url: resumeData.basics.website,
+            sameAs: [
+              'https://github.com/saint2706',
+              'https://www.linkedin.com/in/rishabh-agrawal-1807321b9',
             ],
-            "jobTitle": resumeData.basics.title,
-            "description": description,
-            "image": `${resumeData.basics.website}/og-image.png`
+            jobTitle: resumeData.basics.title,
+            description: description,
+            image: `${resumeData.basics.website}/og-image.png`,
           })}
         </script>
         <script type="application/ld+json">
           {safeJSONStringify({
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": `${resumeData.basics.name} Portfolio`,
-            "url": resumeData.basics.website,
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": `${resumeData.basics.website}/blog?q={search_term_string}`,
-              "query-input": "required name=search_term_string"
-            }
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: `${resumeData.basics.name} Portfolio`,
+            url: resumeData.basics.website,
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: `${resumeData.basics.website}/blog?q={search_term_string}`,
+              'query-input': 'required name=search_term_string',
+            },
           })}
         </script>
       </Helmet>
@@ -191,9 +195,19 @@ const Hero = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
-          Turning <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">messy data</strong> into
-          <strong className="text-primary font-bold border-b-[3px] border-accent mx-1">clear strategies</strong> and
-          <strong className="text-primary font-bold border-b-[3px] border-fun-pink mx-1">AI/ML solutions</strong> into real-world impact.
+          Turning{' '}
+          <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">
+            messy data
+          </strong>{' '}
+          into
+          <strong className="text-primary font-bold border-b-[3px] border-accent mx-1">
+            clear strategies
+          </strong>{' '}
+          and
+          <strong className="text-primary font-bold border-b-[3px] border-fun-pink mx-1">
+            AI/ML solutions
+          </strong>{' '}
+          into real-world impact.
         </motion.p>
 
         {/* CTA Buttons - Neubrutalism style */}
@@ -207,18 +221,21 @@ const Hero = () => {
             to="/projects"
             className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
-            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
-            onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)')}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = 'var(--nb-shadow)')}
           >
             View Projects
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none" />
+            <ArrowRight
+              size={18}
+              className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
+            />
           </Link>
           <button
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
             className="px-8 py-4 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
-            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)'}
-            onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'var(--nb-shadow)'}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = 'var(--nb-shadow-hover)')}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = 'var(--nb-shadow)')}
             aria-label="Open chat with Digital Rishabh"
           >
             <Bot size={18} className="text-fun-pink" aria-hidden="true" />
@@ -246,14 +263,23 @@ const Hero = () => {
             <pre className="whitespace-pre-wrap">
               {isGlitching ? (
                 // Glitched "gamer mode" content
-                <>{`const developer = {
-  mode: `}<span className="text-fun-pink font-bold">'GAMER'</span>{`,
-  status: `}<span className="text-accent font-bold">'Ready Player One'</span>{`,
-  launching: `}<span className="text-green-600 font-bold">true</span>{`
-};`}</>
+                <>
+                  {`const developer = {
+  mode: `}
+                  <span className="text-fun-pink font-bold">&lsquo;GAMER&rsquo;</span>
+                  {`,
+  status: `}
+                  <span className="text-accent font-bold">&lsquo;Ready Player One&rsquo;</span>
+                  {`,
+  launching: `}
+                  <span className="text-green-600 font-bold">true</span>
+                  {`
+};`}
+                </>
               ) : (
                 // Normal content with clickable stack items
-                <>{`const developer = {
+                <>
+                  {`const developer = {
   name: 'Rishabh Agrawal',
   stack: [`}
                   <span
@@ -264,12 +290,13 @@ const Hero = () => {
                     className="cursor-pointer hover:text-fun-pink hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-fun-pink focus:ring-offset-1"
                     aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                   >
-                    'React', 'Node.js', 'Python'
+                    &lsquo;React&rsquo;, &lsquo;Node.js&rsquo;, &lsquo;Python&rsquo;
                   </span>
                   {`],
   currentStatus: 'Building awesome things.',
   openToWork: true
-};`}</>
+};`}
+                </>
               )}
             </pre>
           </div>

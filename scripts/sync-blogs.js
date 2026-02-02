@@ -1,17 +1,17 @@
 /**
  * Blog Synchronization Script
- * 
+ *
  * Fetches blog posts from multiple platforms (Dev.to, Medium, Substack) and consolidates
  * them into a single JSON file for the portfolio website. This script runs periodically
  * (via GitHub Actions) to keep the blog list up-to-date.
- * 
+ *
  * Output: src/data/blogs.json
- * 
+ *
  * Data Sources:
  * - Dev.to: Uses their public API
  * - Medium: Uses RSS feed parsing
  * - Substack: Uses RSS feed with custom slug mapping
- * 
+ *
  * @module scripts/sync-blogs
  */
 
@@ -27,7 +27,7 @@ const parser = new Parser();
 
 /**
  * Fetches blog articles from Dev.to using their public API.
- * 
+ *
  * @async
  * @returns {Promise<Array<object>>} Array of normalized blog post objects
  * @returns {Promise<Array>} Empty array if fetch fails
@@ -40,7 +40,7 @@ async function fetchDevTo() {
       return [];
     }
     const articles = await response.json();
-    
+
     // Normalize Dev.to API response to common blog post format
     return articles.map(article => ({
       title: article.title,
@@ -49,7 +49,7 @@ async function fetchDevTo() {
       summary: article.description,
       source: 'Dev.to',
       tags: article.tag_list,
-      coverImage: article.cover_image
+      coverImage: article.cover_image,
     }));
   } catch (error) {
     console.error('Error fetching Dev.to:', error);
@@ -59,7 +59,7 @@ async function fetchDevTo() {
 
 /**
  * Fetches blog articles from Medium using RSS feed.
- * 
+ *
  * @async
  * @returns {Promise<Array<object>>} Array of normalized blog post objects
  * @returns {Promise<Array>} Empty array if fetch fails
@@ -67,7 +67,7 @@ async function fetchDevTo() {
 async function fetchMedium() {
   try {
     const feed = await parser.parseURL('https://medium.com/feed/@saint2706');
-    
+
     // Normalize RSS feed items to common blog post format
     return feed.items.map(item => ({
       title: item.title,
@@ -77,7 +77,7 @@ async function fetchMedium() {
       source: 'Medium',
       tags: item.categories || [],
       // Extract cover image from HTML content if available
-      coverImage: extractImage(item['content:encoded'])
+      coverImage: extractImage(item['content:encoded']),
     }));
   } catch (error) {
     console.error('Error fetching Medium:', error);
@@ -87,10 +87,10 @@ async function fetchMedium() {
 
 /**
  * Fetches blog articles from Substack using RSS feed with custom slug mapping.
- * 
+ *
  * Substack's RSS links don't always work directly, so we use a mapping file to
  * convert slugs to the correct post IDs for the web interface.
- * 
+ *
  * @async
  * @returns {Promise<Array<object>>} Array of normalized blog post objects
  * @returns {Promise<Array>} Empty array if fetch fails
@@ -102,19 +102,19 @@ async function fetchSubstack() {
     try {
       const mappingModule = await import('./substack-mapping.js');
       substackMapping = mappingModule.substackMapping || {};
-    } catch (e) {
+    } catch {
       console.warn('No substack-mapping.js found, using RSS links directly');
     }
 
     // Use custom parser to capture GUID field from RSS
     const customParser = new Parser({
       customFields: {
-        item: ['guid']
-      }
+        item: ['guid'],
+      },
     });
 
     const feed = await customParser.parseURL('https://saint2706.substack.com/feed');
-    
+
     return feed.items.map(item => {
       // Extract slug from RSS link: https://saint2706.substack.com/p/post-slug
       const linkMatch = item.link.match(/\/p\/([^/?]+)/);
@@ -142,7 +142,7 @@ async function fetchSubstack() {
         summary: summary,
         source: 'Substack',
         tags: tags,
-        coverImage: item.enclosure?.url || extractImage(item['content:encoded'])
+        coverImage: item.enclosure?.url || extractImage(item['content:encoded']),
       };
     });
   } catch (error) {
@@ -154,22 +154,20 @@ async function fetchSubstack() {
 /**
  * Extracts a plain text summary from HTML content.
  * Strips all HTML tags and truncates to 200 characters.
- * 
+ *
  * @param {string} content - HTML content string
  * @returns {string} Plain text summary with ellipsis
  */
 function extractSummary(content) {
   if (!content) return '';
   // Strip HTML tags, then remove any remaining angle brackets, and take first 200 chars
-  const text = content
-    .replace(/<[^>]*>?/gm, '')
-    .replace(/[<>]/g, '');
+  const text = content.replace(/<[^>]*>?/gm, '').replace(/[<>]/g, '');
   return text.substring(0, 200) + '...';
 }
 
 /**
  * Extracts the first image URL from HTML content.
- * 
+ *
  * @param {string} content - HTML content string
  * @returns {string|null} Image URL or null if no image found
  */
@@ -181,7 +179,7 @@ function extractImage(content) {
 
 /**
  * Main synchronization function that fetches from all sources and writes to JSON file.
- * 
+ *
  * @async
  * @returns {Promise<void>}
  */
@@ -192,12 +190,13 @@ async function syncBlogs() {
   const [devTo, medium, substack] = await Promise.all([
     fetchDevTo(),
     fetchMedium(),
-    fetchSubstack()
+    fetchSubstack(),
   ]);
 
   // Combine all blogs and sort by date (newest first)
-  const allBlogs = [...devTo, ...medium, ...substack]
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  const allBlogs = [...devTo, ...medium, ...substack].sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
 
   const outputPath = path.join(__dirname, '../src/data/blogs.json');
 

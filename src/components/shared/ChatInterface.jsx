@@ -1,10 +1,10 @@
 /**
  * Chat Interface Component Module
- * 
+ *
  * Provides an interactive chat interface powered by Google's Gemini AI.
  * This component manages message history, handles user input, renders markdown responses,
  * and implements accessibility features including focus trapping and keyboard navigation.
- * 
+ *
  * Features:
  * - Persistent chat history stored in localStorage
  * - Markdown rendering with safe link handling (XSS prevention)
@@ -14,7 +14,7 @@
  * - Focus trap for modal dialog behavior
  * - Auto-scrolling to latest messages
  * - Character counter for input validation
- * 
+ *
  * @module components/shared/ChatInterface
  */
 
@@ -30,20 +30,23 @@ import { isSafeHref } from '../../utils/security';
 const STORAGE_KEY = 'portfolio_chat_history';
 
 // Default greeting message shown on first load
-const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
+const DEFAULT_MESSAGE = {
+  role: 'model',
+  text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!",
+};
 
 // Quick reply suggestions shown when chat history is empty
 const QUICK_REPLIES = [
-  "Tell me about your projects",
-  "What are your top skills?",
-  "How can I contact you?"
+  'Tell me about your projects',
+  'What are your top skills?',
+  'How can I contact you?',
 ];
 
 /**
  * Custom link renderer for ReactMarkdown that validates URLs for security.
  * Prevents XSS attacks by only allowing safe protocols (http, https, mailto).
  * Unsafe links are rendered as plain text instead of clickable anchors.
- * 
+ *
  * @component
  * @param {object} props
  * @param {string} props.href - The URL to link to
@@ -74,12 +77,12 @@ const LinkRenderer = ({ href, children, ...rest }) => {
 
 /**
  * Memoized message list component that renders the chat history.
- * 
+ *
  * Performance optimization: This component is wrapped in React.memo to prevent
  * re-rendering the entire message history (and expensive Markdown parsing) when
  * only the input field changes. Markdown parsing is computationally expensive,
  * so we only re-render when the messages array or typing state actually changes.
- * 
+ *
  * @component
  * @param {object} props
  * @param {Array<{role: string, text: string}>} props.messages - Array of chat messages
@@ -95,20 +98,14 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
     aria-busy={isTyping}
   >
     {messages.map((msg, index) => (
-      <div
-        key={index}
-        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-      >
+      <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
         <div
-          className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user'
-            ? 'bg-fun-yellow text-black'
-            : 'bg-card text-primary'
-            }`}
+          className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${
+            msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
+          }`}
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
-          <ReactMarkdown components={{ a: LinkRenderer }}>
-            {msg.text}
-          </ReactMarkdown>
+          <ReactMarkdown components={{ a: LinkRenderer }}>{msg.text}</ReactMarkdown>
         </div>
       </div>
     ))}
@@ -120,12 +117,12 @@ MessageList.displayName = 'MessageList';
 
 /**
  * Main chat interface component.
- * 
+ *
  * Provides a complete chat experience with message history persistence, AI responses,
  * and full accessibility support. Messages are stored in localStorage and restored
  * on subsequent visits. The interface includes quick reply buttons, typing indicators,
  * and a focus trap for modal behavior.
- * 
+ *
  * Message Flow:
  * 1. User types message and submits
  * 2. Message is added to history and sent to AI service
@@ -133,7 +130,7 @@ MessageList.displayName = 'MessageList';
  * 4. AI response is received and added to history
  * 5. Messages are persisted to localStorage
  * 6. UI auto-scrolls to show latest message
- * 
+ *
  * @component
  * @param {object} props
  * @param {Function} props.onClose - Callback to close the chat interface
@@ -151,7 +148,7 @@ const ChatInterface = ({ onClose }) => {
   const chatDialogRef = useRef(null); // For focus trapping
   const isMountedRef = useRef(true); // Prevents state updates after unmount
   const prefersReducedMotion = useReducedMotion();
-  
+
   // ARIA identifiers for accessibility
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
@@ -207,7 +204,7 @@ const ChatInterface = ({ onClose }) => {
    * Uses the messagesEndRef which is positioned at the end of the message list.
    */
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   /**
@@ -230,7 +227,7 @@ const ChatInterface = ({ onClose }) => {
 
   /**
    * Sends a message to the AI and handles the response.
-   * 
+   *
    * This function:
    * 1. Adds the user message to the chat history
    * 2. Shows typing indicator
@@ -238,15 +235,15 @@ const ChatInterface = ({ onClose }) => {
    * 4. Sends message to AI service with context
    * 5. Adds AI response to chat history
    * 6. Hides typing indicator
-   * 
+   *
    * Context Management: Only sends the last 30 messages to prevent exceeding
    * token limits and to keep API costs manageable. This still provides enough
    * context for coherent conversations.
-   * 
+   *
    * @async
    * @param {string} text - The message text to send
    */
-  const handleSendMessage = async (text) => {
+  const handleSendMessage = async text => {
     if (!text.trim()) return;
 
     // Add user message to UI immediately for responsive feel
@@ -259,7 +256,7 @@ const ChatInterface = ({ onClose }) => {
     const MAX_HISTORY_CONTEXT = 30;
     const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
       role: m.role,
-      parts: [{ text: m.text }]
+      parts: [{ text: m.text }],
     }));
 
     try {
@@ -275,7 +272,7 @@ const ChatInterface = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       await handleSendMessage(input);
@@ -295,21 +292,22 @@ const ChatInterface = ({ onClose }) => {
 
   /**
    * Implements focus trap and keyboard navigation for modal dialog accessibility.
-   * 
+   *
    * Focus Trap: When Tab is pressed on the last focusable element, focus wraps
    * to the first element. When Shift+Tab is pressed on the first element, focus
    * wraps to the last element. This keeps keyboard focus contained within the dialog.
-   * 
+   *
    * Escape Handling: Pressing Escape closes the dialog, a standard pattern for modals.
-   * 
+   *
    * This ensures keyboard-only users can navigate the dialog properly and matches
    * WAI-ARIA dialog best practices.
    */
   useEffect(() => {
     // Selector for all focusable elements (for focus trap)
-    const focusSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusSelectors =
+      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-    const handleKeyDown = (event) => {
+    const handleKeyDown = event => {
       // Close dialog on Escape key
       if (event.key === 'Escape') {
         event.preventDefault();
@@ -334,7 +332,7 @@ const ChatInterface = ({ onClose }) => {
           event.preventDefault();
           last.focus();
         }
-      } 
+      }
       // Handle Tab on last element: wrap to first
       else if (document.activeElement === last) {
         event.preventDefault();
@@ -367,7 +365,9 @@ const ChatInterface = ({ onClose }) => {
             <Bot size={20} className="text-black" />
           </div>
           <div>
-            <h3 className="font-heading font-bold text-white" id={titleId}>Digital Rishabh</h3>
+            <h3 className="font-heading font-bold text-white" id={titleId}>
+              Digital Rishabh
+            </h3>
             <p className="text-xs text-white/80 flex items-center gap-1 font-sans">
               <span className="w-2 h-2 bg-fun-yellow rounded-full animate-pulse motion-reduce:animate-none"></span>
               Online
@@ -400,7 +400,9 @@ const ChatInterface = ({ onClose }) => {
         </div>
       </div>
 
-      <p id="chatbot-helper" className="sr-only">Chat dialog. Press Escape to close. Tab cycles within the chat window.</p>
+      <p id="chatbot-helper" className="sr-only">
+        Chat dialog. Press Escape to close. Tab cycles within the chat window.
+      </p>
 
       {/* Messages Area */}
       <MessageList messages={messages} isTyping={isTyping} messagesEndRef={messagesEndRef} />
@@ -428,31 +430,34 @@ const ChatInterface = ({ onClose }) => {
             ))}
           </div>
         )}
-        <form onSubmit={handleSubmit} className={`p-4 ${messages.length === 1 && !isTyping ? 'pt-3' : ''}`}>
+        <form
+          onSubmit={handleSubmit}
+          className={`p-4 ${messages.length === 1 && !isTyping ? 'pt-3' : ''}`}
+        >
           <div className="flex gap-2 items-start">
             <div className="flex-grow relative">
-            <input
-              ref={inputRef}
-              type="text"
-              id="chatbot-input"
-              aria-label="Type a message"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              maxLength={500}
-              disabled={isTyping}
-              placeholder={isTyping ? "Thinking..." : "Ask about my skills..."}
-              className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb"
-            />
+              <input
+                ref={inputRef}
+                type="text"
+                id="chatbot-input"
+                aria-label="Type a message"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                maxLength={500}
+                disabled={isTyping}
+                placeholder={isTyping ? 'Thinking...' : 'Ask about my skills...'}
+                className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb"
+              />
               <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
                 {input.length}/500
               </div>
             </div>
             <button
               type="submit"
-            disabled={!input.trim() || isTyping}
-            className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-            aria-label="Send message"
+              disabled={!input.trim() || isTyping}
+              className="group relative p-3 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
+              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+              aria-label="Send message"
             >
               <Send size={20} />
               <span

@@ -11,7 +11,7 @@ import { safeJSONStringify } from '../../utils/security';
 
 /**
  * Projects showcase page component
- * 
+ *
  * Features:
  * - Grid layout of project cards
  * - Project images with lazy loading
@@ -19,14 +19,15 @@ import { safeJSONStringify } from '../../utils/security';
  * - Tech stack tags
  * - Links to live demos and source code
  * - Rotating accent colors for visual interest
- * 
+ *
  * @component
  * @returns {JSX.Element} Projects page with portfolio showcase
  */
 const Projects = () => {
   const shouldReduceMotion = useReducedMotion();
   const canonicalUrl = `${resumeData.basics.website}/projects`;
-  const description = 'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
+  const description =
+    'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
   const title = `Projects | ${resumeData.basics.name}`;
 
   // Animation variants for stagger effect
@@ -36,9 +37,9 @@ const Projects = () => {
       opacity: 1,
       transition: {
         staggerChildren: shouldReduceMotion ? 0 : 0.1,
-        duration: shouldReduceMotion ? 0 : undefined
-      }
-    }
+        duration: shouldReduceMotion ? 0 : undefined,
+      },
+    },
   };
 
   const item = {
@@ -46,8 +47,8 @@ const Projects = () => {
     show: {
       opacity: 1,
       y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined
-    }
+      transition: shouldReduceMotion ? { duration: 0 } : undefined,
+    },
   };
 
   /** Rotating color classes for project card accent bars */
@@ -72,19 +73,22 @@ const Projects = () => {
         <meta name="twitter:creator" content={resumeData.basics.name} />
         <script type="application/ld+json">
           {safeJSONStringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": resumeData.basics.website
-            }, {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Projects",
-              "item": canonicalUrl
-            }]
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: resumeData.basics.website,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Projects',
+                item: canonicalUrl,
+              },
+            ],
           })}
         </script>
       </Helmet>
@@ -109,13 +113,11 @@ const Projects = () => {
         </motion.div>
 
         {/* Screen reader summary (no live region since content is static) */}
-        <div className="sr-only">
-          {`${resumeData.projects.length} projects loaded`}
-        </div>
+        <div className="sr-only">{`${resumeData.projects.length} projects loaded`}</div>
 
         <motion.div
           variants={container}
-          initial={shouldReduceMotion ? false : "hidden"}
+          initial={shouldReduceMotion ? false : 'hidden'}
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
@@ -137,7 +139,7 @@ const Projects = () => {
                     src={project.image}
                     alt={`Screenshot of ${project.title} project`}
                     className="w-full h-full object-cover"
-                    loading={idx < 3 ? "eager" : "lazy"}
+                    loading={idx < 3 ? 'eager' : 'lazy'}
                     decoding="async"
                   />
                 </div>
@@ -147,15 +149,11 @@ const Projects = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-2">
                     <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-                    <h3 className="text-xl font-heading font-bold text-primary">
-                      {project.title}
-                    </h3>
+                    <h3 className="text-xl font-heading font-bold text-primary">{project.title}</h3>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
-                      <span
-                        className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb"
-                      >
+                      <span className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
                         <Star size={12} className="fill-black" />
                         {project.stars}
                       </span>

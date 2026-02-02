@@ -1,14 +1,14 @@
 /**
  * Vite Configuration
- * 
+ *
  * Build configuration for the portfolio application using Vite as the build tool.
  * Vite provides fast HMR (Hot Module Replacement) during development and optimized builds for production.
- * 
+ *
  * @see https://vitejs.dev/config/
  */
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
@@ -18,4 +18,4 @@ export default defineConfig({
     // This prevents warnings for larger bundles like the AI service and D3 visualizations
     chunkSizeWarningLimit: 1000,
   },
-})
+});

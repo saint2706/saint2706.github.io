@@ -1,10 +1,10 @@
 /**
  * Chatbot Component Module
- * 
+ *
  * Provides a floating action button (FAB) that expands to reveal chat and roast options.
  * This component implements lazy loading for optimal performance, only loading the chat
  * and roast interfaces when needed. It also manages focus and accessibility for modals.
- * 
+ *
  * Features:
  * - Expandable FAB with hover and focus interactions
  * - Lazy-loaded chat and roast interfaces with suspense fallbacks
@@ -13,7 +13,7 @@
  * - Click-outside detection to close the FAB
  * - Custom event listeners for programmatic control
  * - ARIA attributes for screen reader accessibility
- * 
+ *
  * @module components/shared/Chatbot
  */
 
@@ -28,7 +28,7 @@ const RoastInterface = lazy(() => import('./RoastInterface'));
 /**
  * Loading fallback component shown during Suspense lazy loading.
  * Displays a skeleton UI with loading animation while the chat/roast interface loads.
- * 
+ *
  * @component
  * @param {object} props
  * @param {'chat'|'roast'} props.type - Type of dialog being loaded (affects styling)
@@ -37,7 +37,7 @@ const RoastInterface = lazy(() => import('./RoastInterface'));
 const LoadingDialog = ({ type }) => {
   const prefersReducedMotion = useReducedMotion();
   const isChat = type === 'chat';
-  
+
   return (
     <motion.div
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
@@ -53,16 +53,20 @@ const LoadingDialog = ({ type }) => {
       role="dialog"
       aria-modal="true"
       aria-busy="true"
-      aria-label={isChat ? "Loading chat..." : "Loading roast..."}
+      aria-label={isChat ? 'Loading chat...' : 'Loading roast...'}
     >
-      <div className={`p-4 flex items-center gap-3 ${
-        isChat ? 'bg-accent' : 'bg-fun-pink'
-      } border-b-nb border-[color:var(--color-border)] ${
-        isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
-      }`}>
-        <div className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
-          isChat ? 'dark:bg-glass-bg' : 'dark:bg-glass-bg'
-        }`}>
+      <div
+        className={`p-4 flex items-center gap-3 ${
+          isChat ? 'bg-accent' : 'bg-fun-pink'
+        } border-b-nb border-[color:var(--color-border)] ${
+          isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
+        }`}
+      >
+        <div
+          className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
+            isChat ? 'dark:bg-glass-bg' : 'dark:bg-glass-bg'
+          }`}
+        >
           {isChat ? (
             <Bot size={20} className="text-black" />
           ) : (
@@ -85,26 +89,26 @@ const LoadingDialog = ({ type }) => {
 
 /**
  * Chatbot component with expandable floating action button (FAB).
- * 
+ *
  * This component provides a persistent UI element for accessing the chatbot and resume roast
  * features. It uses lazy loading to defer loading of the chat and roast interfaces until needed,
  * improving initial page load performance.
- * 
+ *
  * The component manages three states:
  * 1. FAB closed - showing just the main button
  * 2. FAB open - showing the main button plus chat and roast options
  * 3. Dialog open - showing the full chat or roast interface
- * 
+ *
  * Keyboard Shortcuts:
  * - Ctrl/Cmd+K: Toggle chat interface
  * - Escape: Close all dialogs and FAB
- * 
+ *
  * Accessibility:
  * - Focus is trapped within open dialogs
  * - Focus is restored to the previously focused element when closing
  * - Main content is marked as aria-hidden when dialogs are open
  * - Proper ARIA labels and roles throughout
- * 
+ *
  * @component
  * @returns {JSX.Element} The chatbot FAB and lazy-loaded interfaces
  */
@@ -129,7 +133,7 @@ const Chatbot = () => {
    * Only closes if no dialog is currently open (chat or roast).
    */
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = e => {
       if (fabRef.current && !fabRef.current.contains(e.target) && !isChatOpen && !isRoastOpen) {
         setIsFabOpen(false);
       }
@@ -164,7 +168,7 @@ const Chatbot = () => {
    * - Escape: Close all open dialogs and collapse FAB
    */
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = e => {
       // Toggle chat with Cmd/Ctrl+K
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
@@ -210,15 +214,15 @@ const Chatbot = () => {
 
   /**
    * Manage accessibility when dialogs open/close.
-   * 
+   *
    * When a dialog opens:
    * - Store the currently focused element
    * - Mark main content as aria-hidden to hide it from screen readers
-   * 
+   *
    * When all dialogs close:
    * - Remove aria-hidden from main content
    * - Restore focus to the previously focused element
-   * 
+   *
    * This ensures proper screen reader experience and keyboard navigation.
    */
   useEffect(() => {
@@ -248,7 +252,7 @@ const Chatbot = () => {
         onMouseEnter={() => setIsFabOpen(true)}
         onMouseLeave={() => setIsFabOpen(false)}
         onFocusCapture={() => setIsFabOpen(true)}
-        onBlurCapture={(e) => {
+        onBlurCapture={e => {
           if (!fabRef.current?.contains(e.relatedTarget)) {
             setIsFabOpen(false);
           }
@@ -291,7 +295,9 @@ const Chatbot = () => {
                   initial={prefersReducedMotion ? false : { opacity: 0, y: 20, scale: 0.8 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
-                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0.05 }}
+                  transition={
+                    prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0.05 }
+                  }
                   onClick={openChat}
                   className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
@@ -309,10 +315,7 @@ const Chatbot = () => {
       <AnimatePresence>
         {isChatOpen && (
           <Suspense fallback={<LoadingDialog type="chat" />}>
-            <ChatInterface
-              key="chat-interface"
-              onClose={() => setIsChatOpen(false)}
-            />
+            <ChatInterface key="chat-interface" onClose={() => setIsChatOpen(false)} />
           </Suspense>
         )}
         {isRoastOpen && (

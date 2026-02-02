@@ -13,13 +13,13 @@ const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
 
 /**
  * Layout component that wraps all page content
- * 
+ *
  * Provides:
  * - Custom cursor with accessibility-aware auto-disable
  * - Neubrutalist grid background pattern
  * - Skip navigation link for keyboard users
  * - Consistent header/footer structure
- * 
+ *
  * @component
  * @param {Object} props
  * @param {React.ReactNode} props.children - Page content to render within the layout
@@ -69,11 +69,12 @@ const Layout = ({ children }) => {
 
   // Determine if cursor should be disabled due to accessibility preferences
   const cursorForcedOff = prefersReducedMotion || prefersContrast || !hasFinePointer;
-  
+
   // Memoized effective cursor state (respects both user preference and accessibility)
-  const effectiveCursorEnabled = useMemo(() => (
-    cursorEnabled && !cursorForcedOff
-  ), [cursorEnabled, cursorForcedOff]);
+  const effectiveCursorEnabled = useMemo(
+    () => cursorEnabled && !cursorForcedOff,
+    [cursorEnabled, cursorForcedOff]
+  );
 
   // Auto-disable cursor when accessibility settings change
   useEffect(() => {
@@ -108,7 +109,7 @@ const Layout = ({ children }) => {
               linear-gradient(var(--color-border) 1px, transparent 1px),
               linear-gradient(90deg, var(--color-border) 1px, transparent 1px)
             `,
-            backgroundSize: '40px 40px'
+            backgroundSize: '40px 40px',
           }}
         />
       </div>
