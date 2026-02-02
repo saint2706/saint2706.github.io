@@ -18,6 +18,18 @@ const Blog = () => {
   const description = 'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
 
+  // Performance: Pre-process blogs to avoid repetitive expensive operations (sorting, lowercasing)
+  // This runs once when the module loads, not on every render.
+  const processedBlogs = useMemo(() => {
+    return blogs.map(blog => ({
+      ...blog,
+      // Pre-compute lowercase search string to avoid O(N) .toLowerCase() calls during filtering
+      searchStr: `${blog.title} ${blog.summary}`.toLowerCase(),
+      // Pre-parse date for sorting
+      parsedDate: new Date(blog.date)
+    })).sort((a, b) => b.parsedDate - a.parsedDate);
+  }, []);
+
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
 
   const formatDate = (dateStr) => {
@@ -30,15 +42,19 @@ const Blog = () => {
 
   const filteredBlogs = useMemo(() => {
     const normalizedSearch = deferredSearchTerm.toLowerCase();
-    return blogs
-      .filter(blog => {
-        const matchesSource = filter === 'All' || blog.source === filter;
-        const matchesSearch = blog.title.toLowerCase().includes(normalizedSearch) ||
-          blog.summary.toLowerCase().includes(normalizedSearch);
-        return matchesSource && matchesSearch;
-      })
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-  }, [filter, deferredSearchTerm]);
+
+    // Use pre-processed list which is already sorted
+    return processedBlogs.filter(blog => {
+      const matchesSource = filter === 'All' || blog.source === filter;
+
+      // Early return to skip string search if source doesn't match
+      if (!matchesSource) return false;
+
+      // Use pre-computed search string
+      if (!normalizedSearch) return true;
+      return blog.searchStr.includes(normalizedSearch);
+    });
+  }, [filter, deferredSearchTerm, processedBlogs]);
 
   useEffect(() => {
     setCurrentPage(1);
