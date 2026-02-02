@@ -19,6 +19,7 @@ import Parser from 'rss-parser';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { htmlToText } from 'html-to-text';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -153,15 +154,19 @@ async function fetchSubstack() {
 
 /**
  * Extracts a plain text summary from HTML content.
- * Strips all HTML tags and truncates to 200 characters.
+ * Converts HTML to plain text and truncates to 200 characters.
  *
  * @param {string} content - HTML content string
  * @returns {string} Plain text summary with ellipsis
  */
 function extractSummary(content) {
   if (!content) return '';
-  // Strip HTML tags, then remove any remaining angle brackets, and take first 200 chars
-  const text = content.replace(/<[^>]*>?/gm, '').replace(/[<>]/g, '');
+
+  // Use a robust HTML-to-text converter to avoid incomplete sanitization.
+  const text = htmlToText(content, {
+    wordwrap: false,
+  }).trim();
+
   return text.substring(0, 200) + '...';
 }
 

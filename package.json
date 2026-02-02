@@ -28,7 +28,8 @@
     "react-router-dom": "^6.20.1",
     "react-syntax-highlighter": "^16.1.0",
     "rss-parser": "^3.13.0",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "html-to-text": "^9.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
