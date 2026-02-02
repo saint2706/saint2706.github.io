@@ -4,6 +4,7 @@ import { Bot, X, Send } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
+import { isSafeHref } from '../../utils/security';
 
 const STORAGE_KEY = 'portfolio_chat_history';
 const DEFAULT_MESSAGE = { role: 'model', text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!" };
@@ -13,25 +14,6 @@ const QUICK_REPLIES = [
   "What are your top skills?",
   "How can I contact you?"
 ];
-
-// Security: Validate href after decoding to prevent URL-encoded protocol bypasses
-const isSafeHref = (href) => {
-  if (!href || typeof href !== 'string') {
-    return false;
-  }
-
-  let normalizedHref;
-  try {
-    // Decode percent-encoded characters once to catch encoded protocols like javascript:
-    normalizedHref = decodeURIComponent(href);
-  } catch (e) {
-    // If decoding fails, fall back to the original value
-    normalizedHref = href;
-  }
-
-  // Only allow http, https, and mailto protocols
-  return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
-};
 
 const LinkRenderer = ({ href, children, ...rest }) => {
   // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
