@@ -20,11 +20,12 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Bot, X, Send } from 'lucide-react';
+import { Bot, X, Send, Copy, Check } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
 import { isSafeHref } from '../../utils/security';
+import SyntaxHighlighter from './SyntaxHighlighter';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
@@ -41,6 +42,49 @@ const QUICK_REPLIES = [
   'What are your top skills?',
   'How can I contact you?',
 ];
+
+/**
+ * Custom code block renderer with syntax highlighting and copy button.
+ * Uses SyntaxHighlighter for block code and standard code tag for inline code.
+ *
+ * @component
+ * @param {object} props
+ * @param {string} [props.className] - Class name containing language info (e.g., language-python)
+ * @param {React.ReactNode} props.children - Code content
+ */
+const CodeRenderer = ({ children, className, ...rest }) => {
+  const [isCopied, setIsCopied] = useState(false);
+  const match = /language-(\w+)/.exec(className || '');
+  const language = match ? match[1] : '';
+  const code = String(children).replace(/\n$/, '');
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
+  if (!match) {
+    return (
+      <code className={className} {...rest}>
+        {children}
+      </code>
+    );
+  }
+
+  return (
+    <div className="relative group my-2">
+      <SyntaxHighlighter code={code} language={language} />
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 p-1.5 bg-card/80 backdrop-blur text-primary border border-[color:var(--color-border)] rounded opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+        aria-label={isCopied ? 'Copied!' : 'Copy code'}
+      >
+        {isCopied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+      </button>
+    </div>
+  );
+};
 
 /**
  * Custom link renderer for ReactMarkdown that validates URLs for security.
@@ -105,7 +149,9 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
           }`}
           style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
         >
-          <ReactMarkdown components={{ a: LinkRenderer }}>{msg.text}</ReactMarkdown>
+          <ReactMarkdown components={{ a: LinkRenderer, code: CodeRenderer }}>
+            {msg.text}
+          </ReactMarkdown>
         </div>
       </div>
     ))}
