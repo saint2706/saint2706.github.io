@@ -1,6 +1,7 @@
-# Bolt
+## 2026-02-02 - Cascading Renders in Layout and Pages
+**Learning:** The codebase has multiple instances of `setState` calls inside `useEffect` without conditions or in a way that triggers immediate re-renders (cascading renders). This is flagged by the linter (`react-hooks/set-state-in-effect`) and hurts performance by forcing React to render twice.
+**Action:** In future optimizations, refactor these state updates to happen during event handling or derive state during render where possible.
 
-## 2025-02-18 - Grid-Aware Eager Loading
-
-**Learning:** When optimizing image loading for a grid layout, the number of eager-loaded images must match the number of columns in the first row (or the viewport visibility). Simply guessing "2" or "3" without verifying the layout can lead to "above the fold" images being lazy-loaded or "below the fold" images being eager-loaded.
-**Action:** Always verify the visual grid layout (e.g., via `verify_projects.py` screenshots or CSS analysis) to set the correct `idx < N` threshold for eager loading.
+## 2026-02-02 - Bundle Splitting Effectiveness
+**Learning:** Using `manualChunks` to separate stable vendors (React, Framer Motion) from application code significantly cleaner output in `dist/assets` and likely improves caching.
+**Action:** Always check `vite.config.js` for `manualChunks` in React projects with large dependencies like `framer-motion` or `three.js`.
