@@ -28,7 +28,7 @@ const Blog = () => {
       // Pre-parse date for sorting
       parsedDate: new Date(blog.date)
     })).sort((a, b) => b.parsedDate - a.parsedDate);
-  }, []);
+  }, [blogs]);
 
   const sources = ['All', ...new Set(blogs.map(blog => blog.source))];
 
