@@ -17,5 +17,14 @@ export default defineConfig({
     // Increase chunk size warning limit to 1MB (1000 KB)
     // This prevents warnings for larger bundles like the AI service and D3 visualizations
     chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
+          'vendor-ui': ['framer-motion', 'lucide-react'],
+          'vendor-ai': ['@google/generative-ai'],
+        },
+      },
+    },
   },
 });
