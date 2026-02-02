@@ -1,3 +1,18 @@
+/**
+ * Substack Post ID Mapping
+ * 
+ * Maps Substack post slugs from RSS feeds to their actual post IDs used in the web interface.
+ * This is necessary because Substack's RSS feeds use different URLs than the web interface.
+ * 
+ * @module scripts/substack-mapping
+ * @example
+ * // To add a new mapping:
+ * // 1. Open your Substack post in the web interface
+ * // 2. The URL will be: https://substack.com/home/post/p-{POST_ID}
+ * // 3. Copy the numeric ID and add it to the mapping below
+ * // Example: "new-post-slug": "123456789"
+ */
+
 // Substack Post ID Mapping
 // Format: { "post-slug": "post-id" }
 // 
