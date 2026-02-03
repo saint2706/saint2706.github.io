@@ -99,6 +99,38 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     e => {
       if (e.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      if (e.key !== 'Tab') {
+        return;
+      }
+
+      const focusableSelector =
+        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
+      const focusableElements = modalRef.current
+        ? Array.from(modalRef.current.querySelectorAll(focusableSelector))
+        : [];
+
+      if (focusableElements.length === 0) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (e.shiftKey) {
+        if (activeElement === firstElement || !focusableElements.includes(activeElement)) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+        return;
+      }
+
+      if (activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
       }
     },
     [onClose]
