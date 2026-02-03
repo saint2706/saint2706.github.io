@@ -29,11 +29,22 @@ import { isSafeHref } from '../../utils/security';
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
 
-// Default greeting message shown on first load
-const DEFAULT_MESSAGE = {
+const generateMessageId = () => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  const timestamp = Date.now();
+  const randomPart = Math.random().toString(36).slice(2, 11);
+  return `${timestamp}-${randomPart}`;
+};
+
+const DEFAULT_MESSAGE_ID = 'default-message';
+
+const createDefaultMessage = () => ({
+  id: DEFAULT_MESSAGE_ID,
   role: 'model',
   text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!",
-};
+});
 
 // Quick reply suggestions shown when chat history is empty
 const QUICK_REPLIES = [
@@ -118,8 +129,8 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
     aria-live="polite"
     aria-busy={isTyping}
   >
-    {messages.map((msg, index) => (
-      <MessageItem key={index} msg={msg} />
+    {messages.map(msg => (
+      <MessageItem key={msg.id} msg={msg} />
     ))}
     {isTyping && <ChatSkeleton />}
     <div ref={messagesEndRef} />
@@ -150,7 +161,7 @@ MessageList.displayName = 'MessageList';
  */
 const ChatInterface = ({ onClose }) => {
   // Chat state: messages array with role ('user' | 'model') and text
-  const [messages, setMessages] = useState([DEFAULT_MESSAGE]);
+  const [messages, setMessages] = useState([createDefaultMessage()]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false); // AI response loading state
 
@@ -188,7 +199,12 @@ const ChatInterface = ({ onClose }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
+          setMessages(
+            parsed.map(message => ({
+              ...message,
+              id: message.id ?? generateMessageId(),
+            })),
+          );
         }
       }
     } catch (e) {
@@ -259,7 +275,7 @@ const ChatInterface = ({ onClose }) => {
     if (!text.trim()) return;
 
     // Add user message to UI immediately for responsive feel
-    const userMsg = { role: 'user', text: text };
+    const userMsg = { id: generateMessageId(), role: 'user', text: text };
     setMessages(prev => [...prev, userMsg]);
     if (text === input) setInput(''); // Clear input if this is from the input field
     setIsTyping(true);
@@ -275,7 +291,10 @@ const ChatInterface = ({ onClose }) => {
       const responseText = await chatWithGemini(userMsg.text, history);
       // Only update state if component is still mounted
       if (isMountedRef.current) {
-        setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+        setMessages(prev => [
+          ...prev,
+          { id: generateMessageId(), role: 'model', text: responseText },
+        ]);
       }
     } finally {
       if (isMountedRef.current) {
@@ -298,7 +317,7 @@ const ChatInterface = ({ onClose }) => {
    * Also removes the saved history from localStorage.
    */
   const clearHistory = useCallback(() => {
-    setMessages([DEFAULT_MESSAGE]);
+    setMessages([createDefaultMessage()]);
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
