@@ -28,6 +28,7 @@ import { isSafeHref } from '../../utils/security';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
+const MAX_STORED_MESSAGES = 100;
 
 // Default greeting message shown on first load
 const DEFAULT_MESSAGE = {
@@ -188,7 +189,7 @@ const ChatInterface = ({ onClose }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
+          setMessages(parsed.slice(-MAX_STORED_MESSAGES));
         }
       }
     } catch (e) {
@@ -204,7 +205,8 @@ const ChatInterface = ({ onClose }) => {
   useEffect(() => {
     if (messages.length > 1) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+        const cappedMessages = messages.slice(-MAX_STORED_MESSAGES);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cappedMessages));
       } catch (e) {
         console.warn('Failed to save chat history:', e);
       }
