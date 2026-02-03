@@ -7,16 +7,18 @@ import { motion, useReducedMotion } from 'framer-motion';
 import {
   Briefcase,
   GraduationCap,
-  Code,
   Award,
   Globe,
   Calendar,
   MapPin,
   Printer,
+  Sparkles,
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
+import TechStackVisual from '../shared/TechStackVisual';
+
 
 /**
  * Reusable section component with neubrutalist styling
@@ -139,38 +141,6 @@ const TimelineCard = ({
   </div>
 );
 
-/**
- * Skill badge with proficiency-based color coding
- *
- * @component
- * @param {Object} props
- * @param {string} props.name - Skill name
- * @param {number} props.proficiency - Proficiency percentage (0-100)
- * @returns {JSX.Element} Color-coded skill badge
- */
-const SkillBadge = ({ name, proficiency }) => {
-  /**
-   * Get color based on proficiency level
-   * @param {number} p - Proficiency percentage
-   * @returns {string} Tailwind background color class
-   */
-  const getColor = p => {
-    if (p >= 90) return 'bg-fun-yellow';
-    if (p >= 75) return 'bg-accent';
-    if (p >= 60) return 'bg-fun-pink';
-    return 'bg-secondary';
-  };
-
-  return (
-    <div
-      className={`inline-flex items-center gap-2 ${getColor(proficiency)} text-black px-3 py-2 border-2 border-[color:var(--color-border)] font-heading font-bold text-sm rounded-nb`}
-      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-    >
-      {name}
-      <span className="text-sm md:text-xs opacity-70">{proficiency}%</span>
-    </div>
-  );
-};
 
 /**
  * Resume page component
@@ -309,14 +279,13 @@ const Resume = () => {
           ))}
         </Section>
 
-        {/* Skills & Certifications Grid */}
+        {/* Tech Stack Visualization */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
-          className="grid md:grid-cols-2 gap-6 mb-12"
+          className="mb-12"
         >
-          {/* Technical Skills */}
           <div
             className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
@@ -325,37 +294,31 @@ const Resume = () => {
               className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
-              <Code size={20} />
-              <h2 className="text-lg font-heading font-bold">Technical Skills</h2>
+              <Sparkles size={20} />
+              <h2 className="text-lg font-heading font-bold">Tech Stack</h2>
             </div>
 
-            <div className="space-y-6">
-              {resumeData.skills.map((skillGroup, groupIdx) => (
-                <div key={groupIdx}>
-                  <h4 className="text-sm font-heading font-bold text-primary uppercase tracking-wider mb-3 border-b-2 border-[color:var(--color-border)] pb-1">
-                    {skillGroup.category}
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map(skill => (
-                      <SkillBadge
-                        key={skill.name}
-                        name={skill.name}
-                        proficiency={skill.proficiency}
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <p className="text-secondary text-sm mb-6 font-sans">
+              Hover over a skill to see its proficiency level.
+            </p>
+
+            <TechStackVisual />
           </div>
+        </motion.div>
 
-          {/* Certifications */}
+        {/* Certifications */}
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.7 }}
+          className="mb-12"
+        >
           <div
             className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
             style={{ boxShadow: 'var(--nb-shadow)' }}
           >
             <div
-              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
+              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] rounded-nb mb-6"
               style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
             >
               <Award size={20} />
@@ -366,7 +329,7 @@ const Resume = () => {
               {resumeData.certifications.map((cert, i) => (
                 <li
                   key={i}
-                  className="flex items-start gap-3 p-3 bg-secondary border-2 border-[color:var(--color-border)]"
+                  className="flex items-start gap-3 p-3 border-2 border-[color:var(--color-border)] bg-secondary"
                 >
                   <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
                   <div>

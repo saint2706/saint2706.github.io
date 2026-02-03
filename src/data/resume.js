@@ -30,7 +30,7 @@ export const resumeData = {
       { name: 'Marathi', proficiency: 'Native/Bilingual' },
       { name: 'Marwari', proficiency: 'Native/Bilingual' },
       { name: 'French', proficiency: 'Professional Working' },
-      { name: 'South American Indian', proficiency: 'Limited Working' },
+      { name: 'South Asian Indian', proficiency: 'Limited Working' },
     ],
   },
   education: [
@@ -47,18 +47,6 @@ export const resumeData = {
       startDate: '2020',
       endDate: '2024',
       description: 'Core foundation in algorithms, software development, and data science.',
-    },
-    {
-      institution: 'Delhi Public School - India',
-      area: '12th, Schooling',
-      startDate: '2018',
-      endDate: '2020',
-    },
-    {
-      institution: 'Ryan International School',
-      area: 'Schooling',
-      startDate: '2004',
-      endDate: '2018',
     },
   ],
   experience: [
