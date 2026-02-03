@@ -19,8 +19,7 @@ print(flatten(data))`,
       type: 'python-runner',
       defaultInput: '[1, [2, 3, [4, 5]], [6, [7, 8, [9]]]]',
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
-      codeTemplate:
-        () => `import ast
+      codeTemplate: () => `import ast
 flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
 try:
     data = ast.literal_eval(user_input)

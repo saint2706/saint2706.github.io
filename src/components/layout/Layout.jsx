@@ -27,16 +27,14 @@ const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
  */
 const Layout = ({ children }) => {
   // State for custom cursor toggle and accessibility preferences
-  const [cursorEnabled, setCursorEnabled] = useState(false);
+  // Load cursor preference from localStorage on mount
+  const [cursorEnabled, setCursorEnabled] = useState(() => {
+    const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
+    return stored === 'true';
+  });
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [prefersContrast, setPrefersContrast] = useState(false);
   const [hasFinePointer, setHasFinePointer] = useState(true);
-
-  // Load cursor preference from localStorage on mount
-  useEffect(() => {
-    const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
-    setCursorEnabled(stored === 'true');
-  }, []);
 
   // Monitor system accessibility preferences via media queries
   useEffect(() => {
@@ -75,14 +73,6 @@ const Layout = ({ children }) => {
     () => cursorEnabled && !cursorForcedOff,
     [cursorEnabled, cursorForcedOff]
   );
-
-  // Auto-disable cursor when accessibility settings change
-  useEffect(() => {
-    if (cursorForcedOff && cursorEnabled) {
-      setCursorEnabled(false);
-      localStorage.setItem(CURSOR_STORAGE_KEY, 'false');
-    }
-  }, [cursorForcedOff, cursorEnabled]);
 
   /**
    * Toggle custom cursor on/off (unless disabled by accessibility preferences)

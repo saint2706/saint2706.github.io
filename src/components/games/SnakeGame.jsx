@@ -123,17 +123,6 @@ const SnakeGame = () => {
   }, [direction]);
 
   /**
-   * Persist high score to localStorage when score exceeds it.
-   * This ensures high score survives page refreshes.
-   */
-  useEffect(() => {
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem('snakeHighScore', score.toString());
-    }
-  }, [score, highScore]);
-
-  /**
    * Main game logic: moves snake and handles collisions/food.
    *
    * Process:
@@ -174,7 +163,15 @@ const SnakeGame = () => {
 
       // Check if food is eaten
       if (newHead.x === food.x && newHead.y === food.y) {
-        setScore(prev => prev + 10);
+        setScore(prev => {
+          const newScore = prev + 10;
+          // Update high score if needed
+          if (newScore > highScore) {
+            setHighScore(newScore);
+            localStorage.setItem('snakeHighScore', newScore.toString());
+          }
+          return newScore;
+        });
         setFood(getRandomFood(newSnake)); // Spawn new food
         // Increase speed (decrease interval) but cap at MIN_SPEED
         setSpeed(prev => Math.max(MIN_SPEED, prev - SPEED_INCREMENT));
@@ -186,7 +183,7 @@ const SnakeGame = () => {
 
       return newSnake;
     });
-  }, [food]);
+  }, [food, highScore, setHighScore]);
 
   /**
    * Game loop: runs moveSnake at intervals based on current speed.
@@ -353,9 +350,9 @@ const SnakeGame = () => {
         const normalized =
           hex.length === 3
             ? hex
-              .split('')
-              .map(char => char + char)
-              .join('')
+                .split('')
+                .map(char => char + char)
+                .join('')
             : hex;
         if (normalized.length !== 6) return fallback;
         const r = parseInt(normalized.slice(0, 2), 16);

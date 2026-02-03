@@ -33,7 +33,7 @@ import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-moti
  */
 const CustomCursor = ({ enabled }) => {
   const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
+  const [hasMouseMoved, setHasMouseMoved] = useState(false);
   const [cursorVariant, setCursorVariant] = useState('default'); // Current cursor style
   const [isClicking, setIsClicking] = useState(false);
 
@@ -56,10 +56,13 @@ const CustomCursor = ({ enabled }) => {
    */
   const moveCursor = useCallback(
     e => {
+      if (!hasMouseMoved) {
+        setHasMouseMoved(true);
+      }
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     },
-    [cursorX, cursorY]
+    [cursorX, cursorY, hasMouseMoved]
   );
 
   /**
@@ -90,6 +93,7 @@ const CustomCursor = ({ enabled }) => {
   }, []);
 
   const isEnabled = enabled && !prefersReducedMotion;
+  const isVisible = isEnabled && hasMouseMoved;
 
   // Add/remove CSS class to hide native cursor when custom cursor is enabled
   useEffect(() => {
@@ -105,16 +109,13 @@ const CustomCursor = ({ enabled }) => {
   // Attach mouse event listeners for cursor behavior
   useEffect(() => {
     if (!isEnabled) {
-      setIsVisible(false);
       return;
     }
 
-    setIsVisible(true);
-
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseLeave = () => setHasMouseMoved(false);
+    const handleMouseEnter = () => setHasMouseMoved(true);
 
     window.addEventListener('mousemove', moveCursor);
     window.addEventListener('mouseover', updateCursorVariant);
