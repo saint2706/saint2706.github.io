@@ -17,3 +17,9 @@
 **Vulnerability:** Lack of rate limiting on the AI service allowed potential abuse of the Gemini API key (quota exhaustion) via rapid manual requests from a single client.
 **Learning:** In client-side-only applications (like this GitHub Pages site) where API keys must be exposed in the bundle, server-side rate limiting (by IP) is not possible without a backend proxy.
 **Prevention:** Implement client-side rate limiting (throttling) in the service layer as a defense-in-depth measure to slow down potential abuse and improve UX by preventing accidental double-submissions, even if it doesn't fully prevent distributed attacks.
+
+## 2025-02-18 - Python Code Injection in Playground
+
+**Vulnerability:** The `PythonRunner` component interpolated user input directly into Python code strings executed by Pyodide, allowing arbitrary Python code execution (and potentially XSS via `js` module) through malicious input.
+**Learning:** String interpolation of user input into code templates is dangerous even in client-side sandboxes if the sandbox has access to the DOM or other sensitive contexts. Pyodide execution is not isolated from the browser's JavaScript environment by default.
+**Prevention:** Pass user input as variables to the runtime environment (e.g., using `pyodide.globals.set`) instead of constructing code strings dynamically. Use safe parsing methods (like `ast.literal_eval`) for structured data instead of `eval` or direct code execution.

@@ -20,8 +20,13 @@ print(flatten(data))`,
       defaultInput: '[1, [2, 3, [4, 5]], [6, [7, 8, [9]]]]',
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
       codeTemplate:
-        input => `flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
-data = ${input}
+        () => `import ast
+flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
+try:
+    data = ast.literal_eval(user_input)
+except (ValueError, SyntaxError, TypeError):
+    data = []
+    print("Error: Invalid list format")
 print(f"Input: {data}")
 print(f"Flattened: {flatten(data)}")`,
     },
@@ -39,7 +44,10 @@ print(f"Flattened: {flatten(data)}")`,
       type: 'python-runner',
       defaultInput: '30',
       inputLabel: 'FizzBuzz up to N',
-      codeTemplate: n => `n = ${n}
+      codeTemplate: () => `try:
+    n = int(user_input)
+except ValueError:
+    n = 30
 result = [("Fizz"*(i%3==0)+"Buzz"*(i%5==0)) or i for i in range(1, n+1)]
 print("\\n".join(str(x) for x in result))`,
     },
@@ -57,8 +65,12 @@ print("\\n".join(str(x) for x in result))`,
       defaultInput: '64, 34, 25, 12, 22, 11, 90',
       inputLabel: 'Enter numbers (comma-separated)',
       codeTemplate:
-        nums => `qsort = lambda x: [] if not x else qsort([i for i in x[1:] if i < x[0]]) + [x[0]] + qsort([i for i in x[1:] if i >= x[0]])
-data = [${nums}]
+        () => `qsort = lambda x: [] if not x else qsort([i for i in x[1:] if i < x[0]]) + [x[0]] + qsort([i for i in x[1:] if i >= x[0]])
+try:
+    data = [int(x.strip()) for x in user_input.split(',')]
+except ValueError:
+    data = []
+    print("Error: Invalid numbers")
 print(f"Unsorted: {data}")
 print(f"Sorted:   {qsort(data)}")`,
     },
@@ -77,9 +89,14 @@ print(f"Sorted:   {qsort(data)}")`,
       defaultInput: '50',
       inputLabel: 'Find primes up to N',
       codeTemplate:
-        n => `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]
-result = primes(${n})
-print(f"Primes up to ${n}: {result}")
+        () => `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]
+try:
+    n = int(user_input)
+except ValueError:
+    n = 50
+    print("Error: Invalid number")
+result = primes(n)
+print(f"Primes up to {n}: {result}")
 print(f"Count: {len(result)} primes")`,
     },
   },
@@ -95,8 +112,13 @@ print(f"Count: {len(result)} primes")`,
       type: 'python-runner',
       defaultInput: '[[1, 2, 3], [4, 5, 6], [7, 8, 9]]',
       inputLabel: 'Enter 2D matrix',
-      codeTemplate: matrix => `transpose = lambda m: list(map(list, zip(*m)))
-matrix = ${matrix}
+      codeTemplate: () => `import ast
+transpose = lambda m: list(map(list, zip(*m)))
+try:
+    matrix = ast.literal_eval(user_input)
+except (ValueError, SyntaxError, TypeError):
+    matrix = []
+    print("Error: Invalid matrix")
 result = transpose(matrix)
 print("Original:")
 for row in matrix: print(row)
@@ -116,7 +138,7 @@ for row in result: print(row)`,
       type: 'python-runner',
       defaultInput: '35',
       inputLabel: 'Calculate Fibonacci of N',
-      codeTemplate: n => `import time
+      codeTemplate: () => `import time
 memoize = lambda f: (d := {}) or (lambda *a: d.setdefault(a, f(*a)))
 
 # Without memoization (slow!)
@@ -125,7 +147,12 @@ fib_slow = lambda n: n if n < 2 else fib_slow(n-1) + fib_slow(n-2)
 # With memoization (fast!)
 fib_fast = memoize(lambda n: n if n < 2 else fib_fast(n-1) + fib_fast(n-2))
 
-n = ${n}
+try:
+    n = int(user_input)
+except ValueError:
+    n = 35
+    print("Error: Invalid number")
+
 start = time.time()
 result = fib_fast(n)
 fast_time = (time.time() - start) * 1000
@@ -147,10 +174,10 @@ print("(Without memoization, this would take MUCH longer for large N!)")`,
       type: 'python-runner',
       defaultInput: 'apple, banana, cherry, date, elderberry, fig',
       inputLabel: 'Enter words (comma-separated)',
-      codeTemplate: words => `from functools import reduce
+      codeTemplate: () => `from functools import reduce
 group_by = lambda f, xs: reduce(lambda d, x: d.setdefault(f(x), []).append(x) or d, xs, {})
 
-words = [w.strip() for w in "${words}".split(",")]
+words = [w.strip() for w in user_input.split(",")]
 grouped = group_by(len, words)
 
 print("Grouped by word length:")
@@ -172,9 +199,9 @@ for length, items in sorted(grouped.items()):
       defaultInput: 'A, B, C, D',
       inputLabel: 'Enter items (comma-separated)',
       codeTemplate:
-        items => `combos = lambda l, n: [[]] if n == 0 else [[x]+y for i,x in enumerate(l) for y in combos(l[i+1:], n-1)]
+        () => `combos = lambda l, n: [[]] if n == 0 else [[x]+y for i,x in enumerate(l) for y in combos(l[i+1:], n-1)]
 
-items = [x.strip() for x in "${items}".split(",")]
+items = [x.strip() for x in user_input.split(",")]
 print(f"Items: {items}\\n")
 
 for r in range(len(items)+1):
@@ -198,7 +225,7 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
       type: 'python-runner',
       defaultInput: 'Saint',
       inputLabel: 'Enter your name',
-      codeTemplate: name => `name = "${name}"
+      codeTemplate: () => `name = user_input
 print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 <= 0 else ' ') for x in range(-30, 30)]) for y in range(15, -15, -1)]))`,
     },
   },
