@@ -75,6 +75,27 @@ const LinkRenderer = ({ href, children, ...rest }) => {
   );
 };
 
+// Stable markdown components object to prevent unnecessary re-renders
+const MARKDOWN_COMPONENTS = { a: LinkRenderer };
+
+/**
+ * Individual message item component.
+ * Memoized to prevent re-rendering of expensive Markdown content when parent list updates.
+ */
+const MessageItem = React.memo(({ msg }) => (
+  <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+    <div
+      className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${
+        msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
+      }`}
+      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+    >
+      <ReactMarkdown components={MARKDOWN_COMPONENTS}>{msg.text}</ReactMarkdown>
+    </div>
+  </div>
+));
+MessageItem.displayName = 'MessageItem';
+
 /**
  * Memoized message list component that renders the chat history.
  *
@@ -98,16 +119,7 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
     aria-busy={isTyping}
   >
     {messages.map((msg, index) => (
-      <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-        <div
-          className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${
-            msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
-          }`}
-          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-        >
-          <ReactMarkdown components={{ a: LinkRenderer }}>{msg.text}</ReactMarkdown>
-        </div>
-      </div>
+      <MessageItem key={index} msg={msg} />
     ))}
     {isTyping && <ChatSkeleton />}
     <div ref={messagesEndRef} />
