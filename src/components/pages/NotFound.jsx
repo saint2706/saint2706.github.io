@@ -2,7 +2,7 @@
  * @fileoverview 404 Not Found page with interactive animations and quick navigation.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -29,6 +29,7 @@ const NotFound = () => {
   const [glitchText, setGlitchText] = useState('404');
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [clickCount, setClickCount] = useState(0); // Track ghost clicks for easter egg
+  const glitchTimeoutRef = useRef(null);
 
   // Generate random floating particles for background animation (only once on mount)
   const [particles] = useState(() =>
@@ -63,11 +64,21 @@ const NotFound = () => {
           })
           .join('');
         setGlitchText(glitched);
-        setTimeout(() => setGlitchText('404'), 100);
+        if (glitchTimeoutRef.current) {
+          clearTimeout(glitchTimeoutRef.current);
+        }
+        glitchTimeoutRef.current = setTimeout(() => {
+          setGlitchText('404');
+        }, 100);
       }
     }, 2000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (glitchTimeoutRef.current) {
+        clearTimeout(glitchTimeoutRef.current);
+      }
+    };
   }, [shouldReduceMotion]);
 
   /**
