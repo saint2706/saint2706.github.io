@@ -332,6 +332,7 @@ const SnakeGame = () => {
     const height = GRID_SIZE * CELL_SIZE;
 
     // Extract theme colors from CSS variables
+    // Extract theme colors from CSS variables
     const rootStyles = getComputedStyle(document.documentElement);
     const borderColor = rootStyles.getPropertyValue('--color-border').trim() || '#000000';
     const accentColor = rootStyles.getPropertyValue('--color-accent').trim() || '#0052CC';
@@ -341,10 +342,6 @@ const SnakeGame = () => {
     /**
      * Parses CSS color value to RGB object.
      * Handles both hex (#RRGGBB) and rgb(r, g, b) formats.
-     *
-     * @param {string} value - CSS color value
-     * @param {object} fallback - Fallback RGB object {r, g, b}
-     * @returns {object} RGB object {r, g, b}
      */
     const parseColor = (value, fallback) => {
       if (!value) return fallback;
@@ -356,9 +353,9 @@ const SnakeGame = () => {
         const normalized =
           hex.length === 3
             ? hex
-                .split('')
-                .map(char => char + char)
-                .join('')
+              .split('')
+              .map(char => char + char)
+              .join('')
             : hex;
         if (normalized.length !== 6) return fallback;
         const r = parseInt(normalized.slice(0, 2), 16);
@@ -388,18 +385,17 @@ const SnakeGame = () => {
     // Draw grid lines for structure
     ctx.strokeStyle = '#000000';
     ctx.lineWidth = 1;
+    ctx.beginPath();
     for (let i = 0; i <= GRID_SIZE; i++) {
       // Vertical lines
-      ctx.beginPath();
       ctx.moveTo(i * CELL_SIZE, 0);
       ctx.lineTo(i * CELL_SIZE, height);
-      ctx.stroke();
+
       // Horizontal lines
-      ctx.beginPath();
       ctx.moveTo(0, i * CELL_SIZE);
       ctx.lineTo(width, i * CELL_SIZE);
-      ctx.stroke();
     }
+    ctx.stroke();
 
     // Draw snake with gradient from head (accent) to tail (fun-pink)
     snake.forEach((segment, index) => {
