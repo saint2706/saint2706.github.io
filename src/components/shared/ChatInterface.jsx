@@ -29,14 +29,13 @@ import { isSafeHref } from '../../utils/security';
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
 
-let messageCounter = 0;
-
 const generateMessageId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
   }
-  messageCounter += 1;
-  return `${Date.now()}-${messageCounter}`;
+  const timestamp = Date.now();
+  const randomPart = Math.random().toString(36).slice(2, 11);
+  return `${timestamp}-${randomPart}`;
 };
 
 const createDefaultMessage = () => ({
