@@ -38,8 +38,10 @@ const generateMessageId = () => {
   return `${timestamp}-${randomPart}`;
 };
 
+const DEFAULT_MESSAGE_ID = 'default-message';
+
 const createDefaultMessage = () => ({
-  id: generateMessageId(),
+  id: DEFAULT_MESSAGE_ID,
   role: 'model',
   text: "Hi! I'm Digital Rishabh. Ask me about my projects, skills, or experience!",
 });
