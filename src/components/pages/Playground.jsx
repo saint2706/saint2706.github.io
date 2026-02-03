@@ -345,7 +345,7 @@ const SnippetCard = ({
           {/* Copy Button */}
           <button
             onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
+            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
               isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
             }`}
             aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
@@ -355,6 +355,12 @@ const SnippetCard = ({
             ) : (
               <Copy size={16} aria-hidden="true" />
             )}
+            <span
+              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+              aria-hidden="true"
+            >
+              {isCopied ? 'Copied!' : 'Copy code'}
+            </span>
           </button>
         </div>
 
