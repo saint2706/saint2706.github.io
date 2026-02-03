@@ -99,6 +99,46 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     e => {
       if (e.key === 'Escape') {
         onClose();
+        return;
+      }
+
+      if (e.key !== 'Tab') {
+        return;
+      }
+
+      const focusableSelectors = [
+        'a[href]',
+        'button:not([disabled])',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        "[tabindex]:not([tabindex='-1'])",
+        "[contenteditable='true']",
+      ];
+      const focusableElements = modalRef.current
+        ? Array.from(modalRef.current.querySelectorAll(focusableSelectors.join(', ')))
+        : [];
+
+      if (focusableElements.length === 0) {
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+      const focusableSet = new Set(focusableElements);
+
+      if (e.shiftKey) {
+        if (activeElement === firstElement || !focusableSet.has(activeElement)) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+        return;
+      }
+
+      if (activeElement === lastElement || !focusableSet.has(activeElement)) {
+        e.preventDefault();
+        firstElement.focus();
       }
     },
     [onClose]
