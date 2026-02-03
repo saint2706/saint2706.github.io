@@ -39,7 +39,7 @@ import {
  */
 const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [lastFocus, setLastFocus] = useState(null); // Stores element to restore focus to
+  const lastFocusRef = useRef(null); // Stores element to restore focus to
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
@@ -85,7 +85,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   useEffect(() => {
     if (isMenuOpen) {
       // Store current focus to restore later
-      setLastFocus(document.activeElement);
+      lastFocusRef.current = document.activeElement;
       // Hide main content from screen readers
       const main = document.getElementById('main-content');
       if (main) main.setAttribute('aria-hidden', 'true');
@@ -98,10 +98,10 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       if (main) main.removeAttribute('aria-hidden');
       document.removeEventListener('keydown', trapFocus);
       // Restore focus to trigger element
-      lastFocus?.focus?.();
+      lastFocusRef.current?.focus?.();
     }
     return () => document.removeEventListener('keydown', trapFocus);
-  }, [isMenuOpen, trapFocus, lastFocus]);
+  }, [isMenuOpen, trapFocus]);
 
   // Listen for custom event from chatbot to close this menu
   useEffect(() => {

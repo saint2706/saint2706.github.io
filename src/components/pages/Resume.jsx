@@ -19,7 +19,6 @@ import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import TechStackVisual from '../shared/TechStackVisual';
 
-
 /**
  * Reusable section component with neubrutalist styling
  *
@@ -140,7 +139,6 @@ const TimelineCard = ({
     )}
   </div>
 );
-
 
 /**
  * Resume page component

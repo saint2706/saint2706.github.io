@@ -69,6 +69,7 @@ This project uses ESLint and Prettier for code quality and consistency:
 - **Pre-commit**: Code is automatically linted and formatted
 
 Configuration files:
+
 - `eslint.config.js` - ESLint v9 configuration
 - `.prettierrc.json` - Prettier configuration
 - `.prettierignore` - Files to exclude from formatting

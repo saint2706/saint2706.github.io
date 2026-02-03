@@ -317,6 +317,17 @@ const TicTacToe = () => {
    * Keyboard shortcut: Escape key resets game when game is over.
    * Only active when game is in terminal state (won/lost/draw).
    */
+  /**
+   * Resets the game board for a new round.
+   * Preserves scores and difficulty setting.
+   */
+  const resetGame = useCallback(() => {
+    setBoard(Array(9).fill(null));
+    setIsPlayerTurn(true);
+    setGameStatus('playing');
+    setWinningLine(null);
+  }, []);
+
   useEffect(() => {
     if (gameStatus === 'playing') return;
     const handler = event => {
@@ -327,18 +338,7 @@ const TicTacToe = () => {
     };
     document.addEventListener('keydown', handler);
     return () => document.removeEventListener('keydown', handler);
-  }, [gameStatus]);
-
-  /**
-   * Resets the game board for a new round.
-   * Preserves scores and difficulty setting.
-   */
-  const resetGame = () => {
-    setBoard(Array(9).fill(null));
-    setIsPlayerTurn(true);
-    setGameStatus('playing');
-    setWinningLine(null);
-  };
+  }, [gameStatus, resetGame]);
 
   /**
    * Changes difficulty level and resets both game and scores.

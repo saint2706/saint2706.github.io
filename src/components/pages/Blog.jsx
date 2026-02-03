@@ -3,7 +3,7 @@
  * Displays blog posts from multiple sources (Dev.to, Medium, Substack).
  */
 
-import React, { useState, useMemo, useEffect, useDeferredValue } from 'react';
+import React, { useState, useMemo, useDeferredValue } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ExternalLink,
@@ -101,11 +101,6 @@ const Blog = () => {
       return blog.searchStr.includes(normalizedSearch);
     });
   }, [filter, deferredSearchTerm, processedBlogs]);
-
-  // Reset to page 1 when filter or search changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filter, deferredSearchTerm]);
 
   // Calculate pagination values
   const totalPages = Math.ceil(filteredBlogs.length / POSTS_PER_PAGE);
@@ -243,12 +238,16 @@ const Blog = () => {
             {sources.map(source => (
               <button
                 key={source}
-                onClick={() => setFilter(source)}
+                onClick={() => {
+                  setFilter(source);
+                  setCurrentPage(1);
+                }}
                 aria-pressed={filter === source}
                 className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer motion-reduce:transform-none motion-reduce:transition-none
-                  ${filter === source
-                    ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                  ${
+                    filter === source
+                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
                 style={{
                   boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
@@ -275,13 +274,19 @@ const Blog = () => {
               placeholder="Search blogs..."
               value={searchTerm}
               maxLength={100}
-              onChange={e => setSearchTerm(e.target.value)}
+              onChange={e => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
               className="w-full bg-card border-[3px] border-[color:var(--color-border)] py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             />
             {searchTerm && (
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={() => {
+                  setSearchTerm('');
+                  setCurrentPage(1);
+                }}
                 className="group absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1 motion-reduce:transition-none"
                 aria-label="Clear search"
               >
@@ -448,9 +453,10 @@ const Blog = () => {
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
                   className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform motion-reduce:transform-none motion-reduce:transition-none
-                    ${page === currentPage
-                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                      : 'bg-card text-primary hover:-translate-y-0.5'
+                    ${
+                      page === currentPage
+                        ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                        : 'bg-card text-primary hover:-translate-y-0.5'
                     }`}
                   style={{
                     boxShadow:

@@ -30,6 +30,17 @@ const NotFound = () => {
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [clickCount, setClickCount] = useState(0); // Track ghost clicks for easter egg
 
+  // Generate random floating particles for background animation (only once on mount)
+  const [particles] = useState(() =>
+    Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 2,
+      duration: 3 + Math.random() * 2,
+    }))
+  );
+
   const title = `404 - Page Not Found | ${resumeData.basics.name}`;
   const description =
     "Oops! The page you're looking for seems to have wandered off into the digital void.";
@@ -71,15 +82,6 @@ const NotFound = () => {
       setClickCount(0);
     }
   };
-
-  /** Generate random floating particles for background animation */
-  const particles = Array.from({ length: 8 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    delay: Math.random() * 2,
-    duration: 3 + Math.random() * 2,
-  }));
 
   /** Quick navigation links to main pages */
   const quickLinks = [
