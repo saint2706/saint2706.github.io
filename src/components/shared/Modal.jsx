@@ -107,7 +107,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       }
 
       const focusableSelector =
-        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
+        "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1']), [contenteditable='true']";
       const focusableElements = modalRef.current
         ? Array.from(modalRef.current.querySelectorAll(focusableSelector))
         : [];
@@ -128,7 +128,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         return;
       }
 
-      if (activeElement === lastElement) {
+      if (activeElement === lastElement || !focusableElements.includes(activeElement)) {
         e.preventDefault();
         firstElement.focus();
       }
