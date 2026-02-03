@@ -106,10 +106,17 @@ const Modal = ({ isOpen, onClose, title, children }) => {
         return;
       }
 
-      const focusableSelector =
-        "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
+      const focusableSelectors = [
+        'a[href]',
+        'button:not([disabled])',
+        'input:not([disabled])',
+        'select:not([disabled])',
+        'textarea:not([disabled])',
+        "[tabindex]:not([tabindex='-1'])",
+        "[contenteditable='true']",
+      ];
       const focusableElements = modalRef.current
-        ? Array.from(modalRef.current.querySelectorAll(focusableSelector))
+        ? Array.from(modalRef.current.querySelectorAll(focusableSelectors.join(', ')))
         : [];
 
       if (focusableElements.length === 0) {
@@ -119,16 +126,17 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       const firstElement = focusableElements[0];
       const lastElement = focusableElements[focusableElements.length - 1];
       const activeElement = document.activeElement;
+      const focusableSet = new Set(focusableElements);
 
       if (e.shiftKey) {
-        if (activeElement === firstElement || !focusableElements.includes(activeElement)) {
+        if (activeElement === firstElement || !focusableSet.has(activeElement)) {
           e.preventDefault();
           lastElement.focus();
         }
         return;
       }
 
-      if (activeElement === lastElement) {
+      if (activeElement === lastElement || !focusableSet.has(activeElement)) {
         e.preventDefault();
         firstElement.focus();
       }
