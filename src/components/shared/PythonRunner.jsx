@@ -167,8 +167,12 @@ const PythonRunner = ({ snippet }) => {
     try {
       const pyodide = await loadPyodide();
 
-      // Generate Python code from template with user input
-      const code = snippet.interactive.codeTemplate(inputValue.trim());
+      // Security: Pass input as global variable to prevent code injection
+      // This avoids string interpolation of user input into code
+      pyodide.globals.set('user_input', inputValue.trim());
+
+      // Generate Python code from template
+      const code = snippet.interactive.codeTemplate();
 
       // Redirect stdout to StringIO to capture print statements
       pyodide.runPython(`
