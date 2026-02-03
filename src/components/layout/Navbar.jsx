@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   Terminal,
@@ -43,6 +43,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+  const location = useLocation();
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -50,6 +51,11 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       document.dispatchEvent(new CustomEvent('closeChatbot'));
     }
   }, [isMenuOpen]);
+
+  // Close mobile menu when navigating between routes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   /**
    * Trap focus within mobile menu for keyboard navigation
