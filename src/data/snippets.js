@@ -24,7 +24,7 @@ print(flatten(data))`,
 flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
 try:
     data = ast.literal_eval(user_input)
-except:
+except (ValueError, SyntaxError, TypeError):
     data = []
     print("Error: Invalid list format")
 print(f"Input: {data}")
@@ -46,7 +46,7 @@ print(f"Flattened: {flatten(data)}")`,
       inputLabel: 'FizzBuzz up to N',
       codeTemplate: () => `try:
     n = int(user_input)
-except:
+except ValueError:
     n = 30
 result = [("Fizz"*(i%3==0)+"Buzz"*(i%5==0)) or i for i in range(1, n+1)]
 print("\\n".join(str(x) for x in result))`,
@@ -68,7 +68,7 @@ print("\\n".join(str(x) for x in result))`,
         () => `qsort = lambda x: [] if not x else qsort([i for i in x[1:] if i < x[0]]) + [x[0]] + qsort([i for i in x[1:] if i >= x[0]])
 try:
     data = [int(x.strip()) for x in user_input.split(',')]
-except:
+except ValueError:
     data = []
     print("Error: Invalid numbers")
 print(f"Unsorted: {data}")
@@ -92,7 +92,7 @@ print(f"Sorted:   {qsort(data)}")`,
         () => `primes = lambda n: [x for x in range(2, n) if all(x % i for i in range(2, int(x**0.5)+1))]
 try:
     n = int(user_input)
-except:
+except ValueError:
     n = 50
     print("Error: Invalid number")
 result = primes(n)
@@ -116,7 +116,7 @@ print(f"Count: {len(result)} primes")`,
 transpose = lambda m: list(map(list, zip(*m)))
 try:
     matrix = ast.literal_eval(user_input)
-except:
+except (ValueError, SyntaxError, TypeError):
     matrix = []
     print("Error: Invalid matrix")
 result = transpose(matrix)
@@ -149,7 +149,7 @@ fib_fast = memoize(lambda n: n if n < 2 else fib_fast(n-1) + fib_fast(n-2))
 
 try:
     n = int(user_input)
-except:
+except ValueError:
     n = 35
     print("Error: Invalid number")
 

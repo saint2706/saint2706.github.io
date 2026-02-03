@@ -82,21 +82,25 @@ const loadPyodide = async () => {
  *
  * This component provides a terminal-like interface for running Python code snippets
  * in the browser using Pyodide. Users can provide input via a text field, which is
- * then interpolated into a code template and executed.
+ * passed as a global variable `user_input` to the Pyodide environment for safe execution.
  *
  * Execution Flow:
  * 1. User enters input and clicks Run (or presses Enter)
- * 2. Input is validated and inserted into code template
- * 3. Python stdout is redirected to StringIO for capture
- * 4. Code is executed in Pyodide runtime
- * 5. Output is captured from StringIO and displayed
- * 6. stdout is restored to default
+ * 2. Input is set as a global variable `user_input` in Pyodide (prevents injection)
+ * 3. Code template is generated (reads `user_input` from globals, no interpolation)
+ * 4. Python stdout is redirected to StringIO for capture
+ * 5. Code is executed in Pyodide runtime
+ * 6. Output is captured from StringIO and displayed
+ * 7. stdout is restored to default
+ *
+ * Security: User input is never interpolated into code strings, eliminating
+ * code injection vulnerabilities.
  *
  * @component
  * @param {object} props
  * @param {object} props.snippet - Code snippet configuration object
  * @param {object} props.snippet.interactive - Interactive configuration
- * @param {Function} props.snippet.interactive.codeTemplate - Function that generates Python code from input
+ * @param {Function} props.snippet.interactive.codeTemplate - Function that generates Python code (no args, reads user_input global)
  * @param {string} props.snippet.interactive.defaultInput - Default input value
  * @param {string} props.snippet.interactive.inputLabel - Label for input field
  * @param {boolean} props.shouldReduceMotion - Whether to reduce animations
@@ -142,12 +146,16 @@ const PythonRunner = ({ snippet }) => {
    * This function:
    * 1. Validates user input (must not be empty)
    * 2. Gets the Pyodide runtime instance
-   * 3. Generates Python code from template with user input
-   * 4. Redirects Python stdout to StringIO for capture
-   * 5. Executes the generated code
-   * 6. Retrieves captured output from StringIO
-   * 7. Restores stdout to default
-   * 8. Displays output or error to user
+   * 3. Sets user input as a global variable in Pyodide (prevents code injection)
+   * 4. Generates Python code from template (no arguments, reads from global)
+   * 5. Redirects Python stdout to StringIO for capture
+   * 6. Executes the generated code
+   * 7. Retrieves captured output from StringIO
+   * 8. Restores stdout to default
+   * 9. Displays output or error to user
+   *
+   * Security: User input is passed via Pyodide globals, not string interpolation,
+   * preventing code injection attacks.
    *
    * Error Handling: Catches and displays Python execution errors (syntax errors,
    * runtime errors, etc.) in a user-friendly format.
