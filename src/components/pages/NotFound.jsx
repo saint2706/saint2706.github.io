@@ -30,7 +30,6 @@ const NotFound = () => {
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [clickCount, setClickCount] = useState(0); // Track ghost clicks for easter egg
   const glitchTimeoutRef = useRef(null);
-  const isMountedRef = useRef(true);
 
   // Generate random floating particles for background animation (only once on mount)
   const [particles] = useState(() =>
@@ -50,7 +49,6 @@ const NotFound = () => {
   // Glitch effect for 404 text (random character substitution)
   useEffect(() => {
     if (shouldReduceMotion) return;
-    isMountedRef.current = true;
 
     const glitchChars = '!@#$%^&*()_+{}[]|\\:;"<>?,./~`';
     const interval = setInterval(() => {
@@ -70,15 +68,12 @@ const NotFound = () => {
           clearTimeout(glitchTimeoutRef.current);
         }
         glitchTimeoutRef.current = setTimeout(() => {
-          if (isMountedRef.current) {
-            setGlitchText('404');
-          }
+          setGlitchText('404');
         }, 100);
       }
     }, 2000);
 
     return () => {
-      isMountedRef.current = false;
       clearInterval(interval);
       if (glitchTimeoutRef.current) {
         clearTimeout(glitchTimeoutRef.current);
