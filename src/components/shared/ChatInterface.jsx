@@ -201,9 +201,8 @@ const ChatInterface = ({ onClose }) => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           setMessages(
             parsed.map(message => ({
+              ...message,
               id: message.id ?? generateMessageId(),
-              role: message.role,
-              text: message.text,
             })),
           );
         }
