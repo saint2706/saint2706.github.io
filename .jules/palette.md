@@ -19,3 +19,8 @@
 
 **Learning:** Dynamic content updates in modals (like the Roast Mode status) are silent to screen readers unless explicitly marked with `aria-live`. Since the content replaces the previous state entirely, `aria-atomic="true"` is also needed.
 **Action:** Wrap dynamic content containers in `aria-live="polite"` `aria-atomic="true"` and toggle `aria-busy={isLoading}` to prevent partial announcements.
+
+## 2024-05-25 - Keyboard Accessible Hover Reveals
+
+**Learning:** Revealing additional content (like proficiency percentages) solely on hover excludes keyboard and touch users. Interactive elements must be focusable.
+**Action:** Use `<button>` or `tabIndex="0"` for interactive nodes, pair `onFocus`/`onBlur` with hover events, and ensure visible focus states.
