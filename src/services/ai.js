@@ -72,6 +72,7 @@ const withTimeout = (promise, ms) => {
 /**
  * System prompt that defines the AI assistant's personality and constraints.
  * This prompt is injected at the start of every chat session to maintain consistent behavior.
+ * NOTE: Resume data is minified (no indentation) to reduce token usage and payload size.
  */
 const SYSTEM_PROMPT = `
 You are "Digital Rishabh", an AI assistant for Rishabh Agrawal's portfolio website.
@@ -79,7 +80,7 @@ Your goal is to answer questions about Rishabh's experience, skills, and project
 You should be helpful, professional, but also have a slightly playful and geeky personality (reflecting Rishabh).
 
 Here is Rishabh's Resume Data:
-${JSON.stringify(resumeData, null, 2)}
+${JSON.stringify(resumeData)}
 
 Instructions:
 1. Answer strictly based on the provided data. If you don't know something, say "I'm not sure about that, but you can ask Rishabh directly!"
