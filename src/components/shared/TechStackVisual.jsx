@@ -37,15 +37,21 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
       <div className="w-4 h-0.5 border-t-2 border-dashed" style={{ borderColor: color }} />
 
       {/* Skill node */}
-      <motion.div
-        className="relative flex items-center gap-2 px-3 py-1.5 border-2 cursor-default"
+      <motion.button
+        type="button"
+        onFocus={() => onHover(skill)}
+        onBlur={() => onHover(null)}
+        onClick={() => onHover(isHovered ? null : skill)}
+        className="relative flex items-center gap-2 px-3 py-1.5 border-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         style={{
           borderColor: 'var(--color-border)',
           backgroundColor: isHovered ? color : 'var(--color-secondary)',
           boxShadow: isHovered ? '3px 3px 0 var(--color-border)' : '2px 2px 0 var(--color-border)',
         }}
         whileHover={shouldReduceMotion ? {} : { x: 2, y: -2 }}
+        whileFocus={shouldReduceMotion ? {} : { x: 2, y: -2 }}
         transition={{ duration: 0.1 }}
+        aria-expanded={isHovered}
       >
         {/* Proficiency indicator dot */}
         <div
@@ -76,7 +82,7 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
             </motion.span>
           )}
         </AnimatePresence>
-      </motion.div>
+      </motion.button>
     </motion.div>
   );
 };
