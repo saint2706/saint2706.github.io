@@ -27,8 +27,6 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
   return (
     <motion.div
       className="relative flex items-center gap-2 py-1"
-      onMouseEnter={() => onHover(skill)}
-      onMouseLeave={() => onHover(null)}
       initial={shouldReduceMotion ? false : { opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.2 }}
@@ -39,9 +37,10 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
       {/* Skill node */}
       <motion.button
         type="button"
+        onMouseEnter={() => onHover(skill)}
+        onMouseLeave={() => onHover(null)}
         onFocus={() => onHover(skill)}
         onBlur={() => onHover(null)}
-        onClick={() => onHover(isHovered ? null : skill)}
         className="relative flex items-center gap-2 px-3 py-1.5 border-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         style={{
           borderColor: 'var(--color-border)',
@@ -49,9 +48,9 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
           boxShadow: isHovered ? '3px 3px 0 var(--color-border)' : '2px 2px 0 var(--color-border)',
         }}
         whileHover={shouldReduceMotion ? {} : { x: 2, y: -2 }}
-        whileFocus={shouldReduceMotion ? {} : { x: 2, y: -2 }}
         transition={{ duration: 0.1 }}
-        aria-expanded={isHovered}
+        aria-label={`View proficiency details for ${skill.name}`}
+        aria-pressed={isHovered}
       >
         {/* Proficiency indicator dot */}
         <div
