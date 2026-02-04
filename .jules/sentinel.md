@@ -23,3 +23,9 @@
 **Vulnerability:** The `PythonRunner` component interpolated user input directly into Python code strings executed by Pyodide, allowing arbitrary Python code execution (and potentially XSS via `js` module) through malicious input.
 **Learning:** String interpolation of user input into code templates is dangerous even in client-side sandboxes if the sandbox has access to the DOM or other sensitive contexts. Pyodide execution is not isolated from the browser's JavaScript environment by default.
 **Prevention:** Pass user input as variables to the runtime environment (e.g., using `pyodide.globals.set`) instead of constructing code strings dynamically. Use safe parsing methods (like `ast.literal_eval`) for structured data instead of `eval` or direct code execution.
+
+## 2025-02-23 - Strict Referrer Policy
+
+**Vulnerability:** Default browser behavior for the `Referer` header can leak full URLs (including paths and query parameters) to third-party sites when users click external links, potentially exposing sensitive information or user navigation patterns.
+**Learning:** While modern browsers default to `strict-origin-when-cross-origin`, explicitly defining it via `<meta name="referrer">` ensures consistent privacy protection across all environments and older browsers.
+**Prevention:** Always set a strict referrer policy (like `strict-origin-when-cross-origin` or `no-referrer`) in the document head to minimize data leakage.
