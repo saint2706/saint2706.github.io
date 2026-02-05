@@ -84,3 +84,38 @@ export const isSafeHref = href => {
   // This regex checks for: optional whitespace, then http:// or https:// or mailto:
   return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
 };
+
+/**
+ * Sanitizes user input to prevent injection attacks and ensure data integrity.
+ * Removes control characters and normalizes Unicode.
+ *
+ * This function is useful for processing input before sending it to APIs or LLMs.
+ * It performs:
+ * 1. Unicode Normalization (NFKC) to handle compatibility characters
+ * 2. Control character removal (keeping newline, tab, return)
+ * 3. Trimming of whitespace
+ *
+ * @param {string} input - The raw input string.
+ * @returns {string} The sanitized string.
+ *
+ * @example
+ * sanitizeInput("  Hello\u0000World  "); // "HelloWorld"
+ */
+export const sanitizeInput = input => {
+  if (!input || typeof input !== 'string') {
+    return '';
+  }
+
+  // Normalize Unicode to canonical form (NFKC)
+  let sanitized = input.normalize('NFKC');
+
+  // Remove control characters (ASCII 0-31 and 127) except:
+  // \x09 (TAB), \x0A (LF), \x0D (CR)
+  // \x00-\x08 matches NULL through BACKSPACE
+  // \x0B-\x0C matches VERTICAL TAB through FORM FEED
+  // \x0E-\x1F matches SHIFT OUT through UNIT SEPARATOR
+  // \x7F matches DELETE
+  sanitized = sanitized.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+
+  return sanitized.trim();
+};
