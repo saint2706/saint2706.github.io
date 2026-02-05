@@ -33,5 +33,5 @@
 ## 2025-02-23 - CSP Strictness (Removing unsafe-eval)
 
 **Vulnerability:** The Content Security Policy (CSP) included `'unsafe-eval'`, potentially allowing the execution of arbitrary strings as code if an XSS vulnerability were to be found (e.g., via `eval()`, `new Function()`, or `setTimeout(string)`).
-**Learning:** React applications built with Vite generally do not require `'unsafe-eval'` in production. While some development tools might need it, modern production builds are pre-compiled. Removing it significantly reduces the attack surface by neutralizing a class of XSS vectors.
-**Prevention:** Regularly audit CSP headers and remove permissive directives like `'unsafe-eval'` and `'unsafe-inline'` unless strictly necessary and justified.
+**Learning:** React applications built with Vite generally do not require `'unsafe-eval'` in production, except when using WebAssembly-based libraries like Pyodide for the Python playground. In this case, prefer the more modern `'wasm-unsafe-eval'` directive (supported in modern browsers) as a safer alternative that allows WebAssembly compilation while still blocking string-based `eval`.
+**Prevention:** Regularly audit CSP headers and remove permissive directives like `'unsafe-eval'` and `'unsafe-inline'` unless strictly necessary and justified. Use `'wasm-unsafe-eval'` when WebAssembly support is needed.
