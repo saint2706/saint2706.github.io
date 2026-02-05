@@ -32,26 +32,42 @@ const Layout = ({ children }) => {
     const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
     return stored === 'true';
   });
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [prefersContrast, setPrefersContrast] = useState(false);
-  const [hasFinePointer, setHasFinePointer] = useState(true);
+  // Monitor system accessibility preferences with lazy initialization to avoid re-renders
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+  );
 
-  // Monitor system accessibility preferences via media queries
+  const [prefersContrast, setPrefersContrast] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.matchMedia('(prefers-contrast: more)').matches ||
+      window.matchMedia('(forced-colors: active)').matches
+    );
+  });
+
+  const [hasFinePointer, setHasFinePointer] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(pointer: fine)').matches
+      : true
+  );
+
+  // Subscribe to changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contrastMoreQuery = window.matchMedia('(prefers-contrast: more)');
     const forcedColorsQuery = window.matchMedia('(forced-colors: active)');
     const pointerFineQuery = window.matchMedia('(pointer: fine)');
 
-    /** Update accessibility preference states based on media query matches */
     const updatePreferences = () => {
       setPrefersReducedMotion(reducedMotionQuery.matches);
       setPrefersContrast(contrastMoreQuery.matches || forcedColorsQuery.matches);
       setHasFinePointer(pointerFineQuery.matches);
     };
 
-    // Initial check and subscribe to changes
-    updatePreferences();
     reducedMotionQuery.addEventListener('change', updatePreferences);
     contrastMoreQuery.addEventListener('change', updatePreferences);
     forcedColorsQuery.addEventListener('change', updatePreferences);
