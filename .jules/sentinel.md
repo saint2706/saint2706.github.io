@@ -29,3 +29,9 @@
 **Vulnerability:** Default browser behavior for the `Referer` header can leak full URLs (including paths and query parameters) to third-party sites when users click external links, potentially exposing sensitive information or user navigation patterns.
 **Learning:** While modern browsers default to `strict-origin-when-cross-origin`, explicitly defining it via `<meta name="referrer">` ensures consistent privacy protection across all environments and older browsers.
 **Prevention:** Always set a strict referrer policy (like `strict-origin-when-cross-origin` or `no-referrer`) in the document head to minimize data leakage.
+
+## 2025-02-26 - Input Sanitization for LLM Context
+
+**Vulnerability:** Lack of sanitization for user input sent to the LLM allows for potential injection of invisible control characters or malformed Unicode, which could confuse the model or cause processing errors.
+**Learning:** Even when using high-level AI APIs, input should be treated as untrusted. Normalizing Unicode (NFKC) and removing control characters ensures that the text processed by the model matches the user's visible intent and prevents obscure encoding attacks.
+**Prevention:** Implement a strict input sanitization layer (stripping control chars, normalizing Unicode) at the application boundary before any data processing or API calls.

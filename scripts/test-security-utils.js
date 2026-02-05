@@ -1,19 +1,23 @@
 /**
  * Security Utilities Test Suite
  *
- * Comprehensive test suite for the safeJSONStringify function from the security utilities.
- * Tests various scenarios where dangerous characters need to be escaped to prevent XSS attacks.
+ * Comprehensive test suite for security utility functions including safeJSONStringify and sanitizeInput.
+ * Tests various scenarios where dangerous characters need to be escaped to prevent XSS attacks,
+ * and validates input sanitization to prevent injection attacks.
  *
  * This test validates:
  * - Script tag escaping
  * - HTML entity escaping
  * - Unicode line separator handling
  * - Complex nested objects
+ * - Control character removal
+ * - Unicode normalization
+ * - Input trimming
  *
  * @module scripts/test-security-utils
  */
 
-import { safeJSONStringify } from '../src/utils/security.js';
+import { safeJSONStringify, sanitizeInput } from '../src/utils/security.js';
 
 const tests = [
   {
@@ -59,6 +63,47 @@ tests.forEach(test => {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);
       console.error(`Expected to contain:`, test.expectedContains);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+if (failed) {
+  // Don't exit yet, run sanitize tests
+} else {
+  console.log('safeJSONStringify tests passed!');
+}
+
+const sanitizeTests = [
+  { name: 'Sanitize null bytes', input: 'Hello\u0000World', expected: 'HelloWorld' },
+  { name: 'Sanitize vertical tab', input: 'Hello\u000BWorld', expected: 'HelloWorld' },
+  { name: 'Keep newlines', input: 'Hello\nWorld', expected: 'Hello\nWorld' },
+  { name: 'Keep tabs', input: 'Hello\tWorld', expected: 'Hello\tWorld' },
+  { name: 'Keep carriage returns', input: 'Hello\rWorld', expected: 'Hello\rWorld' },
+  { name: 'Trim whitespace', input: '  Hello  ', expected: 'Hello' },
+  // NFKC Normalization: Superscript 2 (\u00B2) becomes 2
+  { name: 'Normalize Unicode (NFKC)', input: 'x\u00B2', expected: 'x2' },
+  { name: 'Control chars + Unicode normalization', input: 'x\u00B2\u0000test', expected: 'x2test' },
+  { name: 'Whitespace-only input', input: '   \t\n  ', expected: '' },
+  { name: 'Empty input', input: '', expected: '' },
+  { name: 'Non-string input', input: null, expected: '' },
+  { name: 'Undefined input', input: undefined, expected: '' },
+];
+
+console.log('\nRunning Sanitize Input Tests...');
+sanitizeTests.forEach(test => {
+  try {
+    const result = sanitizeInput(test.input);
+    if (result !== test.expected) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
       console.error(`Got:`, result);
       failed = true;
     } else {
