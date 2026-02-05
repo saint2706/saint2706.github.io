@@ -54,6 +54,9 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   // Close mobile menu when navigating between routes
   useEffect(() => {
+    // This is a legitimate use case for setState in an effect:
+    // We need to synchronize the menu state with the router location.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMenuOpen(false);
   }, [location.pathname]);
 
