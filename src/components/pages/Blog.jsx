@@ -299,6 +299,9 @@ const Blog = () => {
                 </span>
               </button>
             )}
+            <div className="text-[10px] text-right mt-1 text-muted font-sans">
+              {searchTerm.length}/100
+            </div>
           </div>
         </motion.div>
 
