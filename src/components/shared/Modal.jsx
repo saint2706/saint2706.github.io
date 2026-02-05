@@ -199,11 +199,17 @@ const Modal = ({ isOpen, onClose, title, children }) => {
               </h2>
               <button
                 onClick={onClose}
-                className="p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors"
+                className="group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"
               >
                 <X size={18} />
+                <span
+                  className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                  aria-hidden="true"
+                >
+                  Close
+                </span>
               </button>
             </div>
 
