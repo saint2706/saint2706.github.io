@@ -29,3 +29,9 @@
 **Vulnerability:** Default browser behavior for the `Referer` header can leak full URLs (including paths and query parameters) to third-party sites when users click external links, potentially exposing sensitive information or user navigation patterns.
 **Learning:** While modern browsers default to `strict-origin-when-cross-origin`, explicitly defining it via `<meta name="referrer">` ensures consistent privacy protection across all environments and older browsers.
 **Prevention:** Always set a strict referrer policy (like `strict-origin-when-cross-origin` or `no-referrer`) in the document head to minimize data leakage.
+
+## 2025-02-23 - CSP Strictness (Removing unsafe-eval)
+
+**Vulnerability:** The Content Security Policy (CSP) included `'unsafe-eval'`, potentially allowing the execution of arbitrary strings as code if an XSS vulnerability were to be found (e.g., via `eval()`, `new Function()`, or `setTimeout(string)`).
+**Learning:** React applications built with Vite generally do not require `'unsafe-eval'` in production. While some development tools might need it, modern production builds are pre-compiled. Removing it significantly reduces the attack surface by neutralizing a class of XSS vectors.
+**Prevention:** Regularly audit CSP headers and remove permissive directives like `'unsafe-eval'` and `'unsafe-inline'` unless strictly necessary and justified.

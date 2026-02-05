@@ -54,7 +54,10 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   // Close mobile menu when navigating between routes
   useEffect(() => {
-    setIsMenuOpen(false);
+    if (isMenuOpen) {
+      setTimeout(() => setIsMenuOpen(false), 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   /**
