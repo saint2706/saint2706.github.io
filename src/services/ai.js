@@ -144,6 +144,14 @@ export const chatWithGemini = async (userMessage, history = []) => {
   }
 
   try {
+    // Sanitize history messages to prevent injection attacks from tampered localStorage
+    const sanitizedHistory = history.map(entry => ({
+      role: entry.role,
+      parts: entry.parts.map(part => ({
+        text: part.text ? sanitizeInput(part.text) : part.text,
+      })),
+    }));
+
     // Initialize chat with system prompt and conversation history
     const chat = model.startChat({
       history: [
@@ -155,7 +163,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
           role: 'model',
           parts: [{ text: 'Understood. I am Digital Rishabh. Ask me anything about Rishabh!' }],
         },
-        ...history,
+        ...sanitizedHistory,
       ],
     });
 

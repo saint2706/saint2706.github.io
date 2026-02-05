@@ -106,7 +106,7 @@ export const sanitizeInput = input => {
     return '';
   }
 
-  // Normalize Unicode to canonical form (NFKC)
+  // Normalize Unicode using compatibility form (NFKC)
   let sanitized = input.normalize('NFKC');
 
   // Remove control characters (ASCII 0-31 and 127) except:
@@ -115,7 +115,11 @@ export const sanitizeInput = input => {
   // \x0B-\x0C matches VERTICAL TAB through FORM FEED
   // \x0E-\x1F matches SHIFT OUT through UNIT SEPARATOR
   // \x7F matches DELETE
-  sanitized = sanitized.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+  // Also remove certain Unicode control/formatting characters (zero-width and bidi controls)
+  // \u200B-\u200F covers zero-width space/joiners and directional marks
+  // \u202A-\u202E covers bidirectional formatting characters
+  // eslint-disable-next-line no-control-regex
+  sanitized = sanitized.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\u200B-\u200F\u202A-\u202E]/g, '');
 
   return sanitized.trim();
 };
