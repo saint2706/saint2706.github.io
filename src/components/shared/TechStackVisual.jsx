@@ -19,8 +19,9 @@ const CATEGORY_COLORS = {
 
 /**
  * Single Skill Node in the tree
+ * Memoized to prevent re-renders of all nodes when only one is hovered.
  */
-const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => {
+const SkillNode = React.memo(({ skill, color, isHovered, onHover, shouldReduceMotion }) => {
   // Size based on proficiency: min 8px, max 16px
   const nodeSize = 8 + (skill.proficiency / 100) * 8;
 
@@ -84,7 +85,10 @@ const SkillNode = ({ skill, color, isHovered, onHover, shouldReduceMotion }) => 
       </motion.button>
     </motion.div>
   );
-};
+});
+
+// Display name for debugging
+SkillNode.displayName = 'SkillNode';
 
 /**
  * Category Branch with its skills

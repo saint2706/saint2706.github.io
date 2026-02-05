@@ -30,8 +30,8 @@
 **Learning:** While modern browsers default to `strict-origin-when-cross-origin`, explicitly defining it via `<meta name="referrer">` ensures consistent privacy protection across all environments and older browsers.
 **Prevention:** Always set a strict referrer policy (like `strict-origin-when-cross-origin` or `no-referrer`) in the document head to minimize data leakage.
 
-## 2025-02-23 - CSP Strictness (Removing unsafe-eval)
+## 2025-02-26 - Input Sanitization for LLM Context
 
-**Vulnerability:** The Content Security Policy (CSP) included `'unsafe-eval'`, potentially allowing the execution of arbitrary strings as code if an XSS vulnerability were to be found (e.g., via `eval()`, `new Function()`, or `setTimeout(string)`).
-**Learning:** React applications built with Vite generally do not require `'unsafe-eval'` in production, except when using WebAssembly-based libraries like Pyodide for the Python playground. In this case, prefer the more modern `'wasm-unsafe-eval'` directive (supported in modern browsers) as a safer alternative that allows WebAssembly compilation while still blocking string-based `eval`.
-**Prevention:** Regularly audit CSP headers and remove permissive directives like `'unsafe-eval'` and `'unsafe-inline'` unless strictly necessary and justified. Use `'wasm-unsafe-eval'` when WebAssembly support is needed.
+**Vulnerability:** Lack of sanitization for user input sent to the LLM allows for potential injection of invisible control characters or malformed Unicode, which could confuse the model or cause processing errors.
+**Learning:** Even when using high-level AI APIs, input should be treated as untrusted. Normalizing Unicode (NFKC) and removing control characters ensures that the text processed by the model matches the user's visible intent and prevents obscure encoding attacks.
+**Prevention:** Implement a strict input sanitization layer (stripping control chars, normalizing Unicode) at the application boundary before any data processing or API calls.

@@ -10,6 +10,7 @@
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { resumeData } from '../data/resume';
+import { sanitizeInput } from '../utils/security';
 
 // API Configuration
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
@@ -121,7 +122,13 @@ export const chatWithGemini = async (userMessage, history = []) => {
     return "I didn't catch that. Could you say it again?";
   }
 
-  if (userMessage.length > MAX_INPUT_LENGTH) {
+  // Sanitize input to prevent injection attacks and ensure data integrity
+  const sanitizedMessage = sanitizeInput(userMessage);
+  if (!sanitizedMessage) {
+    return "I didn't catch that. Could you say it again?";
+  }
+
+  if (sanitizedMessage.length > MAX_INPUT_LENGTH) {
     return `Whoa, that's a lot of text! My neural circuits are overloaded. Can you keep it under ${MAX_INPUT_LENGTH} characters?`;
   }
 
@@ -137,6 +144,14 @@ export const chatWithGemini = async (userMessage, history = []) => {
   }
 
   try {
+    // Sanitize history messages to prevent injection attacks from tampered localStorage
+    const sanitizedHistory = history.map(entry => ({
+      role: entry.role === 'user' || entry.role === 'model' ? entry.role : 'user', // Validate role
+      parts: entry.parts.map(part => ({
+        text: part.text ? sanitizeInput(part.text) : part.text,
+      })),
+    }));
+
     // Initialize chat with system prompt and conversation history
     const chat = model.startChat({
       history: [
@@ -148,12 +163,12 @@ export const chatWithGemini = async (userMessage, history = []) => {
           role: 'model',
           parts: [{ text: 'Understood. I am Digital Rishabh. Ask me anything about Rishabh!' }],
         },
-        ...history,
+        ...sanitizedHistory,
       ],
     });
 
     // Send message with timeout protection to prevent hanging requests
-    const result = await withTimeout(chat.sendMessage(userMessage), API_TIMEOUT);
+    const result = await withTimeout(chat.sendMessage(sanitizedMessage), API_TIMEOUT);
     const response = await result.response;
     const responseText = await response.text();
     lastChatRequestTime = Date.now(); // Update rate limit timestamp
