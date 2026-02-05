@@ -299,7 +299,7 @@ const Blog = () => {
                 </span>
               </button>
             )}
-            <div className="text-[10px] text-right mt-1 text-muted font-sans">
+            <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
               {searchTerm.length}/100
             </div>
           </div>
