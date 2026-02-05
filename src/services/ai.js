@@ -146,7 +146,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
   try {
     // Sanitize history messages to prevent injection attacks from tampered localStorage
     const sanitizedHistory = history.map(entry => ({
-      role: entry.role,
+      role: entry.role === 'user' || entry.role === 'model' ? entry.role : 'user', // Validate role
       parts: entry.parts.map(part => ({
         text: part.text ? sanitizeInput(part.text) : part.text,
       })),
