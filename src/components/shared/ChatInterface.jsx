@@ -478,8 +478,18 @@ const ChatInterface = ({ onClose }) => {
                 disabled={isTyping}
                 placeholder={isTyping ? 'Thinking...' : 'Ask about my skills...'}
                 className="w-full bg-card border-nb border-[color:var(--color-border)] px-4 py-3 text-sm text-primary font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted rounded-nb"
+                aria-describedby="chat-char-limit"
               />
-              <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
+              <div
+                id="chat-char-limit"
+                className={`text-[10px] text-right mt-1 font-sans transition-colors ${
+                  input.length >= 500
+                    ? 'text-red-500 font-bold'
+                    : input.length >= 450
+                      ? 'text-orange-500'
+                      : 'text-muted'
+                }`}
+              >
                 {input.length}/500
               </div>
             </div>
