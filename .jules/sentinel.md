@@ -35,3 +35,9 @@
 **Vulnerability:** Lack of sanitization for user input sent to the LLM allows for potential injection of invisible control characters or malformed Unicode, which could confuse the model or cause processing errors.
 **Learning:** Even when using high-level AI APIs, input should be treated as untrusted. Normalizing Unicode (NFKC) and removing control characters ensures that the text processed by the model matches the user's visible intent and prevents obscure encoding attacks.
 **Prevention:** Implement a strict input sanitization layer (stripping control chars, normalizing Unicode) at the application boundary before any data processing or API calls.
+
+## 2025-02-27 - Subresource Integrity (SRI) for CDN Scripts
+
+**Vulnerability:** Loading external scripts (like Pyodide) from CDNs without integrity checks exposes the application to supply chain attacks if the CDN or the specific file is compromised.
+**Learning:** Even trusted CDNs like jsDelivr can be vectors for attacks. Browsers allow verifying the integrity of fetched resources using the `integrity` attribute, ensuring that the executed code matches exactly what was expected during development.
+**Prevention:** Always use Subresource Integrity (SRI) with `integrity` and `crossOrigin="anonymous"` attributes when loading external scripts from CDNs.
