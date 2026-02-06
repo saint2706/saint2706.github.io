@@ -280,6 +280,7 @@ const Blog = () => {
               }}
               className="w-full bg-card border-[3px] border-[color:var(--color-border)] py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
               style={{ boxShadow: 'var(--nb-shadow)' }}
+              aria-describedby="blog-search-limit"
             />
             {searchTerm && (
               <button
@@ -299,7 +300,16 @@ const Blog = () => {
                 </span>
               </button>
             )}
-            <div className="text-[10px] text-right mt-1 text-muted font-sans" aria-hidden="true">
+            <div
+              id="blog-search-limit"
+              className={`text-[10px] text-right mt-1 font-sans transition-colors ${
+                searchTerm.length >= 100
+                  ? 'text-red-500 font-bold'
+                  : searchTerm.length >= 90
+                    ? 'text-orange-500'
+                    : 'text-muted'
+              }`}
+            >
               {searchTerm.length}/100
             </div>
           </div>
