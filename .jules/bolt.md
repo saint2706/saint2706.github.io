@@ -7,3 +7,8 @@
 
 **Learning:** Using `manualChunks` to separate stable vendors (React, Framer Motion) from application code significantly cleaner output in `dist/assets` and likely improves caching.
 **Action:** Always check `vite.config.js` for `manualChunks` in React projects with large dependencies like `framer-motion` or `three.js`.
+
+## 2026-02-02 - Lazy Loading with AnimatePresence
+
+**Learning:** When lazy loading components inside `AnimatePresence`, the `Suspense` boundary must be placed *inside* the `motion.div`. If `Suspense` wraps `AnimatePresence`, the exit animations are lost because the entire tree is replaced by the fallback immediately upon state change.
+**Action:** Always nest `Suspense` inside the animated container when using code splitting with Framer Motion to preserve exit transitions.
