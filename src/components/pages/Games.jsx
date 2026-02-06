@@ -2,14 +2,26 @@
  * @fileoverview Games page - Easter egg feature with Tic Tac Toe and Snake games.
  */
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Check, Gamepad2, Grid3X3, Sparkles } from 'lucide-react';
+import { Check, Gamepad2, Grid3X3, Sparkles, Loader2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
-import TicTacToe from '../games/TicTacToe';
-import SnakeGame from '../games/SnakeGame';
+
+// Lazy load game components to reduce initial bundle size
+const TicTacToe = lazy(() => import('../games/TicTacToe'));
+const SnakeGame = lazy(() => import('../games/SnakeGame'));
+
+/**
+ * Loading spinner for game components
+ * Matches approximate height of games to minimize layout shift
+ */
+const GameLoader = () => (
+  <div className="flex items-center justify-center min-h-[350px]" role="status" aria-label="Loading game">
+    <Loader2 className="w-10 h-10 animate-spin text-fun-yellow motion-reduce:animate-none" />
+  </div>
+);
 
 /**
  * Games page component (easter egg feature)
@@ -171,8 +183,10 @@ const Games = () => {
                 id={`${activeGame}-panel`}
                 aria-labelledby={`${activeGame}-tab`}
               >
-                {activeGame === 'tictactoe' && <TicTacToe />}
-                {activeGame === 'snake' && <SnakeGame />}
+                <Suspense fallback={<GameLoader />}>
+                  {activeGame === 'tictactoe' && <TicTacToe />}
+                  {activeGame === 'snake' && <SnakeGame />}
+                </Suspense>
               </motion.div>
             </AnimatePresence>
           </div>
