@@ -57,6 +57,18 @@ const loadPyodide = async () => {
     if (!window.loadPyodide) {
       const script = document.createElement('script');
       script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
+      // SRI (Subresource Integrity) check to ensure the script hasn't been tampered with.
+      // IMPORTANT: This hash must match the contents of the file at `script.src`.
+      // To (re)generate/verify the hash for a given Pyodide version, run:
+      //
+      //   curl -s https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js \
+      //     | openssl dgst -sha384 -binary \
+      //     | openssl base64 -A
+      //
+      // Then prefix the output with "sha384-" and assign it to `script.integrity`.
+      // If you change the Pyodide version or path above, you MUST update this hash.
+      script.integrity = 'sha384-+R8PTzDXzivdjpxOqwVwRhPS9dlske7tKAjwj0O0Kr361gKY5d2Xe6Osl+faRLT7';
+      script.crossOrigin = 'anonymous';
       document.head.appendChild(script);
 
       // Wait for script to load

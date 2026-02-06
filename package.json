@@ -12,7 +12,8 @@
     "format:check": "prettier --check \"**/*.{js,jsx,json,css,html,md}\"",
     "preview": "vite preview",
     "test:security": "node scripts/test-security-utils.js",
-    "test:csp": "node scripts/test-csp.js"
+    "test:csp": "node scripts/test-csp.js",
+    "verify:sri": "node scripts/verify-sri.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.1.3",
