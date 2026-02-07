@@ -24,7 +24,7 @@ import { Bot, X, Send } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
-import { isSafeHref } from '../../utils/security';
+import { isSafeHref, isValidChatMessage } from '../../utils/security';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
@@ -199,12 +199,16 @@ const ChatInterface = ({ onClose }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(
-            parsed.map(message => ({
-              ...message,
-              id: message.id ?? generateMessageId(),
-            })),
-          );
+          // Security: Validate loaded messages to prevent DoS/XSS via localStorage tampering
+          const validMessages = parsed.filter(isValidChatMessage);
+          if (validMessages.length > 0) {
+            setMessages(
+              validMessages.map(message => ({
+                ...message,
+                id: message.id ?? generateMessageId(),
+              })),
+            );
+          }
         }
       }
     } catch (e) {

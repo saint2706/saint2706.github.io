@@ -41,3 +41,9 @@
 **Vulnerability:** Loading external scripts (like Pyodide) from CDNs without integrity checks exposes the application to supply chain attacks if the CDN or the specific file is compromised.
 **Learning:** Even trusted CDNs like jsDelivr can be vectors for attacks. Browsers allow verifying the integrity of fetched resources using the `integrity` attribute, ensuring that the executed code matches exactly what was expected during development.
 **Prevention:** Always use Subresource Integrity (SRI) with `integrity` and `crossOrigin="anonymous"` attributes when loading external scripts from CDNs.
+
+## 2025-03-01 - LocalStorage Tampering Validation
+
+**Vulnerability:** The application trusted chat history loaded directly from `localStorage`, allowing potential Denial of Service (DoS) or application crashes if the storage was tampered with (e.g., inserting massive payloads or malformed objects).
+**Learning:** Data persisted in `localStorage` is not immutable and can be modified by other scripts on the same origin or by the user. Trusting it blindly violates the principle of "trust nothing".
+**Prevention:** Always validate the structure, type, and size of data loaded from client-side storage before using it in the application state, treating it as untrusted input.
