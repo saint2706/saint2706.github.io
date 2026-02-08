@@ -29,6 +29,10 @@ import { isSafeHref, isValidChatMessage } from '../../utils/security';
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
 
+// Maximum number of messages to load from localStorage (DoS prevention)
+// ReactMarkdown rendering is expensive; limit to most recent messages
+const MAX_STORED_MESSAGES = 100;
+
 const generateMessageId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
     return crypto.randomUUID();
@@ -204,8 +208,6 @@ const ChatInterface = ({ onClose }) => {
           const validMessages = parsed.filter(isValidChatMessage);
           
           // Limit number of messages to prevent rendering DoS (e.g., thousands of small messages)
-          // Keep the most recent 100 messages; ReactMarkdown rendering is expensive
-          const MAX_STORED_MESSAGES = 100;
           const recentMessages = validMessages.slice(-MAX_STORED_MESSAGES);
           
           if (recentMessages.length > 0) {
