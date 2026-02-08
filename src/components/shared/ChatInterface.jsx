@@ -24,7 +24,7 @@ import { Bot, X, Send } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
-import { isSafeHref, isValidChatMessage } from '../../utils/security';
+import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
@@ -102,8 +102,8 @@ const LinkRenderer = ({ href, children, ...rest }) => {
  */
 const ImageRenderer = ({ src, alt, ...rest }) => {
   // Security: Validate image source to prevent dangerous protocols (e.g., javascript:)
-  // Note: isSafeHref also blocks data: URIs, which is acceptable for security here
-  const isValidSrc = isSafeHref(src);
+  // Uses isSafeImageSrc which only allows http/https (not mailto: which doesn't make sense for images)
+  const isValidSrc = isSafeImageSrc(src);
 
   if (!isValidSrc) {
     return <span className="text-muted italic text-xs">[Image blocked for security]</span>;
