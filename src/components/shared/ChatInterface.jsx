@@ -20,11 +20,12 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Bot, X, Send } from 'lucide-react';
+import { Bot, X, Send, Copy, Check } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
 import { isSafeHref, isValidChatMessage } from '../../utils/security';
+import SyntaxHighlighter from './SyntaxHighlighter';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
@@ -90,8 +91,84 @@ const LinkRenderer = ({ href, children, ...rest }) => {
   );
 };
 
+/**
+ * Custom code block renderer with syntax highlighting and copy functionality.
+ *
+ * Features:
+ * - Syntax highlighting via SyntaxHighlighter component
+ * - Copy to clipboard button with visual feedback
+ * - Handles both inline code and code blocks
+ *
+ * @component
+ */
+const CodeRenderer = ({ inline, className, children, ...props }) => {
+  const [isCopied, setIsCopied] = useState(false);
+  const copyResetTimeoutRef = useRef(null);
+  const match = /language-([\w+-]+)/.exec(className || '');
+  const code = String(children).replace(/\n$/, '');
+
+  useEffect(() => {
+    return () => {
+      if (copyResetTimeoutRef.current !== null) {
+        clearTimeout(copyResetTimeoutRef.current);
+        copyResetTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setIsCopied(true);
+
+      if (copyResetTimeoutRef.current !== null) {
+        clearTimeout(copyResetTimeoutRef.current);
+      }
+
+      copyResetTimeoutRef.current = setTimeout(() => {
+        setIsCopied(false);
+        copyResetTimeoutRef.current = null;
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy code:', err);
+    }
+  };
+
+  // Render code blocks (non-inline) with syntax highlighting and copy button
+  if (!inline) {
+    const language = match ? match[1] : 'text';
+    return (
+      <div className="relative group my-4">
+        <SyntaxHighlighter language={language} code={code} {...props} />
+        <button
+          onClick={handleCopy}
+          className="absolute top-2 right-2 p-1.5 bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          aria-label={isCopied ? 'Copied code' : 'Copy code to clipboard'}
+          title={isCopied ? 'Copied!' : 'Copy code'}
+        >
+          {isCopied ? (
+            <Check size={14} aria-hidden="true" />
+          ) : (
+            <Copy size={14} aria-hidden="true" />
+          )}
+        </button>
+      </div>
+    );
+  }
+
+  // Render inline code without syntax highlighting or copy button
+  return (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  );
+};
+
 // Stable markdown components object to prevent unnecessary re-renders
-const MARKDOWN_COMPONENTS = { a: LinkRenderer };
+const MARKDOWN_COMPONENTS = {
+  a: LinkRenderer,
+  code: CodeRenderer,
+};
 
 /**
  * Individual message item component.
