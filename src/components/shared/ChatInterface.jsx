@@ -199,14 +199,30 @@ const ChatInterface = ({ onClose }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          // Security: Validate loaded messages to prevent DoS/XSS via localStorage tampering
+          // Security: Validate loaded messages to guard against malformed/oversized data from localStorage
+          // Note: XSS mitigation is handled when rendering via ReactMarkdown and isSafeHref, not by this check
           const validMessages = parsed.filter(isValidChatMessage);
-          if (validMessages.length > 0) {
+          
+          // Limit number of messages to prevent rendering DoS (e.g., thousands of small messages)
+          // Keep the most recent 100 messages; ReactMarkdown rendering is expensive
+          const MAX_STORED_MESSAGES = 100;
+          const recentMessages = validMessages.slice(-MAX_STORED_MESSAGES);
+          
+          if (recentMessages.length > 0) {
             setMessages(
-              validMessages.map(message => ({
-                ...message,
-                id: message.id ?? generateMessageId(),
-              })),
+              recentMessages.map(message => {
+                const existingId = message.id;
+                const isStringId =
+                  typeof existingId === 'string' && existingId.trim() !== '';
+                const isNumberId =
+                  typeof existingId === 'number' && Number.isFinite(existingId);
+                const safeId = isStringId || isNumberId ? existingId : generateMessageId();
+
+                return {
+                  ...message,
+                  id: safeId,
+                };
+              }),
             );
           }
         }

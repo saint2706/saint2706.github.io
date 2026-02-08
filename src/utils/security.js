@@ -126,7 +126,9 @@ export const sanitizeInput = input => {
 
 /**
  * Validates a chat message object structure and content.
- * Checks for valid role, text type and length to prevent DoS/XSS via localStorage tampering.
+ * Ensures a valid role, text type, and reasonable text length to guard against malformed or
+ * extremely large messages (e.g., from localStorage tampering) that could impact performance.
+ * This function does not sanitize content and does not, by itself, prevent XSS.
  *
  * @param {object} message - The message object to validate
  * @returns {boolean} True if valid, false otherwise
