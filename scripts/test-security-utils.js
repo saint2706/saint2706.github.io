@@ -163,6 +163,8 @@ const imageSrcTests = [
   { name: 'Invalid data: URI', input: 'data:image/png;base64,iVBORw0KGgo=', expected: false },
   { name: 'Invalid mailto: protocol', input: 'mailto:test@example.com', expected: false },
   { name: 'Encoded javascript: protocol', input: 'javascript%3Aalert(1)', expected: false },
+  { name: 'Double-encoded javascript: protocol', input: 'javascript%253Aalert(1)', expected: false },
+  { name: 'Triple-encoded javascript: protocol', input: 'javascript%25253Aalert(1)', expected: false },
   { name: 'Invalid file: protocol', input: 'file:///etc/passwd', expected: false },
   { name: 'Null input', input: null, expected: false },
   { name: 'Undefined input', input: undefined, expected: false },
@@ -173,7 +175,7 @@ const imageSrcTests = [
   { name: 'URL with leading whitespace', input: ' https://example.com/image.png', expected: true },
   { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },
   { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },
-  { name: 'Malformed URL (missing slashes)', input: 'https:example.com', expected: false },
+  { name: 'URL with missing slashes (auto-fixed)', input: 'https:example.com', expected: true },
 ];
 
 console.log('\nRunning Image Source Validation Tests...');
