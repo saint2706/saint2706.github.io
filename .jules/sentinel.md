@@ -50,6 +50,6 @@
 
 ## 2026-02-08 - Unsafe Markdown Image Rendering
 
-**Vulnerability:** `ReactMarkdown` renders `img` tags by default. While generally safe, relying on library defaults for untrusted input is less secure than explicit validation. Malicious image sources (like `javascript:` or unencrypted `http:` tracking pixels) could be introduced if not sanitized.
-**Learning:** Just like `href` in links, `src` in images is an injection vector. Client-side markdown renderers should validate all resource URLs against a strict allowlist.
-**Prevention:** Implement a custom `ImageRenderer` component for `react-markdown` that validates `src` using `isSafeHref` (or equivalent) before rendering the `img` tag, blocking potential XSS vectors and enforcing protocol security.
+**Vulnerability:** `ReactMarkdown` renders `img` tags by default. While generally safe, relying on library defaults for untrusted input is less secure than explicit validation. Malicious image sources using dangerous URI schemes (like `javascript:`) could be introduced if not sanitized.
+**Learning:** Just like `href` in links, `src` in images is an injection vector. Client-side markdown renderers should validate all resource URLs against a strict allowlist and reject unsafe protocols.
+**Prevention:** Implement a custom `ImageRenderer` component for `react-markdown` that validates `src` using `isSafeImageSrc` (or equivalent) before rendering the `img` tag, blocking dangerous protocols and potential XSS vectors.

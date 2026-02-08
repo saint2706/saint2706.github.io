@@ -86,6 +86,41 @@ export const isSafeHref = href => {
 };
 
 /**
+ * Validates an image source URL to ensure it uses a safe protocol (http or https only).
+ * Decodes the URL first to prevent protocol bypassing via URL encoding.
+ *
+ * This is more restrictive than isSafeHref since images should not use mailto: protocol.
+ * It prevents javascript: protocol attacks and other dangerous URLs in image sources.
+ *
+ * @param {string} src - The image source URL to validate.
+ * @returns {boolean} True if the URL is safe for images, false otherwise.
+ *
+ * @example
+ * isSafeImageSrc("https://example.com/image.png"); // true
+ * isSafeImageSrc("http://example.com/image.png"); // true
+ * isSafeImageSrc("javascript:alert(1)"); // false
+ * isSafeImageSrc("mailto:hello@example.com"); // false (not valid for images)
+ */
+export const isSafeImageSrc = src => {
+  if (!src || typeof src !== 'string') {
+    return false;
+  }
+
+  let normalizedSrc;
+  try {
+    // Decode percent-encoded characters once to catch encoded protocols like javascript:
+    normalizedSrc = decodeURIComponent(src);
+  } catch {
+    // If decoding fails (malformed URI), fall back to the original value
+    normalizedSrc = src;
+  }
+
+  // Only allow http and https protocols (case-insensitive)
+  // This regex checks for: optional whitespace, then http:// or https://
+  return /^https?:\/\//i.test(normalizedSrc);
+};
+
+/**
  * Sanitizes user input to prevent injection attacks and ensure data integrity.
  * Removes control characters and normalizes Unicode.
  *

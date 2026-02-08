@@ -17,7 +17,7 @@
  * @module scripts/test-security-utils
  */
 
-import { safeJSONStringify, sanitizeInput, isValidChatMessage } from '../src/utils/security.js';
+import { safeJSONStringify, sanitizeInput, isValidChatMessage, isSafeImageSrc } from '../src/utils/security.js';
 
 const tests = [
   {
@@ -141,6 +141,41 @@ console.log('\nRunning Chat Message Validation Tests...');
 validationTests.forEach(test => {
   try {
     const result = isValidChatMessage(test.input);
+    if (result !== test.expected) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+const imageSrcTests = [
+  { name: 'Valid HTTPS URL', input: 'https://example.com/image.png', expected: true },
+  { name: 'Valid HTTP URL', input: 'http://example.com/image.png', expected: true },
+  { name: 'Invalid javascript: protocol', input: 'javascript:alert(1)', expected: false },
+  { name: 'Invalid data: URI', input: 'data:image/png;base64,iVBORw0KGgo=', expected: false },
+  { name: 'Invalid mailto: protocol', input: 'mailto:test@example.com', expected: false },
+  { name: 'Encoded javascript: protocol', input: 'javascript%3Aalert(1)', expected: false },
+  { name: 'Invalid file: protocol', input: 'file:///etc/passwd', expected: false },
+  { name: 'Null input', input: null, expected: false },
+  { name: 'Undefined input', input: undefined, expected: false },
+  { name: 'Empty string', input: '', expected: false },
+  { name: 'Non-string input', input: 123, expected: false },
+  { name: 'Protocol-relative URL', input: '//example.com/image.png', expected: false },
+  { name: 'Path-only URL', input: '/images/photo.png', expected: false },
+];
+
+console.log('\nRunning Image Source Validation Tests...');
+imageSrcTests.forEach(test => {
+  try {
+    const result = isSafeImageSrc(test.input);
     if (result !== test.expected) {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);
