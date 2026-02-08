@@ -103,23 +103,43 @@ const LinkRenderer = ({ href, children, ...rest }) => {
  */
 const CodeRenderer = ({ inline, className, children, ...props }) => {
   const [isCopied, setIsCopied] = useState(false);
-  const match = /language-(\w+)/.exec(className || '');
+  const copyResetTimeoutRef = useRef(null);
+  const match = /language-([\w+-]+)/.exec(className || '');
   const code = String(children).replace(/\n$/, '');
+
+  useEffect(() => {
+    return () => {
+      if (copyResetTimeoutRef.current !== null) {
+        clearTimeout(copyResetTimeoutRef.current);
+        copyResetTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(code);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+
+      if (copyResetTimeoutRef.current !== null) {
+        clearTimeout(copyResetTimeoutRef.current);
+      }
+
+      copyResetTimeoutRef.current = setTimeout(() => {
+        setIsCopied(false);
+        copyResetTimeoutRef.current = null;
+      }, 2000);
     } catch (err) {
       console.error('Failed to copy code:', err);
     }
   };
 
-  if (!inline && match) {
+  // Render code blocks (non-inline) with syntax highlighting and copy button
+  if (!inline) {
+    const language = match ? match[1] : 'text';
     return (
       <div className="relative group my-4">
-        <SyntaxHighlighter language={match[1]} code={code} {...props} />
+        <SyntaxHighlighter language={language} code={code} {...props} />
         <button
           onClick={handleCopy}
           className="absolute top-2 right-2 p-1.5 bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
@@ -136,6 +156,7 @@ const CodeRenderer = ({ inline, className, children, ...props }) => {
     );
   }
 
+  // Render inline code without syntax highlighting or copy button
   return (
     <code className={className} {...props}>
       {children}
