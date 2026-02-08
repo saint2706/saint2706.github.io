@@ -24,7 +24,7 @@ import { Bot, X, Send, Copy, Check } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
-import { isSafeHref, isValidChatMessage } from '../../utils/security';
+import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
 import SyntaxHighlighter from './SyntaxHighlighter';
 
 // localStorage key for persisting chat history across sessions
@@ -88,6 +88,36 @@ const LinkRenderer = ({ href, children, ...rest }) => {
     >
       {children}
     </a>
+  );
+};
+
+/**
+ * Custom image renderer for ReactMarkdown that validates image sources for security.
+ * Prevents XSS attacks by only allowing safe protocols (http, https) in src attributes.
+ *
+ * @component
+ * @param {object} props
+ * @param {string} props.src - The image source URL
+ * @param {string} props.alt - The image alt text
+ * @returns {JSX.Element} Either the image tag or a placeholder/warning
+ */
+const ImageRenderer = ({ src, alt, ...rest }) => {
+  // Security: Validate image source to prevent dangerous protocols (e.g., javascript:)
+  // Uses isSafeImageSrc which only allows http/https (not mailto: which doesn't make sense for images)
+  const isValidSrc = isSafeImageSrc(src);
+
+  if (!isValidSrc) {
+    return <span className="text-muted italic text-xs">[Image blocked for security]</span>;
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt || 'Chat image'}
+      className="max-w-full h-auto rounded-lg my-2 border-2 border-[color:var(--color-border)]"
+      loading="lazy"
+      {...rest}
+    />
   );
 };
 
@@ -167,6 +197,7 @@ const CodeRenderer = ({ inline, className, children, ...props }) => {
 // Stable markdown components object to prevent unnecessary re-renders
 const MARKDOWN_COMPONENTS = {
   a: LinkRenderer,
+  img: ImageRenderer,
   code: CodeRenderer,
 };
 

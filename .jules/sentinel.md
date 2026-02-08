@@ -47,3 +47,9 @@
 **Vulnerability:** The application trusted chat history loaded directly from `localStorage`, allowing potential Denial of Service (DoS) or application crashes if the storage was tampered with (e.g., inserting massive payloads or malformed objects).
 **Learning:** Data persisted in `localStorage` is not immutable and can be modified by other scripts on the same origin or by the user. Trusting it blindly violates the principle of "trust nothing".
 **Prevention:** Always validate the structure, type, and size of data loaded from client-side storage before using it in the application state, treating it as untrusted input.
+
+## 2026-02-08 - Unsafe Markdown Image Rendering
+
+**Vulnerability:** `ReactMarkdown` renders `img` tags by default. While generally safe, relying on library defaults for untrusted input is less secure than explicit validation. Malicious image sources using dangerous URI schemes (like `javascript:`) could be introduced if not sanitized.
+**Learning:** Just like `href` in links, `src` in images is an injection vector. Client-side markdown renderers should validate all resource URLs against a strict allowlist and reject unsafe protocols.
+**Prevention:** Implement a custom `ImageRenderer` component for `react-markdown` that validates `src` using `isSafeImageSrc` (or equivalent) before rendering the `img` tag, blocking dangerous protocols and potential XSS vectors.
