@@ -68,28 +68,43 @@ const CustomCursor = ({ enabled }) => {
   /**
    * Detect hover target and update cursor style accordingly
    * Checks element type and sets appropriate cursor variant
+   * Optimized to perform cheapest checks first and return early
    */
   const updateCursorVariant = useCallback(e => {
     const target = e.target;
 
-    const isClickable =
-      target.matches('a, button, [role="button"], input, textarea, select, [onclick]') ||
-      target.closest('a, button, [role="button"]');
-    const isText = target.matches('p, span, h1, h2, h3, h4, h5, h6, li, label');
-    const isCard = target.closest('[class*="card"], article, [class*="project"]');
-    const isInput = target.matches('input, textarea, select');
+    if (!target || !target.matches) return;
 
-    if (isInput) {
+    // 1. Check for Inputs (Fastest check, high priority)
+    if (target.matches('input, textarea, select')) {
       setCursorVariant('input');
-    } else if (isClickable) {
-      setCursorVariant('pointer');
-    } else if (isCard) {
-      setCursorVariant('card');
-    } else if (isText) {
-      setCursorVariant('text');
-    } else {
-      setCursorVariant('default');
+      return;
     }
+
+    // 2. Check for Clickables (Links, Buttons)
+    // 'closest' is more expensive, so we check 'matches' first if possible
+    if (
+      target.matches('a, button, [role="button"], [onclick]') ||
+      target.closest('a, button, [role="button"]')
+    ) {
+      setCursorVariant('pointer');
+      return;
+    }
+
+    // 3. Check for Cards (Expensive 'closest' check)
+    if (target.closest('[class*="card"], article, [class*="project"]')) {
+      setCursorVariant('card');
+      return;
+    }
+
+    // 4. Check for Text (Fast 'matches' check)
+    if (target.matches('p, span, h1, h2, h3, h4, h5, h6, li, label')) {
+      setCursorVariant('text');
+      return;
+    }
+
+    // Default
+    setCursorVariant('default');
   }, []);
 
   const isEnabled = enabled && !prefersReducedMotion;
