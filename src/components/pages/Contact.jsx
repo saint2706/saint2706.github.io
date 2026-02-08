@@ -179,11 +179,17 @@ const Contact = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-4 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${social.color}`}
+                    className={`group relative p-4 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${social.color}`}
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                    aria-label={social.label}
+                    aria-label={`${social.label} (opens in new tab)`}
                   >
                     {social.icon}
+                    <span
+                      className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                      aria-hidden="true"
+                    >
+                      {social.label}
+                    </span>
                   </a>
                 ))}
               </div>
