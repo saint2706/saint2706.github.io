@@ -159,6 +159,9 @@ validationTests.forEach(test => {
 const imageSrcTests = [
   { name: 'Valid HTTPS URL', input: 'https://example.com/image.png', expected: true },
   { name: 'Valid HTTP URL', input: 'http://example.com/image.png', expected: true },
+  { name: 'Valid URL with query parameters', input: 'https://example.com/image.png?v=1', expected: true },
+  { name: 'Valid URL with fragment', input: 'https://example.com/image.png#section', expected: true },
+  { name: 'Valid URL with query and fragment', input: 'https://example.com/image.png?v=1#section', expected: true },
   { name: 'Invalid javascript: protocol', input: 'javascript:alert(1)', expected: false },
   { name: 'Invalid data: URI', input: 'data:image/png;base64,iVBORw0KGgo=', expected: false },
   { name: 'Invalid mailto: protocol', input: 'mailto:test@example.com', expected: false },
