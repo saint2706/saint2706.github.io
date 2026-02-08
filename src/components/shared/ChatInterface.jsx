@@ -24,10 +24,14 @@ import { Bot, X, Send } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { ChatSkeleton } from './SkeletonLoader';
-import { isSafeHref } from '../../utils/security';
+import { isSafeHref, isValidChatMessage } from '../../utils/security';
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
+
+// Maximum number of messages to load from localStorage (DoS prevention)
+// ReactMarkdown rendering is expensive; limit to most recent messages
+const MAX_STORED_MESSAGES = 100;
 
 const generateMessageId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -199,12 +203,30 @@ const ChatInterface = ({ onClose }) => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(
-            parsed.map(message => ({
-              ...message,
-              id: message.id ?? generateMessageId(),
-            })),
-          );
+          // Security: Validate loaded messages to guard against malformed/oversized data from localStorage
+          // Note: XSS mitigation is handled when rendering via ReactMarkdown and isSafeHref, not by this check
+          const validMessages = parsed.filter(isValidChatMessage);
+          
+          // Limit number of messages to prevent rendering DoS (e.g., thousands of small messages)
+          const recentMessages = validMessages.slice(-MAX_STORED_MESSAGES);
+          
+          if (recentMessages.length > 0) {
+            setMessages(
+              recentMessages.map(message => {
+                const existingId = message.id;
+                const isStringId =
+                  typeof existingId === 'string' && existingId.trim() !== '';
+                const isNumberId =
+                  typeof existingId === 'number' && Number.isFinite(existingId);
+                const safeId = isStringId || isNumberId ? existingId : generateMessageId();
+
+                return {
+                  ...message,
+                  id: safeId,
+                };
+              }),
+            );
+          }
         }
       }
     } catch (e) {

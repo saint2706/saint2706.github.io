@@ -17,7 +17,7 @@
  * @module scripts/test-security-utils
  */
 
-import { safeJSONStringify, sanitizeInput } from '../src/utils/security.js';
+import { safeJSONStringify, sanitizeInput, isValidChatMessage } from '../src/utils/security.js';
 
 const tests = [
   {
@@ -100,6 +100,47 @@ console.log('\nRunning Sanitize Input Tests...');
 sanitizeTests.forEach(test => {
   try {
     const result = sanitizeInput(test.input);
+    if (result !== test.expected) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+const validationTests = [
+  { name: 'Valid user message', input: { role: 'user', text: 'Hello' }, expected: true },
+  { name: 'Valid model message', input: { role: 'model', text: 'Hi' }, expected: true },
+  { name: 'Invalid role', input: { role: 'admin', text: 'Hello' }, expected: false },
+  { name: 'Missing role', input: { text: 'Hello' }, expected: false },
+  { name: 'Missing text', input: { role: 'user' }, expected: false },
+  { name: 'Non-string text', input: { role: 'user', text: 123 }, expected: false },
+  { name: 'Null input', input: null, expected: false },
+  { name: 'Undefined input', input: undefined, expected: false },
+  { name: 'Empty object', input: {}, expected: false },
+  {
+    name: 'Excessively long text',
+    input: { role: 'user', text: 'a'.repeat(30001) },
+    expected: false,
+  },
+  {
+    name: 'Max allowed length',
+    input: { role: 'user', text: 'a'.repeat(30000) },
+    expected: true,
+  },
+];
+
+console.log('\nRunning Chat Message Validation Tests...');
+validationTests.forEach(test => {
+  try {
+    const result = isValidChatMessage(test.input);
     if (result !== test.expected) {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);

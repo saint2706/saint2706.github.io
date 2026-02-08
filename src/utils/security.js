@@ -123,3 +123,28 @@ export const sanitizeInput = input => {
 
   return sanitized.trim();
 };
+
+/**
+ * Validates a chat message object structure and content.
+ * Ensures a valid role, text type, and reasonable text length to guard against malformed or
+ * extremely large messages (e.g., from localStorage tampering) that could impact performance.
+ * This function does not sanitize content and does not, by itself, prevent XSS.
+ *
+ * @param {object} message - The message object to validate
+ * @returns {boolean} True if valid, false otherwise
+ */
+export const isValidChatMessage = message => {
+  if (!message || typeof message !== 'object') return false;
+
+  // Validate role
+  if (message.role !== 'user' && message.role !== 'model') return false;
+
+  // Validate text content
+  if (typeof message.text !== 'string') return false;
+
+  // Check for unreasonable length (DoS prevention)
+  // 30,000 chars is roughly 10-15 pages of text, generous for AI response but prevents massive payloads
+  if (message.text.length > 30000) return false;
+
+  return true;
+};
