@@ -109,15 +109,26 @@ export const isSafeImageSrc = src => {
   let normalizedSrc;
   try {
     // Decode percent-encoded characters once to catch encoded protocols like javascript:
-    normalizedSrc = decodeURIComponent(src);
+    normalizedSrc = decodeURIComponent(src).trim();
   } catch {
     // If decoding fails (malformed URI), fall back to the original value
-    normalizedSrc = src;
+    normalizedSrc = src.trim();
   }
 
   // Only allow http and https protocols (case-insensitive)
-  // This regex checks for: optional whitespace, then http:// or https://
-  return /^https?:\/\//i.test(normalizedSrc);
+  // This regex anchors at the start and doesn't allow leading whitespace
+  if (!/^https?:\/\//i.test(normalizedSrc)) {
+    return false;
+  }
+
+  // Validate that the URL is well-formed using the URL constructor
+  try {
+    new URL(normalizedSrc);
+    return true;
+  } catch {
+    // URL constructor throws if the URL is malformed
+    return false;
+  }
 };
 
 /**

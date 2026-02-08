@@ -170,6 +170,10 @@ const imageSrcTests = [
   { name: 'Non-string input', input: 123, expected: false },
   { name: 'Protocol-relative URL', input: '//example.com/image.png', expected: false },
   { name: 'Path-only URL', input: '/images/photo.png', expected: false },
+  { name: 'URL with leading whitespace', input: ' https://example.com/image.png', expected: true },
+  { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },
+  { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },
+  { name: 'Malformed URL (missing slashes)', input: 'https:example.com', expected: false },
 ];
 
 console.log('\nRunning Image Source Validation Tests...');
