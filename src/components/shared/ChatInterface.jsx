@@ -23,7 +23,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Bot, X, Send, Copy, Check } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
-import { ChatSkeleton } from './SkeletonLoader';
+import { TypingIndicator } from './SkeletonLoader';
 import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
 import SyntaxHighlighter from './SyntaxHighlighter';
 
@@ -244,7 +244,7 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
     {messages.map(msg => (
       <MessageItem key={msg.id} msg={msg} />
     ))}
-    {isTyping && <ChatSkeleton />}
+    {isTyping && <TypingIndicator />}
     <div ref={messagesEndRef} />
   </div>
 ));
