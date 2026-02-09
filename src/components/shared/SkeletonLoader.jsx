@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
  * Base skeleton with pulse animation
@@ -123,4 +124,34 @@ export const ChatSkeleton = () => (
   </div>
 );
 
-export default { BlogSkeleton, ProjectSkeleton, ChatSkeleton };
+/**
+ * Animated typing indicator with bouncing dots
+ * Matches the chat bubble style for consistency
+ *
+ * @component
+ * @returns {JSX.Element} Bouncing dots animation
+ */
+export const TypingIndicator = () => (
+  <div className="flex justify-start" role="status" aria-label="Digital Rishabh is thinking...">
+    <div
+      className="bg-card px-4 py-3 border-nb border-[color:var(--color-border)] flex items-center gap-1 rounded-nb"
+      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+    >
+      {[0, 1, 2].map(i => (
+        <motion.div
+          key={i}
+          className="w-1.5 h-1.5 bg-primary rounded-full"
+          animate={{ y: [0, -5, 0] }}
+          transition={{
+            duration: 0.6,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: i * 0.15,
+          }}
+        />
+      ))}
+    </div>
+  </div>
+);
+
+export default { BlogSkeleton, ProjectSkeleton, ChatSkeleton, TypingIndicator };
