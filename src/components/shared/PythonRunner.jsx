@@ -21,7 +21,7 @@
  * @module components/shared/PythonRunner
  */
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useId } from 'react';
 import { Play, Loader2 } from 'lucide-react';
 
 // Global Pyodide instance - shared across all PythonRunner components for efficiency
@@ -126,6 +126,7 @@ const PythonRunner = ({ snippet }) => {
   const [error, setError] = useState(null);
   const [pyodideReady, setPyodideReady] = useState(false); // Runtime initialization complete
   const outputRef = useRef(null);
+  const inputId = useId();
 
   /**
    * Preload Pyodide runtime when component mounts.
@@ -256,11 +257,12 @@ sys.stdout = StringIO()
 
       {/* Input Section */}
       <div className="p-4 bg-white border-b-2 border-[color:var(--color-border)]">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-2">
           {snippet.interactive?.inputLabel || 'Input'}
         </label>
         <div className="flex gap-2">
           <input
+            id={inputId}
             type="text"
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
@@ -297,7 +299,13 @@ sys.stdout = StringIO()
       </div>
 
       {/* Output Section */}
-      <div className="bg-gray-900 p-4 min-h-[120px] max-h-[300px] overflow-auto" ref={outputRef}>
+      <div
+        className="bg-gray-900 p-4 min-h-[120px] max-h-[300px] overflow-auto"
+        ref={outputRef}
+        role="status"
+        aria-live="polite"
+        aria-busy={isRunning}
+      >
         {error ? (
           <pre className="text-red-400 font-mono text-xs whitespace-pre-wrap">Error: {error}</pre>
         ) : output ? (
