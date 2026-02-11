@@ -5,12 +5,12 @@
 
 import React, {
   useState,
-  useEffect,
   useCallback,
   useRef,
   useContext,
   createContext,
   useMemo,
+  useSyncExternalStore,
 } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { resumeData } from '../../data/resume';
@@ -33,24 +33,24 @@ const HoverContext = createContext(null);
 
 /**
  * Single Skill Node in the tree
- * Subscribes to hover changes to update its own state without re-rendering parents.
+ * Uses useSyncExternalStore to subscribe to hover changes for React 18 compatibility.
  */
 const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
-  const { subscribe, setHoveredSkill } = useContext(HoverContext);
-  const [isHovered, setIsHovered] = useState(false);
+  const { subscribe, getSnapshot, setHoveredSkill } = useContext(HoverContext);
 
   // Size based on proficiency: min 8px, max 16px
   const nodeSize = 8 + (skill.proficiency / 100) * 8;
 
-  // Subscribe to hover changes
-  useEffect(() => {
-    return subscribe(newHoveredSkill => {
-      const isNowHovered = newHoveredSkill?.name === skill.name;
-      setIsHovered(prev => (prev !== isNowHovered ? isNowHovered : prev));
-    });
-  }, [subscribe, skill.name]);
+  // Subscribe to hover store using useSyncExternalStore for React 18 compatibility
+  const hoveredSkillName = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getSnapshot // Server snapshot (same as client for this use case)
+  );
 
-  const handleMouseEnter = useCallback(() => setHoveredSkill(skill), [setHoveredSkill, skill]);
+  const isHovered = hoveredSkillName === skill.name;
+
+  const handleMouseEnter = useCallback(() => setHoveredSkill(skill.name), [setHoveredSkill, skill.name]);
   const handleMouseLeave = useCallback(() => setHoveredSkill(null), [setHoveredSkill]);
 
   return (
@@ -187,33 +187,51 @@ const TechStackVisual = () => {
   // State only for Screen Reader updates (decoupled from visual updates)
   const [hoveredSkillForSR, setHoveredSkillForSR] = useState(null);
 
-  // Subscription Store
-  const subscribers = useRef(new Set());
+  // Hover store for useSyncExternalStore
+  const hoveredSkillRef = useRef(null);
+  const subscribersRef = useRef(new Set());
 
+  // Memoize skill lookup map to avoid repeated array traversals on hover
+  const skillLookup = useMemo(() => {
+    const map = new Map();
+    resumeData.skills.forEach(group => {
+      group.items.forEach(skill => {
+        map.set(skill.name, skill);
+      });
+    });
+    return map;
+  }, []);
+
+  // Get current snapshot of hovered skill name
+  const getSnapshot = useCallback(() => hoveredSkillRef.current, []);
+
+  // Subscribe function for useSyncExternalStore
   const subscribe = useCallback(callback => {
-    subscribers.current.add(callback);
-    return () => subscribers.current.delete(callback);
+    subscribersRef.current.add(callback);
+    return () => subscribersRef.current.delete(callback);
   }, []);
 
-  const notify = useCallback(skill => {
-    subscribers.current.forEach(callback => callback(skill));
-  }, []);
-
+  // Set hovered skill and notify only if changed
   const setHoveredSkill = useCallback(
-    skill => {
-      // Notify subscribers (visual updates) - sync, fast
-      notify(skill);
-      // Update SR state - triggers re-render of this component
-      // But CategoryBranch children are memoized and props won't change
-      setHoveredSkillForSR(skill);
+    skillName => {
+      const prevSkillName = hoveredSkillRef.current;
+      if (prevSkillName !== skillName) {
+        hoveredSkillRef.current = skillName;
+        // Notify all subscribers (useSyncExternalStore requires notifying all)
+        subscribersRef.current.forEach(callback => callback());
+
+        // Update SR state for accessibility using memoized lookup
+        const skillObj = skillName ? skillLookup.get(skillName) : null;
+        setHoveredSkillForSR(skillObj);
+      }
     },
-    [notify]
+    [skillLookup]
   );
 
   // Stable context value
   const contextValue = useMemo(
-    () => ({ subscribe, setHoveredSkill }),
-    [subscribe, setHoveredSkill]
+    () => ({ subscribe, getSnapshot, setHoveredSkill }),
+    [subscribe, getSnapshot, setHoveredSkill]
   );
 
   return (
