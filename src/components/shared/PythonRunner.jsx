@@ -316,7 +316,11 @@ sys.stdout = StringIO()
           </pre>
         ) : (
           <p className="text-gray-500 font-mono text-sm">
-            {isLoading ? 'Loading Python runtime...' : isRunning ? 'Running...' : 'Click "Run" to execute the code'}
+            {isLoading
+              ? 'Loading Python runtime...'
+              : isRunning
+                ? 'Running...'
+                : 'Click "Run" to execute the code'}
           </p>
         )}
       </div>

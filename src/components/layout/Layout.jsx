@@ -33,17 +33,18 @@ const Layout = ({ children }) => {
     return stored === 'true';
   });
   // Monitor system accessibility preferences with lazy initialization to avoid re-renders
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
 
-  const [prefersContrast, setPrefersContrast] = useState(() =>
-    window.matchMedia('(prefers-contrast: more)').matches ||
-    window.matchMedia('(forced-colors: active)').matches
+  const [prefersContrast, setPrefersContrast] = useState(
+    () =>
+      window.matchMedia('(prefers-contrast: more)').matches ||
+      window.matchMedia('(forced-colors: active)').matches
   );
 
-  const [hasFinePointer, setHasFinePointer] = useState(() =>
-    window.matchMedia('(pointer: fine)').matches
+  const [hasFinePointer, setHasFinePointer] = useState(
+    () => window.matchMedia('(pointer: fine)').matches
   );
 
   // Subscribe to changes

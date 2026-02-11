@@ -395,7 +395,8 @@ const Blog = () => {
                     </a>
                   ) : (
                     <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
-                      Link unavailable <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
+                      Link unavailable{' '}
+                      <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
                     </span>
                   )}
                 </div>
