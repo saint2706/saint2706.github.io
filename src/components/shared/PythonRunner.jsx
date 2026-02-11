@@ -302,9 +302,11 @@ sys.stdout = StringIO()
       <div
         className="bg-gray-900 p-4 min-h-[120px] max-h-[300px] overflow-auto"
         ref={outputRef}
-        role="status"
+        role="log"
         aria-live="polite"
         aria-busy={isRunning}
+        aria-atomic={false}
+        aria-relevant="additions text"
       >
         {error ? (
           <pre className="text-red-400 font-mono text-xs whitespace-pre-wrap">Error: {error}</pre>
@@ -314,7 +316,7 @@ sys.stdout = StringIO()
           </pre>
         ) : (
           <p className="text-gray-500 font-mono text-sm">
-            {isLoading ? 'Loading Python runtime...' : 'Click "Run" to execute the code'}
+            {isLoading ? 'Loading Python runtime...' : isRunning ? 'Running...' : 'Click "Run" to execute the code'}
           </p>
         )}
       </div>
