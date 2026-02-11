@@ -29,13 +29,12 @@ try {
 
   // Check for crossOrigin attribute
   if (!content.includes("script.crossOrigin = 'anonymous'")) {
-    console.error("FAILED: crossOrigin attribute is missing or incorrect.");
+    console.error('FAILED: crossOrigin attribute is missing or incorrect.');
     console.error("Expected: script.crossOrigin = 'anonymous'");
     process.exit(1);
   }
 
   console.log('PASS: PythonRunner.jsx contains correct SRI attributes.');
-
 } catch (error) {
   console.error('Error reading PythonRunner.jsx:', error);
   process.exit(1);

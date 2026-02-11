@@ -21,8 +21,10 @@ try {
 
   // Extract CSP meta tag content
   // First find the meta tag with CSP, then extract content attribute
-  const metaTagMatch = content.match(/<meta[^>]*http-equiv=["']Content-Security-Policy["'][^>]*>/is);
-  
+  const metaTagMatch = content.match(
+    /<meta[^>]*http-equiv=["']Content-Security-Policy["'][^>]*>/is
+  );
+
   if (!metaTagMatch) {
     console.error('FAILED: Content-Security-Policy meta tag not found in index.html');
     process.exit(1);
@@ -34,7 +36,7 @@ try {
   if (!contentMatch) {
     contentMatch = metaTagMatch[0].match(/content='([^']+)'/s);
   }
-  
+
   if (!contentMatch) {
     console.error('FAILED: content attribute not found in CSP meta tag');
     process.exit(1);
@@ -51,12 +53,15 @@ try {
 
   // Check for wasm-unsafe-eval (should be present for Pyodide)
   if (!cspContent.includes("'wasm-unsafe-eval'")) {
-    console.error("FAILED: CSP does not contain 'wasm-unsafe-eval'. This is required for Pyodide WebAssembly execution.");
+    console.error(
+      "FAILED: CSP does not contain 'wasm-unsafe-eval'. This is required for Pyodide WebAssembly execution."
+    );
     process.exit(1);
   }
 
-  console.log("PASS: CSP does not contain 'unsafe-eval' and includes 'wasm-unsafe-eval' for WebAssembly support.");
-
+  console.log(
+    "PASS: CSP does not contain 'unsafe-eval' and includes 'wasm-unsafe-eval' for WebAssembly support."
+  );
 } catch (error) {
   console.error('Error reading index.html:', error);
   process.exit(1);

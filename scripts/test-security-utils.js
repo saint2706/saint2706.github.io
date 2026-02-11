@@ -17,7 +17,12 @@
  * @module scripts/test-security-utils
  */
 
-import { safeJSONStringify, sanitizeInput, isValidChatMessage, isSafeImageSrc } from '../src/utils/security.js';
+import {
+  safeJSONStringify,
+  sanitizeInput,
+  isValidChatMessage,
+  isSafeImageSrc,
+} from '../src/utils/security.js';
 
 const tests = [
   {
@@ -159,15 +164,35 @@ validationTests.forEach(test => {
 const imageSrcTests = [
   { name: 'Valid HTTPS URL', input: 'https://example.com/image.png', expected: true },
   { name: 'Valid HTTP URL', input: 'http://example.com/image.png', expected: true },
-  { name: 'Valid URL with query parameters', input: 'https://example.com/image.png?v=1', expected: true },
-  { name: 'Valid URL with fragment', input: 'https://example.com/image.png#section', expected: true },
-  { name: 'Valid URL with query and fragment', input: 'https://example.com/image.png?v=1#section', expected: true },
+  {
+    name: 'Valid URL with query parameters',
+    input: 'https://example.com/image.png?v=1',
+    expected: true,
+  },
+  {
+    name: 'Valid URL with fragment',
+    input: 'https://example.com/image.png#section',
+    expected: true,
+  },
+  {
+    name: 'Valid URL with query and fragment',
+    input: 'https://example.com/image.png?v=1#section',
+    expected: true,
+  },
   { name: 'Invalid javascript: protocol', input: 'javascript:alert(1)', expected: false },
   { name: 'Invalid data: URI', input: 'data:image/png;base64,iVBORw0KGgo=', expected: false },
   { name: 'Invalid mailto: protocol', input: 'mailto:test@example.com', expected: false },
   { name: 'Encoded javascript: protocol', input: 'javascript%3Aalert(1)', expected: false },
-  { name: 'Double-encoded javascript: protocol', input: 'javascript%253Aalert(1)', expected: false },
-  { name: 'Triple-encoded javascript: protocol', input: 'javascript%25253Aalert(1)', expected: false },
+  {
+    name: 'Double-encoded javascript: protocol',
+    input: 'javascript%253Aalert(1)',
+    expected: false,
+  },
+  {
+    name: 'Triple-encoded javascript: protocol',
+    input: 'javascript%25253Aalert(1)',
+    expected: false,
+  },
   { name: 'Invalid file: protocol', input: 'file:///etc/passwd', expected: false },
   { name: 'Null input', input: null, expected: false },
   { name: 'Undefined input', input: undefined, expected: false },

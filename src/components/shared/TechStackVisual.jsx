@@ -50,7 +50,10 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
 
   const isHovered = hoveredSkillName === skill.name;
 
-  const handleMouseEnter = useCallback(() => setHoveredSkill(skill.name), [setHoveredSkill, skill.name]);
+  const handleMouseEnter = useCallback(
+    () => setHoveredSkill(skill.name),
+    [setHoveredSkill, skill.name]
+  );
   const handleMouseLeave = useCallback(() => setHoveredSkill(null), [setHoveredSkill]);
 
   return (
@@ -74,9 +77,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
         style={{
           borderColor: 'var(--color-border)',
           backgroundColor: isHovered ? color : 'var(--color-secondary)',
-          boxShadow: isHovered
-            ? '3px 3px 0 var(--color-border)'
-            : '2px 2px 0 var(--color-border)',
+          boxShadow: isHovered ? '3px 3px 0 var(--color-border)' : '2px 2px 0 var(--color-border)',
         }}
         whileHover={shouldReduceMotion ? {} : { x: 2, y: -2 }}
         transition={{ duration: 0.1 }}
@@ -124,52 +125,50 @@ SkillNode.displayName = 'SkillNode';
  * Category Branch with its skills
  * Memoized to prevent re-renders when other categories are interacted with.
  */
-const CategoryBranch = React.memo(
-  ({ category, skills, color, shouldReduceMotion, delay }) => {
-    return (
-      <motion.div
-        className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : { delay }}
+const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay }) => {
+  return (
+    <motion.div
+      className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { delay }}
+    >
+      {/* Category label */}
+      <div
+        className="flex items-center gap-2 px-3 py-2 border-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0"
+        style={{
+          borderColor: 'var(--color-border)',
+          backgroundColor: color,
+          boxShadow: '3px 3px 0 var(--color-border)',
+          color: '#000',
+        }}
       >
-        {/* Category label */}
         <div
-          className="flex items-center gap-2 px-3 py-2 border-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0"
-          style={{
-            borderColor: 'var(--color-border)',
-            backgroundColor: color,
-            boxShadow: '3px 3px 0 var(--color-border)',
-            color: '#000',
-          }}
-        >
-          <div
-            className="w-3 h-3 border-2"
-            style={{ borderColor: 'var(--color-border)', backgroundColor: '#fff' }}
+          className="w-3 h-3 border-2"
+          style={{ borderColor: 'var(--color-border)', backgroundColor: '#fff' }}
+        />
+        {category}
+      </div>
+
+      {/* Connecting line */}
+      <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
+        <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
+      </div>
+
+      {/* Skills container */}
+      <div className="flex flex-wrap gap-1 pl-4 sm:pl-0">
+        {skills.map(skill => (
+          <SkillNode
+            key={skill.name}
+            skill={skill}
+            color={color}
+            shouldReduceMotion={shouldReduceMotion}
           />
-          {category}
-        </div>
-
-        {/* Connecting line */}
-        <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
-          <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
-        </div>
-
-        {/* Skills container */}
-        <div className="flex flex-wrap gap-1 pl-4 sm:pl-0">
-          {skills.map(skill => (
-            <SkillNode
-              key={skill.name}
-              skill={skill}
-              color={color}
-              shouldReduceMotion={shouldReduceMotion}
-            />
-          ))}
-        </div>
-      </motion.div>
-    );
-  }
-);
+        ))}
+      </div>
+    </motion.div>
+  );
+});
 
 CategoryBranch.displayName = 'CategoryBranch';
 

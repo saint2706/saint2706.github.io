@@ -18,7 +18,11 @@ const SnakeGame = lazy(() => import('../games/SnakeGame'));
  * Matches approximate height of games to minimize layout shift
  */
 const GameLoader = () => (
-  <div className="flex items-center justify-center min-h-[350px]" role="status" aria-label="Loading game">
+  <div
+    className="flex items-center justify-center min-h-[350px]"
+    role="status"
+    aria-label="Loading game"
+  >
     <Loader2 className="w-10 h-10 animate-spin text-fun-yellow motion-reduce:animate-none" />
   </div>
 );
