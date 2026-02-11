@@ -18,7 +18,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import { safeJSONStringify, isSafeHref } from '../../utils/security';
 
 /** Number of blog posts to display per page */
 const POSTS_PER_PAGE = 6;
@@ -382,16 +382,22 @@ const Blog = () => {
 
                 {/* Read Link */}
                 <div className="mt-auto">
-                  <a
-                    href={blog.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
-                    className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                  >
-                    Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
-                  </a>
+                  {isSafeHref(blog.link) ? (
+                    <a
+                      href={blog.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
+                      className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    >
+                      Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
+                      Link unavailable <ExternalLink size={14} className="opacity-50" />
+                    </span>
+                  )}
                 </div>
               </div>
             </motion.article>
