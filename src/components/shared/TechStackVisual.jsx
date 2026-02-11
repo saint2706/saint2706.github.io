@@ -219,7 +219,7 @@ const TechStackVisual = () => {
         hoveredSkillRef.current = skillName;
         // Notify all subscribers (useSyncExternalStore requires notifying all)
         subscribersRef.current.forEach(callback => callback());
-        
+
         // Update SR state for accessibility using memoized lookup
         const skillObj = skillName ? skillLookup.get(skillName) : null;
         setHoveredSkillForSR(skillObj);
