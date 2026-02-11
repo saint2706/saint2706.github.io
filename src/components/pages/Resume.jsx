@@ -1,9 +1,10 @@
 /**
  * @fileoverview Resume page displaying professional experience, education, and skills.
+ * Features interactive section filters and scroll-triggered reveal animations.
  */
 
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Briefcase,
   GraduationCap,
@@ -13,11 +14,13 @@ import {
   MapPin,
   Printer,
   Sparkles,
+  Filter,
 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import TechStackVisual from '../shared/TechStackVisual';
+import ScrollReveal from '../shared/ScrollReveal';
 
 /**
  * Reusable section component with neubrutalist styling
@@ -28,24 +31,10 @@ import TechStackVisual from '../shared/TechStackVisual';
  * @param {React.ReactNode} props.icon - Icon element
  * @param {string} props.color - Tailwind background color class
  * @param {React.ReactNode} props.children - Section content
- * @param {number} props.delay - Animation delay
- * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Styled section with header and content
  */
-const Section = ({
-  title,
-  icon,
-  color = 'bg-fun-yellow',
-  children,
-  delay = 0,
-  shouldReduceMotion = false,
-}) => (
-  <motion.div
-    initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={shouldReduceMotion ? { duration: 0 } : { delay }}
-    className="mb-12"
-  >
+const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
+  <div className="mb-12">
     <div
       className={`inline-flex items-center gap-3 ${color} text-black px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb`}
       style={{ boxShadow: 'var(--nb-shadow)' }}
@@ -54,7 +43,7 @@ const Section = ({
       <h2 className="text-xl font-heading font-bold">{title}</h2>
     </div>
     <div className="space-y-6">{children}</div>
-  </motion.div>
+  </div>
 );
 
 /**
@@ -140,16 +129,21 @@ const TimelineCard = ({
   </div>
 );
 
+/** Filter section identifiers */
+const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'Languages'];
+
 /**
  * Resume page component
  *
  * Features:
+ * - Interactive filter bar to show/hide sections
  * - Timeline-based experience and education display
  * - Skill categorization with proficiency levels
  * - Certifications list
  * - Language proficiency
  * - Print-friendly layout
  * - Neubrutalist card designs
+ * - Scroll-triggered reveal animations
  *
  * @component
  * @returns {JSX.Element} Resume page with professional information
@@ -160,6 +154,24 @@ const Resume = () => {
   const description =
     'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
+
+  // Interactive filter state — all sections visible by default
+  const [visibleSections, setVisibleSections] = useState(
+    () => new Set(SECTIONS)
+  );
+
+  /** Toggle a section's visibility */
+  const toggleSection = useCallback((section) => {
+    setVisibleSections(prev => {
+      const next = new Set(prev);
+      if (next.has(section)) {
+        next.delete(section);
+      } else {
+        next.add(section);
+      }
+      return next;
+    });
+  }, []);
 
   /** Trigger browser print dialog */
   const handlePrint = () => {
@@ -211,7 +223,7 @@ const Resume = () => {
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="mb-16 text-center"
+          className="mb-10 text-center"
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
@@ -236,149 +248,228 @@ const Resume = () => {
           </button>
         </motion.div>
 
-        {/* Experience Section */}
-        <Section
-          title="Experience"
-          icon={<Briefcase size={24} />}
-          color="bg-fun-pink"
-          delay={0.2}
-          shouldReduceMotion={shouldReduceMotion}
-        >
-          {resumeData.experience.map((job, i) => (
-            <TimelineCard
-              key={i}
-              title={job.company}
-              subtitle={job.position}
-              date={`${job.startDate} - ${job.endDate}`}
-              location={job.location}
-              description={job.highlights || job.summary}
-              accentColor="bg-fun-pink"
-            />
-          ))}
-        </Section>
-
-        {/* Education Section */}
-        <Section
-          title="Education"
-          icon={<GraduationCap size={24} />}
-          color="bg-accent"
-          delay={0.4}
-          shouldReduceMotion={shouldReduceMotion}
-        >
-          {resumeData.education.map((edu, i) => (
-            <TimelineCard
-              key={i}
-              title={edu.institution}
-              subtitle={edu.area}
-              date={`${edu.startDate} - ${edu.endDate}`}
-              description={edu.description}
-              accentColor="bg-accent"
-            />
-          ))}
-        </Section>
-
-        {/* Tech Stack Visualization */}
+        {/* ── Interactive Filter Bar ── */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
-          className="mb-12"
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.1 }}
+          className="mb-12 print:hidden"
         >
-          <div
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
-          >
-            <div
-              className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-            >
-              <Sparkles size={20} />
-              <h2 className="text-lg font-heading font-bold">Tech Stack</h2>
-            </div>
-
-            <p className="text-secondary text-sm mb-6 font-sans">
-              Hover over a skill to see its proficiency level.
-            </p>
-
-            <TechStackVisual />
+          <div className="flex items-center gap-2 mb-3">
+            <Filter size={16} className="text-secondary" />
+            <span className="text-sm font-heading font-bold text-secondary">
+              Filter Sections
+            </span>
           </div>
-        </motion.div>
-
-        {/* Certifications */}
-        <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.7 }}
-          className="mb-12"
-        >
-          <div
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
-          >
-            <div
-              className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] rounded-nb mb-6"
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-            >
-              <Award size={20} />
-              <h2 className="text-lg font-heading font-bold">Certifications</h2>
-            </div>
-
-            <ul className="space-y-4">
-              {resumeData.certifications.map((cert, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-3 p-3 border-2 border-[color:var(--color-border)] bg-secondary"
+          <div className="flex flex-wrap gap-2">
+            {SECTIONS.map(section => {
+              const isActive = visibleSections.has(section);
+              return (
+                <button
+                  key={section}
+                  onClick={() => toggleSection(section)}
+                  className={`px-4 py-2 text-sm font-heading font-bold border-nb border-[color:var(--color-border)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${isActive
+                      ? 'bg-fun-yellow text-black'
+                      : 'bg-card text-secondary'
+                    }`}
+                  style={{ boxShadow: isActive ? 'var(--nb-shadow)' : '2px 2px 0 var(--color-border)' }}
+                  aria-pressed={isActive}
                 >
-                  <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
-                  <div>
-                    <span className="text-primary font-heading font-bold block">{cert.name}</span>
-                    <span className="text-secondary text-sm font-sans leading-relaxed">
-                      {cert.issuer}
-                      {cert.date && ` • ${cert.date}`}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  {section}
+                </button>
+              );
+            })}
           </div>
         </motion.div>
 
-        {/* Languages Section */}
-        {resumeData.basics.languages && (
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
-          >
-            <div
-              className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+        {/* ── Resume Sections with AnimatePresence ── */}
+        <AnimatePresence mode="sync">
+          {/* Experience Section */}
+          {visibleSections.has('Experience') && (
+            <motion.div
+              key="experience"
+              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <div
-                className="inline-flex items-center gap-2 bg-accent text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                <Globe size={20} />
-                <h2 className="text-lg font-heading font-bold">Languages</h2>
-              </div>
+              <ScrollReveal variant="fade-up" delay={0.1}>
+                <Section
+                  title="Experience"
+                  icon={<Briefcase size={24} />}
+                  color="bg-fun-pink"
+                >
+                  {resumeData.experience.map((job, i) => (
+                    <TimelineCard
+                      key={i}
+                      title={job.company}
+                      subtitle={job.position}
+                      date={`${job.startDate} - ${job.endDate}`}
+                      location={job.location}
+                      description={job.highlights || job.summary}
+                      accentColor="bg-fun-pink"
+                    />
+                  ))}
+                </Section>
+              </ScrollReveal>
+            </motion.div>
+          )}
 
-              <div className="flex flex-wrap gap-4">
-                {resumeData.basics.languages.map((lang, i) => (
+          {/* Education Section */}
+          {visibleSections.has('Education') && (
+            <motion.div
+              key="education"
+              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ScrollReveal variant="fade-up" delay={0.2}>
+                <Section
+                  title="Education"
+                  icon={<GraduationCap size={24} />}
+                  color="bg-accent"
+                >
+                  {resumeData.education.map((edu, i) => (
+                    <TimelineCard
+                      key={i}
+                      title={edu.institution}
+                      subtitle={edu.area}
+                      date={`${edu.startDate} - ${edu.endDate}`}
+                      description={edu.description}
+                      accentColor="bg-accent"
+                    />
+                  ))}
+                </Section>
+              </ScrollReveal>
+            </motion.div>
+          )}
+
+          {/* Tech Stack Visualization */}
+          {visibleSections.has('Tech Stack') && (
+            <motion.div
+              key="techstack"
+              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ScrollReveal variant="scale-in" delay={0.1}>
+                <div className="mb-12">
                   <div
-                    key={i}
-                    className="flex items-center gap-3 px-4 py-3 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                    className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
+                    style={{ boxShadow: 'var(--nb-shadow)' }}
+                  >
+                    <div
+                      className="inline-flex items-center gap-2 bg-fun-pink text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6 rounded-nb"
+                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    >
+                      <Sparkles size={20} />
+                      <h2 className="text-lg font-heading font-bold">Tech Stack</h2>
+                    </div>
+
+                    <p className="text-secondary text-sm mb-6 font-sans">
+                      Hover over a skill to see its proficiency level.
+                    </p>
+
+                    <TechStackVisual />
+                  </div>
+                </div>
+              </ScrollReveal>
+            </motion.div>
+          )}
+
+          {/* Certifications */}
+          {visibleSections.has('Certifications') && (
+            <motion.div
+              key="certifications"
+              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ScrollReveal variant="fade-left" delay={0.1}>
+                <div className="mb-12">
+                  <div
+                    className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
+                    style={{ boxShadow: 'var(--nb-shadow)' }}
+                  >
+                    <div
+                      className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] rounded-nb mb-6"
+                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    >
+                      <Award size={20} />
+                      <h2 className="text-lg font-heading font-bold">Certifications</h2>
+                    </div>
+
+                    <ul className="space-y-4">
+                      {resumeData.certifications.map((cert, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-3 p-3 border-2 border-[color:var(--color-border)] bg-secondary"
+                        >
+                          <div className="w-3 h-3 bg-fun-yellow border-2 border-[color:var(--color-border)] flex-shrink-0 mt-1" />
+                          <div>
+                            <span className="text-primary font-heading font-bold block">
+                              {cert.name}
+                            </span>
+                            <span className="text-secondary text-sm font-sans leading-relaxed">
+                              {cert.issuer}
+                              {cert.date && ` • ${cert.date}`}
+                            </span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </motion.div>
+          )}
+
+          {/* Languages Section */}
+          {visibleSections.has('Languages') && resumeData.basics.languages && (
+            <motion.div
+              key="languages"
+              initial={shouldReduceMotion ? false : { opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ScrollReveal variant="fade-right" delay={0.1}>
+                <div
+                  className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
+                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                >
+                  <div
+                    className="inline-flex items-center gap-2 bg-accent text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
-                    <span className="text-primary font-heading font-bold">{lang.name}</span>
-                    <span className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold">
-                      {lang.proficiency}
-                    </span>
+                    <Globe size={20} />
+                    <h2 className="text-lg font-heading font-bold">Languages</h2>
                   </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
+
+                  <div className="flex flex-wrap gap-4">
+                    {resumeData.basics.languages.map((lang, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 px-4 py-3 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      >
+                        <span className="text-primary font-heading font-bold">
+                          {lang.name}
+                        </span>
+                        <span className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold">
+                          {lang.proficiency}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );

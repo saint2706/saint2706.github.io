@@ -1,15 +1,34 @@
 /**
  * @fileoverview Main layout wrapper component providing consistent structure across all pages.
- * Manages the custom cursor feature, accessibility preferences, and renders header/footer/content.
+ * Manages the custom cursor feature, accessibility preferences, command palette, terminal mode,
+ * and renders header/footer/content.
  */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
 
 /** Local storage key for persisting custom cursor preference */
 const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
+
+/** Konami Code sequence: ↑↑↓↓←→←→BA */
+const KONAMI_CODE = [
+  'ArrowUp',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'b',
+  'a',
+];
+
+/** Lazy load overlays so they don't impact initial bundle */
+const CommandPalette = lazy(() => import('../shared/CommandPalette'));
+const TerminalMode = lazy(() => import('../shared/TerminalMode'));
 
 /**
  * Layout component that wraps all page content
@@ -19,6 +38,9 @@ const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
  * - Neubrutalist grid background pattern
  * - Skip navigation link for keyboard users
  * - Consistent header/footer structure
+ * - Command Palette (Ctrl+K / Cmd+K)
+ * - Terminal Mode overlay
+ * - Konami Code easter egg
  *
  * @component
  * @param {Object} props
@@ -26,13 +48,12 @@ const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
  * @returns {JSX.Element} Complete page layout with header, content, and footer
  */
 const Layout = ({ children }) => {
-  // State for custom cursor toggle and accessibility preferences
-  // Load cursor preference from localStorage on mount
+  // ── Custom Cursor State ──
   const [cursorEnabled, setCursorEnabled] = useState(() => {
     const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
     return stored === 'true';
   });
-  // Monitor system accessibility preferences with lazy initialization to avoid re-renders
+
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
     () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
   );
@@ -47,7 +68,15 @@ const Layout = ({ children }) => {
     () => window.matchMedia('(pointer: fine)').matches
   );
 
-  // Subscribe to changes
+  // ── Command Palette & Terminal State ──
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [terminalWelcome, setTerminalWelcome] = useState('');
+
+  // ── Konami Code Tracking ──
+  const konamiIndexRef = useRef(0);
+
+  // Subscribe to accessibility preference changes
   useEffect(() => {
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contrastMoreQuery = window.matchMedia('(prefers-contrast: more)');
@@ -86,12 +115,59 @@ const Layout = ({ children }) => {
    * Toggle custom cursor on/off (unless disabled by accessibility preferences)
    * Persists preference to localStorage
    */
-  const toggleCursor = () => {
+  const toggleCursor = useCallback(() => {
     if (cursorForcedOff) return;
     const next = !cursorEnabled;
     setCursorEnabled(next);
     localStorage.setItem(CURSOR_STORAGE_KEY, next ? 'true' : 'false');
-  };
+  }, [cursorEnabled, cursorForcedOff]);
+
+  // Listen for custom toggleCursor event (from Command Palette)
+  useEffect(() => {
+    const handler = () => toggleCursor();
+    document.addEventListener('toggleCursor', handler);
+    return () => document.removeEventListener('toggleCursor', handler);
+  }, [toggleCursor]);
+
+  /**
+   * Global keyboard listener for:
+   * - Ctrl+K / Cmd+K → open Command Palette
+   * - Konami Code → open Terminal Mode
+   */
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // ── Command Palette shortcut ──
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+        return;
+      }
+
+      // ── Konami Code detection ──
+      if (
+        e.key === KONAMI_CODE[konamiIndexRef.current] ||
+        e.key.toLowerCase() === KONAMI_CODE[konamiIndexRef.current]
+      ) {
+        konamiIndexRef.current += 1;
+        if (konamiIndexRef.current === KONAMI_CODE.length) {
+          konamiIndexRef.current = 0;
+          setTerminalWelcome('🎮 KONAMI CODE ACTIVATED! You found the secret terminal!');
+          setIsTerminalOpen(true);
+        }
+      } else {
+        konamiIndexRef.current = 0;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  /** Open terminal from command palette */
+  const handleOpenTerminal = useCallback(() => {
+    setTerminalWelcome('');
+    setIsTerminalOpen(true);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative">
@@ -136,6 +212,20 @@ const Layout = ({ children }) => {
       </main>
 
       <Footer />
+
+      {/* Command Palette & Terminal Mode overlays */}
+      <Suspense fallback={null}>
+        <CommandPalette
+          isOpen={isCommandPaletteOpen}
+          onClose={() => setIsCommandPaletteOpen(false)}
+          onOpenTerminal={handleOpenTerminal}
+        />
+        <TerminalMode
+          isOpen={isTerminalOpen}
+          onClose={() => setIsTerminalOpen(false)}
+          welcomeMessage={terminalWelcome}
+        />
+      </Suspense>
     </div>
   );
 };

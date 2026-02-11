@@ -187,3 +187,40 @@
 .animate-glitch {
   animation: glitch 0.3s ease-in-out infinite;
 }
+
+/* ===== CONFETTI EASTER EGG ANIMATION ===== */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(100vh + 20px)) rotate(var(--rotation, 360deg));
+    opacity: 0;
+  }
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  left: var(--x, 50%);
+  width: 8px;
+  height: 8px;
+  background: var(--color, #ffd54f);
+  animation: confetti-fall var(--duration, 2s) ease-out var(--delay, 0s) forwards;
+  pointer-events: none;
+}
+
+.confetti-piece:nth-child(odd) {
+  border-radius: 50%;
+}
+
+.confetti-piece:nth-child(3n) {
+  width: 6px;
+  height: 12px;
+}
+
+.confetti-piece:nth-child(5n) {
+  width: 10px;
+  height: 4px;
+}
