@@ -144,12 +144,16 @@ const Contact = () => {
                 </a>
 
                 {/* Location */}
-                <div
-                  className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${resumeData.basics.location.city}, ${resumeData.basics.location.country}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  aria-label={`View location ${resumeData.basics.location.city}, ${resumeData.basics.location.country} on Google Maps (opens in new tab)`}
                 >
-                  <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)]">
-                    <MapPin size={24} />
+                  <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
+                    <MapPin size={24} aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-sm text-muted font-heading font-bold uppercase">Location</p>
@@ -157,7 +161,7 @@ const Contact = () => {
                       {resumeData.basics.location.city}, {resumeData.basics.location.country}
                     </p>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
 
