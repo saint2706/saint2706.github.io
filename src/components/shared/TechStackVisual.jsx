@@ -191,10 +191,19 @@ const TechStackVisual = () => {
   const hoveredSkillRef = useRef(null);
   const subscribersRef = useRef(new Set());
 
-  // Get current snapshot of hovered skill name
-  const getSnapshot = useCallback(() => {
-    return hoveredSkillRef.current;
+  // Memoize skill lookup map to avoid repeated array traversals on hover
+  const skillLookup = useMemo(() => {
+    const map = new Map();
+    resumeData.skills.forEach(group => {
+      group.items.forEach(skill => {
+        map.set(skill.name, skill);
+      });
+    });
+    return map;
   }, []);
+
+  // Get current snapshot of hovered skill name
+  const getSnapshot = useCallback(() => hoveredSkillRef.current, []);
 
   // Subscribe function for useSyncExternalStore
   const subscribe = useCallback(callback => {
@@ -211,17 +220,12 @@ const TechStackVisual = () => {
         // Notify all subscribers (useSyncExternalStore requires notifying all)
         subscribersRef.current.forEach(callback => callback());
         
-        // Update SR state for accessibility
-        // Find the full skill object for screen reader announcement
-        const skillObj = skillName
-          ? resumeData.skills
-              .flatMap(group => group.items)
-              .find(s => s.name === skillName)
-          : null;
+        // Update SR state for accessibility using memoized lookup
+        const skillObj = skillName ? skillLookup.get(skillName) : null;
         setHoveredSkillForSR(skillObj);
       }
     },
-    []
+    [skillLookup]
   );
 
   // Stable context value
