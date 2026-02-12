@@ -8,6 +8,7 @@ import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback, useRe
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 /** Local storage key for persisting custom cursor preference */
 const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
@@ -51,7 +52,7 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
 const Layout = ({ children }) => {
   // ── Custom Cursor State ──
   const [cursorEnabled, setCursorEnabled] = useState(() => {
-    const stored = localStorage.getItem(CURSOR_STORAGE_KEY);
+    const stored = safeGetLocalStorage(CURSOR_STORAGE_KEY, 'false');
     return stored === 'true';
   });
 
@@ -120,7 +121,7 @@ const Layout = ({ children }) => {
     if (cursorForcedOff) return;
     const next = !cursorEnabled;
     setCursorEnabled(next);
-    localStorage.setItem(CURSOR_STORAGE_KEY, next ? 'true' : 'false');
+    safeSetLocalStorage(CURSOR_STORAGE_KEY, next ? 'true' : 'false');
   }, [cursorEnabled, cursorForcedOff]);
 
   // Listen for custom toggleCursor event (from Command Palette)
