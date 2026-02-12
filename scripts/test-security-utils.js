@@ -22,6 +22,7 @@ import {
   sanitizeInput,
   isValidChatMessage,
   isSafeImageSrc,
+  redactPII,
 } from '../src/utils/security.js';
 
 const tests = [
@@ -224,6 +225,96 @@ imageSrcTests.forEach(test => {
     failed = true;
   }
 });
+
+const redactTests = [
+  {
+    name: 'Redact email and phone',
+    input: { basics: { email: 'test@example.com', phone: '123-456' } },
+    expected: { basics: { email: '[REDACTED]', phone: '[REDACTED]' } },
+  },
+  {
+    name: 'Preserve other data',
+    input: { basics: { name: 'John', email: 'e' }, other: 'data' },
+    expected: { basics: { name: 'John', email: '[REDACTED]' }, other: 'data' },
+  },
+  {
+    name: 'Handle missing basics',
+    input: { other: 'data' },
+    expected: { other: 'data' },
+  },
+  {
+    name: 'Handle missing fields',
+    input: { basics: { name: 'John' } },
+    expected: { basics: { name: 'John' } },
+  },
+  {
+    name: 'Handle null input',
+    input: null,
+    expected: null,
+  },
+  {
+    name: 'Handle undefined input',
+    input: undefined,
+    expected: undefined,
+  },
+  {
+    name: 'Handle basics as null',
+    input: { basics: null, other: 'data' },
+    expected: { basics: null, other: 'data' },
+  },
+  {
+    name: 'Handle basics as array',
+    input: { basics: ['item1', 'item2'], other: 'data' },
+    expected: { basics: ['item1', 'item2'], other: 'data' },
+  },
+];
+
+console.log('\nRunning PII Redaction Tests...');
+redactTests.forEach(test => {
+  try {
+    const result = redactPII(test.input);
+    const passed = JSON.stringify(result) === JSON.stringify(test.expected);
+    if (!passed) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+// Test that original object is not mutated
+console.log('\nTesting PII redaction does not mutate original object...');
+try {
+  const original = { basics: { email: 'test@example.com', phone: '123-456', name: 'John' } };
+  const originalCopy = JSON.stringify(original);
+  const result = redactPII(original);
+  
+  // Check that result has redacted values
+  const resultIsRedacted = result.basics.email === '[REDACTED]' && result.basics.phone === '[REDACTED]';
+  // Check that original is unchanged
+  const originalUnchanged = JSON.stringify(original) === originalCopy;
+  
+  if (!resultIsRedacted || !originalUnchanged) {
+    console.error('FAILED: Original object should not be mutated');
+    console.error('Original:', original);
+    console.error('Result:', result);
+    console.error('Result is redacted:', resultIsRedacted);
+    console.error('Original unchanged:', originalUnchanged);
+    failed = true;
+  } else {
+    console.log('PASS: Original object is not mutated');
+  }
+} catch (e) {
+  console.error('ERROR: Testing original object mutation', e);
+  failed = true;
+}
 
 if (failed) {
   process.exit(1);
