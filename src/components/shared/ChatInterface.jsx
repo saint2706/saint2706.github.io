@@ -285,11 +285,13 @@ const ChatInterface = ({ onClose }) => {
   const [messages, setMessages] = useState([createDefaultMessage()]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false); // AI response loading state
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   // Refs for DOM manipulation and lifecycle tracking
   const messagesEndRef = useRef(null); // For auto-scrolling to bottom
   const inputRef = useRef(null); // For auto-focusing input field
   const chatDialogRef = useRef(null); // For focus trapping
+  const confirmTimeoutRef = useRef(null); // For clearing confirmation state
   const isMountedRef = useRef(true); // Prevents state updates after unmount
   const prefersReducedMotion = useReducedMotion();
 
@@ -459,6 +461,39 @@ const ChatInterface = ({ onClose }) => {
   }, []);
 
   /**
+   * Handles the clear button click with a confirmation step.
+   * First click shows "Confirm?", second click actually clears.
+   * Confirmation state resets after 3 seconds.
+   */
+  const handleClearClick = () => {
+    if (showClearConfirm) {
+      clearHistory();
+      setShowClearConfirm(false);
+      if (confirmTimeoutRef.current) {
+        clearTimeout(confirmTimeoutRef.current);
+        confirmTimeoutRef.current = null;
+      }
+    } else {
+      setShowClearConfirm(true);
+      confirmTimeoutRef.current = setTimeout(() => {
+        if (isMountedRef.current) {
+          setShowClearConfirm(false);
+        }
+        confirmTimeoutRef.current = null;
+      }, 3000);
+    }
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (confirmTimeoutRef.current) {
+        clearTimeout(confirmTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  /**
    * Implements focus trap and keyboard navigation for modal dialog accessibility.
    *
    * Focus Trap: When Tab is pressed on the last focusable element, focus wraps
@@ -545,11 +580,15 @@ const ChatInterface = ({ onClose }) => {
         <div className="flex items-center gap-2">
           {messages.length > 1 && (
             <button
-              onClick={clearHistory}
-              className="text-xs text-white/70 hover:text-white transition-colors font-heading font-bold px-2 py-1 border-2 border-white/30 hover:border-white"
-              aria-label="Clear chat history"
+              onClick={handleClearClick}
+              className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${
+                showClearConfirm
+                  ? 'bg-red-500 text-white border-white hover:bg-red-600'
+                  : 'text-white/70 hover:text-white border-white/30 hover:border-white'
+              }`}
+              aria-label={showClearConfirm ? 'Confirm clear chat history' : 'Clear chat history'}
             >
-              Clear
+              {showClearConfirm ? 'Confirm?' : 'Clear'}
             </button>
           )}
           <button

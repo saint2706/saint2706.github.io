@@ -18,7 +18,6 @@ import {
     MousePointer2,
     Bot,
     Printer,
-    Command,
     ArrowUp,
     ArrowDown,
     CornerDownLeft,
