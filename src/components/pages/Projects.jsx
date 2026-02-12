@@ -147,7 +147,15 @@ const Projects = () => {
               key={idx}
               variants={item}
               onClick={handleCardClick(project)}
-              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
+              role="link"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  event.currentTarget.click();
+                }
+              }}
+              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
               style={{ boxShadow: 'var(--nb-shadow)' }}
               whileHover={shouldReduceMotion ? undefined : { boxShadow: 'var(--nb-shadow-hover)' }}
             >
