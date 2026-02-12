@@ -173,7 +173,7 @@ const CodeRenderer = ({ inline, className, children, ...props }) => {
         <Suspense
           fallback={
             <pre className="!bg-gray-900 !p-4 !rounded-lg !overflow-x-auto !text-sm !font-mono !leading-relaxed !border-2 !border-[color:var(--color-border)] !m-0">
-              <code className={className}>{children}</code>
+              <code className={className}>{code}</code>
             </pre>
           }
         >
