@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
-      time: "22:00"
+      time: "22:01"
       timezone: "Asia/Kolkata"
     open-pull-requests-limit: 10
     labels:
