@@ -25,6 +25,7 @@ import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { TypingIndicator } from './SkeletonLoader';
 import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
+import { buildNextMessages, buildGeminiHistory } from './chatHistory';
 
 const SyntaxHighlighter = lazy(() => import('./SyntaxHighlighter'));
 
@@ -415,16 +416,13 @@ const ChatInterface = ({ onClose }) => {
 
     // Add user message to UI immediately for responsive feel
     const userMsg = { id: generateMessageId(), role: 'user', text: text };
-    setMessages(prev => [...prev, userMsg]);
+    const nextMessages = buildNextMessages(messages, userMsg);
+    setMessages(nextMessages);
     if (text === input) setInput(''); // Clear input if this is from the input field
     setIsTyping(true);
 
     // Limit context to last 30 messages to prevent token exhaustion
-    const MAX_HISTORY_CONTEXT = 30;
-    const history = messages.slice(-MAX_HISTORY_CONTEXT).map(m => ({
-      role: m.role,
-      parts: [{ text: m.text }],
-    }));
+    const history = buildGeminiHistory(nextMessages);
 
     try {
       const responseText = await chatWithGemini(userMsg.text, history);
