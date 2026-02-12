@@ -6,7 +6,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 

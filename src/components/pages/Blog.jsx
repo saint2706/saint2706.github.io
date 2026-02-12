@@ -15,7 +15,7 @@ import {
   FileQuestion,
   BookOpen,
 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify, isSafeHref } from '../../utils/security';

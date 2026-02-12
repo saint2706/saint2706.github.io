@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import MarqueeTicker from '../shared/MarqueeTicker';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 

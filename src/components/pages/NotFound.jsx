@@ -5,7 +5,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { Home, ArrowLeft, Compass, Rocket, Star, Sparkles, Ghost, Map } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 

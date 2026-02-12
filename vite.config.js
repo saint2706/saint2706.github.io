@@ -20,7 +20,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
+          'vendor-react': ['react', 'react-dom', 'react-router-dom', '@dr.pogodin/react-helmet'],
           'vendor-ui': ['framer-motion', 'lucide-react'],
           'vendor-ai': ['@google/generative-ai'],
         },
