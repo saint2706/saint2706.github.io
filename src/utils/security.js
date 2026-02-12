@@ -28,7 +28,19 @@
  * // Returns: {"script":"\\u003cscript\\u003ealert(\"xss\")\\u003c/script\\u003e"}
  */
 export const safeJSONStringify = (value, replacer, space) => {
-  return JSON.stringify(value, replacer, space).replace(/[<>&'\u2028\u2029]/g, char => {
+  let json;
+
+  try {
+    json = JSON.stringify(value, replacer, space);
+  } catch {
+    return 'null';
+  }
+
+  if (typeof json !== 'string') {
+    return 'null';
+  }
+
+  return json.replace(/[<>&'\u2028\u2029]/g, char => {
     // Map each dangerous character to its Unicode escape sequence
     switch (char) {
       case '<':

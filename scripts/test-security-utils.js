@@ -26,6 +26,9 @@ import {
   isSafeHref,
 } from '../src/utils/security.js';
 
+const circularObject = {};
+circularObject.self = circularObject;
+
 const tests = [
   {
     name: 'Escapes closing script tag',
@@ -53,6 +56,26 @@ const tests = [
     input: { a: 1, b: ['<'] },
     expectedContains: '\\u003c',
   },
+  {
+    name: 'Returns fallback for undefined',
+    input: undefined,
+    expectedExact: 'null',
+  },
+  {
+    name: 'Returns fallback for circular references',
+    input: circularObject,
+    expectedExact: 'null',
+  },
+  {
+    name: 'Returns fallback for BigInt values',
+    input: { value: 1n },
+    expectedExact: 'null',
+  },
+  {
+    name: 'Still stringifies normal objects',
+    input: { safe: true },
+    expectedExact: '{"safe":true}',
+  },
 ];
 
 let failed = false;
@@ -65,11 +88,18 @@ tests.forEach(test => {
     // We check if the result contains the expected sequence (ignoring other JSON parts)
     // But since input is simple, we can rely on inclusion
     // Note: JSON.stringify output order is not guaranteed for keys, but we use simple objects
-    const passed = result.includes(test.expectedContains);
+    const passed =
+      test.expectedExact !== undefined
+        ? result === test.expectedExact
+        : result.includes(test.expectedContains);
     if (!passed) {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);
-      console.error(`Expected to contain:`, test.expectedContains);
+      if (test.expectedExact !== undefined) {
+        console.error(`Expected:`, test.expectedExact);
+      } else {
+        console.error(`Expected to contain:`, test.expectedContains);
+      }
       console.error(`Got:`, result);
       failed = true;
     } else {
