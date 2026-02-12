@@ -587,7 +587,6 @@ const ChatInterface = ({ onClose }) => {
                   : 'text-white/70 hover:text-white border-white/30 hover:border-white'
               }`}
               aria-label={showClearConfirm ? 'Confirm clear chat history' : 'Clear chat history'}
-              aria-pressed={showClearConfirm}
             >
               {showClearConfirm ? 'Confirm?' : 'Clear'}
             </button>
