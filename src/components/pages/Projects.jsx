@@ -2,7 +2,7 @@
  * @fileoverview Projects showcase page displaying portfolio projects with filtering.
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -53,6 +53,27 @@ const Projects = () => {
 
   /** Rotating color classes for project card accent bars */
   const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+
+  /**
+   * Handle card click to open primary link.
+   * Checks for text selection to avoid accidental navigation.
+   */
+  const handleCardClick = useCallback(
+    project => {
+      return () => {
+        // Ignore if user is selecting text
+        const selection = window.getSelection();
+        if (selection && selection.toString().length > 0) return;
+
+        // Prioritize Live Demo, fallback to GitHub
+        const targetUrl = project.link || project.github;
+        if (targetUrl) {
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        }
+      };
+    },
+    []
+  );
 
   return (
     <>
@@ -125,7 +146,16 @@ const Projects = () => {
             <motion.article
               key={idx}
               variants={item}
-              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
+              onClick={handleCardClick(project)}
+              role="link"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  event.currentTarget.click();
+                }
+              }}
+              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
               style={{ boxShadow: 'var(--nb-shadow)' }}
               whileHover={shouldReduceMotion ? undefined : { boxShadow: 'var(--nb-shadow-hover)' }}
             >
@@ -187,6 +217,7 @@ const Projects = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
                       className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
@@ -199,6 +230,7 @@ const Projects = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
                       className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
