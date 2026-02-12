@@ -40,6 +40,11 @@ const SPEED_INCREMENT = 5; // Speed increase per food eaten
 const MIN_SPEED = 60; // Maximum speed cap (faster = lower number)
 
 /**
+ * Clamps a color channel value to the valid 0-255 range.
+ */
+const clampChannel = value => Math.max(0, Math.min(255, value));
+
+/**
  * Parses CSS color value to RGB object.
  * Handles both hex (#RRGGBB) and rgb(r, g, b) formats.
  */
@@ -65,9 +70,9 @@ const parseColor = (value, fallback) => {
     // Validate parsed channels and clamp to 0-255
     if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return fallback;
     return {
-      r: Math.max(0, Math.min(255, r)),
-      g: Math.max(0, Math.min(255, g)),
-      b: Math.max(0, Math.min(255, b))
+      r: clampChannel(r),
+      g: clampChannel(g),
+      b: clampChannel(b)
     };
   }
 
@@ -80,9 +85,9 @@ const parseColor = (value, fallback) => {
     // Validate parsed channels and clamp to 0-255
     if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return fallback;
     return {
-      r: Math.max(0, Math.min(255, r)),
-      g: Math.max(0, Math.min(255, g)),
-      b: Math.max(0, Math.min(255, b))
+      r: clampChannel(r),
+      g: clampChannel(g),
+      b: clampChannel(b)
     };
   }
 
