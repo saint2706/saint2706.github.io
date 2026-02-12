@@ -26,6 +26,44 @@ const __dirname = path.dirname(__filename);
 
 const parser = new Parser();
 
+const NETWORK_TIMEOUT_MS = 10000;
+const NETWORK_RETRY_ATTEMPTS = 2;
+
+/**
+ * Fetch helper with timeout and retries to avoid hanging CI jobs.
+ *
+ * @param {string} url - URL to fetch
+ * @param {RequestInit} [options] - fetch options
+ * @param {number} [attempts] - total attempts before giving up
+ * @returns {Promise<Response>} fetch response
+ */
+async function fetchWithTimeoutAndRetry(url, options = {}, attempts = NETWORK_RETRY_ATTEMPTS) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      lastError = error;
+
+      if (attempt < attempts) {
+        console.warn(`Network fetch attempt ${attempt} failed for ${url}; retrying...`);
+      }
+    }
+  }
+
+  throw lastError;
+}
+
 /**
  * Fetches blog articles from Dev.to using their public API.
  *
@@ -35,7 +73,7 @@ const parser = new Parser();
  */
 async function fetchDevTo() {
   try {
-    const response = await fetch('https://dev.to/api/articles?username=saint2706');
+    const response = await fetchWithTimeoutAndRetry('https://dev.to/api/articles?username=saint2706');
     if (!response.ok) {
       console.error('Failed to fetch Dev.to articles:', response.statusText);
       return [];
@@ -214,4 +252,7 @@ async function syncBlogs() {
 }
 
 // Execute the sync
-syncBlogs();
+syncBlogs().catch(error => {
+  console.error(`Blog sync failed: ${error.message}`);
+  process.exitCode = 1;
+});
