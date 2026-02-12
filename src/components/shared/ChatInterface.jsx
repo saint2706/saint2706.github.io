@@ -18,14 +18,15 @@
  * @module components/shared/ChatInterface
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Bot, X, Send, Copy, Check } from 'lucide-react';
 import { chatWithGemini } from '../../services/ai';
 import ReactMarkdown from 'react-markdown';
 import { TypingIndicator } from './SkeletonLoader';
 import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
-import SyntaxHighlighter from './SyntaxHighlighter';
+
+const SyntaxHighlighter = lazy(() => import('./SyntaxHighlighter'));
 
 // localStorage key for persisting chat history across sessions
 const STORAGE_KEY = 'portfolio_chat_history';
@@ -169,7 +170,15 @@ const CodeRenderer = ({ inline, className, children, ...props }) => {
     const language = match ? match[1] : 'text';
     return (
       <div className="relative group my-4">
-        <SyntaxHighlighter language={language} code={code} {...props} />
+        <Suspense
+          fallback={
+            <pre className="!bg-gray-900 !p-4 !rounded-lg !overflow-x-auto !text-sm !font-mono !leading-relaxed !border-2 !border-[color:var(--color-border)] !m-0">
+              <code className={className}>{children}</code>
+            </pre>
+          }
+        >
+          <SyntaxHighlighter language={language} code={code} {...props} />
+        </Suspense>
         <button
           onClick={handleCopy}
           className="absolute top-2 right-2 p-1.5 bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
