@@ -225,7 +225,9 @@ export const redactPII = data => {
   // Shallow clone to avoid mutating original data
   const safeData = { ...data };
 
-  // Clone basics separately if present so we can redact without mutating the original
+  // Clone basics separately if present so we can redact without mutating the original.
+  // Note: Shallow clone is sufficient here because we only modify top-level properties
+  // (email and phone) within basics, not nested objects.
   if (data.basics && typeof data.basics === 'object' && !Array.isArray(data.basics)) {
     safeData.basics = { ...data.basics };
 
