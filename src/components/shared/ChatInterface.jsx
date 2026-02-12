@@ -26,6 +26,11 @@ import ReactMarkdown from 'react-markdown';
 import { TypingIndicator } from './SkeletonLoader';
 import { isSafeHref, isSafeImageSrc, isValidChatMessage } from '../../utils/security';
 import { buildNextMessages, buildGeminiHistory } from './chatHistory';
+import {
+  safeGetLocalStorage,
+  safeSetLocalStorage,
+  safeRemoveLocalStorage,
+} from '../../utils/storage';
 
 const SyntaxHighlighter = lazy(() => import('./SyntaxHighlighter'));
 
@@ -319,7 +324,7 @@ const ChatInterface = ({ onClose }) => {
    */
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = safeGetLocalStorage(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
@@ -360,7 +365,7 @@ const ChatInterface = ({ onClose }) => {
   useEffect(() => {
     if (messages.length > 1) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+        safeSetLocalStorage(STORAGE_KEY, JSON.stringify(messages));
       } catch (e) {
         console.warn('Failed to save chat history:', e);
       }
@@ -455,7 +460,7 @@ const ChatInterface = ({ onClose }) => {
    */
   const clearHistory = useCallback(() => {
     setMessages([createDefaultMessage()]);
-    localStorage.removeItem(STORAGE_KEY);
+    safeRemoveLocalStorage(STORAGE_KEY);
   }, []);
 
   /**
