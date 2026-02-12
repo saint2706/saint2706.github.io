@@ -23,6 +23,7 @@
 
 import React, { useState, useCallback, useRef, useEffect, useId } from 'react';
 import { Play, Loader2 } from 'lucide-react';
+import { executePythonWithCapturedStdout } from './pythonExecution';
 
 // Global Pyodide instance - shared across all PythonRunner components for efficiency
 let pyodideInstance = null;
@@ -195,22 +196,9 @@ const PythonRunner = ({ snippet }) => {
       // Generate Python code from template
       const code = snippet.interactive.codeTemplate();
 
-      // Redirect stdout to StringIO to capture print statements
-      pyodide.runPython(`
-import sys
-from io import StringIO
-sys.stdout = StringIO()
-            `);
-
-      // Execute the user's code
-      pyodide.runPython(code);
-
-      // Retrieve captured output from StringIO
-      const result = pyodide.runPython('sys.stdout.getvalue()');
+      // Execute code while capturing stdout and always restoring it.
+      const result = executePythonWithCapturedStdout(pyodide, code);
       setOutput(result);
-
-      // Restore stdout to its original state
-      pyodide.runPython('sys.stdout = sys.__stdout__');
     } catch (err) {
       // Display Python errors to user (syntax, runtime, etc.)
       setError(err.message);
