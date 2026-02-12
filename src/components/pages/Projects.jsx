@@ -60,7 +60,7 @@ const Projects = () => {
    */
   const handleCardClick = useCallback(
     project => {
-      return e => {
+      return () => {
         // Ignore if user is selecting text
         const selection = window.getSelection();
         if (selection && selection.toString().length > 0) return;
