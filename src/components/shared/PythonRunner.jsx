@@ -24,71 +24,7 @@
 import React, { useState, useCallback, useRef, useEffect, useId } from 'react';
 import { Play, Loader2 } from 'lucide-react';
 import { executePythonWithCapturedStdout } from './pythonExecution';
-
-// Global Pyodide instance - shared across all PythonRunner components for efficiency
-let pyodideInstance = null;
-// Loading promise - prevents multiple simultaneous loads from CDN
-let pyodideLoadingPromise = null;
-
-/**
- * Loads Pyodide runtime from CDN and caches it globally.
- *
- * This function implements several optimizations:
- * - Returns cached instance if already loaded
- * - Returns in-progress promise if currently loading (prevents duplicate requests)
- * - Dynamically injects CDN script if not already present
- * - Caches the loaded instance for reuse
- *
- * Pyodide is ~6MB, so caching is critical for performance.
- *
- * @async
- * @returns {Promise<object>} Pyodide runtime instance
- * @private
- */
-const loadPyodide = async () => {
-  // Return cached instance if already loaded
-  if (pyodideInstance) return pyodideInstance;
-
-  // Return in-progress loading promise if currently loading
-  if (pyodideLoadingPromise) return pyodideLoadingPromise;
-
-  // Start loading process
-  pyodideLoadingPromise = (async () => {
-    // Dynamically inject Pyodide CDN script if not present
-    if (!window.loadPyodide) {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js';
-      // SRI (Subresource Integrity) check to ensure the script hasn't been tampered with.
-      // IMPORTANT: This hash must match the contents of the file at `script.src`.
-      // To (re)generate/verify the hash for a given Pyodide version, run:
-      //
-      //   curl -s https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js \
-      //     | openssl dgst -sha384 -binary \
-      //     | openssl base64 -A
-      //
-      // Then prefix the output with "sha384-" and assign it to `script.integrity`.
-      // If you change the Pyodide version or path above, you MUST update this hash.
-      script.integrity = 'sha384-+R8PTzDXzivdjpxOqwVwRhPS9dlske7tKAjwj0O0Kr361gKY5d2Xe6Osl+faRLT7';
-      script.crossOrigin = 'anonymous';
-      document.head.appendChild(script);
-
-      // Wait for script to load
-      await new Promise((resolve, reject) => {
-        script.onload = resolve;
-        script.onerror = reject;
-      });
-    }
-
-    // Initialize Pyodide runtime with CDN path
-    pyodideInstance = await window.loadPyodide({
-      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/',
-    });
-
-    return pyodideInstance;
-  })();
-
-  return pyodideLoadingPromise;
-};
+import { loadPyodide } from './pyodideLoader';
 
 /**
  * Interactive Python code execution component.
