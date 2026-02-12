@@ -10,7 +10,7 @@
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { resumeData } from '../data/resume';
-import { sanitizeInput } from '../utils/security';
+import { sanitizeInput, redactPII } from '../utils/security';
 
 // API Configuration
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
@@ -81,7 +81,7 @@ Your goal is to answer questions about Rishabh's experience, skills, and project
 You should be helpful, professional, but also have a slightly playful and geeky personality (reflecting Rishabh).
 
 Here is Rishabh's Resume Data:
-${JSON.stringify(resumeData)}
+${JSON.stringify(redactPII(resumeData))}
 
 Instructions:
 1. Answer strictly based on the provided data. If you don't know something, say "I'm not sure about that, but you can ask Rishabh directly!"
@@ -230,7 +230,7 @@ export const roastResume = async () => {
     Keep it under 100 words.
 
     Resume Data:
-    ${JSON.stringify(resumeData)}
+    ${JSON.stringify(redactPII(resumeData))}
     `;
 
   try {

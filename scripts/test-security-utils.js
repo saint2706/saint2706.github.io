@@ -22,6 +22,7 @@ import {
   sanitizeInput,
   isValidChatMessage,
   isSafeImageSrc,
+  redactPII,
 } from '../src/utils/security.js';
 
 const tests = [
@@ -211,6 +212,54 @@ imageSrcTests.forEach(test => {
   try {
     const result = isSafeImageSrc(test.input);
     if (result !== test.expected) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+const redactTests = [
+  {
+    name: 'Redact email and phone',
+    input: { basics: { email: 'test@example.com', phone: '123-456' } },
+    expected: { basics: { email: '[REDACTED]', phone: '[REDACTED]' } },
+  },
+  {
+    name: 'Preserve other data',
+    input: { basics: { name: 'John', email: 'e' }, other: 'data' },
+    expected: { basics: { name: 'John', email: '[REDACTED]' }, other: 'data' },
+  },
+  {
+    name: 'Handle missing basics',
+    input: { other: 'data' },
+    expected: { other: 'data' },
+  },
+  {
+    name: 'Handle missing fields',
+    input: { basics: { name: 'John' } },
+    expected: { basics: { name: 'John' } },
+  },
+  {
+    name: 'Handle null/undefined',
+    input: null,
+    expected: null,
+  },
+];
+
+console.log('\nRunning PII Redaction Tests...');
+redactTests.forEach(test => {
+  try {
+    const result = redactPII(test.input);
+    const passed = JSON.stringify(result) === JSON.stringify(test.expected);
+    if (!passed) {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);
       console.error(`Expected:`, test.expected);

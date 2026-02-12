@@ -204,3 +204,35 @@ export const isValidChatMessage = message => {
 
   return true;
 };
+
+/**
+ * Redacts Personally Identifiable Information (PII) from the resume data.
+ * This prevents sensitive information like email and phone numbers from being sent to external AI APIs.
+ *
+ * @param {object} data - The resume data object.
+ * @returns {object} A copy of the data with PII redacted.
+ *
+ * @example
+ * const data = { basics: { email: 'test@example.com' } };
+ * const safe = redactPII(data);
+ * // Returns: { basics: { email: '[REDACTED]' } }
+ */
+export const redactPII = data => {
+  if (!data || typeof data !== 'object') {
+    return data;
+  }
+
+  // Deep clone to avoid mutating original data
+  const safeData = JSON.parse(JSON.stringify(data));
+
+  if (safeData.basics) {
+    if (safeData.basics.email) {
+      safeData.basics.email = '[REDACTED]';
+    }
+    if (safeData.basics.phone) {
+      safeData.basics.phone = '[REDACTED]';
+    }
+  }
+
+  return safeData;
+};
