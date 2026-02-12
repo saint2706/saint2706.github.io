@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Security tests
+        run: npm run test:security
+
+      - name: CSP tests
+        run: npm run test:csp
+
+      - name: Verify SRI
+        run: npm run verify:sri
+
+      - name: Python runner stdout tests
+        run: npm run test:python-runner-stdout
+
+      - name: Pyodide loader retry tests
+        run: npm run test:pyodide-loader-retry
