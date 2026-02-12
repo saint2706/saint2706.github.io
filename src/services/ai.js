@@ -9,14 +9,15 @@
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { resumeData } from '../data/resume';
-import { sanitizeInput, redactPII } from '../utils/security';
+import { resumeData } from '../data/resume.js';
+import { sanitizeInput, redactPII } from '../utils/security.js';
 
 // API Configuration
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
+const API_KEY = import.meta?.env?.VITE_GEMINI_API_KEY?.trim();
 const API_TIMEOUT = 15000; // Maximum time (ms) to wait for API response before timing out
 const MAX_INPUT_LENGTH = 1000; // Maximum allowed characters in user input to prevent token exhaustion
 const RATE_LIMIT_MS = 2000; // Minimum time (ms) between consecutive requests to prevent API abuse
+const ALLOWED_HISTORY_ROLES = new Set(['user', 'model']);
 
 // Rate limiting: Track last request timestamps to enforce rate limits
 let lastChatRequestTime = 0;
@@ -145,12 +146,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
 
   try {
     // Sanitize history messages to prevent injection attacks from tampered localStorage
-    const sanitizedHistory = history.map(entry => ({
-      role: entry.role === 'user' || entry.role === 'model' ? entry.role : 'user', // Validate role
-      parts: entry.parts.map(part => ({
-        text: part.text ? sanitizeInput(part.text) : part.text,
-      })),
-    }));
+    const sanitizedHistory = sanitizeHistoryForGemini(history);
 
     // Initialize chat with system prompt and conversation history
     const chat = model.startChat({
@@ -194,6 +190,47 @@ export const chatWithGemini = async (userMessage, history = []) => {
     // Generic error fallback
     return 'I seem to be having a connection glitch. Maybe my neural pathways are crossed? Try again later!';
   }
+};
+
+/**
+ * Sanitizes Gemini chat history and drops malformed entries.
+ *
+ * @param {Array<object>} history - Candidate chat history entries
+ * @returns {Array<object>} Strictly valid history entries for Gemini API
+ */
+export const sanitizeHistoryForGemini = history => {
+  if (!Array.isArray(history)) {
+    return [];
+  }
+
+  return history.flatMap(entry => {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      return [];
+    }
+
+    if (!ALLOWED_HISTORY_ROLES.has(entry.role) || !Array.isArray(entry.parts)) {
+      return [];
+    }
+
+    const sanitizedParts = entry.parts.flatMap(part => {
+      if (!part || typeof part !== 'object' || Array.isArray(part) || typeof part.text !== 'string') {
+        return [];
+      }
+
+      const sanitizedText = sanitizeInput(part.text);
+      if (!sanitizedText) {
+        return [];
+      }
+
+      return [{ text: sanitizedText }];
+    });
+
+    if (sanitizedParts.length === 0) {
+      return [];
+    }
+
+    return [{ role: entry.role, parts: sanitizedParts }];
+  });
 };
 
 /**
