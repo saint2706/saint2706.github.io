@@ -227,7 +227,7 @@ const Resume = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
+              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               My Journey
@@ -269,8 +269,8 @@ const Resume = () => {
                   key={section}
                   onClick={() => toggleSection(section)}
                   className={`px-4 py-2 text-sm font-heading font-bold border-nb border-[color:var(--color-border)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${isActive
-                      ? 'bg-fun-yellow text-black'
-                      : 'bg-card text-secondary'
+                    ? 'bg-fun-yellow text-black'
+                    : 'bg-card text-secondary'
                     }`}
                   style={{ boxShadow: isActive ? 'var(--nb-shadow)' : '2px 2px 0 var(--color-border)' }}
                   aria-pressed={isActive}

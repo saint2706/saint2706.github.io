@@ -95,7 +95,7 @@ const Contact = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
+              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               Let&apos;s Connect

@@ -170,23 +170,9 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative">
+    <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative nb-paper-bg">
       {/* Custom interactive cursor */}
       <CustomCursor enabled={effectiveCursorEnabled} />
-
-      {/* Subtle grid background pattern */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div
-          className="w-full h-full opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(var(--color-border) 1px, transparent 1px),
-              linear-gradient(90deg, var(--color-border) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
-          }}
-        />
-      </div>
 
       {/* Skip navigation link for keyboard users */}
       <a

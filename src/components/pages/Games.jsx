@@ -115,15 +115,15 @@ const Games = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          {/* Easter Egg Badge */}
+          {/* Easter Egg Badge — sticker rotation stamp-in */}
           <motion.div
-            initial={shouldReduceMotion ? false : { scale: 0 }}
-            animate={{ scale: 1 }}
+            initial={shouldReduceMotion ? false : { scale: 0, rotate: 5 }}
+            animate={{ scale: 1, rotate: -2 }}
             transition={
               shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }
             }
-            className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+            className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb nb-sticker"
+            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '-2deg' }}
           >
             <Gamepad2 className="w-5 h-5" />
             <span className="text-sm">Easter Egg Found!</span>
@@ -131,7 +131,7 @@ const Games = () => {
 
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
+              className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               Game Zone
@@ -158,10 +158,10 @@ const Games = () => {
                 aria-selected={activeGame === game.id}
                 aria-controls={`${game.id}-panel`}
                 id={`${game.id}-tab`}
-                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
+                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer nb-shadow-lift motion-reduce:transform-none motion-reduce:transition-none rounded-nb
                                     ${activeGame === game.id
-                    ? `${game.color} text-white -translate-x-0.5 -translate-y-0.5`
-                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                    ? `${game.color} text-white`
+                    : 'bg-card text-[color:var(--color-text-primary)]'
                   }`}
                 style={{
                   boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
@@ -182,12 +182,13 @@ const Games = () => {
               </button>
             ))}
           </div>
-        </motion.div>
+        </motion.div >
 
         {/* Game Container */}
-        <motion.div
+        < motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }
+          }
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
           className="flex justify-center"
         >
@@ -218,10 +219,10 @@ const Games = () => {
               </motion.div>
             </AnimatePresence>
           </div>
-        </motion.div>
+        </motion.div >
 
         {/* Footer hint */}
-        <motion.div
+        < motion.div
           initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
@@ -235,8 +236,8 @@ const Games = () => {
               Psst... you found this page by going to /games. Keep it a secret! 🤫
             </p>
           </div>
-        </motion.div>
-      </div>
+        </motion.div >
+      </div >
     </>
   );
 };

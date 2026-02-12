@@ -6,6 +6,8 @@
 import React, { useState, useCallback } from 'react';
 import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
+import ZigzagDivider from '../shared/ZigzagDivider';
+import MarqueeTicker from '../shared/MarqueeTicker';
 
 /**
  * Footer component with social links, attribution, and easter egg
@@ -66,103 +68,114 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-12 mt-20 border-t-nb border-[color:var(--color-border)] bg-primary relative overflow-hidden">
-      {/* CSS Confetti Animation */}
-      {showConfetti && (
-        <div className="absolute inset-0 pointer-events-none z-20" aria-hidden="true">
-          {confettiParticles.map((p, i) => (
-            <div
-              key={i}
-              className="confetti-piece"
-              style={{
-                '--x': p.x,
-                '--delay': p.delay,
-                '--color': p.color,
-                '--rotation': p.rotation,
-                '--duration': p.duration,
-              }}
-            />
-          ))}
-        </div>
-      )}
+    <footer className="mt-20 bg-primary relative overflow-hidden">
+      {/* Zigzag divider — replaces thin border-top */}
+      <ZigzagDivider />
 
-      <ScrollReveal variant="fade-up">
-        <div className="max-w-4xl mx-auto px-4">
-          {/* Social Links */}
-          <div className="flex justify-center gap-4 mb-8">
-            {socialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`p-3 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${link.hoverColor}`}
-                style={{ boxShadow: 'var(--nb-shadow)' }}
-                aria-label={link.label}
-              >
-                {link.icon}
-              </a>
+      {/* Tech stack marquee band */}
+      <MarqueeTicker
+        bgColor="bg-fun-yellow"
+        items={['Python', 'React', 'SQL', 'Tableau', 'TensorFlow', 'Machine Learning', 'Deep Learning', 'NLP', 'D3.js']}
+      />
+
+      <div className="py-12">
+        {/* CSS Confetti Animation */}
+        {showConfetti && (
+          <div className="absolute inset-0 pointer-events-none z-20" aria-hidden="true">
+            {confettiParticles.map((p, i) => (
+              <div
+                key={i}
+                className="confetti-piece"
+                style={{
+                  '--x': p.x,
+                  '--delay': p.delay,
+                  '--color': p.color,
+                  '--rotation': p.rotation,
+                  '--duration': p.duration,
+                }}
+              />
             ))}
           </div>
+        )}
 
-          {/* Made with love - Centered */}
-          <div className="flex justify-center">
-            <div
-              className="bg-fun-yellow border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2">
-                Made with <Coffee size={16} className="text-black" aria-hidden="true" />
-                <span className="sr-only">coffee</span>
-                +{' '}
-                <button
-                  onClick={handleHeartClick}
-                  className="inline-flex cursor-pointer hover:scale-125 transition-transform motion-reduce:transform-none p-0 bg-transparent border-none"
-                  aria-label={
-                    showSecret
-                      ? 'You found the secret!'
-                      : `Click ${HEARTS_REQUIRED - heartClicks} more times for a surprise`
-                  }
+        <ScrollReveal variant="fade-up">
+          <div className="max-w-4xl mx-auto px-4">
+            {/* Social Links */}
+            <div className="flex justify-center gap-4 mb-8">
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-3 bg-card border-nb border-[color:var(--color-border)] text-[color:var(--color-text-primary)] nb-shadow-lift nb-color-invert motion-reduce:transform-none motion-reduce:transition-none rounded-nb`}
+                  style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  aria-label={link.label}
                 >
-                  <Heart
-                    size={16}
-                    className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`}
-                    aria-hidden="true"
-                  />
-                </button>
-                <span className="sr-only">love</span>
-                by Rishabh Agrawal
-              </p>
+                  {link.icon}
+                </a>
+              ))}
             </div>
-          </div>
 
-          {/* Easter egg secret message */}
-          {showSecret && (
-            <div className="mt-4 text-center">
-              <span
-                className="inline-block bg-fun-pink text-white px-4 py-2 text-sm font-heading font-bold border-2 border-[color:var(--color-border)] rounded-nb animate-bounce"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            {/* Made with love - Centered */}
+            <div className="flex justify-center">
+              <div
+                className="bg-fun-yellow border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
+                style={{ boxShadow: 'var(--nb-shadow)' }}
               >
-                You found a secret! ❤️ Thanks for clicking around!
-              </span>
+                <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2">
+                  Made with <Coffee size={16} className="text-black" aria-hidden="true" />
+                  <span className="sr-only">coffee</span>
+                  +{' '}
+                  <button
+                    onClick={handleHeartClick}
+                    className="inline-flex cursor-pointer hover:scale-125 transition-transform motion-reduce:transform-none p-0 bg-transparent border-none"
+                    aria-label={
+                      showSecret
+                        ? 'You found the secret!'
+                        : `Click ${HEARTS_REQUIRED - heartClicks} more times for a surprise`
+                    }
+                  >
+                    <Heart
+                      size={16}
+                      className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <span className="sr-only">love</span>
+                  by Rishabh Agrawal
+                </p>
+              </div>
             </div>
-          )}
 
-          {/* Copyright */}
-          <p className="text-secondary font-sans text-sm md:text-xs mt-6 text-center leading-relaxed">
-            © {new Date().getFullYear()} All rights reserved.
-          </p>
+            {/* Easter egg secret message */}
+            {showSecret && (
+              <div className="mt-4 text-center">
+                <span
+                  className="inline-block bg-fun-pink text-white px-4 py-2 text-sm font-heading font-bold border-2 border-[color:var(--color-border)] rounded-nb animate-bounce"
+                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                >
+                  You found a secret! ❤️ Thanks for clicking around!
+                </span>
+              </div>
+            )}
 
-          {/* Cmd+K hint */}
-          <p className="text-muted font-sans text-xs mt-2 text-center">
-            Press{' '}
-            <kbd className="px-1.5 py-0.5 bg-secondary border border-[color:var(--color-border)] rounded text-[10px] font-mono">
-              Ctrl+K
-            </kbd>{' '}
-            to open command palette
-          </p>
-        </div>
-      </ScrollReveal>
+            {/* Copyright */}
+            <p className="text-[color:var(--color-text-secondary)] font-sans text-sm md:text-xs mt-6 text-center leading-relaxed">
+              © {new Date().getFullYear()} All rights reserved.
+            </p>
+
+            {/* Cmd+K hint */}
+            <p className="text-[color:var(--color-text-muted)] font-sans text-xs mt-2 text-center">
+              Press{' '}
+              <kbd className="px-1.5 py-0.5 bg-secondary border border-[color:var(--color-border)] rounded text-[10px] font-mono">
+                Ctrl+K
+              </kbd>{' '}
+              to open command palette
+            </p>
+          </div>
+        </ScrollReveal>
+      </div>
     </footer>
   );
 };

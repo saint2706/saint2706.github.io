@@ -122,7 +122,7 @@ const Projects = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-fun-yellow text-black px-4 py-2 border-nb border-[color:var(--color-border)] rounded-nb"
+              className="inline-block bg-fun-yellow text-black px-4 py-2 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               Creative Experiments
@@ -155,12 +155,11 @@ const Projects = () => {
                   event.currentTarget.click();
                 }
               }}
-              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-              whileHover={shouldReduceMotion ? undefined : { boxShadow: 'var(--nb-shadow-hover)' }}
+              className={`bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer nb-shadow-lift nb-sticker focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb`}
+              style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg' }}
             >
               {/* Color accent bar */}
-              <div className={`h-3 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
+              <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
 
               {/* Project Image */}
               {project.image && (
@@ -189,7 +188,7 @@ const Projects = () => {
                       </span>
                     )}
                     {project.featured && (
-                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb">
+                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb nb-sticker" style={{ '--sticker-rotate': '3deg' }}>
                         Featured
                       </span>
                     )}

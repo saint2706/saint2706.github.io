@@ -74,6 +74,8 @@ export default {
         // Neubrutalism shadows: Offset shadows for depth effect
         nb: 'var(--nb-shadow)',
         'nb-hover': 'var(--nb-shadow-hover)',
+        'nb-xl': 'var(--nb-shadow-xl)',
+        'nb-pressed': 'var(--nb-shadow-pressed)',
 
         // Glassmorphism glow effects: Soft luminous halos
         'glow-sm': '0 0 15px var(--glow-color, rgba(139, 92, 246, 0.3))',
@@ -108,6 +110,8 @@ export default {
         float: 'float 6s ease-in-out infinite',
         // Continuous horizontal scroll for ticker displays
         ticker: 'ticker 30s linear infinite',
+        // Neubrutalist stamp-in entrance
+        'nb-stamp': 'nb-stamp-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both',
       },
       keyframes: {
         // Pulsing glow: Breathe effect for glowing elements
@@ -129,6 +133,12 @@ export default {
         ticker: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        // Neubrutalist stamp-in: rubber stamp thwack
+        'nb-stamp-in': {
+          '0%': { opacity: '0', transform: 'scale(1.15) rotate(3deg)' },
+          '60%': { opacity: '1', transform: 'scale(0.97) rotate(-0.5deg)' },
+          '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
         },
       },
     },

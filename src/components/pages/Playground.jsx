@@ -151,7 +151,7 @@ const Playground = () => {
         >
           <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb"
+              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
               Code Playground
@@ -179,10 +179,9 @@ const Playground = () => {
                 aria-selected={activeFilter === filter.id}
                 aria-controls="snippets-grid"
                 className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
-                  ${
-                    activeFilter === filter.id
-                      ? `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`
-                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                  ${activeFilter === filter.id
+                    ? `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`
+                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
                 style={{
                   boxShadow:
@@ -310,8 +309,7 @@ const SnippetCard = ({
       className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb"
       style={{ boxShadow: 'var(--nb-shadow)' }}
     >
-      {/* Color accent bar */}
-      <div className={`h-2 ${colorClass}`} />
+      <div className={`h-3 ${colorClass}`} />
 
       <div className="p-5 flex-grow flex flex-col">
         {/* Header */}
@@ -322,12 +320,12 @@ const SnippetCard = ({
             ) : (
               <Palette size={18} className="text-fun-pink" aria-hidden="true" />
             )}
-            <h3 className="text-lg font-heading font-bold text-primary">{snippet.title}</h3>
+            <h3 className="text-lg font-heading font-bold text-[color:var(--color-text-primary)]">{snippet.title}</h3>
           </div>
           <span
-            className={`text-xs font-bold px-2 py-1 rounded-nb border-2 border-[color:var(--color-border)] ${
-              snippet.language === 'python' ? 'bg-accent text-white' : 'bg-fun-pink text-white'
-            }`}
+            className={`text-xs font-bold px-2 py-1 rounded-nb border-2 border-[color:var(--color-border)] nb-sticker ${snippet.language === 'python' ? 'bg-accent text-white' : 'bg-fun-pink text-white'
+              }`}
+            style={{ '--sticker-rotate': '3deg' }}
           >
             {snippet.language.toUpperCase()}
           </span>
@@ -339,15 +337,14 @@ const SnippetCard = ({
         </p>
 
         {/* Code Block */}
-        <div className="relative mb-4 flex-grow">
+        <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64">
           <SyntaxHighlighter code={snippet.code} language={snippet.language} />
 
           {/* Copy Button */}
           <button
             onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
-              isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
-            }`}
+            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+              }`}
             aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
           >
             {isCopied ? (
@@ -369,7 +366,7 @@ const SnippetCard = ({
           {snippet.tags.map(tag => (
             <span
               key={tag}
-              className="text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb"
+              className="text-xs font-bold font-heading px-2.5 py-1 bg-secondary text-[color:var(--color-text-primary)] border-2 border-[color:var(--color-border)] rounded-nb"
             >
               {tag}
             </span>

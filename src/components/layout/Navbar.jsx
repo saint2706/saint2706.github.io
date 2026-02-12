@@ -160,14 +160,15 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               to={item.path}
               className={({ isActive }) =>
                 `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
-                ${
-                  isActive
-                    ? 'bg-fun-yellow text-black border-[color:var(--color-border)]'
-                    : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary'
+                ${isActive
+                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1'
+                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
                 }`
               }
               style={({ isActive }) =>
-                isActive ? { boxShadow: '2px 2px 0 var(--color-border)' } : {}
+                isActive
+                  ? { boxShadow: 'inset 2px 2px 0 var(--color-border)', transform: 'translateY(1px) rotate(-1deg)' }
+                  : { boxShadow: 'var(--nb-shadow)' }
               }
             >
               <span className="hidden lg:inline" aria-hidden="true">
