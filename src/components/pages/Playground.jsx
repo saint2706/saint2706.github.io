@@ -179,9 +179,10 @@ const Playground = () => {
                 aria-selected={activeFilter === filter.id}
                 aria-controls="snippets-grid"
                 className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
-                  ${activeFilter === filter.id
-                    ? `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`
-                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                  ${
+                    activeFilter === filter.id
+                      ? `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`
+                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
                 style={{
                   boxShadow:
@@ -320,11 +321,14 @@ const SnippetCard = ({
             ) : (
               <Palette size={18} className="text-fun-pink" aria-hidden="true" />
             )}
-            <h3 className="text-lg font-heading font-bold text-[color:var(--color-text-primary)]">{snippet.title}</h3>
+            <h3 className="text-lg font-heading font-bold text-[color:var(--color-text-primary)]">
+              {snippet.title}
+            </h3>
           </div>
           <span
-            className={`text-xs font-bold px-2 py-1 rounded-nb border-2 border-[color:var(--color-border)] nb-sticker ${snippet.language === 'python' ? 'bg-accent text-white' : 'bg-fun-pink text-white'
-              }`}
+            className={`text-xs font-bold px-2 py-1 rounded-nb border-2 border-[color:var(--color-border)] nb-sticker ${
+              snippet.language === 'python' ? 'bg-accent text-white' : 'bg-fun-pink text-white'
+            }`}
             style={{ '--sticker-rotate': '3deg' }}
           >
             {snippet.language.toUpperCase()}
@@ -343,8 +347,9 @@ const SnippetCard = ({
           {/* Copy Button */}
           <button
             onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
-              }`}
+            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
+              isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+            }`}
             aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
           >
             {isCopied ? (

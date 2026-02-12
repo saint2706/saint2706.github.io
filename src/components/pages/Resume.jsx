@@ -156,12 +156,10 @@ const Resume = () => {
   const title = `Resume | ${resumeData.basics.name}`;
 
   // Interactive filter state — all sections visible by default
-  const [visibleSections, setVisibleSections] = useState(
-    () => new Set(SECTIONS)
-  );
+  const [visibleSections, setVisibleSections] = useState(() => new Set(SECTIONS));
 
   /** Toggle a section's visibility */
-  const toggleSection = useCallback((section) => {
+  const toggleSection = useCallback(section => {
     setVisibleSections(prev => {
       const next = new Set(prev);
       if (next.has(section)) {
@@ -257,9 +255,7 @@ const Resume = () => {
         >
           <div className="flex items-center gap-2 mb-3">
             <Filter size={16} className="text-secondary" />
-            <span className="text-sm font-heading font-bold text-secondary">
-              Filter Sections
-            </span>
+            <span className="text-sm font-heading font-bold text-secondary">Filter Sections</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {SECTIONS.map(section => {
@@ -268,11 +264,12 @@ const Resume = () => {
                 <button
                   key={section}
                   onClick={() => toggleSection(section)}
-                  className={`px-4 py-2 text-sm font-heading font-bold border-nb border-[color:var(--color-border)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${isActive
-                    ? 'bg-fun-yellow text-black'
-                    : 'bg-card text-secondary'
-                    }`}
-                  style={{ boxShadow: isActive ? 'var(--nb-shadow)' : '2px 2px 0 var(--color-border)' }}
+                  className={`px-4 py-2 text-sm font-heading font-bold border-nb border-[color:var(--color-border)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${
+                    isActive ? 'bg-fun-yellow text-black' : 'bg-card text-secondary'
+                  }`}
+                  style={{
+                    boxShadow: isActive ? 'var(--nb-shadow)' : '2px 2px 0 var(--color-border)',
+                  }}
                   aria-pressed={isActive}
                 >
                   {section}
@@ -294,11 +291,7 @@ const Resume = () => {
               transition={{ duration: 0.3 }}
             >
               <ScrollReveal variant="fade-up" delay={0.1}>
-                <Section
-                  title="Experience"
-                  icon={<Briefcase size={24} />}
-                  color="bg-fun-pink"
-                >
+                <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
                   {resumeData.experience.map((job, i) => (
                     <TimelineCard
                       key={i}
@@ -325,11 +318,7 @@ const Resume = () => {
               transition={{ duration: 0.3 }}
             >
               <ScrollReveal variant="fade-up" delay={0.2}>
-                <Section
-                  title="Education"
-                  icon={<GraduationCap size={24} />}
-                  color="bg-accent"
-                >
+                <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
                   {resumeData.education.map((edu, i) => (
                     <TimelineCard
                       key={i}
@@ -456,9 +445,7 @@ const Resume = () => {
                         className="flex items-center gap-3 px-4 py-3 bg-secondary border-[3px] border-[color:var(--color-border)]"
                         style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                       >
-                        <span className="text-primary font-heading font-bold">
-                          {lang.name}
-                        </span>
+                        <span className="text-primary font-heading font-bold">{lang.name}</span>
                         <span className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold">
                           {lang.proficiency}
                         </span>

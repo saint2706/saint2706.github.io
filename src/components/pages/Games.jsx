@@ -149,7 +149,11 @@ const Games = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="flex justify-center mb-8"
         >
-          <div className="flex gap-3 flex-wrap justify-center" role="tablist" aria-label="Select a game to play">
+          <div
+            className="flex gap-3 flex-wrap justify-center"
+            role="tablist"
+            aria-label="Select a game to play"
+          >
             {games.map(game => (
               <button
                 key={game.id}
@@ -159,10 +163,11 @@ const Games = () => {
                 aria-controls={`${game.id}-panel`}
                 id={`${game.id}-tab`}
                 className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer nb-shadow-lift motion-reduce:transform-none motion-reduce:transition-none rounded-nb
-                                    ${activeGame === game.id
-                    ? `${game.color} text-white`
-                    : 'bg-card text-[color:var(--color-text-primary)]'
-                  }`}
+                                    ${
+                                      activeGame === game.id
+                                        ? `${game.color} text-white`
+                                        : 'bg-card text-[color:var(--color-text-primary)]'
+                                    }`}
                 style={{
                   boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
                 }}
@@ -171,8 +176,9 @@ const Games = () => {
                 <span className="flex items-center gap-2">
                   <span>{game.label}</span>
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${activeGame === game.id ? 'opacity-100' : 'opacity-0'
-                      }`}
+                    className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
+                      activeGame === game.id ? 'opacity-100' : 'opacity-0'
+                    }`}
                     aria-hidden={activeGame !== game.id}
                   >
                     <Check className="h-3 w-3" aria-hidden="true" />
@@ -182,13 +188,12 @@ const Games = () => {
               </button>
             ))}
           </div>
-        </motion.div >
+        </motion.div>
 
         {/* Game Container */}
-        < motion.div
+        <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }
-          }
+          animate={{ opacity: 1, scale: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
           className="flex justify-center"
         >
@@ -219,10 +224,10 @@ const Games = () => {
               </motion.div>
             </AnimatePresence>
           </div>
-        </motion.div >
+        </motion.div>
 
         {/* Footer hint */}
-        < motion.div
+        <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
@@ -236,8 +241,8 @@ const Games = () => {
               Psst... you found this page by going to /games. Keep it a secret! 🤫
             </p>
           </div>
-        </motion.div >
-      </div >
+        </motion.div>
+      </div>
     </>
   );
 };

@@ -11,30 +11,30 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
  * Each variant defines initial (hidden) and animate (visible) states
  */
 const variants = {
-    'fade-up': {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0 },
-    },
-    'fade-down': {
-        hidden: { opacity: 0, y: -40 },
-        visible: { opacity: 1, y: 0 },
-    },
-    'fade-left': {
-        hidden: { opacity: 0, x: -40 },
-        visible: { opacity: 1, x: 0 },
-    },
-    'fade-right': {
-        hidden: { opacity: 0, x: 40 },
-        visible: { opacity: 1, x: 0 },
-    },
-    'scale-in': {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: { opacity: 1, scale: 1 },
-    },
-    'slide-up': {
-        hidden: { opacity: 0, y: 60 },
-        visible: { opacity: 1, y: 0 },
-    },
+  'fade-up': {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  },
+  'fade-down': {
+    hidden: { opacity: 0, y: -40 },
+    visible: { opacity: 1, y: 0 },
+  },
+  'fade-left': {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
+  },
+  'fade-right': {
+    hidden: { opacity: 0, x: 40 },
+    visible: { opacity: 1, x: 0 },
+  },
+  'scale-in': {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  'slide-up': {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0 },
+  },
 };
 
 /**
@@ -55,43 +55,43 @@ const variants = {
  * @returns {JSX.Element} Animated wrapper
  */
 const ScrollReveal = ({
-    children,
-    variant = 'fade-up',
-    delay = 0,
-    duration = 0.6,
-    threshold = 0.2,
-    once = true,
-    className = '',
+  children,
+  variant = 'fade-up',
+  delay = 0,
+  duration = 0.6,
+  threshold = 0.2,
+  once = true,
+  className = '',
 }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once, amount: threshold });
-    const shouldReduceMotion = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once, amount: threshold });
+  const shouldReduceMotion = useReducedMotion();
 
-    const selectedVariant = variants[variant] || variants['fade-up'];
+  const selectedVariant = variants[variant] || variants['fade-up'];
 
-    if (shouldReduceMotion) {
-        return (
-            <div ref={ref} className={className}>
-                {children}
-            </div>
-        );
-    }
-
+  if (shouldReduceMotion) {
     return (
-        <motion.div
-            ref={ref}
-            initial={selectedVariant.hidden}
-            animate={isInView ? selectedVariant.visible : selectedVariant.hidden}
-            transition={{
-                duration,
-                delay,
-                ease: [0.25, 0.1, 0.25, 1],
-            }}
-            className={className}
-        >
-            {children}
-        </motion.div>
+      <div ref={ref} className={className}>
+        {children}
+      </div>
     );
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={selectedVariant.hidden}
+      animate={isInView ? selectedVariant.visible : selectedVariant.hidden}
+      transition={{
+        duration,
+        delay,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 };
 
 export default ScrollReveal;

@@ -58,22 +58,19 @@ const Projects = () => {
    * Handle card click to open primary link.
    * Checks for text selection to avoid accidental navigation.
    */
-  const handleCardClick = useCallback(
-    project => {
-      return () => {
-        // Ignore if user is selecting text
-        const selection = window.getSelection();
-        if (selection && selection.toString().length > 0) return;
+  const handleCardClick = useCallback(project => {
+    return () => {
+      // Ignore if user is selecting text
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) return;
 
-        // Prioritize Live Demo, fallback to GitHub
-        const targetUrl = project.link || project.github;
-        if (targetUrl) {
-          window.open(targetUrl, '_blank', 'noopener,noreferrer');
-        }
-      };
-    },
-    []
-  );
+      // Prioritize Live Demo, fallback to GitHub
+      const targetUrl = project.link || project.github;
+      if (targetUrl) {
+        window.open(targetUrl, '_blank', 'noopener,noreferrer');
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -149,14 +146,17 @@ const Projects = () => {
               onClick={handleCardClick(project)}
               role="link"
               tabIndex={0}
-              onKeyDown={(event) => {
+              onKeyDown={event => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   event.preventDefault();
                   event.currentTarget.click();
                 }
               }}
               className={`bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer nb-shadow-lift nb-sticker focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb`}
-              style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg' }}
+              style={{
+                boxShadow: 'var(--nb-shadow)',
+                '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
+              }}
             >
               {/* Color accent bar */}
               <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
@@ -188,7 +188,10 @@ const Projects = () => {
                       </span>
                     )}
                     {project.featured && (
-                      <span className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb nb-sticker" style={{ '--sticker-rotate': '3deg' }}>
+                      <span
+                        className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb nb-sticker"
+                        style={{ '--sticker-rotate': '3deg' }}
+                      >
                         Featured
                       </span>
                     )}

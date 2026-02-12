@@ -244,9 +244,10 @@ const Blog = () => {
                 }}
                 aria-pressed={filter === source}
                 className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer motion-reduce:transform-none motion-reduce:transition-none
-                  ${filter === source
-                    ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                    : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                  ${
+                    filter === source
+                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
                   }`}
                 style={{
                   boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
@@ -301,12 +302,13 @@ const Blog = () => {
             )}
             <div
               id="blog-search-limit"
-              className={`text-[10px] text-right mt-1 font-sans transition-colors ${searchTerm.length >= 100
+              className={`text-[10px] text-right mt-1 font-sans transition-colors ${
+                searchTerm.length >= 100
                   ? 'text-red-500 font-bold'
                   : searchTerm.length >= 90
                     ? 'text-orange-500'
                     : 'text-muted'
-                }`}
+              }`}
             >
               {searchTerm.length}/100
             </div>
@@ -471,9 +473,10 @@ const Blog = () => {
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
                   className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform motion-reduce:transform-none motion-reduce:transition-none
-                    ${page === currentPage
-                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                      : 'bg-card text-primary hover:-translate-y-0.5'
+                    ${
+                      page === currentPage
+                        ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+                        : 'bg-card text-primary hover:-translate-y-0.5'
                     }`}
                   style={{
                     boxShadow:

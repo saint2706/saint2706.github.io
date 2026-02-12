@@ -66,13 +66,13 @@ const parseColor = (value, fallback) => {
     const r = parseInt(normalized.slice(0, 2), 16);
     const g = parseInt(normalized.slice(2, 4), 16);
     const b = parseInt(normalized.slice(4, 6), 16);
-    
+
     // Validate parsed channels and clamp to 0-255
     if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return fallback;
     return {
       r: clampChannel(r),
       g: clampChannel(g),
-      b: clampChannel(b)
+      b: clampChannel(b),
     };
   }
 
@@ -81,13 +81,13 @@ const parseColor = (value, fallback) => {
     const matches = trimmed.match(/\d+(\.\d+)?/g);
     if (!matches || matches.length < 3) return fallback;
     const [r, g, b] = matches.map(Number);
-    
+
     // Validate parsed channels and clamp to 0-255
     if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return fallback;
     return {
       r: clampChannel(r),
       g: clampChannel(g),
-      b: clampChannel(b)
+      b: clampChannel(b),
     };
   }
 
@@ -395,7 +395,7 @@ const SnakeGame = () => {
         borderColor,
         funYellowColor,
         accentRgb: parseColor(accentColor, { r: 33, g: 150, b: 243 }),
-        funPinkRgb: parseColor(funPinkColor, { r: 255, g: 82, b: 82 })
+        funPinkRgb: parseColor(funPinkColor, { r: 255, g: 82, b: 82 }),
       };
     }
 
