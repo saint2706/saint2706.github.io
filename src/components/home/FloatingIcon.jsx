@@ -1,6 +1,34 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
+/**
+ * FloatingIcon Component
+ *
+ * A decorative animated icon that floats, rotates, and pulses opacity in a continuous loop.
+ * Respects user's motion preferences by hiding itself when reduced motion is preferred.
+ *
+ * This component is used in the Hero section to add visual interest with subtle animations
+ * that don't distract from the main content. The animations include:
+ * - Vertical floating motion (up and down)
+ * - Gentle rotation oscillation
+ * - Pulsing opacity for a breathing effect
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.icon - The icon element to be animated (typically from lucide-react)
+ * @param {number} props.delay - Animation start delay in seconds to stagger multiple icons
+ * @param {string} props.x - Horizontal position as CSS value (e.g., '10%', '200px')
+ * @param {string} props.y - Vertical position as CSS value (e.g., '50px', '20%')
+ * @returns {React.ReactElement|null} Animated icon or null if reduced motion is preferred
+ *
+ * @example
+ * <FloatingIcon
+ *   icon={<Code size={32} />}
+ *   delay={0.5}
+ *   x="10%"
+ *   y="20%"
+ * />
+ */
 const FloatingIcon = ({ icon, delay, x, y }) => {
   const shouldReduceMotion = useReducedMotion();
 
