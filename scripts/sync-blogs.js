@@ -73,7 +73,9 @@ async function fetchWithTimeoutAndRetry(url, options = {}, attempts = NETWORK_RE
  */
 async function fetchDevTo() {
   try {
-    const response = await fetchWithTimeoutAndRetry('https://dev.to/api/articles?username=saint2706');
+    const response = await fetchWithTimeoutAndRetry(
+      'https://dev.to/api/articles?username=saint2706'
+    );
     if (!response.ok) {
       console.error('Failed to fetch Dev.to articles:', response.statusText);
       return [];

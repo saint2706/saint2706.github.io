@@ -213,7 +213,12 @@ export const sanitizeHistoryForGemini = history => {
     }
 
     const sanitizedParts = entry.parts.flatMap(part => {
-      if (!part || typeof part !== 'object' || Array.isArray(part) || typeof part.text !== 'string') {
+      if (
+        !part ||
+        typeof part !== 'object' ||
+        Array.isArray(part) ||
+        typeof part.text !== 'string'
+      ) {
         return [];
       }
 

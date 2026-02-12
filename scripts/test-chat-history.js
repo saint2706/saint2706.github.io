@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
-import { buildNextMessages, buildGeminiHistory, MAX_HISTORY_CONTEXT } from '../src/components/shared/chatHistory.js';
+import {
+  buildNextMessages,
+  buildGeminiHistory,
+  MAX_HISTORY_CONTEXT,
+} from '../src/components/shared/chatHistory.js';
 
 const createMessage = (index, role = 'model') => ({
   id: String(index),
@@ -20,9 +24,21 @@ const userMsg = {
 const nextMessages = buildNextMessages(existingMessages, userMsg);
 const history = buildGeminiHistory(nextMessages);
 
-assert.equal(nextMessages.length, existingMessages.length + 1, 'nextMessages should append user message');
-assert.deepEqual(nextMessages.at(-1), userMsg, 'newest user message should be last in nextMessages');
-assert.equal(history.length, MAX_HISTORY_CONTEXT, 'history should be capped at MAX_HISTORY_CONTEXT');
+assert.equal(
+  nextMessages.length,
+  existingMessages.length + 1,
+  'nextMessages should append user message'
+);
+assert.deepEqual(
+  nextMessages.at(-1),
+  userMsg,
+  'newest user message should be last in nextMessages'
+);
+assert.equal(
+  history.length,
+  MAX_HISTORY_CONTEXT,
+  'history should be capped at MAX_HISTORY_CONTEXT'
+);
 assert.equal(
   history.at(-1).parts[0].text,
   userMsg.text,
