@@ -138,7 +138,8 @@ const ImageRenderer = ({ src, alt, ...rest }) => {
  *
  * @component
  */
-const CodeRenderer = ({ inline, className, children, ...props }) => {
+const CodeRenderer = ({ className, children, node, ...props }) => {
+  const inline = !node?.position || node.position.start.line === node.position.end.line;
   const [isCopied, setIsCopied] = useState(false);
   const copyResetTimeoutRef = useRef(null);
   const match = /language-([\w+-]+)/.exec(className || '');
@@ -223,9 +224,8 @@ const MARKDOWN_COMPONENTS = {
 const MessageItem = React.memo(({ msg }) => (
   <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
     <div
-      className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${
-        msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
-      }`}
+      className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
+        }`}
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
       <ReactMarkdown components={MARKDOWN_COMPONENTS}>{msg.text}</ReactMarkdown>
@@ -595,11 +595,10 @@ const ChatInterface = ({ onClose }) => {
           {messages.length > 1 && (
             <button
               onClick={handleClearClick}
-              className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${
-                showClearConfirm
+              className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${showClearConfirm
                   ? 'bg-red-500 text-white border-white hover:bg-red-600'
                   : 'text-white/70 hover:text-white border-white/30 hover:border-white'
-              }`}
+                }`}
               aria-label={showClearConfirm ? 'Confirm clear chat history' : 'Clear chat history'}
             >
               {showClearConfirm ? 'Confirm?' : 'Clear'}
@@ -672,13 +671,12 @@ const ChatInterface = ({ onClose }) => {
               />
               <div
                 id="chat-char-limit"
-                className={`text-[10px] text-right mt-1 font-sans transition-colors ${
-                  input.length >= 500
+                className={`text-[10px] text-right mt-1 font-sans transition-colors ${input.length >= 500
                     ? 'text-red-500 font-bold'
                     : input.length >= 450
                       ? 'text-orange-500'
                       : 'text-muted'
-                }`}
+                  }`}
               >
                 {input.length}/500
               </div>
