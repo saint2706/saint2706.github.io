@@ -257,6 +257,16 @@ const redactTests = [
     input: undefined,
     expected: undefined,
   },
+  {
+    name: 'Handle basics as null',
+    input: { basics: null, other: 'data' },
+    expected: { basics: null, other: 'data' },
+  },
+  {
+    name: 'Handle basics as array',
+    input: { basics: ['item1', 'item2'], other: 'data' },
+    expected: { basics: ['item1', 'item2'], other: 'data' },
+  },
 ];
 
 console.log('\nRunning PII Redaction Tests...');

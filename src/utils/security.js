@@ -226,7 +226,7 @@ export const redactPII = data => {
   const safeData = { ...data };
 
   // Clone basics separately if present so we can redact without mutating the original
-  if (data.basics && typeof data.basics === 'object') {
+  if (data.basics && typeof data.basics === 'object' && !Array.isArray(data.basics)) {
     safeData.basics = { ...data.basics };
 
     if (safeData.basics.email) {
