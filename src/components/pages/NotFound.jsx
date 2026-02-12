@@ -33,6 +33,8 @@ const NotFound = () => {
 
   // 🕵️ Console easter egg for curious developers who inspect the 404 page
   useEffect(() => {
+    if (!import.meta.env.DEV) return;
+
     console.log(
       '%c🕵️ SECRET AGENT MODE ACTIVATED',
       'background: #9c0e4b; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 16px;'
