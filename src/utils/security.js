@@ -222,10 +222,13 @@ export const redactPII = data => {
     return data;
   }
 
-  // Deep clone to avoid mutating original data
-  const safeData = JSON.parse(JSON.stringify(data));
+  // Shallow clone to avoid mutating original data
+  const safeData = { ...data };
 
-  if (safeData.basics) {
+  // Clone basics separately if present so we can redact without mutating the original
+  if (data.basics && typeof data.basics === 'object') {
+    safeData.basics = { ...data.basics };
+
     if (safeData.basics.email) {
       safeData.basics.email = '[REDACTED]';
     }
