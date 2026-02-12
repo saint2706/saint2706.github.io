@@ -40,6 +40,42 @@ const SPEED_INCREMENT = 5; // Speed increase per food eaten
 const MIN_SPEED = 60; // Maximum speed cap (faster = lower number)
 
 /**
+ * Parses CSS color value to RGB object.
+ * Handles both hex (#RRGGBB) and rgb(r, g, b) formats.
+ */
+const parseColor = (value, fallback) => {
+  if (!value) return fallback;
+  const trimmed = value.trim();
+
+  // Parse hex color (#RRGGBB or #RGB)
+  if (trimmed.startsWith('#')) {
+    const hex = trimmed.replace('#', '');
+    const normalized =
+      hex.length === 3
+        ? hex
+            .split('')
+            .map(char => char + char)
+            .join('')
+        : hex;
+    if (normalized.length !== 6) return fallback;
+    const r = parseInt(normalized.slice(0, 2), 16);
+    const g = parseInt(normalized.slice(2, 4), 16);
+    const b = parseInt(normalized.slice(4, 6), 16);
+    return { r, g, b };
+  }
+
+  // Parse rgb(r, g, b) format
+  if (trimmed.startsWith('rgb')) {
+    const matches = trimmed.match(/\d+(\.\d+)?/g);
+    if (!matches || matches.length < 3) return fallback;
+    const [r, g, b] = matches.map(Number);
+    return { r, g, b };
+  }
+
+  return fallback;
+};
+
+/**
  * Creates initial snake at starting position (center, moving right).
  * Snake starts with 3 segments to give player immediate control feedback.
  *
@@ -113,6 +149,9 @@ const SnakeGame = () => {
   const directionRef = useRef(direction); // Ref to prevent stale closure in game loop
   const canvasRef = useRef(null); // Canvas element for rendering
   const touchStartRef = useRef(null); // Touch start position for swipe detection
+
+  // Ref to cache theme colors to avoid expensive getComputedStyle calls in render loop
+  const themeColorsRef = useRef(null);
 
   /**
    * Sync directionRef with direction state.
@@ -324,56 +363,28 @@ const SnakeGame = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Initialize theme colors if not already cached
+    // This optimization avoids calling getComputedStyle on every frame
+    if (!themeColorsRef.current) {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const borderColor = rootStyles.getPropertyValue('--color-border').trim() || '#000000';
+      const accentColor = rootStyles.getPropertyValue('--color-accent').trim() || '#0052CC';
+      const funPinkColor = rootStyles.getPropertyValue('--color-fun-pink').trim() || '#9C0E4B';
+      const funYellowColor = rootStyles.getPropertyValue('--color-fun-yellow').trim() || '#FFEB3B';
+
+      themeColorsRef.current = {
+        borderColor,
+        funYellowColor,
+        accentRgb: parseColor(accentColor, { r: 33, g: 150, b: 243 }),
+        funPinkRgb: parseColor(funPinkColor, { r: 255, g: 82, b: 82 })
+      };
+    }
+
+    const { borderColor, funYellowColor, accentRgb, funPinkRgb } = themeColorsRef.current;
+
     const ctx = canvas.getContext('2d');
     const width = GRID_SIZE * CELL_SIZE;
     const height = GRID_SIZE * CELL_SIZE;
-
-    // Extract theme colors from CSS variables
-    // Extract theme colors from CSS variables
-    const rootStyles = getComputedStyle(document.documentElement);
-    const borderColor = rootStyles.getPropertyValue('--color-border').trim() || '#000000';
-    const accentColor = rootStyles.getPropertyValue('--color-accent').trim() || '#0052CC';
-    const funPinkColor = rootStyles.getPropertyValue('--color-fun-pink').trim() || '#9C0E4B';
-    const funYellowColor = rootStyles.getPropertyValue('--color-fun-yellow').trim() || '#FFEB3B';
-
-    /**
-     * Parses CSS color value to RGB object.
-     * Handles both hex (#RRGGBB) and rgb(r, g, b) formats.
-     */
-    const parseColor = (value, fallback) => {
-      if (!value) return fallback;
-      const trimmed = value.trim();
-
-      // Parse hex color (#RRGGBB or #RGB)
-      if (trimmed.startsWith('#')) {
-        const hex = trimmed.replace('#', '');
-        const normalized =
-          hex.length === 3
-            ? hex
-                .split('')
-                .map(char => char + char)
-                .join('')
-            : hex;
-        if (normalized.length !== 6) return fallback;
-        const r = parseInt(normalized.slice(0, 2), 16);
-        const g = parseInt(normalized.slice(2, 4), 16);
-        const b = parseInt(normalized.slice(4, 6), 16);
-        return { r, g, b };
-      }
-
-      // Parse rgb(r, g, b) format
-      if (trimmed.startsWith('rgb')) {
-        const matches = trimmed.match(/\d+(\.\d+)?/g);
-        if (!matches || matches.length < 3) return fallback;
-        const [r, g, b] = matches.map(Number);
-        return { r, g, b };
-      }
-
-      return fallback;
-    };
-
-    const accentRgb = parseColor(accentColor, { r: 33, g: 150, b: 243 });
-    const funPinkRgb = parseColor(funPinkColor, { r: 255, g: 82, b: 82 });
 
     // Clear canvas with light mode background
     ctx.fillStyle = '#F5F5F5';
