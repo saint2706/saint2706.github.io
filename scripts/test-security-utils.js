@@ -248,9 +248,24 @@ const redactTests = [
     expected: { basics: { name: 'John' } },
   },
   {
-    name: 'Handle null/undefined',
+    name: 'Handle null input',
     input: null,
     expected: null,
+  },
+  {
+    name: 'Handle undefined input',
+    input: undefined,
+    expected: undefined,
+  },
+  {
+    name: 'Handle basics as null',
+    input: { basics: null, other: 'data' },
+    expected: { basics: null, other: 'data' },
+  },
+  {
+    name: 'Handle basics as array',
+    input: { basics: ['item1', 'item2'], other: 'data' },
+    expected: { basics: ['item1', 'item2'], other: 'data' },
   },
 ];
 
@@ -273,6 +288,33 @@ redactTests.forEach(test => {
     failed = true;
   }
 });
+
+// Test that original object is not mutated
+console.log('\nTesting PII redaction does not mutate original object...');
+try {
+  const original = { basics: { email: 'test@example.com', phone: '123-456', name: 'John' } };
+  const originalCopy = JSON.stringify(original);
+  const result = redactPII(original);
+  
+  // Check that result has redacted values
+  const resultIsRedacted = result.basics.email === '[REDACTED]' && result.basics.phone === '[REDACTED]';
+  // Check that original is unchanged
+  const originalUnchanged = JSON.stringify(original) === originalCopy;
+  
+  if (!resultIsRedacted || !originalUnchanged) {
+    console.error('FAILED: Original object should not be mutated');
+    console.error('Original:', original);
+    console.error('Result:', result);
+    console.error('Result is redacted:', resultIsRedacted);
+    console.error('Original unchanged:', originalUnchanged);
+    failed = true;
+  } else {
+    console.log('PASS: Original object is not mutated');
+  }
+} catch (e) {
+  console.error('ERROR: Testing original object mutation', e);
+  failed = true;
+}
 
 if (failed) {
   process.exit(1);
