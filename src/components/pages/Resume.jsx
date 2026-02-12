@@ -16,7 +16,7 @@ import {
   Sparkles,
   Filter,
 } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import TechStackVisual from '../shared/TechStackVisual';
