@@ -14,16 +14,30 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const pythonRunnerPath = path.resolve(__dirname, '../src/components/shared/PythonRunner.jsx');
+const pyodideLoaderPath = path.resolve(__dirname, '../src/components/shared/pyodideLoader.js');
 const EXPECTED_HASH = 'sha384-+R8PTzDXzivdjpxOqwVwRhPS9dlske7tKAjwj0O0Kr361gKY5d2Xe6Osl+faRLT7';
 
 try {
-  const content = fs.readFileSync(pythonRunnerPath, 'utf8');
+  const content = fs.readFileSync(pyodideLoaderPath, 'utf8');
 
   // Check for integrity attribute
-  if (!content.includes(`script.integrity = '${EXPECTED_HASH}'`)) {
+  if (!content.includes(`script.integrity = PYODIDE_SCRIPT_SRI`)) {
     console.error('FAILED: SRI integrity attribute is missing or incorrect.');
-    console.error(`Expected: script.integrity = '${EXPECTED_HASH}'`);
+    console.error(`Expected: script.integrity = PYODIDE_SCRIPT_SRI`);
+    process.exit(1);
+  }
+
+  // Check for the constant definition
+  if (!content.includes(`PYODIDE_SCRIPT_SRI =`)) {
+    console.error('FAILED: PYODIDE_SCRIPT_SRI constant is missing.');
+    console.error(`Expected: const PYODIDE_SCRIPT_SRI = ...`);
+    process.exit(1);
+  }
+
+  // Check for the expected hash value
+  if (!content.includes(`'${EXPECTED_HASH}'`)) {
+    console.error('FAILED: SRI hash value is missing or incorrect.');
+    console.error(`Expected: '${EXPECTED_HASH}'`);
     process.exit(1);
   }
 
@@ -34,8 +48,8 @@ try {
     process.exit(1);
   }
 
-  console.log('PASS: PythonRunner.jsx contains correct SRI attributes.');
+  console.log('PASS: pyodideLoader.js contains correct SRI attributes.');
 } catch (error) {
-  console.error('Error reading PythonRunner.jsx:', error);
+  console.error('Error reading pyodideLoader.js:', error);
   process.exit(1);
 }
