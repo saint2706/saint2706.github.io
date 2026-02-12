@@ -8,7 +8,7 @@
  * Features:
  * - Expandable FAB with hover and focus interactions
  * - Lazy-loaded chat and roast interfaces with suspense fallbacks
- * - Keyboard shortcuts (Ctrl/Cmd+K for chat, Escape to close)
+ * - Programmatic open/close via explicit custom events
  * - Focus management and restoration when dialogs open/close
  * - Click-outside detection to close the FAB
  * - Custom event listeners for programmatic control
@@ -99,9 +99,10 @@ const LoadingDialog = ({ type }) => {
  * 2. FAB open - showing the main button plus chat and roast options
  * 3. Dialog open - showing the full chat or roast interface
  *
- * Keyboard Shortcuts:
- * - Ctrl/Cmd+K: Toggle chat interface
- * - Escape: Close all dialogs and FAB
+ * Keyboard Integration:
+ * - This component does not own global keyboard shortcuts
+ * - It reacts to explicit custom events dispatched by higher-level shells
+ * - Events: 'openChatbot', 'closeChatbot'
  *
  * Accessibility:
  * - Focus is trapped within open dialogs
@@ -149,10 +150,16 @@ const Chatbot = () => {
    */
   useEffect(() => {
     const handleOpenChatbot = () => {
+      lastFocusedRef.current = document.activeElement;
       setIsChatOpen(true);
       setIsRoastOpen(false);
+      setIsFabOpen(false);
     };
-    const handleCloseChatbot = () => setIsChatOpen(false);
+    const handleCloseChatbot = () => {
+      setIsChatOpen(false);
+      setIsRoastOpen(false);
+      setIsFabOpen(false);
+    };
 
     document.addEventListener('openChatbot', handleOpenChatbot);
     document.addEventListener('closeChatbot', handleCloseChatbot);
@@ -160,31 +167,6 @@ const Chatbot = () => {
       document.removeEventListener('openChatbot', handleOpenChatbot);
       document.removeEventListener('closeChatbot', handleCloseChatbot);
     };
-  }, []);
-
-  /**
-   * Global keyboard shortcuts for chatbot control.
-   * - Cmd/Ctrl+K: Toggle chat interface (common pattern for search/help)
-   * - Escape: Close all open dialogs and collapse FAB
-   */
-  useEffect(() => {
-    const handleKeyDown = e => {
-      // Toggle chat with Cmd/Ctrl+K
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        lastFocusedRef.current = document.activeElement;
-        setIsChatOpen(prev => !prev);
-        setIsRoastOpen(false);
-      }
-      // Close everything with Escape
-      if (e.key === 'Escape') {
-        setIsChatOpen(false);
-        setIsRoastOpen(false);
-        setIsFabOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   /**
@@ -301,7 +283,7 @@ const Chatbot = () => {
                   onClick={openChat}
                   className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
                   style={{ boxShadow: 'var(--nb-shadow)' }}
-                  aria-label="Chat with Digital Rishabh (Ctrl+K)"
+                  aria-label="Chat with Digital Rishabh"
                 >
                   <Bot size={20} />
                   <span className="text-sm font-heading font-bold hidden sm:inline">Chat</span>

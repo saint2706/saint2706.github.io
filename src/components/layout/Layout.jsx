@@ -39,6 +39,7 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
  * - Skip navigation link for keyboard users
  * - Consistent header/footer structure
  * - Command Palette (Ctrl+K / Cmd+K)
+ * - Centralized global shortcut ownership and event dispatch
  * - Terminal Mode overlay
  * - Konami Code easter egg
  *
@@ -130,16 +131,37 @@ const Layout = ({ children }) => {
   }, [toggleCursor]);
 
   /**
-   * Global keyboard listener for:
-   * - Ctrl+K / Cmd+K → open Command Palette
+   * Global keyboard listener for this shell.
+   *
+   * Shortcut ownership note:
+   * Layout is the single authoritative owner of Cmd/Ctrl+K so feature
+   * components do not bind the same combination independently. Components
+   * should react only to explicit custom events dispatched from here.
+   *
+   * - Ctrl+K / Cmd+K → toggle command palette + emit open/close events
+   * - Escape → close overlays/chatbot via explicit close events
    * - Konami Code → open Terminal Mode
    */
   useEffect(() => {
     const handleKeyDown = e => {
       // ── Command Palette shortcut ──
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        setIsCommandPaletteOpen(prev => !prev);
+        setIsCommandPaletteOpen(prev => {
+          const next = !prev;
+          document.dispatchEvent(
+            new CustomEvent(next ? 'openCommandPalette' : 'closeCommandPalette')
+          );
+          return next;
+        });
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        setIsCommandPaletteOpen(false);
+        setIsTerminalOpen(false);
+        document.dispatchEvent(new CustomEvent('closeCommandPalette'));
+        document.dispatchEvent(new CustomEvent('closeChatbot'));
         return;
       }
 
