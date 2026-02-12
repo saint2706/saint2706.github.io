@@ -296,6 +296,7 @@ const ChatInterface = ({ onClose }) => {
   // Refs for DOM manipulation and lifecycle tracking
   const messagesEndRef = useRef(null); // For auto-scrolling to bottom
   const inputRef = useRef(null); // For auto-focusing input field
+  const inputFocusTimeoutRef = useRef(null); // For delayed input focus timeout
   const chatDialogRef = useRef(null); // For focus trapping
   const confirmTimeoutRef = useRef(null); // For clearing confirmation state
   const isMountedRef = useRef(true); // Prevents state updates after unmount
@@ -394,8 +395,18 @@ const ChatInterface = ({ onClose }) => {
    */
   useEffect(() => {
     if (inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      inputFocusTimeoutRef.current = setTimeout(() => {
+        inputRef.current?.focus();
+        inputFocusTimeoutRef.current = null;
+      }, 100);
     }
+
+    return () => {
+      if (inputFocusTimeoutRef.current !== null) {
+        clearTimeout(inputFocusTimeoutRef.current);
+        inputFocusTimeoutRef.current = null;
+      }
+    };
   }, []);
 
   /**
