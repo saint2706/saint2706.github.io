@@ -75,7 +75,17 @@ const Footer = () => {
       {/* Tech stack marquee band */}
       <MarqueeTicker
         bgColor="bg-fun-yellow"
-        items={['Python', 'React', 'SQL', 'Tableau', 'TensorFlow', 'Machine Learning', 'Deep Learning', 'NLP', 'D3.js']}
+        items={[
+          'Python',
+          'React',
+          'SQL',
+          'Tableau',
+          'TensorFlow',
+          'Machine Learning',
+          'Deep Learning',
+          'NLP',
+          'D3.js',
+        ]}
       />
 
       <div className="py-12">
@@ -125,8 +135,7 @@ const Footer = () => {
               >
                 <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2">
                   Made with <Coffee size={16} className="text-black" aria-hidden="true" />
-                  <span className="sr-only">coffee</span>
-                  +{' '}
+                  <span className="sr-only">coffee</span>+{' '}
                   <button
                     onClick={handleHeartClick}
                     className="inline-flex cursor-pointer hover:scale-125 transition-transform motion-reduce:transform-none p-0 bg-transparent border-none"

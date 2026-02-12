@@ -90,8 +90,16 @@ const hrefTests = [
   { name: 'Invalid javascript: protocol', input: 'javascript:alert(1)', expected: false },
   { name: 'Invalid data: URI', input: 'data:text/html,test', expected: false },
   { name: 'Encoded javascript: protocol', input: 'javascript%3Aalert(1)', expected: false },
-  { name: 'Double-encoded javascript: protocol', input: 'javascript%253Aalert(1)', expected: false },
-  { name: 'Triple-encoded javascript: protocol', input: 'javascript%25253Aalert(1)', expected: false },
+  {
+    name: 'Double-encoded javascript: protocol',
+    input: 'javascript%253Aalert(1)',
+    expected: false,
+  },
+  {
+    name: 'Triple-encoded javascript: protocol',
+    input: 'javascript%25253Aalert(1)',
+    expected: false,
+  },
   { name: 'Invalid file: protocol', input: 'file:///etc/passwd', expected: false },
   { name: 'Null input', input: null, expected: false },
   { name: 'Undefined input', input: undefined, expected: false },
@@ -339,12 +347,13 @@ try {
   const original = { basics: { email: 'test@example.com', phone: '123-456', name: 'John' } };
   const originalCopy = JSON.stringify(original);
   const result = redactPII(original);
-  
+
   // Check that result has redacted values
-  const resultIsRedacted = result.basics.email === '[REDACTED]' && result.basics.phone === '[REDACTED]';
+  const resultIsRedacted =
+    result.basics.email === '[REDACTED]' && result.basics.phone === '[REDACTED]';
   // Check that original is unchanged
   const originalUnchanged = JSON.stringify(original) === originalCopy;
-  
+
   if (!resultIsRedacted || !originalUnchanged) {
     console.error('FAILED: Original object should not be mutated');
     console.error('Original:', original);

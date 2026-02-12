@@ -135,7 +135,7 @@ const Layout = ({ children }) => {
    * - Konami Code → open Terminal Mode
    */
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = e => {
       // ── Command Palette shortcut ──
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();

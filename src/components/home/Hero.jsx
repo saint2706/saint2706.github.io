@@ -145,7 +145,11 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
             className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '-2deg', animationDelay: '1s' }}
+            style={{
+              boxShadow: 'var(--nb-shadow)',
+              '--sticker-rotate': '-2deg',
+              animationDelay: '1s',
+            }}
           />
           {/* Blue block - top right — rotated sticker */}
           <motion.div
@@ -153,7 +157,11 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
             className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '5deg', animationDelay: '2s' }}
+            style={{
+              boxShadow: 'var(--nb-shadow)',
+              '--sticker-rotate': '5deg',
+              animationDelay: '2s',
+            }}
           />
         </div>
 
@@ -161,7 +169,9 @@ const Hero = () => {
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.15, rotate: 3 }}
           animate={{ opacity: 1, scale: 1, rotate: -2 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }}
+          transition={
+            shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
+          }
           className="mb-8"
         >
           <div
@@ -183,8 +193,20 @@ const Hero = () => {
           <span className="block text-[color:var(--color-text-primary)] mb-2 relative">
             Data Storyteller
             {/* SVG squiggle underline — hand-drawn zine feel */}
-            <svg className="absolute -bottom-2 left-0 w-full" height="12" viewBox="0 0 400 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6" stroke="var(--color-fun-yellow)" strokeWidth="4" strokeLinecap="round" />
+            <svg
+              className="absolute -bottom-2 left-0 w-full"
+              height="12"
+              viewBox="0 0 400 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6"
+                stroke="var(--color-fun-yellow)"
+                strokeWidth="4"
+                strokeLinecap="round"
+              />
             </svg>
           </span>
           <span
@@ -250,7 +272,11 @@ const Hero = () => {
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.12, rotate: 2 }}
           animate={{ opacity: 1, scale: 1, rotate: -1 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 350, damping: 18, delay: 0.8 }}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : { type: 'spring', stiffness: 350, damping: 18, delay: 0.8 }
+          }
           className="mt-16 w-full max-w-md"
         >
           <div
