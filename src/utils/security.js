@@ -80,6 +80,10 @@ export const isSafeHref = href => {
     normalizedHref = href;
   }
 
+  // Explicitly trim whitespace to handle valid URLs with leading/trailing spaces
+  // This prevents false positives where valid URLs are rejected due to regex start anchor
+  normalizedHref = normalizedHref.trim();
+
   // Only allow http, https, and mailto protocols (case-insensitive)
   // This regex checks for: optional whitespace, then http:// or https:// or mailto:
   return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
