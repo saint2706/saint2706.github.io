@@ -1,0 +1,3 @@
+## 2025-02-09 - Card Click Patterns
+**Learning:** Users often expect entire cards (like project showcases) to be clickable, especially when they have visual hover states (cursor-pointer, transform). However, making a card clickable while preserving nested interactive elements (like specific "Demo" and "Code" buttons) and text selection requires careful event handling.
+**Action:** Implement a `handleCardClick` handler on the container that checks for text selection (`window.getSelection()`) and ensures nested interactive elements stop propagation (`e.stopPropagation()`). Avoid wrapping the entire card in an anchor tag if it contains other interactive elements to maintain valid HTML and accessibility.
