@@ -23,6 +23,7 @@ import {
   isValidChatMessage,
   isSafeImageSrc,
   redactPII,
+  isSafeHref,
 } from '../src/utils/security.js';
 
 const tests = [
@@ -69,6 +70,49 @@ tests.forEach(test => {
       console.error(`FAILED: ${test.name}`);
       console.error(`Input:`, test.input);
       console.error(`Expected to contain:`, test.expectedContains);
+      console.error(`Got:`, result);
+      failed = true;
+    } else {
+      console.log(`PASS: ${test.name}`);
+    }
+  } catch (e) {
+    console.error(`ERROR: ${test.name}`, e);
+    failed = true;
+  }
+});
+
+const hrefTests = [
+  { name: 'Valid HTTPS URL', input: 'https://example.com', expected: true },
+  { name: 'Valid HTTP URL', input: 'http://example.com', expected: true },
+  { name: 'Valid Mailto URL', input: 'mailto:test@example.com', expected: true },
+  { name: 'Valid URL with query', input: 'https://example.com?q=1', expected: true },
+  { name: 'Valid URL with fragment', input: 'https://example.com#test', expected: true },
+  { name: 'Invalid javascript: protocol', input: 'javascript:alert(1)', expected: false },
+  { name: 'Invalid data: URI', input: 'data:text/html,test', expected: false },
+  { name: 'Encoded javascript: protocol', input: 'javascript%3Aalert(1)', expected: false },
+  { name: 'Double-encoded javascript: protocol', input: 'javascript%253Aalert(1)', expected: false },
+  { name: 'Triple-encoded javascript: protocol', input: 'javascript%25253Aalert(1)', expected: false },
+  { name: 'Invalid file: protocol', input: 'file:///etc/passwd', expected: false },
+  { name: 'Null input', input: null, expected: false },
+  { name: 'Undefined input', input: undefined, expected: false },
+  { name: 'Empty string', input: '', expected: false },
+  { name: 'Non-string input', input: 123, expected: false },
+  { name: 'Protocol-relative URL', input: '//example.com', expected: false },
+  { name: 'Path-only URL', input: '/blog/post', expected: false },
+  { name: 'URL with leading whitespace', input: ' https://example.com', expected: true },
+  { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
+  // isSafeHref only validates protocol safety, not full URL validity. http:// is safe.
+  { name: 'Malformed URL (protocol only)', input: 'http://', expected: true },
+];
+
+console.log('\nRunning Href Validation Tests...');
+hrefTests.forEach(test => {
+  try {
+    const result = isSafeHref(test.input);
+    if (result !== test.expected) {
+      console.error(`FAILED: ${test.name}`);
+      console.error(`Input:`, test.input);
+      console.error(`Expected:`, test.expected);
       console.error(`Got:`, result);
       failed = true;
     } else {
