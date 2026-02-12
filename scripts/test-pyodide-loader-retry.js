@@ -1,4 +1,7 @@
-import { __resetPyodideLoaderForTests, loadPyodide } from '../src/components/shared/pyodideLoader.js';
+import {
+  __resetPyodideLoaderForTests,
+  loadPyodide,
+} from '../src/components/shared/pyodideLoader.js';
 
 __resetPyodideLoaderForTests();
 

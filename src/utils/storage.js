@@ -3,7 +3,8 @@
  * restricted browser contexts, and private mode quota errors.
  */
 
-const hasStorage = () => typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+const hasStorage = () =>
+  typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
 export const safeGetLocalStorage = (key, fallback = null) => {
   if (!hasStorage()) return fallback;
