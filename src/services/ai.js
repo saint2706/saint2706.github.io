@@ -18,6 +18,8 @@ const API_TIMEOUT = 15000; // Maximum time (ms) to wait for API response before 
 const MAX_INPUT_LENGTH = 1000; // Maximum allowed characters in user input to prevent token exhaustion
 const RATE_LIMIT_MS = 2000; // Minimum time (ms) between consecutive requests to prevent API abuse
 const ALLOWED_HISTORY_ROLES = new Set(['user', 'model']);
+const MISSING_API_KEY_ERROR =
+  'My AI circuits are currently offline. Please check the configuration.';
 
 // Rate limiting: Track last request timestamps to enforce rate limits
 let lastChatRequestTime = 0;
@@ -141,7 +143,7 @@ export const chatWithGemini = async (userMessage, history = []) => {
 
   const model = getModel();
   if (!model) {
-    return 'My AI circuits need an API key to boot up. Please set VITE_GEMINI_API_KEY and try again!';
+    return MISSING_API_KEY_ERROR;
   }
 
   try {
@@ -262,7 +264,7 @@ export const roastResume = async () => {
 
   const model = getModel();
   if (!model) {
-    return 'Roast mode is offline because the AI key is missing. Add VITE_GEMINI_API_KEY and try again!';
+    return MISSING_API_KEY_ERROR;
   }
 
   const prompt = `
