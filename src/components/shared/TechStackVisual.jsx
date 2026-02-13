@@ -41,8 +41,8 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
   // Size based on proficiency: min 8px, max 16px
   const nodeSize = 8 + (skill.proficiency / 100) * 8;
 
-  // Selector-based subscription: only re-render if IS_HOVERED state changes for THIS node
-  // This optimization reduces re-renders from O(N) to O(1) on hover interactions
+  // Selector-based subscription: this node only re-renders when its own IS_HOVERED state changes.
+  // This minimizes component re-renders on hover, though updates still notify all subscribers.
   const checkIsHovered = useCallback(() => {
     return getHoveredSkill() === skill.name;
   }, [getHoveredSkill, skill.name]);
