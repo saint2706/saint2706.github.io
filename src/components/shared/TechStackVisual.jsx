@@ -36,19 +36,22 @@ const HoverContext = createContext(null);
  * Uses useSyncExternalStore to subscribe to hover changes for React 18 compatibility.
  */
 const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
-  const { subscribe, getSnapshot, setHoveredSkill } = useContext(HoverContext);
+  const { subscribe, getHoveredSkill, setHoveredSkill } = useContext(HoverContext);
 
   // Size based on proficiency: min 8px, max 16px
   const nodeSize = 8 + (skill.proficiency / 100) * 8;
 
-  // Subscribe to hover store using useSyncExternalStore for React 18 compatibility
-  const hoveredSkillName = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getSnapshot // Server snapshot (same as client for this use case)
-  );
+  // Selector-based subscription: only re-render if IS_HOVERED state changes for THIS node
+  // This optimization reduces re-renders from O(N) to O(1) on hover interactions
+  const checkIsHovered = useCallback(() => {
+    return getHoveredSkill() === skill.name;
+  }, [getHoveredSkill, skill.name]);
 
-  const isHovered = hoveredSkillName === skill.name;
+  const isHovered = useSyncExternalStore(
+    subscribe,
+    checkIsHovered,
+    checkIsHovered
+  );
 
   const handleMouseEnter = useCallback(
     () => setHoveredSkill(skill.name),
@@ -202,7 +205,7 @@ const TechStackVisual = () => {
   }, []);
 
   // Get current snapshot of hovered skill name
-  const getSnapshot = useCallback(() => hoveredSkillRef.current, []);
+  const getHoveredSkill = useCallback(() => hoveredSkillRef.current, []);
 
   // Subscribe function for useSyncExternalStore
   const subscribe = useCallback(callback => {
@@ -229,8 +232,8 @@ const TechStackVisual = () => {
 
   // Stable context value
   const contextValue = useMemo(
-    () => ({ subscribe, getSnapshot, setHoveredSkill }),
-    [subscribe, getSnapshot, setHoveredSkill]
+    () => ({ subscribe, getHoveredSkill, setHoveredSkill }),
+    [subscribe, getHoveredSkill, setHoveredSkill]
   );
 
   return (
