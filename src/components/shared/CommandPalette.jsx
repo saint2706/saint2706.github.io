@@ -261,7 +261,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   autoComplete="off"
                   spellCheck="false"
                   role="combobox"
-                  aria-expanded="true"
+                  aria-expanded={filteredCommands.length > 0}
                   aria-autocomplete="list"
                   aria-controls="command-list"
                   aria-activedescendant={
