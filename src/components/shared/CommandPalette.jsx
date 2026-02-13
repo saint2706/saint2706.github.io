@@ -260,18 +260,30 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   aria-label="Search commands"
                   autoComplete="off"
                   spellCheck="false"
+                  role="combobox"
+                  aria-expanded="true"
+                  aria-autocomplete="list"
+                  aria-controls="command-list"
+                  aria-activedescendant={filteredCommands[selectedIndex]?.id}
                 />
                 <button
                   onClick={onClose}
-                  className="p-1.5 bg-secondary border-2 border-[color:var(--color-border)] text-primary hover:bg-fun-yellow transition-colors rounded-nb"
+                  className="group relative p-1.5 bg-secondary border-2 border-[color:var(--color-border)] text-primary hover:bg-fun-yellow transition-colors rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   aria-label="Close command palette"
                 >
                   <X size={14} />
+                  <span
+                    className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                    aria-hidden="true"
+                  >
+                    Close
+                  </span>
                 </button>
               </div>
 
               {/* Command List */}
               <div
+                id="command-list"
                 ref={listRef}
                 className="max-h-[50vh] overflow-y-auto py-2"
                 role="listbox"
@@ -299,12 +311,13 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                             const globalIndex = filteredCommands.indexOf(cmd);
                             const isSelected = globalIndex === selectedIndex;
                             return (
-                              <button
+                              <div
                                 key={cmd.id}
+                                id={cmd.id}
                                 data-selected={isSelected}
                                 onClick={() => executeCommand(globalIndex)}
                                 onMouseEnter={() => setSelectedIndex(globalIndex)}
-                                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-100 ${
+                                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-100 cursor-pointer ${
                                   isSelected
                                     ? 'bg-fun-yellow text-black'
                                     : 'text-primary hover:bg-secondary'
@@ -316,7 +329,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                                   {cmd.icon}
                                 </span>
                                 <span className="font-sans text-sm font-medium">{cmd.label}</span>
-                              </button>
+                              </div>
                             );
                           })}
                         </div>
