@@ -264,7 +264,11 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   aria-expanded="true"
                   aria-autocomplete="list"
                   aria-controls="command-list"
-                  aria-activedescendant={filteredCommands[selectedIndex]?.id}
+                  aria-activedescendant={
+                    filteredCommands.length > 0 && filteredCommands[selectedIndex]
+                      ? filteredCommands[selectedIndex].id
+                      : undefined
+                  }
                 />
                 <button
                   onClick={onClose}
