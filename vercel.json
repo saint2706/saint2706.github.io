@@ -1,0 +1,12 @@
+{
+  "functions": {
+    "api/chat.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 10
+    },
+    "api/roast.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 10
+    }
+  }
+}

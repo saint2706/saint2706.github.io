@@ -22,7 +22,6 @@ export default defineConfig({
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-router-dom', '@dr.pogodin/react-helmet'],
           'vendor-ui': ['framer-motion', 'lucide-react'],
-          'vendor-ai': ['@google/generative-ai'],
         },
       },
     },
