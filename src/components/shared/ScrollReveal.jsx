@@ -5,6 +5,8 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useTheme } from './theme-context';
+import { AURA_MOTION, getAuraRevealVariant } from './themeMotion';
 
 /**
  * Animation variant presets for scroll reveals
@@ -66,8 +68,12 @@ const ScrollReveal = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once, amount: threshold });
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
 
-  const selectedVariant = variants[variant] || variants['fade-up'];
+  const selectedVariant = isAura
+    ? getAuraRevealVariant(variant)
+    : variants[variant] || variants['fade-up'];
 
   if (shouldReduceMotion) {
     return (
@@ -83,9 +89,9 @@ const ScrollReveal = ({
       initial={selectedVariant.hidden}
       animate={isInView ? selectedVariant.visible : selectedVariant.hidden}
       transition={{
-        duration,
+        duration: isAura ? AURA_MOTION.duration.reveal : duration,
         delay,
-        ease: [0.25, 0.1, 0.25, 1],
+        ease: isAura ? AURA_MOTION.easing.reveal : [0.25, 0.1, 0.25, 1],
       }}
       className={className}
     >

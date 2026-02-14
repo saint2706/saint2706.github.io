@@ -132,7 +132,7 @@ const Projects = () => {
             title="Creative Experiments"
             variant="yellow"
             className="font-heading text-4xl md:text-5xl font-bold mb-4"
-            chipClassName="nb-stamp-in"
+            chipClassName={isAura ? undefined : 'nb-stamp-in'}
           />
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             From data science models to full-stack applications. Here is what I have been building.
@@ -244,7 +244,7 @@ const Projects = () => {
                       onClick={e => e.stopPropagation()}
                       variant="primary"
                       size="sm"
-                      className="hover:-translate-y-0.5"
+                      className={isAura ? undefined : 'hover:-translate-y-0.5'}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
                       <ExternalLink size={14} aria-hidden="true" /> Demo
@@ -259,7 +259,7 @@ const Projects = () => {
                       onClick={e => e.stopPropagation()}
                       variant="secondary"
                       size="sm"
-                      className="hover:-translate-y-0.5"
+                      className={isAura ? undefined : 'hover:-translate-y-0.5'}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >
                       <Github size={14} aria-hidden="true" /> Code

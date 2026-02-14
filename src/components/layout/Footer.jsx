@@ -122,7 +122,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-full hover:brightness-110 transition-[filter]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
+                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] transition-[filter,transform]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
                   style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label={link.label}
                 >
@@ -142,7 +142,7 @@ const Footer = () => {
                   <span className="sr-only">coffee</span>+{' '}
                   <button
                     onClick={handleHeartClick}
-                    className="inline-flex cursor-pointer hover:scale-125 transition-transform motion-reduce:transform-none p-0 bg-transparent border-none"
+                    className={`inline-flex cursor-pointer transition-transform motion-reduce:transform-none p-0 bg-transparent border-none ${isAura ? 'hover:scale-105' : 'hover:scale-125'}`}
                     aria-label={
                       showSecret
                         ? 'You found the secret!'

@@ -5,19 +5,19 @@ import { joinClasses } from './ThemedPrimitives.utils';
 const VARIANTS = {
   yellow: {
     neubrutalism: 'bg-fun-yellow text-black border-2 border-[color:var(--color-border)] rounded-nb',
-    aura: 'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    aura: 'aura-chip aura-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
   },
   accent: {
     neubrutalism: 'bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    aura: 'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    aura: 'aura-chip aura-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
   },
   pink: {
     neubrutalism: 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    aura: 'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    aura: 'aura-chip aura-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
   },
   neutral: {
     neubrutalism: 'bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb',
-    aura: 'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]',
+    aura: 'aura-chip aura-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]',
   },
 };
 
