@@ -12,6 +12,7 @@ import { safeJSONStringify } from '../../utils/security';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Hero section component for homepage
@@ -31,6 +32,8 @@ import ThemedChip from '../shared/ThemedChip';
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
 
   // Easter egg state (click stack array to unlock games page)
   const [clickCount, setClickCount] = useState(0);
@@ -130,9 +133,9 @@ const Hero = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12">
+      <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
         {/* Neubrutalism Decorative Shapes — sticker rotations + float bob */}
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className={`absolute inset-0 -z-10 overflow-hidden pointer-events-none ${isAura ? 'hidden' : ''}`}>
           {/* Yellow block - top left — rotated sticker */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
@@ -174,7 +177,7 @@ const Hero = () => {
           transition={
             shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
           }
-          className="mb-8"
+          className={`mb-8 ${isAura ? 'hidden' : ''}`}
         >
           <ThemedChip
             variant="yellow"
@@ -186,7 +189,49 @@ const Hero = () => {
           </ThemedChip>
         </motion.div>
 
-        {/* Main Heading — fixed contrast + squiggle underline */}
+      {isAura ? (
+        <motion.section
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
+          className="w-full max-w-4xl aura-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
+        >
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 aura-silver-text">
+            Data Storyteller
+            <span className="block mt-2">&amp; Creative Analyst</span>
+          </h1>
+          <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
+            Turning messy data into clear strategies and AI/ML solutions into real-world impact.
+          </p>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <ThemedButton
+              as={Link}
+              to="/projects"
+              variant="primary"
+              size="lg"
+              className="group relative shadow-[0_0_30px_rgba(141,162,255,0.35)]"
+            >
+              View Projects
+              <ArrowRight
+                size={18}
+                className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
+              />
+            </ThemedButton>
+            <ThemedButton
+              onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
+              variant="secondary"
+              size="lg"
+              className="shadow-[0_0_24px_rgba(215,131,255,0.22)]"
+              aria-label="Open chat with Digital Rishabh"
+            >
+              <Bot size={18} aria-hidden="true" />
+              Talk to Digital Rishabh
+            </ThemedButton>
+          </div>
+        </motion.section>
+      ) : (
+      <>
+      {/* Main Heading — fixed contrast + squiggle underline */}
         <motion.h1
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -275,6 +320,8 @@ const Hero = () => {
             Talk to Digital Rishabh
           </ThemedButton>
         </motion.div>
+      </>
+      )}
 
         {/* Code Snippet Card — sticky-note style with sticker rotation + blinking cursor */}
         <motion.div
@@ -285,7 +332,7 @@ const Hero = () => {
               ? { duration: 0 }
               : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
           }
-          className="mt-16 w-full max-w-md"
+          className={`mt-16 w-full max-w-md ${isAura ? 'hidden' : ''}`}
         >
           <ThemedCard
             variant="highlighted"

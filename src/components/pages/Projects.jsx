@@ -2,7 +2,7 @@
  * @fileoverview Projects showcase page displaying portfolio projects with filtering.
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
@@ -12,6 +12,7 @@ import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedChip from '../shared/ThemedChip';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Projects showcase page component
@@ -29,6 +30,8 @@ import ThemedSectionHeading from '../shared/ThemedSectionHeading';
  */
 const Projects = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description =
     'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
@@ -57,6 +60,9 @@ const Projects = () => {
 
   /** Rotating color classes for project card accent bars */
   const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+  const topTags = useMemo(() => {
+    return [...new Set(resumeData.projects.flatMap(project => project.tags || []))].slice(0, 6);
+  }, []);
 
   /**
    * Handle card click to open primary link.
@@ -142,6 +148,15 @@ const Projects = () => {
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
+          {isAura && (
+            <div className="col-span-full flex flex-wrap items-center gap-2 mb-2">
+              {topTags.map(tag => (
+                <ThemedChip key={tag} variant="neutral" className="text-xs tracking-wide uppercase">
+                  {tag}
+                </ThemedChip>
+              ))}
+            </div>
+          )}
           {resumeData.projects.map((project, idx) => (
             <ThemedCard
               as={motion.article}
@@ -157,13 +172,13 @@ const Projects = () => {
                   event.currentTarget.click();
                 }
               }}
-              className="overflow-hidden flex flex-col h-full cursor-pointer nb-shadow-lift nb-sticker focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow"
+              className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isAura ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
               style={{
                 '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
               }}
             >
               {/* Color accent bar */}
-              <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
+              {!isAura && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
 
               {/* Project Image */}
               {project.image && (
@@ -178,7 +193,7 @@ const Projects = () => {
                 </div>
               )}
 
-              <div className="p-6 flex-grow flex flex-col">
+                <div className={`p-6 flex-grow flex flex-col ${isAura ? 'gap-1' : ''}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-2">
                     <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
@@ -194,7 +209,7 @@ const Projects = () => {
                     {project.featured && (
                       <ThemedChip
                         variant="accent"
-                        className="font-bold nb-sticker"
+                        className={`font-bold ${isAura ? '' : 'nb-sticker'}`}
                         style={{ '--sticker-rotate': '3deg' }}
                       >
                         Featured

@@ -25,6 +25,7 @@ import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedChip from '../shared/ThemedChip';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Reusable section component with neubrutalist styling
@@ -78,15 +79,20 @@ const TimelineCard = ({
   description,
   tags,
   accentColor = 'bg-accent',
+  isAura = false,
 }) => (
   <ThemedCard
     variant="interactive"
-    className="p-6"
+    className={`p-6 ${isAura ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
   >
     {/* Color accent bar */}
-    <div
-      className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`}
-    />
+    {isAura ? (
+      <span className="absolute -left-[1.45rem] top-8 w-3 h-3 rounded-full bg-[color:var(--accent)] border border-[color:var(--border-soft)] shadow-[0_0_12px_rgba(141,162,255,0.45)]" />
+    ) : (
+      <div
+        className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`}
+      />
+    )}
 
     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
       <div>
@@ -161,6 +167,8 @@ const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'La
  */
 const Resume = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description =
     'Review my education, experience, and skills in analytics, AI, and product strategy.';
@@ -300,6 +308,7 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.1}>
                 <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
+                  <div className={isAura ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
                   {resumeData.experience.map((job, i) => (
                     <TimelineCard
                       key={i}
@@ -309,8 +318,10 @@ const Resume = () => {
                       location={job.location}
                       description={job.highlights || job.summary}
                       accentColor="bg-fun-pink"
+                      isAura={isAura}
                     />
                   ))}
+                  </div>
                 </Section>
               </ScrollReveal>
             </motion.div>
@@ -327,6 +338,7 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.2}>
                 <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
+                  <div className={isAura ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
                   {resumeData.education.map((edu, i) => (
                     <TimelineCard
                       key={i}
@@ -335,8 +347,10 @@ const Resume = () => {
                       date={`${edu.startDate} - ${edu.endDate}`}
                       description={edu.description}
                       accentColor="bg-accent"
+                      isAura={isAura}
                     />
                   ))}
+                  </div>
                 </Section>
               </ScrollReveal>
             </motion.div>
