@@ -51,6 +51,12 @@ try {
     process.exit(1);
   }
 
+  // Check for upgrade-insecure-requests
+  if (!cspContent.includes('upgrade-insecure-requests')) {
+    console.error("FAILED: CSP does not contain 'upgrade-insecure-requests'.");
+    process.exit(1);
+  }
+
   // Check for wasm-unsafe-eval (should be present for Pyodide)
   if (!cspContent.includes("'wasm-unsafe-eval'")) {
     console.error(
