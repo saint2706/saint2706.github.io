@@ -74,10 +74,12 @@ const Footer = () => {
   return (
     <footer className="mt-20 bg-primary relative overflow-hidden">
       {/* Zigzag divider — replaces thin border-top */}
-      <ZigzagDivider />
+      <ZigzagDivider variant={isAura ? 'gradient' : 'zigzag'} className={isAura ? 'opacity-80' : ''} />
 
       {/* Tech stack marquee band */}
       <MarqueeTicker
+        variant={isAura ? 'aura' : 'neub'}
+        useBlurBand={isAura}
         bgColor="bg-fun-yellow"
         items={[
           'Python',
