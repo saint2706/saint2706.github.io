@@ -19,6 +19,10 @@ import {
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedChip from '../shared/ThemedChip';
+import { useTheme } from '../shared/theme-context';
 
 // Lazy load game components to reduce initial bundle size
 const TicTacToe = lazy(() => import('../games/TicTacToe'));
@@ -59,6 +63,8 @@ const GameLoader = () => (
 const Games = () => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const canonicalUrl = `${resumeData.basics.website}/games`;
   const description =
     'A secret games easter egg! Play Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.';
@@ -74,6 +80,8 @@ const Games = () => {
     { id: 'whack', label: 'Whack', icon: Target, color: 'bg-orange-500' },
     { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
   ];
+
+  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
 
   return (
     <>
@@ -107,7 +115,12 @@ const Games = () => {
         </script>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto py-12 px-4">
+      <div
+        className={themeClass(
+          'max-w-4xl mx-auto py-12 px-4',
+          'max-w-4xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]'
+        )}
+      >
         {/* Header */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -122,20 +135,42 @@ const Games = () => {
             transition={
               shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }
             }
-            className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-fun-pink text-white font-heading font-bold border-nb border-[color:var(--color-border)] rounded-nb nb-sticker"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '-2deg' }}
+            className={themeClass(
+              '',
+              'hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none'
+            )}
+            style={isAura ? undefined : { '--sticker-rotate': '-2deg' }}
           >
-            <Gamepad2 className="w-5 h-5" />
-            <span className="text-sm">Easter Egg Found!</span>
+            <ThemedChip
+              variant="pink"
+              className={themeClass(
+                'mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white',
+                'mb-6 px-4 py-2 font-heading font-semibold rounded-full aura-chip border border-[color:var(--border-soft)]'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+            >
+              <Gamepad2 className="w-5 h-5" />
+              <span className="text-sm">Easter Egg Found!</span>
+            </ThemedChip>
           </motion.div>
 
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-fun-yellow text-black px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+          <h1
+            className={themeClass(
+              'font-heading text-4xl md:text-5xl font-bold mb-4',
+              'font-heading text-4xl md:text-5xl font-semibold mb-4'
+            )}
+          >
+            <ThemedCard
+              as="span"
+              variant={isAura ? 'default' : 'highlighted'}
+              className={themeClass(
+                'inline-block px-6 py-3 rounded-nb nb-stamp-in',
+                'inline-block px-6 py-3 rounded-3xl aura-glass border border-[color:var(--border-soft)]'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Game Zone
-            </span>
+            </ThemedCard>
           </h1>
           <p className="text-secondary max-w-xl mx-auto mt-6 font-sans">
             You discovered the secret games page! Take a break and have some fun.
@@ -155,37 +190,51 @@ const Games = () => {
             aria-label="Select a game to play"
           >
             {games.map(game => (
-              <button
+              <ThemedButton
+                as="button"
+                variant="secondary"
+                size="md"
                 key={game.id}
                 onClick={() => setActiveGame(game.id)}
                 role="tab"
                 aria-selected={activeGame === game.id}
                 aria-controls={`${game.id}-panel`}
                 id={`${game.id}-tab`}
-                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer nb-shadow-lift motion-reduce:transform-none motion-reduce:transition-none rounded-nb
+                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
                                     ${
                                       activeGame === game.id
-                                        ? `${game.color} text-white`
-                                        : 'bg-card text-[color:var(--color-text-primary)]'
+                                        ? isAura
+                                          ? 'aura-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                                          : `${game.color} text-white`
+                                        : themeClass(
+                                            'bg-card text-[color:var(--color-text-primary)]',
+                                            'aura-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                                          )
                                     }`}
                 style={{
-                  boxShadow: activeGame === game.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
+                  boxShadow:
+                    !isAura && activeGame === game.id
+                      ? 'var(--nb-shadow-hover)'
+                      : !isAura
+                        ? 'var(--nb-shadow)'
+                        : undefined,
                 }}
               >
                 <game.icon size={18} aria-hidden="true" />
                 <span className="flex items-center gap-2">
                   <span>{game.label}</span>
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full border-[2px] border-[color:var(--color-border)] bg-card px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide text-primary transition-opacity ${
-                      activeGame === game.id ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity ${themeClass(
+                      'border-[2px] border-[color:var(--color-border)] bg-card text-primary',
+                      'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]'
+                    )} ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`}
                     aria-hidden={activeGame !== game.id}
                   >
                     <Check className="h-3 w-3" aria-hidden="true" />
                     Selected
                   </span>
                 </span>
-              </button>
+              </ThemedButton>
             ))}
           </div>
         </motion.div>
@@ -197,9 +246,13 @@ const Games = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
           className="flex justify-center"
         >
-          <div
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+          <ThemedCard
+            variant="default"
+            className={themeClass(
+              'bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb',
+              'aura-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl'
+            )}
+            style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -223,7 +276,7 @@ const Games = () => {
                 </Suspense>
               </motion.div>
             </AnimatePresence>
-          </div>
+          </ThemedCard>
         </motion.div>
 
         {/* Footer hint */}
