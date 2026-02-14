@@ -9,6 +9,9 @@ import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 
 /**
  * Contact page component
@@ -93,14 +96,13 @@ const Contact = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              Let&apos;s Connect
-            </span>
-          </h1>
+          <ThemedSectionHeading
+            as="h1"
+            title="Let's Connect"
+            variant="accent"
+            className="font-heading text-4xl md:text-5xl font-bold mb-4"
+            chipClassName="px-6 py-3 nb-stamp-in"
+          />
           <p className="text-secondary text-lg max-w-xl mx-auto mt-6 font-sans">
             Interested in building data-driven solutions that make an impact? Let&apos;s connect!
           </p>
@@ -115,10 +117,7 @@ const Contact = () => {
             className="space-y-6"
           >
             {/* Get in Touch Card */}
-            <div
-              className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
+            <ThemedCard className="p-6">
               <h2
                 className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
@@ -163,13 +162,10 @@ const Contact = () => {
                   </div>
                 </a>
               </div>
-            </div>
+            </ThemedCard>
 
             {/* Follow Me */}
-            <div
-              className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
+            <ThemedCard className="p-6">
               <h3
                 className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
                 style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
@@ -178,13 +174,14 @@ const Contact = () => {
               </h3>
               <div className="flex gap-4">
                 {socialLinks.map(social => (
-                  <a
+                  <ThemedButton
+                    as="a"
                     key={social.label}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-4 bg-card border-nb border-[color:var(--color-border)] text-primary transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${social.color}`}
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    variant="secondary"
+                    className={`group relative p-4 ${social.color}`}
                     aria-label={`${social.label} (opens in new tab)`}
                   >
                     {social.icon}
@@ -194,10 +191,10 @@ const Contact = () => {
                     >
                       {social.label}
                     </span>
-                  </a>
+                  </ThemedButton>
                 ))}
               </div>
-            </div>
+            </ThemedCard>
 
             {/* Availability Badge */}
             <motion.div
@@ -223,10 +220,7 @@ const Contact = () => {
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
             className="flex flex-col justify-center"
           >
-            <div
-              className="bg-card border-nb border-[color:var(--color-border)] p-8 text-center rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
+            <ThemedCard className="p-8 text-center">
               {/* Icon */}
               <div
                 className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
@@ -244,14 +238,15 @@ const Contact = () => {
                 technical depth with business impact - let&apos;s create something amazing together!
               </p>
 
-              <a
+              <ThemedButton
+                as="a"
                 href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-                style={{ boxShadow: 'var(--nb-shadow)' }}
+                variant="primary"
+                size="lg"
               >
                 <Send size={20} />
                 Send me an Email
-              </a>
+              </ThemedButton>
 
               <div
                 className="mt-8 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
@@ -262,7 +257,7 @@ const Contact = () => {
                   Or use the chatbot (Ctrl+K) to learn more about me first!
                 </p>
               </div>
-            </div>
+            </ThemedCard>
           </motion.div>
         </div>
       </div>

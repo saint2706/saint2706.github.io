@@ -21,6 +21,10 @@ import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import TechStackVisual from '../shared/TechStackVisual';
 import ScrollReveal from '../shared/ScrollReveal';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedChip from '../shared/ThemedChip';
+import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 
 /**
  * Reusable section component with neubrutalist styling
@@ -33,15 +37,21 @@ import ScrollReveal from '../shared/ScrollReveal';
  * @param {React.ReactNode} props.children - Section content
  * @returns {JSX.Element} Styled section with header and content
  */
+const SECTION_VARIANTS = {
+  'bg-fun-yellow': 'yellow',
+  'bg-fun-pink': 'pink',
+  'bg-accent': 'accent',
+};
+
 const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
   <div className="mb-12">
-    <div
-      className={`inline-flex items-center gap-3 ${color} text-black px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb`}
-      style={{ boxShadow: 'var(--nb-shadow)' }}
-    >
-      {icon}
-      <h2 className="text-xl font-heading font-bold">{title}</h2>
-    </div>
+    <ThemedSectionHeading
+      title={title}
+      icon={icon}
+      variant={SECTION_VARIANTS[color] ?? 'yellow'}
+      className="mb-6"
+      chipClassName="gap-3"
+    />
     <div className="space-y-6">{children}</div>
   </div>
 );
@@ -69,9 +79,9 @@ const TimelineCard = ({
   tags,
   accentColor = 'bg-accent',
 }) => (
-  <div
-    className="bg-card border-nb border-[color:var(--color-border)] p-6 transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-    style={{ boxShadow: 'var(--nb-shadow)' }}
+  <ThemedCard
+    variant="interactive"
+    className="p-6"
   >
     {/* Color accent bar */}
     <div
@@ -84,10 +94,10 @@ const TimelineCard = ({
         <p className="text-lg text-secondary font-sans">{subtitle}</p>
       </div>
       <div className="flex flex-col items-start md:items-end gap-1">
-        <span className="inline-flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
+        <ThemedChip variant="yellow" className="font-bold">
           <Calendar size={12} />
           {date}
-        </span>
+        </ThemedChip>
         {location && (
           <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
             <MapPin size={12} />
@@ -117,16 +127,17 @@ const TimelineCard = ({
     {tags && tags.length > 0 && (
       <div className="flex flex-wrap gap-2">
         {tags.map((tag, i) => (
-          <span
+          <ThemedChip
             key={i}
-            className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb"
+            variant="neutral"
+            className="font-sans"
           >
             {tag}
-          </span>
+          </ThemedChip>
         ))}
       </div>
     )}
-  </div>
+  </ThemedCard>
 );
 
 /** Filter section identifiers */
@@ -223,27 +234,26 @@ const Resume = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-10 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              My Journey
-            </span>
-          </h1>
+          <ThemedSectionHeading
+            as="h1"
+            title="My Journey"
+            variant="accent"
+            className="font-heading text-4xl md:text-5xl font-bold mb-4"
+            chipClassName="px-6 py-3 nb-stamp-in"
+          />
           <p className="text-secondary text-lg mt-6 font-sans max-w-2xl mx-auto">
             A timeline of my education, experience, and technical milestones.
           </p>
 
-          <button
+          <ThemedButton
             onClick={handlePrint}
-            className="mt-6 inline-flex items-center gap-2 bg-card text-primary px-5 py-2.5 border-nb border-[color:var(--color-border)] font-heading font-bold transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none print:hidden rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+            variant="secondary"
+            className="mt-6 print:hidden"
             aria-label="Print resume"
           >
             <Printer size={20} aria-hidden="true" />
             <span>Print Resume</span>
-          </button>
+          </ThemedButton>
         </motion.div>
 
         {/* ── Interactive Filter Bar ── */}
@@ -261,19 +271,17 @@ const Resume = () => {
             {SECTIONS.map(section => {
               const isActive = visibleSections.has(section);
               return (
-                <button
+                <ThemedButton
                   key={section}
                   onClick={() => toggleSection(section)}
-                  className={`px-4 py-2 text-sm font-heading font-bold border-nb border-[color:var(--color-border)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb ${
-                    isActive ? 'bg-fun-yellow text-black' : 'bg-card text-secondary'
-                  }`}
-                  style={{
-                    boxShadow: isActive ? 'var(--nb-shadow)' : '2px 2px 0 var(--color-border)',
-                  }}
+                  variant="secondary"
+                  isActive={isActive}
+                  size="md"
+                  className="text-sm"
                   aria-pressed={isActive}
                 >
                   {section}
-                </button>
+                </ThemedButton>
               );
             })}
           </div>

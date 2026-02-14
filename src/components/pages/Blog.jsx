@@ -19,6 +19,10 @@ import { Helmet } from '@dr.pogodin/react-helmet';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify, isSafeHref } from '../../utils/security';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedChip from '../shared/ThemedChip';
+import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 
 /** Number of blog posts to display per page */
 const POSTS_PER_PAGE = 6;
@@ -209,14 +213,13 @@ const Blog = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-fun-pink text-white px-6 py-3 border-[3px] border-[color:var(--color-border)] nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              Written Thoughts
-            </span>
-          </h1>
+          <ThemedSectionHeading
+            as="h1"
+            title="Written Thoughts"
+            variant="pink"
+            className="font-heading text-4xl md:text-5xl font-bold mb-4"
+            chipClassName="px-6 py-3 nb-stamp-in"
+          />
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             Musings on code, life, and everything in between. Synced from Dev.to, Medium, and
             Substack.
@@ -236,25 +239,19 @@ const Blog = () => {
             aria-label="Filter blogs by source"
           >
             {sources.map(source => (
-              <button
+              <ThemedButton
                 key={source}
                 onClick={() => {
                   setFilter(source);
                   setCurrentPage(1);
                 }}
                 aria-pressed={filter === source}
-                className={`px-4 py-2 font-heading font-bold text-sm transition-transform border-[3px] border-[color:var(--color-border)] cursor-pointer motion-reduce:transform-none motion-reduce:transition-none
-                  ${
-                    filter === source
-                      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
-                  }`}
-                style={{
-                  boxShadow: filter === source ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
-                }}
+                variant="secondary"
+                size="md"
+                isActive={filter === source}
               >
                 {source}
-              </button>
+              </ThemedButton>
             ))}
           </div>
 
@@ -329,11 +326,12 @@ const Blog = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {paginatedBlogs.map((blog, idx) => (
-            <motion.article
+            <ThemedCard
+              as={motion.article}
               key={`${blog.title}-${idx}`}
               variants={item}
-              className="bg-card border-[3px] border-[color:var(--color-border)] overflow-hidden flex flex-col h-full transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              variant="interactive"
+              className="overflow-hidden flex flex-col h-full"
             >
               {/* Color accent bar based on source */}
               <div className={`h-3 ${getSourceColor(blog.source)}`} />
@@ -341,16 +339,15 @@ const Blog = () => {
               <div className="p-6 flex-grow flex flex-col">
                 {/* Source and Date */}
                 <div className="flex justify-between items-start mb-4">
-                  <span
-                    className={`text-sm md:text-xs font-heading font-bold px-3 py-1 border-2 border-[color:var(--color-border)] ${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  <ThemedChip
+                    className={`font-heading font-bold px-3 ${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}
                   >
                     {blog.source}
-                  </span>
-                  <span className="text-secondary text-sm md:text-xs font-sans flex items-center gap-1 bg-secondary px-2 py-1 border-2 border-[color:var(--color-border)]">
+                  </ThemedChip>
+                  <ThemedChip variant="neutral" className="text-secondary font-sans">
                     <Calendar size={12} />
                     {formatDate(blog.date)}
-                  </span>
+                  </ThemedChip>
                 </div>
 
                 {/* Title */}
@@ -370,12 +367,13 @@ const Blog = () => {
                 {blog.tags && blog.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {blog.tags.slice(0, 3).map(tag => (
-                      <span
+                      <ThemedChip
                         key={tag}
-                        className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)]"
+                        variant="neutral"
+                        className="font-sans"
                       >
                         #{tag}
-                      </span>
+                      </ThemedChip>
                     ))}
                   </div>
                 )}
@@ -383,16 +381,18 @@ const Blog = () => {
                 {/* Read Link */}
                 <div className="mt-auto">
                   {isSafeHref(blog.link) ? (
-                    <a
+                    <ThemedButton
+                      as="a"
                       href={blog.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
-                      className="inline-flex items-center gap-2 text-sm font-heading font-bold px-4 py-2 bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      variant="primary"
+                      size="md"
+                      className="hover:-translate-y-0.5"
                     >
                       Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
-                    </a>
+                    </ThemedButton>
                   ) : (
                     <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
                       Link unavailable{' '}
@@ -401,7 +401,7 @@ const Blog = () => {
                   )}
                 </div>
               </div>
-            </motion.article>
+            </ThemedCard>
           ))}
 
           {/* Empty State */}
@@ -431,16 +431,16 @@ const Blog = () => {
                 )}
                 .
               </p>
-              <button
+              <ThemedButton
                 onClick={() => {
                   setSearchTerm('');
                   setFilter('All');
                 }}
-                className="px-6 py-3 bg-fun-yellow text-black font-heading font-bold border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: 'var(--nb-shadow)' }}
+                variant="primary"
+                className="px-6 py-3 hover:-translate-y-0.5"
               >
                 Clear all filters
-              </button>
+              </ThemedButton>
             </div>
           )}
         </motion.div>
@@ -455,50 +455,41 @@ const Blog = () => {
             role="navigation"
             aria-label="Pagination"
           >
-            <button
+            <ThemedButton
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label="Go to previous page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+              variant="secondary"
+              className="gap-1 hover:-translate-y-0.5"
             >
               <ChevronLeft size={18} /> Prev
-            </button>
+            </ThemedButton>
 
             <div className="flex items-center gap-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <button
+                <ThemedButton
                   key={page}
                   onClick={() => setCurrentPage(page)}
                   aria-label={`Go to page ${page}`}
                   aria-current={page === currentPage ? 'page' : undefined}
-                  className={`w-10 h-10 font-heading font-bold border-[3px] border-[color:var(--color-border)] transition-transform motion-reduce:transform-none motion-reduce:transition-none
-                    ${
-                      page === currentPage
-                        ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-                        : 'bg-card text-primary hover:-translate-y-0.5'
-                    }`}
-                  style={{
-                    boxShadow:
-                      page === currentPage
-                        ? 'var(--nb-shadow-hover)'
-                        : '2px 2px 0 var(--color-border)',
-                  }}
+                  variant="secondary"
+                  isActive={page === currentPage}
+                  className="w-10 h-10 justify-center px-0"
                 >
                   {page}
-                </button>
+                </ThemedButton>
               ))}
             </div>
 
-            <button
+            <ThemedButton
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               aria-label="Go to next page"
-              className="flex items-center gap-1 px-4 py-2 bg-card font-heading font-bold border-[3px] border-[color:var(--color-border)] text-primary transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none"
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+              variant="secondary"
+              className="gap-1 hover:-translate-y-0.5"
             >
               Next <ChevronRight size={18} />
-            </button>
+            </ThemedButton>
           </motion.div>
         )}
 
