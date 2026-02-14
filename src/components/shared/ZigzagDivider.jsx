@@ -6,14 +6,46 @@
 import React from 'react';
 
 /**
- * ZigzagDivider — a thick zigzag SVG line used between sections
+ * ZigzagDivider — decorative section divider with variant-driven styles
  *
  * @param {Object} props
+ * @param {'zigzag'|'gradient'|'soft'|'none'} [props.variant] - Divider style
  * @param {string} [props.fillColor] - Fill color for the zigzag (default: black)
  * @param {number} [props.height] - Height in pixels (default: 20)
  * @param {string} [props.className] - Additional wrapper classes
  */
-const ZigzagDivider = ({ fillColor = '#000000', height = 20, className = '' }) => {
+const ZigzagDivider = ({ variant = 'zigzag', fillColor = '#000000', height = 20, className = '' }) => {
+  if (variant === 'none') {
+    return null;
+  }
+
+  if (variant === 'gradient') {
+    return (
+      <div
+        className={`w-full ${className}`}
+        style={{
+          height: '2px',
+          background:
+            'linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--color-accent) 50%, transparent) 20%, color-mix(in srgb, var(--color-accent) 75%, white) 50%, color-mix(in srgb, var(--color-accent) 50%, transparent) 80%, transparent 100%)',
+        }}
+        aria-hidden="true"
+      />
+    );
+  }
+
+  if (variant === 'soft') {
+    return (
+      <div
+        className={`w-full ${className}`}
+        style={{
+          height: '1px',
+          background: 'color-mix(in srgb, var(--color-text-secondary) 30%, transparent)',
+        }}
+        aria-hidden="true"
+      />
+    );
+  }
+
   return (
     <div className={`w-full overflow-hidden leading-[0] ${className}`} aria-hidden="true">
       <svg
