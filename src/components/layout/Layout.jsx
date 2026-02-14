@@ -114,6 +114,18 @@ const Layout = ({ children }) => {
     };
   }, []);
 
+
+  useEffect(() => {
+    if (!canUseDOM()) return undefined;
+
+    const root = document.documentElement;
+    root.dataset.contrast = prefersContrast ? 'more' : 'no-preference';
+
+    return () => {
+      delete root.dataset.contrast;
+    };
+  }, [prefersContrast]);
+
   // Determine if cursor should be disabled due to accessibility preferences
   const cursorForcedOff = prefersReducedMotion || prefersContrast || !hasFinePointer;
 
@@ -209,6 +221,8 @@ const Layout = ({ children }) => {
       className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
         isAura ? 'aura-bg aura-atmosphere-shell' : 'bg-primary nb-paper-bg'
       }`}
+      data-theme={isAura ? 'aura' : 'neubrutalism'}
+      data-contrast={prefersContrast ? 'more' : 'no-preference'}
     >
       {isAura && (
         <>

@@ -168,7 +168,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isAura ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
+                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isAura ? 'aura-chip aura-nav-link aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
                 ${isActive
                   ? isAura
                     ? 'text-[color:var(--text-primary)] border-[color:var(--accent-soft)]'

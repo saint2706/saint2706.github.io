@@ -120,7 +120,7 @@ const Contact = () => {
           >
             <ThemedCard className="p-8 md:p-10 rounded-3xl">
               <h2 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h2>
-              <p className="text-secondary mb-6 font-sans">
+              <p className="text-secondary aura-helper-text mb-6 font-sans">
                 Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
               </p>
 
@@ -128,17 +128,17 @@ const Contact = () => {
                 <input
                   type="text"
                   placeholder="Your name"
-                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
                   type="email"
                   placeholder="Your email"
-                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
                   rows={5}
                   placeholder="Project details"
-                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
+                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 
                 <ThemedButton
