@@ -122,7 +122,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] transition-[filter,transform]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
+                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass aura-footer-icon aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] transition-[filter,transform]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
                   style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label={link.label}
                 >

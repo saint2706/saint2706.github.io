@@ -278,7 +278,7 @@ const Blog = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
+              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isAura ? 'aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
               style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               aria-describedby="blog-search-limit"
             />
