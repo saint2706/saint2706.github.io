@@ -19,6 +19,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
+import { AURA_MOTION } from '../shared/themeMotion';
 
 /**
  * Navigation bar component with desktop and mobile layouts
@@ -142,9 +143,9 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   return (
     <motion.nav
-      initial={shouldReduceMotion ? false : { y: -100 }}
+      initial={shouldReduceMotion ? false : { y: isAura ? -AURA_MOTION.offset.y : -100 }}
       animate={{ y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : undefined}
+      transition={shouldReduceMotion ? { duration: 0 } : isAura ? { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal } : undefined}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
@@ -167,19 +168,27 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb
+                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isAura ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
                 ${isActive
-                  ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1'
-                  : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+                  ? isAura
+                    ? 'text-[color:var(--text-primary)] border-[color:var(--accent-soft)]'
+                    : 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1'
+                  : isAura
+                    ? 'text-primary border-[color:var(--border-soft)]'
+                    : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
                 }`
               }
               style={({ isActive }) =>
-                isActive
+                isAura
                   ? {
-                    boxShadow: 'inset 2px 2px 0 var(--color-border)',
-                    transform: 'translateY(1px) rotate(-1deg)',
+                    boxShadow: isActive ? '0 10px 30px rgba(93, 111, 179, 0.35)' : undefined,
                   }
-                  : { boxShadow: 'var(--nb-shadow)' }
+                  : isActive
+                    ? {
+                      boxShadow: 'inset 2px 2px 0 var(--color-border)',
+                      transform: 'translateY(1px) rotate(-1deg)',
+                    }
+                    : { boxShadow: 'var(--nb-shadow)' }
               }
             >
               <span className="hidden lg:inline" aria-hidden="true">
@@ -244,10 +253,10 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           {isMenuOpen && (
             <motion.div
               id="mobile-nav-menu"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: -8 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: isAura ? -AURA_MOTION.offset.subtleY : -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: isAura ? -AURA_MOTION.offset.subtleY : -8 }}
+              transition={shouldReduceMotion ? { duration: 0 } : isAura ? { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal } : { duration: 0.15 }}
               className={`absolute right-4 top-full mt-3 w-64 md:hidden ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'aura-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
               style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
               ref={menuRef}

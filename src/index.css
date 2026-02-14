@@ -360,6 +360,9 @@
   border: 1px solid var(--border-soft);
   box-shadow: var(--glow-soft);
   border-radius: var(--radius-lg);
+  transition:
+    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .aura-chip {
@@ -372,6 +375,9 @@
   background: color-mix(in srgb, var(--surface) 70%, transparent);
   color: var(--text-secondary);
   box-shadow: 0 4px 14px rgba(5, 8, 18, 0.2);
+  transition:
+    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .aura-button-primary {
@@ -385,19 +391,37 @@
   color: var(--text-primary);
   box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .aura-button-primary:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.015);
   filter: brightness(1.05);
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 .aura-button-primary:active {
   transform: translateY(0);
+}
+
+
+.aura-glow-transition {
+  transition:
+    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aura-interactive-surface {
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aura-interactive-surface:hover {
+  box-shadow: 0 16px 34px rgba(93, 111, 179, 0.38);
 }
 
 .aura-silver-text {
@@ -622,4 +646,19 @@
 .confetti-piece:nth-child(5n) {
   width: 10px;
   height: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-glass,
+  .aura-chip,
+  .aura-button-primary,
+  .aura-interactive-surface,
+  .aura-glow-transition {
+    transition: none !important;
+  }
+
+  .aura-button-primary:hover,
+  .aura-interactive-surface:hover {
+    transform: none !important;
+  }
 }

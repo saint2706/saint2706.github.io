@@ -13,19 +13,19 @@ const VARIANTS = {
     neubrutalism:
       'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     aura:
-      'aura-button-primary border border-[color:var(--border-soft)] hover:brightness-110 focus-visible:brightness-110',
+      'aura-button-primary aura-interactive-surface border border-[color:var(--border-soft)] hover:brightness-110 hover:scale-[1.015] focus-visible:brightness-110 motion-reduce:transform-none',
   },
   secondary: {
     neubrutalism:
       'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     aura:
-      'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110',
+      'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110 hover:scale-[1.015] motion-reduce:transform-none',
   },
   subtle: {
     neubrutalism:
       'bg-secondary text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     aura:
-      'aura-glass border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110',
+      'aura-glass aura-interactive-surface border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110 hover:scale-[1.012] motion-reduce:transform-none',
   },
 };
 

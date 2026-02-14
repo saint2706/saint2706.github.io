@@ -13,6 +13,7 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
+import { AURA_MOTION } from '../shared/themeMotion';
 
 /**
  * Hero section component for homepage
@@ -191,9 +192,9 @@ const Hero = () => {
 
       {isAura ? (
         <motion.section
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: AURA_MOTION.offset.y }}
           animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal }}
           className="w-full max-w-4xl aura-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
         >
           <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 aura-silver-text">
