@@ -23,6 +23,8 @@ import {
   CornerDownLeft,
   X,
 } from 'lucide-react';
+import { useTheme } from './theme-context';
+import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 
 /**
  * Command Palette overlay for keyboard-driven navigation
@@ -47,6 +49,9 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
   const listRef = useRef(null);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const shell = getOverlayShell({ theme, depth: 'hover' });
 
   /** All available commands grouped by category */
   const commands = useMemo(
@@ -243,11 +248,18 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
             aria-modal="true"
           >
             <div
-              className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb"
-              style={{ boxShadow: '8px 8px 0 var(--color-border)' }}
+              className={joinClasses('overflow-hidden', shell.className)}
+              style={shell.style}
             >
               {/* Search Input */}
-              <div className="flex items-center gap-3 px-4 py-3 border-b-nb border-[color:var(--color-border)]">
+              <div
+                className={joinClasses(
+                  'flex items-center gap-3 px-4 py-3',
+                  isAura
+                    ? 'border-b border-[color:var(--border-soft)]'
+                    : 'border-b-nb border-[color:var(--color-border)]'
+                )}
+              >
                 <Search size={20} className="text-secondary flex-shrink-0" />
                 <input
                   ref={inputRef}
@@ -272,7 +284,12 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                 />
                 <button
                   onClick={onClose}
-                  className="group relative p-1.5 bg-secondary border-2 border-[color:var(--color-border)] text-primary hover:bg-fun-yellow transition-colors rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className={joinClasses(
+                    'group relative p-1.5 text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                    isAura
+                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110'
+                      : 'bg-secondary border-2 border-[color:var(--color-border)] hover:bg-fun-yellow rounded-nb'
+                  )}
                   aria-label="Close command palette"
                 >
                   <X size={14} />
@@ -344,7 +361,14 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
               </div>
 
               {/* Footer with keyboard hints */}
-              <div className="flex items-center gap-4 px-4 py-2.5 border-t-nb border-[color:var(--color-border)] bg-secondary">
+              <div
+                className={joinClasses(
+                  'flex items-center gap-4 px-4 py-2.5',
+                  isAura
+                    ? 'border-t border-[color:var(--border-soft)] bg-[color:var(--surface-muted)]'
+                    : 'border-t-nb border-[color:var(--color-border)] bg-secondary'
+                )}
+              >
                 <span className="flex items-center gap-1 text-xs text-muted font-sans">
                   <ArrowUp size={12} />
                   <ArrowDown size={12} />

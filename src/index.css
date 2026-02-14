@@ -719,9 +719,16 @@
     background: color-mix(in srgb, var(--surface) 86%, #ffffff 14%) !important;
   }
 
+  [data-theme='aura'] .aura-overlay-action {
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    background: color-mix(in srgb, var(--surface) 84%, #ffffff 16%) !important;
+  }
+
   [data-theme='aura'][data-contrast='more'] .aura-nav-link:focus-visible,
   [data-theme='aura'][data-contrast='more'] .aura-form-field:focus-visible,
-  [data-theme='aura'][data-contrast='more'] .aura-footer-icon:focus-visible {
+  [data-theme='aura'][data-contrast='more'] .aura-footer-icon:focus-visible,
+  [data-theme='aura'][data-contrast='more'] .aura-overlay-action:focus-visible {
     outline: 3px solid var(--text-primary);
     outline-offset: 2px;
   }

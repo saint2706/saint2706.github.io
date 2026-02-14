@@ -20,6 +20,8 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useTheme } from './theme-context';
+import { getOverlayShell } from './ThemedPrimitives.utils';
 
 /**
  * Accessible modal dialog component.
@@ -48,6 +50,8 @@ import { X } from 'lucide-react';
 const Modal = ({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
   const previousFocus = useRef(null); // Stores element to restore focus to
+  const { theme } = useTheme();
+  const shell = getOverlayShell({ theme, depth: 'hover' });
 
   /**
    * Manages focus and scroll behavior when modal opens/closes.
@@ -189,8 +193,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-2xl max-h-[85vh] bg-card border-nb border-[color:var(--color-border)] rounded-nb overflow-hidden flex flex-col"
-            style={{ boxShadow: 'var(--nb-shadow-hover)' }}
+            className={`relative w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col ${shell.className}`}
+            style={shell.style}
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[color:var(--color-border)] bg-secondary">
