@@ -10,6 +10,7 @@ import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
 import { getSnippetsByLanguage } from '../../data/snippets';
+import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
 import SyntaxHighlighter from '../shared/SyntaxHighlighter';
 import Modal from '../shared/Modal';
@@ -396,6 +397,8 @@ const SnippetCard = ({
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
             <button
               onClick={onOpenRunner}
+              onMouseEnter={() => loadPyodide()}
+              onFocus={() => loadPyodide()}
               className="flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] transition-transform motion-reduce:transform-none rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
