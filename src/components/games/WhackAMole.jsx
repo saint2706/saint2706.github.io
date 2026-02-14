@@ -16,6 +16,8 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Timer } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
+import { getGameThemeStyles } from './gameThemeStyles';
 
 const GRID_SIZE = 9; // 3×3
 const GAME_DURATION = 30; // seconds
@@ -25,6 +27,9 @@ const SPAWN_INTERVAL = 800; // ms between spawns
 
 const WhackAMole = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const ui = getGameThemeStyles(isAura);
   const [gameState, setGameState] = useState('idle'); // idle | playing | gameOver
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
@@ -183,8 +188,8 @@ const WhackAMole = () => {
 
       {/* Status bar */}
       <div
-        className="flex gap-6 bg-secondary border-[3px] border-[color:var(--color-border)] p-4"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={ui.scoreboard}
+        style={ui.style.raised}
       >
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Score</div>
@@ -198,7 +203,7 @@ const WhackAMole = () => {
             {score}
           </motion.div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Timer size={16} className="text-fun-pink" aria-hidden="true" />
           <div>
@@ -210,7 +215,7 @@ const WhackAMole = () => {
             </div>
           </div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Trophy size={16} className="text-fun-yellow" aria-hidden="true" />
           <div>
@@ -226,8 +231,8 @@ const WhackAMole = () => {
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="p-5 bg-card border-[3px] border-[color:var(--color-border)]"
-          style={{ boxShadow: 'var(--nb-shadow)' }}
+          className={`${ui.boardShell} p-5`}
+          style={ui.style.board}
         >
           <div className="grid grid-cols-3 gap-4" role="grid" aria-label="Whack-a-Mole game board">
             {Array.from({ length: GRID_SIZE }, (_, i) => (
@@ -236,18 +241,16 @@ const WhackAMole = () => {
                 onClick={() => whackMole(i)}
                 disabled={gameState !== 'playing'}
                 aria-label={`Hole ${i + 1}${activeMoles.has(i) ? ' — Mole! Click to whack!' : ''}`}
-                className={`w-20 h-20 md:w-24 md:h-24 border-[3px] border-[color:var(--color-border)] rounded-full cursor-pointer select-none flex items-center justify-center text-3xl transition-all motion-reduce:transition-none
+                className={`w-20 h-20 md:w-24 md:h-24 rounded-full cursor-pointer flex items-center justify-center text-3xl transition-all motion-reduce:transition-none ${ui.tileBase}
                   ${
                     whackedMoles.has(i)
-                      ? 'bg-fun-yellow scale-90'
+                      ? `${ui.tileWin} scale-90`
                       : activeMoles.has(i)
-                        ? 'bg-fun-pink hover:bg-fun-pink/80 -translate-y-1'
-                        : 'bg-secondary hover:bg-secondary/80'
+                        ? `bg-fun-pink hover:bg-fun-pink/80 ${isAura ? 'brightness-110' : '-translate-y-1'}`
+                        : `${isAura ? 'bg-[color:var(--surface-muted)]/80 hover:brightness-110' : 'bg-secondary hover:bg-secondary/80'}`
                   }`}
                 style={{
-                  boxShadow: activeMoles.has(i)
-                    ? 'var(--nb-shadow-hover)'
-                    : '2px 2px 0 var(--color-border)',
+                  ...(activeMoles.has(i) ? ui.style.tileActive : ui.style.raised),
                 }}
               >
                 <AnimatePresence mode="wait">
@@ -258,7 +261,7 @@ const WhackAMole = () => {
                       animate={{ scale: 1, y: 0 }}
                       exit={shouldReduceMotion ? undefined : { scale: 0, y: 20 }}
                       transition={
-                        shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }
+                        shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }
                       }
                       aria-hidden="true"
                     >
@@ -290,14 +293,14 @@ const WhackAMole = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <div
-                className="text-xl font-heading font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={`${ui.banner} text-xl text-black bg-fun-yellow`}
+                style={ui.style.raised}
               >
                 Whack-a-Mole
               </div>
@@ -309,8 +312,8 @@ const WhackAMole = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <Play size={20} aria-hidden="true" />
@@ -325,20 +328,20 @@ const WhackAMole = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div
-                  className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+                  style={ui.style.raised}
                 >
                   Time's Up!
                 </div>
@@ -363,8 +366,8 @@ const WhackAMole = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />

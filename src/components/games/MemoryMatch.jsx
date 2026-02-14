@@ -15,6 +15,8 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Sparkles } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
+import { getGameThemeStyles } from './gameThemeStyles';
 
 /** Icon set representing tech brands/concepts */
 const ICONS = ['⚛️', '🐍', '🟨', '🌐', '🎨', '🐙', '🐳', '📦'];
@@ -39,6 +41,9 @@ const createDeck = () =>
 
 const MemoryMatch = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const ui = getGameThemeStyles(isAura);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won
   const [cards, setCards] = useState(createDeck);
   const [flipped, setFlipped] = useState([]); // indices of currently flipped cards
@@ -164,8 +169,8 @@ const MemoryMatch = () => {
 
       {/* Score board */}
       <div
-        className="flex gap-6 bg-secondary border-[3px] border-[color:var(--color-border)] p-4"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={ui.scoreboard}
+        style={ui.style.raised}
       >
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Moves</div>
@@ -179,7 +184,7 @@ const MemoryMatch = () => {
             {moves}
           </motion.div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
           <div>
@@ -197,8 +202,8 @@ const MemoryMatch = () => {
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="p-4 bg-card border-[3px] border-[color:var(--color-border)]"
-          style={{ boxShadow: 'var(--nb-shadow)' }}
+          className={`${ui.boardShell} ${ui.boardPadding}`}
+          style={ui.style.board}
         >
           <div
             ref={gridRef}
@@ -215,17 +220,17 @@ const MemoryMatch = () => {
                 }
                 aria-pressed={isFlipped(i)}
                 tabIndex={gameState === 'playing' && focusIndex === i ? 0 : -1}
-                className={`relative w-16 h-16 md:w-[72px] md:h-[72px] border-[3px] border-[color:var(--color-border)] rounded-nb font-heading font-bold text-2xl cursor-pointer select-none
+                className={`relative w-16 h-16 md:w-[72px] md:h-[72px] ${ui.tileBase} text-2xl cursor-pointer
                   transition-all motion-reduce:transition-none
                   ${
                     card.matched
-                      ? 'bg-fun-yellow/30 border-fun-yellow'
+                      ? ui.tileWin
                       : isFlipped(i)
-                        ? 'bg-accent text-white -translate-x-0.5 -translate-y-0.5'
-                        : `bg-card text-transparent hover:-translate-x-0.5 hover:-translate-y-0.5 ${focusIndex === i && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
+                        ? `${ui.tileActive} ${isAura ? 'scale-[0.985]' : ''}`
+                        : `${ui.tileIdle} text-transparent ${isAura ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'} ${focusIndex === i && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
                   }`}
                 style={{
-                  boxShadow: isFlipped(i) ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
+                  ...(isFlipped(i) ? ui.style.tileActive : ui.style.tile),
                 }}
               >
                 <AnimatePresence mode="wait">
@@ -235,7 +240,7 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: 90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: -90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isAura ? 0.15 : 0.2 }}
                       className="absolute inset-0 flex items-center justify-center text-2xl"
                       aria-hidden="true"
                     >
@@ -247,7 +252,7 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: -90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: 90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isAura ? 0.15 : 0.2 }}
                       className="absolute inset-0 flex items-center justify-center text-xl text-secondary"
                       aria-hidden="true"
                     >
@@ -268,8 +273,8 @@ const MemoryMatch = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
               aria-labelledby="memory-start-title"
@@ -277,8 +282,8 @@ const MemoryMatch = () => {
             >
               <div
                 id="memory-start-title"
-                className="text-xl font-heading font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={`${ui.banner} text-xl text-black bg-fun-yellow`}
+                style={ui.style.raised}
               >
                 Memory Match
               </div>
@@ -293,8 +298,8 @@ const MemoryMatch = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <Play size={20} aria-hidden="true" />
@@ -309,8 +314,8 @@ const MemoryMatch = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
               aria-labelledby="memory-win-title"
@@ -319,14 +324,14 @@ const MemoryMatch = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <Sparkles className="w-10 h-10 text-fun-yellow mx-auto mb-2" aria-hidden="true" />
                 <div
                   id="memory-win-title"
-                  className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+                  style={ui.style.raised}
                 >
                   You Win!
                 </div>
@@ -342,7 +347,7 @@ const MemoryMatch = () => {
                     className="flex items-center justify-center gap-2 mt-2"
                   >
                     <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
-                    <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
+                    <span className={`${ui.banner} text-black bg-fun-yellow px-2 py-1 text-sm`}>
                       New Best Score!
                     </span>
                   </motion.div>
@@ -351,11 +356,11 @@ const MemoryMatch = () => {
               <motion.button
                 initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: isAura ? 0.1 : 0.2 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />

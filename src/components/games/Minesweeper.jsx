@@ -16,6 +16,8 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Flag, Bomb, Timer } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
+import { getGameThemeStyles } from './gameThemeStyles';
 
 const ROWS = 9;
 const COLS = 9;
@@ -104,6 +106,9 @@ const ADJACENT_COLORS = [
 
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const ui = getGameThemeStyles(isAura);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won | lost
   const [board, setBoard] = useState(createEmptyBoard);
   const [firstClick, setFirstClick] = useState(true);
@@ -271,8 +276,8 @@ const Minesweeper = () => {
 
       {/* Status bar */}
       <div
-        className="flex gap-6 bg-secondary border-[3px] border-[color:var(--color-border)] p-4"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={ui.scoreboard}
+        style={ui.style.raised}
       >
         <div className="flex items-center gap-2 px-4">
           <Flag size={16} className="text-fun-pink" aria-hidden="true" />
@@ -281,7 +286,7 @@ const Minesweeper = () => {
             <div className="text-2xl font-heading font-bold text-fun-pink">{MINES - flagCount}</div>
           </div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Timer size={16} className="text-accent" aria-hidden="true" />
           <div>
@@ -289,7 +294,7 @@ const Minesweeper = () => {
             <div className="text-2xl font-heading font-bold text-accent">{timer}s</div>
           </div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Trophy size={16} className="text-fun-yellow" aria-hidden="true" />
           <div>
@@ -307,8 +312,8 @@ const Minesweeper = () => {
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="p-3 bg-card border-[3px] border-[color:var(--color-border)]"
-          style={{ boxShadow: 'var(--nb-shadow)' }}
+          className={`${ui.boardShell} p-3`}
+          style={ui.style.board}
         >
           <div
             className="grid gap-[2px]"
@@ -330,13 +335,13 @@ const Minesweeper = () => {
                   disabled={isGameOver}
                   tabIndex={focusR === r && focusC === c ? 0 : -1}
                   aria-label={`Row ${r + 1}, Column ${c + 1}${cell.revealed ? (cell.mine ? ', mine' : cell.adjacent > 0 ? `, ${cell.adjacent} adjacent mines` : ', empty') : cell.flagged ? ', flagged' : ', hidden'}. Press F to flag.`}
-                  className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm font-heading font-bold border-[2px] border-[color:var(--color-border)] cursor-pointer select-none flex items-center justify-center transition-colors motion-reduce:transition-none
+                  className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm cursor-pointer flex items-center justify-center transition-colors motion-reduce:transition-none ${ui.tileBase}
                     ${
                       cell.revealed
                         ? cell.mine
                           ? 'bg-fun-pink/40'
                           : 'bg-secondary'
-                        : `bg-card hover:bg-accent/10 ${focusR === r && focusC === c ? 'ring-2 ring-accent' : ''}`
+                        : `${ui.tileIdle} ${isAura ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${focusR === r && focusC === c ? 'ring-2 ring-accent' : ''}`
                     }`}
                 >
                   <span
@@ -360,20 +365,20 @@ const Minesweeper = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div
-                  className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+                  style={ui.style.raised}
                 >
                   You Win! 🎉
                 </div>
@@ -392,8 +397,8 @@ const Minesweeper = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />
@@ -408,21 +413,21 @@ const Minesweeper = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <Bomb className="w-10 h-10 text-fun-pink mx-auto mb-2" aria-hidden="true" />
                 <div
-                  className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+                  style={ui.style.raised}
                 >
                   Game Over!
                 </div>
@@ -431,8 +436,8 @@ const Minesweeper = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />
@@ -445,8 +450,8 @@ const Minesweeper = () => {
 
       {/* Controls hint */}
       <div
-        className="text-sm md:text-xs text-secondary text-center px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-sans leading-relaxed"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={`${ui.statusBanner} text-sm md:text-xs text-secondary text-center font-sans leading-relaxed`}
+        style={ui.style.raised}
       >
         Right-click or long-press to flag · Press{' '}
         <kbd className="font-mono bg-card px-1 border border-[color:var(--color-border)]">F</kbd>{' '}
