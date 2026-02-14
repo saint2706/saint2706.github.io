@@ -14,6 +14,7 @@ import React, {
 } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { resumeData } from '../../data/resume';
+import { useTheme } from './theme-context';
 
 /**
  * Category colors matching neubrutalist theme
@@ -35,7 +36,7 @@ const HoverContext = createContext(null);
  * Single Skill Node in the tree
  * Uses useSyncExternalStore to subscribe to hover changes for React 18 compatibility.
  */
-const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
+const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
   const { subscribe, getHoveredSkill, setHoveredSkill } = useContext(HoverContext);
 
   // Size based on proficiency: min 8px, max 16px
@@ -67,7 +68,16 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
       transition={{ duration: 0.2 }}
     >
       {/* Branch line */}
-      <div className="w-4 h-0.5 border-t-2 border-dashed" style={{ borderColor: color }} />
+      {isAura ? (
+        <div
+          className="w-4 h-px rounded-full"
+          style={{
+            background: `linear-gradient(90deg, ${color}99 0%, ${color}33 100%)`,
+          }}
+        />
+      ) : (
+        <div className="w-4 h-0.5 border-t-2 border-dashed" style={{ borderColor: color }} />
+      )}
 
       {/* Skill node */}
       <motion.button
@@ -76,13 +86,28 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
         onMouseLeave={handleMouseLeave}
         onFocus={handleMouseEnter}
         onBlur={handleMouseLeave}
-        className="relative flex items-center gap-2 px-3 py-1.5 border-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
+        className={`relative flex items-center gap-2 px-3 py-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+          isAura
+            ? 'rounded-full border border-[color:var(--border-soft)] focus-visible:ring-accent/70 focus-visible:ring-offset-transparent'
+            : 'border-2 focus-visible:ring-black'
+        }`}
         style={{
-          borderColor: 'var(--color-border)',
-          backgroundColor: isHovered ? color : 'var(--color-secondary)',
-          boxShadow: isHovered ? '3px 3px 0 var(--color-border)' : '2px 2px 0 var(--color-border)',
+          borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
+          background: isAura
+            ? `linear-gradient(135deg, ${color}${isHovered ? '2e' : '1f'} 0%, rgba(255,255,255,0.05) 100%)`
+            : undefined,
+          backgroundColor: isAura ? undefined : isHovered ? color : 'var(--color-secondary)',
+          boxShadow: isAura
+            ? isHovered
+              ? `0 0 0 1px ${color}66, 0 8px 22px -14px ${color}cc`
+              : '0 8px 16px -16px rgba(0,0,0,0.55)'
+            : isHovered
+              ? '3px 3px 0 var(--color-border)'
+              : '2px 2px 0 var(--color-border)',
         }}
-        whileHover={shouldReduceMotion ? {} : { x: 2, y: -2 }}
+        whileHover={
+          shouldReduceMotion ? {} : isAura ? { y: -1, scale: 1.01 } : { x: 2, y: -2 }
+        }
         transition={{ duration: 0.1 }}
         aria-label={`View proficiency details for ${skill.name}`}
         aria-pressed={isHovered}
@@ -94,12 +119,13 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
             width: nodeSize,
             height: nodeSize,
             backgroundColor: color,
-            borderColor: 'var(--color-border)',
+            borderColor: isAura ? 'color-mix(in srgb, var(--border-soft) 55%, #fff 45%)' : 'var(--color-border)',
+            boxShadow: isAura ? `0 0 10px -3px ${color}cc` : undefined,
           }}
         />
 
         {/* Skill name - always visible */}
-        <span className="text-sm font-heading font-bold whitespace-nowrap text-black">
+        <span className={`text-sm font-heading font-bold whitespace-nowrap ${isAura ? 'text-primary' : 'text-black'}`}>
           {skill.name}
         </span>
 
@@ -110,7 +136,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion }) => {
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: 'auto' }}
               exit={{ opacity: 0, width: 0 }}
-              className="text-xs font-sans font-bold text-black overflow-hidden"
+              className={`text-xs font-sans font-bold overflow-hidden ${isAura ? 'text-primary' : 'text-black'}`}
             >
               {skill.proficiency}%
             </motion.span>
@@ -128,7 +154,7 @@ SkillNode.displayName = 'SkillNode';
  * Category Branch with its skills
  * Memoized to prevent re-renders when other categories are interacted with.
  */
-const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay }) => {
+const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay, isAura }) => {
   return (
     <motion.div
       className="flex flex-col sm:flex-row gap-2 sm:gap-4"
@@ -138,24 +164,38 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
     >
       {/* Category label */}
       <div
-        className="flex items-center gap-2 px-3 py-2 border-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0"
+        className={`flex items-center gap-2 px-3 py-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0 ${isAura ? 'rounded-full border border-[color:var(--border-soft)]' : 'border-2'}`}
         style={{
-          borderColor: 'var(--color-border)',
-          backgroundColor: color,
-          boxShadow: '3px 3px 0 var(--color-border)',
-          color: '#000',
+          borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
+          background: isAura
+            ? `linear-gradient(135deg, ${color}40 0%, rgba(255,255,255,0.08) 100%)`
+            : undefined,
+          backgroundColor: isAura ? undefined : color,
+          boxShadow: isAura ? '0 10px 24px -18px rgba(0,0,0,0.7)' : '3px 3px 0 var(--color-border)',
+          color: isAura ? 'var(--text-primary)' : '#000',
         }}
       >
         <div
-          className="w-3 h-3 border-2"
-          style={{ borderColor: 'var(--color-border)', backgroundColor: '#fff' }}
+          className={`w-3 h-3 ${isAura ? 'rounded-full border' : 'border-2'}`}
+          style={{
+            borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
+            backgroundColor: isAura ? color : '#fff',
+            boxShadow: isAura ? `0 0 8px -2px ${color}` : undefined,
+          }}
         />
         {category}
       </div>
 
       {/* Connecting line */}
       <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
-        <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
+        {isAura ? (
+          <div
+            className="w-full h-px rounded-full"
+            style={{ background: `linear-gradient(90deg, ${color}aa 0%, ${color}22 100%)` }}
+          />
+        ) : (
+          <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
+        )}
       </div>
 
       {/* Skills container */}
@@ -166,6 +206,7 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
             skill={skill}
             color={color}
             shouldReduceMotion={shouldReduceMotion}
+            isAura={isAura}
           />
         ))}
       </div>
@@ -186,6 +227,8 @@ CategoryBranch.displayName = 'CategoryBranch';
  */
 const TechStackVisual = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   // State only for Screen Reader updates (decoupled from visual updates)
   const [hoveredSkillForSR, setHoveredSkillForSR] = useState(null);
 
@@ -256,6 +299,7 @@ const TechStackVisual = () => {
               color={CATEGORY_COLORS[group.category] || '#e5e5e5'}
               shouldReduceMotion={shouldReduceMotion}
               delay={i * 0.1}
+              isAura={isAura}
             />
           ))}
         </div>
