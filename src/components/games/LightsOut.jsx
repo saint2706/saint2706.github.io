@@ -17,6 +17,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Lightbulb } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
+import { getGameThemeStyles } from './gameThemeStyles';
 
 const SIZE = 5;
 
@@ -56,6 +58,9 @@ const createPuzzle = () => {
 
 const LightsOut = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const ui = getGameThemeStyles(isAura);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won
   const [grid, setGrid] = useState(createPuzzle);
   const [moves, setMoves] = useState(0);
@@ -160,8 +165,8 @@ const LightsOut = () => {
 
       {/* Score board */}
       <div
-        className="flex gap-6 bg-secondary border-[3px] border-[color:var(--color-border)] p-4"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={ui.scoreboard}
+        style={ui.style.raised}
       >
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Moves</div>
@@ -175,7 +180,7 @@ const LightsOut = () => {
             {moves}
           </motion.div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Lightbulb size={16} className="text-fun-yellow" aria-hidden="true" />
           <div>
@@ -183,7 +188,7 @@ const LightsOut = () => {
             <div className="text-2xl font-heading font-bold text-fun-yellow">{lightsOn}</div>
           </div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-4">
           <Trophy size={16} className="text-fun-pink" aria-hidden="true" />
           <div>
@@ -199,8 +204,8 @@ const LightsOut = () => {
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="p-4 bg-card border-[3px] border-[color:var(--color-border)]"
-          style={{ boxShadow: 'var(--nb-shadow)' }}
+          className={`${ui.boardShell} ${ui.boardPadding}`}
+          style={ui.style.board}
         >
           <div
             className="grid gap-2"
@@ -242,14 +247,14 @@ const LightsOut = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <div
-                className="text-xl font-heading font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={`${ui.banner} text-xl text-black bg-fun-yellow`}
+                style={ui.style.raised}
               >
                 Lights Out
               </div>
@@ -261,8 +266,8 @@ const LightsOut = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <Play size={20} aria-hidden="true" />
@@ -277,20 +282,20 @@ const LightsOut = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
             >
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div
-                  className="text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)] mb-4"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+                  style={ui.style.raised}
                 >
                   Lights Out! 🎉
                 </div>
@@ -315,8 +320,8 @@ const LightsOut = () => {
               <motion.button
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
-                className="px-6 py-2 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />
@@ -329,8 +334,8 @@ const LightsOut = () => {
 
       {/* Instructions */}
       <div
-        className="text-sm md:text-xs text-secondary text-center px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-sans leading-relaxed"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={`${ui.statusBanner} text-sm md:text-xs text-secondary text-center font-sans leading-relaxed`}
+        style={ui.style.raised}
       >
         Arrow keys to navigate · Enter to toggle
       </div>

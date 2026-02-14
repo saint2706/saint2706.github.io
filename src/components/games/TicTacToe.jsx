@@ -23,6 +23,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Cpu, User } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
+import { getGameThemeStyles } from './gameThemeStyles';
 
 // All possible winning combinations (rows, columns, diagonals)
 const WINNING_COMBINATIONS = [
@@ -165,6 +167,9 @@ const getWinningLine = board => {
  */
 const TicTacToe = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+  const ui = getGameThemeStyles(isAura);
 
   // Game state
   const [board, setBoard] = useState(Array(9).fill(null)); // 9 cells: 'X', 'O', or null
@@ -389,12 +394,15 @@ const TicTacToe = () => {
             className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                             ${
                               difficulty === diff.id
-                                ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} -translate-x-0.5 -translate-y-0.5`
-                                : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                                ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} ${isAura ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
+                                : `${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
                             }`}
             style={{
-              boxShadow:
-                difficulty === diff.id ? 'var(--nb-shadow-hover)' : '2px 2px 0 var(--color-border)',
+              boxShadow: isAura
+                ? undefined
+                : difficulty === diff.id
+                  ? 'var(--nb-shadow-hover)'
+                  : '2px 2px 0 var(--color-border)',
             }}
           >
             {diff.label}
@@ -404,8 +412,8 @@ const TicTacToe = () => {
 
       {/* Score Board - Neubrutalism */}
       <div
-        className="flex gap-4 bg-secondary border-[3px] border-[color:var(--color-border)] p-4"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={ui.scoreboard}
+        style={ui.style.raised}
       >
         <div className="flex items-center gap-2 px-3">
           <User size={18} className="text-accent" />
@@ -414,12 +422,12 @@ const TicTacToe = () => {
             <div className="text-xl font-heading font-bold text-accent">{scores.player}</div>
           </div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="px-3">
           <div className="text-sm md:text-xs text-secondary font-heading">Draws</div>
           <div className="text-xl font-heading font-bold text-secondary">{scores.draws}</div>
         </div>
-        <div className="w-[3px] bg-[color:var(--color-border)]" />
+        <div className={ui.separator} />
         <div className="flex items-center gap-2 px-3">
           <div>
             <div className="text-sm md:text-xs text-secondary font-heading">AI</div>
@@ -432,8 +440,8 @@ const TicTacToe = () => {
       {/* Game Board - Neubrutalism */}
       <div className="relative">
         <motion.div
-          className="grid grid-cols-3 gap-2 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
-          style={{ boxShadow: 'var(--nb-shadow)' }}
+          className={`grid grid-cols-3 gap-2 ${ui.boardPadding} ${ui.boardShell}`}
+          style={ui.style.board}
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
@@ -446,11 +454,11 @@ const TicTacToe = () => {
               onClick={() => handleCellClick(index)}
               disabled={!!cell || !isPlayerTurn || gameStatus !== 'playing'}
               aria-label={getCellLabel(index, cell)}
-              className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl font-heading font-bold flex items-center justify-center transition-transform border-[3px] border-[color:var(--color-border)] motion-reduce:transform-none motion-reduce:transition-none
-                                ${winningLine?.includes(index) ? 'bg-fun-yellow' : 'bg-card'}
-                                ${!cell && isPlayerTurn && gameStatus === 'playing' ? 'cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5' : 'cursor-default'}
+              className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl flex items-center justify-center transition-transform motion-reduce:transform-none motion-reduce:transition-none ${ui.tileBase}
+                                ${winningLine?.includes(index) ? ui.tileWin : ui.tileIdle}
+                                ${!cell && isPlayerTurn && gameStatus === 'playing' ? `cursor-pointer ${isAura ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'}` : 'cursor-default'}
                             `}
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+              style={ui.style.raised}
               whileTap={
                 !cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion
                   ? { scale: 0.95 }
@@ -483,8 +491,8 @@ const TicTacToe = () => {
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="absolute inset-0 bg-primary/90 flex flex-col items-center justify-center gap-4 border-[3px] border-[color:var(--color-border)]"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={ui.overlay}
+              style={ui.style.board}
               role="dialog"
               aria-modal="true"
               aria-labelledby="game-result"
@@ -493,7 +501,7 @@ const TicTacToe = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 {gameStatus === 'won' && (
@@ -501,8 +509,8 @@ const TicTacToe = () => {
                     <Trophy className="w-16 h-16 text-fun-yellow mx-auto mb-2" aria-hidden="true" />
                     <div
                       id="game-result"
-                      className="inline-block text-2xl font-heading font-bold text-black bg-fun-yellow px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      className={`inline-block text-2xl text-black bg-fun-yellow ${ui.banner}`}
+                      style={ui.style.raised}
                     >
                       You Won!
                     </div>
@@ -511,8 +519,8 @@ const TicTacToe = () => {
                 {gameStatus === 'lost' && (
                   <div
                     id="game-result"
-                    className="inline-block text-2xl font-heading font-bold text-white bg-fun-pink px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    className={`inline-block text-2xl text-white bg-fun-pink ${ui.banner}`}
+                    style={ui.style.raised}
                   >
                     AI Wins!
                   </div>
@@ -520,8 +528,8 @@ const TicTacToe = () => {
                 {gameStatus === 'draw' && (
                   <div
                     id="game-result"
-                    className="inline-block text-2xl font-heading font-bold text-primary bg-secondary px-4 py-2 border-[3px] border-[color:var(--color-border)]"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    className={`inline-block text-2xl text-primary bg-secondary ${ui.banner}`}
+                    style={ui.style.raised}
                   >
                     It&apos;s a Draw!
                   </div>
@@ -533,10 +541,10 @@ const TicTacToe = () => {
               <motion.button
                 initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: isAura ? 0.1 : 0.2 }}
                 onClick={resetGame}
-                className="px-6 py-3 bg-accent text-white font-heading font-bold border-[3px] border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={ui.buttonPrimary}
+                style={ui.style.raised}
                 autoFocus
               >
                 <RotateCcw size={18} aria-hidden="true" />
@@ -554,8 +562,8 @@ const TicTacToe = () => {
           initial={shouldReduceMotion ? false : { opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          className="px-4 py-2 bg-secondary border-[3px] border-[color:var(--color-border)] font-heading font-bold"
-          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+          className={ui.statusBanner}
+          style={ui.style.raised}
         >
           {isPlayerTurn ? (
             <span className="text-accent">Your turn</span>
