@@ -1,24 +1,55 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @config "../tailwind.config.js";
 
 /* Theme CSS Variables */
 :root {
-  /* NEUBRUTALISM THEME */
-  --color-primary: #fafafa;
-  --color-secondary: #f5f5f5;
-  --color-accent: #0052cc;
-  --color-fun-pink: #9c0e4b;
-  --color-fun-yellow: #ffd54f;
+  /* Base semantic tokens */
+  --bg: #fafafa;
+  --bg-layer-1: #fafafa;
+  --bg-layer-2: #f5f5f5;
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.75);
+  --surface-overlay: rgba(250, 250, 250, 0.95);
 
-  --color-text-primary: #000000;
-  --color-text-secondary: #333333;
-  --color-text-muted: #666666;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+  --text-subtle: #666666;
 
-  --color-border: #000000;
-  --color-card-bg: #ffffff;
-  --color-overlay: rgba(250, 250, 250, 0.95);
+  --accent: #0052cc;
+  --accent-soft: rgba(0, 82, 204, 0.2);
+  --fun-pink: #9c0e4b;
+  --fun-yellow: #ffd54f;
 
-  /* Neubrutalism specific */
+  --border-color: #000000;
+  --border-soft: rgba(0, 0, 0, 0.18);
+  --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+
+  /* Legacy variable aliases mapped to semantic tokens */
+  --color-primary: var(--bg);
+  --color-secondary: var(--bg-layer-2);
+  --color-accent: var(--accent);
+  --color-fun-pink: var(--fun-pink);
+  --color-fun-yellow: var(--fun-yellow);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-border: var(--border-color);
+  --color-card-bg: var(--surface);
+  --color-overlay: var(--surface-overlay);
+
+  /* Neubrutalism defaults for backwards compatibility */
   --nb-border-width: 3px;
   --nb-shadow-offset: 4px;
   --nb-shadow: 4px 4px 0 #000000;
@@ -29,6 +60,95 @@
 
   /* Skeleton colors */
   --color-skeleton: rgba(0, 0, 0, 0.1);
+}
+
+/* Neubrutalism theme tokens */
+[data-theme='neubrutalism'] {
+  --bg: #fafafa;
+  --bg-layer-1: #fafafa;
+  --bg-layer-2: #f5f5f5;
+  --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.75);
+  --surface-overlay: rgba(250, 250, 250, 0.95);
+
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+  --text-subtle: #666666;
+
+  --accent: #0052cc;
+  --accent-soft: rgba(0, 82, 204, 0.2);
+  --fun-pink: #9c0e4b;
+  --fun-yellow: #ffd54f;
+
+  --border-color: #000000;
+  --border-soft: rgba(0, 0, 0, 0.18);
+  --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+
+  /* Neubrutalism specific */
+  --nb-border-width: 3px;
+  --nb-shadow-offset: 4px;
+  --nb-shadow: 4px 4px 0 #000000;
+  --nb-shadow-hover: 6px 6px 0 #000000;
+  --nb-shadow-xl: 8px 8px 0 #000000;
+  --nb-shadow-pressed: inset 2px 2px 0 #000000;
+  --nb-radius: 0px;
+}
+
+/* Aura theme tokens */
+[data-theme='aura'] {
+  --bg: #070b19;
+  --bg-layer-1:
+    radial-gradient(circle at 15% 20%, #1f2f63 0%, rgba(31, 47, 99, 0) 45%),
+    radial-gradient(circle at 85% 15%, #413287 0%, rgba(65, 50, 135, 0) 40%),
+    linear-gradient(180deg, #090f23 0%, #050812 100%);
+  --bg-layer-2: rgba(26, 34, 63, 0.9);
+  --surface: rgba(18, 24, 43, 0.88);
+  --surface-glass: rgba(147, 167, 213, 0.14);
+  --surface-overlay: rgba(7, 11, 25, 0.85);
+
+  --text-primary: #eef3ff;
+  --text-secondary: #c2cbe4;
+  --text-muted: #99a3c2;
+  --text-subtle: #7c86a8;
+
+  --accent: #8da2ff;
+  --accent-soft: rgba(141, 162, 255, 0.28);
+  --fun-pink: #d783ff;
+  --fun-yellow: #f9d78b;
+
+  --border-color: rgba(173, 189, 235, 0.42);
+  --border-soft: rgba(173, 189, 235, 0.2);
+  --glow-soft: 0 12px 40px rgba(93, 111, 179, 0.35);
+
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.9rem;
+  --radius-lg: 1.25rem;
+  --space-1: 0.375rem;
+  --space-2: 0.625rem;
+  --space-3: 0.875rem;
+  --space-4: 1.25rem;
+
+  /* Keep neubrutalism vars defined to avoid regressions when aura is active */
+  --nb-border-width: 1px;
+  --nb-shadow-offset: 0px;
+  --nb-shadow: 0 10px 25px rgba(7, 11, 25, 0.35);
+  --nb-shadow-hover: 0 14px 32px rgba(7, 11, 25, 0.45);
+  --nb-shadow-xl: 0 20px 44px rgba(7, 11, 25, 0.5);
+  --nb-shadow-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --nb-radius: var(--radius-md);
+
+  --color-skeleton: rgba(141, 162, 255, 0.2);
 }
 
 @layer utilities {
@@ -111,7 +231,6 @@
 
 /* Gentle float bob for decorative elements */
 @keyframes nb-float-bob {
-
   0%,
   100% {
     transform: translateY(0) rotate(var(--sticker-rotate, 2deg));
@@ -145,7 +264,6 @@
 
 /* Blinking cursor for code snippets */
 @keyframes nb-blink {
-
   0%,
   100% {
     opacity: 1;
@@ -202,6 +320,82 @@
 .nb-scrollbar::-webkit-scrollbar-corner {
   background: var(--color-secondary);
   border: 2px solid var(--color-border);
+}
+
+/* ===== AURA UTILITIES ===== */
+.aura-bg {
+  background: var(--bg);
+  background-image: var(--bg-layer-1);
+  color: var(--text-primary);
+}
+
+.aura-glass {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--glow-soft);
+  border-radius: var(--radius-lg);
+}
+
+.aura-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 9999px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  color: var(--text-secondary);
+  box-shadow: 0 4px 14px rgba(5, 8, 18, 0.2);
+}
+
+.aura-button-primary {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    color-mix(in srgb, var(--accent), #ffffff 22%) 100%
+  );
+  color: var(--text-primary);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.aura-button-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.aura-button-primary:active {
+  transform: translateY(0);
+}
+
+.aura-silver-text {
+  color: var(--text-secondary);
+  background: linear-gradient(130deg, #cdd6ea 0%, #f8fbff 40%, #98a4c7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .aura-glass,
+  .aura-chip {
+    background: var(--surface);
+  }
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .aura-glass,
+  .aura-chip {
+    background: var(--surface-glass);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+    backdrop-filter: blur(18px) saturate(120%);
+  }
 }
 
 /* Speech bubble with left pointer for RoastMode */
