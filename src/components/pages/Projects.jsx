@@ -8,6 +8,10 @@ import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedChip from '../shared/ThemedChip';
+import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 
 /**
  * Projects showcase page component
@@ -117,14 +121,13 @@ const Projects = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-fun-yellow text-black px-4 py-2 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              Creative Experiments
-            </span>
-          </h1>
+          <ThemedSectionHeading
+            as="h1"
+            title="Creative Experiments"
+            variant="yellow"
+            className="font-heading text-4xl md:text-5xl font-bold mb-4"
+            chipClassName="nb-stamp-in"
+          />
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             From data science models to full-stack applications. Here is what I have been building.
           </p>
@@ -140,8 +143,10 @@ const Projects = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {resumeData.projects.map((project, idx) => (
-            <motion.article
+            <ThemedCard
+              as={motion.article}
               key={idx}
+              variant="interactive"
               variants={item}
               onClick={handleCardClick(project)}
               role="link"
@@ -152,9 +157,8 @@ const Projects = () => {
                   event.currentTarget.click();
                 }
               }}
-              className={`bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col h-full cursor-pointer nb-shadow-lift nb-sticker focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow motion-reduce:transform-none motion-reduce:transition-none rounded-nb`}
+              className="overflow-hidden flex flex-col h-full cursor-pointer nb-shadow-lift nb-sticker focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow"
               style={{
-                boxShadow: 'var(--nb-shadow)',
                 '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
               }}
             >
@@ -182,18 +186,19 @@ const Projects = () => {
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
-                      <span className="flex items-center gap-1 text-sm md:text-xs font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
+                      <ThemedChip variant="yellow" className="font-bold">
                         <Star size={12} className="fill-black" />
                         {project.stars}
-                      </span>
+                      </ThemedChip>
                     )}
                     {project.featured && (
-                      <span
-                        className="text-sm md:text-xs font-bold px-2 py-1 bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb nb-sticker"
+                      <ThemedChip
+                        variant="accent"
+                        className="font-bold nb-sticker"
                         style={{ '--sticker-rotate': '3deg' }}
                       >
                         Featured
-                      </span>
+                      </ThemedChip>
                     )}
                   </div>
                 </div>
@@ -204,45 +209,50 @@ const Projects = () => {
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.map(tag => (
-                    <span
+                    <ThemedChip
                       key={tag}
-                      className="text-sm md:text-xs font-sans px-2 py-1 bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb"
+                      variant="neutral"
+                      className="font-sans"
                     >
                       {tag}
-                    </span>
+                    </ThemedChip>
                   ))}
                 </div>
 
                 <div className="flex items-center gap-4 mt-auto">
                   {project.link && (
-                    <a
+                    <ThemedButton
+                      as="a"
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      variant="primary"
+                      size="sm"
+                      className="hover:-translate-y-0.5"
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
                       <ExternalLink size={14} aria-hidden="true" /> Demo
-                    </a>
+                    </ThemedButton>
                   )}
                   {project.github && (
-                    <a
+                    <ThemedButton
+                      as="a"
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
-                      className="flex items-center gap-2 text-sm font-heading font-bold px-3 py-2 bg-card text-primary border-2 border-[color:var(--color-border)] transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      variant="secondary"
+                      size="sm"
+                      className="hover:-translate-y-0.5"
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >
                       <Github size={14} aria-hidden="true" /> Code
-                    </a>
+                    </ThemedButton>
                   )}
                 </div>
               </div>
-            </motion.article>
+            </ThemedCard>
           ))}
         </motion.div>
       </div>

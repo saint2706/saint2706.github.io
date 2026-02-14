@@ -9,6 +9,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
 import { safeJSONStringify } from '../../utils/security';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedChip from '../shared/ThemedChip';
 
 /**
  * Hero section component for homepage
@@ -173,13 +176,14 @@ const Hero = () => {
           }
           className="mb-8"
         >
-          <div
-            className="inline-flex items-center gap-2 bg-fun-yellow text-black font-heading font-semibold px-5 py-2 border-nb border-[color:var(--color-border)] rounded-nb nb-sticker"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '-2deg' }}
+          <ThemedChip
+            variant="yellow"
+            className="font-heading font-semibold px-5 py-2 nb-sticker"
+            style={{ '--sticker-rotate': '-2deg' }}
           >
             <Sparkles size={18} className="text-black" />
             Available for hire & collaborations
-          </div>
+          </ThemedChip>
         </motion.div>
 
         {/* Main Heading — fixed contrast + squiggle underline */}
@@ -245,26 +249,31 @@ const Hero = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
           className="flex flex-col md:flex-row gap-4 justify-center"
         >
-          <Link
+          <ThemedButton
+            as={Link}
             to="/projects"
-            className="group relative px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer nb-shadow-lift nb-color-invert motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': 'var(--color-fun-yellow)' }}
+            variant="primary"
+            size="lg"
+            className="group relative nb-shadow-lift nb-color-invert"
+            style={{ '--invert-text': 'var(--color-fun-yellow)' }}
           >
             View Projects
             <ArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
             />
-          </Link>
-          <button
+          </ThemedButton>
+          <ThemedButton
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-            className="px-8 py-4 bg-card text-[color:var(--color-text-primary)] font-heading font-bold border-nb border-[color:var(--color-border)] flex items-center gap-2 cursor-pointer nb-shadow-lift nb-color-invert motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+            variant="secondary"
+            size="lg"
+            className="nb-shadow-lift nb-color-invert"
+            style={{ '--invert-text': '#ffffff' }}
             aria-label="Open chat with Digital Rishabh"
           >
             <Bot size={18} className="text-fun-pink" aria-hidden="true" />
             Talk to Digital Rishabh
-          </button>
+          </ThemedButton>
         </motion.div>
 
         {/* Code Snippet Card — sticky-note style with sticker rotation + blinking cursor */}
@@ -278,9 +287,10 @@ const Hero = () => {
           }
           className="mt-16 w-full max-w-md"
         >
-          <div
-            className={`bg-fun-yellow text-black p-6 border-nb border-[color:var(--color-border)] text-left font-mono text-sm rounded-nb transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`}
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '-1deg' }}
+          <ThemedCard
+            variant="highlighted"
+            className={`p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`}
+            style={{ '--sticker-rotate': '-1deg' }}
           >
             <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
               <Code2 size={16} />
@@ -329,7 +339,7 @@ const Hero = () => {
                 </>
               )}
             </pre>
-          </div>
+          </ThemedCard>
         </motion.div>
       </div>
     </>
