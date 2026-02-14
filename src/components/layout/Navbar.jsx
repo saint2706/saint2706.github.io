@@ -16,7 +16,6 @@ import {
   X,
   MousePointer2,
   Code2,
-  Sparkles,
 } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { AURA_MOTION } from '../shared/themeMotion';
@@ -47,7 +46,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const isAura = theme === 'aura';
 
   const themeClass = useCallback((neubrutalClasses, auraClasses) => {
@@ -201,16 +200,22 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
         {/* Cursor Toggle and Mobile Menu container */}
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className={`p-2.5 text-primary transition-all duration-200 motion-reduce:transform-none motion-reduce:transition-none cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb hover:-translate-x-0.5 hover:-translate-y-0.5', 'aura-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
+          <label
+            htmlFor="theme-preference"
+            className={`hidden md:flex items-center gap-2 pl-3 pr-2 py-2 text-sm font-semibold text-primary ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full')}`}
             style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
-            aria-label={`Switch to ${isAura ? 'neubrutalism' : 'aura'} theme`}
-            title={`Switch to ${isAura ? 'neubrutalism' : 'aura'} theme`}
           >
-            <Sparkles size={18} aria-hidden="true" />
-          </button>
+            <span>Theme</span>
+            <select
+              id="theme-preference"
+              value={theme}
+              onChange={event => setTheme(event.target.value)}
+              className={`text-sm px-2 py-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
+            >
+              <option value="neubrutalism">Neubrutalism</option>
+              <option value="aura">Aura</option>
+            </select>
+          </label>
 
           {/* Cursor Toggle Button */}
           <button
@@ -262,6 +267,20 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               ref={menuRef}
             >
               <div className="flex flex-col">
+                <div className="px-5 py-4 border-b-2 border-[color:var(--color-border)]">
+                  <label htmlFor="mobile-theme-preference" className="block text-sm font-heading font-semibold text-primary mb-2">
+                    Theme
+                  </label>
+                  <select
+                    id="mobile-theme-preference"
+                    value={theme}
+                    onChange={event => setTheme(event.target.value)}
+                    className={`w-full text-sm px-3 py-2 text-primary ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
+                  >
+                    <option value="neubrutalism">Neubrutalism</option>
+                    <option value="aura">Aura</option>
+                  </select>
+                </div>
                 {navItems.map((item, index) => (
                   <NavLink
                     key={item.name}
