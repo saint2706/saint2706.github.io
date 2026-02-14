@@ -14,6 +14,10 @@ import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
 import SyntaxHighlighter from '../shared/SyntaxHighlighter';
 import Modal from '../shared/Modal';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedChip from '../shared/ThemedChip';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Playground page for code snippets and interactive demos
@@ -30,6 +34,8 @@ import Modal from '../shared/Modal';
  * @returns {JSX.Element} Playground page with filterable code snippets
  */
 const Playground = () => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const [activeFilter, setActiveFilter] = useState('all');
   const [copiedId, setCopiedId] = useState(null);
   const [modalSnippet, setModalSnippet] = useState(null);
@@ -106,6 +112,8 @@ const Playground = () => {
     },
   };
 
+  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+
   return (
     <>
       <Helmet>
@@ -142,7 +150,12 @@ const Playground = () => {
         </script>
       </Helmet>
 
-      <div className="max-w-6xl mx-auto py-12 px-4">
+      <div
+        className={themeClass(
+          'max-w-6xl mx-auto py-12 px-4',
+          'max-w-6xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]'
+        )}
+      >
         {/* Header */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -150,13 +163,18 @@ const Playground = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
-            <span
-              className="inline-block bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] rounded-nb nb-stamp-in"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+          <h1 className={themeClass('font-heading text-4xl md:text-5xl font-bold mb-4', 'font-heading text-4xl md:text-5xl font-semibold mb-4')}>
+            <ThemedCard
+              as="span"
+              variant={isAura ? 'default' : 'highlighted'}
+              className={themeClass(
+                'inline-block bg-accent text-white px-6 py-3 rounded-nb nb-stamp-in',
+                'inline-block px-8 py-4 rounded-3xl aura-glass border border-[color:var(--border-soft)]'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Code Playground
-            </span>
+            </ThemedCard>
           </h1>
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             Powerful Python one-liners and creative CSS snippets. Copy, learn, and make them your
@@ -171,33 +189,53 @@ const Playground = () => {
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.1 }}
           className="flex justify-center mb-10"
         >
-          <div className="flex gap-3" role="tablist" aria-label="Filter snippets by language">
+          <div
+            className={themeClass('flex gap-3', 'flex gap-3 rounded-3xl aura-glass border border-[color:var(--border-soft)] p-2')}
+            role="tablist"
+            aria-label="Filter snippets by language"
+          >
             {filters.map(filter => (
-              <button
+              <ThemedButton
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
                 role="tab"
                 aria-selected={activeFilter === filter.id}
                 aria-controls="snippets-grid"
-                className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none rounded-nb
+                variant="secondary"
+                className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm rounded-nb
                   ${
                     activeFilter === filter.id
-                      ? `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`
-                      : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'
+                      ? themeClass(
+                          `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
+                          'aura-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                        )
+                      : themeClass(
+                          'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
+                          'aura-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                        )
                   }`}
                 style={{
                   boxShadow:
-                    activeFilter === filter.id ? 'var(--nb-shadow-hover)' : 'var(--nb-shadow)',
+                    !isAura && activeFilter === filter.id
+                      ? 'var(--nb-shadow-hover)'
+                      : !isAura
+                        ? 'var(--nb-shadow)'
+                        : undefined,
                 }}
               >
                 <filter.icon size={16} aria-hidden="true" />
                 <span>{filter.label}</span>
                 {activeFilter === filter.id && (
-                  <span className="bg-white/20 px-2 py-0.5 rounded text-xs">
+                  <span
+                    className={themeClass(
+                      'bg-white/20 px-2 py-0.5 rounded text-xs',
+                      'px-2 py-0.5 rounded-full text-xs bg-[color:var(--surface-muted)] text-[color:var(--color-text-primary)] border border-[color:var(--border-soft)]'
+                    )}
+                  >
                     {filteredSnippets.length}
                   </span>
                 )}
-              </button>
+              </ThemedButton>
             ))}
           </div>
         </motion.div>
@@ -239,16 +277,19 @@ const Playground = () => {
           initial={shouldReduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.5 }}
-          className="flex justify-center mt-12"
+          className={themeClass('flex justify-center mt-12', 'flex justify-center mt-14')}
         >
-          <div
-            className="bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+          <ThemedCard
+            className={themeClass(
+              'bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb',
+              'aura-glass border border-[color:var(--border-soft)] px-7 py-4 rounded-3xl max-w-2xl'
+            )}
+            style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >
             <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
               💡 Click the copy button to grab any snippet. Some snippets have live output previews!
             </p>
-          </div>
+          </ThemedCard>
         </motion.div>
       </div>
 
@@ -300,16 +341,22 @@ const SnippetCard = ({
   onOpenRunner,
   shouldReduceMotion,
 }) => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const hasPreview = !!snippet.preview;
   const hasInteractive = !!snippet.interactive;
   const isCopied = copiedId === snippet.id;
+  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
 
   return (
     <motion.article
       variants={variants}
       layout={!shouldReduceMotion}
-      className="bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb"
-      style={{ boxShadow: 'var(--nb-shadow)' }}
+      className={themeClass(
+        'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
+        'aura-glass border border-[color:var(--border-soft)] overflow-hidden flex flex-col rounded-3xl'
+      )}
+      style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
     >
       <div className={`h-3 ${colorClass}`} />
 
@@ -326,14 +373,16 @@ const SnippetCard = ({
               {snippet.title}
             </h3>
           </div>
-          <span
-            className={`text-xs font-bold px-2 py-1 rounded-nb border-2 border-[color:var(--color-border)] nb-sticker ${
-              snippet.language === 'python' ? 'bg-accent text-white' : 'bg-fun-pink text-white'
-            }`}
-            style={{ '--sticker-rotate': '3deg' }}
+          <ThemedChip
+            variant={snippet.language === 'python' ? 'accent' : 'pink'}
+            className={themeClass(
+              'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
+              'text-xs font-semibold px-2.5 py-1 rounded-full'
+            )}
+            style={isAura ? undefined : { '--sticker-rotate': '3deg' }}
           >
             {snippet.language.toUpperCase()}
-          </span>
+          </ThemedChip>
         </div>
 
         {/* Description */}
@@ -370,12 +419,13 @@ const SnippetCard = ({
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {snippet.tags.map(tag => (
-            <span
+            <ThemedChip
               key={tag}
-              className="text-xs font-bold font-heading px-2.5 py-1 bg-secondary text-[color:var(--color-text-primary)] border-2 border-[color:var(--color-border)] rounded-nb"
+              variant="neutral"
+              className={themeClass('text-xs font-bold font-heading px-2.5 py-1 rounded-nb', 'text-xs font-semibold px-2.5 py-1 rounded-full')}
             >
               {tag}
-            </span>
+            </ThemedChip>
           ))}
         </div>
 
@@ -383,28 +433,36 @@ const SnippetCard = ({
         <div className="mt-auto flex gap-2">
           {/* Live Preview Button (CSS) */}
           {hasPreview && (
-            <button
+            <ThemedButton
               onClick={onOpenPreview}
-              className="flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] transition-transform motion-reduce:transform-none rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              variant="secondary"
+              className={themeClass(
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Play size={14} aria-hidden="true" />
               Live Preview
-            </button>
+            </ThemedButton>
           )}
 
           {/* Python Runner Button */}
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
-            <button
+            <ThemedButton
               onClick={onOpenRunner}
               onMouseEnter={() => loadPyodide().catch(() => {})}
               onFocus={() => loadPyodide().catch(() => {})}
-              className="flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] transition-transform motion-reduce:transform-none rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              variant="secondary"
+              className={themeClass(
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full aura-button-primary border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Play size={14} aria-hidden="true" />
               Try It Live! 🐍
-            </button>
+            </ThemedButton>
           )}
         </div>
       </div>

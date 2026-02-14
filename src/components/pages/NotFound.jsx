@@ -8,6 +8,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { Home, ArrowLeft, Compass, Rocket, Star, Sparkles, Ghost, Map } from 'lucide-react';
 import { resumeData } from '../../data/resume';
+import ThemedButton from '../shared/ThemedButton';
+import ThemedCard from '../shared/ThemedCard';
+import ThemedChip from '../shared/ThemedChip';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * 404 Not Found page component
@@ -24,6 +28,8 @@ import { resumeData } from '../../data/resume';
  * @returns {JSX.Element} 404 error page with navigation options
  */
 const NotFound = () => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
   const [glitchText, setGlitchText] = useState('404');
@@ -116,6 +122,8 @@ const NotFound = () => {
     { path: '/contact', label: 'Contact', icon: <Compass size={18} /> },
   ];
 
+  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+
   return (
     <>
       <Helmet>
@@ -126,7 +134,12 @@ const NotFound = () => {
         <meta property="og:description" content={description} />
       </Helmet>
 
-      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 relative overflow-hidden">
+      <div
+        className={themeClass(
+          'min-h-[80vh] flex items-center justify-center px-4 py-12 relative overflow-hidden',
+          'min-h-[80vh] flex items-center justify-center px-4 py-14 relative overflow-hidden'
+        )}
+      >
         {/* Animated background particles */}
         {!shouldReduceMotion &&
           particles.map(particle => (
@@ -150,7 +163,12 @@ const NotFound = () => {
             </motion.div>
           ))}
 
-        <div className="max-w-2xl mx-auto text-center relative z-10">
+        <section
+          className={themeClass(
+            'max-w-2xl mx-auto text-center relative z-10',
+            'max-w-3xl mx-auto text-center relative z-10 aura-glass border border-[color:var(--border-soft)] rounded-[2rem] px-6 py-8 md:px-10 md:py-10'
+          )}
+        >
           {/* Main 404 Display */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
@@ -168,12 +186,15 @@ const NotFound = () => {
               whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
               aria-label="Floating ghost icon"
             >
-              <div
-                className="w-24 h-24 mx-auto bg-fun-yellow border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
-                style={{ boxShadow: 'var(--nb-shadow)' }}
+              <ThemedCard
+                className={themeClass(
+                  'w-24 h-24 mx-auto bg-fun-yellow border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb',
+                  'w-24 h-24 mx-auto aura-glass border border-[color:var(--border-soft)] flex items-center justify-center rounded-3xl'
+                )}
+                style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
                 <Ghost size={48} className="text-black" />
-              </div>
+              </ThemedCard>
             </motion.div>
 
             {/* Easter egg message */}
@@ -182,8 +203,11 @@ const NotFound = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="absolute left-1/2 -translate-x-1/2 top-4 bg-fun-pink text-white px-4 py-2 rounded-nb font-heading text-sm"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={themeClass(
+                  'absolute left-1/2 -translate-x-1/2 top-4 bg-fun-pink text-white px-4 py-2 rounded-nb font-heading text-sm',
+                  'absolute left-1/2 -translate-x-1/2 top-4 aura-chip border border-[color:var(--border-soft)] px-4 py-2 rounded-full font-heading text-sm text-[color:var(--color-text-primary)]'
+                )}
+                style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 <Sparkles size={14} className="inline mr-2" />
                 Boo! You found me!
@@ -224,17 +248,30 @@ const NotFound = () => {
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
             className="mb-8"
           >
-            <h2
-              className="inline-block font-heading text-2xl md:text-3xl font-bold bg-accent text-white px-6 py-3 border-nb border-[color:var(--color-border)] mb-4 rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+            <ThemedChip
+              as="h2"
+              variant="accent"
+              className={themeClass(
+                'inline-block font-heading text-2xl md:text-3xl font-bold px-6 py-3 mb-4 rounded-nb text-white',
+                'inline-flex font-heading text-2xl md:text-3xl font-semibold px-6 py-3 mb-4 rounded-full text-[color:var(--color-text-primary)]'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Page Not Found
-            </h2>
+            </ThemedChip>
             <p className="text-secondary text-lg font-sans max-w-md mx-auto mt-4">
               Oops! Looks like this page took a wrong turn somewhere in the digital cosmos.
               {location.pathname && (
-                <span className="block mt-2 text-muted text-sm font-mono">
-                  Path: <code className="bg-secondary px-2 py-1 rounded">{location.pathname}</code>
+                <span className="block mt-3 text-[color:var(--color-text-secondary)] text-sm font-mono">
+                  Path:{' '}
+                  <code
+                    className={themeClass(
+                      'bg-secondary px-2 py-1 rounded text-[color:var(--color-text-primary)]',
+                      'aura-chip border border-[color:var(--border-soft)] px-2.5 py-1 rounded-md text-[color:var(--color-text-primary)]'
+                    )}
+                  >
+                    {location.pathname}
+                  </code>
                 </span>
               )}
             </p>
@@ -247,22 +284,33 @@ const NotFound = () => {
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
           >
-            <Link
+            <ThemedButton
+              as={Link}
               to="/"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              size="lg"
+              variant="primary"
+              className={themeClass(
+                'inline-flex items-center gap-2 px-8 py-4 rounded-nb',
+                'inline-flex items-center gap-2 px-8 py-4 rounded-full aura-button-primary border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Home size={20} />
               Go Home
-            </Link>
-            <button
+            </ThemedButton>
+            <ThemedButton
               onClick={() => window.history.back()}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              size="lg"
+              variant="secondary"
+              className={themeClass(
+                'inline-flex items-center gap-2 px-8 py-4 rounded-nb',
+                'inline-flex items-center gap-2 px-8 py-4 rounded-full aura-chip border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <ArrowLeft size={20} />
               Go Back
-            </button>
+            </ThemedButton>
           </motion.div>
 
           {/* Quick navigation */}
@@ -270,29 +318,45 @@ const NotFound = () => {
             initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
-            className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
           >
-            <h3
-              className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
-              style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            <ThemedCard
+              className={themeClass(
+                'bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb',
+                'aura-glass border border-[color:var(--border-soft)] p-6 rounded-3xl'
+              )}
+              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
-              <Compass size={16} className="inline mr-2" />
-              Quick Navigation
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {quickLinks.map(link => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="flex items-center justify-center gap-2 p-3 bg-secondary border-[3px] border-[color:var(--color-border)] font-heading font-bold text-sm transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-accent hover:text-white motion-reduce:transform-none motion-reduce:transition-none"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                >
-                  {link.icon}
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+              <ThemedChip
+                as="h3"
+                variant="pink"
+                className={themeClass(
+                  'inline-block font-heading text-lg font-bold px-4 py-2 mb-6 text-white rounded-nb',
+                  'inline-flex font-heading text-lg font-semibold px-4 py-2 mb-6 rounded-full text-[color:var(--color-text-primary)]'
+                )}
+                style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+              >
+                <Compass size={16} className="inline mr-2" />
+                Quick Navigation
+              </ThemedChip>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {quickLinks.map(link => (
+                  <ThemedButton
+                    key={link.path}
+                    as={Link}
+                    to={link.path}
+                    variant="subtle"
+                    className={themeClass(
+                      'flex items-center justify-center gap-2 p-3 font-heading font-bold text-sm rounded-nb bg-secondary hover:bg-accent hover:text-white',
+                      'flex items-center justify-center gap-2 p-3 font-heading font-semibold text-sm rounded-full aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                    )}
+                    style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                  >
+                    {link.icon}
+                    {link.label}
+                  </ThemedButton>
+                ))}
+              </div>
+            </ThemedCard>
           </motion.div>
 
           {/* Fun footer message */}
@@ -300,12 +364,12 @@ const NotFound = () => {
             initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
-            className="mt-8 text-muted text-sm font-sans flex items-center justify-center gap-2"
+            className="mt-8 text-[color:var(--color-text-secondary)] text-sm font-sans flex items-center justify-center gap-2"
           >
             <Sparkles size={14} className="text-fun-yellow" />
             Pro tip: Use the chatbot (Ctrl+K) if you need help navigating!
           </motion.p>
-        </div>
+        </section>
       </div>
     </>
   );
