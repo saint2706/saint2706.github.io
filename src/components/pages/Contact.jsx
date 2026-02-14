@@ -12,6 +12,7 @@ import { safeJSONStringify } from '../../utils/security';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Contact page component
@@ -28,6 +29,8 @@ import ThemedSectionHeading from '../shared/ThemedSectionHeading';
  */
 const Contact = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
 
   /** Social media links configuration */
   const socialLinks = [
@@ -108,6 +111,73 @@ const Contact = () => {
           </p>
         </motion.div>
 
+        {isAura ? (
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.15 }}
+            className="max-w-2xl mx-auto"
+          >
+            <ThemedCard className="p-8 md:p-10 rounded-3xl">
+              <h2 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h2>
+              <p className="text-secondary mb-6 font-sans">
+                Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
+              </p>
+
+              <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                />
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                />
+                <textarea
+                  rows={5}
+                  placeholder="Project details"
+                  className="w-full aura-glass border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
+                />
+
+                <ThemedButton
+                  as="a"
+                  href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
+                  variant="primary"
+                  size="lg"
+                  className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
+                >
+                  <Send size={20} />
+                  Send via Email
+                </ThemedButton>
+              </form>
+
+              <div className="mt-6 pt-5 border-t border-[color:var(--border-soft)] flex flex-wrap items-center justify-between gap-3 text-sm text-secondary">
+                <span className="inline-flex items-center gap-2">
+                  <MapPin size={16} />
+                  {resumeData.basics.location.city}, {resumeData.basics.location.country}
+                </span>
+                <div className="flex items-center gap-2">
+                  {socialLinks.map(social => (
+                    <ThemedButton
+                      as="a"
+                      key={social.label}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      className="p-2.5"
+                      aria-label={`${social.label} (opens in new tab)`}
+                    >
+                      {social.icon}
+                    </ThemedButton>
+                  ))}
+                </div>
+              </div>
+            </ThemedCard>
+          </motion.div>
+        ) : (
         <div className="grid md:grid-cols-2 gap-8">
           {/* Contact Info */}
           <motion.div
@@ -260,6 +330,7 @@ const Contact = () => {
             </ThemedCard>
           </motion.div>
         </div>
+        )}
       </div>
     </>
   );
