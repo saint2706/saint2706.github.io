@@ -20,6 +20,8 @@
 import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Bot, MessageCircle, Flame } from 'lucide-react';
+import { useTheme } from './theme-context';
+import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 
 // Lazy load chat and roast interfaces for code-splitting and performance
 const ChatInterface = lazy(() => import('./ChatInterface'));
@@ -36,31 +38,33 @@ const RoastInterface = lazy(() => import('./RoastInterface'));
  */
 const LoadingDialog = ({ type }) => {
   const prefersReducedMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const isChat = type === 'chat';
+  const shell = getOverlayShell({
+    theme,
+    depth: 'hover',
+    tone: isChat ? 'card' : 'pink',
+  });
 
   return (
     <motion.div
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      className={`fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto ${
-        isChat ? 'md:w-[420px]' : 'md:w-[380px]'
-      } ${
-        isChat ? 'bg-card' : 'bg-fun-pink'
-      } border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb ${
-        isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
-      }`}
-      style={{ boxShadow: 'var(--nb-shadow-hover)' }}
+      className={`fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto ${isChat ? 'md:w-[420px]' : 'md:w-[380px]'} overflow-hidden ${shell.className}`}
+      style={shell.style}
       role="dialog"
       aria-modal="true"
       aria-busy="true"
       aria-label={isChat ? 'Loading chat...' : 'Loading roast...'}
     >
       <div
-        className={`p-4 flex items-center gap-3 ${
-          isChat ? 'bg-accent' : 'bg-fun-pink'
-        } border-b-nb border-[color:var(--color-border)] ${
-          isChat ? 'dark:border-glass-border' : 'dark:border-transparent'
-        }`}
+        className={joinClasses(
+          'p-4 flex items-center gap-3',
+          isAura
+            ? 'bg-[color:var(--surface-muted)] border-b border-[color:var(--border-soft)]'
+            : `${isChat ? 'bg-accent' : 'bg-fun-pink'} border-b-nb border-[color:var(--color-border)]`
+        )}
       >
         <div
           className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
@@ -114,6 +118,8 @@ const LoadingDialog = ({ type }) => {
  * @returns {JSX.Element} The chatbot FAB and lazy-loaded interfaces
  */
 const Chatbot = () => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   // FAB (Floating Action Button) expansion state
   const [isFabOpen, setIsFabOpen] = useState(false);
 
@@ -193,6 +199,9 @@ const Chatbot = () => {
 
   // Track whether any dialog is currently open
   const anyDialogOpen = isChatOpen || isRoastOpen;
+  const mainFabShell = getOverlayShell({ theme, tone: 'yellow' });
+  const roastFabShell = getOverlayShell({ theme, tone: 'pink' });
+  const chatFabShell = getOverlayShell({ theme, tone: 'accent' });
 
   /**
    * Manage accessibility when dialogs open/close.
@@ -243,8 +252,13 @@ const Chatbot = () => {
         <div className="relative flex flex-col-reverse items-end gap-3">
           {/* Main FAB Button */}
           <button
-            className="p-4 bg-fun-yellow text-black border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+            className={joinClasses(
+              'p-4 cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none',
+              isAura
+                ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${mainFabShell.className}`
+            )}
+            style={mainFabShell.style}
             aria-label="Open chat options"
             aria-haspopup="menu"
             aria-expanded={isFabOpen}
@@ -264,8 +278,13 @@ const Chatbot = () => {
                   exit={prefersReducedMotion ? undefined : { opacity: 0, y: 20, scale: 0.8 }}
                   transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0 }}
                   onClick={openRoast}
-                  className="p-3 bg-fun-pink text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                  className={joinClasses(
+                    'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
+                    isAura
+                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                      : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${roastFabShell.className}`
+                  )}
+                  style={roastFabShell.style}
                   aria-label="Roast my resume"
                 >
                   <Flame size={20} />
@@ -281,8 +300,13 @@ const Chatbot = () => {
                     prefersReducedMotion ? { duration: 0 } : { duration: 0.15, delay: 0.05 }
                   }
                   onClick={openChat}
-                  className="p-3 bg-accent text-white border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                  className={joinClasses(
+                    'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
+                    isAura
+                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                      : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${chatFabShell.className}`
+                  )}
+                  style={chatFabShell.style}
                   aria-label="Chat with Digital Rishabh"
                 >
                   <Bot size={20} />

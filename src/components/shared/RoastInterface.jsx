@@ -7,6 +7,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { X, Flame, RefreshCw } from 'lucide-react';
 import { roastResume } from '../../services/ai';
+import { useTheme } from './theme-context';
+import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 
 /**
  * Roast interface dialog component
@@ -27,11 +29,14 @@ import { roastResume } from '../../services/ai';
  * @returns {JSX.Element} Roast interface modal dialog
  */
 const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
   const [roastLoading, setRoastLoading] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
   const isMountedRef = useRef(true); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
+  const shell = getOverlayShell({ theme, depth: 'hover', tone: 'pink' });
 
   // Track component mount status
   useEffect(() => {
@@ -118,8 +123,8 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       initial={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={prefersReducedMotion ? undefined : { opacity: 0, y: 100, scale: 0.9 }}
-      className="fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] bg-fun-pink border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb"
-      style={{ boxShadow: 'var(--nb-shadow-hover)' }}
+      className={`fixed bottom-6 left-4 right-4 md:left-auto md:right-6 z-50 w-auto md:w-[380px] overflow-hidden ${shell.className}`}
+      style={shell.style}
       role="dialog"
       aria-modal="true"
       aria-labelledby="roast-title"
@@ -127,9 +132,23 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       ref={roastDialogRef}
     >
       {/* Header */}
-      <div className="p-4 flex justify-between items-center border-b-nb border-[color:var(--color-border)] bg-fun-pink">
+      <div
+        className={joinClasses(
+          'p-4 flex justify-between items-center',
+          isAura
+            ? 'bg-[color:var(--surface-muted)] border-b border-[color:var(--border-soft)]'
+            : 'bg-fun-pink border-b-nb border-[color:var(--color-border)]'
+        )}
+      >
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb">
+          <div
+            className={joinClasses(
+              'p-2',
+              isAura
+                ? 'aura-chip border border-[color:var(--border-soft)] rounded-full'
+                : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
+            )}
+          >
             <Flame size={20} className="text-fun-pink" />
           </div>
           <h3 className="font-heading font-bold text-white" id="roast-title">
@@ -171,12 +190,24 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       </p>
 
       {/* Actions */}
-      <div className="p-4 bg-secondary border-t-nb border-[color:var(--color-border)] flex gap-2">
+      <div
+        className={joinClasses(
+          'p-4 flex gap-2',
+          isAura
+            ? 'bg-[color:var(--surface-muted)] border-t border-[color:var(--border-soft)]'
+            : 'bg-secondary border-t-nb border-[color:var(--color-border)]'
+        )}
+      >
         <button
           onClick={handleRoast}
           disabled={roastLoading}
-          className="flex-1 py-3 bg-fun-yellow text-black font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
-          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+          className={joinClasses(
+            'flex-1 py-3 font-heading font-bold cursor-pointer disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
+            isAura
+              ? 'aura-overlay-action aura-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+              : 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
+          )}
+          style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           <RefreshCw
             size={16}
@@ -186,8 +217,13 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         </button>
         <button
           onClick={onClose}
-          className="py-3 px-6 bg-card text-primary font-heading font-bold border-nb border-[color:var(--color-border)] cursor-pointer transition-transform hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none rounded-nb focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
-          style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+          className={joinClasses(
+            'py-3 px-6 font-heading font-bold cursor-pointer motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
+            isAura
+              ? 'aura-overlay-action aura-interactive-surface bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+              : 'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
+          )}
+          style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           Close
         </button>
