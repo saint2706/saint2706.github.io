@@ -16,7 +16,9 @@ import {
   X,
   MousePointer2,
   Code2,
+  Sparkles,
 } from 'lucide-react';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * Navigation bar component with desktop and mobile layouts
@@ -44,6 +46,12 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
+  const isAura = theme === 'aura';
+
+  const themeClass = useCallback((neubrutalClasses, auraClasses) => {
+    return isAura ? auraClasses : neubrutalClasses;
+  }, [isAura]);
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -140,8 +148,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
-        className="relative max-w-5xl mx-auto bg-card border-nb border-[color:var(--color-border)] px-4 py-3 flex justify-between items-center rounded-nb"
-        style={{ boxShadow: 'var(--nb-shadow)' }}
+        className={`relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'aura-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
+        style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
       >
         <NavLink
           to="/"
@@ -184,12 +192,23 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
         {/* Cursor Toggle and Mobile Menu container */}
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className={`p-2.5 text-primary transition-all duration-200 motion-reduce:transform-none motion-reduce:transition-none cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb hover:-translate-x-0.5 hover:-translate-y-0.5', 'aura-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
+            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
+            aria-label={`Switch to ${isAura ? 'neubrutalism' : 'aura'} theme`}
+            title={`Switch to ${isAura ? 'neubrutalism' : 'aura'} theme`}
+          >
+            <Sparkles size={18} aria-hidden="true" />
+          </button>
+
           {/* Cursor Toggle Button */}
           <button
             type="button"
             onClick={onToggleCursor}
-            className="group relative hidden md:flex p-2.5 bg-card border-2 border-[color:var(--color-border)] text-primary transition-all duration-200 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+            className={`group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none ${themeClass('bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
+            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
             aria-pressed={cursorEnabled}
             aria-label={cursorToggleLabel}
             disabled={cursorToggleDisabled}
@@ -206,8 +225,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           <button
             type="button"
             ref={menuButtonRef}
-            className="md:hidden p-3 bg-card border-2 border-[color:var(--color-border)] text-primary cursor-pointer rounded-nb"
-            style={{ boxShadow: 'var(--nb-shadow)' }}
+            className={`md:hidden p-3 text-primary cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full')}`}
+            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
@@ -229,8 +248,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               animate={{ opacity: 1, y: 0 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
-              className="absolute right-4 top-full mt-3 w-64 bg-card border-nb border-[color:var(--color-border)] md:hidden rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
+              className={`absolute right-4 top-full mt-3 w-64 md:hidden ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'aura-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
+              style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
               ref={menuRef}
             >
               <div className="flex flex-col">
