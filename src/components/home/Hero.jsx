@@ -269,12 +269,12 @@ const Hero = () => {
 
         {/* Code Snippet Card — sticky-note style with sticker rotation + blinking cursor */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.12, rotate: 2 }}
-          animate={{ opacity: 1, scale: 1, rotate: -1 }}
+          initial={shouldReduceMotion ? false : { scale: 1.08, rotate: 2 }}
+          animate={{ scale: 1, rotate: -1 }}
           transition={
             shouldReduceMotion
               ? { duration: 0 }
-              : { type: 'spring', stiffness: 350, damping: 18, delay: 0.8 }
+              : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
           }
           className="mt-16 w-full max-w-md"
         >
