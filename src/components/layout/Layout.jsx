@@ -8,7 +8,13 @@ import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback, useRe
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
-import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
+import {
+  canUseDOM,
+  safeGetLocalStorage,
+  safeKeyboardKey,
+  safeMediaQueryMatch,
+  safeSetLocalStorage,
+} from '../../utils/storage';
 
 /** Local storage key for persisting custom cursor preference */
 const CURSOR_STORAGE_KEY = 'custom_cursor_enabled';
@@ -57,18 +63,16 @@ const Layout = ({ children }) => {
   });
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    () => safeMediaQueryMatch('(prefers-reduced-motion: reduce)')
   );
 
   const [prefersContrast, setPrefersContrast] = useState(
     () =>
-      window.matchMedia('(prefers-contrast: more)').matches ||
-      window.matchMedia('(forced-colors: active)').matches
+      safeMediaQueryMatch('(prefers-contrast: more)') ||
+      safeMediaQueryMatch('(forced-colors: active)')
   );
 
-  const [hasFinePointer, setHasFinePointer] = useState(
-    () => window.matchMedia('(pointer: fine)').matches
-  );
+  const [hasFinePointer, setHasFinePointer] = useState(() => safeMediaQueryMatch('(pointer: fine)'));
 
   // ── Command Palette & Terminal State ──
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -80,6 +84,8 @@ const Layout = ({ children }) => {
 
   // Subscribe to accessibility preference changes
   useEffect(() => {
+    if (!canUseDOM() || typeof window.matchMedia !== 'function') return undefined;
+
     const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const contrastMoreQuery = window.matchMedia('(prefers-contrast: more)');
     const forcedColorsQuery = window.matchMedia('(forced-colors: active)');
@@ -145,8 +151,10 @@ const Layout = ({ children }) => {
    */
   useEffect(() => {
     const handleKeyDown = e => {
+      const normalizedKey = safeKeyboardKey(e).toLowerCase();
+
       // ── Command Palette shortcut ──
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      if ((e.ctrlKey || e.metaKey) && normalizedKey === 'k') {
         e.preventDefault();
         setIsCommandPaletteOpen(prev => {
           const next = !prev;
@@ -158,7 +166,7 @@ const Layout = ({ children }) => {
         return;
       }
 
-      if (e.key === 'Escape') {
+      if (normalizedKey === 'escape') {
         setIsCommandPaletteOpen(false);
         setIsTerminalOpen(false);
         document.dispatchEvent(new CustomEvent('closeCommandPalette'));
@@ -169,7 +177,7 @@ const Layout = ({ children }) => {
       // ── Konami Code detection ──
       if (
         e.key === KONAMI_CODE[konamiIndexRef.current] ||
-        e.key.toLowerCase() === KONAMI_CODE[konamiIndexRef.current]
+        normalizedKey === KONAMI_CODE[konamiIndexRef.current]
       ) {
         konamiIndexRef.current += 1;
         if (konamiIndexRef.current === KONAMI_CODE.length) {
