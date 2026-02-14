@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { useTheme } from '../shared/theme-context';
 import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
@@ -24,6 +25,9 @@ import MarqueeTicker from '../shared/MarqueeTicker';
  * @returns {JSX.Element} Footer with social links and copyright
  */
 const Footer = () => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+
   const [heartClicks, setHeartClicks] = useState(0);
   const [showSecret, setShowSecret] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -118,8 +122,8 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 bg-card border-nb border-[color:var(--color-border)] text-[color:var(--color-text-primary)] nb-shadow-lift nb-color-invert motion-reduce:transform-none motion-reduce:transition-none rounded-nb`}
-                  style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-full hover:brightness-110 transition-[filter]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
+                  style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label={link.label}
                 >
                   {link.icon}
@@ -130,11 +134,11 @@ const Footer = () => {
             {/* Made with love - Centered */}
             <div className="flex justify-center">
               <div
-                className="bg-fun-yellow border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
-                style={{ boxShadow: 'var(--nb-shadow)' }}
+                className={`px-6 py-3 ${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-full' : 'bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb'}`}
+                style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)' }}
               >
-                <p className="text-black font-heading font-bold text-sm flex items-center justify-center gap-2">
-                  Made with <Coffee size={16} className="text-black" aria-hidden="true" />
+                <p className={`font-heading font-bold text-sm flex items-center justify-center gap-2 ${isAura ? 'text-[color:var(--text-primary)]' : 'text-black'}`}>
+                  Made with <Coffee size={16} className={isAura ? 'text-[color:var(--text-primary)]' : 'text-black'} aria-hidden="true" />
                   <span className="sr-only">coffee</span>+{' '}
                   <button
                     onClick={handleHeartClick}

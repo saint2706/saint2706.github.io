@@ -8,6 +8,7 @@ import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback, useRe
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
+import { useTheme } from '../shared/theme-context';
 import {
   canUseDOM,
   safeGetLocalStorage,
@@ -56,6 +57,9 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
  * @returns {JSX.Element} Complete page layout with header, content, and footer
  */
 const Layout = ({ children }) => {
+  const { theme } = useTheme();
+  const isAura = theme === 'aura';
+
   // ── Custom Cursor State ──
   const [cursorEnabled, setCursorEnabled] = useState(() => {
     const stored = safeGetLocalStorage(CURSOR_STORAGE_KEY, 'false');
@@ -201,7 +205,18 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-primary text-primary overflow-hidden relative nb-paper-bg">
+    <div
+      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
+        isAura ? 'aura-bg aura-atmosphere-shell' : 'bg-primary nb-paper-bg'
+      }`}
+    >
+      {isAura && (
+        <>
+          <div className="aura-atmosphere-layers" aria-hidden="true" />
+          <div className="aura-noise-overlay" aria-hidden="true" />
+        </>
+      )}
+
       {/* Custom interactive cursor */}
       <CustomCursor enabled={effectiveCursorEnabled} />
 
