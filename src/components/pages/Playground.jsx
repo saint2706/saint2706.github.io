@@ -397,8 +397,8 @@ const SnippetCard = ({
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
             <button
               onClick={onOpenRunner}
-              onMouseEnter={() => loadPyodide()}
-              onFocus={() => loadPyodide()}
+              onMouseEnter={() => loadPyodide().catch(() => {})}
+              onFocus={() => loadPyodide().catch(() => {})}
               className="flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm border-nb border-[color:var(--color-border)] transition-transform motion-reduce:transform-none rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5"
               style={{ boxShadow: 'var(--nb-shadow)' }}
             >
