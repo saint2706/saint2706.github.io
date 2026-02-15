@@ -21,7 +21,7 @@ import { useTheme } from '../shared/theme-context';
 import { AURA_MOTION } from '../shared/themeMotion';
 
 const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled])';
+  'a[href], area[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /**
  * Navigation bar component with desktop and mobile layouts
