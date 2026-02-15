@@ -53,7 +53,7 @@
 **Vulnerability:** `ReactMarkdown` renders `img` tags by default. While generally safe, relying on library defaults for untrusted input is less secure than explicit validation. Malicious image sources using dangerous URI schemes (like `javascript:`) could be introduced if not sanitized.
 **Learning:** Just like `href` in links, `src` in images is an injection vector. Client-side markdown renderers should validate all resource URLs against a strict allowlist and reject unsafe protocols.
 **Prevention:** Implement a custom `ImageRenderer` component for `react-markdown` that validates `src` using `isSafeImageSrc` (or equivalent) before rendering the `img` tag, blocking dangerous protocols and potential XSS vectors.
-## 2025-02-18 - Improved URL Security with Relative Path Support
+## 2026-02-18 - Improved URL Security with Relative Path Support
 **Vulnerability:** `isSafeHref` and `isSafeImageSrc` were overly restrictive, blocking valid relative URLs (`/projects`, `#contact`) which broke internal navigation in dynamic content.
-**Learning:** Security utilities must balance strictness with functionality. Over-blocking often leads to broken features or security bypasses. Using `new URL(src, 'http://dummy.com')` allows robust parsing of relative URLs while still enforcing protocol checks.
+**Learning:** Security utilities must balance strictness with functionality. Over-blocking often leads to broken features or security bypasses. Using `new URL(src, 'http://example.com')` allows robust parsing of relative URLs while still enforcing protocol checks.
 **Prevention:** When designing validators, explicitly test for valid internal use cases (relative paths, fragments) alongside attack vectors. Use standard parsers over regex where possible.

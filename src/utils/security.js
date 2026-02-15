@@ -113,7 +113,7 @@ export const isSafeHref = href => {
   }
 
   // Only allow http, https, and mailto protocols (case-insensitive)
-  // This regex checks for: optional whitespace, then http:// or https:// or mailto:
+  // This regex checks for http://, https://, or mailto: protocols at the start of the string
   return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
 };
 
