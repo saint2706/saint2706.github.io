@@ -4,7 +4,6 @@
  */
 
 import React, {
-  useState,
   useCallback,
   useRef,
   useContext,
@@ -217,6 +216,29 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
 CategoryBranch.displayName = 'CategoryBranch';
 
 /**
+ * Announcement component for Screen Readers
+ * Subscribes to hover changes independently to prevent full tree re-renders.
+ */
+const TechStackAnnouncer = () => {
+  const { subscribe, getHoveredSkill, skillLookup } = useContext(HoverContext);
+
+  const getSnapshot = useCallback(() => {
+    const name = getHoveredSkill();
+    return name ? skillLookup.get(name) : null;
+  }, [getHoveredSkill, skillLookup]);
+
+  const hoveredSkill = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+
+  return (
+    <div className="sr-only" role="status" aria-live="polite">
+      {hoveredSkill
+        ? `${hoveredSkill.name}: ${hoveredSkill.proficiency}% proficiency`
+        : 'Skill tree showing proficiency levels by category. Hover over skills for details.'}
+    </div>
+  );
+};
+
+/**
  * TechStackVisual Component
  *
  * Renders skills in a hierarchical tree layout.
@@ -229,8 +251,6 @@ const TechStackVisual = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isAura = theme === 'aura';
-  // State only for Screen Reader updates (decoupled from visual updates)
-  const [hoveredSkillForSR, setHoveredSkillForSR] = useState(null);
 
   // Hover store for useSyncExternalStore
   const hoveredSkillRef = useRef(null);
@@ -264,19 +284,15 @@ const TechStackVisual = () => {
         hoveredSkillRef.current = skillName;
         // Notify all subscribers (useSyncExternalStore requires notifying all)
         subscribersRef.current.forEach(callback => callback());
-
-        // Update SR state for accessibility using memoized lookup
-        const skillObj = skillName ? skillLookup.get(skillName) : null;
-        setHoveredSkillForSR(skillObj);
       }
     },
-    [skillLookup]
+    []
   );
 
   // Stable context value
   const contextValue = useMemo(
-    () => ({ subscribe, getHoveredSkill, setHoveredSkill }),
-    [subscribe, getHoveredSkill, setHoveredSkill]
+    () => ({ subscribe, getHoveredSkill, setHoveredSkill, skillLookup }),
+    [subscribe, getHoveredSkill, setHoveredSkill, skillLookup]
   );
 
   return (
@@ -305,11 +321,7 @@ const TechStackVisual = () => {
         </div>
 
         {/* Screen reader description */}
-        <div className="sr-only" role="status" aria-live="polite">
-          {hoveredSkillForSR
-            ? `${hoveredSkillForSR.name}: ${hoveredSkillForSR.proficiency}% proficiency`
-            : 'Skill tree showing proficiency levels by category. Hover over skills for details.'}
-        </div>
+        <TechStackAnnouncer />
       </div>
     </HoverContext.Provider>
   );
