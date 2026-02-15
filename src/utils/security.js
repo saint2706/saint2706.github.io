@@ -83,21 +83,37 @@ export const isSafeHref = href => {
     return false;
   }
 
-  let normalizedHref;
-  try {
-    // Decode percent-encoded characters once to catch encoded protocols like javascript:
-    normalizedHref = decodeURIComponent(href);
-  } catch {
-    // If decoding fails (malformed URI), fall back to the original value
-    normalizedHref = href;
+  // Iteratively decode URL to catch multiple layers of encoding
+  // Limit iterations to prevent infinite loops on malformed input
+  let normalizedHref = href.trim();
+  let previousHref;
+  let iterations = 0;
+  const maxIterations = 10;
+
+  while (iterations < maxIterations && normalizedHref !== previousHref) {
+    previousHref = normalizedHref;
+    try {
+      normalizedHref = decodeURIComponent(normalizedHref);
+    } catch {
+      // If decoding fails, stop and use the current value
+      break;
+    }
+    iterations++;
   }
 
-  // Explicitly trim whitespace to handle valid URLs with leading/trailing spaces
-  // This prevents false positives where valid URLs are rejected due to regex start anchor
   normalizedHref = normalizedHref.trim();
 
+  // Allow relative URLs (starting with / or #) but strictly block protocol-relative (//)
+  // to prevent potential open redirects or loading from arbitrary domains
+  if (/^(\/|#)/.test(normalizedHref)) {
+    if (normalizedHref.startsWith('//')) {
+      return false;
+    }
+    return true;
+  }
+
   // Only allow http, https, and mailto protocols (case-insensitive)
-  // This regex checks for: optional whitespace, then http:// or https:// or mailto:
+  // This regex checks for http://, https://, or mailto: protocols at the start of the string
   return /^(https?:\/\/|mailto:)/i.test(normalizedHref);
 };
 
@@ -143,10 +159,17 @@ export const isSafeImageSrc = src => {
 
   normalizedSrc = normalizedSrc.trim();
 
+  // Block protocol-relative URLs (//) which could be used to load resources from arbitrary domains
+  if (normalizedSrc.startsWith('//')) {
+    return false;
+  }
+
   // Validate that the URL is well-formed using the URL constructor
   let url;
   try {
-    url = new URL(normalizedSrc);
+    // Use a dummy base to allow relative URLs (e.g., /images/photo.png) to be parsed successfully
+    // Absolute URLs will ignore the base
+    url = new URL(normalizedSrc, 'http://example.com');
   } catch {
     // URL constructor throws if the URL is malformed
     return false;
