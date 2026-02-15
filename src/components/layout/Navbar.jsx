@@ -20,6 +20,9 @@ import {
 import { useTheme } from '../shared/theme-context';
 import { AURA_MOTION } from '../shared/themeMotion';
 
+const FOCUSABLE_SELECTOR =
+  'a[href], area[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 /**
  * Navigation bar component with desktop and mobile layouts
  *
@@ -76,7 +79,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const trapFocus = useCallback(
     event => {
       if (!isMenuOpen || !menuRef.current) return;
-      const focusable = menuRef.current.querySelectorAll('a, button');
+      const focusable = menuRef.current.querySelectorAll(FOCUSABLE_SELECTOR);
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -108,7 +111,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       if (main) main.setAttribute('aria-hidden', 'true');
       document.addEventListener('keydown', trapFocus);
       // Auto-focus first interactive element in menu
-      setTimeout(() => menuRef.current?.querySelector('a, button')?.focus(), 0);
+      setTimeout(() => menuRef.current?.querySelector(FOCUSABLE_SELECTOR)?.focus(), 0);
     } else {
       // Show main content to screen readers
       const main = document.getElementById('main-content');
