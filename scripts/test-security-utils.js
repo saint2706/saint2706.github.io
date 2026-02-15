@@ -136,7 +136,8 @@ const hrefTests = [
   { name: 'Empty string', input: '', expected: false },
   { name: 'Non-string input', input: 123, expected: false },
   { name: 'Protocol-relative URL', input: '//example.com', expected: false },
-  { name: 'Path-only URL', input: '/blog/post', expected: false },
+  { name: 'Path-only URL', input: '/blog/post', expected: true },
+  { name: 'Fragment URL', input: '#section', expected: true },
   { name: 'URL with leading whitespace', input: ' https://example.com', expected: true },
   { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
   // isSafeHref only validates protocol safety, not full URL validity. http:// is safe.
@@ -282,7 +283,7 @@ const imageSrcTests = [
   { name: 'Empty string', input: '', expected: false },
   { name: 'Non-string input', input: 123, expected: false },
   { name: 'Protocol-relative URL', input: '//example.com/image.png', expected: false },
-  { name: 'Path-only URL', input: '/images/photo.png', expected: false },
+  { name: 'Path-only URL', input: '/images/photo.png', expected: true },
   { name: 'URL with leading whitespace', input: ' https://example.com/image.png', expected: true },
   { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },
   { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },

@@ -21,7 +21,10 @@ const tests = [
   { input: 'vbscript:alert(1)', expected: false }, // VBScript XSS
   { input: 'data:text/html,...', expected: false }, // Data URI XSS
   { input: 'ftp://example.com', expected: false }, // Unsafe protocol
-  { input: '/relative/path', expected: false }, // Relative path (no protocol)
+  { input: '/relative/path', expected: true }, // Relative path (now allowed)
+  { input: '#section', expected: true }, // Fragment (allowed)
+  { input: 'javascript%3Aalert(1)', expected: false }, // Encoded XSS
+  { input: 'javascript%253Aalert(1)', expected: false }, // Double encoded XSS
   { input: '//protocol-relative', expected: false }, // Protocol-relative URL
   // https:// is safe (not XSS), just a broken link.
   // The original test expected false (invalid), but isSafeHref is a security check, not a validity check.
