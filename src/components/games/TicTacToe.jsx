@@ -345,24 +345,44 @@ const TicTacToe = () => {
 
       // Trap focus within overlay
       if (event.key === 'Tab' && overlayRef.current) {
-        const focusables = overlayRef.current.querySelectorAll(
+        const focusableNodeList = overlayRef.current.querySelectorAll(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
+
+        const focusables = Array.from(focusableNodeList).filter(el => {
+          // Optionally exclude disabled or aria-hidden elements from the focus trap
+          if ((el as HTMLButtonElement).disabled) return false;
+          if (el.getAttribute && el.getAttribute('aria-hidden') === 'true') return false;
+          return true;
+        });
 
         if (focusables.length === 0) return;
 
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
+        const active = document.activeElement;
+        const isInTrap = focusables.includes(active as Element);
+
+        // If focus has escaped the overlay, move it back inside
+        if (!isInTrap) {
+          event.preventDefault();
+          if (event.shiftKey) {
+            (last as HTMLElement).focus();
+          } else {
+            (first as HTMLElement).focus();
+          }
+          return;
+        }
 
         if (event.shiftKey) {
-          if (document.activeElement === first) {
+          if (active === first) {
             event.preventDefault();
-            last.focus();
+            (last as HTMLElement).focus();
           }
         } else {
-          if (document.activeElement === last) {
+          if (active === last) {
             event.preventDefault();
-            first.focus();
+            (first as HTMLElement).focus();
           }
         }
       }
