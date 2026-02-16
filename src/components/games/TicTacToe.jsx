@@ -20,7 +20,7 @@
  * @module components/games/TicTacToe
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Cpu, User } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
@@ -178,6 +178,7 @@ const TicTacToe = () => {
   const [scores, setScores] = useState({ player: 0, ai: 0, draws: 0 }); // Score tracking
   const [gameStatus, setGameStatus] = useState('playing'); // 'playing' | 'won' | 'lost' | 'draw'
   const [winningLine, setWinningLine] = useState(null); // Indices of winning cells for highlighting
+  const overlayRef = useRef(null);
 
   /**
    * Calculates the best move for the AI based on difficulty level.
@@ -339,6 +340,31 @@ const TicTacToe = () => {
       if (event.key === 'Escape') {
         event.preventDefault();
         resetGame();
+        return;
+      }
+
+      // Trap focus within overlay
+      if (event.key === 'Tab' && overlayRef.current) {
+        const focusables = overlayRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (event.shiftKey) {
+          if (document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+          }
+        }
       }
     };
     document.addEventListener('keydown', handler);
@@ -487,6 +513,7 @@ const TicTacToe = () => {
         <AnimatePresence>
           {gameStatus !== 'playing' && (
             <motion.div
+              ref={overlayRef}
               initial={shouldReduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={shouldReduceMotion ? undefined : { opacity: 0 }}
