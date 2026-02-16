@@ -194,6 +194,9 @@ const PythonRunner = ({ snippet }) => {
             placeholder="Enter your name..."
             className="flex-1 px-3 py-2 border-2 border-[color:var(--color-border)] rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent"
             disabled={isRunning}
+            maxLength={1000}
+            spellCheck="false"
+            autoComplete="off"
           />
           <button
             onClick={runCode}
