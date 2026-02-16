@@ -28,7 +28,7 @@
  * @module components/games/SnakeGame
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Pause } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
@@ -152,7 +152,8 @@ const SnakeGame = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  // Memoize theme styles to prevent object recreation on every game tick/render
+  const ui = useMemo(() => getGameThemeStyles(isAura), [isAura]);
 
   // Game state
   const [snake, setSnake] = useState(getInitialSnake());
@@ -430,6 +431,10 @@ const SnakeGame = () => {
     ctx.stroke();
 
     // Draw snake with gradient from head (accent) to tail (fun-pink)
+    // Hoist context settings out of the loop to minimize Canvas API calls
+    ctx.strokeStyle = borderColor;
+    ctx.lineWidth = 2;
+
     snake.forEach((segment, index) => {
       // Calculate color gradient based on position in snake
       const progress = index / snake.length;
@@ -438,8 +443,6 @@ const SnakeGame = () => {
       const b = Math.round(accentRgb.b + (funPinkRgb.b - accentRgb.b) * progress);
 
       ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-      ctx.strokeStyle = borderColor;
-      ctx.lineWidth = 2;
 
       // Draw sharp rectangles (Neubrutalism style)
       ctx.fillRect(
