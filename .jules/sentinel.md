@@ -57,3 +57,9 @@
 **Vulnerability:** `isSafeHref` and `isSafeImageSrc` were overly restrictive, blocking valid relative URLs (`/projects`, `#contact`) which broke internal navigation in dynamic content.
 **Learning:** Security utilities must balance strictness with functionality. Over-blocking often leads to broken features or security bypasses. Using `new URL(src, 'http://example.com')` allows robust parsing of relative URLs while still enforcing protocol checks.
 **Prevention:** When designing validators, explicitly test for valid internal use cases (relative paths, fragments) alongside attack vectors. Use standard parsers over regex where possible.
+
+## 2026-05-23 - Python Runner Input Hardening
+
+**Vulnerability:** The interactive Python runner input field lacked length limits and browser-specific security attributes, potentially allowing for Denial of Service (DoS) via massive inputs or leaking sensitive data to spellcheck services.
+**Learning:** Even client-side inputs for sandboxed environments should have reasonable constraints. Unbounded inputs can crash the browser tab or the WASM runtime. Code inputs should opt-out of spellchecking and autocomplete to prevent data leakage.
+**Prevention:** Always set `maxLength`, `spellCheck="false"`, and `autoComplete="off"` on inputs intended for code execution or sensitive data entry.
