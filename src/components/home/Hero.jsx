@@ -2,19 +2,13 @@
  * @fileoverview Hero section for homepage with interactive elements and animations.
  */
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
   Bot,
   Code2,
   Sparkles,
-  BadgeCheck,
-  MapPin,
-  History,
-  LayoutGrid,
-  Globe,
-  Award
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
@@ -38,15 +32,6 @@ const Hero = () => {
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
   const CLICKS_REQUIRED = 3;
-
-  // Calculate years of experience dynamically
-  const yearsExperience = useMemo(() => {
-    // Start year from first education entry (2020) as a proxy for start of journey
-    // or from first experience if preferred. Using 2020 based on B.Tech start.
-    const startYear = 2020;
-    const currentYear = new Date().getFullYear();
-    return (currentYear - startYear).toString().padStart(2, '0');
-  }, []);
 
   // Reset click count after 2 seconds of inactivity
   useEffect(() => {
@@ -90,14 +75,15 @@ const Hero = () => {
   const description = resumeData.basics.summary;
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
 
-  // Liquid Theme Render
-  if (isLiquid) {
-    return (
-      <>
-        <Helmet>
-          <title>{title}</title>
-          <link rel="canonical" href={canonicalUrl} />
-          <meta name="description" content={description} />
+  // Helper to switch classes based on theme
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
+
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={description} />
            <script type="application/ld+json">
           {safeJSONStringify({
             '@context': 'https://schema.org',
@@ -110,130 +96,43 @@ const Hero = () => {
             image: `${resumeData.basics.website}/og-image.png`,
           })}
         </script>
-        </Helmet>
-
-        <section aria-labelledby="hero-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 pb-32 pt-10">
-          <div className="flex flex-col items-start max-w-[960px]">
-            <div className="flex flex-wrap items-center gap-4 mb-12">
-              <div className="info-chip">
-                <BadgeCheck className="text-primary w-[22px] h-[22px]" />
-                <span className="text-ios-dark">{resumeData.basics.title.split(' & ')[0]}</span>
-              </div>
-              <div className="info-chip">
-                <MapPin className="text-ios-gray w-[22px] h-[22px]" />
-                <span className="text-ios-dark">{`${resumeData.basics.location.city}, ${resumeData.basics.location.country}`}</span>
-              </div>
-            </div>
-
-            <h1 className="large-title text-ios-dark mb-10" id="hero-heading">
-              Data Storyteller &<br/>Analytics Strategist.
-            </h1>
-
-            <p className="headline text-ios-gray max-w-[760px] mb-12 font-medium">
-              {resumeData.basics.summary}
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
-              <Link to="/projects" className="pill-button touch-target w-full sm:w-auto bg-ios-dark text-white text-[17px] hover:translate-y-[-1px] active:scale-95 shadow-lg">
-                View Portfolio
-              </Link>
-              <button
-                onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-                className="pill-button touch-target w-full sm:w-auto glass-surface text-ios-dark text-[17px] font-bold hover:bg-white/95 hover:translate-y-[-1px] active:scale-95"
-              >
-                Talk to Digital Rishabh
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section aria-labelledby="metrics-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 mb-32">
-          <h2 className="section-label" id="metrics-heading">Core Competencies & Impact</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { label: 'Scale', value: yearsExperience, sub: 'Years Experience', icon: <History className="text-3xl text-primary" /> },
-              { label: 'Portfolio', value: resumeData.projects.length.toString().padStart(2, '0'), sub: 'Live Projects', icon: <LayoutGrid className="text-3xl text-primary" /> },
-              { label: 'Reach', value: resumeData.basics.languages.length.toString().padStart(2, '0'), sub: 'Languages', icon: <Globe className="text-3xl text-primary" /> },
-              { label: 'Status', value: resumeData.certifications.length.toString().padStart(2, '0'), sub: 'Certifications', icon: <Award className="text-3xl text-primary" /> }
-            ].map((metric, i) => (
-               <div key={i} className="metric-widget group hover:translate-y-[-4px]">
-                  <div className="flex justify-between items-start">
-                    <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center">
-                      {metric.icon}
-                    </div>
-                    <span className="text-[12px] font-bold uppercase tracking-widest text-ios-gray">{metric.label}</span>
-                  </div>
-                  <div>
-                    <span className="text-6xl font-semibold tracking-tighter text-ios-dark mb-2 block">{metric.value}</span>
-                    <p className="text-[12px] font-bold text-gray-500 uppercase tracking-widest">{metric.sub}</p>
-                  </div>
-               </div>
-            ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="narrative-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 mb-32">
-          <h2 className="section-label" id="narrative-heading">Spatial Narrative</h2>
-          <div className="relative ios-sheet overflow-hidden bg-ios-bg-2 aspect-[21/9] border-[0.5px] border-black/10 group">
-             <img
-               alt="Luxury minimalist workspace with architectural lighting"
-               className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmcx4Y4dcAi7p_eC_q0GKpZMTiY2VlFMCDumD7XOarOAT4RhMiWscPAHZ8dcYHDnj3yxsdm65t0WFdq6Lmk4XHykWbhZrRfpLTQCtnQem__L95QHQ6FvC9C0jBPQR_a84dQoVlPzbeBbERTFqBoGTQUIzAU2zuNYfZUc2HZIOiJg_VCCSlqnbp7mV3ZEtLkogYjS-r9981ryohLoTuasdfyKF5a_uIeIiiWaUZE_BeAVDkiElOaRzOP73PxaKrQ00oVP2MIztxgOlt"
-             />
-             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-             <div className="absolute bottom-10 left-10">
-                <div className="liquid-glass px-8 h-[52px] rounded-2xl flex items-center gap-3 text-ios-dark shadow-xl bg-white/40 backdrop-blur-md border border-white/30">
-                   <span className="text-[12px] font-bold tracking-widest uppercase">Studio Environment 01</span>
-                </div>
-             </div>
-          </div>
-        </section>
-      </>
-    );
-  }
-
-  // Original Neubrutalism Render
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
       </Helmet>
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
-        {/* Neubrutalism Decorative Shapes */}
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
-            className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
-          />
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
-            className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{
-              boxShadow: 'var(--nb-shadow)',
-              '--sticker-rotate': '-2deg',
-              animationDelay: '1s',
-            }}
-          />
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
-            className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{
-              boxShadow: 'var(--nb-shadow)',
-              '--sticker-rotate': '5deg',
-              animationDelay: '2s',
-            }}
-          />
-        </div>
+        {/* Decorative Shapes (Hidden in Liquid Mode to match cleaner aesthetic) */}
+        {!isLiquid && (
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
+              className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
+            />
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
+              className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{
+                boxShadow: 'var(--nb-shadow)',
+                '--sticker-rotate': '-2deg',
+                animationDelay: '1s',
+              }}
+            />
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
+              className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{
+                boxShadow: 'var(--nb-shadow)',
+                '--sticker-rotate': '5deg',
+                animationDelay: '2s',
+              }}
+            />
+          </div>
+        )}
 
         {/* Status Badge */}
         <motion.div
@@ -246,11 +145,14 @@ const Hero = () => {
         >
           <ThemedChip
             variant="yellow"
-            className="font-heading font-semibold px-5 py-2 nb-sticker"
-            style={{ '--sticker-rotate': '-2deg' }}
+            className={themeClass(
+              "font-heading font-semibold px-5 py-2 nb-sticker",
+              "font-heading font-semibold px-5 py-2 liquid-chip border border-[color:var(--border-soft)]"
+            )}
+            style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
-            <Sparkles size={18} className="text-black" />
-            Available for hire & collaborations
+            <Sparkles size={18} className={themeClass("text-black", "text-fun-yellow")} />
+            <span className={isLiquid ? "text-[color:var(--color-text-primary)]" : ""}>Available for hire & collaborations</span>
           </ThemedChip>
         </motion.div>
 
@@ -263,25 +165,31 @@ const Hero = () => {
         >
           <span className="block text-[color:var(--color-text-primary)] mb-2 relative">
             Data Storyteller
-            <svg
-              className="absolute -bottom-2 left-0 w-full"
-              height="12"
-              viewBox="0 0 400 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6"
-                stroke="var(--color-fun-yellow)"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </svg>
+            {/* SVG squiggle only for Neubrutalism */}
+            {!isLiquid && (
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                height="12"
+                viewBox="0 0 400 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6"
+                  stroke="var(--color-fun-yellow)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
           </span>
           <span
-            className="text-[color:var(--color-text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
+            className={themeClass(
+              "text-[color:var(--color-text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker",
+              "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block"
+            )}
+            style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
           >
             & Creative Analyst
           </span>
@@ -295,15 +203,15 @@ const Hero = () => {
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
           Turning{' '}
-          <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-yellow", "text-blue-400 font-bold")}>
             messy data
           </strong>{' '}
           into
-          <strong className="text-primary font-bold border-b-[3px] border-accent mx-1">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-accent mx-1", "text-purple-400 font-bold mx-1")}>
             clear strategies
           </strong>{' '}
           and
-          <strong className="text-primary font-bold border-b-[3px] border-fun-pink mx-1">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-pink mx-1", "text-pink-400 font-bold mx-1")}>
             AI/ML solutions
           </strong>{' '}
           into real-world impact.
@@ -321,8 +229,11 @@ const Hero = () => {
             to="/projects"
             variant="primary"
             size="lg"
-            className="group relative nb-shadow-lift nb-color-invert"
-            style={{ '--invert-text': 'var(--color-fun-yellow)' }}
+            className={themeClass(
+              "group relative nb-shadow-lift nb-color-invert",
+              "group relative liquid-button-primary border border-[color:var(--border-soft)] shadow-[0_0_30px_rgba(141,162,255,0.35)] hover:-translate-y-0.5"
+            )}
+            style={isLiquid ? undefined : { '--invert-text': 'var(--color-fun-yellow)' }}
           >
             View Projects
             <ArrowRight
@@ -334,16 +245,19 @@ const Hero = () => {
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
             variant="secondary"
             size="lg"
-            className="nb-shadow-lift nb-color-invert"
-            style={{ '--invert-text': '#ffffff' }}
+            className={themeClass(
+              "nb-shadow-lift nb-color-invert",
+              "liquid-glass border border-[color:var(--border-soft)] shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--color-text-primary)]"
+            )}
+            style={isLiquid ? undefined : { '--invert-text': '#ffffff' }}
             aria-label="Open chat with Digital Rishabh"
           >
-            <Bot size={18} className="text-fun-pink" aria-hidden="true" />
+            <Bot size={18} className={isLiquid ? "text-purple-400" : "text-fun-pink"} aria-hidden="true" />
             Talk to Digital Rishabh
           </ThemedButton>
         </motion.div>
 
-        {/* Code Snippet Card */}
+        {/* Code Snippet Card - Translucent in Liquid Mode */}
         <motion.div
           initial={shouldReduceMotion ? false : { scale: 1.08, rotate: 2 }}
           animate={{ scale: 1, rotate: -1 }}
@@ -355,28 +269,31 @@ const Hero = () => {
           className="mt-16 w-full max-w-md"
         >
           <ThemedCard
-            variant="highlighted"
-            className={`p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`}
-            style={{ '--sticker-rotate': '-1deg' }}
+            variant={isLiquid ? 'default' : 'highlighted'} // Use default for liquid to get glass effect, highlighted for neubrutalism
+            className={themeClass(
+              `p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`,
+              `p-6 text-left font-mono text-sm transition-all duration-300 liquid-glass border border-[color:var(--border-soft)] bg-opacity-40 backdrop-blur-md ${isGlitching ? 'animate-glitch' : ''}`
+            )}
+            style={isLiquid ? undefined : { '--sticker-rotate': '-1deg' }}
           >
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
-              <Code2 size={16} />
-              <span className="font-heading font-bold">
+            <div className={`flex items-center gap-2 mb-3 pb-2 border-b-2 ${isLiquid ? 'border-white/10' : 'border-black/20'}`}>
+              <Code2 size={16} className={isLiquid ? 'text-blue-400' : ''} />
+              <span className={`font-heading font-bold ${isLiquid ? 'text-white' : ''}`}>
                 {isGlitching ? 'game_mode.js' : 'developer.js'}
               </span>
             </div>
-            <pre className="whitespace-pre-wrap">
+            <pre className={`whitespace-pre-wrap ${isLiquid ? 'text-blue-100' : ''}`}>
               {isGlitching ? (
                 <>
                   {`const developer = {
   mode: `}
-                  <span className="text-fun-pink font-bold">&lsquo;GAMER&rsquo;</span>
+                  <span className={isLiquid ? "text-pink-400 font-bold" : "text-fun-pink font-bold"}>&lsquo;GAMER&rsquo;</span>
                   {`,
   status: `}
-                  <span className="text-accent font-bold">&lsquo;Ready Player One&rsquo;</span>
+                  <span className={isLiquid ? "text-blue-400 font-bold" : "text-accent font-bold"}>&lsquo;Ready Player One&rsquo;</span>
                   {`,
   launching: `}
-                  <span className="text-green-600 font-bold">true</span>
+                  <span className="text-green-500 font-bold">true</span>
                   {`
 };`}
                   <span className="nb-blink">█</span>
@@ -391,7 +308,7 @@ const Hero = () => {
                     tabIndex={0}
                     onClick={handleEasterEggClick}
                     onKeyDown={handleEasterEggKeyDown}
-                    className="cursor-pointer hover:text-fun-pink hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-fun-pink focus:ring-offset-1"
+                    className={`cursor-pointer hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${isLiquid ? 'hover:text-pink-400 focus:ring-pink-400' : 'hover:text-fun-pink focus:ring-fun-pink'}`}
                     aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                   >
                     &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
