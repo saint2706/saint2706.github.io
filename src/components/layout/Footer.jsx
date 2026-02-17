@@ -5,7 +5,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { useTheme } from '../shared/theme-context';
-import { Github, Linkedin, Coffee, Heart, Grid } from 'lucide-react';
+import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
@@ -48,54 +48,18 @@ const Footer = () => {
   const linkedInUrl = resumeData.basics.socials.find(s => s.network === 'LinkedIn')?.url;
   const githubUrl = resumeData.basics.socials.find(s => s.network === 'GitHub')?.url;
 
-  if (isLiquid) {
-    return (
-      <footer className="bg-ios-bg-1 pt-24 pb-24 border-t border-black/[0.08]">
-        <div className="max-w-[1200px] mx-auto px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-10">
-            <div className="flex flex-col gap-2 items-center md:items-start">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="size-8 bg-ios-dark rounded-[8px] flex items-center justify-center text-white">
-                  <Grid size={18} />
-                </div>
-                <span className="text-[15px] font-bold tracking-tight uppercase text-ios-dark">System Audit</span>
-              </div>
-              <p className="text-[14px] font-semibold text-ios-gray tracking-tight">
-                © {new Date().getFullYear()} {resumeData.basics.name}. Designed for accessibility and performance.
-              </p>
-            </div>
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              <nav aria-label="Footer Navigation" className="flex flex-wrap justify-center items-center gap-2">
-                <a className="touch-target flex items-center justify-center px-6 text-[15px] font-bold text-ios-gray hover:text-ios-dark transition-colors" href="#">Archive</a>
-                <a className="touch-target flex items-center justify-center px-6 text-[15px] font-bold text-ios-gray hover:text-ios-dark transition-colors" href="#">Methodology</a>
-                <a className="touch-target flex items-center justify-center px-6 text-[15px] font-bold text-ios-gray hover:text-ios-dark transition-colors" href="#">Privacy</a>
-              </nav>
-              <div className="flex items-center gap-4">
-                {linkedInUrl && (
-                  <a aria-label="Connect on LinkedIn" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href={linkedInUrl} target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="size-6 fill-current" />
-                  </a>
-                )}
-                {githubUrl && (
-                  <a aria-label="View on GitHub" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href={githubUrl} target="_blank" rel="noopener noreferrer">
-                    <Github className="size-6 fill-current" />
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-  }
+  // Helper to switch classes based on theme
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-  // Original Neubrutalism Footer
   return (
-    <footer className="mt-20 bg-primary relative overflow-hidden">
-      <ZigzagDivider variant="zigzag" />
+    <footer className={themeClass("mt-20 bg-primary relative overflow-hidden", "mt-20 bg-ios-bg-1 relative overflow-hidden")}>
+      {/* Zigzag divider */}
+      <ZigzagDivider variant={isLiquid ? 'gradient' : 'zigzag'} className={isLiquid ? 'opacity-80' : ''} />
 
+      {/* Marquee Ticker */}
       <MarqueeTicker
-        variant="neub"
+        variant={isLiquid ? 'liquid' : 'neub'}
+        useBlurBand={isLiquid}
         bgColor="bg-fun-yellow"
         items={[
           'Python', 'React', 'SQL', 'Tableau', 'TensorFlow', 'Machine Learning', 'Deep Learning', 'NLP', 'D3.js',
@@ -124,23 +88,51 @@ const Footer = () => {
 
         <ScrollReveal variant="fade-up">
           <div className="max-w-4xl mx-auto px-4">
+            {/* Social Links */}
             <div className="flex justify-center gap-4 mb-8">
                {githubUrl && (
-                 <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit GitHub">
+                 <a
+                    href={githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={themeClass(
+                        "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                        "p-3 liquid-glass border border-[color:var(--border-soft)] rounded-full hover:scale-110 transition-transform text-[color:var(--color-text-primary)]"
+                    )}
+                    style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                    aria-label="Visit GitHub"
+                 >
                     <Github size={24} />
                  </a>
                )}
                {linkedInUrl && (
-                 <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit LinkedIn">
+                 <a
+                    href={linkedInUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={themeClass(
+                        "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                        "p-3 liquid-glass border border-[color:var(--border-soft)] rounded-full hover:scale-110 transition-transform text-[color:var(--color-text-primary)]"
+                    )}
+                    style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                    aria-label="Visit LinkedIn"
+                 >
                     <Linkedin size={24} />
                  </a>
                )}
             </div>
 
+            {/* Made with love */}
             <div className="flex justify-center">
-              <div className="px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb" style={{ boxShadow: 'var(--nb-shadow)' }}>
-                <p className="font-heading font-bold text-sm flex items-center justify-center gap-2 text-black">
-                  Made with <Coffee size={16} className="text-black" aria-hidden="true" />
+              <div
+                className={themeClass(
+                    "px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb",
+                    "px-6 py-3 liquid-chip border border-[color:var(--border-soft)] rounded-full"
+                )}
+                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              >
+                <p className={themeClass("font-heading font-bold text-sm flex items-center justify-center gap-2 text-black", "font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--color-text-secondary)]")}>
+                  Made with <Coffee size={16} className={isLiquid ? "text-[color:var(--color-text-secondary)]" : "text-black"} aria-hidden="true" />
                   + <button onClick={handleHeartClick} className="inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none">
                     <Heart size={16} className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`} />
                   </button>
@@ -149,18 +141,27 @@ const Footer = () => {
               </div>
             </div>
 
+            {/* Secret Message */}
             {showSecret && (
               <div className="mt-4 text-center">
-                <span className="inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb" style={{ boxShadow: '2px 2px 0 var(--color-border)' }}>
+                <span
+                    className={themeClass(
+                        "inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb",
+                        "inline-block px-4 py-2 text-sm font-heading font-semibold animate-bounce liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)]"
+                    )}
+                    style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                >
                   You found a secret! ❤️
                 </span>
               </div>
             )}
 
+            {/* Copyright */}
             <p className="text-[color:var(--color-text-secondary)] font-sans text-sm md:text-xs mt-6 text-center leading-relaxed">
               © {new Date().getFullYear()} All rights reserved.
             </p>
 
+            {/* Hint */}
             <p className="text-[color:var(--color-text-muted)] font-sans text-xs mt-2 text-center">
               Press <kbd className="px-1.5 py-0.5 bg-secondary border border-[color:var(--color-border)] rounded text-[10px] font-mono">Ctrl+K</kbd> to open command palette
             </p>

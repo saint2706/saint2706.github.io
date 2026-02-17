@@ -140,7 +140,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               <div className="size-9 bg-ios-dark rounded-xl flex items-center justify-center text-white transition-transform group-hover:scale-105">
                 <Grid size={20} />
               </div>
-              <span className="text-[14px] font-bold tracking-tight uppercase text-ios-dark">System Audit</span>
+              <span className="text-[14px] font-bold tracking-tight uppercase text-ios-dark">Liquid</span>
             </div>
           ) : (
             <span className="text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
@@ -189,7 +189,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                 }`}
               >
                 <option value="neubrutalism">Neubrutalism</option>
-                <option value="liquid">System Audit</option>
+                <option value="liquid">Liquid</option>
               </select>
            </div>
 
@@ -268,7 +268,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                     }`}
                   >
                     <option value="neubrutalism">Neubrutalism</option>
-                    <option value="liquid">System Audit</option>
+                    <option value="liquid">Liquid</option>
                   </select>
                 </div>
                 {[...navItems, { name: 'Contact', path: '/contact', icon: <Mail size={18} /> }].map((item, index) => (
