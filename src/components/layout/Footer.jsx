@@ -9,6 +9,7 @@ import { Github, Linkedin, Coffee, Heart, Grid } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
+import { resumeData } from '../../data/resume';
 
 /**
  * Footer component with social links, attribution, and easter egg
@@ -44,6 +45,9 @@ const Footer = () => {
     }))
   );
 
+  const linkedInUrl = resumeData.basics.socials.find(s => s.network === 'LinkedIn')?.url;
+  const githubUrl = resumeData.basics.socials.find(s => s.network === 'GitHub')?.url;
+
   if (isLiquid) {
     return (
       <footer className="bg-ios-bg-1 pt-24 pb-24 border-t border-black/[0.08]">
@@ -57,7 +61,7 @@ const Footer = () => {
                 <span className="text-[15px] font-bold tracking-tight uppercase text-ios-dark">System Audit</span>
               </div>
               <p className="text-[14px] font-semibold text-ios-gray tracking-tight">
-                © {new Date().getFullYear()} Editorial Studio. Designed for accessibility and performance.
+                © {new Date().getFullYear()} {resumeData.basics.name}. Designed for accessibility and performance.
               </p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -67,12 +71,16 @@ const Footer = () => {
                 <a className="touch-target flex items-center justify-center px-6 text-[15px] font-bold text-ios-gray hover:text-ios-dark transition-colors" href="#">Privacy</a>
               </nav>
               <div className="flex items-center gap-4">
-                <a aria-label="Connect on LinkedIn" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href="https://www.linkedin.com/in/rishabh-agrawal-1807321b9">
-                  <Linkedin className="size-6 fill-current" />
-                </a>
-                <a aria-label="View on GitHub" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href="https://github.com/saint2706">
-                  <Github className="size-6 fill-current" />
-                </a>
+                {linkedInUrl && (
+                  <a aria-label="Connect on LinkedIn" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href={linkedInUrl} target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="size-6 fill-current" />
+                  </a>
+                )}
+                {githubUrl && (
+                  <a aria-label="View on GitHub" className="touch-target flex items-center justify-center w-[48px] h-[48px] text-ios-gray hover:text-ios-dark transition-all hover:scale-110" href={githubUrl} target="_blank" rel="noopener noreferrer">
+                    <Github className="size-6 fill-current" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -117,12 +125,16 @@ const Footer = () => {
         <ScrollReveal variant="fade-up">
           <div className="max-w-4xl mx-auto px-4">
             <div className="flex justify-center gap-4 mb-8">
-               <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit GitHub">
-                  <Github size={24} />
-               </a>
-               <a href="https://www.linkedin.com/in/rishabh-agrawal-1807321b9" target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit LinkedIn">
-                  <Linkedin size={24} />
-               </a>
+               {githubUrl && (
+                 <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit GitHub">
+                    <Github size={24} />
+                 </a>
+               )}
+               {linkedInUrl && (
+                 <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert" style={{ boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }} aria-label="Visit LinkedIn">
+                    <Linkedin size={24} />
+                 </a>
+               )}
             </div>
 
             <div className="flex justify-center">
@@ -132,7 +144,7 @@ const Footer = () => {
                   + <button onClick={handleHeartClick} className="inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none">
                     <Heart size={16} className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`} />
                   </button>
-                  by Rishabh Agrawal
+                  by {resumeData.basics.name}
                 </p>
               </div>
             </div>

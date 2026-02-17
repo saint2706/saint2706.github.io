@@ -2,7 +2,7 @@
  * @fileoverview Hero section for homepage with interactive elements and animations.
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
@@ -38,6 +38,15 @@ const Hero = () => {
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
   const CLICKS_REQUIRED = 3;
+
+  // Calculate years of experience dynamically
+  const yearsExperience = useMemo(() => {
+    // Start year from first education entry (2020) as a proxy for start of journey
+    // or from first experience if preferred. Using 2020 based on B.Tech start.
+    const startYear = 2020;
+    const currentYear = new Date().getFullYear();
+    return (currentYear - startYear).toString().padStart(2, '0');
+  }, []);
 
   // Reset click count after 2 seconds of inactivity
   useEffect(() => {
@@ -78,8 +87,7 @@ const Hero = () => {
   );
 
   const canonicalUrl = resumeData.basics.website;
-  const description =
-    'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
+  const description = resumeData.basics.summary;
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
 
   // Liquid Theme Render
@@ -96,10 +104,7 @@ const Hero = () => {
             '@type': 'Person',
             name: resumeData.basics.name,
             url: resumeData.basics.website,
-            sameAs: [
-              'https://github.com/saint2706',
-              'https://www.linkedin.com/in/rishabh-agrawal-1807321b9',
-            ],
+            sameAs: resumeData.basics.socials.map(s => s.url),
             jobTitle: resumeData.basics.title,
             description: description,
             image: `${resumeData.basics.website}/og-image.png`,
@@ -112,20 +117,20 @@ const Hero = () => {
             <div className="flex flex-wrap items-center gap-4 mb-12">
               <div className="info-chip">
                 <BadgeCheck className="text-primary w-[22px] h-[22px]" />
-                <span className="text-ios-dark">Product Architect</span>
+                <span className="text-ios-dark">{resumeData.basics.title.split(' & ')[0]}</span>
               </div>
               <div className="info-chip">
                 <MapPin className="text-ios-gray w-[22px] h-[22px]" />
-                <span className="text-ios-dark">London, UK</span>
+                <span className="text-ios-dark">{`${resumeData.basics.location.city}, ${resumeData.basics.location.country}`}</span>
               </div>
             </div>
 
             <h1 className="large-title text-ios-dark mb-10" id="hero-heading">
-              Crafting digital interfaces with architectural rigor.
+              Data Storyteller &<br/>Analytics Strategist.
             </h1>
 
             <p className="headline text-ios-gray max-w-[760px] mb-12 font-medium">
-              A design engineering studio focused on premium software experiences that balance aesthetic purity with high-performance execution.
+              {resumeData.basics.summary}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
@@ -136,7 +141,7 @@ const Hero = () => {
                 onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
                 className="pill-button touch-target w-full sm:w-auto glass-surface text-ios-dark text-[17px] font-bold hover:bg-white/95 hover:translate-y-[-1px] active:scale-95"
               >
-                The Methodology
+                Talk to Digital Rishabh
               </button>
             </div>
           </div>
@@ -146,10 +151,10 @@ const Hero = () => {
           <h2 className="section-label" id="metrics-heading">Core Competencies & Impact</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { label: 'Scale', value: '08', sub: 'Years in Design', icon: <History className="text-3xl text-primary" /> },
-              { label: 'Portfolio', value: '124', sub: 'Live Platforms', icon: <LayoutGrid className="text-3xl text-primary" /> },
-              { label: 'Reach', value: '12', sub: 'Global Markets', icon: <Globe className="text-3xl text-primary" /> },
-              { label: 'Status', value: '16', sub: 'Industry Honors', icon: <Award className="text-3xl text-primary" /> }
+              { label: 'Scale', value: yearsExperience, sub: 'Years Experience', icon: <History className="text-3xl text-primary" /> },
+              { label: 'Portfolio', value: resumeData.projects.length.toString().padStart(2, '0'), sub: 'Live Projects', icon: <LayoutGrid className="text-3xl text-primary" /> },
+              { label: 'Reach', value: resumeData.basics.languages.length.toString().padStart(2, '0'), sub: 'Languages', icon: <Globe className="text-3xl text-primary" /> },
+              { label: 'Status', value: resumeData.certifications.length.toString().padStart(2, '0'), sub: 'Certifications', icon: <Award className="text-3xl text-primary" /> }
             ].map((metric, i) => (
                <div key={i} className="metric-widget group hover:translate-y-[-4px]">
                   <div className="flex justify-between items-start">
@@ -379,7 +384,7 @@ const Hero = () => {
               ) : (
                 <>
                   {`const developer = {
-  name: 'Rishabh Agrawal',
+  name: '${resumeData.basics.name}',
   stack: [`}
                   <span
                     role="button"
@@ -389,7 +394,7 @@ const Hero = () => {
                     className="cursor-pointer hover:text-fun-pink hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-fun-pink focus:ring-offset-1"
                     aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                   >
-                    &lsquo;React&rsquo;, &lsquo;Node.js&rsquo;, &lsquo;Python&rsquo;
+                    &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
                   </span>
                   {`],
   currentStatus: 'Building awesome things.',
