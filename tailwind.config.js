@@ -32,6 +32,12 @@ export default {
         'nb-black': '#000000',
         'nb-white': '#FFFFFF',
 
+        // Editorial / System Audit Theme (formerly Liquid)
+        'ios-bg-1': '#FBFBFD',
+        'ios-bg-2': '#F5F5F7',
+        'ios-gray': '#424245',
+        'ios-dark': '#1D1D1F',
+
         // Glassmorphism Design System (Dark Mode)
         // Semi-transparent colors for frosted glass effect
         glass: {
@@ -66,7 +72,7 @@ export default {
       },
       fontFamily: {
         // Custom font stacks for different text styles
-        sans: ['DM Sans', 'sans-serif'], // Body text
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'], // Dynamic font
         heading: ['Space Grotesk', 'sans-serif'], // Headings and titles
         mono: ['Fira Code', 'monospace'], // Code blocks
       },
@@ -76,6 +82,10 @@ export default {
         'nb-hover': 'var(--nb-shadow-hover)',
         'nb-xl': 'var(--nb-shadow-xl)',
         'nb-pressed': 'var(--nb-shadow-pressed)',
+
+        // Editorial shadows
+        'ios-refined': '0 4px 6px rgba(0, 0, 0, 0.04), 0 40px 80px rgba(0, 0, 0, 0.12)',
+        'ios-stack': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 40px 60px -15px rgba(0, 0, 0, 0.08)',
 
         // Glassmorphism glow effects: Soft luminous halos
         'glow-sm': '0 0 15px var(--glow-color, rgba(139, 92, 246, 0.3))',
@@ -93,6 +103,9 @@ export default {
       borderRadius: {
         nb: 'var(--nb-radius)',
         glass: '16px',
+        card: '24px',
+        sheet: '32px',
+        widget: '24px',
       },
       borderWidth: {
         nb: 'var(--nb-border-width)',

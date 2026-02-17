@@ -4,7 +4,18 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  Bot,
+  Code2,
+  Sparkles,
+  BadgeCheck,
+  MapPin,
+  History,
+  LayoutGrid,
+  Globe,
+  Award
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
@@ -13,22 +24,9 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
-import { LIQUID_MOTION } from '../shared/themeMotion';
 
 /**
  * Hero section component for homepage
- *
- * Features:
- * - Bold typography with neubrutalist styling
- * - Availability status badge
- * - CTA buttons (View Projects, Talk to Bot)
- * - Interactive code snippet card with easter egg
- * - Click stack array 3 times to reveal /games page
- * - Decorative background shapes
- * - SEO optimization with structured data
- *
- * @component
- * @returns {JSX.Element} Hero section with heading, CTAs, and code snippet
  */
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -51,7 +49,6 @@ const Hero = () => {
 
   /**
    * Handle easter egg activation
-   * After 3 clicks, glitch animation plays and navigates to /games
    */
   const handleEasterEggClick = useCallback(() => {
     if (isGlitching) return;
@@ -61,7 +58,6 @@ const Hero = () => {
 
     if (newCount >= CLICKS_REQUIRED) {
       setIsGlitching(true);
-      // Navigate after glitch animation plays
       setTimeout(() => {
         navigate('/games');
       }, 1500);
@@ -70,7 +66,6 @@ const Hero = () => {
 
   /**
    * Keyboard handler for easter egg accessibility
-   * Activates on Enter or Space key
    */
   const handleEasterEggKeyDown = useCallback(
     e => {
@@ -87,24 +82,15 @@ const Hero = () => {
     'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
 
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-        <script type="application/ld+json">
+  // Liquid Theme Render
+  if (isLiquid) {
+    return (
+      <>
+        <Helmet>
+          <title>{title}</title>
+          <link rel="canonical" href={canonicalUrl} />
+          <meta name="description" content={description} />
+           <script type="application/ld+json">
           {safeJSONStringify({
             '@context': 'https://schema.org',
             '@type': 'Person',
@@ -119,25 +105,100 @@ const Hero = () => {
             image: `${resumeData.basics.website}/og-image.png`,
           })}
         </script>
-        <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: `${resumeData.basics.name} Portfolio`,
-            url: resumeData.basics.website,
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: `${resumeData.basics.website}/blog?q={search_term_string}`,
-              'query-input': 'required name=search_term_string',
-            },
-          })}
-        </script>
+        </Helmet>
+
+        <section aria-labelledby="hero-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 pb-32 pt-10">
+          <div className="flex flex-col items-start max-w-[960px]">
+            <div className="flex flex-wrap items-center gap-4 mb-12">
+              <div className="info-chip">
+                <BadgeCheck className="text-primary w-[22px] h-[22px]" />
+                <span className="text-ios-dark">Product Architect</span>
+              </div>
+              <div className="info-chip">
+                <MapPin className="text-ios-gray w-[22px] h-[22px]" />
+                <span className="text-ios-dark">London, UK</span>
+              </div>
+            </div>
+
+            <h1 className="large-title text-ios-dark mb-10" id="hero-heading">
+              Crafting digital interfaces with architectural rigor.
+            </h1>
+
+            <p className="headline text-ios-gray max-w-[760px] mb-12 font-medium">
+              A design engineering studio focused on premium software experiences that balance aesthetic purity with high-performance execution.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto">
+              <Link to="/projects" className="pill-button touch-target w-full sm:w-auto bg-ios-dark text-white text-[17px] hover:translate-y-[-1px] active:scale-95 shadow-lg">
+                View Portfolio
+              </Link>
+              <button
+                onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
+                className="pill-button touch-target w-full sm:w-auto glass-surface text-ios-dark text-[17px] font-bold hover:bg-white/95 hover:translate-y-[-1px] active:scale-95"
+              >
+                The Methodology
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="metrics-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 mb-32">
+          <h2 className="section-label" id="metrics-heading">Core Competencies & Impact</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { label: 'Scale', value: '08', sub: 'Years in Design', icon: <History className="text-3xl text-primary" /> },
+              { label: 'Portfolio', value: '124', sub: 'Live Platforms', icon: <LayoutGrid className="text-3xl text-primary" /> },
+              { label: 'Reach', value: '12', sub: 'Global Markets', icon: <Globe className="text-3xl text-primary" /> },
+              { label: 'Status', value: '16', sub: 'Industry Honors', icon: <Award className="text-3xl text-primary" /> }
+            ].map((metric, i) => (
+               <div key={i} className="metric-widget group hover:translate-y-[-4px]">
+                  <div className="flex justify-between items-start">
+                    <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center">
+                      {metric.icon}
+                    </div>
+                    <span className="text-[12px] font-bold uppercase tracking-widest text-ios-gray">{metric.label}</span>
+                  </div>
+                  <div>
+                    <span className="text-6xl font-semibold tracking-tighter text-ios-dark mb-2 block">{metric.value}</span>
+                    <p className="text-[12px] font-bold text-gray-500 uppercase tracking-widest">{metric.sub}</p>
+                  </div>
+               </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="narrative-heading" className="max-w-[1200px] mx-auto px-4 md:px-8 mb-32">
+          <h2 className="section-label" id="narrative-heading">Spatial Narrative</h2>
+          <div className="relative ios-sheet overflow-hidden bg-ios-bg-2 aspect-[21/9] border-[0.5px] border-black/10 group">
+             <img
+               alt="Luxury minimalist workspace with architectural lighting"
+               className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
+               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmcx4Y4dcAi7p_eC_q0GKpZMTiY2VlFMCDumD7XOarOAT4RhMiWscPAHZ8dcYHDnj3yxsdm65t0WFdq6Lmk4XHykWbhZrRfpLTQCtnQem__L95QHQ6FvC9C0jBPQR_a84dQoVlPzbeBbERTFqBoGTQUIzAU2zuNYfZUc2HZIOiJg_VCCSlqnbp7mV3ZEtLkogYjS-r9981ryohLoTuasdfyKF5a_uIeIiiWaUZE_BeAVDkiElOaRzOP73PxaKrQ00oVP2MIztxgOlt"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+             <div className="absolute bottom-10 left-10">
+                <div className="liquid-glass px-8 h-[52px] rounded-2xl flex items-center gap-3 text-ios-dark shadow-xl bg-white/40 backdrop-blur-md border border-white/30">
+                   <span className="text-[12px] font-bold tracking-widest uppercase">Studio Environment 01</span>
+                </div>
+             </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  // Original Neubrutalism Render
+  return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={description} />
       </Helmet>
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
-        {/* Neubrutalism Decorative Shapes — sticker rotations + float bob */}
-        <div className={`absolute inset-0 -z-10 overflow-hidden pointer-events-none ${isLiquid ? 'hidden' : ''}`}>
-          {/* Yellow block - top left — rotated sticker */}
+        {/* Neubrutalism Decorative Shapes */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -145,7 +206,6 @@ const Hero = () => {
             className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
             style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
           />
-          {/* Pink block - bottom left — rotated sticker */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -157,7 +217,6 @@ const Hero = () => {
               animationDelay: '1s',
             }}
           />
-          {/* Blue block - top right — rotated sticker */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -171,14 +230,14 @@ const Hero = () => {
           />
         </div>
 
-        {/* Status Badge — stamp-in entrance with sticker rotation */}
+        {/* Status Badge */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.15, rotate: 3 }}
           animate={{ opacity: 1, scale: 1, rotate: -2 }}
           transition={
             shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
           }
-          className={`mb-8 ${isLiquid ? 'hidden' : ''}`}
+          className="mb-8"
         >
           <ThemedChip
             variant="yellow"
@@ -190,49 +249,7 @@ const Hero = () => {
           </ThemedChip>
         </motion.div>
 
-      {isLiquid ? (
-        <motion.section
-          initial={shouldReduceMotion ? false : { opacity: 0, y: LIQUID_MOTION.offset.y }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal }}
-          className="w-full max-w-4xl liquid-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
-        >
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 liquid-silver-text">
-            Data Storyteller
-            <span className="block mt-2">&amp; Creative Analyst</span>
-          </h1>
-          <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
-            Turning messy data into clear strategies and AI/ML solutions into real-world impact.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <ThemedButton
-              as={Link}
-              to="/projects"
-              variant="primary"
-              size="lg"
-              className="group relative shadow-[0_0_30px_rgba(141,162,255,0.35)]"
-            >
-              View Projects
-              <ArrowRight
-                size={18}
-                className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
-              />
-            </ThemedButton>
-            <ThemedButton
-              onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-              variant="secondary"
-              size="lg"
-              className="shadow-[0_0_24px_rgba(215,131,255,0.22)]"
-              aria-label="Open chat with Digital Rishabh"
-            >
-              <Bot size={18} aria-hidden="true" />
-              Talk to Digital Rishabh
-            </ThemedButton>
-          </div>
-        </motion.section>
-      ) : (
-      <>
-      {/* Main Heading — fixed contrast + squiggle underline */}
+        {/* Main Heading */}
         <motion.h1
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -241,7 +258,6 @@ const Hero = () => {
         >
           <span className="block text-[color:var(--color-text-primary)] mb-2 relative">
             Data Storyteller
-            {/* SVG squiggle underline — hand-drawn zine feel */}
             <svg
               className="absolute -bottom-2 left-0 w-full"
               height="12"
@@ -288,7 +304,7 @@ const Hero = () => {
           into real-world impact.
         </motion.p>
 
-        {/* CTA Buttons - Neubrutalism style */}
+        {/* CTA Buttons */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -321,10 +337,8 @@ const Hero = () => {
             Talk to Digital Rishabh
           </ThemedButton>
         </motion.div>
-      </>
-      )}
 
-        {/* Code Snippet Card — sticky-note style with sticker rotation + blinking cursor */}
+        {/* Code Snippet Card */}
         <motion.div
           initial={shouldReduceMotion ? false : { scale: 1.08, rotate: 2 }}
           animate={{ scale: 1, rotate: -1 }}
@@ -333,7 +347,7 @@ const Hero = () => {
               ? { duration: 0 }
               : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
           }
-          className={`mt-16 w-full max-w-md ${isLiquid ? 'hidden' : ''}`}
+          className="mt-16 w-full max-w-md"
         >
           <ThemedCard
             variant="highlighted"
@@ -348,7 +362,6 @@ const Hero = () => {
             </div>
             <pre className="whitespace-pre-wrap">
               {isGlitching ? (
-                // Glitched "gamer mode" content
                 <>
                   {`const developer = {
   mode: `}
@@ -364,7 +377,6 @@ const Hero = () => {
                   <span className="nb-blink">█</span>
                 </>
               ) : (
-                // Normal content with clickable stack items
                 <>
                   {`const developer = {
   name: 'Rishabh Agrawal',

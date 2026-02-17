@@ -16,31 +16,15 @@ import {
   X,
   MousePointer2,
   Code2,
+  Grid,
 } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
-import { LIQUID_MOTION } from '../shared/themeMotion';
 
 const FOCUSABLE_SELECTOR =
   'a[href], area[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /**
  * Navigation bar component with desktop and mobile layouts
- *
- * Features:
- * - Responsive navigation menu (desktop horizontal, mobile dropdown)
- * - Active link highlighting with neubrutalist styling
- * - Custom cursor toggle button
- * - Focus trap in mobile menu for accessibility
- * - Automatic close on route change
- * - Communicates with chatbot to prevent UI conflicts
- *
- * @component
- * @param {Object} props
- * @param {boolean} props.cursorEnabled - Whether custom cursor is currently enabled
- * @param {boolean} props.cursorToggleDisabled - Whether cursor toggle should be disabled
- * @param {string} props.cursorToggleLabel - Accessible label for cursor toggle button
- * @param {Function} props.onToggleCursor - Callback to toggle cursor on/off
- * @returns {JSX.Element} Navigation bar with menu and controls
  */
 const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,10 +36,6 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const { theme, setTheme } = useTheme();
   const isLiquid = theme === 'liquid';
 
-  const themeClass = useCallback((neubrutalClasses, liquidClasses) => {
-    return isLiquid ? liquidClasses : neubrutalClasses;
-  }, [isLiquid]);
-
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
     if (isMenuOpen) {
@@ -65,16 +45,14 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   // Close mobile menu when navigating between routes
   useEffect(() => {
-    // This is a legitimate use case for setState in an effect:
-    // We need to synchronize the menu state with the router location.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMenuOpen(false);
+    if (isMenuOpen) {
+        setIsMenuOpen(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   /**
    * Trap focus within mobile menu for keyboard navigation
-   * Handles Tab key to cycle through focusable elements
-   * Handles Escape key to close menu
    */
   const trapFocus = useCallback(
     event => {
@@ -104,20 +82,15 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   // Manage focus, aria-hidden, and event listeners when menu toggles
   useEffect(() => {
     if (isMenuOpen) {
-      // Store current focus to restore later
       lastFocusRef.current = document.activeElement;
-      // Hide main content from screen readers
       const main = document.getElementById('main-content');
       if (main) main.setAttribute('aria-hidden', 'true');
       document.addEventListener('keydown', trapFocus);
-      // Auto-focus first interactive element in menu
       setTimeout(() => menuRef.current?.querySelector(FOCUSABLE_SELECTOR)?.focus(), 0);
     } else {
-      // Show main content to screen readers
       const main = document.getElementById('main-content');
       if (main) main.removeAttribute('aria-hidden');
       document.removeEventListener('keydown', trapFocus);
-      // Restore focus to trigger element
       lastFocusRef.current?.focus?.();
     }
     return () => document.removeEventListener('keydown', trapFocus);
@@ -137,118 +110,119 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
     { name: 'Resume', path: '/resume', icon: <User size={18} /> },
     { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
     { name: 'Playground', path: '/playground', icon: <Code2 size={18} /> },
-    { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
+    // Contact is separated in Liquid theme
   ];
 
-  /** Close mobile menu (called on nav link click) */
   const handleCloseMenu = () => setIsMenuOpen(false);
 
   return (
     <motion.nav
-      initial={shouldReduceMotion ? false : { y: isLiquid ? -LIQUID_MOTION.offset.y : -100 }}
+      initial={shouldReduceMotion ? false : { y: -100 }}
       animate={{ y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : isLiquid ? { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal } : undefined}
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 px-4 ${isLiquid ? 'pt-8 flex justify-center pointer-events-none' : 'py-4 md:py-6'}`}
     >
       <div
-        className={`relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
-        style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
+        className={
+          isLiquid
+            ? 'glass-surface ios-sheet flex items-center justify-between w-full max-w-[1200px] h-[72px] px-8 pointer-events-auto transition-all duration-300'
+            : 'relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
+        }
       >
+        {/* Logo Section */}
         <NavLink
           to="/"
-          className="text-xl font-heading font-bold text-primary"
+          className="flex items-center gap-4 group"
           aria-label="Rishabh Agrawal - Home page"
         >
-          <span
-            className={themeClass(
-              'bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb',
-              'liquid-chip px-2.5 py-1 border border-[color:var(--border-soft)] rounded-full text-[color:var(--text-primary)]'
-            )}
-          >
-            &lt;Rishabh /&gt;
-          </span>
+          {isLiquid ? (
+            <div className="flex items-center gap-4">
+              <div className="size-9 bg-ios-dark rounded-xl flex items-center justify-center text-white transition-transform group-hover:scale-105">
+                <Grid size={20} />
+              </div>
+              <span className="text-[14px] font-bold tracking-tight uppercase text-ios-dark">System Audit</span>
+            </div>
+          ) : (
+            <span className="text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
+              &lt;Rishabh /&gt;
+            </span>
+          )}
         </NavLink>
 
-        <div className="hidden md:flex gap-1 md:gap-2">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-2">
           {navItems.map(item => (
             <NavLink
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isLiquid ? 'liquid-chip liquid-nav-link liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
-                ${isActive
-                  ? isLiquid
-                    ? 'text-[color:var(--text-primary)] border-[color:var(--accent-soft)]'
-                    : 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1'
-                  : isLiquid
-                    ? 'text-primary border-[color:var(--border-soft)]'
-                    : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
-                }`
-              }
-              style={({ isActive }) =>
                 isLiquid
-                  ? {
-                    boxShadow: isActive ? '0 10px 30px rgba(93, 111, 179, 0.35)' : undefined,
-                  }
-                  : isActive
-                    ? {
-                      boxShadow: 'inset 2px 2px 0 var(--color-border)',
-                      transform: 'translateY(1px) rotate(-1deg)',
-                    }
-                    : { boxShadow: 'var(--nb-shadow)' }
+                  ? `touch-target flex items-center justify-center px-6 text-[15px] font-semibold rounded-full transition-colors ${
+                      isActive ? 'bg-black/5 text-ios-dark' : 'text-ios-dark hover:bg-black/[0.06]'
+                    }`
+                  : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb ${
+                      isActive
+                        ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
+                        : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+                    }`
               }
             >
-              <span className="hidden lg:inline" aria-hidden="true">
-                {item.icon}
-              </span>
+              {!isLiquid && <span className="hidden lg:inline" aria-hidden="true">{item.icon}</span>}
               <span>{item.name}</span>
             </NavLink>
           ))}
         </div>
 
-        {/* Cursor Toggle and Mobile Menu container */}
-        <div className="flex items-center gap-2">
-          <label
-            htmlFor="theme-preference"
-            className={`hidden md:flex items-center gap-2 pl-3 pr-2 py-2 text-sm font-semibold text-primary ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full')}`}
-            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
-          >
-            <span>Theme</span>
-            <select
-              id="theme-preference"
-              value={theme}
-              onChange={event => setTheme(event.target.value)}
-              className={`text-sm px-2 py-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
+        {/* Right Actions */}
+        <div className="flex items-center gap-4">
+           {/* Theme Switcher - Always Visible but Styled Differently */}
+           <label htmlFor="theme-preference" className="sr-only">Select Theme</label>
+           <div className={`relative flex items-center ${isLiquid ? 'hidden lg:flex' : 'hidden md:flex'}`}>
+              <select
+                id="theme-preference"
+                value={theme}
+                onChange={event => setTheme(event.target.value)}
+                className={`text-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+                    isLiquid
+                    ? 'bg-transparent text-ios-dark font-medium border-none pr-8 py-2'
+                    : 'bg-primary border-2 border-[color:var(--color-border)] rounded-nb px-2 py-1'
+                }`}
+              >
+                <option value="neubrutalism">Neubrutalism</option>
+                <option value="liquid">System Audit</option>
+              </select>
+           </div>
+
+           {/* Contact Button (Liquid Only) or Cursor Toggle (Neubrutalism) */}
+           {isLiquid ? (
+             <NavLink
+                to="/contact"
+                className="hidden md:flex touch-target bg-primary text-white px-8 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20"
+             >
+                Contact
+             </NavLink>
+           ) : (
+            <button
+                type="button"
+                onClick={onToggleCursor}
+                className="group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb shadow-nb"
+                aria-pressed={cursorEnabled}
+                aria-label={cursorToggleLabel}
+                disabled={cursorToggleDisabled}
             >
-              <option value="neubrutalism">Neubrutalism</option>
-              <option value="liquid">Liquid Glass</option>
-            </select>
-          </label>
+                <MousePointer2 size={18} aria-hidden="true" />
+            </button>
+           )}
 
-          {/* Cursor Toggle Button */}
-          <button
-            type="button"
-            onClick={onToggleCursor}
-            className={`group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none ${themeClass('bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
-            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
-            aria-pressed={cursorEnabled}
-            aria-label={cursorToggleLabel}
-            disabled={cursorToggleDisabled}
-          >
-            <MousePointer2 size={18} aria-hidden="true" />
-
-            {/* Tooltip */}
-            <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans">
-              {cursorEnabled ? 'Disable Custom Cursor' : 'Enable Custom Cursor'}
-            </span>
-          </button>
-
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
             type="button"
             ref={menuButtonRef}
-            className={`md:hidden p-3 text-primary cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full')}`}
-            style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
+            className={`md:hidden p-3 cursor-pointer ${
+                isLiquid
+                ? 'text-ios-dark hover:bg-black/5 rounded-full'
+                : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb'
+            }`}
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
@@ -262,45 +236,56 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           </button>
         </div>
 
+        {/* Mobile Menu Dropdown */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
               id="mobile-nav-menu"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: isLiquid ? -LIQUID_MOTION.offset.subtleY : -8 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0, y: isLiquid ? -LIQUID_MOTION.offset.subtleY : -8 }}
-              transition={shouldReduceMotion ? { duration: 0 } : isLiquid ? { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal } : { duration: 0.15 }}
-              className={`absolute right-4 top-full mt-3 w-64 md:hidden ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
-              style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${
+                  isLiquid
+                  ? 'glass-surface ios-card border border-black/10'
+                  : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
+              }`}
               ref={menuRef}
             >
               <div className="flex flex-col">
-                <div className="px-5 py-4 border-b-2 border-[color:var(--color-border)]">
-                  <label htmlFor="mobile-theme-preference" className="block text-sm font-heading font-semibold text-primary mb-2">
+                <div className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}>
+                  <label htmlFor="mobile-theme-preference" className={`block text-sm font-bold mb-2 ${isLiquid ? 'text-ios-dark' : 'font-heading text-primary'}`}>
                     Theme
                   </label>
                   <select
                     id="mobile-theme-preference"
                     value={theme}
                     onChange={event => setTheme(event.target.value)}
-                    className={`w-full text-sm px-3 py-2 text-primary ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
+                    className={`w-full text-sm px-3 py-2 ${
+                        isLiquid
+                        ? 'bg-ios-bg-2 rounded-lg text-ios-dark border-none'
+                        : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb'
+                    }`}
                   >
                     <option value="neubrutalism">Neubrutalism</option>
-                    <option value="liquid">Liquid Glass</option>
+                    <option value="liquid">System Audit</option>
                   </select>
                 </div>
-                {navItems.map((item, index) => (
+                {[...navItems, { name: 'Contact', path: '/contact', icon: <Mail size={18} /> }].map((item, index) => (
                   <NavLink
                     key={item.name}
                     to={item.path}
                     onClick={handleCloseMenu}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-5 py-4 text-base font-heading font-semibold transition-colors duration-200
-                      ${index !== navItems.length - 1 ? 'border-b-2 border-[color:var(--color-border)]' : ''}
-                      ${isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary'}`
+                      `flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200
+                      ${isLiquid
+                        ? (isActive ? 'bg-primary/5 text-primary' : 'text-ios-dark hover:bg-black/5')
+                        : (isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary')
+                      }
+                      ${!isLiquid && index !== navItems.length ? 'border-b-2 border-[color:var(--color-border)]' : ''}`
                     }
                   >
-                    <span aria-hidden="true">{item.icon}</span>
+                    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>{item.icon}</span>
                     <span>{item.name}</span>
                   </NavLink>
                 ))}
