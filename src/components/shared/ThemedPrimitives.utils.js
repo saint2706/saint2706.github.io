@@ -1,7 +1,7 @@
 /**
  * Utility to join CSS classes efficiently.
  * Optimized to avoid intermediate array allocation (filter+join).
- * @param {...string} classes - CSS classes to join.
+ * @param {...(string|false|null|undefined)} classes - CSS classes to join.
  * @returns {string} Combined CSS class string.
  */
 export const joinClasses = (...classes) => {
