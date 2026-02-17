@@ -133,8 +133,18 @@ const Footer = () => {
               >
                 <p className={themeClass("font-heading font-bold text-sm flex items-center justify-center gap-2 text-black", "font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--color-text-secondary)]")}>
                   Made with <Coffee size={16} className={isLiquid ? "text-[color:var(--color-text-secondary)]" : "text-black"} aria-hidden="true" />
-                  + <button onClick={handleHeartClick} className="inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none">
+                  + <button
+                    onClick={handleHeartClick}
+                    className="group relative inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-fun-pink focus-visible:rounded-full"
+                    aria-label="Give a like"
+                  >
                     <Heart size={16} className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`} />
+                    <span
+                      className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                      aria-hidden="true"
+                    >
+                      Give a like
+                    </span>
                   </button>
                   by {resumeData.basics.name}
                 </p>

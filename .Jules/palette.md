@@ -1,4 +1,3 @@
-## 2025-02-09 - Card Click Patterns
-
-**Learning:** Users often expect entire cards (like project showcases) to be clickable, especially when they have visual hover states (cursor-pointer, transform). However, making a card clickable while preserving nested interactive elements (like specific "Demo" and "Code" buttons) and text selection requires careful event handling.
-**Action:** Implement a `handleCardClick` handler on the container that checks for text selection (`window.getSelection()`) and ensures nested interactive elements stop propagation (`e.stopPropagation()`). For non-anchor clickable containers, also ensure keyboard accessibility by making the card focusable (for example, `tabIndex="0"` with `role="button"`), wiring an `onKeyDown` handler so `Enter`/`Space` activate the same behavior as click, and providing a visible focus style (e.g., via `:focus-visible`). Avoid wrapping the entire card in an anchor tag if it contains other interactive elements to maintain valid HTML and accessibility.
+## 2024-05-24 - Easter Egg Accessibility
+**Learning:** Easter eggs and micro-interactions often bypass standard accessibility audits because they are considered 'hidden' or 'bonus' content. However, for screen reader users, encountering an unlabeled interactive element can be confusing and frustrating.
+**Action:** Treat all interactive elements, including easter eggs, as first-class citizens requiring proper labels and focus management.
