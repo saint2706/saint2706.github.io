@@ -35,7 +35,6 @@ const LightsOut = lazy(() => import('../games/LightsOut'));
 
 /**
  * Loading spinner for game components
- * Matches approximate height of games to minimize layout shift
  */
 const GameLoader = () => (
   <div
@@ -47,24 +46,12 @@ const GameLoader = () => (
   </div>
 );
 
-/**
- * Games page component (easter egg feature)
- *
- * Features:
- * - Hidden games page (noindex in SEO)
- * - Tab interface to switch between games
- * - Tic Tac Toe with AI opponent
- * - Classic Snake game
- * - Easter egg badge and messaging
- *
- * @component
- * @returns {JSX.Element} Games page with playable games
- */
 const Games = () => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
+
   const canonicalUrl = `${resumeData.basics.website}/games`;
   const description =
     'A secret games easter egg! Play Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.';
@@ -81,6 +68,10 @@ const Games = () => {
     { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
   ];
 
+  const handleGameSelect = (gameId) => {
+    setActiveGame(gameId);
+  };
+
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
@@ -90,9 +81,6 @@ const Games = () => {
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
         <meta name="robots" content="noindex" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
         <script type="application/ld+json">
           {safeJSONStringify({
             '@context': 'https://schema.org',
@@ -115,12 +103,7 @@ const Games = () => {
         </script>
       </Helmet>
 
-      <div
-        className={themeClass(
-          'max-w-4xl mx-auto py-12 px-4',
-          'max-w-4xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]'
-        )}
-      >
+      <div className="max-w-4xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]">
         {/* Header */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -128,7 +111,7 @@ const Games = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          {/* Easter Egg Badge — sticker rotation stamp-in */}
+          {/* Easter Egg Badge */}
           <motion.div
             initial={shouldReduceMotion ? false : { scale: 0, rotate: 5 }}
             animate={{ scale: 1, rotate: -2 }}
@@ -136,16 +119,16 @@ const Games = () => {
               shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }
             }
             className={themeClass(
-              '',
-              'hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none'
+                "hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none",
+                "hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none"
             )}
             style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
             <ThemedChip
               variant="pink"
               className={themeClass(
-                'mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white',
-                'mb-6 px-4 py-2 font-heading font-semibold rounded-full liquid-chip border border-[color:var(--border-soft)]'
+                  "mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white",
+                  "mb-6 px-4 py-2 font-heading font-semibold rounded-full liquid-chip border border-[color:var(--border-soft)]"
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -154,18 +137,13 @@ const Games = () => {
             </ThemedChip>
           </motion.div>
 
-          <h1
-            className={themeClass(
-              'font-heading text-4xl md:text-5xl font-bold mb-4',
-              'font-heading text-4xl md:text-5xl font-semibold mb-4'
-            )}
-          >
+          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">
             <ThemedCard
               as="span"
               variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
-                'inline-block px-6 py-3 rounded-nb nb-stamp-in',
-                'inline-block px-6 py-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)]'
+                  "inline-block px-6 py-3 rounded-nb nb-stamp-in",
+                  "inline-block px-6 py-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)]"
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -177,7 +155,7 @@ const Games = () => {
           </p>
         </motion.div>
 
-        {/* Game Selector Tabs - Neubrutalism Style */}
+        {/* Game Selector Tabs */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -195,22 +173,20 @@ const Games = () => {
                 variant="secondary"
                 size="md"
                 key={game.id}
-                onClick={() => setActiveGame(game.id)}
+                onClick={() => handleGameSelect(game.id)}
                 role="tab"
                 aria-selected={activeGame === game.id}
                 aria-controls={`${game.id}-panel`}
                 id={`${game.id}-tab`}
-                className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
-                                    ${
-                                      activeGame === game.id
-                                        ? isLiquid
-                                          ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
-                                          : `${game.color} text-white`
-                                        : themeClass(
-                                            'bg-card text-[color:var(--color-text-primary)]',
-                                            'liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
-                                          )
-                                    }`}
+                className={themeClass(
+                    `flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
+                    ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--color-text-primary)]'}`,
+
+                    `flex items-center gap-2 px-6 py-3 font-heading font-semibold text-sm rounded-full transition-all
+                    ${activeGame === game.id
+                        ? 'liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                        : 'liquid-glass border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'}`
+                )}
                 style={{
                   boxShadow:
                     !isLiquid && activeGame === game.id
@@ -224,10 +200,10 @@ const Games = () => {
                 <span className="flex items-center gap-2">
                   <span>{game.label}</span>
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity ${themeClass(
-                      'border-[2px] border-[color:var(--color-border)] bg-card text-primary',
-                      'liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]'
-                    )} ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`}
+                    className={themeClass(
+                        `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity border-[2px] border-[color:var(--color-border)] bg-card text-primary ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`,
+                        `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)] ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`
+                    )}
                     aria-hidden={activeGame !== game.id}
                   >
                     <Check className="h-3 w-3" aria-hidden="true" />
@@ -249,8 +225,8 @@ const Games = () => {
           <ThemedCard
             variant="default"
             className={themeClass(
-              'bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb',
-              'liquid-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl'
+                "bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb",
+                "liquid-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl"
             )}
             style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
           >
@@ -287,8 +263,11 @@ const Games = () => {
           className="flex justify-center mt-12"
         >
           <div
-            className="bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb"
-            style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+            className={themeClass(
+                "bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb",
+                "liquid-glass border border-[color:var(--border-soft)] px-6 py-3 rounded-full"
+            )}
+            style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >
             <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
               Psst... you found this page by going to /games. Keep it a secret! 🤫

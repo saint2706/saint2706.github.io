@@ -4,7 +4,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
+import {
+  ArrowRight,
+  Bot,
+  Code2,
+  Sparkles,
+} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
@@ -13,22 +18,9 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
-import { LIQUID_MOTION } from '../shared/themeMotion';
 
 /**
  * Hero section component for homepage
- *
- * Features:
- * - Bold typography with neubrutalist styling
- * - Availability status badge
- * - CTA buttons (View Projects, Talk to Bot)
- * - Interactive code snippet card with easter egg
- * - Click stack array 3 times to reveal /games page
- * - Decorative background shapes
- * - SEO optimization with structured data
- *
- * @component
- * @returns {JSX.Element} Hero section with heading, CTAs, and code snippet
  */
 const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -51,7 +43,6 @@ const Hero = () => {
 
   /**
    * Handle easter egg activation
-   * After 3 clicks, glitch animation plays and navigates to /games
    */
   const handleEasterEggClick = useCallback(() => {
     if (isGlitching) return;
@@ -61,7 +52,6 @@ const Hero = () => {
 
     if (newCount >= CLICKS_REQUIRED) {
       setIsGlitching(true);
-      // Navigate after glitch animation plays
       setTimeout(() => {
         navigate('/games');
       }, 1500);
@@ -70,7 +60,6 @@ const Hero = () => {
 
   /**
    * Keyboard handler for easter egg accessibility
-   * Activates on Enter or Space key
    */
   const handleEasterEggKeyDown = useCallback(
     e => {
@@ -83,9 +72,11 @@ const Hero = () => {
   );
 
   const canonicalUrl = resumeData.basics.website;
-  const description =
-    'Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.';
+  const description = resumeData.basics.summary;
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
+
+  // Helper to switch classes based on theme
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
     <>
@@ -93,146 +84,79 @@ const Hero = () => {
         <title>{title}</title>
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-        <script type="application/ld+json">
+           <script type="application/ld+json">
           {safeJSONStringify({
             '@context': 'https://schema.org',
             '@type': 'Person',
             name: resumeData.basics.name,
             url: resumeData.basics.website,
-            sameAs: [
-              'https://github.com/saint2706',
-              'https://www.linkedin.com/in/rishabh-agrawal-1807321b9',
-            ],
+            sameAs: resumeData.basics.socials.map(s => s.url),
             jobTitle: resumeData.basics.title,
             description: description,
             image: `${resumeData.basics.website}/og-image.png`,
           })}
         </script>
-        <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: `${resumeData.basics.name} Portfolio`,
-            url: resumeData.basics.website,
-            potentialAction: {
-              '@type': 'SearchAction',
-              target: `${resumeData.basics.website}/blog?q={search_term_string}`,
-              'query-input': 'required name=search_term_string',
-            },
-          })}
-        </script>
       </Helmet>
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
-        {/* Neubrutalism Decorative Shapes — sticker rotations + float bob */}
-        <div className={`absolute inset-0 -z-10 overflow-hidden pointer-events-none ${isLiquid ? 'hidden' : ''}`}>
-          {/* Yellow block - top left — rotated sticker */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
-            className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
-          />
-          {/* Pink block - bottom left — rotated sticker */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
-            className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{
-              boxShadow: 'var(--nb-shadow)',
-              '--sticker-rotate': '-2deg',
-              animationDelay: '1s',
-            }}
-          />
-          {/* Blue block - top right — rotated sticker */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
-            className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-            style={{
-              boxShadow: 'var(--nb-shadow)',
-              '--sticker-rotate': '5deg',
-              animationDelay: '2s',
-            }}
-          />
-        </div>
+        {/* Decorative Shapes (Hidden in Liquid Mode to match cleaner aesthetic) */}
+        {!isLiquid && (
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
+              className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
+            />
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
+              className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{
+                boxShadow: 'var(--nb-shadow)',
+                '--sticker-rotate': '-2deg',
+                animationDelay: '1s',
+              }}
+            />
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
+              className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
+              style={{
+                boxShadow: 'var(--nb-shadow)',
+                '--sticker-rotate': '5deg',
+                animationDelay: '2s',
+              }}
+            />
+          </div>
+        )}
 
-        {/* Status Badge — stamp-in entrance with sticker rotation */}
+        {/* Status Badge */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.15, rotate: 3 }}
           animate={{ opacity: 1, scale: 1, rotate: -2 }}
           transition={
             shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
           }
-          className={`mb-8 ${isLiquid ? 'hidden' : ''}`}
+          className="mb-8"
         >
           <ThemedChip
             variant="yellow"
-            className="font-heading font-semibold px-5 py-2 nb-sticker"
-            style={{ '--sticker-rotate': '-2deg' }}
+            className={themeClass(
+              "font-heading font-semibold px-5 py-2 nb-sticker",
+              "font-heading font-semibold px-5 py-2 liquid-chip border border-[color:var(--border-soft)]"
+            )}
+            style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
-            <Sparkles size={18} className="text-black" />
-            Available for hire & collaborations
+            <Sparkles size={18} className={themeClass("text-black", "text-fun-yellow")} />
+            <span className={isLiquid ? "text-[color:var(--color-text-primary)]" : ""}>Available for hire & collaborations</span>
           </ThemedChip>
         </motion.div>
 
-      {isLiquid ? (
-        <motion.section
-          initial={shouldReduceMotion ? false : { opacity: 0, y: LIQUID_MOTION.offset.y }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal }}
-          className="w-full max-w-4xl liquid-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
-        >
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 liquid-silver-text">
-            Data Storyteller
-            <span className="block mt-2">&amp; Creative Analyst</span>
-          </h1>
-          <p className="text-secondary text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-sans">
-            Turning messy data into clear strategies and AI/ML solutions into real-world impact.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <ThemedButton
-              as={Link}
-              to="/projects"
-              variant="primary"
-              size="lg"
-              className="group relative shadow-[0_0_30px_rgba(141,162,255,0.35)]"
-            >
-              View Projects
-              <ArrowRight
-                size={18}
-                className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
-              />
-            </ThemedButton>
-            <ThemedButton
-              onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
-              variant="secondary"
-              size="lg"
-              className="shadow-[0_0_24px_rgba(215,131,255,0.22)]"
-              aria-label="Open chat with Digital Rishabh"
-            >
-              <Bot size={18} aria-hidden="true" />
-              Talk to Digital Rishabh
-            </ThemedButton>
-          </div>
-        </motion.section>
-      ) : (
-      <>
-      {/* Main Heading — fixed contrast + squiggle underline */}
+        {/* Main Heading */}
         <motion.h1
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -241,26 +165,31 @@ const Hero = () => {
         >
           <span className="block text-[color:var(--color-text-primary)] mb-2 relative">
             Data Storyteller
-            {/* SVG squiggle underline — hand-drawn zine feel */}
-            <svg
-              className="absolute -bottom-2 left-0 w-full"
-              height="12"
-              viewBox="0 0 400 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6"
-                stroke="var(--color-fun-yellow)"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </svg>
+            {/* SVG squiggle only for Neubrutalism */}
+            {!isLiquid && (
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                height="12"
+                viewBox="0 0 400 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 8C20 2 40 10 60 4C80 -2 100 10 120 4C140 -2 160 10 180 4C200 -2 220 10 240 4C260 -2 280 10 300 4C320 -2 340 10 360 4C380 -2 395 8 398 6"
+                  stroke="var(--color-fun-yellow)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
           </span>
           <span
-            className="text-[color:var(--color-text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker"
-            style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
+            className={themeClass(
+              "text-[color:var(--color-text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker",
+              "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block"
+            )}
+            style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
           >
             & Creative Analyst
           </span>
@@ -274,21 +203,21 @@ const Hero = () => {
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
           Turning{' '}
-          <strong className="text-primary font-bold border-b-[3px] border-fun-yellow">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-yellow", "text-blue-400 font-bold")}>
             messy data
           </strong>{' '}
           into
-          <strong className="text-primary font-bold border-b-[3px] border-accent mx-1">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-accent mx-1", "text-purple-400 font-bold mx-1")}>
             clear strategies
           </strong>{' '}
           and
-          <strong className="text-primary font-bold border-b-[3px] border-fun-pink mx-1">
+          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-pink mx-1", "text-pink-400 font-bold mx-1")}>
             AI/ML solutions
           </strong>{' '}
           into real-world impact.
         </motion.p>
 
-        {/* CTA Buttons - Neubrutalism style */}
+        {/* CTA Buttons */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -300,8 +229,11 @@ const Hero = () => {
             to="/projects"
             variant="primary"
             size="lg"
-            className="group relative nb-shadow-lift nb-color-invert"
-            style={{ '--invert-text': 'var(--color-fun-yellow)' }}
+            className={themeClass(
+              "group relative nb-shadow-lift nb-color-invert",
+              "group relative liquid-button-primary border border-[color:var(--border-soft)] shadow-[0_0_30px_rgba(141,162,255,0.35)] hover:-translate-y-0.5"
+            )}
+            style={isLiquid ? undefined : { '--invert-text': 'var(--color-fun-yellow)' }}
           >
             View Projects
             <ArrowRight
@@ -313,18 +245,19 @@ const Hero = () => {
             onClick={() => document.dispatchEvent(new CustomEvent('openChatbot'))}
             variant="secondary"
             size="lg"
-            className="nb-shadow-lift nb-color-invert"
-            style={{ '--invert-text': '#ffffff' }}
+            className={themeClass(
+              "nb-shadow-lift nb-color-invert",
+              "liquid-glass border border-[color:var(--border-soft)] shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--color-text-primary)]"
+            )}
+            style={isLiquid ? undefined : { '--invert-text': '#ffffff' }}
             aria-label="Open chat with Digital Rishabh"
           >
-            <Bot size={18} className="text-fun-pink" aria-hidden="true" />
+            <Bot size={18} className={isLiquid ? "text-purple-400" : "text-fun-pink"} aria-hidden="true" />
             Talk to Digital Rishabh
           </ThemedButton>
         </motion.div>
-      </>
-      )}
 
-        {/* Code Snippet Card — sticky-note style with sticker rotation + blinking cursor */}
+        {/* Code Snippet Card - Translucent in Liquid Mode */}
         <motion.div
           initial={shouldReduceMotion ? false : { scale: 1.08, rotate: 2 }}
           animate={{ scale: 1, rotate: -1 }}
@@ -333,51 +266,52 @@ const Hero = () => {
               ? { duration: 0 }
               : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
           }
-          className={`mt-16 w-full max-w-md ${isLiquid ? 'hidden' : ''}`}
+          className="mt-16 w-full max-w-md"
         >
           <ThemedCard
-            variant="highlighted"
-            className={`p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`}
-            style={{ '--sticker-rotate': '-1deg' }}
+            variant={isLiquid ? 'default' : 'highlighted'} // Use default for liquid to get glass effect, highlighted for neubrutalism
+            className={themeClass(
+              `p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`,
+              `p-6 text-left font-mono text-sm transition-all duration-300 liquid-glass border border-[color:var(--border-soft)] bg-opacity-40 backdrop-blur-md ${isGlitching ? 'animate-glitch' : ''}`
+            )}
+            style={isLiquid ? undefined : { '--sticker-rotate': '-1deg' }}
           >
-            <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
-              <Code2 size={16} />
-              <span className="font-heading font-bold">
+            <div className={`flex items-center gap-2 mb-3 pb-2 border-b-2 ${isLiquid ? 'border-white/10' : 'border-black/20'}`}>
+              <Code2 size={16} className={isLiquid ? 'text-blue-400' : ''} />
+              <span className={`font-heading font-bold ${isLiquid ? 'text-white' : ''}`}>
                 {isGlitching ? 'game_mode.js' : 'developer.js'}
               </span>
             </div>
-            <pre className="whitespace-pre-wrap">
+            <pre className={`whitespace-pre-wrap ${isLiquid ? 'text-blue-100' : ''}`}>
               {isGlitching ? (
-                // Glitched "gamer mode" content
                 <>
                   {`const developer = {
   mode: `}
-                  <span className="text-fun-pink font-bold">&lsquo;GAMER&rsquo;</span>
+                  <span className={isLiquid ? "text-pink-400 font-bold" : "text-fun-pink font-bold"}>&lsquo;GAMER&rsquo;</span>
                   {`,
   status: `}
-                  <span className="text-accent font-bold">&lsquo;Ready Player One&rsquo;</span>
+                  <span className={isLiquid ? "text-blue-400 font-bold" : "text-accent font-bold"}>&lsquo;Ready Player One&rsquo;</span>
                   {`,
   launching: `}
-                  <span className="text-green-600 font-bold">true</span>
+                  <span className="text-green-500 font-bold">true</span>
                   {`
 };`}
                   <span className="nb-blink">█</span>
                 </>
               ) : (
-                // Normal content with clickable stack items
                 <>
                   {`const developer = {
-  name: 'Rishabh Agrawal',
+  name: '${resumeData.basics.name}',
   stack: [`}
                   <span
                     role="button"
                     tabIndex={0}
                     onClick={handleEasterEggClick}
                     onKeyDown={handleEasterEggKeyDown}
-                    className="cursor-pointer hover:text-fun-pink hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-fun-pink focus:ring-offset-1"
+                    className={`cursor-pointer hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${isLiquid ? 'hover:text-pink-400 focus:ring-pink-400' : 'hover:text-fun-pink focus:ring-fun-pink'}`}
                     aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                   >
-                    &lsquo;React&rsquo;, &lsquo;Node.js&rsquo;, &lsquo;Python&rsquo;
+                    &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
                   </span>
                   {`],
   currentStatus: 'Building awesome things.',
