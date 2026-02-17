@@ -3,7 +3,7 @@
  * Features call-to-action and availability status.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
@@ -31,6 +31,29 @@ const Contact = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isAura = theme === 'aura';
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    // Generate mailto URL with form data
+    const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
+      `Contact from ${formData.name || 'Portfolio'}`
+    )}&body=${encodeURIComponent(
+      `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
+    )}`;
+    // Navigate to mailto URL (opens default email client)
+    window.location.href = mailtoUrl;
+  };
 
   /** Social media links configuration */
   const socialLinks = [
@@ -124,26 +147,40 @@ const Contact = () => {
                 Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
               </p>
 
-              <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Your name"
+                  aria-label="Your name"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Your email"
+                  aria-label="Your email"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
                   rows={5}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Project details"
+                  aria-label="Project details"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 
                 <ThemedButton
-                  as="a"
-                  href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
+                  type="submit"
                   variant="primary"
                   size="lg"
                   className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
