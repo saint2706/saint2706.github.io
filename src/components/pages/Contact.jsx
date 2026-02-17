@@ -55,21 +55,6 @@ const Contact = () => {
     window.location.href = mailtoUrl;
   };
 
-  /** Social media links configuration */
-  const socialLinks = [
-    {
-      icon: <Github size={24} />,
-      url: 'https://github.com/saint2706',
-      label: 'GitHub',
-      color: 'hover:bg-fun-yellow',
-    },
-    {
-      icon: <Linkedin size={24} />,
-      url: 'https://www.linkedin.com/in/rishabh-agrawal-1807321b9',
-      label: 'LinkedIn',
-      color: 'hover:bg-accent',
-    },
-  ];
   const canonicalUrl = `${resumeData.basics.website}/contact`;
   const description =
     'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
@@ -196,18 +181,18 @@ const Contact = () => {
                   {resumeData.basics.location.city}, {resumeData.basics.location.country}
                 </span>
                 <div className="flex items-center gap-2">
-                  {socialLinks.map(social => (
+                  {resumeData.basics.socials.map(social => (
                     <ThemedButton
                       as="a"
-                      key={social.label}
+                      key={social.network}
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="secondary"
                       className="p-2.5"
-                      aria-label={`${social.label} (opens in new tab)`}
+                      aria-label={`${social.network} (opens in new tab)`}
                     >
-                      {social.icon}
+                      {social.network === 'GitHub' ? <Github size={20} /> : <Linkedin size={20} />}
                     </ThemedButton>
                   ))}
                 </div>
@@ -280,23 +265,23 @@ const Contact = () => {
                 Follow Me
               </h3>
               <div className="flex gap-4">
-                {socialLinks.map(social => (
+                {resumeData.basics.socials.map(social => (
                   <ThemedButton
                     as="a"
-                    key={social.label}
+                    key={social.network}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="secondary"
-                    className={`group relative p-4 ${social.color}`}
-                    aria-label={`${social.label} (opens in new tab)`}
+                    className={`group relative p-4 ${social.network === 'GitHub' ? 'hover:bg-fun-yellow' : 'hover:bg-accent'}`}
+                    aria-label={`${social.network} (opens in new tab)`}
                   >
-                    {social.icon}
+                    {social.network === 'GitHub' ? <Github size={24} /> : <Linkedin size={24} />}
                     <span
                       className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
                       aria-hidden="true"
                     >
-                      {social.label}
+                      {social.network}
                     </span>
                   </ThemedButton>
                 ))}
