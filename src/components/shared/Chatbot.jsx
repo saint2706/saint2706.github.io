@@ -39,7 +39,7 @@ const RoastInterface = lazy(() => import('./RoastInterface'));
 const LoadingDialog = ({ type }) => {
   const prefersReducedMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const isChat = type === 'chat';
   const shell = getOverlayShell({
     theme,
@@ -61,15 +61,18 @@ const LoadingDialog = ({ type }) => {
       <div
         className={joinClasses(
           'p-4 flex items-center gap-3',
-          isAura
+          isLiquid
             ? 'bg-[color:var(--surface-muted)] border-b border-[color:var(--border-soft)]'
             : `${isChat ? 'bg-accent' : 'bg-fun-pink'} border-b-nb border-[color:var(--color-border)]`
         )}
       >
         <div
-          className={`p-2 bg-white border-2 border-[color:var(--color-border)] rounded-nb ${
-            isChat ? 'dark:bg-glass-bg' : 'dark:bg-glass-bg'
-          }`}
+          className={joinClasses(
+            'p-2',
+            isLiquid
+              ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
+              : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
+          )}
         >
           {isChat ? (
             <Bot size={20} className="text-black" />
@@ -81,7 +84,7 @@ const LoadingDialog = ({ type }) => {
           {isChat ? 'Loading chat...' : 'Loading roast...'}
         </h3>
       </div>
-      <div className="p-6 bg-white">
+      <div className={isLiquid ? 'p-6 bg-[color:var(--surface)]' : 'p-6 bg-white'}>
         <div className="animate-pulse motion-reduce:animate-none space-y-3">
           <div className="h-4 bg-gray-300 rounded w-3/4"></div>
           <div className="h-4 bg-gray-300 rounded w-1/2"></div>
@@ -119,7 +122,7 @@ const LoadingDialog = ({ type }) => {
  */
 const Chatbot = () => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   // FAB (Floating Action Button) expansion state
   const [isFabOpen, setIsFabOpen] = useState(false);
 
@@ -254,8 +257,8 @@ const Chatbot = () => {
           <button
             className={joinClasses(
               'p-4 cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none',
-              isAura
-                ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+              isLiquid
+                ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
                 : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${mainFabShell.className}`
             )}
             style={mainFabShell.style}
@@ -280,8 +283,8 @@ const Chatbot = () => {
                   onClick={openRoast}
                   className={joinClasses(
                     'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
-                    isAura
-                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                    isLiquid
+                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
                       : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${roastFabShell.className}`
                   )}
                   style={roastFabShell.style}
@@ -302,8 +305,8 @@ const Chatbot = () => {
                   onClick={openChat}
                   className={joinClasses(
                     'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
-                    isAura
-                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                    isLiquid
+                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
                       : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${chatFabShell.className}`
                   )}
                   style={chatFabShell.style}

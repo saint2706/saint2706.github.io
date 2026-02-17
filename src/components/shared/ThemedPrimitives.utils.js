@@ -24,12 +24,12 @@ const NB_SURFACE_BY_TONE = {
   yellow: 'bg-fun-yellow text-black',
 };
 
-const AURA_SURFACE_BY_TONE = {
-  card: 'aura-glass text-[color:var(--text-primary)]',
-  accent: 'aura-glass text-[color:var(--text-primary)]',
-  pink: 'aura-glass text-[color:var(--text-primary)]',
-  secondary: 'bg-[color:var(--surface-muted)] text-[color:var(--text-primary)]',
-  yellow: 'bg-[color:var(--surface-muted)] text-[color:var(--text-primary)]',
+const LIQUID_SURFACE_BY_TONE = {
+  card: 'liquid-glass text-[color:var(--text)]',
+  accent: 'liquid-glass text-[color:var(--text)]',
+  pink: 'liquid-glass text-[color:var(--text)]',
+  secondary: 'bg-[color:var(--surface-muted)] text-[color:var(--text)]',
+  yellow: 'bg-[color:var(--surface-muted)] text-[color:var(--text)]',
 };
 
 const NB_SHADOW_BY_DEPTH = {
@@ -38,24 +38,24 @@ const NB_SHADOW_BY_DEPTH = {
   subtle: '2px 2px 0 var(--color-border)',
 };
 
-const AURA_SHADOW_BY_DEPTH = {
-  default: '0 20px 52px rgba(5, 10, 24, 0.46)',
-  hover: '0 24px 60px rgba(5, 10, 24, 0.52)',
-  subtle: '0 10px 24px rgba(5, 10, 24, 0.34)',
+const LIQUID_SHADOW_BY_DEPTH = {
+  default: '0 10px 28px rgba(5, 10, 24, 0.28)',
+  hover: '0 14px 34px rgba(5, 10, 24, 0.34)',
+  subtle: '0 6px 16px rgba(5, 10, 24, 0.2)',
 };
 
 export const getOverlayShell = ({ theme, tone = 'card', depth = 'default', className = '' } = {}) => {
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   return {
     className: joinClasses(
-      isAura
-        ? `${AURA_SURFACE_BY_TONE[tone] ?? AURA_SURFACE_BY_TONE.card} border border-[color:var(--border-soft)] rounded-2xl`
+      isLiquid
+        ? `${LIQUID_SURFACE_BY_TONE[tone] ?? LIQUID_SURFACE_BY_TONE.card} border border-[color:var(--border-soft)] rounded-2xl`
         : `${NB_SURFACE_BY_TONE[tone] ?? NB_SURFACE_BY_TONE.card} border-nb border-[color:var(--color-border)] rounded-nb`,
       className
     ),
     style: {
-      boxShadow: isAura
-        ? AURA_SHADOW_BY_DEPTH[depth] ?? AURA_SHADOW_BY_DEPTH.default
+      boxShadow: isLiquid
+        ? LIQUID_SHADOW_BY_DEPTH[depth] ?? LIQUID_SHADOW_BY_DEPTH.default
         : NB_SHADOW_BY_DEPTH[depth] ?? NB_SHADOW_BY_DEPTH.default,
     },
   };

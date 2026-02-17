@@ -30,7 +30,7 @@ import { useTheme } from '../shared/theme-context';
 const Contact = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -127,14 +127,14 @@ const Contact = () => {
             title="Let's Connect"
             variant="accent"
             className="font-heading text-4xl md:text-5xl font-bold mb-4"
-            chipClassName="px-6 py-3 nb-stamp-in"
+            chipClassName={isLiquid ? 'px-6 py-3' : 'px-6 py-3 nb-stamp-in'}
           />
           <p className="text-secondary text-lg max-w-xl mx-auto mt-6 font-sans">
             Interested in building data-driven solutions that make an impact? Let&apos;s connect!
           </p>
         </motion.div>
 
-        {isAura ? (
+        {isLiquid ? (
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ const Contact = () => {
           >
             <ThemedCard className="p-8 md:p-10 rounded-3xl">
               <h2 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h2>
-              <p className="text-secondary aura-helper-text mb-6 font-sans">
+              <p className="text-secondary liquid-helper-text mb-6 font-sans">
                 Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
               </p>
 
@@ -156,7 +156,7 @@ const Contact = () => {
                   placeholder="Your name"
                   aria-label="Your name"
                   required
-                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
                   type="email"
@@ -166,7 +166,7 @@ const Contact = () => {
                   placeholder="Your email"
                   aria-label="Your email"
                   required
-                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
                   rows={5}
@@ -176,7 +176,7 @@ const Contact = () => {
                   placeholder="Project details"
                   aria-label="Project details"
                   required
-                  className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
+                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 
                 <ThemedButton

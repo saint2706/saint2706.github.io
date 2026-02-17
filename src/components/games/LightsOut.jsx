@@ -59,8 +59,8 @@ const createPuzzle = () => {
 const LightsOut = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won
   const [grid, setGrid] = useState(createPuzzle);
   const [moves, setMoves] = useState(0);
@@ -290,7 +290,7 @@ const LightsOut = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div

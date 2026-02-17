@@ -30,7 +30,7 @@ import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
  */
 const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const [roastLoading, setRoastLoading] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
@@ -135,7 +135,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       <div
         className={joinClasses(
           'p-4 flex justify-between items-center',
-          isAura
+          isLiquid
             ? 'bg-[color:var(--surface-muted)] border-b border-[color:var(--border-soft)]'
             : 'bg-fun-pink border-b-nb border-[color:var(--color-border)]'
         )}
@@ -144,8 +144,8 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           <div
             className={joinClasses(
               'p-2',
-              isAura
-                ? 'aura-chip border border-[color:var(--border-soft)] rounded-full'
+              isLiquid
+                ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
@@ -193,7 +193,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       <div
         className={joinClasses(
           'p-4 flex gap-2',
-          isAura
+          isLiquid
             ? 'bg-[color:var(--surface-muted)] border-t border-[color:var(--border-soft)]'
             : 'bg-secondary border-t-nb border-[color:var(--color-border)]'
         )}
@@ -203,11 +203,11 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           disabled={roastLoading}
           className={joinClasses(
             'flex-1 py-3 font-heading font-bold cursor-pointer disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
-            isAura
-              ? 'aura-overlay-action aura-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+            isLiquid
+              ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
               : 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
           )}
-          style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+          style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           <RefreshCw
             size={16}
@@ -219,11 +219,11 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           onClick={onClose}
           className={joinClasses(
             'py-3 px-6 font-heading font-bold cursor-pointer motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
-            isAura
-              ? 'aura-overlay-action aura-interactive-surface bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+            isLiquid
+              ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
               : 'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
           )}
-          style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+          style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
         >
           Close
         </button>

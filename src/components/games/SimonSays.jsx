@@ -29,8 +29,8 @@ const COLORS = [
 const SimonSays = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
   const [gameState, setGameState] = useState('idle'); // idle | watching | input | gameOver
   const [sequence, setSequence] = useState([]);
   const [playerIndex, setPlayerIndex] = useState(0);
@@ -232,7 +232,7 @@ const SimonSays = () => {
                 whileTap={shouldReduceMotion || gameState !== 'input' ? undefined : { scale: 0.9 }}
                 aria-label={`${color.name} button (key ${color.key})`}
                 className={`w-24 h-24 md:w-28 md:h-28 cursor-pointer transition-all motion-reduce:transition-none ${ui.tileBase}
-                  ${activeButton === color.id ? `${color.active} ${isAura ? 'brightness-125 scale-[0.98]' : 'scale-95 brightness-150'}` : `${color.bg} ${gameState === 'input' ? (isAura ? 'hover:brightness-110' : 'hover:-translate-y-1') : 'opacity-70'}`}`}
+                  ${activeButton === color.id ? `${color.active} ${isLiquid ? 'brightness-125 scale-[0.98]' : 'scale-95 brightness-150'}` : `${color.bg} ${gameState === 'input' ? (isLiquid ? 'hover:brightness-110' : 'hover:-translate-y-1') : 'opacity-70'}`}`}
                 style={{
                   ...(activeButton === color.id ? ui.style.tileActive : ui.style.tile),
                 }}
@@ -296,7 +296,7 @@ const SimonSays = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div

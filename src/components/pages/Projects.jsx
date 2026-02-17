@@ -31,7 +31,7 @@ import { useTheme } from '../shared/theme-context';
 const Projects = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description =
     'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
@@ -132,7 +132,7 @@ const Projects = () => {
             title="Creative Experiments"
             variant="yellow"
             className="font-heading text-4xl md:text-5xl font-bold mb-4"
-            chipClassName={isAura ? undefined : 'nb-stamp-in'}
+            chipClassName={isLiquid ? undefined : 'nb-stamp-in'}
           />
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
             From data science models to full-stack applications. Here is what I have been building.
@@ -148,7 +148,7 @@ const Projects = () => {
           animate="show"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {isAura && (
+          {isLiquid && (
             <div className="col-span-full flex flex-wrap items-center gap-2 mb-2">
               {topTags.map(tag => (
                 <ThemedChip key={tag} variant="neutral" className="text-xs tracking-wide uppercase">
@@ -172,13 +172,13 @@ const Projects = () => {
                   event.currentTarget.click();
                 }
               }}
-              className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isAura ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
+              className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
               style={{
                 '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
               }}
             >
               {/* Color accent bar */}
-              {!isAura && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
+              {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
 
               {/* Project Image */}
               {project.image && (
@@ -193,7 +193,7 @@ const Projects = () => {
                 </div>
               )}
 
-                <div className={`p-6 flex-grow flex flex-col ${isAura ? 'gap-1' : ''}`}>
+                <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-2">
                     <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
@@ -209,7 +209,7 @@ const Projects = () => {
                     {project.featured && (
                       <ThemedChip
                         variant="accent"
-                        className={`font-bold ${isAura ? '' : 'nb-sticker'}`}
+                        className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
                         style={{ '--sticker-rotate': '3deg' }}
                       >
                         Featured
@@ -244,7 +244,7 @@ const Projects = () => {
                       onClick={e => e.stopPropagation()}
                       variant="primary"
                       size="sm"
-                      className={isAura ? undefined : 'hover:-translate-y-0.5'}
+                      className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
                       aria-label={`Live Demo for ${project.title} (opens in new tab)`}
                     >
                       <ExternalLink size={14} aria-hidden="true" /> Demo
@@ -259,7 +259,7 @@ const Projects = () => {
                       onClick={e => e.stopPropagation()}
                       variant="secondary"
                       size="sm"
-                      className={isAura ? undefined : 'hover:-translate-y-0.5'}
+                      className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
                       aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
                     >
                       <Github size={14} aria-hidden="true" /> Code

@@ -43,7 +43,7 @@
             border: 1px solid rgba(59, 130, 246, 0.3);
             box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.05), 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
-        .aura-bg {
+        .liquid-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -52,7 +52,7 @@
             z-index: -1;
             overflow: hidden;
         }
-        .aura-blob {
+        .liquid-blob {
             position: absolute;
             filter: blur(80px);
             opacity: 0.4;
@@ -69,10 +69,10 @@
 <div class="fixed top-0 left-0 w-full z-50">
 <div class="progress-bar w-[65%]"></div>
 </div>
-<div class="aura-bg pointer-events-none">
-<div class="aura-blob bg-blue-600 w-96 h-96 -top-20 -left-20 animate-pulse-slow"></div>
-<div class="aura-blob bg-purple-600 w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
-<div class="aura-blob bg-indigo-600 w-80 h-80 bottom-0 right-0 animate-pulse-slow" style="animation-delay: 2s;"></div>
+<div class="liquid-bg pointer-events-none">
+<div class="liquid-blob bg-blue-600 w-96 h-96 -top-20 -left-20 animate-pulse-slow"></div>
+<div class="liquid-blob bg-purple-600 w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"></div>
+<div class="liquid-blob bg-indigo-600 w-80 h-80 bottom-0 right-0 animate-pulse-slow" style="animation-delay: 2s;"></div>
 </div>
 <nav class="sticky top-0 z-40 px-6 py-6 backdrop-blur-md">
 <div class="max-w-6xl mx-auto flex justify-between items-center">

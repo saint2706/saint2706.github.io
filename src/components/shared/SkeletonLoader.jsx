@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useTheme } from './theme-context';
 
 /**
  * Base skeleton with pulse animation
@@ -134,12 +135,18 @@ export const ChatSkeleton = () => (
  */
 export const TypingIndicator = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { theme } = useTheme();
+  const isLiquid = theme === 'liquid';
 
   return (
     <div className="flex justify-start">
       <div
-        className="bg-card px-4 py-3 border-nb border-[color:var(--color-border)] flex items-center gap-1 rounded-nb"
-        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+        className={
+          isLiquid
+            ? 'liquid-chip liquid-glow-transition px-4 py-3 border border-[color:var(--border-soft)] flex items-center gap-1 rounded-full text-[color:var(--text-primary)]'
+            : 'bg-card px-4 py-3 border-nb border-[color:var(--color-border)] flex items-center gap-1 rounded-nb'
+        }
+        style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
         role="status"
         aria-live="polite"
         aria-atomic="true"

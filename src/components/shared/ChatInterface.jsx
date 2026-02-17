@@ -290,7 +290,7 @@ MessageList.displayName = 'MessageList';
  */
 const ChatInterface = ({ onClose }) => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   // Chat state: messages array with role ('user' | 'model') and text
   const [messages, setMessages] = useState([createDefaultMessage()]);
   const [input, setInput] = useState('');
@@ -584,7 +584,7 @@ const ChatInterface = ({ onClose }) => {
       <div
         className={joinClasses(
           'p-4 flex justify-between items-center',
-          isAura
+          isLiquid
             ? 'bg-[color:var(--surface-muted)] border-b border-[color:var(--border-soft)]'
             : 'bg-accent border-b-nb border-[color:var(--color-border)]'
         )}
@@ -593,8 +593,8 @@ const ChatInterface = ({ onClose }) => {
           <div
             className={joinClasses(
               'p-2',
-              isAura
-                ? 'aura-chip border border-[color:var(--border-soft)] rounded-full'
+              isLiquid
+                ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
@@ -649,7 +649,7 @@ const ChatInterface = ({ onClose }) => {
       {/* Input Area */}
       <div
         className={
-          isAura
+          isLiquid
             ? 'bg-[color:var(--surface-muted)] border-t border-[color:var(--border-soft)]'
             : 'bg-secondary border-t-nb border-[color:var(--color-border)]'
         }
@@ -666,8 +666,10 @@ const ChatInterface = ({ onClose }) => {
                     inputRef.current.focus();
                   }
                 }}
-                className="bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={isLiquid
+                  ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                  : 'bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
+                style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label={`Ask: ${reply}`}
               >
                 {reply}
@@ -693,8 +695,8 @@ const ChatInterface = ({ onClose }) => {
                 placeholder={isTyping ? 'Thinking...' : 'Ask about my skills...'}
                 className={joinClasses(
                   'w-full px-4 py-3 text-sm font-sans focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-secondary disabled:text-muted',
-                  isAura
-                    ? 'aura-form-field bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-xl'
+                  isLiquid
+                    ? 'liquid-form-field bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-xl'
                     : 'bg-card border-nb border-[color:var(--color-border)] text-primary rounded-nb'
                 )}
                 aria-describedby="chat-char-limit"
@@ -716,11 +718,11 @@ const ChatInterface = ({ onClose }) => {
               disabled={!input.trim() || isTyping}
               className={joinClasses(
                 'group relative p-3 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
-                isAura
-                  ? 'aura-overlay-action aura-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                isLiquid
+                  ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
                   : 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
               )}
-              style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+              style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               aria-label="Send message"
             >
               <Send size={20} />

@@ -26,7 +26,7 @@ import MarqueeTicker from '../shared/MarqueeTicker';
  */
 const Footer = () => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
   const [heartClicks, setHeartClicks] = useState(0);
   const [showSecret, setShowSecret] = useState(false);
@@ -74,12 +74,12 @@ const Footer = () => {
   return (
     <footer className="mt-20 bg-primary relative overflow-hidden">
       {/* Zigzag divider — replaces thin border-top */}
-      <ZigzagDivider variant={isAura ? 'gradient' : 'zigzag'} className={isAura ? 'opacity-80' : ''} />
+      <ZigzagDivider variant={isLiquid ? 'gradient' : 'zigzag'} className={isLiquid ? 'opacity-80' : ''} />
 
       {/* Tech stack marquee band */}
       <MarqueeTicker
-        variant={isAura ? 'aura' : 'neub'}
-        useBlurBand={isAura}
+        variant={isLiquid ? 'liquid' : 'neub'}
+        useBlurBand={isLiquid}
         bgColor="bg-fun-yellow"
         items={[
           'Python',
@@ -124,8 +124,8 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isAura ? 'aura-glass aura-footer-icon aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] transition-[filter,transform]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
-                  style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  className={`p-3 text-[color:var(--color-text-primary)] nb-color-invert motion-reduce:transform-none motion-reduce:transition-none ${isLiquid ? 'liquid-glass liquid-footer-icon liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] transition-[filter,transform]' : 'bg-card border-nb border-[color:var(--color-border)] nb-shadow-lift rounded-nb'}`}
+                  style={{ boxShadow: isLiquid ? undefined : 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label={link.label}
                 >
                   {link.icon}
@@ -136,15 +136,15 @@ const Footer = () => {
             {/* Made with love - Centered */}
             <div className="flex justify-center">
               <div
-                className={`px-6 py-3 ${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-full' : 'bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb'}`}
-                style={{ boxShadow: isAura ? undefined : 'var(--nb-shadow)' }}
+                className={`px-6 py-3 ${isLiquid ? 'liquid-glass border border-[color:var(--border-soft)] rounded-full' : 'bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb'}`}
+                style={{ boxShadow: isLiquid ? undefined : 'var(--nb-shadow)' }}
               >
-                <p className={`font-heading font-bold text-sm flex items-center justify-center gap-2 ${isAura ? 'text-[color:var(--text-primary)]' : 'text-black'}`}>
-                  Made with <Coffee size={16} className={isAura ? 'text-[color:var(--text-primary)]' : 'text-black'} aria-hidden="true" />
+                <p className={`font-heading font-bold text-sm flex items-center justify-center gap-2 ${isLiquid ? 'text-[color:var(--text-primary)]' : 'text-black'}`}>
+                  Made with <Coffee size={16} className={isLiquid ? 'text-[color:var(--text-primary)]' : 'text-black'} aria-hidden="true" />
                   <span className="sr-only">coffee</span>+{' '}
                   <button
                     onClick={handleHeartClick}
-                    className={`inline-flex cursor-pointer transition-transform motion-reduce:transform-none p-0 bg-transparent border-none ${isAura ? 'hover:scale-105' : 'hover:scale-125'}`}
+                    className={`inline-flex cursor-pointer transition-transform motion-reduce:transform-none p-0 bg-transparent border-none ${isLiquid ? 'hover:scale-105' : 'hover:scale-125'}`}
                     aria-label={
                       showSecret
                         ? 'You found the secret!'
@@ -167,8 +167,12 @@ const Footer = () => {
             {showSecret && (
               <div className="mt-4 text-center">
                 <span
-                  className="inline-block bg-fun-pink text-white px-4 py-2 text-sm font-heading font-bold border-2 border-[color:var(--color-border)] rounded-nb animate-bounce"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={`inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce ${
+                    isLiquid
+                      ? 'liquid-chip liquid-glow-transition border border-[color:var(--border-soft)] rounded-full text-[color:var(--text-primary)]'
+                      : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
+                  }`}
+                  style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
                   You found a secret! ❤️ Thanks for clicking around!
                 </span>

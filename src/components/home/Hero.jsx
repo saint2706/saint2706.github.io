@@ -13,7 +13,7 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
-import { AURA_MOTION } from '../shared/themeMotion';
+import { LIQUID_MOTION } from '../shared/themeMotion';
 
 /**
  * Hero section component for homepage
@@ -34,7 +34,7 @@ const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
   // Easter egg state (click stack array to unlock games page)
   const [clickCount, setClickCount] = useState(0);
@@ -136,7 +136,7 @@ const Hero = () => {
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
         {/* Neubrutalism Decorative Shapes — sticker rotations + float bob */}
-        <div className={`absolute inset-0 -z-10 overflow-hidden pointer-events-none ${isAura ? 'hidden' : ''}`}>
+        <div className={`absolute inset-0 -z-10 overflow-hidden pointer-events-none ${isLiquid ? 'hidden' : ''}`}>
           {/* Yellow block - top left — rotated sticker */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
@@ -178,7 +178,7 @@ const Hero = () => {
           transition={
             shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
           }
-          className={`mb-8 ${isAura ? 'hidden' : ''}`}
+          className={`mb-8 ${isLiquid ? 'hidden' : ''}`}
         >
           <ThemedChip
             variant="yellow"
@@ -190,14 +190,14 @@ const Hero = () => {
           </ThemedChip>
         </motion.div>
 
-      {isAura ? (
+      {isLiquid ? (
         <motion.section
-          initial={shouldReduceMotion ? false : { opacity: 0, y: AURA_MOTION.offset.y }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: LIQUID_MOTION.offset.y }}
           animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal }}
-          className="w-full max-w-4xl aura-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal }}
+          className="w-full max-w-4xl liquid-glass border border-[color:var(--border-soft)] rounded-[2rem] p-8 md:p-14"
         >
-          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 aura-silver-text">
+          <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 liquid-silver-text">
             Data Storyteller
             <span className="block mt-2">&amp; Creative Analyst</span>
           </h1>
@@ -333,7 +333,7 @@ const Hero = () => {
               ? { duration: 0 }
               : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
           }
-          className={`mt-16 w-full max-w-md ${isAura ? 'hidden' : ''}`}
+          className={`mt-16 w-full max-w-md ${isLiquid ? 'hidden' : ''}`}
         >
           <ThemedCard
             variant="highlighted"

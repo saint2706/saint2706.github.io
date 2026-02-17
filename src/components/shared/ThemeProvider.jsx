@@ -5,10 +5,10 @@ import { ThemeContext } from './theme-context';
 const THEME_STORAGE_KEY = 'preferred_theme';
 const THEMES = {
   neubrutalism: 'neubrutalism',
-  aura: 'aura',
+  liquid: 'liquid',
 };
 
-const isValidTheme = theme => Object.values(THEMES).includes(theme);
+const isValidTheme = theme => [THEMES.neubrutalism, THEMES.liquid].includes(theme);
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setThemeState] = useState(() => {
@@ -21,7 +21,7 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState(prev => (prev === THEMES.neubrutalism ? THEMES.aura : THEMES.neubrutalism));
+    setThemeState(prev => (prev === THEMES.neubrutalism ? THEMES.liquid : THEMES.neubrutalism));
   }, []);
 
   useEffect(() => {

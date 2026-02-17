@@ -51,6 +51,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
   const previousFocus = useRef(null); // Stores element to restore focus to
   const { theme } = useTheme();
+  const isLiquid = theme === 'liquid';
   const shell = getOverlayShell({ theme, depth: 'hover' });
 
   /**
@@ -197,14 +198,20 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             style={shell.style}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[color:var(--color-border)] bg-secondary">
+            <div
+              className={isLiquid
+                ? 'flex items-center justify-between px-5 py-4 border-b border-[color:var(--border-soft)] bg-[color:var(--surface-muted)]'
+                : 'flex items-center justify-between px-5 py-4 border-b-2 border-[color:var(--color-border)] bg-secondary'}
+            >
               <h2 id="modal-title" className="font-heading font-bold text-lg text-primary">
                 {title}
               </h2>
               <button
                 onClick={onClose}
-                className="group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                className={isLiquid
+                  ? 'group relative p-2 liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full text-primary hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                  : 'group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
+                style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"
               >
                 <X size={18} />

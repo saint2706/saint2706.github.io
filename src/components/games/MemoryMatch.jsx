@@ -42,8 +42,8 @@ const createDeck = () =>
 const MemoryMatch = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won
   const [cards, setCards] = useState(createDeck);
   const [flipped, setFlipped] = useState([]); // indices of currently flipped cards
@@ -226,8 +226,8 @@ const MemoryMatch = () => {
                     card.matched
                       ? ui.tileWin
                       : isFlipped(i)
-                        ? `${ui.tileActive} ${isAura ? 'scale-[0.985]' : ''}`
-                        : `${ui.tileIdle} text-transparent ${isAura ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'} ${focusIndex === i && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
+                        ? `${ui.tileActive} ${isLiquid ? 'scale-[0.985]' : ''}`
+                        : `${ui.tileIdle} text-transparent ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'} ${focusIndex === i && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
                   }`}
                 style={{
                   ...(isFlipped(i) ? ui.style.tileActive : ui.style.tile),
@@ -240,7 +240,7 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: 90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: -90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isAura ? 0.15 : 0.2 }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }}
                       className="absolute inset-0 flex items-center justify-center text-2xl"
                       aria-hidden="true"
                     >
@@ -252,7 +252,7 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: -90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: 90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isAura ? 0.15 : 0.2 }}
+                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }}
                       className="absolute inset-0 flex items-center justify-center text-xl text-secondary"
                       aria-hidden="true"
                     >
@@ -324,7 +324,7 @@ const MemoryMatch = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <Sparkles className="w-10 h-10 text-fun-yellow mx-auto mb-2" aria-hidden="true" />
@@ -356,7 +356,7 @@ const MemoryMatch = () => {
               <motion.button
                 initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: isAura ? 0.1 : 0.2 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
                 className={ui.buttonPrimary}

@@ -15,7 +15,8 @@
     "test:csp": "node scripts/test-csp.js",
     "verify:sri": "node scripts/verify-sri.js",
     "test:python-runner-stdout": "node scripts/test-python-runner-stdout.js",
-    "test:pyodide-loader-retry": "node scripts/test-pyodide-loader-retry.js"
+    "test:pyodide-loader-retry": "node scripts/test-pyodide-loader-retry.js",
+    "test:no-aura": "node scripts/check-no-aura.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
