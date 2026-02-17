@@ -362,12 +362,6 @@
   isolation: isolate;
 }
 
-.liquid-atmosphere-shell {
-  isolation: isolate;
-}
-
-.liquid-atmosphere-layers,
-.liquid-noise-overlay,
 .liquid-atmosphere-layers,
 .liquid-noise-overlay {
   position: fixed;
@@ -383,20 +377,6 @@
     radial-gradient(circle at 50% 100%, rgba(122, 169, 255, 0.18), transparent 45%);
 }
 
-.liquid-atmosphere-layers {
-  z-index: 0;
-  background:
-    radial-gradient(circle at 10% 15%, rgba(141, 162, 255, 0.2), transparent 42%),
-    radial-gradient(circle at 85% 10%, rgba(215, 131, 255, 0.2), transparent 40%),
-    radial-gradient(circle at 50% 100%, rgba(122, 169, 255, 0.18), transparent 45%);
-}
-
-.liquid-noise-overlay {
-  z-index: 1;
-  opacity: 0.22;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
-}
-
 .liquid-noise-overlay {
   z-index: 1;
   opacity: 0.22;
@@ -407,22 +387,6 @@
   background: var(--bg);
   background-image: var(--bg-layer-1);
   color: var(--text-primary);
-}
-
-.liquid-bg {
-  background: var(--bg);
-  background-image: var(--bg-layer-1);
-  color: var(--text-primary);
-}
-
-.liquid-glass {
-  background: var(--surface);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--glow-soft);
-  border-radius: var(--radius-lg);
-  transition:
-    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .liquid-glass {
@@ -432,21 +396,6 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
     0 6px 18px rgba(5, 10, 24, 0.24);
   border-radius: var(--radius-lg);
-  transition:
-    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.liquid-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
-  border-radius: 9999px;
-  border: 1px solid var(--border-soft);
-  background: color-mix(in srgb, var(--surface) calc(var(--liquid-min-chip-alpha) * 100%), transparent);
-  color: var(--text-secondary);
-  box-shadow: 0 4px 14px rgba(5, 8, 18, 0.2);
   transition:
     box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
     filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
@@ -471,22 +420,6 @@
 
 .liquid-button-primary {
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background: linear-gradient(
-    135deg,
-    var(--accent) 0%,
-    color-mix(in srgb, var(--accent), #ffffff 22%) 100%
-  );
-  color: var(--text-primary);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.liquid-button-primary {
-  border-radius: var(--radius-md);
   border: 1px solid var(--border-strong);
   background: linear-gradient(
     135deg,
@@ -505,12 +438,6 @@
 
 .liquid-button-primary:hover {
   transform: translateY(-1px) scale(1.015);
-  filter: brightness(1.05);
-  box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 45%, transparent);
-}
-
-.liquid-button-primary:hover {
-  transform: translateY(-1px) scale(1.015);
   filter: brightness(1.04);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
@@ -521,16 +448,6 @@
   transform: translateY(0);
 }
 
-.liquid-button-primary:active {
-  transform: translateY(0);
-}
-
-
-.liquid-glow-transition {
-  transition:
-    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
 
 .liquid-glow-transition {
   transition:
@@ -543,17 +460,6 @@
     transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
     filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.liquid-interactive-surface {
-  transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.liquid-interactive-surface:hover {
-  box-shadow: 0 16px 34px rgba(93, 111, 179, 0.38);
 }
 
 .liquid-interactive-surface:hover {
@@ -570,23 +476,12 @@
   -webkit-text-fill-color: transparent;
 }
 
-.liquid-silver-text {
-  color: var(--text-secondary);
-  background: linear-gradient(130deg, #cdd6ea 0%, #f8fbff 40%, #98a4c7 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
-
-[data-theme='liquid'] .liquid-form-field::placeholder,
 [data-theme='liquid'] .liquid-form-field::placeholder {
   color: var(--text-muted);
   opacity: 1;
 }
 
-[data-theme='liquid'] .liquid-form-field:disabled,
-[data-theme='liquid'] .liquid-form-field[aria-disabled='true'],
 [data-theme='liquid'] .liquid-form-field:disabled,
 [data-theme='liquid'] .liquid-form-field[aria-disabled='true'] {
   color: var(--text-secondary);
@@ -595,14 +490,11 @@
   opacity: 0.82;
 }
 
-[data-theme='liquid'] .liquid-helper-text,
 [data-theme='liquid'] .liquid-helper-text {
   color: var(--text-muted);
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .liquid-glass,
-  .liquid-chip,
   .liquid-glass,
   .liquid-chip {
     background: var(--surface);
@@ -610,8 +502,6 @@
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .liquid-glass,
-  .liquid-chip,
   .liquid-glass,
   .liquid-chip {
     background: var(--surface-glass);
@@ -822,10 +712,7 @@
 
 
 @media (prefers-contrast: more) {
-  [data-theme='liquid'],
   [data-theme='liquid'] {
-    --liquid-min-glass-alpha: 0.34;
-    --liquid-min-chip-alpha: 0.38;
     --liquid-min-glass-alpha: 0.34;
     --liquid-min-chip-alpha: 0.38;
     --surface: rgba(10, 16, 33, 0.96);
@@ -847,21 +734,11 @@
     color: var(--text-primary) !important;
   }
 
-  [data-theme='liquid'] .liquid-form-field {
-    background: color-mix(in srgb, var(--surface) 92%, #ffffff 8%) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-  }
-
-  [data-theme='liquid'] .liquid-form-field::placeholder,
-  [data-theme='liquid'] .liquid-helper-text,
   [data-theme='liquid'] .liquid-form-field::placeholder,
   [data-theme='liquid'] .liquid-helper-text {
     color: var(--text-secondary) !important;
   }
 
-  [data-theme='liquid'] .liquid-chip,
-  [data-theme='liquid'] .liquid-tag,
   [data-theme='liquid'] .liquid-chip,
   [data-theme='liquid'] .liquid-tag {
     background: color-mix(in srgb, var(--surface) 88%, #ffffff 12%) !important;
@@ -876,18 +753,6 @@
     background: color-mix(in srgb, var(--surface) 84%, #ffffff 16%);
   }
 
-  [data-theme='liquid'] .liquid-nav-link {
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-    background: color-mix(in srgb, var(--surface) 84%, #ffffff 16%);
-  }
-
-  [data-theme='liquid'] .liquid-footer-icon {
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-    background: color-mix(in srgb, var(--surface) 86%, #ffffff 14%) !important;
-  }
-
   [data-theme='liquid'] .liquid-footer-icon {
     border-color: var(--border-color) !important;
     color: var(--text-primary) !important;
@@ -900,16 +765,6 @@
     background: color-mix(in srgb, var(--surface) 84%, #ffffff 16%) !important;
   }
 
-  [data-theme='liquid'] .liquid-overlay-action {
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-    background: color-mix(in srgb, var(--surface) 84%, #ffffff 16%) !important;
-  }
-
-  [data-theme='liquid'][data-contrast='more'] .liquid-nav-link:focus-visible,
-  [data-theme='liquid'][data-contrast='more'] .liquid-form-field:focus-visible,
-  [data-theme='liquid'][data-contrast='more'] .liquid-footer-icon:focus-visible,
-  [data-theme='liquid'][data-contrast='more'] .liquid-overlay-action:focus-visible,
   [data-theme='liquid'][data-contrast='more'] .liquid-nav-link:focus-visible,
   [data-theme='liquid'][data-contrast='more'] .liquid-form-field:focus-visible,
   [data-theme='liquid'][data-contrast='more'] .liquid-footer-icon:focus-visible,
@@ -924,17 +779,10 @@
   .liquid-chip,
   .liquid-button-primary,
   .liquid-interactive-surface,
-  .liquid-glow-transition,
-  .liquid-glass,
-  .liquid-chip,
-  .liquid-button-primary,
-  .liquid-interactive-surface,
   .liquid-glow-transition {
     transition: none !important;
   }
 
-  .liquid-button-primary:hover,
-  .liquid-interactive-surface:hover,
   .liquid-button-primary:hover,
   .liquid-interactive-surface:hover {
     transform: none !important;

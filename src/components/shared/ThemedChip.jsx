@@ -27,7 +27,7 @@ const VARIANTS = {
 
 const ThemedChip = ({ as: Component = 'span', variant = 'neutral', className, style, ...props }) => {
   const { theme } = useTheme();
-  const themeKey = theme === 'liquid' || theme === 'liquid' ? 'liquid' : 'neubrutalism';
+  const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
 
   return (
     <Component
