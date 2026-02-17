@@ -27,8 +27,8 @@ export default {
         // Neubrutalism Design System
         // Bold, playful colors for high-contrast brutalist design
         'nb-yellow': '#FFEB3B',
-        'nb-red': '#FF5252',
-        'nb-blue': '#2196F3',
+        'nb-red': '#D32F2F',
+        'nb-blue': '#1565C0',
         'nb-black': '#000000',
         'nb-white': '#FFFFFF',
 
