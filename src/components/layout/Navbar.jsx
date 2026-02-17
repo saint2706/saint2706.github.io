@@ -17,6 +17,7 @@ import {
   MousePointer2,
   Code2,
   Grid,
+  Moon,
 } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 
@@ -35,6 +36,11 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const location = useLocation();
   const { theme, setTheme } = useTheme();
   const isLiquid = theme === 'liquid';
+
+  // Toggle theme handler
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => (prev === 'liquid' ? 'neubrutalism' : 'liquid'));
+  }, [setTheme]);
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -132,35 +138,32 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
         {/* Logo Section */}
         <NavLink
           to="/"
-          className="flex items-center gap-4 group"
+          className="flex items-center gap-4 group flex-shrink-0"
           aria-label="Rishabh Agrawal - Home page"
         >
           {isLiquid ? (
-            <div className="flex items-center gap-4">
-              <div className="size-9 bg-ios-dark rounded-xl flex items-center justify-center text-white transition-transform group-hover:scale-105">
-                <Grid size={20} />
-              </div>
-              <span className="text-[14px] font-bold tracking-tight uppercase text-ios-dark">Liquid</span>
-            </div>
+            <span className="liquid-chip px-4 py-2 border border-[color:var(--border-soft)] rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap">
+              &lt;Rishabh /&gt;
+            </span>
           ) : (
-            <span className="text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
+            <span className="text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb whitespace-nowrap">
               &lt;Rishabh /&gt;
             </span>
           )}
         </NavLink>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-2 flex-grow justify-center">
           {navItems.map(item => (
             <NavLink
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
                 isLiquid
-                  ? `touch-target flex items-center justify-center px-6 text-[15px] font-semibold rounded-full transition-colors ${
+                  ? `touch-target flex items-center justify-center px-4 lg:px-6 text-[15px] font-semibold rounded-full transition-colors whitespace-nowrap ${
                       isActive ? 'bg-black/5 text-ios-dark' : 'text-ios-dark hover:bg-black/[0.06]'
                     }`
-                  : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb ${
+                  : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
                       isActive
                         ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
                         : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
@@ -174,30 +177,25 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-4">
-           {/* Theme Switcher - Always Visible but Styled Differently */}
-           <label htmlFor="theme-preference" className="sr-only">Select Theme</label>
-           <div className={`relative flex items-center ${isLiquid ? 'hidden lg:flex' : 'hidden md:flex'}`}>
-              <select
-                id="theme-preference"
-                value={theme}
-                onChange={event => setTheme(event.target.value)}
-                className={`text-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-                    isLiquid
-                    ? 'bg-transparent text-ios-dark font-medium border-none pr-8 py-2'
-                    : 'bg-primary border-2 border-[color:var(--color-border)] rounded-nb px-2 py-1'
-                }`}
-              >
-                <option value="neubrutalism">Neubrutalism</option>
-                <option value="liquid">Liquid</option>
-              </select>
-           </div>
+        <div className="flex items-center gap-4 flex-shrink-0">
+           {/* Theme Toggle Switch */}
+           <button
+             onClick={toggleTheme}
+             className={`relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+               isLiquid
+                 ? 'hover:bg-black/5 text-ios-dark'
+                 : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
+             }`}
+             aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
+           >
+             {isLiquid ? <Grid size={20} /> : <Moon size={18} />}
+           </button>
 
            {/* Contact Button (Liquid Only) or Cursor Toggle (Neubrutalism) */}
            {isLiquid ? (
              <NavLink
                 to="/contact"
-                className="hidden md:flex touch-target bg-primary text-white px-8 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20"
+                className="hidden md:flex touch-target bg-primary text-white px-6 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
              >
                 Contact
              </NavLink>
@@ -254,22 +252,17 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
             >
               <div className="flex flex-col">
                 <div className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}>
-                  <label htmlFor="mobile-theme-preference" className={`block text-sm font-bold mb-2 ${isLiquid ? 'text-ios-dark' : 'font-heading text-primary'}`}>
-                    Theme
-                  </label>
-                  <select
-                    id="mobile-theme-preference"
-                    value={theme}
-                    onChange={event => setTheme(event.target.value)}
-                    className={`w-full text-sm px-3 py-2 ${
+                  <button
+                    onClick={toggleTheme}
+                    className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${
                         isLiquid
-                        ? 'bg-ios-bg-2 rounded-lg text-ios-dark border-none'
+                        ? 'bg-ios-bg-2 text-ios-dark hover:bg-black/5'
                         : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb'
                     }`}
                   >
-                    <option value="neubrutalism">Neubrutalism</option>
-                    <option value="liquid">Liquid</option>
-                  </select>
+                    <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
+                    {isLiquid ? <Grid size={16} /> : <Moon size={16} />}
+                  </button>
                 </div>
                 {[...navItems, { name: 'Contact', path: '/contact', icon: <Mail size={18} /> }].map((item, index) => (
                   <NavLink
