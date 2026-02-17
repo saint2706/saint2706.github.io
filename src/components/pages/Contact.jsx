@@ -3,7 +3,7 @@
  * Features call-to-action and availability status.
  */
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
@@ -60,7 +60,26 @@ const Contact = () => {
     'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
   const title = `Contact | ${resumeData.basics.name}`;
 
-  return (
+
+  const jsonLd = useMemo(() => safeJSONStringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: resumeData.basics.website,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: canonicalUrl,
+              },
+            ],
+          }), [canonicalUrl]);
+return (
     <>
       <Helmet>
         <title>{title}</title>
@@ -78,24 +97,7 @@ const Contact = () => {
         <meta name="twitter:site" content={resumeData.basics.name} />
         <meta name="twitter:creator" content={resumeData.basics.name} />
         <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Contact',
-                item: canonicalUrl,
-              },
-            ],
-          })}
+          {jsonLd}
         </script>
       </Helmet>
 
