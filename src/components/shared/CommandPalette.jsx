@@ -50,7 +50,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const shell = getOverlayShell({ theme, depth: 'hover' });
 
   /** All available commands grouped by category */
@@ -255,7 +255,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
               <div
                 className={joinClasses(
                   'flex items-center gap-3 px-4 py-3',
-                  isAura
+                  isLiquid
                     ? 'border-b border-[color:var(--border-soft)]'
                     : 'border-b-nb border-[color:var(--color-border)]'
                 )}
@@ -286,8 +286,8 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   onClick={onClose}
                   className={joinClasses(
                     'group relative p-1.5 text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-                    isAura
-                      ? 'aura-chip aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110'
+                    isLiquid
+                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110'
                       : 'bg-secondary border-2 border-[color:var(--color-border)] hover:bg-fun-yellow rounded-nb'
                   )}
                   aria-label="Close command palette"
@@ -364,7 +364,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
               <div
                 className={joinClasses(
                   'flex items-center gap-4 px-4 py-2.5',
-                  isAura
+                  isLiquid
                     ? 'border-t border-[color:var(--border-soft)] bg-[color:var(--surface-muted)]'
                     : 'border-t-nb border-[color:var(--color-border)] bg-secondary'
                 )}

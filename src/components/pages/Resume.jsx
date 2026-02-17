@@ -79,14 +79,14 @@ const TimelineCard = ({
   description,
   tags,
   accentColor = 'bg-accent',
-  isAura = false,
+  isLiquid = false,
 }) => (
   <ThemedCard
     variant="interactive"
-    className={`p-6 ${isAura ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
+    className={`p-6 ${isLiquid ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
   >
     {/* Color accent bar */}
-    {isAura ? (
+    {isLiquid ? (
       <span className="absolute -left-[1.45rem] top-8 w-3 h-3 rounded-full bg-[color:var(--accent)] border border-[color:var(--border-soft)] shadow-[0_0_12px_rgba(141,162,255,0.45)]" />
     ) : (
       <div
@@ -168,7 +168,7 @@ const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'La
 const Resume = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description =
     'Review my education, experience, and skills in analytics, AI, and product strategy.';
@@ -247,7 +247,7 @@ const Resume = () => {
             title="My Journey"
             variant="accent"
             className="font-heading text-4xl md:text-5xl font-bold mb-4"
-            chipClassName="px-6 py-3 nb-stamp-in"
+            chipClassName={isLiquid ? 'px-6 py-3' : 'px-6 py-3 nb-stamp-in'}
           />
           <p className="text-secondary text-lg mt-6 font-sans max-w-2xl mx-auto">
             A timeline of my education, experience, and technical milestones.
@@ -308,7 +308,7 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.1}>
                 <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
-                  <div className={isAura ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
+                  <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
                   {resumeData.experience.map((job, i) => (
                     <TimelineCard
                       key={i}
@@ -318,7 +318,7 @@ const Resume = () => {
                       location={job.location}
                       description={job.highlights || job.summary}
                       accentColor="bg-fun-pink"
-                      isAura={isAura}
+                      isLiquid={isLiquid}
                     />
                   ))}
                   </div>
@@ -338,7 +338,7 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.2}>
                 <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
-                  <div className={isAura ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
+                  <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
                   {resumeData.education.map((edu, i) => (
                     <TimelineCard
                       key={i}
@@ -347,7 +347,7 @@ const Resume = () => {
                       date={`${edu.startDate} - ${edu.endDate}`}
                       description={edu.description}
                       accentColor="bg-accent"
-                      isAura={isAura}
+                      isLiquid={isLiquid}
                     />
                   ))}
                   </div>
@@ -369,19 +369,19 @@ const Resume = () => {
                 <div className="mb-12">
                   <div
                     className={`p-6 ${
-                      isAura
-                        ? 'aura-glass border border-[color:var(--border-soft)] rounded-3xl'
+                      isLiquid
+                        ? 'liquid-glass border border-[color:var(--border-soft)] rounded-3xl'
                         : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
                     }`}
-                    style={{ boxShadow: isAura ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
+                    style={{ boxShadow: isLiquid ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
                   >
                     <div
                       className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${
-                        isAura
-                          ? 'aura-glass text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
+                        isLiquid
+                          ? 'liquid-glass text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
                           : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
                       }`}
-                      style={{ boxShadow: isAura ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}
+                      style={{ boxShadow: isLiquid ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}
                     >
                       <Sparkles size={20} />
                       <h2 className="text-lg font-heading font-bold">Tech Stack</h2>

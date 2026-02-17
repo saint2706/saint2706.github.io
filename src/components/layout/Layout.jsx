@@ -58,7 +58,7 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
  */
 const Layout = ({ children }) => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
   // ── Custom Cursor State ──
   const [cursorEnabled, setCursorEnabled] = useState(() => {
@@ -219,15 +219,15 @@ const Layout = ({ children }) => {
   return (
     <div
       className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
-        isAura ? 'aura-bg aura-atmosphere-shell' : 'bg-primary nb-paper-bg'
+        isLiquid ? 'liquid-bg liquid-atmosphere-shell' : 'bg-primary nb-paper-bg'
       }`}
-      data-theme={isAura ? 'aura' : 'neubrutalism'}
+      data-theme={isLiquid ? 'liquid' : 'neubrutalism'}
       data-contrast={prefersContrast ? 'more' : 'no-preference'}
     >
-      {isAura && (
+      {isLiquid && (
         <>
-          <div className="aura-atmosphere-layers" aria-hidden="true" />
-          <div className="aura-noise-overlay" aria-hidden="true" />
+          <div className="liquid-atmosphere-layers" aria-hidden="true" />
+          <div className="liquid-noise-overlay" aria-hidden="true" />
         </>
       )}
 

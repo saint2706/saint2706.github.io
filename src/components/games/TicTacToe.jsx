@@ -168,8 +168,8 @@ const getWinningLine = board => {
 const TicTacToe = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
 
   // Game state
   const [board, setBoard] = useState(Array(9).fill(null)); // 9 cells: 'X', 'O', or null
@@ -440,11 +440,11 @@ const TicTacToe = () => {
             className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                             ${
                               difficulty === diff.id
-                                ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} ${isAura ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
-                                : `${isAura ? 'aura-glass border border-[color:var(--border-soft)] rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
+                                ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} ${isLiquid ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
+                                : `${isLiquid ? 'liquid-glass border border-[color:var(--border-soft)] rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
                             }`}
             style={{
-              boxShadow: isAura
+              boxShadow: isLiquid
                 ? undefined
                 : difficulty === diff.id
                   ? 'var(--nb-shadow-hover)'
@@ -502,7 +502,7 @@ const TicTacToe = () => {
               aria-label={getCellLabel(index, cell)}
               className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl flex items-center justify-center transition-transform motion-reduce:transform-none motion-reduce:transition-none ${ui.tileBase}
                                 ${winningLine?.includes(index) ? ui.tileWin : ui.tileIdle}
-                                ${!cell && isPlayerTurn && gameStatus === 'playing' ? `cursor-pointer ${isAura ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'}` : 'cursor-default'}
+                                ${!cell && isPlayerTurn && gameStatus === 'playing' ? `cursor-pointer ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'}` : 'cursor-default'}
                             `}
               style={ui.style.raised}
               whileTap={
@@ -548,7 +548,7 @@ const TicTacToe = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 {gameStatus === 'won' && (
@@ -588,7 +588,7 @@ const TicTacToe = () => {
               <motion.button
                 initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: isAura ? 0.1 : 0.2 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
                 onClick={resetGame}
                 className={ui.buttonPrimary}
                 style={ui.style.raised}

@@ -107,8 +107,8 @@ const ADJACENT_COLORS = [
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won | lost
   const [board, setBoard] = useState(createEmptyBoard);
   const [firstClick, setFirstClick] = useState(true);
@@ -341,7 +341,7 @@ const Minesweeper = () => {
                         ? cell.mine
                           ? 'bg-fun-pink/40'
                           : 'bg-secondary'
-                        : `${ui.tileIdle} ${isAura ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${focusR === r && focusC === c ? 'ring-2 ring-accent' : ''}`
+                        : `${ui.tileIdle} ${isLiquid ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${focusR === r && focusC === c ? 'ring-2 ring-accent' : ''}`
                     }`}
                 >
                   <span
@@ -373,7 +373,7 @@ const Minesweeper = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div
@@ -421,7 +421,7 @@ const Minesweeper = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <Bomb className="w-10 h-10 text-fun-pink mx-auto mb-2" aria-hidden="true" />

@@ -18,7 +18,7 @@ import {
   Code2,
 } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
-import { AURA_MOTION } from '../shared/themeMotion';
+import { LIQUID_MOTION } from '../shared/themeMotion';
 
 const FOCUSABLE_SELECTOR =
   'a[href], area[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -50,11 +50,11 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
-  const themeClass = useCallback((neubrutalClasses, auraClasses) => {
-    return isAura ? auraClasses : neubrutalClasses;
-  }, [isAura]);
+  const themeClass = useCallback((neubrutalClasses, liquidClasses) => {
+    return isLiquid ? liquidClasses : neubrutalClasses;
+  }, [isLiquid]);
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -145,13 +145,13 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   return (
     <motion.nav
-      initial={shouldReduceMotion ? false : { y: isAura ? -AURA_MOTION.offset.y : -100 }}
+      initial={shouldReduceMotion ? false : { y: isLiquid ? -LIQUID_MOTION.offset.y : -100 }}
       animate={{ y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : isAura ? { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal } : undefined}
+      transition={shouldReduceMotion ? { duration: 0 } : isLiquid ? { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal } : undefined}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:py-6"
     >
       <div
-        className={`relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'aura-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
+        className={`relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
         style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
       >
         <NavLink
@@ -159,7 +159,12 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           className="text-xl font-heading font-bold text-primary"
           aria-label="Rishabh Agrawal - Home page"
         >
-          <span className="bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb">
+          <span
+            className={themeClass(
+              'bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb',
+              'liquid-chip px-2.5 py-1 border border-[color:var(--border-soft)] rounded-full text-[color:var(--text-primary)]'
+            )}
+          >
             &lt;Rishabh /&gt;
           </span>
         </NavLink>
@@ -170,18 +175,18 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isAura ? 'aura-chip aura-nav-link aura-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
+                `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 ${isLiquid ? 'liquid-chip liquid-nav-link liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none' : 'border-2 rounded-nb'}
                 ${isActive
-                  ? isAura
+                  ? isLiquid
                     ? 'text-[color:var(--text-primary)] border-[color:var(--accent-soft)]'
                     : 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1'
-                  : isAura
+                  : isLiquid
                     ? 'text-primary border-[color:var(--border-soft)]'
                     : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
                 }`
               }
               style={({ isActive }) =>
-                isAura
+                isLiquid
                   ? {
                     boxShadow: isActive ? '0 10px 30px rgba(93, 111, 179, 0.35)' : undefined,
                   }
@@ -205,7 +210,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
         <div className="flex items-center gap-2">
           <label
             htmlFor="theme-preference"
-            className={`hidden md:flex items-center gap-2 pl-3 pr-2 py-2 text-sm font-semibold text-primary ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full')}`}
+            className={`hidden md:flex items-center gap-2 pl-3 pr-2 py-2 text-sm font-semibold text-primary ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full')}`}
             style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
           >
             <span>Theme</span>
@@ -216,7 +221,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               className={`text-sm px-2 py-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
             >
               <option value="neubrutalism">Neubrutalism</option>
-              <option value="aura">Aura</option>
+              <option value="liquid">Liquid Glass</option>
             </select>
           </label>
 
@@ -224,7 +229,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           <button
             type="button"
             onClick={onToggleCursor}
-            className={`group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none ${themeClass('bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
+            className={`group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none ${themeClass('bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full hover:brightness-110')}`}
             style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
             aria-pressed={cursorEnabled}
             aria-label={cursorToggleLabel}
@@ -242,7 +247,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           <button
             type="button"
             ref={menuButtonRef}
-            className={`md:hidden p-3 text-primary cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'aura-chip border border-[color:var(--border-soft)] rounded-full')}`}
+            className={`md:hidden p-3 text-primary cursor-pointer ${themeClass('bg-card border-2 border-[color:var(--color-border)] rounded-nb', 'liquid-chip border border-[color:var(--border-soft)] rounded-full')}`}
             style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
@@ -261,11 +266,11 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           {isMenuOpen && (
             <motion.div
               id="mobile-nav-menu"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: isAura ? -AURA_MOTION.offset.subtleY : -8 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: isLiquid ? -LIQUID_MOTION.offset.subtleY : -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0, y: isAura ? -AURA_MOTION.offset.subtleY : -8 }}
-              transition={shouldReduceMotion ? { duration: 0 } : isAura ? { duration: AURA_MOTION.duration.reveal, ease: AURA_MOTION.easing.reveal } : { duration: 0.15 }}
-              className={`absolute right-4 top-full mt-3 w-64 md:hidden ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'aura-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: isLiquid ? -LIQUID_MOTION.offset.subtleY : -8 }}
+              transition={shouldReduceMotion ? { duration: 0 } : isLiquid ? { duration: LIQUID_MOTION.duration.reveal, ease: LIQUID_MOTION.easing.reveal } : { duration: 0.15 }}
+              className={`absolute right-4 top-full mt-3 w-64 md:hidden ${themeClass('bg-card border-nb border-[color:var(--color-border)] rounded-nb', 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl')}`}
               style={themeClass({ boxShadow: 'var(--nb-shadow)' }, undefined)}
               ref={menuRef}
             >
@@ -281,7 +286,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                     className={`w-full text-sm px-3 py-2 text-primary ${themeClass('bg-primary border-2 border-[color:var(--color-border)] rounded-nb', 'bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] rounded-full')}`}
                   >
                     <option value="neubrutalism">Neubrutalism</option>
-                    <option value="aura">Aura</option>
+                    <option value="liquid">Liquid Glass</option>
                   </select>
                 </div>
                 {navItems.map((item, index) => (

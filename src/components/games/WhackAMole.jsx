@@ -28,8 +28,8 @@ const SPAWN_INTERVAL = 800; // ms between spawns
 const WhackAMole = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
-  const ui = getGameThemeStyles(isAura);
+  const isLiquid = theme === 'liquid';
+  const ui = getGameThemeStyles(isLiquid);
   const [gameState, setGameState] = useState('idle'); // idle | playing | gameOver
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
@@ -246,8 +246,8 @@ const WhackAMole = () => {
                     whackedMoles.has(i)
                       ? `${ui.tileWin} scale-90`
                       : activeMoles.has(i)
-                        ? `bg-fun-pink hover:bg-fun-pink/80 ${isAura ? 'brightness-110' : '-translate-y-1'}`
-                        : `${isAura ? 'bg-[color:var(--surface-muted)]/80 hover:brightness-110' : 'bg-secondary hover:bg-secondary/80'}`
+                        ? `bg-fun-pink hover:bg-fun-pink/80 ${isLiquid ? 'brightness-110' : '-translate-y-1'}`
+                        : `${isLiquid ? 'bg-[color:var(--surface-muted)]/80 hover:brightness-110' : 'bg-secondary hover:bg-secondary/80'}`
                   }`}
                 style={{
                   ...(activeMoles.has(i) ? ui.style.tileActive : ui.style.raised),
@@ -261,7 +261,7 @@ const WhackAMole = () => {
                       animate={{ scale: 1, y: 0 }}
                       exit={shouldReduceMotion ? undefined : { scale: 0, y: 20 }}
                       transition={
-                        shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }
+                        shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
                       }
                       aria-hidden="true"
                     >
@@ -336,7 +336,7 @@ const WhackAMole = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div

@@ -35,7 +35,7 @@ import { useTheme } from '../shared/theme-context';
  */
 const Playground = () => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const [activeFilter, setActiveFilter] = useState('all');
   const [copiedId, setCopiedId] = useState(null);
   const [modalSnippet, setModalSnippet] = useState(null);
@@ -112,7 +112,7 @@ const Playground = () => {
     },
   };
 
-  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
     <>
@@ -166,12 +166,12 @@ const Playground = () => {
           <h1 className={themeClass('font-heading text-4xl md:text-5xl font-bold mb-4', 'font-heading text-4xl md:text-5xl font-semibold mb-4')}>
             <ThemedCard
               as="span"
-              variant={isAura ? 'default' : 'highlighted'}
+              variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
                 'inline-block bg-accent text-white px-6 py-3 rounded-nb nb-stamp-in',
-                'inline-block px-8 py-4 rounded-3xl aura-glass border border-[color:var(--border-soft)]'
+                'inline-block px-8 py-4 rounded-3xl liquid-glass border border-[color:var(--border-soft)]'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Code Playground
             </ThemedCard>
@@ -190,7 +190,7 @@ const Playground = () => {
           className="flex justify-center mb-10"
         >
           <div
-            className={themeClass('flex gap-3', 'flex gap-3 rounded-3xl aura-glass border border-[color:var(--border-soft)] p-2')}
+            className={themeClass('flex gap-3', 'flex gap-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)] p-2')}
             role="tablist"
             aria-label="Filter snippets by language"
           >
@@ -207,18 +207,18 @@ const Playground = () => {
                     activeFilter === filter.id
                       ? themeClass(
                           `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
-                          'aura-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                          'liquid-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
                         )
                       : themeClass(
                           'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
-                          'aura-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                          'liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
                         )
                   }`}
                 style={{
                   boxShadow:
-                    !isAura && activeFilter === filter.id
+                    !isLiquid && activeFilter === filter.id
                       ? 'var(--nb-shadow-hover)'
-                      : !isAura
+                      : !isLiquid
                         ? 'var(--nb-shadow)'
                         : undefined,
                 }}
@@ -282,9 +282,9 @@ const Playground = () => {
           <ThemedCard
             className={themeClass(
               'bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb',
-              'aura-glass border border-[color:var(--border-soft)] px-7 py-4 rounded-3xl max-w-2xl'
+              'liquid-glass border border-[color:var(--border-soft)] px-7 py-4 rounded-3xl max-w-2xl'
             )}
-            style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+            style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >
             <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
               💡 Click the copy button to grab any snippet. Some snippets have live output previews!
@@ -342,11 +342,11 @@ const SnippetCard = ({
   shouldReduceMotion,
 }) => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const hasPreview = !!snippet.preview;
   const hasInteractive = !!snippet.interactive;
   const isCopied = copiedId === snippet.id;
-  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
     <motion.article
@@ -354,9 +354,9 @@ const SnippetCard = ({
       layout={!shouldReduceMotion}
       className={themeClass(
         'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
-        'aura-glass border border-[color:var(--border-soft)] overflow-hidden flex flex-col rounded-3xl'
+        'liquid-glass border border-[color:var(--border-soft)] overflow-hidden flex flex-col rounded-3xl'
       )}
-      style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+      style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
     >
       <div className={`h-3 ${colorClass}`} />
 
@@ -379,7 +379,7 @@ const SnippetCard = ({
               'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
               'text-xs font-semibold px-2.5 py-1 rounded-full'
             )}
-            style={isAura ? undefined : { '--sticker-rotate': '3deg' }}
+            style={isLiquid ? undefined : { '--sticker-rotate': '3deg' }}
           >
             {snippet.language.toUpperCase()}
           </ThemedChip>
@@ -438,9 +438,9 @@ const SnippetCard = ({
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Play size={14} aria-hidden="true" />
               Live Preview
@@ -456,9 +456,9 @@ const SnippetCard = ({
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full aura-button-primary border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Play size={14} aria-hidden="true" />
               Try It Live! 🐍

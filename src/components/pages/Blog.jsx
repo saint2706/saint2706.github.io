@@ -49,7 +49,7 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const canonicalUrl = `${resumeData.basics.website}/blog`;
   const description =
     'Read articles on analytics, product thinking, and the intersection of data and creativity.';
@@ -208,7 +208,7 @@ const Blog = () => {
         <meta name="twitter:creator" content={resumeData.basics.name} />
       </Helmet>
 
-      <div className={`mx-auto py-12 px-4 ${isAura ? 'max-w-4xl' : 'max-w-6xl'}`}>
+      <div className={`mx-auto py-12 px-4 ${isLiquid ? 'max-w-4xl' : 'max-w-6xl'}`}>
         {/* Header */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -234,7 +234,7 @@ const Blog = () => {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
-          className={`flex flex-col md:flex-row justify-between items-center mb-10 gap-4 ${isAura ? 'aura-glass rounded-3xl p-4 md:p-5' : ''}`}
+          className={`flex flex-col md:flex-row justify-between items-center mb-10 gap-4 ${isLiquid ? 'liquid-glass rounded-3xl p-4 md:p-5' : ''}`}
         >
           <div
             className="flex flex-wrap gap-2 justify-center md:justify-start"
@@ -278,8 +278,8 @@ const Blog = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isAura ? 'aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isLiquid ? 'liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               aria-describedby="blog-search-limit"
             />
             {searchTerm && (
@@ -326,7 +326,7 @@ const Blog = () => {
           variants={container}
           initial={shouldReduceMotion ? false : 'hidden'}
           animate="show"
-          className={`grid grid-cols-1 ${isAura ? 'gap-5' : 'md:grid-cols-2 lg:grid-cols-3 gap-6'}`}
+          className={`grid grid-cols-1 ${isLiquid ? 'gap-5' : 'md:grid-cols-2 lg:grid-cols-3 gap-6'}`}
         >
           {paginatedBlogs.map((blog, idx) => (
             <ThemedCard
@@ -334,16 +334,16 @@ const Blog = () => {
               key={`${blog.title}-${idx}`}
               variants={item}
               variant="interactive"
-              className={`overflow-hidden flex flex-col h-full ${isAura ? 'rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
+              className={`overflow-hidden flex flex-col h-full ${isLiquid ? 'rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
             >
               {/* Color accent bar based on source */}
-              {!isAura && <div className={`h-3 ${getSourceColor(blog.source)}`} />}
+              {!isLiquid && <div className={`h-3 ${getSourceColor(blog.source)}`} />}
 
               <div className="p-6 flex-grow flex flex-col">
                 {/* Source and Date */}
-                <div className={`flex justify-between items-start mb-4 ${isAura ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}>
+                <div className={`flex justify-between items-start mb-4 ${isLiquid ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}>
                   <ThemedChip
-                    className={`font-heading font-bold px-3 ${isAura ? 'tracking-wide uppercase text-xs' : `${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}`}
+                    className={`font-heading font-bold px-3 ${isLiquid ? 'tracking-wide uppercase text-xs' : `${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}`}
                   >
                     {blog.source}
                   </ThemedChip>

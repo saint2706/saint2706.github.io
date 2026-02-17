@@ -64,7 +64,7 @@ const Games = () => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const canonicalUrl = `${resumeData.basics.website}/games`;
   const description =
     'A secret games easter egg! Play Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.';
@@ -81,7 +81,7 @@ const Games = () => {
     { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
   ];
 
-  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
     <>
@@ -139,15 +139,15 @@ const Games = () => {
               '',
               'hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none'
             )}
-            style={isAura ? undefined : { '--sticker-rotate': '-2deg' }}
+            style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
             <ThemedChip
               variant="pink"
               className={themeClass(
                 'mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white',
-                'mb-6 px-4 py-2 font-heading font-semibold rounded-full aura-chip border border-[color:var(--border-soft)]'
+                'mb-6 px-4 py-2 font-heading font-semibold rounded-full liquid-chip border border-[color:var(--border-soft)]'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Gamepad2 className="w-5 h-5" />
               <span className="text-sm">Easter Egg Found!</span>
@@ -162,12 +162,12 @@ const Games = () => {
           >
             <ThemedCard
               as="span"
-              variant={isAura ? 'default' : 'highlighted'}
+              variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
                 'inline-block px-6 py-3 rounded-nb nb-stamp-in',
-                'inline-block px-6 py-3 rounded-3xl aura-glass border border-[color:var(--border-soft)]'
+                'inline-block px-6 py-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)]'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Game Zone
             </ThemedCard>
@@ -203,19 +203,19 @@ const Games = () => {
                 className={`flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
                                     ${
                                       activeGame === game.id
-                                        ? isAura
-                                          ? 'aura-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                                        ? isLiquid
+                                          ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
                                           : `${game.color} text-white`
                                         : themeClass(
                                             'bg-card text-[color:var(--color-text-primary)]',
-                                            'aura-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                                            'liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
                                           )
                                     }`}
                 style={{
                   boxShadow:
-                    !isAura && activeGame === game.id
+                    !isLiquid && activeGame === game.id
                       ? 'var(--nb-shadow-hover)'
-                      : !isAura
+                      : !isLiquid
                         ? 'var(--nb-shadow)'
                         : undefined,
                 }}
@@ -226,7 +226,7 @@ const Games = () => {
                   <span
                     className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity ${themeClass(
                       'border-[2px] border-[color:var(--color-border)] bg-card text-primary',
-                      'aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]'
+                      'liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]'
                     )} ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`}
                     aria-hidden={activeGame !== game.id}
                   >
@@ -250,9 +250,9 @@ const Games = () => {
             variant="default"
             className={themeClass(
               'bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb',
-              'aura-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl'
+              'liquid-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl'
             )}
-            style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+            style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
           >
             <AnimatePresence mode="wait">
               <motion.div

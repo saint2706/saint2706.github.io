@@ -151,9 +151,9 @@ const getRandomFood = snake => {
 const SnakeGame = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   // Memoize theme styles to prevent object recreation on every game tick/render
-  const ui = useMemo(() => getGameThemeStyles(isAura), [isAura]);
+  const ui = useMemo(() => getGameThemeStyles(isLiquid), [isLiquid]);
 
   // Game state
   const [snake, setSnake] = useState(getInitialSnake());
@@ -639,7 +639,7 @@ const SnakeGame = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isAura ? 0.2 : 0.5 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
                 className="text-center"
               >
                 <div
@@ -669,7 +669,7 @@ const SnakeGame = () => {
               <motion.button
                 initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: isAura ? 0.1 : 0.2 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
                 onClick={startGame}
                 className={ui.buttonPrimary}

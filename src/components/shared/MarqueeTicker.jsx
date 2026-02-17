@@ -28,13 +28,13 @@ const DEFAULT_ITEMS = [
 ];
 
 /**
- * MarqueeTicker — full-width scrolling band with neubrutalist or aura styling
+ * MarqueeTicker — full-width scrolling band with neubrutalist or liquid styling
  *
  * @param {Object} props
  * @param {string[]} [props.items] - Text items to scroll
  * @param {string} [props.bgColor] - Background color class (default: bg-fun-yellow)
- * @param {'neub'|'aura'} [props.variant] - Visual style variant
- * @param {boolean} [props.useBlurBand] - Adds a glassy blur backdrop for aura variant
+ * @param {'neub'|'liquid'} [props.variant] - Visual style variant
+ * @param {boolean} [props.useBlurBand] - Adds a glassy blur backdrop for liquid variant
  * @param {string} [props.className] - Additional wrapper classes
  */
 const MarqueeTicker = ({
@@ -46,17 +46,17 @@ const MarqueeTicker = ({
 }) => {
   // Duplicate items for seamless loop
   const tickerContent = [...items, ...items];
-  const isAura = variant === 'aura';
+  const isLiquid = variant === 'liquid';
 
-  const wrapperClasses = isAura
-    ? `${useBlurBand ? 'aura-glass backdrop-blur-md' : bgColor} border-y border-[color:var(--border-soft)] py-2`
+  const wrapperClasses = isLiquid
+    ? `${useBlurBand ? 'liquid-glass backdrop-blur-md' : bgColor} border-y border-[color:var(--border-soft)] py-2`
     : `border-y-[3px] border-black ${bgColor} py-3`;
 
-  const itemClasses = isAura
+  const itemClasses = isLiquid
     ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--color-text-secondary)]'
     : 'whitespace-nowrap px-6 font-heading text-sm font-bold uppercase tracking-widest text-black';
 
-  const separatorClasses = isAura ? 'mx-4 text-[color:var(--color-text-muted)]' : 'mx-4 text-fun-pink';
+  const separatorClasses = isLiquid ? 'mx-4 text-[color:var(--color-text-muted)]' : 'mx-4 text-fun-pink';
 
   return (
     <div

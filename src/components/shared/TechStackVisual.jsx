@@ -35,7 +35,7 @@ const HoverContext = createContext(null);
  * Single Skill Node in the tree
  * Uses useSyncExternalStore to subscribe to hover changes for React 18 compatibility.
  */
-const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
+const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isLiquid }) => {
   const { subscribe, getHoveredSkill, setHoveredSkill } = useContext(HoverContext);
 
   // Size based on proficiency: min 8px, max 16px
@@ -67,7 +67,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
       transition={{ duration: 0.2 }}
     >
       {/* Branch line */}
-      {isAura ? (
+      {isLiquid ? (
         <div
           className="w-4 h-px rounded-full"
           style={{
@@ -86,17 +86,17 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
         onFocus={handleMouseEnter}
         onBlur={handleMouseLeave}
         className={`relative flex items-center gap-2 px-3 py-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-          isAura
+          isLiquid
             ? 'rounded-full border border-[color:var(--border-soft)] focus-visible:ring-accent/70 focus-visible:ring-offset-transparent'
             : 'border-2 focus-visible:ring-black'
         }`}
         style={{
-          borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
-          background: isAura
+          borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
+          background: isLiquid
             ? `linear-gradient(135deg, ${color}${isHovered ? '2e' : '1f'} 0%, rgba(255,255,255,0.05) 100%)`
             : undefined,
-          backgroundColor: isAura ? undefined : isHovered ? color : 'var(--color-secondary)',
-          boxShadow: isAura
+          backgroundColor: isLiquid ? undefined : isHovered ? color : 'var(--color-secondary)',
+          boxShadow: isLiquid
             ? isHovered
               ? `0 0 0 1px ${color}66, 0 8px 22px -14px ${color}cc`
               : '0 8px 16px -16px rgba(0,0,0,0.55)'
@@ -105,7 +105,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
               : '2px 2px 0 var(--color-border)',
         }}
         whileHover={
-          shouldReduceMotion ? {} : isAura ? { y: -1, scale: 1.01 } : { x: 2, y: -2 }
+          shouldReduceMotion ? {} : isLiquid ? { y: -1, scale: 1.01 } : { x: 2, y: -2 }
         }
         transition={{ duration: 0.1 }}
         aria-label={`View proficiency details for ${skill.name}`}
@@ -118,13 +118,13 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
             width: nodeSize,
             height: nodeSize,
             backgroundColor: color,
-            borderColor: isAura ? 'color-mix(in srgb, var(--border-soft) 55%, #fff 45%)' : 'var(--color-border)',
-            boxShadow: isAura ? `0 0 10px -3px ${color}cc` : undefined,
+            borderColor: isLiquid ? 'color-mix(in srgb, var(--border-soft) 55%, #fff 45%)' : 'var(--color-border)',
+            boxShadow: isLiquid ? `0 0 10px -3px ${color}cc` : undefined,
           }}
         />
 
         {/* Skill name - always visible */}
-        <span className={`text-sm font-heading font-bold whitespace-nowrap ${isAura ? 'text-primary' : 'text-black'}`}>
+        <span className={`text-sm font-heading font-bold whitespace-nowrap ${isLiquid ? 'text-primary' : 'text-black'}`}>
           {skill.name}
         </span>
 
@@ -135,7 +135,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isAura }) => {
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: 'auto' }}
               exit={{ opacity: 0, width: 0 }}
-              className={`text-xs font-sans font-bold overflow-hidden ${isAura ? 'text-primary' : 'text-black'}`}
+              className={`text-xs font-sans font-bold overflow-hidden ${isLiquid ? 'text-primary' : 'text-black'}`}
             >
               {skill.proficiency}%
             </motion.span>
@@ -153,7 +153,7 @@ SkillNode.displayName = 'SkillNode';
  * Category Branch with its skills
  * Memoized to prevent re-renders when other categories are interacted with.
  */
-const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay, isAura }) => {
+const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay, isLiquid }) => {
   return (
     <motion.div
       className="flex flex-col sm:flex-row gap-2 sm:gap-4"
@@ -163,23 +163,23 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
     >
       {/* Category label */}
       <div
-        className={`flex items-center gap-2 px-3 py-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0 ${isAura ? 'rounded-full border border-[color:var(--border-soft)]' : 'border-2'}`}
+        className={`flex items-center gap-2 px-3 py-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0 ${isLiquid ? 'rounded-full border border-[color:var(--border-soft)]' : 'border-2'}`}
         style={{
-          borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
-          background: isAura
+          borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
+          background: isLiquid
             ? `linear-gradient(135deg, ${color}40 0%, rgba(255,255,255,0.08) 100%)`
             : undefined,
-          backgroundColor: isAura ? undefined : color,
-          boxShadow: isAura ? '0 10px 24px -18px rgba(0,0,0,0.7)' : '3px 3px 0 var(--color-border)',
-          color: isAura ? 'var(--text-primary)' : '#000',
+          backgroundColor: isLiquid ? undefined : color,
+          boxShadow: isLiquid ? '0 10px 24px -18px rgba(0,0,0,0.7)' : '3px 3px 0 var(--color-border)',
+          color: isLiquid ? 'var(--text-primary)' : '#000',
         }}
       >
         <div
-          className={`w-3 h-3 ${isAura ? 'rounded-full border' : 'border-2'}`}
+          className={`w-3 h-3 ${isLiquid ? 'rounded-full border' : 'border-2'}`}
           style={{
-            borderColor: isAura ? 'var(--border-soft)' : 'var(--color-border)',
-            backgroundColor: isAura ? color : '#fff',
-            boxShadow: isAura ? `0 0 8px -2px ${color}` : undefined,
+            borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
+            backgroundColor: isLiquid ? color : '#fff',
+            boxShadow: isLiquid ? `0 0 8px -2px ${color}` : undefined,
           }}
         />
         {category}
@@ -187,7 +187,7 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
 
       {/* Connecting line */}
       <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
-        {isAura ? (
+        {isLiquid ? (
           <div
             className="w-full h-px rounded-full"
             style={{ background: `linear-gradient(90deg, ${color}aa 0%, ${color}22 100%)` }}
@@ -205,7 +205,7 @@ const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion
             skill={skill}
             color={color}
             shouldReduceMotion={shouldReduceMotion}
-            isAura={isAura}
+            isLiquid={isLiquid}
           />
         ))}
       </div>
@@ -250,7 +250,7 @@ const TechStackAnnouncer = () => {
 const TechStackVisual = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
 
   // Hover store for useSyncExternalStore
   const hoveredSkillRef = useRef(null);
@@ -315,7 +315,7 @@ const TechStackVisual = () => {
               color={CATEGORY_COLORS[group.category] || '#e5e5e5'}
               shouldReduceMotion={shouldReduceMotion}
               delay={i * 0.1}
-              isAura={isAura}
+              isLiquid={isLiquid}
             />
           ))}
         </div>

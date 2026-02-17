@@ -29,7 +29,7 @@ import { useTheme } from '../shared/theme-context';
  */
 const NotFound = () => {
   const { theme } = useTheme();
-  const isAura = theme === 'aura';
+  const isLiquid = theme === 'liquid';
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
   const [glitchText, setGlitchText] = useState('404');
@@ -122,7 +122,7 @@ const NotFound = () => {
     { path: '/contact', label: 'Contact', icon: <Compass size={18} /> },
   ];
 
-  const themeClass = (neubClass, auraClass) => (isAura ? auraClass : neubClass);
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
     <>
@@ -166,7 +166,7 @@ const NotFound = () => {
         <section
           className={themeClass(
             'max-w-2xl mx-auto text-center relative z-10',
-            'max-w-3xl mx-auto text-center relative z-10 aura-glass border border-[color:var(--border-soft)] rounded-[2rem] px-6 py-8 md:px-10 md:py-10'
+            'max-w-3xl mx-auto text-center relative z-10 liquid-glass border border-[color:var(--border-soft)] rounded-[2rem] px-6 py-8 md:px-10 md:py-10'
           )}
         >
           {/* Main 404 Display */}
@@ -189,9 +189,9 @@ const NotFound = () => {
               <ThemedCard
                 className={themeClass(
                   'w-24 h-24 mx-auto bg-fun-yellow border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb',
-                  'w-24 h-24 mx-auto aura-glass border border-[color:var(--border-soft)] flex items-center justify-center rounded-3xl'
+                  'w-24 h-24 mx-auto liquid-glass border border-[color:var(--border-soft)] flex items-center justify-center rounded-3xl'
                 )}
-                style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
                 <Ghost size={48} className="text-black" />
               </ThemedCard>
@@ -205,9 +205,9 @@ const NotFound = () => {
                 exit={{ opacity: 0 }}
                 className={themeClass(
                   'absolute left-1/2 -translate-x-1/2 top-4 bg-fun-pink text-white px-4 py-2 rounded-nb font-heading text-sm',
-                  'absolute left-1/2 -translate-x-1/2 top-4 aura-chip border border-[color:var(--border-soft)] px-4 py-2 rounded-full font-heading text-sm text-[color:var(--color-text-primary)]'
+                  'absolute left-1/2 -translate-x-1/2 top-4 liquid-chip border border-[color:var(--border-soft)] px-4 py-2 rounded-full font-heading text-sm text-[color:var(--color-text-primary)]'
                 )}
-                style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 <Sparkles size={14} className="inline mr-2" />
                 Boo! You found me!
@@ -217,9 +217,7 @@ const NotFound = () => {
             {/* Glitchy 404 text */}
             <motion.h1
               className="font-heading text-8xl md:text-9xl font-black text-primary tracking-tight select-none"
-              style={{
-                textShadow: 'var(--nb-shadow)',
-              }}
+              style={isLiquid ? undefined : { textShadow: 'var(--nb-shadow)' }}
               aria-label="404 Error"
             >
               <span className="relative">
@@ -255,7 +253,7 @@ const NotFound = () => {
                 'inline-block font-heading text-2xl md:text-3xl font-bold px-6 py-3 mb-4 rounded-nb text-white',
                 'inline-flex font-heading text-2xl md:text-3xl font-semibold px-6 py-3 mb-4 rounded-full text-[color:var(--color-text-primary)]'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               Page Not Found
             </ThemedChip>
@@ -267,7 +265,7 @@ const NotFound = () => {
                   <code
                     className={themeClass(
                       'bg-secondary px-2 py-1 rounded text-[color:var(--color-text-primary)]',
-                      'aura-chip border border-[color:var(--border-soft)] px-2.5 py-1 rounded-md text-[color:var(--color-text-primary)]'
+                      'liquid-chip border border-[color:var(--border-soft)] px-2.5 py-1 rounded-md text-[color:var(--color-text-primary)]'
                     )}
                   >
                     {location.pathname}
@@ -291,9 +289,9 @@ const NotFound = () => {
               variant="primary"
               className={themeClass(
                 'inline-flex items-center gap-2 px-8 py-4 rounded-nb',
-                'inline-flex items-center gap-2 px-8 py-4 rounded-full aura-button-primary border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'inline-flex items-center gap-2 px-8 py-4 rounded-full liquid-button-primary border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <Home size={20} />
               Go Home
@@ -304,9 +302,9 @@ const NotFound = () => {
               variant="secondary"
               className={themeClass(
                 'inline-flex items-center gap-2 px-8 py-4 rounded-nb',
-                'inline-flex items-center gap-2 px-8 py-4 rounded-full aura-chip border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'inline-flex items-center gap-2 px-8 py-4 rounded-full liquid-chip border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <ArrowLeft size={20} />
               Go Back
@@ -322,9 +320,9 @@ const NotFound = () => {
             <ThemedCard
               className={themeClass(
                 'bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb',
-                'aura-glass border border-[color:var(--border-soft)] p-6 rounded-3xl'
+                'liquid-glass border border-[color:var(--border-soft)] p-6 rounded-3xl'
               )}
-              style={isAura ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
               <ThemedChip
                 as="h3"
@@ -333,7 +331,7 @@ const NotFound = () => {
                   'inline-block font-heading text-lg font-bold px-4 py-2 mb-6 text-white rounded-nb',
                   'inline-flex font-heading text-lg font-semibold px-4 py-2 mb-6 rounded-full text-[color:var(--color-text-primary)]'
                 )}
-                style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
                 <Compass size={16} className="inline mr-2" />
                 Quick Navigation
@@ -347,9 +345,9 @@ const NotFound = () => {
                     variant="subtle"
                     className={themeClass(
                       'flex items-center justify-center gap-2 p-3 font-heading font-bold text-sm rounded-nb bg-secondary hover:bg-accent hover:text-white',
-                      'flex items-center justify-center gap-2 p-3 font-heading font-semibold text-sm rounded-full aura-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                      'flex items-center justify-center gap-2 p-3 font-heading font-semibold text-sm rounded-full liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
                     )}
-                    style={isAura ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                    style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
                     {link.icon}
                     {link.label}
