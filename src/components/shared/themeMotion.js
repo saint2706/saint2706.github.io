@@ -15,11 +15,17 @@ export const AURA_MOTION = {
   },
 };
 
-export const getAuraRevealVariant = variant => {
+/**
+ * Lazy initialization of variant definitions to avoid object allocation on every call.
+ * This function is called frequently by ScrollReveal, so caching is critical.
+ */
+let AURA_VARIANTS_CACHE = null;
+
+const getAuraVariants = () => {
   const x = AURA_MOTION.offset.x;
   const y = AURA_MOTION.offset.y;
 
-  const variants = {
+  return {
     'fade-up': {
       hidden: { opacity: 0, y },
       visible: { opacity: 1, y: 0 },
@@ -45,6 +51,12 @@ export const getAuraRevealVariant = variant => {
       visible: { opacity: 1, y: 0 },
     },
   };
+};
 
-  return variants[variant] || variants['fade-up'];
+export const getAuraRevealVariant = variant => {
+  if (!AURA_VARIANTS_CACHE) {
+    AURA_VARIANTS_CACHE = getAuraVariants();
+  }
+
+  return AURA_VARIANTS_CACHE[variant] || AURA_VARIANTS_CACHE['fade-up'];
 };

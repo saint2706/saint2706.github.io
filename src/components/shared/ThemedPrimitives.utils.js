@@ -1,4 +1,20 @@
-export const joinClasses = (...classes) => classes.filter(Boolean).join(' ');
+/**
+ * Utility to join CSS classes efficiently.
+ * Optimized to avoid intermediate array allocation (filter+join).
+ * @param {...(string|false|null|undefined)} classes - CSS classes to join.
+ * @returns {string} Combined CSS class string.
+ */
+export const joinClasses = (...classes) => {
+  let str = '';
+  for (let i = 0; i < classes.length; i++) {
+    const c = classes[i];
+    if (c) {
+      if (str) str += ' ';
+      str += c;
+    }
+  }
+  return str;
+};
 
 const NB_SURFACE_BY_TONE = {
   card: 'bg-card',
