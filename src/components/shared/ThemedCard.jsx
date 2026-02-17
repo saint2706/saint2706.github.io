@@ -21,7 +21,7 @@ const VARIANTS = {
 
 const ThemedCard = ({ as: Component = 'div', variant = 'default', className, style, ...props }) => {
   const { theme } = useTheme();
-  const themeKey = theme === 'liquid' || theme === 'liquid' ? 'liquid' : 'neubrutalism';
+  const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
   const variantClasses = VARIANTS[variant]?.[themeKey] ?? VARIANTS.default[themeKey];
 
   return (

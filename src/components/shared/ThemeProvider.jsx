@@ -8,18 +8,16 @@ const THEMES = {
   liquid: 'liquid',
 };
 
-const normalizeTheme = theme => theme;
-
 const isValidTheme = theme => [THEMES.neubrutalism, THEMES.liquid].includes(theme);
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setThemeState] = useState(() => {
     const storedTheme = safeGetLocalStorage(THEME_STORAGE_KEY, THEMES.neubrutalism);
-    return isValidTheme(storedTheme) ? normalizeTheme(storedTheme) : THEMES.neubrutalism;
+    return isValidTheme(storedTheme) ? storedTheme : THEMES.neubrutalism;
   });
 
   const setTheme = useCallback(nextTheme => {
-    setThemeState(isValidTheme(nextTheme) ? normalizeTheme(nextTheme) : THEMES.neubrutalism);
+    setThemeState(isValidTheme(nextTheme) ? nextTheme : THEMES.neubrutalism);
   }, []);
 
   const toggleTheme = useCallback(() => {

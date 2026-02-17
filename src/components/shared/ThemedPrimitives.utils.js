@@ -45,7 +45,7 @@ const LIQUID_SHADOW_BY_DEPTH = {
 };
 
 export const getOverlayShell = ({ theme, tone = 'card', depth = 'default', className = '' } = {}) => {
-  const isLiquid = theme === 'liquid' || theme === 'liquid';
+  const isLiquid = theme === 'liquid';
   return {
     className: joinClasses(
       isLiquid
