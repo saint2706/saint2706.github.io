@@ -2,7 +2,7 @@
  * @fileoverview Hero section for homepage with interactive elements and animations.
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight,
@@ -78,14 +78,8 @@ const Hero = () => {
   // Helper to switch classes based on theme
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-           <script type="application/ld+json">
-          {safeJSONStringify({
+
+  const jsonLd = useMemo(() => safeJSONStringify({
             '@context': 'https://schema.org',
             '@type': 'Person',
             name: resumeData.basics.name,
@@ -94,7 +88,15 @@ const Hero = () => {
             jobTitle: resumeData.basics.title,
             description: description,
             image: `${resumeData.basics.website}/og-image.png`,
-          })}
+          }), [description]);
+return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={description} />
+           <script type="application/ld+json">
+          {jsonLd}
         </script>
       </Helmet>
 

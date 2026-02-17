@@ -2,7 +2,7 @@
  * @fileoverview Games page - Easter egg feature with Tic Tac Toe and Snake games.
  */
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useMemo, useState, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Check,
@@ -74,15 +74,8 @@ const Games = () => {
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-  return (
-    <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <meta name="robots" content="noindex" />
-        <script type="application/ld+json">
-          {safeJSONStringify({
+
+  const jsonLd = useMemo(() => safeJSONStringify({
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
@@ -99,7 +92,16 @@ const Games = () => {
                 item: canonicalUrl,
               },
             ],
-          })}
+          }), [canonicalUrl]);
+return (
+    <>
+      <Helmet>
+        <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta name="description" content={description} />
+        <meta name="robots" content="noindex" />
+        <script type="application/ld+json">
+          {jsonLd}
         </script>
       </Helmet>
 
