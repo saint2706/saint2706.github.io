@@ -3,7 +3,7 @@
  * Features call-to-action and availability status.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { Helmet } from '@dr.pogodin/react-helmet';
@@ -31,6 +31,17 @@ const Contact = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isAura = theme === 'aura';
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   /** Social media links configuration */
   const socialLinks = [
@@ -127,23 +138,42 @@ const Contact = () => {
               <form className="space-y-4" onSubmit={e => e.preventDefault()}>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Your name"
+                  aria-label="Your name"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="Your email"
+                  aria-label="Your email"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
                   rows={5}
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Project details"
+                  aria-label="Project details"
+                  required
                   className="w-full aura-glass aura-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 
                 <ThemedButton
                   as="a"
-                  href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
+                  href={`mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
+                    `Contact from ${formData.name || 'Portfolio'}`
+                  )}&body=${encodeURIComponent(
+                    `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
+                  )}`}
                   variant="primary"
                   size="lg"
                   className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
