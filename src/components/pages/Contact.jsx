@@ -43,6 +43,18 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    // Generate mailto URL with form data
+    const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
+      `Contact from ${formData.name || 'Portfolio'}`
+    )}&body=${encodeURIComponent(
+      `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
+    )}`;
+    // Navigate to mailto URL (opens default email client)
+    window.location.href = mailtoUrl;
+  };
+
   /** Social media links configuration */
   const socialLinks = [
     {
@@ -135,7 +147,7 @@ const Contact = () => {
                 Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
               </p>
 
-              <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <input
                   type="text"
                   name="name"
@@ -168,12 +180,7 @@ const Contact = () => {
                 />
 
                 <ThemedButton
-                  as="a"
-                  href={`mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
-                    `Contact from ${formData.name || 'Portfolio'}`
-                  )}&body=${encodeURIComponent(
-                    `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
-                  )}`}
+                  type="submit"
                   variant="primary"
                   size="lg"
                   className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
