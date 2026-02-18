@@ -11,6 +11,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { resumeData } from '../data/resume.js';
 import { sanitizeInput, redactPII } from '../utils/security.js';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../utils/storage.js';
 
 // API Configuration
 const API_KEY = import.meta?.env?.VITE_GEMINI_API_KEY?.trim();
@@ -20,10 +21,12 @@ const RATE_LIMIT_MS = 2000; // Minimum time (ms) between consecutive requests to
 const ALLOWED_HISTORY_ROLES = new Set(['user', 'model']);
 const MISSING_API_KEY_ERROR =
   'My AI circuits are currently offline. Please check the configuration.';
+const CHAT_RATE_LIMIT_KEY = 'chat_last_request_time';
+const ROAST_RATE_LIMIT_KEY = 'roast_last_request_time';
 
-// Rate limiting: Track last request timestamps to enforce rate limits
-let lastChatRequestTime = 0;
-let lastRoastRequestTime = 0;
+// Rate limiting: Initialize from localStorage to enforce limits across page reloads
+let lastChatRequestTime = parseInt(safeGetLocalStorage(CHAT_RATE_LIMIT_KEY, '0'), 10);
+let lastRoastRequestTime = parseInt(safeGetLocalStorage(ROAST_RATE_LIMIT_KEY, '0'), 10);
 
 /**
  * Gets an instance of the Gemini AI model.
@@ -141,6 +144,10 @@ export const chatWithGemini = async (userMessage, history = []) => {
     return "I'm processing a lot of thoughts right now! Please give me a moment to catch my breath.";
   }
 
+  // Update persistent rate limit immediately to prevent race conditions and enforce attempt limits
+  lastChatRequestTime = now;
+  safeSetLocalStorage(CHAT_RATE_LIMIT_KEY, now.toString());
+
   const model = getModel();
   if (!model) {
     return MISSING_API_KEY_ERROR;
@@ -168,7 +175,6 @@ export const chatWithGemini = async (userMessage, history = []) => {
     // Send message with timeout protection to prevent hanging requests
     const result = await withTimeout(chat.sendMessage(sanitizedMessage), API_TIMEOUT);
     const responseText = result.response.text();
-    lastChatRequestTime = Date.now(); // Update rate limit timestamp
     return responseText;
   } catch (error) {
     // Comprehensive error handling with specific messages for different failure modes
@@ -262,6 +268,10 @@ export const roastResume = async () => {
     return 'Roast oven is cooling down! Give it a second.';
   }
 
+  // Update persistent rate limit immediately to prevent race conditions and enforce attempt limits
+  lastRoastRequestTime = now;
+  safeSetLocalStorage(ROAST_RATE_LIMIT_KEY, now.toString());
+
   const model = getModel();
   if (!model) {
     return MISSING_API_KEY_ERROR;
@@ -280,7 +290,6 @@ export const roastResume = async () => {
     // Generate roast with timeout protection
     const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
     const responseText = result.response.text();
-    lastRoastRequestTime = Date.now(); // Update rate limit timestamp
     return responseText;
   } catch (error) {
     // Same error handling as chatWithGemini for consistency
