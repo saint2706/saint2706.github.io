@@ -2,19 +2,19 @@ const join = (...parts) => parts.filter(Boolean).join(' ');
 
 export const getGameThemeStyles = isLiquid => {
   const panel = isLiquid
-    ? 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl'
+    ? 'lg-surface-2 rounded-2xl'
     : 'border-[3px] border-[color:var(--color-border)]';
 
   return {
     scoreboard: join('flex p-4', isLiquid ? 'gap-5' : 'gap-4 bg-secondary', panel),
     statBlock: 'px-3 md:px-4',
     separator: isLiquid ? 'w-px bg-[color:var(--border-soft)]' : 'w-[3px] bg-[color:var(--color-border)]',
-    boardShell: join(isLiquid ? 'liquid-glass rounded-2xl' : 'bg-card', panel),
+    boardShell: join(isLiquid ? 'lg-surface-2 rounded-2xl' : 'bg-card', panel),
     boardPadding: isLiquid ? 'p-3' : 'p-4',
     overlay: join(
       'absolute inset-0 flex flex-col items-center justify-center gap-4',
       isLiquid
-        ? 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl backdrop-blur-md bg-primary/75'
+        ? 'lg-surface-2 rounded-2xl backdrop-blur-md bg-primary/75'
         : 'bg-primary/90 border-[3px] border-[color:var(--color-border)]'
     ),
     banner: join(
@@ -26,7 +26,7 @@ export const getGameThemeStyles = isLiquid => {
     statusBanner: join(
       'px-4 py-2 font-heading font-bold',
       isLiquid
-        ? 'liquid-glass border border-[color:var(--border-soft)] rounded-xl'
+        ? 'lg-surface-2 rounded-xl'
         : 'bg-secondary border-[3px] border-[color:var(--color-border)]'
     ),
     buttonPrimary: join(
@@ -38,7 +38,7 @@ export const getGameThemeStyles = isLiquid => {
     buttonSecondary: join(
       'px-6 py-2 font-heading font-bold flex items-center gap-2 cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none',
       isLiquid
-        ? 'liquid-glass border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] rounded-xl hover:brightness-110'
+        ? 'lg-surface-2 text-[color:var(--text-primary)] rounded-xl hover:brightness-110'
         : 'bg-fun-yellow text-black border-[3px] border-[color:var(--color-border)] hover:-translate-y-0.5'
     ),
     tileBase: join(

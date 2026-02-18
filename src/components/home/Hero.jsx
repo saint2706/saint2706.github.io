@@ -80,22 +80,22 @@ const Hero = () => {
 
 
   const jsonLd = useMemo(() => safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'Person',
-            name: resumeData.basics.name,
-            url: resumeData.basics.website,
-            sameAs: resumeData.basics.socials.map(s => s.url),
-            jobTitle: resumeData.basics.title,
-            description: description,
-            image: `${resumeData.basics.website}/og-image.png`,
-          }), [description]);
-return (
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: resumeData.basics.name,
+    url: resumeData.basics.website,
+    sameAs: resumeData.basics.socials.map(s => s.url),
+    jobTitle: resumeData.basics.title,
+    description: description,
+    image: `${resumeData.basics.website}/og-image.png`,
+  }), [description]);
+  return (
     <>
       <Helmet>
         <title>{title}</title>
         <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={description} />
-           <script type="application/ld+json">
+        <script type="application/ld+json">
           {jsonLd}
         </script>
       </Helmet>
@@ -149,12 +149,12 @@ return (
             variant="yellow"
             className={themeClass(
               "font-heading font-semibold px-5 py-2 nb-sticker",
-              "font-heading font-semibold px-5 py-2 liquid-chip border border-[color:var(--border-soft)]"
+              "font-heading font-semibold px-5 py-2 lg-surface-3 lg-pill"
             )}
             style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
             <Sparkles size={18} className={themeClass("text-black", "text-fun-yellow")} />
-            <span className={isLiquid ? "text-[color:var(--color-text-primary)]" : ""}>Available for hire & collaborations</span>
+            <span className={isLiquid ? "text-[color:var(--text-primary)]" : ""}>Available for hire & collaborations</span>
           </ThemedChip>
         </motion.div>
 
@@ -165,7 +165,7 @@ return (
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
-          <span className="block text-[color:var(--color-text-primary)] mb-2 relative">
+          <span className="block text-[color:var(--text-primary)] mb-2 relative">
             Data Storyteller
             {/* SVG squiggle only for Neubrutalism */}
             {!isLiquid && (
@@ -188,7 +188,7 @@ return (
           </span>
           <span
             className={themeClass(
-              "text-[color:var(--color-text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker",
+              "text-[color:var(--text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker",
               "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block"
             )}
             style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
@@ -249,7 +249,7 @@ return (
             size="lg"
             className={themeClass(
               "nb-shadow-lift nb-color-invert",
-              "liquid-glass border border-[color:var(--border-soft)] shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--color-text-primary)]"
+              "lg-surface-2 shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--text-primary)]"
             )}
             style={isLiquid ? undefined : { '--invert-text': '#ffffff' }}
             aria-label="Open chat with Digital Rishabh"
@@ -271,58 +271,107 @@ return (
           className="mt-16 w-full max-w-md"
         >
           <ThemedCard
-            variant={isLiquid ? 'default' : 'highlighted'} // Use default for liquid to get glass effect, highlighted for neubrutalism
+            variant={isLiquid ? 'default' : 'highlighted'}
             className={themeClass(
               `p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`,
-              `p-6 text-left font-mono text-sm transition-all duration-300 liquid-glass border border-[color:var(--border-soft)] bg-opacity-40 backdrop-blur-md ${isGlitching ? 'animate-glitch' : ''}`
+              `!bg-transparent !border-0 !shadow-none p-0 ${isGlitching ? 'animate-glitch' : ''}`
             )}
             style={isLiquid ? undefined : { '--sticker-rotate': '-1deg' }}
           >
-            <div className={`flex items-center gap-2 mb-3 pb-2 border-b-2 ${isLiquid ? 'border-white/10' : 'border-black/20'}`}>
-              <Code2 size={16} className={isLiquid ? 'text-blue-400' : ''} />
-              <span className={`font-heading font-bold ${isLiquid ? 'text-white' : ''}`}>
-                {isGlitching ? 'game_mode.js' : 'developer.js'}
-              </span>
-            </div>
-            <pre className={`whitespace-pre-wrap ${isLiquid ? 'text-blue-100' : ''}`}>
-              {isGlitching ? (
-                <>
-                  {`const developer = {
-  mode: `}
-                  <span className={isLiquid ? "text-pink-400 font-bold" : "text-fun-pink font-bold"}>&lsquo;GAMER&rsquo;</span>
-                  {`,
-  status: `}
-                  <span className={isLiquid ? "text-blue-400 font-bold" : "text-accent font-bold"}>&lsquo;Ready Player One&rsquo;</span>
-                  {`,
-  launching: `}
-                  <span className="text-green-500 font-bold">true</span>
-                  {`
-};`}
-                  <span className="nb-blink">█</span>
-                </>
-              ) : (
-                <>
-                  {`const developer = {
-  name: '${resumeData.basics.name}',
-  stack: [`}
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    onClick={handleEasterEggClick}
-                    onKeyDown={handleEasterEggKeyDown}
-                    className={`cursor-pointer hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${isLiquid ? 'hover:text-pink-400 focus:ring-pink-400' : 'hover:text-fun-pink focus:ring-fun-pink'}`}
-                    aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
-                  >
-                    &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
+            {isLiquid ? (
+              <div className="lg-code-surface p-6 text-left font-mono text-sm">
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/15">
+                  <span className="flex gap-1.5 mr-2">
+                    <span className="w-3 h-3 rounded-full bg-[#FF5F57] opacity-80" />
+                    <span className="w-3 h-3 rounded-full bg-[#FEBC2E] opacity-80" />
+                    <span className="w-3 h-3 rounded-full bg-[#28C840] opacity-80" />
                   </span>
-                  {`],
-  currentStatus: 'Building awesome things.',
-  openToWork: true
-};`}
-                  <span className="nb-blink">█</span>
-                </>
-              )}
-            </pre>
+                  <Code2 size={14} className="text-blue-400/70" />
+                  <span className="font-heading font-semibold text-[13px] text-gray-300 tracking-wide">
+                    {isGlitching ? 'game_mode.js' : 'developer.js'}
+                  </span>
+                </div>
+                <pre className="whitespace-pre-wrap text-gray-300 leading-relaxed">
+                  {isGlitching ? (
+                    <>
+                      <span className="text-[#c792ea]">const</span>{' '}
+                      <span className="text-[#82aaff]">developer</span>{' = {\n'}
+                      {'  mode: '}
+                      <span className="text-[#c3e88d]">&lsquo;GAMER&rsquo;</span>
+                      {',\n  status: '}
+                      <span className="text-[#c3e88d]">&lsquo;Ready Player One&rsquo;</span>
+                      {',\n  launching: '}
+                      <span className="text-[#f78c6c]">true</span>
+                      {'\n};'}
+                      <span className="nb-blink text-blue-400">█</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-[#c792ea]">const</span>{' '}
+                      <span className="text-[#82aaff]">developer</span>{' = {\n'}
+                      {'  name: '}
+                      <span className="text-[#c3e88d]">&lsquo;{resumeData.basics.name}&rsquo;</span>
+                      {',\n  stack: ['}
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={handleEasterEggClick}
+                        onKeyDown={handleEasterEggKeyDown}
+                        className="cursor-pointer text-[#c3e88d] hover:text-[#addb67] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-400"
+                        aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
+                      >
+                        &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
+                      </span>
+                      {'],\n  currentStatus: '}
+                      <span className="text-[#c3e88d]">&lsquo;Building awesome things.&rsquo;</span>
+                      {',\n  openToWork: '}
+                      <span className="text-[#f78c6c]">true</span>
+                      {'\n};'}
+                      <span className="nb-blink text-blue-400">█</span>
+                    </>
+                  )}
+                </pre>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
+                  <Code2 size={16} />
+                  <span className="font-heading font-bold">
+                    {isGlitching ? 'game_mode.js' : 'developer.js'}
+                  </span>
+                </div>
+                <pre className="whitespace-pre-wrap">
+                  {isGlitching ? (
+                    <>
+                      {`const developer = {\n  mode: `}
+                      <span className="text-fun-pink font-bold">&lsquo;GAMER&rsquo;</span>
+                      {`,\n  status: `}
+                      <span className="text-accent font-bold">&lsquo;Ready Player One&rsquo;</span>
+                      {`,\n  launching: `}
+                      <span className="text-green-500 font-bold">true</span>
+                      {`\n};`}
+                      <span className="nb-blink">█</span>
+                    </>
+                  ) : (
+                    <>
+                      {`const developer = {\n  name: '${resumeData.basics.name}',\n  stack: [`}
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        onClick={handleEasterEggClick}
+                        onKeyDown={handleEasterEggKeyDown}
+                        className="cursor-pointer hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 hover:text-fun-pink focus:ring-fun-pink"
+                        aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
+                      >
+                        &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
+                      </span>
+                      {`],\n  currentStatus: 'Building awesome things.',\n  openToWork: true\n};`}
+                      <span className="nb-blink">█</span>
+                    </>
+                  )}
+                </pre>
+              </>
+            )}
           </ThemedCard>
         </motion.div>
       </div>

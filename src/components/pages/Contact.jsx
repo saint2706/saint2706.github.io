@@ -143,7 +143,7 @@ return (
                   placeholder="Your name"
                   aria-label="Your name"
                   required
-                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
                   type="email"
@@ -153,7 +153,7 @@ return (
                   placeholder="Your email"
                   aria-label="Your email"
                   required
-                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
                   rows={5}
@@ -163,7 +163,7 @@ return (
                   placeholder="Project details"
                   aria-label="Project details"
                   required
-                  className="w-full liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
+                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 
                 <ThemedButton

@@ -126,7 +126,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       <div
         className={
           isLiquid
-            ? 'glass-surface ios-sheet flex items-center justify-between w-full max-w-[1200px] h-[72px] px-8 pointer-events-auto transition-all duration-300'
+            ? 'lg-surface-1 lg-specular-rim flex items-center justify-between w-full max-w-[1200px] h-[72px] px-8 pointer-events-auto transition-all duration-300'
             : 'relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
         }
       >
@@ -137,7 +137,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           aria-label="Rishabh Agrawal - Home page"
         >
           {isLiquid ? (
-            <span className="liquid-chip px-4 py-2 border border-[color:var(--border-soft)] rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap">
+            <span className="lg-surface-3 px-4 py-2 rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap">
               &lt;Rishabh /&gt;
             </span>
           ) : (
@@ -155,7 +155,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               to={item.path}
               className={({ isActive }) =>
                 isLiquid
-                  ? `touch-target flex items-center justify-center px-4 lg:px-6 text-[15px] font-semibold rounded-full transition-colors whitespace-nowrap ${isActive ? 'bg-black/5 text-ios-dark' : 'text-ios-dark hover:bg-black/[0.06]'
+                  ? `touch-target flex items-center justify-center px-4 lg:px-6 text-[15px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${isActive ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]' : 'text-[color:var(--text-secondary)] hover:bg-white/40'
                   }`
                   : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${isActive
                     ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
@@ -175,8 +175,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           <button
             onClick={toggleTheme}
             className={`relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isLiquid
-                ? 'hover:bg-black/5 text-ios-dark'
-                : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
+              ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+              : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
               }`}
             aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
           >
@@ -187,7 +187,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           {isLiquid ? (
             <NavLink
               to="/contact"
-              className="hidden md:flex touch-target bg-primary text-white px-6 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
+              className="hidden md:flex touch-target bg-[color:var(--accent)] text-white px-6 h-[44px] items-center justify-center rounded-full text-[15px] font-bold active:scale-95 transition-all lg-spring-hover whitespace-nowrap"
+              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), 0 4px 16px rgba(0,122,255,0.3)' }}
             >
               Contact
             </NavLink>
@@ -209,8 +210,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
             type="button"
             ref={menuButtonRef}
             className={`md:hidden p-3 cursor-pointer ${isLiquid
-                ? 'text-ios-dark hover:bg-black/5 rounded-full'
-                : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb'
+              ? 'text-[color:var(--text-primary)] lg-surface-3 rounded-full'
+              : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb'
               }`}
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
@@ -235,8 +236,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
               className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${isLiquid
-                  ? 'glass-surface ios-card border border-black/10'
-                  : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
+                ? 'lg-surface-2 lg-specular-rim'
+                : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
                 }`}
               ref={menuRef}
             >
@@ -245,8 +246,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                   <button
                     onClick={toggleTheme}
                     className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${isLiquid
-                        ? 'bg-ios-bg-2 text-ios-dark hover:bg-black/5'
-                        : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb'
+                      ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+                      : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb'
                       }`}
                   >
                     <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
@@ -261,7 +262,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200
                       ${isLiquid
-                        ? (isActive ? 'bg-primary/5 text-primary' : 'text-ios-dark hover:bg-black/5')
+                        ? (isActive ? 'bg-white/60 text-[color:var(--text-primary)]' : 'text-[color:var(--text-secondary)] hover:bg-white/40')
                         : (isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary')
                       }
                       ${!isLiquid && index !== navItems.length ? 'border-b-2 border-[color:var(--color-border)]' : ''}`

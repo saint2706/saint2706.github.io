@@ -153,7 +153,7 @@ const Playground = () => {
       <div
         className={themeClass(
           'max-w-6xl mx-auto py-12 px-4',
-          'max-w-6xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]'
+          'max-w-6xl mx-auto py-12 px-4 text-[color:var(--text-primary)]'
         )}
       >
         {/* Header */}
@@ -169,7 +169,7 @@ const Playground = () => {
               variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
                 'inline-block bg-accent text-white px-6 py-3 rounded-nb nb-stamp-in',
-                'inline-block px-8 py-4 rounded-3xl liquid-glass border border-[color:var(--border-soft)]'
+                'inline-block px-8 py-4 rounded-3xl lg-surface-2'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -190,7 +190,7 @@ const Playground = () => {
           className="flex justify-center mb-10"
         >
           <div
-            className={themeClass('flex gap-3', 'flex gap-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)] p-2')}
+            className={themeClass('flex gap-3', 'flex gap-3 rounded-3xl lg-surface-2 p-2')}
             role="tablist"
             aria-label="Filter snippets by language"
           >
@@ -207,11 +207,11 @@ const Playground = () => {
                     activeFilter === filter.id
                       ? themeClass(
                           `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
-                          'liquid-chip border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
+                          'lg-surface-3 lg-pill rounded-full text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
                         )
                       : themeClass(
                           'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
-                          'liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                          'lg-surface-2 rounded-full text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
                         )
                   }`}
                 style={{
@@ -229,7 +229,7 @@ const Playground = () => {
                   <span
                     className={themeClass(
                       'bg-white/20 px-2 py-0.5 rounded text-xs',
-                      'px-2 py-0.5 rounded-full text-xs bg-[color:var(--surface-muted)] text-[color:var(--color-text-primary)] border border-[color:var(--border-soft)]'
+                      'px-2 py-0.5 rounded-full text-xs bg-[color:var(--surface-muted)] text-[color:var(--text-primary)] border border-[color:var(--border-soft)]'
                     )}
                   >
                     {filteredSnippets.length}
@@ -282,7 +282,7 @@ const Playground = () => {
           <ThemedCard
             className={themeClass(
               'bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb',
-              'liquid-glass border border-[color:var(--border-soft)] px-7 py-4 rounded-3xl max-w-2xl'
+              'lg-surface-2 px-7 py-4 rounded-3xl max-w-2xl'
             )}
             style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >
@@ -354,7 +354,7 @@ const SnippetCard = ({
       layout={!shouldReduceMotion}
       className={themeClass(
         'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
-        'liquid-glass border border-[color:var(--border-soft)] overflow-hidden flex flex-col rounded-3xl'
+        'lg-surface-2 overflow-hidden flex flex-col rounded-3xl'
       )}
       style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
     >
@@ -369,7 +369,7 @@ const SnippetCard = ({
             ) : (
               <Palette size={18} className="text-fun-pink" aria-hidden="true" />
             )}
-            <h3 className="text-lg font-heading font-bold text-[color:var(--color-text-primary)]">
+            <h3 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
               {snippet.title}
             </h3>
           </div>
@@ -438,7 +438,7 @@ const SnippetCard = ({
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full lg-surface-3 lg-pill text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -456,7 +456,7 @@ const SnippetCard = ({
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >

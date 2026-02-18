@@ -70,7 +70,7 @@ const LoadingDialog = ({ type }) => {
           className={joinClasses(
             'p-2',
             isLiquid
-              ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
+              ? 'lg-surface-3 lg-pill rounded-full'
               : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
           )}
         >
@@ -258,7 +258,7 @@ const Chatbot = () => {
             className={joinClasses(
               'p-4 cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none',
               isLiquid
-                ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                ? 'lg-surface-3 lg-pill lg-spring-hover rounded-full hover:brightness-110 hover:scale-[1.01]'
                 : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${mainFabShell.className}`
             )}
             style={mainFabShell.style}
@@ -284,7 +284,7 @@ const Chatbot = () => {
                   className={joinClasses(
                     'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
                     isLiquid
-                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                      ? 'lg-surface-3 lg-pill lg-spring-hover rounded-full hover:brightness-110 hover:scale-[1.01]'
                       : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${roastFabShell.className}`
                   )}
                   style={roastFabShell.style}
@@ -306,7 +306,7 @@ const Chatbot = () => {
                   className={joinClasses(
                     'p-3 cursor-pointer transition-transform flex items-center gap-2 motion-reduce:transform-none motion-reduce:transition-none',
                     isLiquid
-                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                      ? 'lg-surface-3 lg-pill lg-spring-hover rounded-full hover:brightness-110 hover:scale-[1.01]'
                       : `hover:-translate-x-0.5 hover:-translate-y-0.5 ${chatFabShell.className}`
                   )}
                   style={chatFabShell.style}

@@ -5,23 +5,19 @@ import { joinClasses } from './ThemedPrimitives.utils';
 const VARIANTS = {
   yellow: {
     neubrutalism: 'bg-fun-yellow text-black border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid:
-      'liquid-chip liquid-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
   },
   accent: {
     neubrutalism: 'bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid:
-      'liquid-chip liquid-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
   },
   pink: {
     neubrutalism: 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid:
-      'liquid-chip liquid-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)]',
+    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
   },
   neutral: {
     neubrutalism: 'bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid:
-      'liquid-chip liquid-glow-transition border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)]',
+    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-secondary)]',
   },
 };
 

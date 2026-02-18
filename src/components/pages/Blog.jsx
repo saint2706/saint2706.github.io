@@ -234,7 +234,7 @@ const Blog = () => {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
-          className={`flex flex-col md:flex-row justify-between items-center mb-10 gap-4 ${isLiquid ? 'liquid-glass rounded-3xl p-4 md:p-5' : ''}`}
+          className={`flex flex-col md:flex-row justify-between items-center mb-10 gap-4 ${isLiquid ? 'lg-surface-2 rounded-3xl p-4 md:p-5' : ''}`}
         >
           <div
             className="flex flex-wrap gap-2 justify-center md:justify-start"
@@ -278,7 +278,7 @@ const Blog = () => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isLiquid ? 'liquid-glass liquid-form-field border border-[color:var(--border-soft)] rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
+              className={`w-full py-3 pl-12 pr-12 text-primary font-sans placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent ${isLiquid ? 'lg-surface-2 rounded-2xl' : 'bg-card border-[3px] border-[color:var(--color-border)]'}`}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               aria-describedby="blog-search-limit"
             />

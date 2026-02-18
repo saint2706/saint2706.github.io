@@ -145,7 +145,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
             className={joinClasses(
               'p-2',
               isLiquid
-                ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
+                ? 'lg-surface-3 lg-pill rounded-full'
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
@@ -204,7 +204,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           className={joinClasses(
             'flex-1 py-3 font-heading font-bold cursor-pointer disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
             isLiquid
-              ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+              ? 'liquid-overlay-action lg-spring-hover bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
               : 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
           )}
           style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
@@ -220,7 +220,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           className={joinClasses(
             'py-3 px-6 font-heading font-bold cursor-pointer motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
             isLiquid
-              ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+              ? 'liquid-overlay-action lg-spring-hover bg-[color:var(--surface)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
               : 'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
           )}
           style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}

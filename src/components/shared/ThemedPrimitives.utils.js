@@ -25,11 +25,11 @@ const NB_SURFACE_BY_TONE = {
 };
 
 const LIQUID_SURFACE_BY_TONE = {
-  card: 'liquid-glass text-[color:var(--text)]',
-  accent: 'liquid-glass text-[color:var(--text)]',
-  pink: 'liquid-glass text-[color:var(--text)]',
-  secondary: 'bg-[color:var(--surface-muted)] text-[color:var(--text)]',
-  yellow: 'bg-[color:var(--surface-muted)] text-[color:var(--text)]',
+  card: 'lg-surface-2 text-[color:var(--text)]',
+  accent: 'lg-surface-2 text-[color:var(--text)]',
+  pink: 'lg-surface-2 text-[color:var(--text)]',
+  secondary: 'lg-surface-3 text-[color:var(--text)]',
+  yellow: 'lg-surface-3 text-[color:var(--text)]',
 };
 
 const NB_SHADOW_BY_DEPTH = {
@@ -39,9 +39,9 @@ const NB_SHADOW_BY_DEPTH = {
 };
 
 const LIQUID_SHADOW_BY_DEPTH = {
-  default: '0 10px 28px rgba(5, 10, 24, 0.28)',
-  hover: '0 14px 34px rgba(5, 10, 24, 0.34)',
-  subtle: '0 6px 16px rgba(5, 10, 24, 0.2)',
+  default: 'var(--glass-drop-shadow, 0 8px 32px rgba(0,0,0,0.08))',
+  hover: 'var(--glass-drop-shadow-hover, 0 12px 40px rgba(0,0,0,0.12))',
+  subtle: 'var(--glass-drop-shadow-subtle, 0 2px 8px rgba(0,0,0,0.05))',
 };
 
 export const getOverlayShell = ({ theme, tone = 'card', depth = 'default', className = '' } = {}) => {

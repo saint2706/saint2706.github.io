@@ -166,7 +166,7 @@ const NotFound = () => {
         <section
           className={themeClass(
             'max-w-2xl mx-auto text-center relative z-10',
-            'max-w-3xl mx-auto text-center relative z-10 liquid-glass border border-[color:var(--border-soft)] rounded-[2rem] px-6 py-8 md:px-10 md:py-10'
+            'max-w-3xl mx-auto text-center relative z-10 lg-surface-2 rounded-[2rem] px-6 py-8 md:px-10 md:py-10'
           )}
         >
           {/* Main 404 Display */}
@@ -189,7 +189,7 @@ const NotFound = () => {
               <ThemedCard
                 className={themeClass(
                   'w-24 h-24 mx-auto bg-fun-yellow border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb',
-                  'w-24 h-24 mx-auto liquid-glass border border-[color:var(--border-soft)] flex items-center justify-center rounded-3xl'
+                  'w-24 h-24 mx-auto lg-surface-2 flex items-center justify-center rounded-3xl'
                 )}
                 style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
@@ -205,7 +205,7 @@ const NotFound = () => {
                 exit={{ opacity: 0 }}
                 className={themeClass(
                   'absolute left-1/2 -translate-x-1/2 top-4 bg-fun-pink text-white px-4 py-2 rounded-nb font-heading text-sm',
-                  'absolute left-1/2 -translate-x-1/2 top-4 liquid-chip border border-[color:var(--border-soft)] px-4 py-2 rounded-full font-heading text-sm text-[color:var(--color-text-primary)]'
+                  'absolute left-1/2 -translate-x-1/2 top-4 lg-surface-3 lg-pill px-4 py-2 rounded-full font-heading text-sm text-[color:var(--text-primary)]'
                 )}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
@@ -251,7 +251,7 @@ const NotFound = () => {
               variant="accent"
               className={themeClass(
                 'inline-block font-heading text-2xl md:text-3xl font-bold px-6 py-3 mb-4 rounded-nb text-white',
-                'inline-flex font-heading text-2xl md:text-3xl font-semibold px-6 py-3 mb-4 rounded-full text-[color:var(--color-text-primary)]'
+                'inline-flex font-heading text-2xl md:text-3xl font-semibold px-6 py-3 mb-4 rounded-full text-[color:var(--text-primary)]'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -260,12 +260,12 @@ const NotFound = () => {
             <p className="text-secondary text-lg font-sans max-w-md mx-auto mt-4">
               Oops! Looks like this page took a wrong turn somewhere in the digital cosmos.
               {location.pathname && (
-                <span className="block mt-3 text-[color:var(--color-text-secondary)] text-sm font-mono">
+                <span className="block mt-3 text-[color:var(--text-secondary)] text-sm font-mono">
                   Path:{' '}
                   <code
                     className={themeClass(
-                      'bg-secondary px-2 py-1 rounded text-[color:var(--color-text-primary)]',
-                      'liquid-chip border border-[color:var(--border-soft)] px-2.5 py-1 rounded-md text-[color:var(--color-text-primary)]'
+                      'bg-secondary px-2 py-1 rounded text-[color:var(--text-primary)]',
+                      'lg-surface-3 lg-pill px-2.5 py-1 rounded-md text-[color:var(--text-primary)]'
                     )}
                   >
                     {location.pathname}
@@ -302,7 +302,7 @@ const NotFound = () => {
               variant="secondary"
               className={themeClass(
                 'inline-flex items-center gap-2 px-8 py-4 rounded-nb',
-                'inline-flex items-center gap-2 px-8 py-4 rounded-full liquid-chip border border-[color:var(--border-soft)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                'inline-flex items-center gap-2 px-8 py-4 rounded-full lg-surface-3 lg-pill focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -320,7 +320,7 @@ const NotFound = () => {
             <ThemedCard
               className={themeClass(
                 'bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb',
-                'liquid-glass border border-[color:var(--border-soft)] p-6 rounded-3xl'
+                'lg-surface-2 p-6 rounded-3xl'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -329,7 +329,7 @@ const NotFound = () => {
                 variant="pink"
                 className={themeClass(
                   'inline-block font-heading text-lg font-bold px-4 py-2 mb-6 text-white rounded-nb',
-                  'inline-flex font-heading text-lg font-semibold px-4 py-2 mb-6 rounded-full text-[color:var(--color-text-primary)]'
+                  'inline-flex font-heading text-lg font-semibold px-4 py-2 mb-6 rounded-full text-[color:var(--text-primary)]'
                 )}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
@@ -345,7 +345,7 @@ const NotFound = () => {
                     variant="subtle"
                     className={themeClass(
                       'flex items-center justify-center gap-2 p-3 font-heading font-bold text-sm rounded-nb bg-secondary hover:bg-accent hover:text-white',
-                      'flex items-center justify-center gap-2 p-3 font-heading font-semibold text-sm rounded-full liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                      'flex items-center justify-center gap-2 p-3 font-heading font-semibold text-sm rounded-full lg-surface-3 lg-pill text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
                     )}
                     style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
@@ -362,7 +362,7 @@ const NotFound = () => {
             initial={shouldReduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
-            className="mt-8 text-[color:var(--color-text-secondary)] text-sm font-sans flex items-center justify-center gap-2"
+            className="mt-8 text-[color:var(--text-secondary)] text-sm font-sans flex items-center justify-center gap-2"
           >
             <Sparkles size={14} className="text-fun-yellow" />
             Pro tip: Use the chatbot (Ctrl+K) if you need help navigating!

@@ -52,7 +52,7 @@ const Footer = () => {
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
-    <footer className={themeClass("mt-20 bg-primary relative overflow-hidden", "mt-20 bg-ios-bg-1 relative overflow-hidden")}>
+    <footer className={themeClass("mt-20 bg-primary relative overflow-hidden", "mt-20 relative overflow-hidden lg-ambient-bg")}>
       {/* Zigzag divider */}
       <ZigzagDivider variant={isLiquid ? 'gradient' : 'zigzag'} className={isLiquid ? 'opacity-80' : ''} />
 
@@ -90,49 +90,49 @@ const Footer = () => {
           <div className="max-w-4xl mx-auto px-4">
             {/* Social Links */}
             <div className="flex justify-center gap-4 mb-8">
-               {githubUrl && (
-                 <a
-                    href={githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={themeClass(
-                        "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                        "p-3 liquid-glass border border-[color:var(--border-soft)] rounded-full hover:scale-110 transition-transform text-[color:var(--color-text-primary)]"
-                    )}
-                    style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
-                    aria-label="Visit GitHub"
-                 >
-                    <Github size={24} />
-                 </a>
-               )}
-               {linkedInUrl && (
-                 <a
-                    href={linkedInUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={themeClass(
-                        "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                        "p-3 liquid-glass border border-[color:var(--border-soft)] rounded-full hover:scale-110 transition-transform text-[color:var(--color-text-primary)]"
-                    )}
-                    style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
-                    aria-label="Visit LinkedIn"
-                 >
-                    <Linkedin size={24} />
-                 </a>
-               )}
+              {githubUrl && (
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={themeClass(
+                    "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                    "p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                  )}
+                  style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  aria-label="Visit GitHub"
+                >
+                  <Github size={24} />
+                </a>
+              )}
+              {linkedInUrl && (
+                <a
+                  href={linkedInUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={themeClass(
+                    "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                    "p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                  )}
+                  style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  aria-label="Visit LinkedIn"
+                >
+                  <Linkedin size={24} />
+                </a>
+              )}
             </div>
 
             {/* Made with love */}
             <div className="flex justify-center">
               <div
                 className={themeClass(
-                    "px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb",
-                    "px-6 py-3 liquid-chip border border-[color:var(--border-soft)] rounded-full"
+                  "px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb",
+                  "px-6 py-3 lg-surface-3 lg-pill"
                 )}
                 style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
-                <p className={themeClass("font-heading font-bold text-sm flex items-center justify-center gap-2 text-black", "font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--color-text-secondary)]")}>
-                  Made with <Coffee size={16} className={isLiquid ? "text-[color:var(--color-text-secondary)]" : "text-black"} aria-hidden="true" />
+                <p className={themeClass("font-heading font-bold text-sm flex items-center justify-center gap-2 text-black", "font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--text-secondary)]")}>
+                  Made with <Coffee size={16} className={isLiquid ? "text-[color:var(--text-secondary)]" : "text-black"} aria-hidden="true" />
                   + <button
                     onClick={handleHeartClick}
                     className="group relative inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-fun-pink focus-visible:rounded-full"
@@ -155,11 +155,11 @@ const Footer = () => {
             {showSecret && (
               <div className="mt-4 text-center">
                 <span
-                    className={themeClass(
-                        "inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb",
-                        "inline-block px-4 py-2 text-sm font-heading font-semibold animate-bounce liquid-glass border border-[color:var(--border-soft)] rounded-full text-[color:var(--color-text-primary)]"
-                    )}
-                    style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+                  className={themeClass(
+                    "inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb",
+                    "inline-block px-4 py-2 text-sm font-heading font-semibold animate-bounce lg-surface-3 lg-pill text-[color:var(--text-primary)]"
+                  )}
+                  style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
                   You found a secret! ❤️
                 </span>

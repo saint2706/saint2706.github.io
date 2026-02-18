@@ -291,7 +291,7 @@ Just kidding... but seriously, let's chat!
             <div
               className={
                 isLiquid
-                  ? 'flex flex-col liquid-glass border border-[color:var(--border-soft)] overflow-hidden rounded-2xl'
+                  ? 'flex flex-col lg-surface-2 overflow-hidden rounded-2xl'
                   : 'flex flex-col bg-gray-950 border-nb border-[color:var(--color-border)] overflow-hidden rounded-nb'
               }
               style={isLiquid ? undefined : { boxShadow: '8px 8px 0 var(--color-border)' }}

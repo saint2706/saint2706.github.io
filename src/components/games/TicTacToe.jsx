@@ -441,7 +441,7 @@ const TicTacToe = () => {
                             ${
                               difficulty === diff.id
                                 ? `${diff.color} ${diff.id === 'easy' ? 'text-black' : 'text-white'} ${isLiquid ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
-                                : `${isLiquid ? 'liquid-glass border border-[color:var(--border-soft)] rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
+                                : `${isLiquid ? 'lg-surface-2 rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
                             }`}
             style={{
               boxShadow: isLiquid

@@ -5,17 +5,17 @@ import { joinClasses } from './ThemedPrimitives.utils';
 const VARIANTS = {
   default: {
     neubrutalism: 'bg-card border-nb border-[color:var(--color-border)] rounded-nb',
-    liquid: 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl',
+    liquid: 'lg-surface-2 lg-specular-rim',
   },
   interactive: {
     neubrutalism:
       'bg-card border-nb border-[color:var(--color-border)] rounded-nb transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none',
     liquid:
-      'liquid-glass liquid-interactive-surface border border-[color:var(--border-soft)] rounded-2xl transition-[filter,transform] hover:brightness-110 hover:scale-[1.01] motion-reduce:transform-none motion-reduce:transition-none',
+      'lg-surface-2 lg-specular-rim lg-spring-hover motion-reduce:transform-none motion-reduce:transition-none',
   },
   highlighted: {
     neubrutalism: 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] rounded-nb',
-    liquid: 'liquid-glass border border-[color:var(--border-soft)] rounded-2xl',
+    liquid: 'lg-surface-2 lg-specular-rim',
   },
 };
 

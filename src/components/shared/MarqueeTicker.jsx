@@ -49,11 +49,11 @@ const MarqueeTicker = ({
   const isLiquid = variant === 'liquid';
 
   const wrapperClasses = isLiquid
-    ? `${useBlurBand ? 'liquid-glass backdrop-blur-md' : bgColor} border-y border-[color:var(--border-soft)] py-2`
+    ? `${useBlurBand ? 'lg-surface-2' : bgColor} border-y border-[color:var(--border-soft)] py-2`
     : `border-y-[3px] border-black ${bgColor} py-3`;
 
   const itemClasses = isLiquid
-    ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--color-text-secondary)]'
+    ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--text-secondary)]'
     : 'whitespace-nowrap px-6 font-heading text-sm font-bold uppercase tracking-widest text-black';
 
   const separatorClasses = isLiquid ? 'mx-4 text-[color:var(--color-text-muted)]' : 'mx-4 text-fun-pink';

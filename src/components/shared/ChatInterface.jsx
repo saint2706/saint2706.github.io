@@ -594,7 +594,7 @@ const ChatInterface = ({ onClose }) => {
             className={joinClasses(
               'p-2',
               isLiquid
-                ? 'liquid-chip border border-[color:var(--border-soft)] rounded-full'
+                ? 'lg-surface-3 lg-pill rounded-full'
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
@@ -667,7 +667,7 @@ const ChatInterface = ({ onClose }) => {
                   }
                 }}
                 className={isLiquid
-                  ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                  ? 'lg-surface-3 lg-pill lg-spring-hover text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
                   : 'bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label={`Ask: ${reply}`}
@@ -719,7 +719,7 @@ const ChatInterface = ({ onClose }) => {
               className={joinClasses(
                 'group relative p-3 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
                 isLiquid
-                  ? 'liquid-overlay-action liquid-interactive-surface bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
+                  ? 'liquid-overlay-action lg-spring-hover bg-[color:var(--surface-muted)] border border-[color:var(--border-soft)] text-[color:var(--text-primary)] rounded-full hover:brightness-110 hover:scale-[1.01]'
                   : 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-y-0.5 rounded-nb'
               )}
               style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}

@@ -370,7 +370,7 @@ const Resume = () => {
                   <div
                     className={`p-6 ${
                       isLiquid
-                        ? 'liquid-glass border border-[color:var(--border-soft)] rounded-3xl'
+                        ? 'lg-surface-2 rounded-3xl'
                         : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
                     }`}
                     style={{ boxShadow: isLiquid ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
@@ -378,7 +378,7 @@ const Resume = () => {
                     <div
                       className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${
                         isLiquid
-                          ? 'liquid-glass text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
+                          ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
                           : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
                       }`}
                       style={{ boxShadow: isLiquid ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}

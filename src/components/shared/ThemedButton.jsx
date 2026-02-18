@@ -13,19 +13,19 @@ const VARIANTS = {
     neubrutalism:
       'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
-      'liquid-button-primary liquid-interactive-surface border border-[color:var(--border-soft)] hover:brightness-110 hover:scale-[1.015] focus-visible:brightness-110 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-0 motion-reduce:transform-none',
+      'liquid-button-primary lg-pill lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
   secondary: {
     neubrutalism:
       'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
-      'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110 hover:scale-[1.015] focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-0 motion-reduce:transform-none',
+      'lg-surface-3 lg-pill text-[color:var(--text-primary)] lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
   subtle: {
     neubrutalism:
       'bg-secondary text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
-      'liquid-glass liquid-interactive-surface border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] hover:brightness-110 hover:scale-[1.012] focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-0 motion-reduce:transform-none',
+      'lg-surface-2 lg-pill text-[color:var(--text-primary)] lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
 };
 

@@ -209,7 +209,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
               <button
                 onClick={onClose}
                 className={isLiquid
-                  ? 'group relative p-2 liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full text-primary hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                  ? 'group relative p-2 lg-surface-3 lg-pill lg-spring-hover rounded-full text-primary hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
                   : 'group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"

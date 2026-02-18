@@ -287,7 +287,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   className={joinClasses(
                     'group relative p-1.5 text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                     isLiquid
-                      ? 'liquid-chip liquid-interactive-surface border border-[color:var(--border-soft)] rounded-full hover:brightness-110'
+                      ? 'lg-surface-3 lg-pill lg-spring-hover rounded-full hover:brightness-110'
                       : 'bg-secondary border-2 border-[color:var(--color-border)] hover:bg-fun-yellow rounded-nb'
                   )}
                   aria-label="Close command palette"

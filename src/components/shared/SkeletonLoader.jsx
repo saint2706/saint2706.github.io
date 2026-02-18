@@ -143,7 +143,7 @@ export const TypingIndicator = () => {
       <div
         className={
           isLiquid
-            ? 'liquid-chip liquid-glow-transition px-4 py-3 border border-[color:var(--border-soft)] flex items-center gap-1 rounded-full text-[color:var(--text-primary)]'
+            ? 'lg-surface-3 lg-pill px-4 py-3 flex items-center gap-1 rounded-full text-[color:var(--text-primary)]'
             : 'bg-card px-4 py-3 border-nb border-[color:var(--color-border)] flex items-center gap-1 rounded-nb'
         }
         style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}

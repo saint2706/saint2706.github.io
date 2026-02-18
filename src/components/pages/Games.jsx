@@ -105,7 +105,7 @@ return (
         </script>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto py-12 px-4 text-[color:var(--color-text-primary)]">
+      <div className="max-w-4xl mx-auto py-12 px-4 text-[color:var(--text-primary)]">
         {/* Header */}
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -130,7 +130,7 @@ return (
               variant="pink"
               className={themeClass(
                   "mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white",
-                  "mb-6 px-4 py-2 font-heading font-semibold rounded-full liquid-chip border border-[color:var(--border-soft)]"
+                  "mb-6 px-4 py-2 font-heading font-semibold rounded-full lg-surface-3 lg-pill"
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -145,7 +145,7 @@ return (
               variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
                   "inline-block px-6 py-3 rounded-nb nb-stamp-in",
-                  "inline-block px-6 py-3 rounded-3xl liquid-glass border border-[color:var(--border-soft)]"
+                  "inline-block px-6 py-3 rounded-3xl lg-surface-2"
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -182,12 +182,12 @@ return (
                 id={`${game.id}-tab`}
                 className={themeClass(
                     `flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
-                    ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--color-text-primary)]'}`,
+                    ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--text-primary)]'}`,
 
                     `flex items-center gap-2 px-6 py-3 font-heading font-semibold text-sm rounded-full transition-all
                     ${activeGame === game.id
-                        ? 'liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-primary)] brightness-110 scale-[1.015]'
-                        : 'liquid-glass border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)] hover:brightness-110 hover:scale-[1.015]'}`
+                        ? 'lg-surface-3 lg-pill text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
+                        : 'lg-surface-2 text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'}`
                 )}
                 style={{
                   boxShadow:
@@ -204,7 +204,7 @@ return (
                   <span
                     className={themeClass(
                         `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity border-[2px] border-[color:var(--color-border)] bg-card text-primary ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`,
-                        `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity liquid-chip border border-[color:var(--border-soft)] text-[color:var(--color-text-secondary)] ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`
+                        `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity lg-surface-3 lg-pill text-[color:var(--text-secondary)] ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`
                     )}
                     aria-hidden={activeGame !== game.id}
                   >
@@ -228,7 +228,7 @@ return (
             variant="default"
             className={themeClass(
                 "bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb",
-                "liquid-glass border border-[color:var(--border-soft)] p-6 md:p-8 rounded-3xl"
+                "lg-surface-2 p-6 md:p-8 rounded-3xl"
             )}
             style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
           >
@@ -267,7 +267,7 @@ return (
           <div
             className={themeClass(
                 "bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb",
-                "liquid-glass border border-[color:var(--border-soft)] px-6 py-3 rounded-full"
+                "lg-surface-2 px-6 py-3 rounded-full"
             )}
             style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >

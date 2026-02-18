@@ -1,17 +1,22 @@
 export const LIQUID_MOTION = {
   duration: {
-    reveal: 0.5,
-    interactive: 0.28,
-    glow: 0.65,
+    reveal: 0.6,
+    interactive: 0.35,
+    glow: 0.5,
   },
   easing: {
     reveal: [0.22, 1, 0.36, 1],
     glow: [0.4, 0, 0.2, 1],
   },
+  spring: {
+    reveal: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8 },
+    interactive: { type: 'spring', stiffness: 500, damping: 25 },
+    gentle: { type: 'spring', stiffness: 200, damping: 20, mass: 1 },
+  },
   offset: {
-    x: 14,
-    y: 14,
-    subtleY: 10,
+    x: 10,
+    y: 10,
+    subtleY: 6,
   },
 };
 
@@ -43,12 +48,16 @@ const getLiquidVariants = () => {
       visible: { opacity: 1, x: 0 },
     },
     'scale-in': {
-      hidden: { opacity: 0, scale: 0.98, y: LIQUID_MOTION.offset.subtleY },
+      hidden: { opacity: 0, scale: 0.97, y: LIQUID_MOTION.offset.subtleY },
       visible: { opacity: 1, scale: 1, y: 0 },
     },
     'slide-up': {
-      hidden: { opacity: 0, y: y + 6 },
+      hidden: { opacity: 0, y: y + 4 },
       visible: { opacity: 1, y: 0 },
+    },
+    morph: {
+      hidden: { opacity: 0, scale: 0.95, filter: 'blur(4px)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
     },
   };
 };
@@ -60,3 +69,4 @@ export const getLiquidRevealVariant = variant => {
 
   return LIQUID_VARIANTS_CACHE[variant] || LIQUID_VARIANTS_CACHE['fade-up'];
 };
+
