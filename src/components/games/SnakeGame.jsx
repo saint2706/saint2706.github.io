@@ -177,6 +177,8 @@ const SnakeGame = () => {
 
   // Ref to cache theme colors to avoid expensive getComputedStyle calls in render loop
   const themeColorsRef = useRef(null);
+  // Ref to cache gradient colors for the snake body
+  const snakeColorsCache = useRef({ length: 0, colors: [] });
 
   /**
    * Sync directionRef with direction state.
@@ -388,9 +390,9 @@ const SnakeGame = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Initialize theme colors if not already cached
+    // Initialize theme colors if not already cached or if theme changed
     // This optimization avoids calling getComputedStyle on every frame
-    if (!themeColorsRef.current) {
+    if (!themeColorsRef.current || themeColorsRef.current.theme !== theme) {
       const rootStyles = getComputedStyle(document.documentElement);
       const borderColor = rootStyles.getPropertyValue('--color-border').trim() || '#000000';
       const accentColor = rootStyles.getPropertyValue('--color-accent').trim() || '#0052CC';
@@ -398,14 +400,33 @@ const SnakeGame = () => {
       const funYellowColor = rootStyles.getPropertyValue('--color-fun-yellow').trim() || '#FFEB3B';
 
       themeColorsRef.current = {
+        theme,
         borderColor,
         funYellowColor,
         accentRgb: parseColor(accentColor, { r: 33, g: 150, b: 243 }),
         funPinkRgb: parseColor(funPinkColor, { r: 255, g: 82, b: 82 }),
       };
+
+      // Invalidate snake colors cache when theme changes
+      snakeColorsCache.current = { length: 0, colors: [] };
     }
 
     const { borderColor, funYellowColor, accentRgb, funPinkRgb } = themeColorsRef.current;
+
+    // Regenerate gradient colors if snake length changed
+    if (snakeColorsCache.current.length !== snake.length) {
+      const colors = [];
+      for (let i = 0; i < snake.length; i++) {
+        const progress = i / snake.length;
+        const r = Math.round(accentRgb.r + (funPinkRgb.r - accentRgb.r) * progress);
+        const g = Math.round(accentRgb.g + (funPinkRgb.g - accentRgb.g) * progress);
+        const b = Math.round(accentRgb.b + (funPinkRgb.b - accentRgb.b) * progress);
+        colors.push(`rgb(${r}, ${g}, ${b})`);
+      }
+      snakeColorsCache.current = { length: snake.length, colors };
+    }
+
+    const snakeColors = snakeColorsCache.current.colors;
 
     const ctx = canvas.getContext('2d');
     const width = GRID_SIZE * CELL_SIZE;
@@ -436,13 +457,8 @@ const SnakeGame = () => {
     ctx.lineWidth = 2;
 
     snake.forEach((segment, index) => {
-      // Calculate color gradient based on position in snake
-      const progress = index / snake.length;
-      const r = Math.round(accentRgb.r + (funPinkRgb.r - accentRgb.r) * progress);
-      const g = Math.round(accentRgb.g + (funPinkRgb.g - accentRgb.g) * progress);
-      const b = Math.round(accentRgb.b + (funPinkRgb.b - accentRgb.b) * progress);
-
-      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      // Use cached color
+      ctx.fillStyle = snakeColors[index];
 
       // Draw sharp rectangles (Neubrutalism style)
       ctx.fillRect(
@@ -465,7 +481,7 @@ const SnakeGame = () => {
     ctx.lineWidth = 2;
     ctx.fillRect(food.x * CELL_SIZE + 2, food.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4);
     ctx.strokeRect(food.x * CELL_SIZE + 2, food.y * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4);
-  }, [snake, food]);
+  }, [snake, food, theme]);
 
   /**
    * Starts a new game, resetting all state to initial values.
