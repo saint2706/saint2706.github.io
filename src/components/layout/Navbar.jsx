@@ -34,13 +34,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const isLiquid = theme === 'liquid';
-
-  // Toggle theme handler
-  const toggleTheme = useCallback(() => {
-    setTheme(prev => (prev === 'liquid' ? 'neubrutalism' : 'liquid'));
-  }, [setTheme]);
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -52,7 +47,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   // Close mobile menu when navigating between routes
   useEffect(() => {
     if (isMenuOpen) {
-        setIsMenuOpen(false);
+      setIsMenuOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
@@ -160,14 +155,12 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               to={item.path}
               className={({ isActive }) =>
                 isLiquid
-                  ? `touch-target flex items-center justify-center px-4 lg:px-6 text-[15px] font-semibold rounded-full transition-colors whitespace-nowrap ${
-                      isActive ? 'bg-black/5 text-ios-dark' : 'text-ios-dark hover:bg-black/[0.06]'
-                    }`
-                  : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
-                      isActive
-                        ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
-                        : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
-                    }`
+                  ? `touch-target flex items-center justify-center px-4 lg:px-6 text-[15px] font-semibold rounded-full transition-colors whitespace-nowrap ${isActive ? 'bg-black/5 text-ios-dark' : 'text-ios-dark hover:bg-black/[0.06]'
+                  }`
+                  : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${isActive
+                    ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
+                    : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+                  }`
               }
             >
               {!isLiquid && <span className="hidden lg:inline" aria-hidden="true">{item.icon}</span>}
@@ -178,49 +171,47 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
         {/* Right Actions */}
         <div className="flex items-center gap-4 flex-shrink-0">
-           {/* Theme Toggle Switch */}
-           <button
-             onClick={toggleTheme}
-             className={`relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-               isLiquid
-                 ? 'hover:bg-black/5 text-ios-dark'
-                 : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
-             }`}
-             aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
-           >
-             {isLiquid ? <Grid size={20} /> : <Moon size={18} />}
-           </button>
+          {/* Theme Toggle Switch */}
+          <button
+            onClick={toggleTheme}
+            className={`relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isLiquid
+                ? 'hover:bg-black/5 text-ios-dark'
+                : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
+              }`}
+            aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
+          >
+            {isLiquid ? <Grid size={20} /> : <Moon size={18} />}
+          </button>
 
-           {/* Contact Button (Liquid Only) or Cursor Toggle (Neubrutalism) */}
-           {isLiquid ? (
-             <NavLink
-                to="/contact"
-                className="hidden md:flex touch-target bg-primary text-white px-6 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
-             >
-                Contact
-             </NavLink>
-           ) : (
-            <button
-                type="button"
-                onClick={onToggleCursor}
-                className="group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb shadow-nb"
-                aria-pressed={cursorEnabled}
-                aria-label={cursorToggleLabel}
-                disabled={cursorToggleDisabled}
+          {/* Contact Button (Liquid Only) or Cursor Toggle (Neubrutalism) */}
+          {isLiquid ? (
+            <NavLink
+              to="/contact"
+              className="hidden md:flex touch-target bg-primary text-white px-6 h-[44px] items-center justify-center rounded-full text-[15px] font-bold hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-blue-500/20 whitespace-nowrap"
             >
-                <MousePointer2 size={18} aria-hidden="true" />
+              Contact
+            </NavLink>
+          ) : (
+            <button
+              type="button"
+              onClick={onToggleCursor}
+              className="group relative hidden md:flex p-2.5 text-primary transition-all duration-200 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed bg-card border-2 border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5 rounded-nb shadow-nb"
+              aria-pressed={cursorEnabled}
+              aria-label={cursorToggleLabel}
+              disabled={cursorToggleDisabled}
+            >
+              <MousePointer2 size={18} aria-hidden="true" />
             </button>
-           )}
+          )}
 
           {/* Mobile Menu Toggle */}
           <button
             type="button"
             ref={menuButtonRef}
-            className={`md:hidden p-3 cursor-pointer ${
-                isLiquid
+            className={`md:hidden p-3 cursor-pointer ${isLiquid
                 ? 'text-ios-dark hover:bg-black/5 rounded-full'
                 : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb'
-            }`}
+              }`}
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
@@ -243,22 +234,20 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${
-                  isLiquid
+              className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${isLiquid
                   ? 'glass-surface ios-card border border-black/10'
                   : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb'
-              }`}
+                }`}
               ref={menuRef}
             >
               <div className="flex flex-col">
                 <div className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}>
                   <button
                     onClick={toggleTheme}
-                    className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${
-                        isLiquid
+                    className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${isLiquid
                         ? 'bg-ios-bg-2 text-ios-dark hover:bg-black/5'
                         : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb'
-                    }`}
+                      }`}
                   >
                     <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
                     {isLiquid ? <Grid size={16} /> : <Moon size={16} />}
