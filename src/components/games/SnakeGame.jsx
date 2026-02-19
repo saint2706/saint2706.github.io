@@ -129,6 +129,210 @@ const getRandomFood = snake => {
 };
 
 /**
+ * ScoreBoard component memoized to prevent re-renders on every game tick.
+ * Only updates when score, highScore, or theme changes.
+ */
+const ScoreBoard = React.memo(({ score, highScore, ui, shouldReduceMotion }) => (
+  <div className={ui.scoreboard} style={ui.style.raised}>
+    <div className="px-4">
+      <div className="text-sm md:text-xs text-secondary font-heading">Score</div>
+      <motion.div
+        key={score}
+        initial={shouldReduceMotion ? false : { scale: 1.2 }}
+        animate={{ scale: 1 }}
+        transition={shouldReduceMotion ? { duration: 0 } : undefined}
+        className="text-2xl font-heading font-bold text-accent"
+      >
+        {score}
+      </motion.div>
+    </div>
+    <div className={ui.separator} />
+    <div className="flex items-center gap-2 px-4">
+      <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
+      <div>
+        <div className="text-sm md:text-xs text-secondary font-heading">Best</div>
+        <div className="text-2xl font-heading font-bold text-fun-yellow">{highScore}</div>
+      </div>
+    </div>
+  </div>
+));
+
+ScoreBoard.displayName = 'ScoreBoard';
+
+/**
+ * GameOverlay component memoized to isolate overlay rendering from game loop.
+ */
+const GameOverlay = React.memo(({ gameState, score, highScore, ui, shouldReduceMotion, isLiquid, startGame, togglePause }) => (
+  <AnimatePresence>
+    {gameState === 'idle' && (
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : undefined}
+        className={ui.overlay}
+        style={ui.style.board}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="snake-start-title"
+        aria-describedby="snake-start-desc"
+      >
+        <div
+          id="snake-start-title"
+          className={`${ui.banner} text-xl text-black bg-fun-yellow`}
+          style={ui.style.raised}
+        >
+          Snake Game
+        </div>
+        <div
+          id="snake-start-desc"
+          className="text-sm text-secondary text-center px-4 font-sans"
+        >
+          Use arrow keys or swipe to control
+          <br />
+          <span className="text-muted">Space to pause</span>
+        </div>
+        <motion.button
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+          onClick={startGame}
+          className={ui.buttonPrimary}
+          style={ui.style.raised}
+          autoFocus
+        >
+          <Play size={20} aria-hidden="true" />
+          Start Game
+        </motion.button>
+      </motion.div>
+    )}
+
+    {gameState === 'paused' && (
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : undefined}
+        className={ui.overlay}
+        style={ui.style.board}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="snake-pause-title"
+      >
+        <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
+        <div
+          id="snake-pause-title"
+          className={`${ui.banner} text-xl text-white bg-accent`}
+          style={ui.style.raised}
+        >
+          Paused
+        </div>
+        <motion.button
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+          onClick={togglePause}
+          className={ui.buttonSecondary}
+          style={ui.style.raised}
+          autoFocus
+        >
+          <Play size={18} aria-hidden="true" />
+          Resume
+        </motion.button>
+      </motion.div>
+    )}
+
+    {gameState === 'gameOver' && (
+      <motion.div
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : undefined}
+        className={ui.overlay}
+        style={ui.style.board}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="snake-gameover-title"
+        aria-describedby="snake-gameover-desc"
+      >
+        <motion.div
+          initial={shouldReduceMotion ? false : { scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+          className="text-center"
+        >
+          <div
+            id="snake-gameover-title"
+            className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+            style={ui.style.raised}
+          >
+            Game Over!
+          </div>
+          <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
+            Score: <span className="font-heading font-bold text-accent">{score}</span>
+          </div>
+          {score >= highScore && score > 0 && (
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : undefined}
+              className="flex items-center justify-center gap-2 mt-2"
+            >
+              <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
+              <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
+                New High Score!
+              </span>
+            </motion.div>
+          )}
+        </motion.div>
+        <motion.button
+          initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+          onClick={startGame}
+          className={ui.buttonPrimary}
+          style={ui.style.raised}
+          autoFocus
+        >
+          <RotateCcw size={18} aria-hidden="true" />
+          Play Again
+        </motion.button>
+      </motion.div>
+    )}
+  </AnimatePresence>
+));
+
+GameOverlay.displayName = 'GameOverlay';
+
+/**
+ * MobileControls component memoized for static rendering.
+ */
+const MobileControls = React.memo(({ gameState, ui, shouldReduceMotion, togglePause }) => (
+  <>
+    <div
+      className={`${ui.statusBanner} text-sm md:text-xs text-secondary text-center md:hidden font-sans leading-relaxed`}
+      style={ui.style.raised}
+    >
+      Swipe to change direction
+    </div>
+
+    {gameState === 'playing' && (
+      <motion.button
+        initial={shouldReduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={shouldReduceMotion ? { duration: 0 } : undefined}
+        onClick={togglePause}
+        className={`md:hidden ${ui.buttonSecondary}`}
+        style={ui.style.raised}
+        aria-label="Pause game"
+      >
+        <Pause size={16} aria-hidden="true" />
+        Pause
+      </motion.button>
+    )}
+  </>
+));
+
+MobileControls.displayName = 'MobileControls';
+
+/**
  * Snake game component with canvas rendering.
  *
  * Game States:
@@ -486,23 +690,23 @@ const SnakeGame = () => {
   /**
    * Starts a new game, resetting all state to initial values.
    */
-  const startGame = () => {
+  const startGame = useCallback(() => {
     setSnake(getInitialSnake());
     setFood({ x: 15, y: 10 });
     setDirection({ x: 1, y: 0 });
     setScore(0);
     setSpeed(INITIAL_SPEED);
     setGameState('playing');
-  };
+  }, []);
 
   /**
    * Toggles between playing and paused states.
    */
-  const togglePause = () => {
+  const togglePause = useCallback(() => {
     setGameState(prev => (prev === 'playing' ? 'paused' : 'playing'));
-  };
+  }, []);
 
-  const getGameAnnouncement = () => {
+  const gameAnnouncement = useMemo(() => {
     if (gameState === 'idle') return 'Snake game ready. Press Start Game to begin.';
     if (gameState === 'playing')
       return `Playing. Score: ${score}. Use arrow keys or WASD to control the snake.`;
@@ -510,40 +714,15 @@ const SnakeGame = () => {
     if (gameState === 'gameOver')
       return `Game over! Final score: ${score}. ${score >= highScore && score > 0 ? 'New high score!' : ''}`;
     return '';
-  };
+  }, [gameState, score, highScore]);
 
   return (
     <div className="flex flex-col items-center gap-6">
       <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {getGameAnnouncement()}
+        {gameAnnouncement}
       </div>
 
-      {/* Score Board - Neubrutalism */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
-        <div className="px-4">
-          <div className="text-sm md:text-xs text-secondary font-heading">Score</div>
-          <motion.div
-            key={score}
-            initial={shouldReduceMotion ? false : { scale: 1.2 }}
-            animate={{ scale: 1 }}
-            transition={shouldReduceMotion ? { duration: 0 } : undefined}
-            className="text-2xl font-heading font-bold text-accent"
-          >
-            {score}
-          </motion.div>
-        </div>
-        <div className={ui.separator} />
-        <div className="flex items-center gap-2 px-4">
-          <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
-          <div>
-            <div className="text-sm md:text-xs text-secondary font-heading">Best</div>
-            <div className="text-2xl font-heading font-bold text-fun-yellow">{highScore}</div>
-          </div>
-        </div>
-      </div>
+      <ScoreBoard score={score} highScore={highScore} ui={ui} shouldReduceMotion={shouldReduceMotion} />
 
       {/* Game Canvas - Neubrutalism */}
       <div className="relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -563,166 +742,24 @@ const SnakeGame = () => {
           />
         </motion.div>
 
-        {/* Overlay States */}
-        <AnimatePresence>
-          {gameState === 'idle' && (
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className={ui.overlay}
-              style={ui.style.board}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="snake-start-title"
-              aria-describedby="snake-start-desc"
-            >
-              <div
-                id="snake-start-title"
-                className={`${ui.banner} text-xl text-black bg-fun-yellow`}
-                style={ui.style.raised}
-              >
-                Snake Game
-              </div>
-              <div
-                id="snake-start-desc"
-                className="text-sm text-secondary text-center px-4 font-sans"
-              >
-                Use arrow keys or swipe to control
-                <br />
-                <span className="text-muted">Space to pause</span>
-              </div>
-              <motion.button
-                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                onClick={startGame}
-                className={ui.buttonPrimary}
-                style={ui.style.raised}
-                autoFocus
-              >
-                <Play size={20} aria-hidden="true" />
-                Start Game
-              </motion.button>
-            </motion.div>
-          )}
-
-          {gameState === 'paused' && (
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className={ui.overlay}
-              style={ui.style.board}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="snake-pause-title"
-            >
-              <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
-              <div
-                id="snake-pause-title"
-                className={`${ui.banner} text-xl text-white bg-accent`}
-                style={ui.style.raised}
-              >
-                Paused
-              </div>
-              <motion.button
-                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                onClick={togglePause}
-                className={ui.buttonSecondary}
-                style={ui.style.raised}
-                autoFocus
-              >
-                <Play size={18} aria-hidden="true" />
-                Resume
-              </motion.button>
-            </motion.div>
-          )}
-
-          {gameState === 'gameOver' && (
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className={ui.overlay}
-              style={ui.style.board}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="snake-gameover-title"
-              aria-describedby="snake-gameover-desc"
-            >
-              <motion.div
-                initial={shouldReduceMotion ? false : { scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
-                className="text-center"
-              >
-                <div
-                  id="snake-gameover-title"
-                  className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
-                  style={ui.style.raised}
-                >
-                  Game Over!
-                </div>
-                <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
-                  Score: <span className="font-heading font-bold text-accent">{score}</span>
-                </div>
-                {score >= highScore && score > 0 && (
-                  <motion.div
-                    initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
-                    className="flex items-center justify-center gap-2 mt-2"
-                  >
-                    <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
-                    <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
-                      New High Score!
-                    </span>
-                  </motion.div>
-                )}
-              </motion.div>
-              <motion.button
-                initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
-                whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-                onClick={startGame}
-                className={ui.buttonPrimary}
-                style={ui.style.raised}
-                autoFocus
-              >
-                <RotateCcw size={18} aria-hidden="true" />
-                Play Again
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <GameOverlay
+          gameState={gameState}
+          score={score}
+          highScore={highScore}
+          ui={ui}
+          shouldReduceMotion={shouldReduceMotion}
+          isLiquid={isLiquid}
+          startGame={startGame}
+          togglePause={togglePause}
+        />
       </div>
 
-      {/* Controls hint for mobile */}
-      <div
-        className={`${ui.statusBanner} text-sm md:text-xs text-secondary text-center md:hidden font-sans leading-relaxed`}
-        style={ui.style.raised}
-      >
-        Swipe to change direction
-      </div>
-
-      {/* Pause button for mobile */}
-      {gameState === 'playing' && (
-        <motion.button
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={shouldReduceMotion ? { duration: 0 } : undefined}
-          onClick={togglePause}
-          className={`md:hidden ${ui.buttonSecondary}`}
-          style={ui.style.raised}
-          aria-label="Pause game"
-        >
-          <Pause size={16} aria-hidden="true" />
-          Pause
-        </motion.button>
-      )}
+      <MobileControls
+        gameState={gameState}
+        ui={ui}
+        shouldReduceMotion={shouldReduceMotion}
+        togglePause={togglePause}
+      />
     </div>
   );
 };
