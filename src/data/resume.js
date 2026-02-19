@@ -30,7 +30,6 @@ export const resumeData = {
       { name: 'Marathi', proficiency: 'Native/Bilingual' },
       { name: 'Marwari', proficiency: 'Native/Bilingual' },
       { name: 'French', proficiency: 'Professional Working' },
-      { name: 'South Asian Indian', proficiency: 'Limited Working' },
     ],
   },
   education: [
