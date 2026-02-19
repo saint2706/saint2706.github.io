@@ -96,13 +96,19 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={themeClass(
-                    "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                    "p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                    "group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                    "group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
                   )}
                   style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label="Visit GitHub"
                 >
                   <Github size={24} />
+                  <span
+                    className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                    aria-hidden="true"
+                  >
+                    GitHub
+                  </span>
                 </a>
               )}
               {linkedInUrl && (
@@ -111,13 +117,19 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={themeClass(
-                    "p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                    "p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                    "group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
+                    "group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
                   )}
                   style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
                   aria-label="Visit LinkedIn"
                 >
                   <Linkedin size={24} />
+                  <span
+                    className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                    aria-hidden="true"
+                  >
+                    LinkedIn
+                  </span>
                 </a>
               )}
             </div>

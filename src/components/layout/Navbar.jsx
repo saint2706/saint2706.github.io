@@ -174,13 +174,19 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
           {/* Theme Toggle Switch */}
           <button
             onClick={toggleTheme}
-            className={`relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isLiquid
+            className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${isLiquid
               ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
               : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary'
               }`}
             aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
           >
             {isLiquid ? <Grid size={20} /> : <Moon size={18} />}
+            <span
+              className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+              aria-hidden="true"
+            >
+              {isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}
+            </span>
           </button>
 
           {/* Contact Button (Liquid Only) or Cursor Toggle (Neubrutalism) */}
@@ -202,6 +208,12 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               disabled={cursorToggleDisabled}
             >
               <MousePointer2 size={18} aria-hidden="true" />
+              <span
+                className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                aria-hidden="true"
+              >
+                {cursorToggleLabel}
+              </span>
             </button>
           )}
 
