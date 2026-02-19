@@ -219,6 +219,34 @@ const MARKDOWN_COMPONENTS = {
   code: CodeRenderer,
 };
 
+// Security: Restrict allowed Markdown elements to prevent structure hijacking and XSS risks
+const ALLOWED_MARKDOWN_ELEMENTS = [
+  'a',
+  'blockquote',
+  'br',
+  'code',
+  'em',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'img',
+  'li',
+  'ol',
+  'p',
+  'pre',
+  'span',
+  'strong',
+  'table',
+  'tbody',
+  'td',
+  'th',
+  'thead',
+  'tr',
+  'ul',
+];
+
 /**
  * Individual message item component.
  * Memoized to prevent re-rendering of expensive Markdown content when parent list updates.
@@ -230,7 +258,13 @@ const MessageItem = React.memo(({ msg }) => (
         }`}
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
-      <ReactMarkdown components={MARKDOWN_COMPONENTS}>{msg.text}</ReactMarkdown>
+      <ReactMarkdown
+        components={MARKDOWN_COMPONENTS}
+        allowedElements={ALLOWED_MARKDOWN_ELEMENTS}
+        unwrapDisallowed
+      >
+        {msg.text}
+      </ReactMarkdown>
     </div>
   </div>
 ));
