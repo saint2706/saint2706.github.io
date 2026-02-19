@@ -32,6 +32,14 @@ export default {
         'nb-black': '#000000',
         'nb-white': '#FFFFFF',
 
+        // Neubrutalism 2.0 — Extended accent palette
+        'nb-coral': '#FF6B6B',
+        'nb-lime': '#76FF03',
+        'nb-violet': '#B388FF',
+        'nb-orange': '#FF9100',
+        'nb-hot-pink': '#FF4081',
+        'nb-electric-blue': '#448AFF',
+
         // Editorial / System Audit Theme (formerly Liquid)
         'ios-bg-1': '#FBFBFD',
         'ios-bg-2': '#F5F5F7',
@@ -125,6 +133,8 @@ export default {
         ticker: 'ticker 30s linear infinite',
         // Neubrutalist stamp-in entrance
         'nb-stamp': 'nb-stamp-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both',
+        // Neubrutalism 2.0 squish press
+        'nb-squish': 'nb-squish 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
       keyframes: {
         // Pulsing glow: Breathe effect for glowing elements
@@ -152,6 +162,14 @@ export default {
           '0%': { opacity: '0', transform: 'scale(1.15) rotate(3deg)' },
           '60%': { opacity: '1', transform: 'scale(0.97) rotate(-0.5deg)' },
           '100%': { opacity: '1', transform: 'scale(1) rotate(0deg)' },
+        },
+        // Neubrutalism 2.0 squish
+        'nb-squish': {
+          '0%': { transform: 'scale(1, 1)' },
+          '35%': { transform: 'scale(1.06, 0.88)' },
+          '65%': { transform: 'scale(0.97, 1.04)' },
+          '85%': { transform: 'scale(1.01, 0.99)' },
+          '100%': { transform: 'scale(1, 1)' },
         },
       },
     },

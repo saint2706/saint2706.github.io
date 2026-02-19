@@ -66,6 +66,8 @@ const Projects = () => {
 
   /** Rotating color classes for project card accent bars */
   const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+  /** NB 2.0: Cycle colored shadow accents per card */
+  const shadowColors = ['yellow', 'pink', 'blue', 'coral', 'violet'];
   const topTags = useMemo(() => {
     return [...new Set(resumeData.projects.flatMap(project => project.tags || []))].slice(0, 6);
   }, []);
@@ -139,6 +141,7 @@ const Projects = () => {
               as={motion.article}
               key={idx}
               variant="interactive"
+              shadowColor={isLiquid ? undefined : shadowColors[idx % shadowColors.length]}
               variants={item}
               onClick={handleCardClick(project)}
               role="link"

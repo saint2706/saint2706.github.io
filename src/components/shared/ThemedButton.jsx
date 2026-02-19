@@ -11,22 +11,34 @@ const SIZE_CLASSES = {
 const VARIANTS = {
   primary: {
     neubrutalism:
-      'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
+      'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] nb-squish hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
       'liquid-button-primary lg-pill lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
   secondary: {
     neubrutalism:
-      'bg-card text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
+      'bg-card text-primary border-nb border-[color:var(--color-border)] nb-squish hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
       'lg-surface-3 lg-pill text-[color:var(--text-primary)] lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
   subtle: {
     neubrutalism:
-      'bg-secondary text-primary border-nb border-[color:var(--color-border)] hover:-translate-x-0.5 hover:-translate-y-0.5',
+      'bg-secondary text-primary border-nb border-[color:var(--color-border)] nb-squish hover:-translate-x-0.5 hover:-translate-y-0.5',
     liquid:
       'lg-surface-2 lg-pill text-[color:var(--text-primary)] lg-spring-hover active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 motion-reduce:transform-none',
   },
+};
+
+/** Map shadow color names to NB 2.0 colored shadow CSS classes */
+const NB_SHADOW_COLOR_MAP = {
+  yellow: 'nb-shadow-yellow',
+  pink: 'nb-shadow-pink',
+  blue: 'nb-shadow-blue',
+  red: 'nb-shadow-red',
+  lime: 'nb-shadow-lime',
+  coral: 'nb-shadow-coral',
+  violet: 'nb-shadow-violet',
+  orange: 'nb-shadow-orange',
 };
 
 const ThemedButton = ({
@@ -34,6 +46,7 @@ const ThemedButton = ({
   variant = 'secondary',
   size = 'md',
   isActive = false,
+  coloredShadow,
   className,
   style,
   ...props
@@ -44,6 +57,8 @@ const ThemedButton = ({
   const activeClasses =
     themeKey === 'neubrutalism' && isActive ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5' : '';
 
+  const coloredShadowClass = themeKey === 'neubrutalism' && coloredShadow ? NB_SHADOW_COLOR_MAP[coloredShadow] : '';
+
   return (
     <Component
       className={joinClasses(
@@ -51,12 +66,17 @@ const ThemedButton = ({
         SIZE_CLASSES[size] ?? SIZE_CLASSES.md,
         VARIANTS[variant]?.[themeKey] ?? VARIANTS.secondary[themeKey],
         activeClasses,
+        coloredShadowClass,
         className
       )}
-      style={{ ...(themeKey === 'neubrutalism' ? { boxShadow: 'var(--nb-shadow)' } : {}), ...style }}
+      style={{
+        ...(themeKey === 'neubrutalism' && !coloredShadow ? { boxShadow: 'var(--nb-shadow)' } : {}),
+        ...style,
+      }}
       {...props}
     />
   );
 };
 
 export default ThemedButton;
+

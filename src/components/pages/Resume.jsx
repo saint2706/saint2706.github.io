@@ -25,6 +25,7 @@ import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedChip from '../shared/ThemedChip';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
+import { DoodleDivider } from '../shared/NbDecorative';
 import { useTheme } from '../shared/theme-context';
 
 /**
@@ -54,6 +55,8 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
       chipClassName="gap-3"
     />
     <div className="space-y-6">{children}</div>
+    {/* NB 2.0: wavy doodle divider between sections */}
+    <DoodleDivider pattern="wavy" className="mt-8" />
   </div>
 );
 
@@ -79,10 +82,12 @@ const TimelineCard = ({
   description,
   tags,
   accentColor = 'bg-accent',
+  shadowColor,
   isLiquid = false,
 }) => (
   <ThemedCard
     variant="interactive"
+    shadowColor={!isLiquid ? shadowColor : undefined}
     className={`p-6 ${isLiquid ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
   >
     {/* Color accent bar */}
@@ -285,18 +290,22 @@ const Resume = () => {
               <ScrollReveal variant="fade-up" delay={0.1}>
                 <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
                   <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
-                    {resumeData.experience.map((job, i) => (
-                      <TimelineCard
-                        key={i}
-                        title={job.company}
-                        subtitle={job.position}
-                        date={`${job.startDate} - ${job.endDate}`}
-                        location={job.location}
-                        description={job.highlights || job.summary}
-                        accentColor="bg-fun-pink"
-                        isLiquid={isLiquid}
-                      />
-                    ))}
+                    {resumeData.experience.map((job, i) => {
+                      const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
+                      return (
+                        <TimelineCard
+                          key={i}
+                          title={job.company}
+                          subtitle={job.position}
+                          date={`${job.startDate} - ${job.endDate}`}
+                          location={job.location}
+                          description={job.highlights || job.summary}
+                          accentColor="bg-fun-pink"
+                          shadowColor={expShadowColors[i % expShadowColors.length]}
+                          isLiquid={isLiquid}
+                        />
+                      );
+                    })}
                   </div>
                 </Section>
               </ScrollReveal>
@@ -315,17 +324,21 @@ const Resume = () => {
               <ScrollReveal variant="fade-up" delay={0.2}>
                 <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
                   <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
-                    {resumeData.education.map((edu, i) => (
-                      <TimelineCard
-                        key={i}
-                        title={edu.institution}
-                        subtitle={edu.area}
-                        date={`${edu.startDate} - ${edu.endDate}`}
-                        description={edu.description}
-                        accentColor="bg-accent"
-                        isLiquid={isLiquid}
-                      />
-                    ))}
+                    {resumeData.education.map((edu, i) => {
+                      const eduShadowColors = ['blue', 'yellow', 'lime'];
+                      return (
+                        <TimelineCard
+                          key={i}
+                          title={edu.institution}
+                          subtitle={edu.area}
+                          date={`${edu.startDate} - ${edu.endDate}`}
+                          description={edu.description}
+                          accentColor="bg-accent"
+                          shadowColor={eduShadowColors[i % eduShadowColors.length]}
+                          isLiquid={isLiquid}
+                        />
+                      );
+                    })}
                   </div>
                 </Section>
               </ScrollReveal>
@@ -345,15 +358,15 @@ const Resume = () => {
                 <div className="mb-12">
                   <div
                     className={`p-6 ${isLiquid
-                        ? 'lg-surface-2 rounded-3xl'
-                        : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
+                      ? 'lg-surface-2 rounded-3xl'
+                      : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
                       }`}
                     style={{ boxShadow: isLiquid ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
                   >
                     <div
                       className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${isLiquid
-                          ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
-                          : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
+                        ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
+                        : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
                         }`}
                       style={{ boxShadow: isLiquid ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}
                     >

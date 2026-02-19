@@ -17,6 +17,7 @@ import { websiteSchema, profilePageSchema, personSchemaFull } from '../../utils/
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
+import { StampBadge } from '../shared/NbDecorative';
 import { useTheme } from '../shared/theme-context';
 
 /**
@@ -128,8 +129,8 @@ const Hero = () => {
               initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
-              className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
-              style={{ boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '3deg' }}
+              className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob nb-halftone-bg"
+              style={{ boxShadow: '4px 4px 0 var(--nb-shadow-color-pink)', '--sticker-rotate': '3deg' }}
             />
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
@@ -137,7 +138,7 @@ const Hero = () => {
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
               className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
               style={{
-                boxShadow: 'var(--nb-shadow)',
+                boxShadow: '4px 4px 0 var(--nb-shadow-color-yellow)',
                 '--sticker-rotate': '-2deg',
                 animationDelay: '1s',
               }}
@@ -148,7 +149,7 @@ const Hero = () => {
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
               className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
               style={{
-                boxShadow: 'var(--nb-shadow)',
+                boxShadow: '4px 4px 0 var(--nb-shadow-color-violet)',
                 '--sticker-rotate': '5deg',
                 animationDelay: '2s',
               }}
@@ -292,6 +293,7 @@ const Hero = () => {
         >
           <ThemedCard
             variant={isLiquid ? 'default' : 'highlighted'}
+            shadowColor={isLiquid ? undefined : 'coral'}
             className={themeClass(
               `p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`,
               `!bg-transparent !border-0 !shadow-none p-0 ${isGlitching ? 'animate-glitch' : ''}`
@@ -393,6 +395,13 @@ const Hero = () => {
               </>
             )}
           </ThemedCard>
+
+          {/* Decorative stamp badge — NB only */}
+          {!isLiquid && (
+            <div className="absolute -bottom-4 -right-4 z-10">
+              <StampBadge label="OPEN TO WORK" color="blue" rotate={-8} />
+            </div>
+          )}
         </motion.div>
       </div>
     </>
