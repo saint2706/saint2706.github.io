@@ -5,15 +5,15 @@ import { joinClasses } from './ThemedPrimitives.utils';
 const VARIANTS = {
   yellow: {
     neubrutalism: 'bg-fun-yellow text-black border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
+    liquid: 'lg-surface-3 lg-tint-amber lg-pill text-[color:var(--text-primary)]',
   },
   accent: {
     neubrutalism: 'bg-accent text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
+    liquid: 'lg-surface-3 lg-tint-blue lg-pill text-[color:var(--text-primary)]',
   },
   pink: {
     neubrutalism: 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb',
-    liquid: 'lg-surface-3 lg-pill text-[color:var(--text-primary)]',
+    liquid: 'lg-surface-3 lg-tint-purple lg-pill text-[color:var(--text-primary)]',
   },
   neutral: {
     neubrutalism: 'bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb',

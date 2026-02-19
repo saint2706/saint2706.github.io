@@ -93,8 +93,36 @@ const Hero = () => {
       />
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
-        {/* Decorative Shapes (Hidden in Liquid Mode to match cleaner aesthetic) */}
-        {!isLiquid && (
+        {/* Decorative Shapes — Neubrutalism vs Liquid */}
+        {isLiquid ? (
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div
+              className="absolute top-[10%] left-[15%] w-64 h-64 md:w-80 md:h-80 rounded-full opacity-60 lg-hero-orb"
+              style={{
+                background: 'radial-gradient(circle, rgba(0,122,255,0.18) 0%, transparent 70%)',
+                animation: 'lg-orb-drift 12s ease-in-out infinite',
+                filter: 'blur(40px)',
+              }}
+            />
+            <div
+              className="absolute top-[30%] right-[10%] w-56 h-56 md:w-72 md:h-72 rounded-full opacity-50 lg-hero-orb"
+              style={{
+                background: 'radial-gradient(circle, rgba(175,82,222,0.16) 0%, transparent 70%)',
+                animation: 'lg-orb-drift 15s ease-in-out infinite reverse',
+                filter: 'blur(50px)',
+              }}
+            />
+            <div
+              className="absolute bottom-[15%] left-[40%] w-48 h-48 md:w-64 md:h-64 rounded-full opacity-40 lg-hero-orb"
+              style={{
+                background: 'radial-gradient(circle, rgba(255,159,10,0.14) 0%, transparent 70%)',
+                animation: 'lg-orb-drift 18s ease-in-out infinite',
+                animationDelay: '3s',
+                filter: 'blur(45px)',
+              }}
+            />
+          </div>
+        ) : (
           <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}

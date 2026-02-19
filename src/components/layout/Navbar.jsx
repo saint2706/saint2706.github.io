@@ -43,6 +43,7 @@ const NAV_ITEMS = [
  */
 const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const lastFocusRef = useRef(null);
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -50,6 +51,15 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const isLiquid = theme === 'liquid';
+
+  // Scroll-aware navbar compaction for liquid theme
+  useEffect(() => {
+    if (!isLiquid) { setIsScrolled(false); return undefined; }
+    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLiquid]);
 
   // Close chatbot when mobile menu opens to prevent UI conflicts
   useEffect(() => {
@@ -122,7 +132,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   /* ── Theme-dependent class maps ── */
 
-  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${isLiquid ? 'pt-6 flex justify-center pointer-events-none' : 'py-4 md:py-5'
+  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${isLiquid ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}` : 'py-4 md:py-5'
     }`;
 
   const containerCls = isLiquid

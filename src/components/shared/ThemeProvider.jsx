@@ -16,13 +16,22 @@ export const ThemeProvider = ({ children }) => {
     return isValidTheme(storedTheme) ? storedTheme : THEMES.neubrutalism;
   });
 
-  const setTheme = useCallback(nextTheme => {
+  const applyTheme = useCallback(nextTheme => {
     setThemeState(isValidTheme(nextTheme) ? nextTheme : THEMES.neubrutalism);
   }, []);
 
+  const setTheme = useCallback(nextTheme => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => applyTheme(nextTheme));
+    } else {
+      applyTheme(nextTheme);
+    }
+  }, [applyTheme]);
+
   const toggleTheme = useCallback(() => {
-    setThemeState(prev => (prev === THEMES.neubrutalism ? THEMES.liquid : THEMES.neubrutalism));
-  }, []);
+    const next = theme === THEMES.neubrutalism ? THEMES.liquid : THEMES.neubrutalism;
+    setTheme(next);
+  }, [theme, setTheme]);
 
   useEffect(() => {
     safeSetDocumentTheme(theme);

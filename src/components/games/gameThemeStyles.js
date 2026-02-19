@@ -48,8 +48,8 @@ export const getGameThemeStyles = isLiquid => {
         : 'border-[3px] border-[color:var(--color-border)] rounded-nb'
     ),
     tileIdle: isLiquid ? 'bg-[color:var(--surface-muted)]/80' : 'bg-card',
-    tileActive: isLiquid ? 'bg-accent/80 text-white' : 'bg-accent text-white -translate-x-0.5 -translate-y-0.5',
-    tileWin: isLiquid ? 'bg-fun-yellow/40 border-fun-yellow/70' : 'bg-fun-yellow',
+    tileActive: isLiquid ? 'lg-tint-blue bg-accent/80 text-white' : 'bg-accent text-white -translate-x-0.5 -translate-y-0.5',
+    tileWin: isLiquid ? 'lg-tint-amber bg-fun-yellow/40 border-fun-yellow/70' : 'bg-fun-yellow',
     style: {
       raised: isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' },
       board: isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' },

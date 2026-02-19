@@ -26,10 +26,10 @@ const NB_SURFACE_BY_TONE = {
 
 const LIQUID_SURFACE_BY_TONE = {
   card: 'lg-surface-2 text-[color:var(--text)]',
-  accent: 'lg-surface-2 text-[color:var(--text)]',
-  pink: 'lg-surface-2 text-[color:var(--text)]',
+  accent: 'lg-surface-2 lg-tint-blue text-[color:var(--text)]',
+  pink: 'lg-surface-2 lg-tint-purple text-[color:var(--text)]',
   secondary: 'lg-surface-3 text-[color:var(--text)]',
-  yellow: 'lg-surface-3 text-[color:var(--text)]',
+  yellow: 'lg-surface-3 lg-tint-amber text-[color:var(--text)]',
 };
 
 const NB_SHADOW_BY_DEPTH = {

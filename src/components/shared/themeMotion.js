@@ -10,8 +10,9 @@ export const LIQUID_MOTION = {
   },
   spring: {
     reveal: { type: 'spring', stiffness: 300, damping: 30, mass: 0.8 },
-    interactive: { type: 'spring', stiffness: 500, damping: 25 },
+    interactive: { type: 'spring', stiffness: 500, damping: 28 },
     gentle: { type: 'spring', stiffness: 200, damping: 20, mass: 1 },
+    breathing: { type: 'spring', stiffness: 120, damping: 14, mass: 1.2 },
   },
   offset: {
     x: 10,
@@ -29,6 +30,7 @@ let LIQUID_VARIANTS_CACHE = null;
 const getLiquidVariants = () => {
   const x = LIQUID_MOTION.offset.x;
   const y = LIQUID_MOTION.offset.y;
+  const spring = LIQUID_MOTION.spring.interactive;
 
   return {
     'fade-up': {
@@ -57,7 +59,11 @@ const getLiquidVariants = () => {
     },
     morph: {
       hidden: { opacity: 0, scale: 0.95, filter: 'blur(4px)' },
-      visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: spring },
+    },
+    'glass-press': {
+      hidden: { opacity: 0, scale: 0.98, filter: 'brightness(0.95)' },
+      visible: { opacity: 1, scale: 1, filter: 'brightness(1)', transition: spring },
     },
   };
 };

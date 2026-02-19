@@ -5,6 +5,7 @@
  */
 
 import React, { lazy, Suspense, useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
@@ -59,6 +60,20 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
 const Layout = ({ children }) => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
+  const { pathname } = useLocation();
+
+  // Per-page ambient tint for liquid theme
+  const liquidTint = useMemo(() => {
+    if (!isLiquid) return undefined;
+    if (pathname === '/') return 'blue';
+    if (pathname.startsWith('/resume')) return 'green';
+    if (pathname.startsWith('/projects')) return 'purple';
+    if (pathname.startsWith('/blog')) return 'amber';
+    if (pathname.startsWith('/contact')) return 'amber';
+    if (pathname.startsWith('/playground')) return 'purple';
+    if (pathname.startsWith('/games')) return 'blue';
+    return 'blue';
+  }, [isLiquid, pathname]);
 
   // ── Custom Cursor State ──
   const [cursorEnabled, setCursorEnabled] = useState(() => {
@@ -218,18 +233,13 @@ const Layout = ({ children }) => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
-        isLiquid ? 'liquid-bg liquid-atmosphere-shell' : 'bg-primary nb-paper-bg'
-      }`}
+      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
+        }`}
+      style={{ background: isLiquid ? 'var(--bg)' : undefined }}
       data-theme={isLiquid ? 'liquid' : 'neubrutalism'}
       data-contrast={prefersContrast ? 'more' : 'no-preference'}
+      {...(liquidTint ? { 'data-liquid-tint': liquidTint } : {})}
     >
-      {isLiquid && (
-        <>
-          <div className="liquid-atmosphere-layers" aria-hidden="true" />
-          <div className="liquid-noise-overlay" aria-hidden="true" />
-        </>
-      )}
 
       {/* Custom interactive cursor */}
       <CustomCursor enabled={effectiveCursorEnabled} />
@@ -237,7 +247,7 @@ const Layout = ({ children }) => {
       {/* Skip navigation link for keyboard users */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-fun-yellow focus:text-black focus:px-4 focus:py-2 focus:border-2 focus:border-black focus:z-[100] focus:font-heading focus:font-bold"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-fun-yellow focus:text-black focus:px-4 focus:py-2 focus:border-2 focus:border-black focus:z-100 focus:font-heading focus:font-bold"
       >
         Skip to main content
       </a>
@@ -253,7 +263,7 @@ const Layout = ({ children }) => {
         onToggleCursor={toggleCursor}
       />
 
-      <main id="main-content" className="flex-grow pt-28 px-4 z-10 relative">
+      <main id="main-content" className="grow pt-28 px-4 z-10 relative">
         {children}
       </main>
 
