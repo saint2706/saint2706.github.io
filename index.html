@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -7,8 +7,17 @@
       content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://*.googleapis.com https://*.firebaseio.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebase.com https://cdn.jsdelivr.net; frame-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; worker-src 'self' blob:;"
     />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme Color for browsers & PWA -->
+    <meta name="theme-color" content="#1e1e2e" />
+    <meta name="msapplication-TileColor" content="#1e1e2e" />
+    <meta name="color-scheme" content="dark light" />
 
     <!-- Primary Meta Tags - Fallback for non-JS crawlers -->
     <title>Rishabh Agrawal | Data Storyteller & Analytics Strategist</title>
@@ -17,6 +26,9 @@
       name="description"
       content="Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences."
     />
+    <meta name="author" content="Rishabh Agrawal" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://saint2706.github.io/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -27,31 +39,86 @@
       content="Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences."
     />
     <meta property="og:image" content="https://saint2706.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Rishabh Agrawal" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://saint2706.github.io/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://saint2706.github.io/" />
     <meta
-      property="twitter:title"
+      name="twitter:title"
       content="Rishabh Agrawal | Data Storyteller & Analytics Strategist"
     />
     <meta
-      property="twitter:description"
+      name="twitter:description"
       content="Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences."
     />
-    <meta property="twitter:image" content="https://saint2706.github.io/og-image.png" />
+    <meta name="twitter:image" content="https://saint2706.github.io/og-image.png" />
+
+    <!-- Geo/Location Hints -->
+    <meta name="geo.region" content="IN-GA" />
+    <meta name="geo.placename" content="Goa, India" />
+
+    <!-- DNS Prefetch & Preconnect for faster external loads -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical fonts for LCP -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      as="style"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fira+Code:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- JSON-LD Fallback for non-JS crawlers (static) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Rishabh Agrawal",
+        "url": "https://saint2706.github.io",
+        "description": "Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.",
+        "author": {
+          "@type": "Person",
+          "name": "Rishabh Agrawal",
+          "url": "https://saint2706.github.io",
+          "jobTitle": "Data Storyteller & Analytics Strategist",
+          "sameAs": [
+            "https://www.linkedin.com/in/rishabh-agrawal-1807321b9",
+            "https://github.com/saint2706"
+          ]
+        }
+      }
+    </script>
+
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript" src="/spa-redirect.js"></script>
     <!-- End Single Page Apps for GitHub Pages -->
+
+    <!-- Noscript fallback for crawlers that don't execute JS -->
+    <noscript>
+      <meta http-equiv="refresh" content="0; url=https://saint2706.github.io/" />
+    </noscript>
   </head>
 
   <body class="bg-primary text-slate-200 antialiased">
+    <noscript>
+      <div style="text-align:center;padding:2rem;">
+        <h1>Rishabh Agrawal – Data Storyteller & Analytics Strategist</h1>
+        <p>This site requires JavaScript to run. Please enable JavaScript or visit my
+          <a href="https://www.linkedin.com/in/rishabh-agrawal-1807321b9">LinkedIn</a> or
+          <a href="https://github.com/saint2706">GitHub</a>.
+        </p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -3,12 +3,12 @@
  * Features call-to-action and availability status.
  */
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { breadcrumbSchema, contactPageSchema, SITE_URL } from '../../utils/seo';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
@@ -55,51 +55,24 @@ const Contact = () => {
     window.location.href = mailtoUrl;
   };
 
-  const canonicalUrl = `${resumeData.basics.website}/contact`;
   const description =
     'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
   const title = `Contact | ${resumeData.basics.name}`;
-
-
-  const jsonLd = useMemo(() => safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Contact',
-                item: canonicalUrl,
-              },
-            ],
-          }), [canonicalUrl]);
-return (
+  const contactSchemas = [
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Contact', url: `${SITE_URL}/contact` },
+    ]),
+    contactPageSchema(),
+  ];
+  return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-        <script type="application/ld+json">
-          {jsonLd}
-        </script>
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/contact"
+        schemas={contactSchemas}
+      />
 
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
@@ -202,158 +175,158 @@ return (
             </ThemedCard>
           </motion.div>
         ) : (
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Contact Info */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
-            className="space-y-6"
-          >
-            {/* Get in Touch Card */}
-            <ThemedCard className="p-6">
-              <h2
-                className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                Get in Touch
-              </h2>
-
-              <div className="space-y-4">
-                {/* Email */}
-                <a
-                  href={`mailto:${resumeData.basics.email}`}
-                  className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Contact Info */}
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+              className="space-y-6"
+            >
+              {/* Get in Touch Card */}
+              <ThemedCard className="p-6">
+                <h2
+                  className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                  aria-label={`Send email to ${resumeData.basics.email}`}
                 >
-                  <div className="p-3 bg-accent text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
-                    <Mail size={24} aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted font-heading font-bold uppercase">Email</p>
-                    <p className="text-primary font-sans font-medium">{resumeData.basics.email}</p>
-                  </div>
-                </a>
+                  Get in Touch
+                </h2>
 
-                {/* Location */}
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${resumeData.basics.location.city}, ${resumeData.basics.location.country}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-                  aria-label={`View location ${resumeData.basics.location.city}, ${resumeData.basics.location.country} on Google Maps (opens in new tab)`}
-                >
-                  <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
-                    <MapPin size={24} aria-hidden="true" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted font-heading font-bold uppercase">Location</p>
-                    <p className="text-primary font-sans font-medium">
-                      {resumeData.basics.location.city}, {resumeData.basics.location.country}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </ThemedCard>
+                <div className="space-y-4">
+                  {/* Email */}
+                  <a
+                    href={`mailto:${resumeData.basics.email}`}
+                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
+                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    aria-label={`Send email to ${resumeData.basics.email}`}
+                  >
+                    <div className="p-3 bg-accent text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
+                      <Mail size={24} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted font-heading font-bold uppercase">Email</p>
+                      <p className="text-primary font-sans font-medium">{resumeData.basics.email}</p>
+                    </div>
+                  </a>
 
-            {/* Follow Me */}
-            <ThemedCard className="p-6">
-              <h3
-                className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                Follow Me
-              </h3>
-              <div className="flex gap-4">
-                {resumeData.basics.socials.map(social => (
-                  <ThemedButton
-                    as="a"
-                    key={social.network}
-                    href={social.url}
+                  {/* Location */}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${resumeData.basics.location.city}, ${resumeData.basics.location.country}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    variant="secondary"
-                    className={`group relative p-4 ${social.network === 'GitHub' ? 'hover:bg-fun-yellow' : 'hover:bg-accent'}`}
-                    aria-label={`${social.network} (opens in new tab)`}
+                    className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
+                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    aria-label={`View location ${resumeData.basics.location.city}, ${resumeData.basics.location.country} on Google Maps (opens in new tab)`}
                   >
-                    {social.network === 'GitHub' ? <Github size={24} /> : <Linkedin size={24} />}
-                    <span
-                      className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
-                      aria-hidden="true"
+                    <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
+                      <MapPin size={24} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted font-heading font-bold uppercase">Location</p>
+                      <p className="text-primary font-sans font-medium">
+                        {resumeData.basics.location.city}, {resumeData.basics.location.country}
+                      </p>
+                    </div>
+                  </a>
+                </div>
+              </ThemedCard>
+
+              {/* Follow Me */}
+              <ThemedCard className="p-6">
+                <h3
+                  className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
+                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                >
+                  Follow Me
+                </h3>
+                <div className="flex gap-4">
+                  {resumeData.basics.socials.map(social => (
+                    <ThemedButton
+                      as="a"
+                      key={social.network}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      className={`group relative p-4 ${social.network === 'GitHub' ? 'hover:bg-fun-yellow' : 'hover:bg-accent'}`}
+                      aria-label={`${social.network} (opens in new tab)`}
                     >
-                      {social.network}
-                    </span>
-                  </ThemedButton>
-                ))}
-              </div>
-            </ThemedCard>
+                      {social.network === 'GitHub' ? <Github size={24} /> : <Linkedin size={24} />}
+                      <span
+                        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                        aria-hidden="true"
+                      >
+                        {social.network}
+                      </span>
+                    </ThemedButton>
+                  ))}
+                </div>
+              </ThemedCard>
 
-            {/* Availability Badge */}
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
-              className="bg-fun-yellow border-nb border-[color:var(--color-border)] p-4 rounded-nb"
-              style={{ boxShadow: 'var(--nb-shadow)' }}
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none rounded-nb"></span>
-                <span className="text-black font-heading font-bold">
-                  Available for freelance & collaborations
-                </span>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* CTA Section */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
-            className="flex flex-col justify-center"
-          >
-            <ThemedCard className="p-8 text-center">
-              {/* Icon */}
-              <div
-                className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
+              {/* Availability Badge */}
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
+                className="bg-fun-yellow border-nb border-[color:var(--color-border)] p-4 rounded-nb"
                 style={{ boxShadow: 'var(--nb-shadow)' }}
               >
-                <Mail size={40} className="text-white" />
-              </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none rounded-nb"></span>
+                  <span className="text-black font-heading font-bold">
+                    Available for freelance & collaborations
+                  </span>
+                </div>
+              </motion.div>
+            </motion.div>
 
-              <h3 className="font-heading text-2xl font-bold text-primary mb-4">
-                Ready to start a conversation?
-              </h3>
+            {/* CTA Section */}
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3 }}
+              className="flex flex-col justify-center"
+            >
+              <ThemedCard className="p-8 text-center">
+                {/* Icon */}
+                <div
+                  className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
+                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                >
+                  <Mail size={40} className="text-white" />
+                </div>
 
-              <p className="text-secondary mb-8 font-sans">
-                Whether it&apos;s making sense of messy data, designing AI/ML solutions, or bridging
-                technical depth with business impact - let&apos;s create something amazing together!
-              </p>
+                <h3 className="font-heading text-2xl font-bold text-primary mb-4">
+                  Ready to start a conversation?
+                </h3>
 
-              <ThemedButton
-                as="a"
-                href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
-                variant="primary"
-                size="lg"
-              >
-                <Send size={20} />
-                Send me an Email
-              </ThemedButton>
-
-              <div
-                className="mt-8 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
-                style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
-              >
-                <p className="text-muted text-sm font-sans flex items-center justify-center gap-2">
-                  <Sparkles size={16} className="text-fun-yellow" />
-                  Or use the chatbot (Ctrl+K) to learn more about me first!
+                <p className="text-secondary mb-8 font-sans">
+                  Whether it&apos;s making sense of messy data, designing AI/ML solutions, or bridging
+                  technical depth with business impact - let&apos;s create something amazing together!
                 </p>
-              </div>
-            </ThemedCard>
-          </motion.div>
-        </div>
+
+                <ThemedButton
+                  as="a"
+                  href={`mailto:${resumeData.basics.email}?subject=Hello from your portfolio!`}
+                  variant="primary"
+                  size="lg"
+                >
+                  <Send size={20} />
+                  Send me an Email
+                </ThemedButton>
+
+                <div
+                  className="mt-8 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
+                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                >
+                  <p className="text-muted text-sm font-sans flex items-center justify-center gap-2">
+                    <Sparkles size={16} className="text-fun-yellow" />
+                    Or use the chatbot (Ctrl+K) to learn more about me first!
+                  </p>
+                </div>
+              </ThemedCard>
+            </motion.div>
+          </div>
         )}
       </div>
     </>

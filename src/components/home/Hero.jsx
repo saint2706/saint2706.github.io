@@ -11,9 +11,9 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { websiteSchema, profilePageSchema, personSchemaFull } from '../../utils/seo';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -71,7 +71,6 @@ const Hero = () => {
     [handleEasterEggClick]
   );
 
-  const canonicalUrl = resumeData.basics.website;
   const description = resumeData.basics.summary;
   const title = `${resumeData.basics.name} | ${resumeData.basics.title}`;
 
@@ -79,26 +78,19 @@ const Hero = () => {
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
 
-  const jsonLd = useMemo(() => safeJSONStringify({
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: resumeData.basics.name,
-    url: resumeData.basics.website,
-    sameAs: resumeData.basics.socials.map(s => s.url),
-    jobTitle: resumeData.basics.title,
-    description: description,
-    image: `${resumeData.basics.website}/og-image.png`,
-  }), [description]);
+  const homeSchemas = useMemo(
+    () => [websiteSchema(), profilePageSchema(), personSchemaFull()],
+    []
+  );
+
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <script type="application/ld+json">
-          {jsonLd}
-        </script>
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/"
+        schemas={homeSchemas}
+      />
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
         {/* Decorative Shapes (Hidden in Liquid Mode to match cleaner aesthetic) */}

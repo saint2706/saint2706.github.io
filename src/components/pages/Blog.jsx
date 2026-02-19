@@ -15,10 +15,11 @@ import {
   FileQuestion,
   BookOpen,
 } from 'lucide-react';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify, isSafeHref } from '../../utils/security';
+import { isSafeHref } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { breadcrumbSchema, blogCollectionSchema, SITE_URL } from '../../utils/seo';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -50,10 +51,16 @@ const Blog = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
-  const canonicalUrl = `${resumeData.basics.website}/blog`;
   const description =
     'Read articles on analytics, product thinking, and the intersection of data and creativity.';
   const title = `Blog | ${resumeData.basics.name}`;
+  const blogSchemas = [
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Blog', url: `${SITE_URL}/blog` },
+    ]),
+    blogCollectionSchema(),
+  ];
 
   /**
    * Pre-process blogs once on mount for performance optimization
@@ -171,42 +178,12 @@ const Blog = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Blog',
-                item: canonicalUrl,
-              },
-            ],
-          })}
-        </script>
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/blog"
+        schemas={blogSchemas}
+      />
 
       <div className={`mx-auto py-12 px-4 ${isLiquid ? 'max-w-4xl' : 'max-w-6xl'}`}>
         {/* Header */}
@@ -302,13 +279,12 @@ const Blog = () => {
             )}
             <div
               id="blog-search-limit"
-              className={`text-[10px] text-right mt-1 font-sans transition-colors ${
-                searchTerm.length >= 100
-                  ? 'text-red-500 font-bold'
-                  : searchTerm.length >= 90
-                    ? 'text-orange-500'
-                    : 'text-muted'
-              }`}
+              className={`text-[10px] text-right mt-1 font-sans transition-colors ${searchTerm.length >= 100
+                ? 'text-red-500 font-bold'
+                : searchTerm.length >= 90
+                  ? 'text-orange-500'
+                  : 'text-muted'
+                }`}
             >
               {searchTerm.length}/100
             </div>

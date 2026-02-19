@@ -5,9 +5,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { breadcrumbSchema, projectsCollectionSchema, SITE_URL } from '../../utils/seo';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedChip from '../shared/ThemedChip';
@@ -32,10 +32,16 @@ const Projects = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
-  const canonicalUrl = `${resumeData.basics.website}/projects`;
   const description =
     'Explore case studies and side projects spanning analytics, AI, and full-stack builds.';
   const title = `Projects | ${resumeData.basics.name}`;
+  const projectSchemas = [
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Projects', url: `${SITE_URL}/projects` },
+    ]),
+    projectsCollectionSchema(),
+  ];
 
   // Animation variants for stagger effect
   const container = {
@@ -83,45 +89,14 @@ const Projects = () => {
   }, []);
 
 
-  const jsonLd = useMemo(() => safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Projects',
-                item: canonicalUrl,
-              },
-            ],
-          }), [canonicalUrl]);
-return (
+  return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-        <script type="application/ld+json">
-          {jsonLd}
-        </script>
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/projects"
+        schemas={projectSchemas}
+      />
       <div className="max-w-6xl mx-auto py-12 px-4">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -195,7 +170,7 @@ return (
                 </div>
               )}
 
-                <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
+              <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-2">
                     <Folder size={20} className="text-muted flex-shrink-0 mt-1" />

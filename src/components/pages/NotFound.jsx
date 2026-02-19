@@ -5,9 +5,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Helmet } from '@dr.pogodin/react-helmet';
+import SEOHead from '../shared/SEOHead';
 import { Home, ArrowLeft, Compass, Rocket, Star, Sparkles, Ghost, Map } from 'lucide-react';
-import { resumeData } from '../../data/resume';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -62,9 +61,6 @@ const NotFound = () => {
     }))
   );
 
-  const title = `404 - Page Not Found | ${resumeData.basics.name}`;
-  const description =
-    "Oops! The page you're looking for seems to have wandered off into the digital void.";
 
   // Glitch effect for 404 text (random character substitution)
   useEffect(() => {
@@ -126,13 +122,12 @@ const NotFound = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="robots" content="noindex, nofollow" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-      </Helmet>
+      <SEOHead
+        title="Page Not Found | Rishabh Agrawal"
+        description="The page you're looking for doesn't exist. Navigate back to explore the portfolio."
+        path={location.pathname}
+        noindex
+      />
 
       <div
         className={themeClass(

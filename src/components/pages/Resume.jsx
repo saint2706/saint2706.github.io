@@ -16,9 +16,9 @@ import {
   Sparkles,
   Filter,
 } from 'lucide-react';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { breadcrumbSchema, resumePersonSchema, SITE_URL } from '../../utils/seo';
 import TechStackVisual from '../shared/TechStackVisual';
 import ScrollReveal from '../shared/ScrollReveal';
 import ThemedCard from '../shared/ThemedCard';
@@ -169,10 +169,16 @@ const Resume = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
-  const canonicalUrl = `${resumeData.basics.website}/resume`;
   const description =
     'Review my education, experience, and skills in analytics, AI, and product strategy.';
   const title = `Resume | ${resumeData.basics.name}`;
+  const resumeSchemas = [
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Resume', url: `${SITE_URL}/resume` },
+    ]),
+    resumePersonSchema(),
+  ];
 
   // Interactive filter state — all sections visible by default
   const [visibleSections, setVisibleSections] = useState(() => new Set(SECTIONS));
@@ -197,42 +203,12 @@ const Resume = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Resume',
-                item: canonicalUrl,
-              },
-            ],
-          })}
-        </script>
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={resumeData.basics.name} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:site" content={resumeData.basics.name} />
-        <meta name="twitter:creator" content={resumeData.basics.name} />
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/resume"
+        schemas={resumeSchemas}
+      />
 
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
@@ -309,18 +285,18 @@ const Resume = () => {
               <ScrollReveal variant="fade-up" delay={0.1}>
                 <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
                   <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
-                  {resumeData.experience.map((job, i) => (
-                    <TimelineCard
-                      key={i}
-                      title={job.company}
-                      subtitle={job.position}
-                      date={`${job.startDate} - ${job.endDate}`}
-                      location={job.location}
-                      description={job.highlights || job.summary}
-                      accentColor="bg-fun-pink"
-                      isLiquid={isLiquid}
-                    />
-                  ))}
+                    {resumeData.experience.map((job, i) => (
+                      <TimelineCard
+                        key={i}
+                        title={job.company}
+                        subtitle={job.position}
+                        date={`${job.startDate} - ${job.endDate}`}
+                        location={job.location}
+                        description={job.highlights || job.summary}
+                        accentColor="bg-fun-pink"
+                        isLiquid={isLiquid}
+                      />
+                    ))}
                   </div>
                 </Section>
               </ScrollReveal>
@@ -339,17 +315,17 @@ const Resume = () => {
               <ScrollReveal variant="fade-up" delay={0.2}>
                 <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
                   <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
-                  {resumeData.education.map((edu, i) => (
-                    <TimelineCard
-                      key={i}
-                      title={edu.institution}
-                      subtitle={edu.area}
-                      date={`${edu.startDate} - ${edu.endDate}`}
-                      description={edu.description}
-                      accentColor="bg-accent"
-                      isLiquid={isLiquid}
-                    />
-                  ))}
+                    {resumeData.education.map((edu, i) => (
+                      <TimelineCard
+                        key={i}
+                        title={edu.institution}
+                        subtitle={edu.area}
+                        date={`${edu.startDate} - ${edu.endDate}`}
+                        description={edu.description}
+                        accentColor="bg-accent"
+                        isLiquid={isLiquid}
+                      />
+                    ))}
                   </div>
                 </Section>
               </ScrollReveal>
@@ -368,19 +344,17 @@ const Resume = () => {
               <ScrollReveal variant="scale-in" delay={0.1}>
                 <div className="mb-12">
                   <div
-                    className={`p-6 ${
-                      isLiquid
+                    className={`p-6 ${isLiquid
                         ? 'lg-surface-2 rounded-3xl'
                         : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
-                    }`}
+                      }`}
                     style={{ boxShadow: isLiquid ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
                   >
                     <div
-                      className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${
-                        isLiquid
+                      className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${isLiquid
                           ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
                           : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
-                      }`}
+                        }`}
                       style={{ boxShadow: isLiquid ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}
                     >
                       <Sparkles size={20} />

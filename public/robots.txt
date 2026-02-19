@@ -1,4 +1,35 @@
+# ─── Search Engine Crawlers ───
 User-agent: *
 Allow: /
+Disallow: /games
 
+# ─── AI Crawlers ───
+# Block AI training crawlers to protect content from being used without permission.
+# These bots scrape for LLM training datasets rather than search indexing.
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# ─── Sitemap ───
 Sitemap: https://saint2706.github.io/sitemap.xml

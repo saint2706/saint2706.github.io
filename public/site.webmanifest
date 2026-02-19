@@ -1,0 +1,16 @@
+{
+    "name": "Rishabh Agrawal | Portfolio",
+    "short_name": "Rishabh",
+    "description": "Portfolio of Rishabh Agrawal: data storyteller and analytics strategist building AI, product, and data experiences.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1e1e2e",
+    "theme_color": "#1e1e2e",
+    "icons": [
+        {
+            "src": "/vite.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

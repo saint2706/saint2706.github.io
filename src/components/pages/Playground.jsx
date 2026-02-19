@@ -6,9 +6,9 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { resumeData } from '../../data/resume';
-import { safeJSONStringify } from '../../utils/security';
+import SEOHead from '../shared/SEOHead';
+import { breadcrumbSchema, SITE_URL } from '../../utils/seo';
 import { getSnippetsByLanguage } from '../../data/snippets';
 import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
@@ -42,10 +42,15 @@ const Playground = () => {
   const [modalType, setModalType] = useState(null); // 'preview' or 'runner'
   const shouldReduceMotion = useReducedMotion();
 
-  const canonicalUrl = `${resumeData.basics.website}/playground`;
   const description =
     'Explore powerful Python one-liners and creative CSS snippets. Copy, learn, and experiment with advanced code techniques.';
   const title = `Code Playground | ${resumeData.basics.name}`;
+  const playgroundSchemas = [
+    breadcrumbSchema([
+      { name: 'Home', url: SITE_URL },
+      { name: 'Playground', url: `${SITE_URL}/playground` },
+    ]),
+  ];
 
   const filteredSnippets = getSnippetsByLanguage(activeFilter);
 
@@ -116,39 +121,12 @@ const Playground = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        <link rel="canonical" href={canonicalUrl} />
-        <meta name="description" content={description} />
-        <meta name="author" content={resumeData.basics.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <script type="application/ld+json">
-          {safeJSONStringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: resumeData.basics.website,
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Playground',
-                item: canonicalUrl,
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
+      <SEOHead
+        title={title}
+        description={description}
+        path="/playground"
+        schemas={playgroundSchemas}
+      />
 
       <div
         className={themeClass(
@@ -203,16 +181,15 @@ const Playground = () => {
                 aria-controls="snippets-grid"
                 variant="secondary"
                 className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm rounded-nb
-                  ${
-                    activeFilter === filter.id
-                      ? themeClass(
-                          `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
-                          'lg-surface-3 lg-pill rounded-full text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
-                        )
-                      : themeClass(
-                          'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
-                          'lg-surface-2 rounded-full text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
-                        )
+                  ${activeFilter === filter.id
+                    ? themeClass(
+                      `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
+                      'lg-surface-3 lg-pill rounded-full text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
+                    )
+                    : themeClass(
+                      'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
+                      'lg-surface-2 rounded-full text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                    )
                   }`}
                 style={{
                   boxShadow:
@@ -397,9 +374,8 @@ const SnippetCard = ({
           {/* Copy Button */}
           <button
             onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
-              isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
-            }`}
+            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+              }`}
             aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
           >
             {isCopied ? (
@@ -451,8 +427,8 @@ const SnippetCard = ({
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
             <ThemedButton
               onClick={onOpenRunner}
-              onMouseEnter={() => loadPyodide().catch(() => {})}
-              onFocus={() => loadPyodide().catch(() => {})}
+              onMouseEnter={() => loadPyodide().catch(() => { })}
+              onFocus={() => loadPyodide().catch(() => { })}
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
