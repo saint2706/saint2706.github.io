@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { X, Flame, RefreshCw } from 'lucide-react';
+import { X, Flame, RefreshCw, Copy, Check } from 'lucide-react';
 import { roastResume } from '../../services/ai';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
@@ -32,6 +32,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const [roastLoading, setRoastLoading] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
   const isMountedRef = useRef(true); // Track mount status to prevent state updates after unmount
@@ -77,6 +78,22 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       setTimeout(() => roastCloseRef.current?.focus(), 100);
     }
   }, []);
+
+  /**
+   * Copy roast text to clipboard
+   */
+  const handleCopy = useCallback(async () => {
+    if (!roastContent) return;
+    try {
+      await navigator.clipboard.writeText(roastContent);
+      setIsCopied(true);
+      setTimeout(() => {
+        if (isMountedRef.current) setIsCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy roast:', err);
+    }
+  }, [roastContent]);
 
   /**
    * Trap focus within dialog and handle keyboard navigation
@@ -172,16 +189,48 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       </div>
 
       {/* Content */}
-      <div className="p-6 bg-white" aria-live="polite" aria-atomic="true" aria-busy={roastLoading}>
+      <div
+        className={joinClasses(
+          'p-6 relative group',
+          isLiquid ? 'bg-transparent' : 'bg-card text-primary'
+        )}
+        aria-live="polite"
+        aria-atomic="true"
+        aria-busy={roastLoading}
+      >
         {roastLoading ? (
           <div className="flex items-center gap-3 text-fun-pink" role="status">
             <RefreshCw size={20} className="animate-spin motion-reduce:animate-none" />
             <span className="font-heading font-bold">Roasting your resume...</span>
           </div>
         ) : roastContent ? (
-          <p className="text-black font-sans text-base italic leading-relaxed">
-            &quot;{roastContent}&quot;
-          </p>
+          <>
+            <p
+              className={joinClasses(
+                'font-sans text-base italic leading-relaxed pr-6',
+                isLiquid ? 'text-[color:var(--text-primary)]' : 'text-inherit'
+              )}
+            >
+              &quot;{roastContent}&quot;
+            </p>
+            <button
+              onClick={handleCopy}
+              className={joinClasses(
+                'absolute top-2 right-2 p-1.5 rounded transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent',
+                isLiquid
+                  ? 'text-[color:var(--text-muted)] hover:text-[color:var(--text-primary)] hover:bg-black/5'
+                  : 'text-muted hover:text-primary hover:bg-secondary'
+              )}
+              aria-label={isCopied ? 'Copied roast' : 'Copy roast to clipboard'}
+              title={isCopied ? 'Copied!' : 'Copy roast'}
+            >
+              {isCopied ? (
+                <Check size={16} aria-hidden="true" />
+              ) : (
+                <Copy size={16} aria-hidden="true" />
+              )}
+            </button>
+          </>
         ) : null}
       </div>
 
