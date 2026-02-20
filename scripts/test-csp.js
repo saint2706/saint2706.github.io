@@ -59,8 +59,16 @@ try {
     process.exit(1);
   }
 
+  // Check for upgrade-insecure-requests (should be present)
+  if (!cspContent.includes('upgrade-insecure-requests')) {
+    console.error(
+      "FAILED: CSP does not contain 'upgrade-insecure-requests'. This is required to prevent mixed content."
+    );
+    process.exit(1);
+  }
+
   console.log(
-    "PASS: CSP does not contain 'unsafe-eval' and includes 'wasm-unsafe-eval' for WebAssembly support."
+    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval', and 'upgrade-insecure-requests')."
   );
 } catch (error) {
   console.error('Error reading index.html:', error);
