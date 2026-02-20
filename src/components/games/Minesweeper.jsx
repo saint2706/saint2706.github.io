@@ -104,11 +104,68 @@ const ADJACENT_COLORS = [
   'text-gray-500',
 ];
 
+const MinesweeperCell = React.memo(({
+  r, c,
+  mine, revealed, flagged, adjacent,
+  ui,
+  onReveal, onFlag,
+  isGameOver, isFocused,
+  isLiquid
+}) => {
+  const longPressRef = useRef(null);
+
+  const handleTouchStart = useCallback(() => {
+    longPressRef.current = setTimeout(() => onFlag(r, c), 500);
+  }, [onFlag, r, c]);
+
+  const handleTouchEnd = useCallback(() => {
+    clearTimeout(longPressRef.current);
+  }, []);
+
+  const cellContent = (() => {
+    if (!revealed && flagged) return '🚩';
+    if (!revealed) return '';
+    if (mine) return '💣';
+    if (adjacent === 0) return '';
+    return adjacent;
+  })();
+
+  return (
+    <button
+      onClick={() => onReveal(r, c)}
+      onContextMenu={(e) => onFlag(r, c, e)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchEnd}
+      disabled={isGameOver}
+      tabIndex={isFocused ? 0 : -1}
+      aria-label={`Row ${r + 1}, Column ${c + 1}${revealed ? (mine ? ', mine' : adjacent > 0 ? `, ${adjacent} adjacent mines` : ', empty') : flagged ? ', flagged' : ', hidden'}. Press F to flag.`}
+      className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm cursor-pointer flex items-center justify-center transition-colors motion-reduce:transition-none ${ui.tileBase}
+        ${
+          revealed
+            ? mine
+              ? 'bg-fun-pink/40'
+              : 'bg-secondary'
+            : `${ui.tileIdle} ${isLiquid ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${isFocused ? 'ring-2 ring-accent' : ''}`
+        }`}
+    >
+      <span
+        className={
+          adjacent > 0 && revealed ? ADJACENT_COLORS[adjacent] : ''
+        }
+      >
+        {cellContent}
+      </span>
+    </button>
+  );
+});
+MinesweeperCell.displayName = 'MinesweeperCell';
+
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
-  const ui = getGameThemeStyles(isLiquid);
+  const ui = React.useMemo(() => getGameThemeStyles(isLiquid), [isLiquid]);
   const [gameState, setGameState] = useState('idle'); // idle | playing | won | lost
   const [board, setBoard] = useState(createEmptyBoard);
   const [firstClick, setFirstClick] = useState(true);
@@ -121,7 +178,12 @@ const Minesweeper = () => {
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
   const timerRef = useRef(null);
-  const longPressRef = useRef(null);
+  const timerValueRef = useRef(0);
+
+  // Keep ref in sync with timer state
+  useEffect(() => {
+    timerValueRef.current = timer;
+  }, [timer]);
 
   // Timer effect
   useEffect(() => {
@@ -140,13 +202,14 @@ const Minesweeper = () => {
         }
       }
       // Won!
-      if (!bestTime || timer < bestTime) {
-        setBestTime(timer);
-        localStorage.setItem('minesweeperBest', timer.toString());
+      const currentTimer = timerValueRef.current;
+      if (!bestTime || currentTimer < bestTime) {
+        setBestTime(currentTimer);
+        localStorage.setItem('minesweeperBest', currentTimer.toString());
       }
       return true;
     },
-    [timer, bestTime]
+    [bestTime]
   );
 
   const revealCell = useCallback(
@@ -251,14 +314,6 @@ const Minesweeper = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [gameState, focusR, focusC, revealCell, toggleFlag]);
 
-  const getCellDisplay = cell => {
-    if (!cell.revealed && cell.flagged) return '🚩';
-    if (!cell.revealed) return '';
-    if (cell.mine) return '💣';
-    if (cell.adjacent === 0) return '';
-    return cell.adjacent;
-  };
-
   const getAnnouncement = () => {
     if (gameState === 'idle') return 'Minesweeper ready. Click any cell to begin.';
     if (gameState === 'won') return `You won in ${timer} seconds!`;
@@ -323,35 +378,21 @@ const Minesweeper = () => {
           >
             {board.map((row, r) =>
               row.map((cell, c) => (
-                <button
+                <MinesweeperCell
                   key={`${r}-${c}`}
-                  onClick={() => revealCell(r, c)}
-                  onContextMenu={e => toggleFlag(r, c, e)}
-                  onTouchStart={() => {
-                    longPressRef.current = setTimeout(() => toggleFlag(r, c), 500);
-                  }}
-                  onTouchEnd={() => clearTimeout(longPressRef.current)}
-                  onTouchMove={() => clearTimeout(longPressRef.current)}
-                  disabled={isGameOver}
-                  tabIndex={focusR === r && focusC === c ? 0 : -1}
-                  aria-label={`Row ${r + 1}, Column ${c + 1}${cell.revealed ? (cell.mine ? ', mine' : cell.adjacent > 0 ? `, ${cell.adjacent} adjacent mines` : ', empty') : cell.flagged ? ', flagged' : ', hidden'}. Press F to flag.`}
-                  className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm cursor-pointer flex items-center justify-center transition-colors motion-reduce:transition-none ${ui.tileBase}
-                    ${
-                      cell.revealed
-                        ? cell.mine
-                          ? 'bg-fun-pink/40'
-                          : 'bg-secondary'
-                        : `${ui.tileIdle} ${isLiquid ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${focusR === r && focusC === c ? 'ring-2 ring-accent' : ''}`
-                    }`}
-                >
-                  <span
-                    className={
-                      cell.adjacent > 0 && cell.revealed ? ADJACENT_COLORS[cell.adjacent] : ''
-                    }
-                  >
-                    {getCellDisplay(cell)}
-                  </span>
-                </button>
+                  r={r}
+                  c={c}
+                  mine={cell.mine}
+                  revealed={cell.revealed}
+                  flagged={cell.flagged}
+                  adjacent={cell.adjacent}
+                  ui={ui}
+                  onReveal={revealCell}
+                  onFlag={toggleFlag}
+                  isGameOver={isGameOver}
+                  isFocused={focusR === r && focusC === c}
+                  isLiquid={isLiquid}
+                />
               ))
             )}
           </div>
