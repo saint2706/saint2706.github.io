@@ -297,7 +297,25 @@ const GameOverlay = React.memo(({ gameState, score, highScore, ui, shouldReduceM
       </motion.div>
     )}
   </AnimatePresence>
-));
+), (prevProps, nextProps) => {
+  // If critical state changes, always re-render
+  if (prevProps.gameState !== nextProps.gameState) return false;
+  if (prevProps.ui !== nextProps.ui) return false;
+  if (prevProps.shouldReduceMotion !== nextProps.shouldReduceMotion) return false;
+  if (prevProps.isLiquid !== nextProps.isLiquid) return false;
+
+  // If game is playing, overlay is hidden (empty AnimatePresence), so we can skip re-renders
+  // even if score/highScore changes. This prevents unnecessary work on every score update.
+  if (nextProps.gameState === 'playing') return true;
+
+  // Otherwise (idle, paused, gameOver), we need to check all props
+  return (
+    prevProps.score === nextProps.score &&
+    prevProps.highScore === nextProps.highScore &&
+    prevProps.startGame === nextProps.startGame &&
+    prevProps.togglePause === nextProps.togglePause
+  );
+});
 
 GameOverlay.displayName = 'GameOverlay';
 
@@ -383,6 +401,40 @@ const SnakeGame = () => {
   const themeColorsRef = useRef(null);
   // Ref to cache gradient colors for the snake body
   const snakeColorsCache = useRef({ length: 0, colors: [] });
+  // Ref to cache the static grid canvas to avoid re-drawing it every frame
+  const gridCanvasRef = useRef(null);
+
+  /**
+   * Pre-render the static grid background and lines to an offscreen canvas.
+   * This runs once on mount (since grid size/colors are constant constants).
+   */
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = GRID_SIZE * CELL_SIZE;
+    canvas.height = GRID_SIZE * CELL_SIZE;
+    const ctx = canvas.getContext('2d');
+
+    // Clear canvas with light mode background
+    ctx.fillStyle = '#F5F5F5';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw grid lines for structure
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let i = 0; i <= GRID_SIZE; i++) {
+      // Vertical lines
+      ctx.moveTo(i * CELL_SIZE, 0);
+      ctx.lineTo(i * CELL_SIZE, canvas.height);
+
+      // Horizontal lines
+      ctx.moveTo(0, i * CELL_SIZE);
+      ctx.lineTo(canvas.width, i * CELL_SIZE);
+    }
+    ctx.stroke();
+
+    gridCanvasRef.current = canvas;
+  }, []);
 
   /**
    * Sync directionRef with direction state.
@@ -636,24 +688,15 @@ const SnakeGame = () => {
     const width = GRID_SIZE * CELL_SIZE;
     const height = GRID_SIZE * CELL_SIZE;
 
-    // Clear canvas with light mode background
-    ctx.fillStyle = '#F5F5F5';
-    ctx.fillRect(0, 0, width, height);
-
-    // Draw grid lines for structure
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    for (let i = 0; i <= GRID_SIZE; i++) {
-      // Vertical lines
-      ctx.moveTo(i * CELL_SIZE, 0);
-      ctx.lineTo(i * CELL_SIZE, height);
-
-      // Horizontal lines
-      ctx.moveTo(0, i * CELL_SIZE);
-      ctx.lineTo(width, i * CELL_SIZE);
+    // Clear and draw cached grid background
+    // This replaces 40+ drawing commands with a single image draw
+    if (gridCanvasRef.current) {
+      ctx.drawImage(gridCanvasRef.current, 0, 0);
+    } else {
+      // Fallback: Clear canvas with light mode background
+      ctx.fillStyle = '#F5F5F5';
+      ctx.fillRect(0, 0, width, height);
     }
-    ctx.stroke();
 
     // Draw snake with gradient from head (accent) to tail (fun-pink)
     // Hoist context settings out of the loop to minimize Canvas API calls
