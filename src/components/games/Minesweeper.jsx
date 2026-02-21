@@ -104,14 +104,14 @@ const ADJACENT_COLORS = [
   'text-gray-500',
 ];
 
-const MinesweeperCell = React.memo(({
+const MinesweeperCell = React.memo(React.forwardRef(({
   r, c,
   mine, revealed, flagged, adjacent,
   ui,
-  onReveal, onFlag,
+  onReveal, onFlag, onFocus,
   isGameOver, isFocused,
   isLiquid
-}) => {
+}, ref) => {
   const longPressRef = useRef(null);
 
   const handleTouchStart = useCallback(() => {
@@ -132,8 +132,10 @@ const MinesweeperCell = React.memo(({
 
   return (
     <button
+      ref={ref}
       onClick={() => onReveal(r, c)}
       onContextMenu={(e) => onFlag(r, c, e)}
+      onFocus={() => onFocus(r, c)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchEnd}
@@ -158,7 +160,7 @@ const MinesweeperCell = React.memo(({
       </span>
     </button>
   );
-});
+}));
 MinesweeperCell.displayName = 'MinesweeperCell';
 
 const Minesweeper = () => {
@@ -179,6 +181,7 @@ const Minesweeper = () => {
   const [focusC, setFocusC] = useState(0);
   const timerRef = useRef(null);
   const timerValueRef = useRef(0);
+  const cellRefs = useRef({});
 
   // Keep ref in sync with timer state
   useEffect(() => {
@@ -271,32 +274,40 @@ const Minesweeper = () => {
     setTimeout(() => setGameState('idle'), 0);
   }, []);
 
-  // Keyboard nav
-  useEffect(() => {
-    const handleKey = e => {
+  // Update focus state when a cell is focused via mouse/tab
+  const handleCellFocus = useCallback((r, c) => {
+    setFocusR(r);
+    setFocusC(c);
+  }, []);
+
+  // Revised keyboard nav: scoped to the grid container
+  const handleKeyDown = useCallback((e) => {
       if (gameState === 'won' || gameState === 'lost') return;
+
       let r = focusR;
       let c = focusC;
+      let handled = false;
+
       switch (e.key) {
         case 'ArrowRight':
           c = Math.min(COLS - 1, c + 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowLeft':
           c = Math.max(0, c - 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowDown':
           r = Math.min(ROWS - 1, r + 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowUp':
           r = Math.max(0, r - 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'Enter':
         case ' ':
-          e.preventDefault();
+          e.preventDefault(); // always prevent default for activation keys
           revealCell(r, c);
           return;
         case 'f':
@@ -307,12 +318,21 @@ const Minesweeper = () => {
         default:
           return;
       }
-      setFocusR(r);
-      setFocusC(c);
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [gameState, focusR, focusC, revealCell, toggleFlag]);
+
+      if (handled) {
+        e.preventDefault(); // Stop scroll hijacking
+        e.stopPropagation(); // Stop bubbling
+        setFocusR(r);
+        setFocusC(c);
+        // We need to ensure focus moves.
+        // Direct focus here is safer than useEffect to avoid "steal focus on mount" issue.
+        // But useEffect handles it reactively.
+        // Let's try direct focus in a timeout or requestAnimationFrame to wait for render?
+        // No, ref should be stable.
+        const nextCell = cellRefs.current[`${r}-${c}`];
+        if (nextCell) nextCell.focus();
+      }
+    }, [gameState, focusR, focusC, revealCell, toggleFlag]);
 
   const getAnnouncement = () => {
     if (gameState === 'idle') return 'Minesweeper ready. Click any cell to begin.';
@@ -371,15 +391,17 @@ const Minesweeper = () => {
           style={ui.style.board}
         >
           <div
-            className="grid gap-[2px]"
+            className="grid gap-[2px] outline-none"
             style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
             role="grid"
             aria-label="Minesweeper game board"
+            onKeyDown={handleKeyDown}
           >
             {board.map((row, r) =>
               row.map((cell, c) => (
                 <MinesweeperCell
                   key={`${r}-${c}`}
+                  ref={el => (cellRefs.current[`${r}-${c}`] = el)}
                   r={r}
                   c={c}
                   mine={cell.mine}
@@ -389,6 +411,7 @@ const Minesweeper = () => {
                   ui={ui}
                   onReveal={revealCell}
                   onFlag={toggleFlag}
+                  onFocus={handleCellFocus}
                   isGameOver={isGameOver}
                   isFocused={focusR === r && focusC === c}
                   isLiquid={isLiquid}
