@@ -103,6 +103,10 @@ export const isSafeHref = href => {
 
   normalizedHref = normalizedHref.trim();
 
+  // Remove control characters (tab, newline, carriage return) which browsers ignore
+  // This prevents bypasses like `/\t/example.com` which browsers normalize to `//example.com`
+  normalizedHref = normalizedHref.replace(/[\t\n\r]/g, '');
+
   // Allow relative URLs (starting with / or #) but strictly block protocol-relative (//)
   // to prevent potential open redirects or loading from arbitrary domains
   if (/^(\/|#)/.test(normalizedHref)) {

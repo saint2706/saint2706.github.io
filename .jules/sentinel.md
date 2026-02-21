@@ -60,6 +60,12 @@
 
 ## 2026-05-23 - Python Runner Input Hardening
 
-**Vulnerability:** The interactive Python runner input field lacked length limits and browser-specific security attributes, potentially allowing for Denial of Service (DoS) via massive inputs or leaking sensitive data to spellcheck services.
+**Vulnerability:** The interactive Python runner input field lacked length limits and browser-specific security attributes, potentially allowing for Denial of Service (DoS) or application crashes if the storage was tampered with (e.g., inserting massive payloads or malformed objects).
 **Learning:** Even client-side inputs for sandboxed environments should have reasonable constraints. Unbounded inputs can crash the browser tab or the WASM runtime. Code inputs should opt-out of spellchecking and autocomplete to prevent data leakage.
 **Prevention:** Always set `maxLength`, `spellCheck="false"`, and `autoComplete="off"` on inputs intended for code execution or sensitive data entry.
+
+## 2026-05-23 - Open Redirect via Control Characters
+
+**Vulnerability:** The `isSafeHref` validation used a blacklist for protocol-relative URLs (`//example.com`) but failed to remove control characters like `\t`, `\n`, `\r` before the check. Browsers strip these characters during URL parsing, allowing attackers to bypass the blacklist (e.g., `/\t/example.com` becomes `//example.com`) and redirect users to malicious sites.
+**Learning:** Blacklisting patterns in URLs is brittle if the input is not strictly normalized first. Browser URL parsing behavior differs from simple string matching. Control characters are often ignored by browsers but can break regex checks.
+**Prevention:** Always strip control characters from URLs before performing security checks, especially when validating relative URLs or checking against blocklists. Mimic browser normalization logic in security validators.
