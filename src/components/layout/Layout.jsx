@@ -81,8 +81,8 @@ const Layout = ({ children }) => {
     return stored === 'true';
   });
 
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
-    () => safeMediaQueryMatch('(prefers-reduced-motion: reduce)')
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() =>
+    safeMediaQueryMatch('(prefers-reduced-motion: reduce)')
   );
 
   const [prefersContrast, setPrefersContrast] = useState(
@@ -91,7 +91,9 @@ const Layout = ({ children }) => {
       safeMediaQueryMatch('(forced-colors: active)')
   );
 
-  const [hasFinePointer, setHasFinePointer] = useState(() => safeMediaQueryMatch('(pointer: fine)'));
+  const [hasFinePointer, setHasFinePointer] = useState(() =>
+    safeMediaQueryMatch('(pointer: fine)')
+  );
 
   // ── Command Palette & Terminal State ──
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
@@ -128,7 +130,6 @@ const Layout = ({ children }) => {
       pointerFineQuery.removeEventListener('change', updatePreferences);
     };
   }, []);
-
 
   useEffect(() => {
     if (!canUseDOM()) return undefined;
@@ -233,14 +234,14 @@ const Layout = ({ children }) => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
-        }`}
+      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
+        isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
+      }`}
       style={{ background: isLiquid ? 'var(--bg)' : undefined }}
       data-theme={isLiquid ? 'liquid' : 'neubrutalism'}
       data-contrast={prefersContrast ? 'more' : 'no-preference'}
       {...(liquidTint ? { 'data-liquid-tint': liquidTint } : {})}
     >
-
       {/* Custom interactive cursor */}
       <CustomCursor enabled={effectiveCursorEnabled} />
 

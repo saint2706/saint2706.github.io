@@ -187,10 +187,7 @@ const WhackAMole = () => {
       </div>
 
       {/* Status bar */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
+      <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Score</div>
           <motion.div
@@ -261,7 +258,9 @@ const WhackAMole = () => {
                       animate={{ scale: 1, y: 0 }}
                       exit={shouldReduceMotion ? undefined : { scale: 0, y: 20 }}
                       transition={
-                        shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                        shouldReduceMotion
+                          ? { duration: 0 }
+                          : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
                       }
                       aria-hidden="true"
                     >
@@ -336,7 +335,11 @@ const WhackAMole = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                }
                 className="text-center"
               >
                 <div

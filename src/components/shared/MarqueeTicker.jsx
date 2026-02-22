@@ -56,7 +56,9 @@ const MarqueeTicker = ({
     ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--text-secondary)]'
     : 'whitespace-nowrap px-6 font-heading text-sm font-bold uppercase tracking-widest text-black';
 
-  const separatorClasses = isLiquid ? 'mx-4 text-[color:var(--color-text-muted)]' : 'mx-4 text-fun-pink';
+  const separatorClasses = isLiquid
+    ? 'mx-4 text-[color:var(--color-text-muted)]'
+    : 'mx-4 text-fun-pink';
 
   return (
     <div

@@ -6,8 +6,7 @@
 const hasStorage = () =>
   typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
 
-export const canUseDOM = () =>
-  typeof window !== 'undefined' && typeof document !== 'undefined';
+export const canUseDOM = () => typeof window !== 'undefined' && typeof document !== 'undefined';
 
 export const safeMediaQueryMatch = (query, fallback = false) => {
   if (!canUseDOM() || typeof window.matchMedia !== 'function') return fallback;

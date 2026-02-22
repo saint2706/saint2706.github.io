@@ -138,11 +138,7 @@ const TimelineCard = ({
     {tags && tags.length > 0 && (
       <div className="flex flex-wrap gap-2">
         {tags.map((tag, i) => (
-          <ThemedChip
-            key={i}
-            variant="neutral"
-            className="font-sans"
-          >
+          <ThemedChip key={i} variant="neutral" className="font-sans">
             {tag}
           </ThemedChip>
         ))}
@@ -208,12 +204,7 @@ const Resume = () => {
 
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/resume"
-        schemas={resumeSchemas}
-      />
+      <SEOHead title={title} description={description} path="/resume" schemas={resumeSchemas} />
 
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
@@ -289,7 +280,13 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.1}>
                 <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
-                  <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
+                  <div
+                    className={
+                      isLiquid
+                        ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]'
+                        : 'space-y-6'
+                    }
+                  >
                     {resumeData.experience.map((job, i) => {
                       const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
                       return (
@@ -323,7 +320,13 @@ const Resume = () => {
             >
               <ScrollReveal variant="fade-up" delay={0.2}>
                 <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
-                  <div className={isLiquid ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]' : 'space-y-6'}>
+                  <div
+                    className={
+                      isLiquid
+                        ? 'relative space-y-5 pl-8 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-px before:bg-[color:var(--border-soft)]'
+                        : 'space-y-6'
+                    }
+                  >
                     {resumeData.education.map((edu, i) => {
                       const eduShadowColors = ['blue', 'yellow', 'lime'];
                       return (
@@ -357,18 +360,28 @@ const Resume = () => {
               <ScrollReveal variant="scale-in" delay={0.1}>
                 <div className="mb-12">
                   <div
-                    className={`p-6 ${isLiquid
-                      ? 'lg-surface-2 rounded-3xl'
-                      : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
-                      }`}
-                    style={{ boxShadow: isLiquid ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)' : 'var(--nb-shadow)' }}
+                    className={`p-6 ${
+                      isLiquid
+                        ? 'lg-surface-2 rounded-3xl'
+                        : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb'
+                    }`}
+                    style={{
+                      boxShadow: isLiquid
+                        ? '0 14px 34px -28px rgba(25, 35, 84, 0.75)'
+                        : 'var(--nb-shadow)',
+                    }}
                   >
                     <div
-                      className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${isLiquid
-                        ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
-                        : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
-                        }`}
-                      style={{ boxShadow: isLiquid ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)' : '2px 2px 0 var(--color-border)' }}
+                      className={`inline-flex items-center gap-2 px-3 py-2 mb-6 ${
+                        isLiquid
+                          ? 'lg-surface-2 text-[color:var(--text-primary)] border border-[color:var(--border-soft)] rounded-full'
+                          : 'bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb'
+                      }`}
+                      style={{
+                        boxShadow: isLiquid
+                          ? '0 8px 24px -20px rgba(139, 92, 246, 0.85)'
+                          : '2px 2px 0 var(--color-border)',
+                      }}
                     >
                       <Sparkles size={20} />
                       <h2 className="text-lg font-heading font-bold">Tech Stack</h2>

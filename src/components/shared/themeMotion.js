@@ -75,4 +75,3 @@ export const getLiquidRevealVariant = variant => {
 
   return LIQUID_VARIANTS_CACHE[variant] || LIQUID_VARIANTS_CACHE['fade-up'];
 };
-

@@ -178,12 +178,7 @@ const Blog = () => {
 
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/blog"
-        schemas={blogSchemas}
-      />
+      <SEOHead title={title} description={description} path="/blog" schemas={blogSchemas} />
 
       <div className={`mx-auto py-12 px-4 ${isLiquid ? 'max-w-4xl' : 'max-w-6xl'}`}>
         {/* Header */}
@@ -279,12 +274,13 @@ const Blog = () => {
             )}
             <div
               id="blog-search-limit"
-              className={`text-[10px] text-right mt-1 font-sans transition-colors ${searchTerm.length >= 100
-                ? 'text-red-500 font-bold'
-                : searchTerm.length >= 90
-                  ? 'text-orange-500'
-                  : 'text-muted'
-                }`}
+              className={`text-[10px] text-right mt-1 font-sans transition-colors ${
+                searchTerm.length >= 100
+                  ? 'text-red-500 font-bold'
+                  : searchTerm.length >= 90
+                    ? 'text-orange-500'
+                    : 'text-muted'
+              }`}
             >
               {searchTerm.length}/100
             </div>
@@ -317,7 +313,9 @@ const Blog = () => {
 
               <div className="p-6 flex-grow flex flex-col">
                 {/* Source and Date */}
-                <div className={`flex justify-between items-start mb-4 ${isLiquid ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}>
+                <div
+                  className={`flex justify-between items-start mb-4 ${isLiquid ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}
+                >
                   <ThemedChip
                     className={`font-heading font-bold px-3 ${isLiquid ? 'tracking-wide uppercase text-xs' : `${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}`}
                   >
@@ -346,11 +344,7 @@ const Blog = () => {
                 {blog.tags && blog.tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {blog.tags.slice(0, 3).map(tag => (
-                      <ThemedChip
-                        key={tag}
-                        variant="neutral"
-                        className="font-sans"
-                      >
+                      <ThemedChip key={tag} variant="neutral" className="font-sans">
                         #{tag}
                       </ThemedChip>
                     ))}

@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { safeGetLocalStorage, safeSetLocalStorage, safeSetDocumentTheme } from '../../utils/storage';
+import {
+  safeGetLocalStorage,
+  safeSetLocalStorage,
+  safeSetDocumentTheme,
+} from '../../utils/storage';
 import { ThemeContext } from './theme-context';
 
 const THEME_STORAGE_KEY = 'preferred_theme';
@@ -20,13 +24,16 @@ export const ThemeProvider = ({ children }) => {
     setThemeState(isValidTheme(nextTheme) ? nextTheme : THEMES.neubrutalism);
   }, []);
 
-  const setTheme = useCallback(nextTheme => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => applyTheme(nextTheme));
-    } else {
-      applyTheme(nextTheme);
-    }
-  }, [applyTheme]);
+  const setTheme = useCallback(
+    nextTheme => {
+      if (document.startViewTransition) {
+        document.startViewTransition(() => applyTheme(nextTheme));
+      } else {
+        applyTheme(nextTheme);
+      }
+    },
+    [applyTheme]
+  );
 
   const toggleTheme = useCallback(() => {
     const next = theme === THEMES.neubrutalism ? THEMES.liquid : THEMES.neubrutalism;

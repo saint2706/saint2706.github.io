@@ -254,10 +254,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
             aria-label="Command Palette"
             aria-modal="true"
           >
-            <div
-              className={joinClasses('overflow-hidden', shell.className)}
-              style={shell.style}
-            >
+            <div className={joinClasses('overflow-hidden', shell.className)} style={shell.style}>
               {/* Search Input */}
               <div
                 className={joinClasses(

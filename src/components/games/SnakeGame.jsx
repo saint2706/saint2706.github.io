@@ -162,160 +162,164 @@ ScoreBoard.displayName = 'ScoreBoard';
 /**
  * GameOverlay component memoized to isolate overlay rendering from game loop.
  */
-const GameOverlay = React.memo(({ gameState, score, highScore, ui, shouldReduceMotion, isLiquid, startGame, togglePause }) => (
-  <AnimatePresence>
-    {gameState === 'idle' && (
-      <motion.div
-        initial={shouldReduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : undefined}
-        className={ui.overlay}
-        style={ui.style.board}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="snake-start-title"
-        aria-describedby="snake-start-desc"
-      >
-        <div
-          id="snake-start-title"
-          className={`${ui.banner} text-xl text-black bg-fun-yellow`}
-          style={ui.style.raised}
-        >
-          Snake Game
-        </div>
-        <div
-          id="snake-start-desc"
-          className="text-sm text-secondary text-center px-4 font-sans"
-        >
-          Use arrow keys or swipe to control
-          <br />
-          <span className="text-muted">Space to pause</span>
-        </div>
-        <motion.button
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-          onClick={startGame}
-          className={ui.buttonPrimary}
-          style={ui.style.raised}
-          autoFocus
-        >
-          <Play size={20} aria-hidden="true" />
-          Start Game
-        </motion.button>
-      </motion.div>
-    )}
-
-    {gameState === 'paused' && (
-      <motion.div
-        initial={shouldReduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : undefined}
-        className={ui.overlay}
-        style={ui.style.board}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="snake-pause-title"
-      >
-        <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
-        <div
-          id="snake-pause-title"
-          className={`${ui.banner} text-xl text-white bg-accent`}
-          style={ui.style.raised}
-        >
-          Paused
-        </div>
-        <motion.button
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-          onClick={togglePause}
-          className={ui.buttonSecondary}
-          style={ui.style.raised}
-          autoFocus
-        >
-          <Play size={18} aria-hidden="true" />
-          Resume
-        </motion.button>
-      </motion.div>
-    )}
-
-    {gameState === 'gameOver' && (
-      <motion.div
-        initial={shouldReduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-        transition={shouldReduceMotion ? { duration: 0 } : undefined}
-        className={ui.overlay}
-        style={ui.style.board}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="snake-gameover-title"
-        aria-describedby="snake-gameover-desc"
-      >
+const GameOverlay = React.memo(
+  ({ gameState, score, highScore, ui, shouldReduceMotion, isLiquid, startGame, togglePause }) => (
+    <AnimatePresence>
+      {gameState === 'idle' && (
         <motion.div
-          initial={shouldReduceMotion ? false : { scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
-          className="text-center"
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
+          className={ui.overlay}
+          style={ui.style.board}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="snake-start-title"
+          aria-describedby="snake-start-desc"
         >
           <div
-            id="snake-gameover-title"
-            className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+            id="snake-start-title"
+            className={`${ui.banner} text-xl text-black bg-fun-yellow`}
             style={ui.style.raised}
           >
-            Game Over!
+            Snake Game
           </div>
-          <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
-            Score: <span className="font-heading font-bold text-accent">{score}</span>
+          <div id="snake-start-desc" className="text-sm text-secondary text-center px-4 font-sans">
+            Use arrow keys or swipe to control
+            <br />
+            <span className="text-muted">Space to pause</span>
           </div>
-          {score >= highScore && score > 0 && (
-            <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={shouldReduceMotion ? { duration: 0 } : undefined}
-              className="flex items-center justify-center gap-2 mt-2"
-            >
-              <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
-              <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
-                New High Score!
-              </span>
-            </motion.div>
-          )}
+          <motion.button
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+            onClick={startGame}
+            className={ui.buttonPrimary}
+            style={ui.style.raised}
+            autoFocus
+          >
+            <Play size={20} aria-hidden="true" />
+            Start Game
+          </motion.button>
         </motion.div>
-        <motion.button
-          initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
-          onClick={startGame}
-          className={ui.buttonPrimary}
-          style={ui.style.raised}
-          autoFocus
+      )}
+
+      {gameState === 'paused' && (
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
+          className={ui.overlay}
+          style={ui.style.board}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="snake-pause-title"
         >
-          <RotateCcw size={18} aria-hidden="true" />
-          Play Again
-        </motion.button>
-      </motion.div>
-    )}
-  </AnimatePresence>
-), (prevProps, nextProps) => {
-  // If critical state changes, always re-render
-  if (prevProps.gameState !== nextProps.gameState) return false;
-  if (prevProps.ui !== nextProps.ui) return false;
-  if (prevProps.shouldReduceMotion !== nextProps.shouldReduceMotion) return false;
-  if (prevProps.isLiquid !== nextProps.isLiquid) return false;
+          <Pause className="w-12 h-12 text-accent" aria-hidden="true" />
+          <div
+            id="snake-pause-title"
+            className={`${ui.banner} text-xl text-white bg-accent`}
+            style={ui.style.raised}
+          >
+            Paused
+          </div>
+          <motion.button
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+            onClick={togglePause}
+            className={ui.buttonSecondary}
+            style={ui.style.raised}
+            autoFocus
+          >
+            <Play size={18} aria-hidden="true" />
+            Resume
+          </motion.button>
+        </motion.div>
+      )}
 
-  // If game is playing, overlay is hidden (empty AnimatePresence), so we can skip re-renders
-  // even if score/highScore changes. This prevents unnecessary work on every score update.
-  if (nextProps.gameState === 'playing') return true;
+      {gameState === 'gameOver' && (
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : undefined}
+          className={ui.overlay}
+          style={ui.style.board}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="snake-gameover-title"
+          aria-describedby="snake-gameover-desc"
+        >
+          <motion.div
+            initial={shouldReduceMotion ? false : { scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+            }
+            className="text-center"
+          >
+            <div
+              id="snake-gameover-title"
+              className={`${ui.banner} text-2xl text-white bg-fun-pink mb-4`}
+              style={ui.style.raised}
+            >
+              Game Over!
+            </div>
+            <div id="snake-gameover-desc" className="text-lg text-secondary font-sans">
+              Score: <span className="font-heading font-bold text-accent">{score}</span>
+            </div>
+            {score >= highScore && score > 0 && (
+              <motion.div
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? { duration: 0 } : undefined}
+                className="flex items-center justify-center gap-2 mt-2"
+              >
+                <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
+                <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
+                  New High Score!
+                </span>
+              </motion.div>
+            )}
+          </motion.div>
+          <motion.button
+            initial={shouldReduceMotion ? false : { y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { delay: isLiquid ? 0.1 : 0.2 }}
+            whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
+            onClick={startGame}
+            className={ui.buttonPrimary}
+            style={ui.style.raised}
+            autoFocus
+          >
+            <RotateCcw size={18} aria-hidden="true" />
+            Play Again
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  ),
+  (prevProps, nextProps) => {
+    // If critical state changes, always re-render
+    if (prevProps.gameState !== nextProps.gameState) return false;
+    if (prevProps.ui !== nextProps.ui) return false;
+    if (prevProps.shouldReduceMotion !== nextProps.shouldReduceMotion) return false;
+    if (prevProps.isLiquid !== nextProps.isLiquid) return false;
 
-  // Otherwise (idle, paused, gameOver), we need to check all props
-  return (
-    prevProps.score === nextProps.score &&
-    prevProps.highScore === nextProps.highScore &&
-    prevProps.startGame === nextProps.startGame &&
-    prevProps.togglePause === nextProps.togglePause
-  );
-});
+    // If game is playing, overlay is hidden (empty AnimatePresence), so we can skip re-renders
+    // even if score/highScore changes. This prevents unnecessary work on every score update.
+    if (nextProps.gameState === 'playing') return true;
+
+    // Otherwise (idle, paused, gameOver), we need to check all props
+    return (
+      prevProps.score === nextProps.score &&
+      prevProps.highScore === nextProps.highScore &&
+      prevProps.startGame === nextProps.startGame &&
+      prevProps.togglePause === nextProps.togglePause
+    );
+  }
+);
 
 GameOverlay.displayName = 'GameOverlay';
 
@@ -765,7 +769,12 @@ const SnakeGame = () => {
         {gameAnnouncement}
       </div>
 
-      <ScoreBoard score={score} highScore={highScore} ui={ui} shouldReduceMotion={shouldReduceMotion} />
+      <ScoreBoard
+        score={score}
+        highScore={highScore}
+        ui={ui}
+        shouldReduceMotion={shouldReduceMotion}
+      />
 
       {/* Game Canvas - Neubrutalism */}
       <div className="relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>

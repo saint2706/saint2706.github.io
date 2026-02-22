@@ -457,10 +457,7 @@ const TicTacToe = () => {
       </div>
 
       {/* Score Board - Neubrutalism */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
+      <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="flex items-center gap-2 px-3">
           <User size={18} className="text-accent" />
           <div>
@@ -548,7 +545,11 @@ const TicTacToe = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                }
                 className="text-center"
               >
                 {gameStatus === 'won' && (

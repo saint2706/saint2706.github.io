@@ -164,10 +164,7 @@ const LightsOut = () => {
       </div>
 
       {/* Score board */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
+      <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Moves</div>
           <motion.div
@@ -290,7 +287,11 @@ const LightsOut = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                }
                 className="text-center"
               >
                 <div

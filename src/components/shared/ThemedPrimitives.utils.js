@@ -44,7 +44,12 @@ const LIQUID_SHADOW_BY_DEPTH = {
   subtle: 'var(--glass-drop-shadow-subtle, 0 2px 8px rgba(0,0,0,0.05))',
 };
 
-export const getOverlayShell = ({ theme, tone = 'card', depth = 'default', className = '' } = {}) => {
+export const getOverlayShell = ({
+  theme,
+  tone = 'card',
+  depth = 'default',
+  className = '',
+} = {}) => {
   const isLiquid = theme === 'liquid';
   return {
     className: joinClasses(
@@ -55,8 +60,8 @@ export const getOverlayShell = ({ theme, tone = 'card', depth = 'default', class
     ),
     style: {
       boxShadow: isLiquid
-        ? LIQUID_SHADOW_BY_DEPTH[depth] ?? LIQUID_SHADOW_BY_DEPTH.default
-        : NB_SHADOW_BY_DEPTH[depth] ?? NB_SHADOW_BY_DEPTH.default,
+        ? (LIQUID_SHADOW_BY_DEPTH[depth] ?? LIQUID_SHADOW_BY_DEPTH.default)
+        : (NB_SHADOW_BY_DEPTH[depth] ?? NB_SHADOW_BY_DEPTH.default),
     },
   };
 };
