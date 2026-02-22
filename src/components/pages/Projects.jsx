@@ -90,15 +90,9 @@ const Projects = () => {
     };
   }, []);
 
-
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/projects"
-        schemas={projectSchemas}
-      />
+      <SEOHead title={title} description={description} path="/projects" schemas={projectSchemas} />
       <div className="max-w-6xl mx-auto py-12 px-4">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: -20 }}
@@ -158,7 +152,9 @@ const Projects = () => {
               }}
             >
               {/* Color accent bar */}
-              {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
+              {!isLiquid && (
+                <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
+              )}
 
               {/* Project Image */}
               {project.image && (
@@ -204,11 +200,7 @@ const Projects = () => {
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.map(tag => (
-                    <ThemedChip
-                      key={tag}
-                      variant="neutral"
-                      className="font-sans"
-                    >
+                    <ThemedChip key={tag} variant="neutral" className="font-sans">
                       {tag}
                     </ThemedChip>
                   ))}

@@ -308,13 +308,19 @@ Just kidding... but seriously, let's chat!
                   <div className="flex gap-1.5">
                     <button
                       onClick={onClose}
-                    className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
+                      className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                       aria-label="Close terminal"
                     />
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-green-500" />
                   </div>
-                  <span className={isLiquid ? 'text-[color:var(--text-muted)] text-xs font-mono ml-3' : 'text-gray-400 text-xs font-mono ml-3'}>
+                  <span
+                    className={
+                      isLiquid
+                        ? 'text-[color:var(--text-muted)] text-xs font-mono ml-3'
+                        : 'text-gray-400 text-xs font-mono ml-3'
+                    }
+                  >
                     rishabh@portfolio ~ %
                   </span>
                 </div>

@@ -167,10 +167,7 @@ const SimonSays = () => {
       </div>
 
       {/* Score board */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
+      <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Round</div>
           <motion.div
@@ -296,7 +293,11 @@ const SimonSays = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                }
                 className="text-center"
               >
                 <div

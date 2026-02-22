@@ -61,7 +61,6 @@ const NotFound = () => {
     }))
   );
 
-
   // Glitch effect for 404 text (random character substitution)
   useEffect(() => {
     if (shouldReduceMotion) return;

@@ -47,11 +47,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isLiquid }) =>
     return getHoveredSkill() === skill.name;
   }, [getHoveredSkill, skill.name]);
 
-  const isHovered = useSyncExternalStore(
-    subscribe,
-    checkIsHovered,
-    checkIsHovered
-  );
+  const isHovered = useSyncExternalStore(subscribe, checkIsHovered, checkIsHovered);
 
   const handleMouseEnter = useCallback(
     () => setHoveredSkill(skill.name),
@@ -104,9 +100,7 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isLiquid }) =>
               ? '3px 3px 0 var(--color-border)'
               : '2px 2px 0 var(--color-border)',
         }}
-        whileHover={
-          shouldReduceMotion ? {} : isLiquid ? { y: -1, scale: 1.01 } : { x: 2, y: -2 }
-        }
+        whileHover={shouldReduceMotion ? {} : isLiquid ? { y: -1, scale: 1.01 } : { x: 2, y: -2 }}
         transition={{ duration: 0.1 }}
         aria-label={`View proficiency details for ${skill.name}`}
         aria-pressed={isHovered}
@@ -118,13 +112,17 @@ const SkillNode = React.memo(({ skill, color, shouldReduceMotion, isLiquid }) =>
             width: nodeSize,
             height: nodeSize,
             backgroundColor: color,
-            borderColor: isLiquid ? 'color-mix(in srgb, var(--border-soft) 55%, #fff 45%)' : 'var(--color-border)',
+            borderColor: isLiquid
+              ? 'color-mix(in srgb, var(--border-soft) 55%, #fff 45%)'
+              : 'var(--color-border)',
             boxShadow: isLiquid ? `0 0 10px -3px ${color}cc` : undefined,
           }}
         />
 
         {/* Skill name - always visible */}
-        <span className={`text-sm font-heading font-bold whitespace-nowrap ${isLiquid ? 'text-primary' : 'text-black'}`}>
+        <span
+          className={`text-sm font-heading font-bold whitespace-nowrap ${isLiquid ? 'text-primary' : 'text-black'}`}
+        >
           {skill.name}
         </span>
 
@@ -153,65 +151,69 @@ SkillNode.displayName = 'SkillNode';
  * Category Branch with its skills
  * Memoized to prevent re-renders when other categories are interacted with.
  */
-const CategoryBranch = React.memo(({ category, skills, color, shouldReduceMotion, delay, isLiquid }) => {
-  return (
-    <motion.div
-      className="flex flex-col sm:flex-row gap-2 sm:gap-4"
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : { delay }}
-    >
-      {/* Category label */}
-      <div
-        className={`flex items-center gap-2 px-3 py-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0 ${isLiquid ? 'rounded-full border border-[color:var(--border-soft)]' : 'border-2'}`}
-        style={{
-          borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
-          background: isLiquid
-            ? `linear-gradient(135deg, ${color}40 0%, rgba(255,255,255,0.08) 100%)`
-            : undefined,
-          backgroundColor: isLiquid ? undefined : color,
-          boxShadow: isLiquid ? '0 10px 24px -18px rgba(0,0,0,0.7)' : '3px 3px 0 var(--color-border)',
-          color: isLiquid ? 'var(--text-primary)' : '#000',
-        }}
+const CategoryBranch = React.memo(
+  ({ category, skills, color, shouldReduceMotion, delay, isLiquid }) => {
+    return (
+      <motion.div
+        className="flex flex-col sm:flex-row gap-2 sm:gap-4"
+        initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { delay }}
       >
+        {/* Category label */}
         <div
-          className={`w-3 h-3 ${isLiquid ? 'rounded-full border' : 'border-2'}`}
+          className={`flex items-center gap-2 px-3 py-2 font-heading font-bold text-sm sm:min-w-[180px] flex-shrink-0 ${isLiquid ? 'rounded-full border border-[color:var(--border-soft)]' : 'border-2'}`}
           style={{
             borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
-            backgroundColor: isLiquid ? color : '#fff',
-            boxShadow: isLiquid ? `0 0 8px -2px ${color}` : undefined,
+            background: isLiquid
+              ? `linear-gradient(135deg, ${color}40 0%, rgba(255,255,255,0.08) 100%)`
+              : undefined,
+            backgroundColor: isLiquid ? undefined : color,
+            boxShadow: isLiquid
+              ? '0 10px 24px -18px rgba(0,0,0,0.7)'
+              : '3px 3px 0 var(--color-border)',
+            color: isLiquid ? 'var(--text-primary)' : '#000',
           }}
-        />
-        {category}
-      </div>
-
-      {/* Connecting line */}
-      <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
-        {isLiquid ? (
+        >
           <div
-            className="w-full h-px rounded-full"
-            style={{ background: `linear-gradient(90deg, ${color}aa 0%, ${color}22 100%)` }}
+            className={`w-3 h-3 ${isLiquid ? 'rounded-full border' : 'border-2'}`}
+            style={{
+              borderColor: isLiquid ? 'var(--border-soft)' : 'var(--color-border)',
+              backgroundColor: isLiquid ? color : '#fff',
+              boxShadow: isLiquid ? `0 0 8px -2px ${color}` : undefined,
+            }}
           />
-        ) : (
-          <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
-        )}
-      </div>
+          {category}
+        </div>
 
-      {/* Skills container */}
-      <div className="flex flex-wrap gap-1 pl-4 sm:pl-0">
-        {skills.map(skill => (
-          <SkillNode
-            key={skill.name}
-            skill={skill}
-            color={color}
-            shouldReduceMotion={shouldReduceMotion}
-            isLiquid={isLiquid}
-          />
-        ))}
-      </div>
-    </motion.div>
-  );
-});
+        {/* Connecting line */}
+        <div className="hidden sm:flex items-center" style={{ width: '20px' }}>
+          {isLiquid ? (
+            <div
+              className="w-full h-px rounded-full"
+              style={{ background: `linear-gradient(90deg, ${color}aa 0%, ${color}22 100%)` }}
+            />
+          ) : (
+            <div className="w-full h-0.5 border-t-2" style={{ borderColor: color }} />
+          )}
+        </div>
+
+        {/* Skills container */}
+        <div className="flex flex-wrap gap-1 pl-4 sm:pl-0">
+          {skills.map(skill => (
+            <SkillNode
+              key={skill.name}
+              skill={skill}
+              color={color}
+              shouldReduceMotion={shouldReduceMotion}
+              isLiquid={isLiquid}
+            />
+          ))}
+        </div>
+      </motion.div>
+    );
+  }
+);
 
 CategoryBranch.displayName = 'CategoryBranch';
 
@@ -277,17 +279,14 @@ const TechStackVisual = () => {
   }, []);
 
   // Set hovered skill and notify only if changed
-  const setHoveredSkill = useCallback(
-    skillName => {
-      const prevSkillName = hoveredSkillRef.current;
-      if (prevSkillName !== skillName) {
-        hoveredSkillRef.current = skillName;
-        // Notify all subscribers (useSyncExternalStore requires notifying all)
-        subscribersRef.current.forEach(callback => callback());
-      }
-    },
-    []
-  );
+  const setHoveredSkill = useCallback(skillName => {
+    const prevSkillName = hoveredSkillRef.current;
+    if (prevSkillName !== skillName) {
+      hoveredSkillRef.current = skillName;
+      // Notify all subscribers (useSyncExternalStore requires notifying all)
+      subscribersRef.current.forEach(callback => callback());
+    }
+  }, []);
 
   // Stable context value
   const contextValue = useMemo(

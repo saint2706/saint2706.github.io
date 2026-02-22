@@ -54,7 +54,10 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   // Scroll-aware navbar compaction for liquid theme
   useEffect(() => {
-    if (!isLiquid) { setIsScrolled(false); return undefined; }
+    if (!isLiquid) {
+      setIsScrolled(false);
+      return undefined;
+    }
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -132,8 +135,11 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
 
   /* ── Theme-dependent class maps ── */
 
-  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${isLiquid ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}` : 'py-4 md:py-5'
-    }`;
+  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${
+    isLiquid
+      ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}`
+      : 'py-4 md:py-5'
+  }`;
 
   const containerCls = isLiquid
     ? 'lg-surface-1 lg-specular-rim flex items-center justify-between w-full max-w-5xl h-[64px] px-6 pointer-events-auto transition-all duration-300'
@@ -143,16 +149,18 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
     ? 'lg-surface-3 px-4 py-1.5 rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap text-sm'
     : 'text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb whitespace-nowrap';
 
-  const desktopLinkCls = (isActive) =>
+  const desktopLinkCls = isActive =>
     isLiquid
-      ? `touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${isActive
-        ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
-        : 'text-[color:var(--text-secondary)] hover:bg-white/40'
-      }`
-      : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${isActive
-        ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
-        : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
-      }`;
+      ? `touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
+          isActive
+            ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
+            : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+        }`
+      : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
+          isActive
+            ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
+            : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+        }`;
 
   const actionBtnCls = isLiquid
     ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
@@ -171,11 +179,19 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
     : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb';
 
   const mobileLinkCls = (isActive, index) => {
-    const base = 'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200';
+    const base =
+      'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200';
     const activeStyle = isLiquid
-      ? (isActive ? 'bg-white/60 text-[color:var(--text-primary)]' : 'text-[color:var(--text-secondary)] hover:bg-white/40')
-      : (isActive ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary');
-    const separator = !isLiquid && index < NAV_ITEMS.length - 1 ? 'border-b-2 border-[color:var(--color-border)]' : '';
+      ? isActive
+        ? 'bg-white/60 text-[color:var(--text-primary)]'
+        : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+      : isActive
+        ? 'bg-fun-yellow text-black'
+        : 'text-primary hover:bg-secondary';
+    const separator =
+      !isLiquid && index < NAV_ITEMS.length - 1
+        ? 'border-b-2 border-[color:var(--color-border)]'
+        : '';
     return `${base} ${activeStyle} ${separator}`;
   };
 
@@ -204,7 +220,9 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
               to={item.path}
               className={({ isActive }) => desktopLinkCls(isActive)}
             >
-              <span className="hidden lg:inline opacity-70" aria-hidden="true">{item.icon}</span>
+              <span className="hidden lg:inline opacity-70" aria-hidden="true">
+                {item.icon}
+              </span>
               <span>{item.name}</span>
             </NavLink>
           ))}
@@ -277,7 +295,9 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
             >
               <div className="flex flex-col">
                 {/* Theme switcher row */}
-                <div className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}>
+                <div
+                  className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}
+                >
                   <button
                     onClick={toggleTheme}
                     className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${mobileThemeBtnCls}`}
@@ -295,7 +315,9 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
                     onClick={handleCloseMenu}
                     className={({ isActive }) => mobileLinkCls(isActive, index)}
                   >
-                    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>{item.icon}</span>
+                    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
+                      {item.icon}
+                    </span>
                     <span>{item.name}</span>
                   </NavLink>
                 ))}

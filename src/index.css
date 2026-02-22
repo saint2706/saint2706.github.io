@@ -66,14 +66,14 @@
   --nb-radius: 0px;
 
   /* Colored shadow palette */
-  --nb-shadow-color-yellow: #FFD54F;
-  --nb-shadow-color-pink: #FF4081;
-  --nb-shadow-color-blue: #448AFF;
-  --nb-shadow-color-red: #E53935;
-  --nb-shadow-color-lime: #76FF03;
-  --nb-shadow-color-coral: #FF6B6B;
-  --nb-shadow-color-violet: #B388FF;
-  --nb-shadow-color-orange: #FF9100;
+  --nb-shadow-color-yellow: #ffd54f;
+  --nb-shadow-color-pink: #ff4081;
+  --nb-shadow-color-blue: #448aff;
+  --nb-shadow-color-red: #e53935;
+  --nb-shadow-color-lime: #76ff03;
+  --nb-shadow-color-coral: #ff6b6b;
+  --nb-shadow-color-violet: #b388ff;
+  --nb-shadow-color-orange: #ff9100;
 
   /* Skeleton colors */
   --color-skeleton: rgba(0, 0, 0, 0.1);
@@ -147,28 +147,28 @@
     --surface-overlay: rgba(18, 18, 18, 0.95);
 
     /* Light text on dark */
-    --text-primary: #F5F5F5;
-    --text-secondary: #D4D4D4;
-    --text-muted: #A0A0A0;
+    --text-primary: #f5f5f5;
+    --text-secondary: #d4d4d4;
+    --text-muted: #a0a0a0;
     --text-subtle: #757575;
     --text: var(--text-primary);
 
     /* Vibrant accents pop harder on dark */
-    --accent: #448AFF;
+    --accent: #448aff;
     --accent-soft: rgba(68, 138, 255, 0.25);
-    --fun-pink: #FF4081;
-    --fun-yellow: #FFD54F;
+    --fun-pink: #ff4081;
+    --fun-yellow: #ffd54f;
 
     /* White/bright borders for contrast */
-    --border-color: #F5F5F5;
+    --border-color: #f5f5f5;
     --border-soft: rgba(255, 255, 255, 0.18);
     --border-strong: rgba(255, 255, 255, 0.4);
-    --focus-ring: #FFD54F;
+    --focus-ring: #ffd54f;
     --glass-blur: 0;
     --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
 
     /* Colored offset shadows — the Midnight Brutalism signature */
-    --nb-shadow-color: #FFD54F;
+    --nb-shadow-color: #ffd54f;
     --nb-shadow: 4px 4px 0 var(--nb-shadow-color);
     --nb-shadow-hover: 6px 6px 0 var(--nb-shadow-color);
     --nb-shadow-xl: 8px 8px 0 var(--nb-shadow-color);
@@ -191,9 +191,9 @@
 /* ===== iOS LIQUID GLASS THEME ===== */
 [data-theme='liquid'] {
   /* System backgrounds */
-  --bg: #F2F2F7;
-  --bg-layer-1: #F2F2F7;
-  --bg-layer-2: #E5E5EA;
+  --bg: #f2f2f7;
+  --bg-layer-1: #f2f2f7;
+  --bg-layer-2: #e5e5ea;
 
   /* Liquid glass surfaces — translucent with high blur */
   --glass-bg: rgba(255, 255, 255, 0.55);
@@ -216,17 +216,17 @@
   --glass-tint: rgba(120, 120, 180, 0.06);
 
   /* Typography */
-  --text-primary: #1D1D1F;
-  --text-secondary: #3C3C43;
-  --text-muted: #6E6E73;
-  --text-subtle: #86868B;
+  --text-primary: #1d1d1f;
+  --text-secondary: #3c3c43;
+  --text-muted: #6e6e73;
+  --text-subtle: #86868b;
   --text: var(--text-primary);
 
   /* Accent palette — iOS system colors */
-  --accent: #007AFF;
+  --accent: #007aff;
   --accent-soft: rgba(0, 122, 255, 0.12);
-  --fun-pink: #AF52DE;
-  --fun-yellow: #FF9F0A;
+  --fun-pink: #af52de;
+  --fun-yellow: #ff9f0a;
 
   /* Borders — white specular edges (iOS liquid glass signature) */
   --border-color: rgba(255, 255, 255, 0.45);
@@ -234,7 +234,7 @@
   --border-strong: rgba(255, 255, 255, 0.6);
   --border-outer: rgba(0, 0, 0, 0.06);
 
-  --focus-ring: #007AFF;
+  --focus-ring: #007aff;
   --glass-blur-val: 40;
   --glow-soft: 0 4px 12px rgba(0, 0, 0, 0.06);
 
@@ -261,7 +261,9 @@
   --color-skeleton: rgba(0, 0, 0, 0.04);
 
   /* Font — iOS system font stack */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue',
+    sans-serif;
 
   /* Refined shadows */
   --ios-shadow-refined: 0 4px 6px rgba(0, 0, 0, 0.04), 0 24px 48px rgba(0, 0, 0, 0.08);
@@ -271,8 +273,8 @@
 @media (prefers-color-scheme: dark) {
   [data-theme='liquid'] {
     --bg: #000000;
-    --bg-layer-1: #1C1C1E;
-    --bg-layer-2: #2C2C2E;
+    --bg-layer-1: #1c1c1e;
+    --bg-layer-2: #2c2c2e;
 
     --glass-bg: rgba(44, 44, 46, 0.55);
     --glass-border: rgba(255, 255, 255, 0.12);
@@ -292,23 +294,23 @@
     --glass-drop-shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.2);
     --glass-tint: rgba(120, 120, 180, 0.08);
 
-    --text-primary: #F5F5F7;
-    --text-secondary: #A1A1A6;
-    --text-muted: #8E8E93;
+    --text-primary: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-muted: #8e8e93;
     --text-subtle: #636366;
     --text: var(--text-primary);
 
-    --accent: #0A84FF;
+    --accent: #0a84ff;
     --accent-soft: rgba(10, 132, 255, 0.18);
-    --fun-pink: #BF5AF2;
-    --fun-yellow: #FFD60A;
+    --fun-pink: #bf5af2;
+    --fun-yellow: #ffd60a;
 
     --border-color: rgba(255, 255, 255, 0.12);
     --border-soft: rgba(255, 255, 255, 0.08);
     --border-strong: rgba(255, 255, 255, 0.2);
     --border-outer: rgba(255, 255, 255, 0.04);
 
-    --focus-ring: #0A84FF;
+    --focus-ring: #0a84ff;
     --glow-soft: 0 4px 12px rgba(0, 0, 0, 0.2);
 
     --color-primary: var(--bg);
@@ -398,7 +400,6 @@
   animation: nb-ticker-scroll 25s linear infinite;
 }
 
-
 @media (prefers-reduced-motion: reduce) {
   .nb-ticker {
     animation: none;
@@ -407,7 +408,6 @@
 
 /* Gentle float bob for decorative elements */
 @keyframes nb-float-bob {
-
   0%,
   100% {
     transform: translateY(0) rotate(var(--sticker-rotate, 2deg));
@@ -441,7 +441,6 @@
 
 /* Blinking cursor for code snippets */
 @keyframes nb-blink {
-
   0%,
   100% {
     opacity: 1;
@@ -530,8 +529,20 @@
   pointer-events: none;
   opacity: 0.06;
   background-image:
-    repeating-linear-gradient(45deg, var(--nb-shadow-color, #000) 0, var(--nb-shadow-color, #000) 1px, transparent 0, transparent 50%),
-    repeating-linear-gradient(-45deg, var(--nb-shadow-color, #000) 0, var(--nb-shadow-color, #000) 1px, transparent 0, transparent 50%);
+    repeating-linear-gradient(
+      45deg,
+      var(--nb-shadow-color, #000) 0,
+      var(--nb-shadow-color, #000) 1px,
+      transparent 0,
+      transparent 50%
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      var(--nb-shadow-color, #000) 0,
+      var(--nb-shadow-color, #000) 1px,
+      transparent 0,
+      transparent 50%
+    );
   background-size: 10px 10px;
   border-radius: inherit;
 }
@@ -730,12 +741,18 @@
     inset: 0;
     border-radius: inherit;
     padding: 0.5px;
-    background: linear-gradient(180deg,
-        var(--specular-top, rgba(255, 255, 255, 0.8)) 0%,
-        rgba(255, 255, 255, 0.2) 40%,
-        rgba(255, 255, 255, 0.05) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    background: linear-gradient(
+      180deg,
+      var(--specular-top, rgba(255, 255, 255, 0.8)) 0%,
+      rgba(255, 255, 255, 0.2) 40%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -755,7 +772,7 @@
       radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0, 122, 255, 0.08) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 80% 30%, rgba(175, 82, 222, 0.07) 0%, transparent 55%),
       radial-gradient(ellipse 70% 50% at 50% 90%, rgba(255, 159, 10, 0.06) 0%, transparent 60%),
-      var(--bg, #F2F2F7);
+      var(--bg, #f2f2f7);
     pointer-events: none;
     transition: background 0.8s ease;
   }
@@ -763,18 +780,18 @@
   /* ---------- Per-page ambient tinting ---------- */
   [data-liquid-tint='blue'] .lg-ambient-bg::before {
     background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0, 122, 255, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0, 122, 255, 0.1) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 80% 30%, rgba(88, 86, 214, 0.08) 0%, transparent 55%),
       radial-gradient(ellipse 70% 50% at 50% 90%, rgba(0, 122, 255, 0.05) 0%, transparent 60%),
-      var(--bg, #F2F2F7);
+      var(--bg, #f2f2f7);
   }
 
   [data-liquid-tint='purple'] .lg-ambient-bg::before {
     background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(175, 82, 222, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(175, 82, 222, 0.1) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 80% 30%, rgba(88, 86, 214, 0.09) 0%, transparent 55%),
       radial-gradient(ellipse 70% 50% at 50% 90%, rgba(175, 82, 222, 0.06) 0%, transparent 60%),
-      var(--bg, #F2F2F7);
+      var(--bg, #f2f2f7);
   }
 
   [data-liquid-tint='green'] .lg-ambient-bg::before {
@@ -782,20 +799,21 @@
       radial-gradient(ellipse 80% 60% at 20% 10%, rgba(52, 199, 89, 0.09) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 80% 30%, rgba(0, 122, 255, 0.05) 0%, transparent 55%),
       radial-gradient(ellipse 70% 50% at 50% 90%, rgba(52, 199, 89, 0.06) 0%, transparent 60%),
-      var(--bg, #F2F2F7);
+      var(--bg, #f2f2f7);
   }
 
   [data-liquid-tint='amber'] .lg-ambient-bg::before {
     background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255, 159, 10, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255, 159, 10, 0.1) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255, 55, 95, 0.07) 0%, transparent 55%),
       radial-gradient(ellipse 70% 50% at 50% 90%, rgba(255, 159, 10, 0.06) 0%, transparent 60%),
-      var(--bg, #F2F2F7);
+      var(--bg, #f2f2f7);
   }
 
   /* ---------- Spring hover interaction ---------- */
   .lg-spring-hover {
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transition:
+      transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 0.4s ease,
       filter 0.3s ease;
   }
@@ -874,13 +892,14 @@
 
   /* ---------- Primary accent button ---------- */
   .liquid-button-primary {
-    background: var(--accent, #007AFF);
+    background: var(--accent, #007aff);
     color: #fff;
     border-radius: 9999px;
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     border-top: 0.5px solid rgba(255, 255, 255, 0.5);
-    box-shadow: var(--glass-inner-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.25)),
-      0 4px 16px color-mix(in srgb, var(--accent, #007AFF) 30%, transparent);
+    box-shadow:
+      var(--glass-inner-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.25)),
+      0 4px 16px color-mix(in srgb, var(--accent, #007aff) 30%, transparent);
   }
 
   /* ---------- Touch target minimum ---------- */
@@ -930,7 +949,6 @@
 
 /* Hero gradient orb floating animation */
 @keyframes lg-orb-drift {
-
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -1156,9 +1174,7 @@
   height: 4px;
 }
 
-
 @media (prefers-reduced-motion: reduce) {
-
   .lg-spring-hover,
   .lg-surface-1,
   .lg-surface-2,
@@ -1214,10 +1230,9 @@
 
 /* ===== PRINT STYLES ===== */
 @media print {
-
   /* Show link URLs */
   a[href]::after {
-    content: " (" attr(href) ")";
+    content: ' (' attr(href) ')';
     font-size: 0.8em;
     font-weight: normal;
     color: #555;

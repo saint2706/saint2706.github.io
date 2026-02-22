@@ -4,12 +4,7 @@
 
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import {
-  ArrowRight,
-  Bot,
-  Code2,
-  Sparkles,
-} from 'lucide-react';
+import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
@@ -78,20 +73,11 @@ const Hero = () => {
   // Helper to switch classes based on theme
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-
-  const homeSchemas = useMemo(
-    () => [websiteSchema(), profilePageSchema(), personSchemaFull()],
-    []
-  );
+  const homeSchemas = useMemo(() => [websiteSchema(), profilePageSchema(), personSchemaFull()], []);
 
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/"
-        schemas={homeSchemas}
-      />
+      <SEOHead title={title} description={description} path="/" schemas={homeSchemas} />
 
       <div className="min-h-[80vh] relative flex flex-col justify-center items-center text-center max-w-5xl mx-auto py-12 px-4">
         {/* Decorative Shapes — Neubrutalism vs Liquid */}
@@ -130,7 +116,10 @@ const Hero = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
               className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob nb-halftone-bg"
-              style={{ boxShadow: '4px 4px 0 var(--nb-shadow-color-pink)', '--sticker-rotate': '3deg' }}
+              style={{
+                boxShadow: '4px 4px 0 var(--nb-shadow-color-pink)',
+                '--sticker-rotate': '3deg',
+              }}
             />
             <motion.div
               initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
@@ -169,13 +158,15 @@ const Hero = () => {
           <ThemedChip
             variant="yellow"
             className={themeClass(
-              "font-heading font-semibold px-5 py-2 nb-sticker",
-              "font-heading font-semibold px-5 py-2 lg-surface-3 lg-pill"
+              'font-heading font-semibold px-5 py-2 nb-sticker',
+              'font-heading font-semibold px-5 py-2 lg-surface-3 lg-pill'
             )}
             style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
-            <Sparkles size={18} className={themeClass("text-black", "text-fun-yellow")} />
-            <span className={isLiquid ? "text-[color:var(--text-primary)]" : ""}>Available for hire & collaborations</span>
+            <Sparkles size={18} className={themeClass('text-black', 'text-fun-yellow')} />
+            <span className={isLiquid ? 'text-[color:var(--text-primary)]' : ''}>
+              Available for hire & collaborations
+            </span>
           </ThemedChip>
         </motion.div>
 
@@ -209,10 +200,12 @@ const Hero = () => {
           </span>
           <span
             className={themeClass(
-              "text-[color:var(--text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker",
-              "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block"
+              'text-[color:var(--text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker',
+              'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block'
             )}
-            style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }}
+            style={
+              isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }
+            }
           >
             & Creative Analyst
           </span>
@@ -226,15 +219,30 @@ const Hero = () => {
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
           Turning{' '}
-          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-yellow", "text-blue-400 font-bold")}>
+          <strong
+            className={themeClass(
+              'text-primary font-bold border-b-[3px] border-fun-yellow',
+              'text-blue-400 font-bold'
+            )}
+          >
             messy data
           </strong>{' '}
           into
-          <strong className={themeClass("text-primary font-bold border-b-[3px] border-accent mx-1", "text-purple-400 font-bold mx-1")}>
+          <strong
+            className={themeClass(
+              'text-primary font-bold border-b-[3px] border-accent mx-1',
+              'text-purple-400 font-bold mx-1'
+            )}
+          >
             clear strategies
           </strong>{' '}
           and
-          <strong className={themeClass("text-primary font-bold border-b-[3px] border-fun-pink mx-1", "text-pink-400 font-bold mx-1")}>
+          <strong
+            className={themeClass(
+              'text-primary font-bold border-b-[3px] border-fun-pink mx-1',
+              'text-pink-400 font-bold mx-1'
+            )}
+          >
             AI/ML solutions
           </strong>{' '}
           into real-world impact.
@@ -253,8 +261,8 @@ const Hero = () => {
             variant="primary"
             size="lg"
             className={themeClass(
-              "group relative nb-shadow-lift nb-color-invert",
-              "group relative liquid-button-primary border border-[color:var(--border-soft)] shadow-[0_0_30px_rgba(141,162,255,0.35)] hover:-translate-y-0.5"
+              'group relative nb-shadow-lift nb-color-invert',
+              'group relative liquid-button-primary border border-[color:var(--border-soft)] shadow-[0_0_30px_rgba(141,162,255,0.35)] hover:-translate-y-0.5'
             )}
             style={isLiquid ? undefined : { '--invert-text': 'var(--color-fun-yellow)' }}
           >
@@ -269,13 +277,17 @@ const Hero = () => {
             variant="secondary"
             size="lg"
             className={themeClass(
-              "nb-shadow-lift nb-color-invert",
-              "lg-surface-2 shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--text-primary)]"
+              'nb-shadow-lift nb-color-invert',
+              'lg-surface-2 shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--text-primary)]'
             )}
             style={isLiquid ? undefined : { '--invert-text': '#ffffff' }}
             aria-label="Open chat with Digital Rishabh"
           >
-            <Bot size={18} className={isLiquid ? "text-purple-400" : "text-fun-pink"} aria-hidden="true" />
+            <Bot
+              size={18}
+              className={isLiquid ? 'text-purple-400' : 'text-fun-pink'}
+              aria-hidden="true"
+            />
             Talk to Digital Rishabh
           </ThemedButton>
         </motion.div>
@@ -317,7 +329,8 @@ const Hero = () => {
                   {isGlitching ? (
                     <>
                       <span className="text-[#c792ea]">const</span>{' '}
-                      <span className="text-[#82aaff]">developer</span>{' = {\n'}
+                      <span className="text-[#82aaff]">developer</span>
+                      {' = {\n'}
                       {'  mode: '}
                       <span className="text-[#c3e88d]">&lsquo;GAMER&rsquo;</span>
                       {',\n  status: '}
@@ -330,7 +343,8 @@ const Hero = () => {
                   ) : (
                     <>
                       <span className="text-[#c792ea]">const</span>{' '}
-                      <span className="text-[#82aaff]">developer</span>{' = {\n'}
+                      <span className="text-[#82aaff]">developer</span>
+                      {' = {\n'}
                       {'  name: '}
                       <span className="text-[#c3e88d]">&lsquo;{resumeData.basics.name}&rsquo;</span>
                       {',\n  stack: ['}

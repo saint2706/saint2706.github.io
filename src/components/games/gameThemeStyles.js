@@ -8,7 +8,9 @@ export const getGameThemeStyles = isLiquid => {
   return {
     scoreboard: join('flex p-4', isLiquid ? 'gap-5' : 'gap-4 bg-secondary', panel),
     statBlock: 'px-3 md:px-4',
-    separator: isLiquid ? 'w-px bg-[color:var(--border-soft)]' : 'w-[3px] bg-[color:var(--color-border)]',
+    separator: isLiquid
+      ? 'w-px bg-[color:var(--border-soft)]'
+      : 'w-[3px] bg-[color:var(--color-border)]',
     boardShell: join(isLiquid ? 'lg-surface-2 rounded-2xl' : 'bg-card', panel),
     boardPadding: isLiquid ? 'p-3' : 'p-4',
     overlay: join(
@@ -48,7 +50,9 @@ export const getGameThemeStyles = isLiquid => {
         : 'border-[3px] border-[color:var(--color-border)] rounded-nb'
     ),
     tileIdle: isLiquid ? 'bg-[color:var(--surface-muted)]/80' : 'bg-card',
-    tileActive: isLiquid ? 'lg-tint-blue bg-accent/80 text-white' : 'bg-accent text-white -translate-x-0.5 -translate-y-0.5',
+    tileActive: isLiquid
+      ? 'lg-tint-blue bg-accent/80 text-white'
+      : 'bg-accent text-white -translate-x-0.5 -translate-y-0.5',
     tileWin: isLiquid ? 'lg-tint-amber bg-fun-yellow/40 border-fun-yellow/70' : 'bg-fun-yellow',
     style: {
       raised: isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' },

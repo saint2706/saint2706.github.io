@@ -276,8 +276,8 @@ const CustomCursor = ({ enabled }) => {
         }}
       >
         <div
-            className={`w-full h-full ${isLiquid ? 'bg-white rounded-full' : 'bg-black border-2 border-white'}`}
-            style={{ borderRadius: isLiquid ? '50%' : 0 }}
+          className={`w-full h-full ${isLiquid ? 'bg-white rounded-full' : 'bg-black border-2 border-white'}`}
+          style={{ borderRadius: isLiquid ? '50%' : 0 }}
         />
       </motion.div>
 

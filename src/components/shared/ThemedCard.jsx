@@ -14,7 +14,8 @@ const VARIANTS = {
       'lg-surface-2 lg-specular-rim lg-spring-hover motion-reduce:transform-none motion-reduce:transition-none',
   },
   highlighted: {
-    neubrutalism: 'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] rounded-nb',
+    neubrutalism:
+      'bg-fun-yellow text-black border-nb border-[color:var(--color-border)] rounded-nb',
     liquid: 'lg-surface-2 lg-specular-rim',
   },
   decorated: {
@@ -35,13 +36,21 @@ const NB_SHADOW_COLOR_MAP = {
   orange: 'nb-shadow-orange',
 };
 
-const ThemedCard = ({ as: Component = 'div', variant = 'default', shadowColor, className, style, ...props }) => {
+const ThemedCard = ({
+  as: Component = 'div',
+  variant = 'default',
+  shadowColor,
+  className,
+  style,
+  ...props
+}) => {
   const { theme } = useTheme();
   const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
   const variantClasses = VARIANTS[variant]?.[themeKey] ?? VARIANTS.default[themeKey];
 
   // Apply colored shadow class if specified (NB only)
-  const coloredShadowClass = themeKey === 'neubrutalism' && shadowColor ? NB_SHADOW_COLOR_MAP[shadowColor] : '';
+  const coloredShadowClass =
+    themeKey === 'neubrutalism' && shadowColor ? NB_SHADOW_COLOR_MAP[shadowColor] : '';
 
   return (
     <Component
@@ -56,4 +65,3 @@ const ThemedCard = ({ as: Component = 'div', variant = 'default', shadowColor, c
 };
 
 export default ThemedCard;
-

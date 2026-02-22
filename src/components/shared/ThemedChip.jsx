@@ -16,11 +16,13 @@ const VARIANTS = {
     liquid: 'lg-surface-3 lg-tint-purple lg-pill text-[color:var(--text-primary)]',
   },
   neutral: {
-    neubrutalism: 'bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb',
+    neubrutalism:
+      'bg-secondary text-primary border-2 border-[color:var(--color-border)] rounded-nb',
     liquid: 'lg-surface-3 lg-pill text-[color:var(--text-secondary)]',
   },
   sticker: {
-    neubrutalism: 'bg-fun-yellow text-black border-2 border-[color:var(--color-border)] rounded-nb nb-sticker',
+    neubrutalism:
+      'bg-fun-yellow text-black border-2 border-[color:var(--color-border)] rounded-nb nb-sticker',
     liquid: 'lg-surface-3 lg-tint-amber lg-pill text-[color:var(--text-primary)]',
   },
 };
@@ -33,17 +35,29 @@ const SHADOW_COLORS = {
   red: 'var(--nb-shadow-color-red)',
 };
 
-const ThemedChip = ({ as: Component = 'span', variant = 'neutral', shadowColor, className, style, ...props }) => {
+const ThemedChip = ({
+  as: Component = 'span',
+  variant = 'neutral',
+  shadowColor,
+  className,
+  style,
+  ...props
+}) => {
   const { theme } = useTheme();
   const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
 
-  const chipShadow = themeKey === 'neubrutalism'
-    ? `2px 2px 0 ${shadowColor && SHADOW_COLORS[shadowColor] ? SHADOW_COLORS[shadowColor] : 'var(--color-border)'}`
-    : undefined;
+  const chipShadow =
+    themeKey === 'neubrutalism'
+      ? `2px 2px 0 ${shadowColor && SHADOW_COLORS[shadowColor] ? SHADOW_COLORS[shadowColor] : 'var(--color-border)'}`
+      : undefined;
 
   return (
     <Component
-      className={joinClasses('inline-flex items-center gap-1 px-2 py-1 text-sm md:text-xs', VARIANTS[variant]?.[themeKey], className)}
+      className={joinClasses(
+        'inline-flex items-center gap-1 px-2 py-1 text-sm md:text-xs',
+        VARIANTS[variant]?.[themeKey],
+        className
+      )}
       style={{ ...(chipShadow ? { boxShadow: chipShadow } : {}), ...style }}
       {...props}
     />
@@ -51,4 +65,3 @@ const ThemedChip = ({ as: Component = 'span', variant = 'neutral', shadowColor, 
 };
 
 export default ThemedChip;
-

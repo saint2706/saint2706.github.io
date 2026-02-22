@@ -73,12 +73,11 @@ const Games = () => {
     { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
   ];
 
-  const handleGameSelect = (gameId) => {
+  const handleGameSelect = gameId => {
     setActiveGame(gameId);
   };
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
-
 
   return (
     <>
@@ -106,16 +105,16 @@ const Games = () => {
               shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: 0.5, delay: 0.1 }
             }
             className={themeClass(
-              "hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none",
-              "hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none"
+              'hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none',
+              'hover:brightness-110 hover:scale-[1.015] transition-[filter,transform] motion-reduce:transform-none'
             )}
             style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
           >
             <ThemedChip
               variant="pink"
               className={themeClass(
-                "mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white",
-                "mb-6 px-4 py-2 font-heading font-semibold rounded-full lg-surface-3 lg-pill"
+                'mb-6 px-4 py-2 font-heading font-bold nb-sticker rounded-nb text-white',
+                'mb-6 px-4 py-2 font-heading font-semibold rounded-full lg-surface-3 lg-pill'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -129,8 +128,8 @@ const Games = () => {
               as="span"
               variant={isLiquid ? 'default' : 'highlighted'}
               className={themeClass(
-                "inline-block px-6 py-3 rounded-nb nb-stamp-in",
-                "inline-block px-6 py-3 rounded-3xl lg-surface-2"
+                'inline-block px-6 py-3 rounded-nb nb-stamp-in',
+                'inline-block px-6 py-3 rounded-3xl lg-surface-2'
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
@@ -170,9 +169,11 @@ const Games = () => {
                     ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--text-primary)]'}`,
 
                   `flex items-center gap-2 px-6 py-3 font-heading font-semibold text-sm rounded-full transition-all
-                    ${activeGame === game.id
-                    ? 'lg-surface-3 lg-pill text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
-                    : 'lg-surface-2 text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'}`
+                    ${
+                      activeGame === game.id
+                        ? 'lg-surface-3 lg-pill text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
+                        : 'lg-surface-2 text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                    }`
                 )}
                 style={{
                   boxShadow:
@@ -212,8 +213,8 @@ const Games = () => {
           <ThemedCard
             variant="default"
             className={themeClass(
-              "bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb",
-              "lg-surface-2 p-6 md:p-8 rounded-3xl"
+              'bg-card border-nb border-[color:var(--color-border)] p-6 md:p-8 rounded-nb',
+              'lg-surface-2 p-6 md:p-8 rounded-3xl'
             )}
             style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
           >
@@ -251,8 +252,8 @@ const Games = () => {
         >
           <div
             className={themeClass(
-              "bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb",
-              "lg-surface-2 px-6 py-3 rounded-full"
+              'bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb',
+              'lg-surface-2 px-6 py-3 rounded-full'
             )}
             style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
           >

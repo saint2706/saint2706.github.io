@@ -55,9 +55,12 @@ const ThemedButton = ({
   const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
 
   const activeClasses =
-    themeKey === 'neubrutalism' && isActive ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5' : '';
+    themeKey === 'neubrutalism' && isActive
+      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+      : '';
 
-  const coloredShadowClass = themeKey === 'neubrutalism' && coloredShadow ? NB_SHADOW_COLOR_MAP[coloredShadow] : '';
+  const coloredShadowClass =
+    themeKey === 'neubrutalism' && coloredShadow ? NB_SHADOW_COLOR_MAP[coloredShadow] : '';
 
   return (
     <Component
@@ -79,4 +82,3 @@ const ThemedButton = ({
 };
 
 export default ThemedButton;
-

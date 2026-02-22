@@ -254,8 +254,9 @@ const ALLOWED_MARKDOWN_ELEMENTS = [
 const MessageItem = React.memo(({ msg }) => (
   <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
     <div
-      className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
-        }`}
+      className={`max-w-[85%] p-3 text-sm leading-relaxed border-[3px] border-[color:var(--color-border)] ${
+        msg.role === 'user' ? 'bg-fun-yellow text-black' : 'bg-card text-primary'
+      }`}
       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
     >
       <ReactMarkdown
@@ -648,10 +649,11 @@ const ChatInterface = ({ onClose }) => {
           {messages.length > 1 && (
             <button
               onClick={handleClearClick}
-              className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${showClearConfirm
+              className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${
+                showClearConfirm
                   ? 'bg-red-500 text-white border-white hover:bg-red-600'
                   : 'text-white/70 hover:text-white border-white/30 hover:border-white'
-                }`}
+              }`}
               aria-label={showClearConfirm ? 'Confirm clear chat history' : 'Clear chat history'}
             >
               {showClearConfirm ? 'Confirm?' : 'Clear'}
@@ -700,9 +702,11 @@ const ChatInterface = ({ onClose }) => {
                     inputRef.current.focus();
                   }
                 }}
-                className={isLiquid
-                  ? 'lg-surface-3 lg-pill lg-spring-hover text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
-                  : 'bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
+                className={
+                  isLiquid
+                    ? 'lg-surface-3 lg-pill lg-spring-hover text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                    : 'bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'
+                }
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label={`Ask: ${reply}`}
               >
@@ -737,12 +741,13 @@ const ChatInterface = ({ onClose }) => {
               />
               <div
                 id="chat-char-limit"
-                className={`text-[10px] text-right mt-1 font-sans transition-colors ${input.length >= 500
+                className={`text-[10px] text-right mt-1 font-sans transition-colors ${
+                  input.length >= 500
                     ? 'text-red-500 font-bold'
                     : input.length >= 450
                       ? 'text-orange-500'
                       : 'text-muted'
-                  }`}
+                }`}
               >
                 {input.length}/500
               </div>

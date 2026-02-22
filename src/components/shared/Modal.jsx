@@ -199,18 +199,22 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           >
             {/* Header */}
             <div
-              className={isLiquid
-                ? 'flex items-center justify-between px-5 py-4 border-b border-[color:var(--border-soft)] bg-[color:var(--surface-muted)]'
-                : 'flex items-center justify-between px-5 py-4 border-b-2 border-[color:var(--color-border)] bg-secondary'}
+              className={
+                isLiquid
+                  ? 'flex items-center justify-between px-5 py-4 border-b border-[color:var(--border-soft)] bg-[color:var(--surface-muted)]'
+                  : 'flex items-center justify-between px-5 py-4 border-b-2 border-[color:var(--color-border)] bg-secondary'
+              }
             >
               <h2 id="modal-title" className="font-heading font-bold text-lg text-primary">
                 {title}
               </h2>
               <button
                 onClick={onClose}
-                className={isLiquid
-                  ? 'group relative p-2 lg-surface-3 lg-pill lg-spring-hover rounded-full text-primary hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
-                  : 'group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'}
+                className={
+                  isLiquid
+                    ? 'group relative p-2 lg-surface-3 lg-pill lg-spring-hover rounded-full text-primary hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+                    : 'group relative p-2 bg-card border-2 border-[color:var(--color-border)] rounded-nb text-primary hover:bg-fun-pink hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'
+                }
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"
               >

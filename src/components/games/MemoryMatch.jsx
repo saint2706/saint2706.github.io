@@ -168,10 +168,7 @@ const MemoryMatch = () => {
       </div>
 
       {/* Score board */}
-      <div
-        className={ui.scoreboard}
-        style={ui.style.raised}
-      >
+      <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="px-4">
           <div className="text-sm md:text-xs text-secondary font-heading">Moves</div>
           <motion.div
@@ -240,7 +237,9 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: 90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: -90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }}
+                      transition={
+                        shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
+                      }
                       className="absolute inset-0 flex items-center justify-center text-2xl"
                       aria-hidden="true"
                     >
@@ -252,7 +251,9 @@ const MemoryMatch = () => {
                       initial={shouldReduceMotion ? false : { rotateY: -90, opacity: 0 }}
                       animate={{ rotateY: 0, opacity: 1 }}
                       exit={shouldReduceMotion ? undefined : { rotateY: 90, opacity: 0 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }}
+                      transition={
+                        shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
+                      }
                       className="absolute inset-0 flex items-center justify-center text-xl text-secondary"
                       aria-hidden="true"
                     >
@@ -324,7 +325,11 @@ const MemoryMatch = () => {
               <motion.div
                 initial={shouldReduceMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+                }
                 className="text-center"
               >
                 <Sparkles className="w-10 h-10 text-fun-yellow mx-auto mb-2" aria-hidden="true" />

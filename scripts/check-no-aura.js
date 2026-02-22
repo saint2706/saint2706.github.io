@@ -16,7 +16,20 @@ const ALLOWED_DOC = path.join('docs', 'liquid-glass-checklist.md');
 const AURA_PATTERN = /\baura\b/i;
 
 const textExtensions = new Set([
-  '.js', '.jsx', '.ts', '.tsx', '.css', '.md', '.html', '.json', '.txt', '.xml', '.yml', '.yaml', '.mjs', '.cjs',
+  '.js',
+  '.jsx',
+  '.ts',
+  '.tsx',
+  '.css',
+  '.md',
+  '.html',
+  '.json',
+  '.txt',
+  '.xml',
+  '.yml',
+  '.yaml',
+  '.mjs',
+  '.cjs',
 ]);
 
 const violations = [];

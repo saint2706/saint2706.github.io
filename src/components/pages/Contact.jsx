@@ -67,12 +67,7 @@ const Contact = () => {
   ];
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/contact"
-        schemas={contactSchemas}
-      />
+      <SEOHead title={title} description={description} path="/contact" schemas={contactSchemas} />
 
       <div className="max-w-5xl mx-auto py-12 px-4">
         {/* Header */}
@@ -104,7 +99,8 @@ const Contact = () => {
             <ThemedCard className="p-8 md:p-10 rounded-3xl">
               <h2 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h2>
               <p className="text-secondary liquid-helper-text mb-6 font-sans">
-                Tell me what you&apos;re building and I&apos;ll get back via {resumeData.basics.email}.
+                Tell me what you&apos;re building and I&apos;ll get back via{' '}
+                {resumeData.basics.email}.
               </p>
 
               <form className="space-y-4" onSubmit={handleSubmit}>
@@ -205,7 +201,9 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-sm text-muted font-heading font-bold uppercase">Email</p>
-                      <p className="text-primary font-sans font-medium">{resumeData.basics.email}</p>
+                      <p className="text-primary font-sans font-medium">
+                        {resumeData.basics.email}
+                      </p>
                     </div>
                   </a>
 
@@ -222,7 +220,9 @@ const Contact = () => {
                       <MapPin size={24} aria-hidden="true" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted font-heading font-bold uppercase">Location</p>
+                      <p className="text-sm text-muted font-heading font-bold uppercase">
+                        Location
+                      </p>
                       <p className="text-primary font-sans font-medium">
                         {resumeData.basics.location.city}, {resumeData.basics.location.country}
                       </p>
@@ -301,8 +301,9 @@ const Contact = () => {
                 </h3>
 
                 <p className="text-secondary mb-8 font-sans">
-                  Whether it&apos;s making sense of messy data, designing AI/ML solutions, or bridging
-                  technical depth with business impact - let&apos;s create something amazing together!
+                  Whether it&apos;s making sense of messy data, designing AI/ML solutions, or
+                  bridging technical depth with business impact - let&apos;s create something
+                  amazing together!
                 </p>
 
                 <ThemedButton

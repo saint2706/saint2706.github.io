@@ -14,7 +14,12 @@ import React from 'react';
  * @param {number} [props.height] - Height in pixels (default: 20)
  * @param {string} [props.className] - Additional wrapper classes
  */
-const ZigzagDivider = ({ variant = 'zigzag', fillColor = '#000000', height = 20, className = '' }) => {
+const ZigzagDivider = ({
+  variant = 'zigzag',
+  fillColor = '#000000',
+  height = 20,
+  className = '',
+}) => {
   if (variant === 'none') {
     return null;
   }

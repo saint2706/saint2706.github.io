@@ -288,8 +288,16 @@ const imageSrcTests = [
   { name: 'Protocol-relative URL', input: '//example.com/image.png', expected: false },
   { name: 'Path-only URL', input: '/images/photo.png', expected: true },
   { name: 'Fragment-only URL', input: '#section', expected: true },
-  { name: 'Encoded slash attack (single encoding)', input: '/%2Fexample.com/image.png', expected: false },
-  { name: 'Encoded slash attack (double encoding)', input: '%2F%2Fexample.com/image.png', expected: false },
+  {
+    name: 'Encoded slash attack (single encoding)',
+    input: '/%2Fexample.com/image.png',
+    expected: false,
+  },
+  {
+    name: 'Encoded slash attack (double encoding)',
+    input: '%2F%2Fexample.com/image.png',
+    expected: false,
+  },
   { name: 'Encoded fragment with slashes (safe)', input: '#%2F%2Fevil.com', expected: true },
   { name: 'URL with leading whitespace', input: ' https://example.com/image.png', expected: true },
   { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },

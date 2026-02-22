@@ -52,9 +52,17 @@ const Footer = () => {
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
-    <footer className={themeClass("mt-20 bg-primary relative overflow-hidden", "mt-20 relative overflow-hidden lg-ambient-bg")}>
+    <footer
+      className={themeClass(
+        'mt-20 bg-primary relative overflow-hidden',
+        'mt-20 relative overflow-hidden lg-ambient-bg'
+      )}
+    >
       {/* Zigzag divider */}
-      <ZigzagDivider variant={isLiquid ? 'gradient' : 'zigzag'} className={isLiquid ? 'opacity-80' : ''} />
+      <ZigzagDivider
+        variant={isLiquid ? 'gradient' : 'zigzag'}
+        className={isLiquid ? 'opacity-80' : ''}
+      />
 
       {/* Marquee Ticker */}
       <MarqueeTicker
@@ -62,7 +70,15 @@ const Footer = () => {
         useBlurBand={isLiquid}
         bgColor="bg-fun-yellow"
         items={[
-          'Python', 'React', 'SQL', 'Tableau', 'TensorFlow', 'Machine Learning', 'Deep Learning', 'NLP', 'D3.js',
+          'Python',
+          'React',
+          'SQL',
+          'Tableau',
+          'TensorFlow',
+          'Machine Learning',
+          'Deep Learning',
+          'NLP',
+          'D3.js',
         ]}
       />
 
@@ -96,10 +112,14 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={themeClass(
-                    "group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                    "group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                    'group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert',
+                    'group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]'
                   )}
-                  style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  style={
+                    isLiquid
+                      ? undefined
+                      : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }
+                  }
                   aria-label="Visit GitHub"
                 >
                   <Github size={24} />
@@ -117,10 +137,14 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={themeClass(
-                    "group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert",
-                    "group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]"
+                    'group relative p-3 bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-shadow-lift nb-color-invert',
+                    'group relative p-3 lg-surface-3 rounded-full lg-spring-hover text-[color:var(--text-primary)]'
                   )}
-                  style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }}
+                  style={
+                    isLiquid
+                      ? undefined
+                      : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }
+                  }
                   aria-label="Visit LinkedIn"
                 >
                   <Linkedin size={24} />
@@ -138,19 +162,33 @@ const Footer = () => {
             <div className="flex justify-center">
               <div
                 className={themeClass(
-                  "px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb",
-                  "px-6 py-3 lg-surface-3 lg-pill"
+                  'px-6 py-3 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb',
+                  'px-6 py-3 lg-surface-3 lg-pill'
                 )}
                 style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
-                <p className={themeClass("font-heading font-bold text-sm flex items-center justify-center gap-2 text-black", "font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--text-secondary)]")}>
-                  Made with <Coffee size={16} className={isLiquid ? "text-[color:var(--text-secondary)]" : "text-black"} aria-hidden="true" />
-                  + <button
+                <p
+                  className={themeClass(
+                    'font-heading font-bold text-sm flex items-center justify-center gap-2 text-black',
+                    'font-heading font-semibold text-sm flex items-center justify-center gap-2 text-[color:var(--text-secondary)]'
+                  )}
+                >
+                  Made with{' '}
+                  <Coffee
+                    size={16}
+                    className={isLiquid ? 'text-[color:var(--text-secondary)]' : 'text-black'}
+                    aria-hidden="true"
+                  />
+                  +{' '}
+                  <button
                     onClick={handleHeartClick}
                     className="group relative inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-fun-pink focus-visible:rounded-full"
                     aria-label="Give a like"
                   >
-                    <Heart size={16} className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`} />
+                    <Heart
+                      size={16}
+                      className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`}
+                    />
                     <span
                       className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
                       aria-hidden="true"
@@ -168,8 +206,8 @@ const Footer = () => {
               <div className="mt-4 text-center">
                 <span
                   className={themeClass(
-                    "inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb",
-                    "inline-block px-4 py-2 text-sm font-heading font-semibold animate-bounce lg-surface-3 lg-pill text-[color:var(--text-primary)]"
+                    'inline-block px-4 py-2 text-sm font-heading font-bold animate-bounce bg-fun-pink text-white border-2 border-[color:var(--color-border)] rounded-nb',
+                    'inline-block px-4 py-2 text-sm font-heading font-semibold animate-bounce lg-surface-3 lg-pill text-[color:var(--text-primary)]'
                   )}
                   style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
@@ -185,7 +223,11 @@ const Footer = () => {
 
             {/* Hint */}
             <p className="text-[color:var(--color-text-muted)] font-sans text-xs mt-2 text-center">
-              Press <kbd className="px-1.5 py-0.5 bg-secondary border border-[color:var(--color-border)] rounded text-[10px] font-mono">Ctrl+K</kbd> to open command palette
+              Press{' '}
+              <kbd className="px-1.5 py-0.5 bg-secondary border border-[color:var(--color-border)] rounded text-[10px] font-mono">
+                Ctrl+K
+              </kbd>{' '}
+              to open command palette
             </p>
           </div>
         </ScrollReveal>

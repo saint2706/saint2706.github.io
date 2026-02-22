@@ -1,10 +1,13 @@
-
 import { isSafeHref } from '../src/utils/security.js';
 
 const cases = [
   { input: '/\t/example.com', expected: false, name: 'Tab character in protocol-relative URL' },
   { input: '/\n/example.com', expected: false, name: 'Newline character in protocol-relative URL' },
-  { input: '/\r/example.com', expected: false, name: 'Carriage return character in protocol-relative URL' },
+  {
+    input: '/\r/example.com',
+    expected: false,
+    name: 'Carriage return character in protocol-relative URL',
+  },
   { input: '//example.com', expected: false, name: 'Standard protocol-relative URL' },
 ];
 
@@ -16,7 +19,9 @@ cases.forEach(({ input, expected, name }) => {
   const result = isSafeHref(input);
   if (result !== expected) {
     console.error(`FAILED: ${name}`);
-    console.error(`Input: "${input.replace(/\t/g, '\\t').replace(/\n/g, '\\n').replace(/\r/g, '\\r')}"`);
+    console.error(
+      `Input: "${input.replace(/\t/g, '\\t').replace(/\n/g, '\\n').replace(/\r/g, '\\r')}"`
+    );
     console.error(`Expected: ${expected}`);
     console.error(`Got: ${result}`);
     failed = true;

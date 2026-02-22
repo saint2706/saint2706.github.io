@@ -141,7 +141,12 @@ const Playground = () => {
           transition={shouldReduceMotion ? { duration: 0 } : undefined}
           className="mb-12 text-center"
         >
-          <h1 className={themeClass('font-heading text-4xl md:text-5xl font-bold mb-4', 'font-heading text-4xl md:text-5xl font-semibold mb-4')}>
+          <h1
+            className={themeClass(
+              'font-heading text-4xl md:text-5xl font-bold mb-4',
+              'font-heading text-4xl md:text-5xl font-semibold mb-4'
+            )}
+          >
             <ThemedCard
               as="span"
               variant={isLiquid ? 'default' : 'highlighted'}
@@ -181,15 +186,16 @@ const Playground = () => {
                 aria-controls="snippets-grid"
                 variant="secondary"
                 className={`flex items-center gap-2 px-5 py-2.5 font-heading font-bold text-sm rounded-nb
-                  ${activeFilter === filter.id
-                    ? themeClass(
-                      `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
-                      'lg-surface-3 lg-pill rounded-full text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
-                    )
-                    : themeClass(
-                      'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
-                      'lg-surface-2 rounded-full text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
-                    )
+                  ${
+                    activeFilter === filter.id
+                      ? themeClass(
+                          `${filter.color} text-white -translate-x-0.5 -translate-y-0.5`,
+                          'lg-surface-3 lg-pill rounded-full text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
+                        )
+                      : themeClass(
+                          'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5',
+                          'lg-surface-2 rounded-full text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+                        )
                   }`}
                 style={{
                   boxShadow:
@@ -374,8 +380,9 @@ const SnippetCard = ({
           {/* Copy Button */}
           <button
             onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
-              }`}
+            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
+              isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+            }`}
             aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
           >
             {isCopied ? (
@@ -398,7 +405,10 @@ const SnippetCard = ({
             <ThemedChip
               key={tag}
               variant="neutral"
-              className={themeClass('text-xs font-bold font-heading px-2.5 py-1 rounded-nb', 'text-xs font-semibold px-2.5 py-1 rounded-full')}
+              className={themeClass(
+                'text-xs font-bold font-heading px-2.5 py-1 rounded-nb',
+                'text-xs font-semibold px-2.5 py-1 rounded-full'
+              )}
             >
               {tag}
             </ThemedChip>
@@ -427,8 +437,8 @@ const SnippetCard = ({
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
             <ThemedButton
               onClick={onOpenRunner}
-              onMouseEnter={() => loadPyodide().catch(() => { })}
-              onFocus={() => loadPyodide().catch(() => { })}
+              onMouseEnter={() => loadPyodide().catch(() => {})}
+              onFocus={() => loadPyodide().catch(() => {})}
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
