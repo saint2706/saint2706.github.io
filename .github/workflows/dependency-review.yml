@@ -3,20 +3,18 @@ name: Dependency Review
 on:
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Dependency review
         uses: actions/dependency-review-action@v4
         with:
+          # We fail on high/critical findings to block meaningful risk,
+          # while avoiding noise from moderate advisories during PR review.
           fail-on-severity: high
-          # Optional license policy: fail if newly introduced dependencies use
-          # licenses that are commonly incompatible with many projects.
+          # Block licenses often incompatible with permissive/commercial use.
           deny-licenses: GPL-2.0, GPL-3.0, AGPL-3.0, LGPL-2.1, LGPL-3.0
