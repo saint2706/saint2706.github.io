@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useFocusTrap } from './useFocusTrap';
 import {
   Search,
   Terminal,
@@ -47,6 +48,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
   const listRef = useRef(null);
+  const containerRef = useRef(null);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -159,14 +161,20 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     setSelectedIndex(0);
   }, [filteredCommands.length, query]);
 
-  // Focus input when palette opens
+  // Initialize focus trap and modal behavior
+  useFocusTrap({
+    isOpen,
+    containerRef,
+    onClose,
+    initialFocusRef: inputRef,
+  });
+
+  // Reset state when palette opens
   useEffect(() => {
     if (isOpen) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery('');
       setSelectedIndex(0);
-      // Small delay to ensure the DOM is ready
-      setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);
 
@@ -219,8 +227,6 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     [filteredCommands.length, selectedIndex, executeCommand, onClose]
   );
 
-  if (!isOpen) return null;
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -238,6 +244,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
 
           {/* Palette Container */}
           <motion.div
+            ref={containerRef}
             initial={shouldReduceMotion ? false : { opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={shouldReduceMotion ? undefined : { opacity: 0, y: -20, scale: 0.95 }}
