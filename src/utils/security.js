@@ -107,6 +107,10 @@ export const isSafeHref = href => {
   // This prevents bypasses like `/\t/example.com` which browsers normalize to `//example.com`
   normalizedHref = normalizedHref.replace(/[\t\n\r]/g, '');
 
+  // Normalize backslashes to forward slashes to prevent open redirect bypasses
+  // Browsers treat backslashes as forward slashes, so `/\example.com` becomes `//example.com`
+  normalizedHref = normalizedHref.replace(/\\/g, '/');
+
   // Allow relative URLs (starting with / or #) but strictly block protocol-relative (//)
   // to prevent potential open redirects or loading from arbitrary domains
   if (/^(\/|#)/.test(normalizedHref)) {
