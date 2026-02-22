@@ -69,3 +69,9 @@
 **Vulnerability:** The `isSafeHref` validation used a blacklist for protocol-relative URLs (`//example.com`) but failed to remove control characters like `\t`, `\n`, `\r` before the check. Browsers strip these characters during URL parsing, allowing attackers to bypass the blacklist (e.g., `/\t/example.com` becomes `//example.com`) and redirect users to malicious sites.
 **Learning:** Blacklisting patterns in URLs is brittle if the input is not strictly normalized first. Browser URL parsing behavior differs from simple string matching. Control characters are often ignored by browsers but can break regex checks.
 **Prevention:** Always strip control characters from URLs before performing security checks, especially when validating relative URLs or checking against blocklists. Mimic browser normalization logic in security validators.
+
+## 2026-02-22 - Open Redirect via Backslash Obfuscation
+
+**Vulnerability:** The `isSafeHref` validator blocked protocol-relative URLs starting with `//` but failed to normalize backslashes (`\`) to forward slashes (`/`). Browsers treat `\` as `/` in URL paths, allowing attackers to construct URLs like `/\example.com` that bypass the `//` check but are interpreted as `//example.com` (protocol-relative) by the browser, leading to Open Redirect.
+**Learning:** URL validation logic must account for browser-specific normalization behaviors, particularly how different browsers handle non-standard separators like backslashes. Security checks based on string matching are insufficient without prior normalization.
+**Prevention:** Normalize all backslashes to forward slashes before performing structural validation or blocklisting on URLs.
