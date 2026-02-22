@@ -163,6 +163,53 @@ const MinesweeperCell = React.memo(React.forwardRef(({
 }));
 MinesweeperCell.displayName = 'MinesweeperCell';
 
+const MinesweeperBoard = React.memo(({
+  board,
+  ui,
+  onReveal,
+  onFlag,
+  onFocus,
+  isGameOver,
+  focusR,
+  focusC,
+  isLiquid,
+  cellRefs,
+  onKeyDown
+}) => {
+  return (
+    <div
+      className="grid gap-[2px] outline-none"
+      style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
+      role="grid"
+      aria-label="Minesweeper game board"
+      onKeyDown={onKeyDown}
+    >
+      {board.map((row, r) =>
+        row.map((cell, c) => (
+          <MinesweeperCell
+            key={`${r}-${c}`}
+            ref={el => (cellRefs.current[`${r}-${c}`] = el)}
+            r={r}
+            c={c}
+            mine={cell.mine}
+            revealed={cell.revealed}
+            flagged={cell.flagged}
+            adjacent={cell.adjacent}
+            ui={ui}
+            onReveal={onReveal}
+            onFlag={onFlag}
+            onFocus={onFocus}
+            isGameOver={isGameOver}
+            isFocused={focusR === r && focusC === c}
+            isLiquid={isLiquid}
+          />
+        ))
+      )}
+    </div>
+  );
+});
+MinesweeperBoard.displayName = 'MinesweeperBoard';
+
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -390,35 +437,19 @@ const Minesweeper = () => {
           className={`${ui.boardShell} p-3`}
           style={ui.style.board}
         >
-          <div
-            className="grid gap-[2px] outline-none"
-            style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
-            role="grid"
-            aria-label="Minesweeper game board"
+          <MinesweeperBoard
+            board={board}
+            ui={ui}
+            onReveal={revealCell}
+            onFlag={toggleFlag}
+            onFocus={handleCellFocus}
+            isGameOver={isGameOver}
+            focusR={focusR}
+            focusC={focusC}
+            isLiquid={isLiquid}
+            cellRefs={cellRefs}
             onKeyDown={handleKeyDown}
-          >
-            {board.map((row, r) =>
-              row.map((cell, c) => (
-                <MinesweeperCell
-                  key={`${r}-${c}`}
-                  ref={el => (cellRefs.current[`${r}-${c}`] = el)}
-                  r={r}
-                  c={c}
-                  mine={cell.mine}
-                  revealed={cell.revealed}
-                  flagged={cell.flagged}
-                  adjacent={cell.adjacent}
-                  ui={ui}
-                  onReveal={revealCell}
-                  onFlag={toggleFlag}
-                  onFocus={handleCellFocus}
-                  isGameOver={isGameOver}
-                  isFocused={focusR === r && focusC === c}
-                  isLiquid={isLiquid}
-                />
-              ))
-            )}
-          </div>
+          />
         </motion.div>
 
         {/* Overlays */}
