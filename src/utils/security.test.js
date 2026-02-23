@@ -13,7 +13,9 @@ describe('Security Utils', () => {
     it('escapes closing script tag', () => {
       const input = { key: '</script><script>alert(1)</script>' };
       const result = safeJSONStringify(input);
-      expect(result).toContain('\\u003c/script\\u003e\\u003cscript\\u003ealert(1)\\u003c/script\\u003e');
+      expect(result).toContain(
+        '\\u003c/script\\u003e\\u003cscript\\u003ealert(1)\\u003c/script\\u003e'
+      );
     });
 
     it('escapes <script>', () => {
@@ -89,7 +91,11 @@ describe('Security Utils', () => {
       { name: 'Path-only URL', input: '/blog/post', expected: true },
       { name: 'Fragment URL', input: '#section', expected: true },
       { name: 'Encoded slash attack (single encoding)', input: '/%2Fexample.com', expected: false },
-      { name: 'Encoded slash attack (double encoding)', input: '%2F%2Fexample.com', expected: false },
+      {
+        name: 'Encoded slash attack (double encoding)',
+        input: '%2F%2Fexample.com',
+        expected: false,
+      },
       { name: 'Encoded fragment with slashes (safe)', input: '#%2F%2Fevil.com', expected: true },
       { name: 'URL with leading whitespace', input: ' https://example.com', expected: true },
       { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
@@ -114,7 +120,11 @@ describe('Security Utils', () => {
       { name: 'Trim whitespace', input: '  Hello  ', expected: 'Hello' },
       // NFKC Normalization: Superscript 2 (\u00B2) becomes 2
       { name: 'Normalize Unicode (NFKC)', input: 'x\u00B2', expected: 'x2' },
-      { name: 'Control chars + Unicode normalization', input: 'x\u00B2\u0000test', expected: 'x2test' },
+      {
+        name: 'Control chars + Unicode normalization',
+        input: 'x\u00B2\u0000test',
+        expected: 'x2test',
+      },
       { name: 'Whitespace-only input', input: '   \t\n  ', expected: '' },
       { name: 'Empty input', input: '', expected: '' },
       { name: 'Non-string input', input: null, expected: '' },
@@ -210,7 +220,11 @@ describe('Security Utils', () => {
         expected: false,
       },
       { name: 'Encoded fragment with slashes (safe)', input: '#%2F%2Fevil.com', expected: true },
-      { name: 'URL with leading whitespace', input: ' https://example.com/image.png', expected: true },
+      {
+        name: 'URL with leading whitespace',
+        input: ' https://example.com/image.png',
+        expected: true,
+      },
       { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },
       { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },
       { name: 'URL with missing slashes (auto-fixed)', input: 'https:example.com', expected: true },
