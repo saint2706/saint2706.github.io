@@ -173,6 +173,36 @@ const MinesweeperCell = React.memo(
 );
 MinesweeperCell.displayName = 'MinesweeperCell';
 
+/**
+ * TimerDisplay component to isolate timer re-renders.
+ * Only this component re-renders every second, not the entire grid.
+ */
+const TimerDisplay = React.memo(({ startTime, finalTime, gameState }) => {
+  const [elapsed, setElapsed] = useState(0);
+
+  useEffect(() => {
+    // Active timer
+    if (gameState === 'playing' && startTime) {
+      const interval = setInterval(() => {
+        setElapsed(Math.floor((Date.now() - startTime) / 1000));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [gameState, startTime]);
+
+  let displayTime = 0;
+  if (gameState === 'idle') {
+    displayTime = 0;
+  } else if (gameState === 'won' || gameState === 'lost') {
+    displayTime = finalTime !== null ? finalTime : 0;
+  } else {
+    displayTime = elapsed;
+  }
+
+  return <div className="text-2xl font-heading font-bold text-accent">{displayTime}s</div>;
+});
+TimerDisplay.displayName = 'TimerDisplay';
+
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -182,30 +212,20 @@ const Minesweeper = () => {
   const [board, setBoard] = useState(createEmptyBoard);
   const [firstClick, setFirstClick] = useState(true);
   const [flagCount, setFlagCount] = useState(0);
-  const [timer, setTimer] = useState(0);
+
+  // Performance Optimization: Moved timer state to TimerDisplay component
+  // to prevent re-rendering the entire 9x9 grid every second.
+  const [startTime, setStartTime] = useState(null);
+  const [finalTime, setFinalTime] = useState(null);
+  const startTimeRef = useRef(null);
+
   const [bestTime, setBestTime] = useState(() => {
     const s = localStorage.getItem('minesweeperBest');
     return s ? parseInt(s, 10) : null;
   });
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
-  const timerRef = useRef(null);
-  const timerValueRef = useRef(0);
   const cellRefs = useRef({});
-
-  // Keep ref in sync with timer state
-  useEffect(() => {
-    timerValueRef.current = timer;
-  }, [timer]);
-
-  // Timer effect
-  useEffect(() => {
-    if (gameState === 'playing') {
-      timerRef.current = setInterval(() => setTimer(t => t + 1), 1000);
-      return () => clearInterval(timerRef.current);
-    }
-    clearInterval(timerRef.current);
-  }, [gameState]);
 
   const checkWin = useCallback(
     b => {
@@ -215,10 +235,12 @@ const Minesweeper = () => {
         }
       }
       // Won!
-      const currentTimer = timerValueRef.current;
-      if (!bestTime || currentTimer < bestTime) {
-        setBestTime(currentTimer);
-        localStorage.setItem('minesweeperBest', currentTimer.toString());
+      const duration = Math.floor((Date.now() - startTimeRef.current) / 1000);
+      setFinalTime(duration);
+
+      if (!bestTime || duration < bestTime) {
+        setBestTime(duration);
+        localStorage.setItem('minesweeperBest', duration.toString());
       }
       return true;
     },
@@ -228,6 +250,13 @@ const Minesweeper = () => {
   const revealCell = useCallback(
     (r, c) => {
       if (gameState !== 'playing' && gameState !== 'idle') return;
+
+      // Start timer on first interaction
+      if (firstClick) {
+        const now = Date.now();
+        setStartTime(now);
+        startTimeRef.current = now;
+      }
 
       setBoard(prev => {
         let b = prev;
@@ -244,6 +273,7 @@ const Minesweeper = () => {
             row.map(cell => (cell.mine ? { ...cell, revealed: true } : cell))
           );
           setGameState('lost');
+          setFinalTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
           return lost;
         }
 
@@ -276,7 +306,12 @@ const Minesweeper = () => {
     setBoard(createEmptyBoard());
     setFirstClick(true);
     setFlagCount(0);
-    setTimer(0);
+
+    // Reset timer
+    setStartTime(null);
+    setFinalTime(null);
+    startTimeRef.current = null;
+
     setGameState('idle');
     setFocusR(0);
     setFocusC(0);
@@ -335,11 +370,6 @@ const Minesweeper = () => {
         e.stopPropagation(); // Stop bubbling
         setFocusR(r);
         setFocusC(c);
-        // We need to ensure focus moves.
-        // Direct focus here is safer than useEffect to avoid "steal focus on mount" issue.
-        // But useEffect handles it reactively.
-        // Let's try direct focus in a timeout or requestAnimationFrame to wait for render?
-        // No, ref should be stable.
         const nextCell = cellRefs.current[`${r}-${c}`];
         if (nextCell) nextCell.focus();
       }
@@ -349,9 +379,11 @@ const Minesweeper = () => {
 
   const getAnnouncement = () => {
     if (gameState === 'idle') return 'Minesweeper ready. Click any cell to begin.';
-    if (gameState === 'won') return `You won in ${timer} seconds!`;
+    // Use finalTime or default to 0 if not set, for announcement
+    const timeToAnnounce = finalTime !== null ? finalTime : 0;
+    if (gameState === 'won') return `You won in ${timeToAnnounce} seconds!`;
     if (gameState === 'lost') return 'Game over! You hit a mine.';
-    return `Playing Minesweeper. Flags: ${flagCount}/${MINES}. Time: ${timer}s.`;
+    return `Playing Minesweeper. Flags: ${flagCount}/${MINES}.`;
   };
 
   const isGameOver = gameState === 'won' || gameState === 'lost';
@@ -376,7 +408,7 @@ const Minesweeper = () => {
           <Timer size={16} className="text-accent" aria-hidden="true" />
           <div>
             <div className="text-sm md:text-xs text-secondary font-heading">Time</div>
-            <div className="text-2xl font-heading font-bold text-accent">{timer}s</div>
+            <TimerDisplay startTime={startTime} finalTime={finalTime} gameState={gameState} />
           </div>
         </div>
         <div className={ui.separator} />
@@ -461,9 +493,9 @@ const Minesweeper = () => {
                   You Win! 🎉
                 </div>
                 <div className="text-lg text-secondary font-sans">
-                  Cleared in <span className="font-heading font-bold text-accent">{timer}s</span>
+                  Cleared in <span className="font-heading font-bold text-accent">{finalTime}s</span>
                 </div>
-                {bestTime === timer && (
+                {bestTime === finalTime && (
                   <div className="flex items-center justify-center gap-2 mt-2">
                     <Trophy size={18} className="text-fun-yellow" aria-hidden="true" />
                     <span className="font-heading font-bold text-black bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)]">
