@@ -493,7 +493,8 @@ const Minesweeper = () => {
                   You Win! 🎉
                 </div>
                 <div className="text-lg text-secondary font-sans">
-                  Cleared in <span className="font-heading font-bold text-accent">{finalTime}s</span>
+                  Cleared in{' '}
+                  <span className="font-heading font-bold text-accent">{finalTime}s</span>
                 </div>
                 {bestTime === finalTime && (
                   <div className="flex items-center justify-center gap-2 mt-2">
