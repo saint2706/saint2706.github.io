@@ -54,9 +54,7 @@ const Contact = () => {
     // Generate mailto URL with form data
     const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
       `Contact from ${safeName}`
-    )}&body=${encodeURIComponent(
-      `${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`
-    )}`;
+    )}&body=${encodeURIComponent(`${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`)}`;
     // Navigate to mailto URL (opens default email client)
     window.location.href = mailtoUrl;
   };
