@@ -104,36 +104,62 @@ const Contact = () => {
               </p>
 
               <form className="space-y-4" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  aria-label="Your name"
-                  required
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Your email"
-                  aria-label="Your email"
-                  required
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <textarea
-                  rows={5}
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Project details"
-                  aria-label="Project details"
-                  required
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
-                />
+                <div>
+                  <label
+                    htmlFor="contact-name"
+                    className="block text-sm font-bold font-heading mb-1 text-primary"
+                  >
+                    Name <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    required
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="block text-sm font-bold font-heading mb-1 text-primary"
+                  >
+                    Email <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your email"
+                    required
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-sm font-bold font-heading mb-1 text-primary"
+                  >
+                    Message <span className="text-red-500" aria-hidden="true">*</span>
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    rows={5}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Project details"
+                    required
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
+                  />
+                </div>
 
                 <ThemedButton
                   type="submit"
