@@ -11,6 +11,8 @@
     "format": "prettier --write \"**/*.{js,jsx,json,css,html,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,json,css,html,md}\"",
     "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
     "test:security": "node scripts/test-security-utils.js",
     "test:csp": "node scripts/test-csp.js",
     "verify:sri": "node scripts/verify-sri.js",
@@ -19,6 +21,7 @@
     "test:no-aura": "node scripts/check-no-aura.js"
   },
   "dependencies": {
+    "@dr.pogodin/react-helmet": "^3.0.6",
     "@google/generative-ai": "^0.24.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
@@ -27,7 +30,6 @@
     "prismjs": "^1.30.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "@dr.pogodin/react-helmet": "^3.0.6",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0"
   },
@@ -35,6 +37,9 @@
     "@eslint/js": "^9.39.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.2.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
@@ -46,10 +51,12 @@
     "eslint-plugin-react-refresh": "^0.5.0",
     "globals": "^17.3.0",
     "html-to-text": "^9.0.5",
+    "jsdom": "^28.1.0",
     "postcss": "^8.4.31",
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vitest": "^4.0.18"
   }
 }
