@@ -9,6 +9,7 @@ import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, contactPageSchema, SITE_URL } from '../../utils/seo';
+import { sanitizeInput } from '../../utils/security';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
@@ -45,11 +46,16 @@ const Contact = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    // Sanitize inputs to prevent control character injection or bidi spoofing
+    const safeName = sanitizeInput(formData.name || 'Portfolio');
+    const safeMessage = sanitizeInput(formData.message || '');
+    const safeEmail = sanitizeInput(formData.email || '');
+
     // Generate mailto URL with form data
     const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
-      `Contact from ${formData.name || 'Portfolio'}`
+      `Contact from ${safeName}`
     )}&body=${encodeURIComponent(
-      `${formData.message}\n\nFrom: ${formData.name} (${formData.email})`
+      `${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`
     )}`;
     // Navigate to mailto URL (opens default email client)
     window.location.href = mailtoUrl;
@@ -112,6 +118,7 @@ const Contact = () => {
                   placeholder="Your name"
                   aria-label="Your name"
                   required
+                  maxLength={100}
                   className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <input
@@ -122,6 +129,7 @@ const Contact = () => {
                   placeholder="Your email"
                   aria-label="Your email"
                   required
+                  maxLength={320}
                   className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <textarea
@@ -132,6 +140,7 @@ const Contact = () => {
                   placeholder="Project details"
                   aria-label="Project details"
                   required
+                  maxLength={2000}
                   className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
                 />
 

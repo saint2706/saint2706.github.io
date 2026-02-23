@@ -77,3 +77,15 @@
 **Vulnerability:** The `isSafeHref` validator blocked protocol-relative URLs starting with `//` but failed to normalize backslashes (`\`) to forward slashes (`/`). Browsers treat `\` as `/` in URL paths, allowing attackers to construct URLs like `/\example.com` that bypass the `//` check but are interpreted as `//example.com` (protocol-relative) by the browser, leading to Open Redirect.
 **Learning:** URL validation logic must account for browser-specific normalization behaviors, particularly how different browsers handle non-standard separators like backslashes. Security checks based on string matching are insufficient without prior normalization.
 **Prevention:** Normalize all backslashes to forward slashes before performing structural validation or blocklisting on URLs.
+
+## 2026-02-23 - Theme-Dependent Vulnerability Visibility
+
+**Vulnerability:** The Contact form, which was missing input sanitization and length limits, was only rendered in the 'liquid' theme. The default 'neubrutalism' theme did not display the form, potentially hiding the vulnerability during routine checks or automated scans that don't toggle themes.
+**Learning:** Security vulnerabilities can be conditionally rendered based on application state (like themes, user roles, or feature flags). Verification strategies must account for all possible UI states. A "hidden" vulnerability is still exploitable if the attacker can trigger the state (e.g., by changing their local storage or URL parameters).
+**Prevention:** When testing or auditing components, ensure all conditional branches are exercised. Use theme providers or state overrides in tests (like Playwright) to force specific configurations.
+
+## 2026-02-23 - Missing SRI for Dynamic Pyodide Resources
+
+**Vulnerability:** While the main `pyodide.js` script was loaded with Subresource Integrity (SRI), the subsequent resources it dynamically fetches (WebAssembly binaries, standard library) were not verified against an integrity hash.
+**Learning:** SRI on the entry point script does not automatically extend to resources loaded by that script. If the CDN is compromised, the dynamically loaded artifacts could be malicious. Pyodide supports an integrity check via `lockFileURL`, but it requires generating and maintaining a hash map of all dependencies.
+**Prevention:** For critical WASM runtimes, generate a `repodata.json` or lockfile with hashes and configure the runtime loader to verify integrity of all fetched assets, or self-host the assets to ensure control.
