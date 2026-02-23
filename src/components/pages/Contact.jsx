@@ -109,7 +109,10 @@ const Contact = () => {
                     htmlFor="contact-name"
                     className="block text-sm font-bold font-heading mb-1 text-primary"
                   >
-                    Name <span className="text-red-500" aria-hidden="true">*</span>
+                    Name{' '}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <input
                     id="contact-name"
@@ -128,7 +131,10 @@ const Contact = () => {
                     htmlFor="contact-email"
                     className="block text-sm font-bold font-heading mb-1 text-primary"
                   >
-                    Email <span className="text-red-500" aria-hidden="true">*</span>
+                    Email{' '}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <input
                     id="contact-email"
@@ -147,7 +153,10 @@ const Contact = () => {
                     htmlFor="contact-message"
                     className="block text-sm font-bold font-heading mb-1 text-primary"
                   >
-                    Message <span className="text-red-500" aria-hidden="true">*</span>
+                    Message{' '}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <textarea
                     id="contact-message"
