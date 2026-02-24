@@ -6,7 +6,7 @@
  * Only className strings swap to apply different visual skins (neubrutalism ↔ liquid).
  */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
@@ -22,10 +22,8 @@ import {
   Grid,
   Moon,
 } from 'lucide-react';
+import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
-
-const FOCUSABLE_SELECTOR =
-  'a[href], area[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /** Navigation menu items — shared across both themes */
 const NAV_ITEMS = [
@@ -44,7 +42,6 @@ const NAV_ITEMS = [
 const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const lastFocusRef = useRef(null);
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
@@ -79,50 +76,28 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  /**
-   * Trap focus within mobile menu for keyboard navigation
-   */
-  const trapFocus = useCallback(
-    event => {
-      if (!isMenuOpen || !menuRef.current) return;
-      const focusable = menuRef.current.querySelectorAll(FOCUSABLE_SELECTOR);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.key === 'Tab') {
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        setIsMenuOpen(false);
-        menuButtonRef.current?.focus();
-      }
-    },
-    [isMenuOpen]
-  );
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
 
-  // Manage focus, aria-hidden, and event listeners when menu toggles
+  // Use shared hook for focus trapping and keyboard navigation
+  useFocusTrap({
+    isOpen: isMenuOpen,
+    containerRef: menuRef,
+    onClose: handleCloseMenu,
+    preventScroll: false,
+  });
+
+  // Manage aria-hidden when menu toggles
   useEffect(() => {
+    const main = document.getElementById('main-content');
     if (isMenuOpen) {
-      lastFocusRef.current = document.activeElement;
-      const main = document.getElementById('main-content');
       if (main) main.setAttribute('aria-hidden', 'true');
-      document.addEventListener('keydown', trapFocus);
-      setTimeout(() => menuRef.current?.querySelector(FOCUSABLE_SELECTOR)?.focus(), 0);
     } else {
-      const main = document.getElementById('main-content');
       if (main) main.removeAttribute('aria-hidden');
-      document.removeEventListener('keydown', trapFocus);
-      lastFocusRef.current?.focus?.();
     }
-    return () => document.removeEventListener('keydown', trapFocus);
-  }, [isMenuOpen, trapFocus]);
+  }, [isMenuOpen]);
 
   // Listen for custom event from chatbot to close this menu
   useEffect(() => {
@@ -130,8 +105,6 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
     document.addEventListener('closeMobileMenu', handleCloseMobileMenu);
     return () => document.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
   }, []);
-
-  const handleCloseMenu = () => setIsMenuOpen(false);
 
   /* ── Theme-dependent class maps ── */
 

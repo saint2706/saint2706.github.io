@@ -8,8 +8,15 @@ import { useEffect, useRef, useCallback } from 'react';
  * @param {React.RefObject} options.containerRef - Ref to the container element to trap focus within.
  * @param {Function} options.onClose - Callback to close the overlay (e.g., on Escape).
  * @param {React.RefObject} [options.initialFocusRef] - Optional ref to focus initially when opened.
+ * @param {boolean} [options.preventScroll=true] - Whether to prevent body scroll when open. Defaults to true.
  */
-export const useFocusTrap = ({ isOpen, containerRef, onClose, initialFocusRef }) => {
+export const useFocusTrap = ({
+  isOpen,
+  containerRef,
+  onClose,
+  initialFocusRef,
+  preventScroll = true,
+}) => {
   const previousFocus = useRef(null);
 
   // Manage focus restoration and scroll lock
@@ -31,7 +38,9 @@ export const useFocusTrap = ({ isOpen, containerRef, onClose, initialFocusRef })
         }
       }, 50);
 
-      document.body.style.overflow = 'hidden';
+      if (preventScroll) {
+        document.body.style.overflow = 'hidden';
+      }
     } else {
       document.body.style.overflow = '';
       previousFocus.current?.focus?.();
@@ -40,7 +49,7 @@ export const useFocusTrap = ({ isOpen, containerRef, onClose, initialFocusRef })
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, initialFocusRef, containerRef]);
+  }, [isOpen, initialFocusRef, containerRef, preventScroll]);
 
   // Handle keyboard navigation (Trap + Escape)
   const handleKeyDown = useCallback(
