@@ -58,5 +58,11 @@
     "tailwindcss": "^4.1.18",
     "vite": "^7.2.4",
     "vitest": "^4.0.18"
+  },
+  "pnpm": {
+    "overrides": {
+      "ajv": "^6.14.0",
+      "minimatch": ">=10.2.1"
+    }
   }
 }
