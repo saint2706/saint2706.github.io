@@ -31,6 +31,7 @@ import {
   safeSetLocalStorage,
   safeRemoveLocalStorage,
 } from '../../utils/storage';
+import { useFocusTrap } from './useFocusTrap';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 
@@ -547,59 +548,13 @@ const ChatInterface = ({ onClose }) => {
     };
   }, []);
 
-  /**
-   * Implements focus trap and keyboard navigation for modal dialog accessibility.
-   *
-   * Focus Trap: When Tab is pressed on the last focusable element, focus wraps
-   * to the first element. When Shift+Tab is pressed on the first element, focus
-   * wraps to the last element. This keeps keyboard focus contained within the dialog.
-   *
-   * Escape Handling: Pressing Escape closes the dialog, a standard pattern for modals.
-   *
-   * This ensures keyboard-only users can navigate the dialog properly and matches
-   * WAI-ARIA dialog best practices.
-   */
-  useEffect(() => {
-    // Selector for all focusable elements (for focus trap)
-    const focusSelectors =
-      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    const handleKeyDown = event => {
-      // Close dialog on Escape key
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-
-      // Focus trap: only handle Tab key
-      if (event.key !== 'Tab') return;
-      const container = chatDialogRef.current;
-      if (!container) return;
-
-      // Get all focusable elements within the dialog
-      const focusable = container.querySelectorAll(focusSelectors);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      // Handle Shift+Tab on first element: wrap to last
-      if (event.shiftKey) {
-        if (document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        }
-      }
-      // Handle Tab on last element: wrap to first
-      else if (document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  // Use shared hook for focus trapping and keyboard navigation
+  useFocusTrap({
+    isOpen: true,
+    containerRef: chatDialogRef,
+    onClose,
+    preventScroll: false,
+  });
 
   return (
     <motion.div

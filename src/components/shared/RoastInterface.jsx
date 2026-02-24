@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { X, Flame, RefreshCw, Copy, Check } from 'lucide-react';
 import { roastResume } from '../../services/ai';
+import { useFocusTrap } from './useFocusTrap';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 
@@ -95,45 +96,13 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     }
   }, [roastContent]);
 
-  /**
-   * Trap focus within dialog and handle keyboard navigation
-   * - Tab cycles through focusable elements
-   * - Escape closes dialog
-   */
-  useEffect(() => {
-    const focusSelectors =
-      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    const handleKeyDown = event => {
-      const container = roastDialogRef.current;
-      if (!container) return;
-
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-
-      if (event.key !== 'Tab') return;
-      const focusable = container.querySelectorAll(focusSelectors);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (event.shiftKey) {
-        if (document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        }
-      } else if (document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  // Use shared hook for focus trapping and keyboard navigation
+  useFocusTrap({
+    isOpen: true,
+    containerRef: roastDialogRef,
+    onClose,
+    preventScroll: false,
+  });
 
   return (
     <motion.div

@@ -23,6 +23,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Cpu, User } from 'lucide-react';
+import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
 
@@ -334,62 +335,13 @@ const TicTacToe = () => {
     setWinningLine(null);
   }, []);
 
-  useEffect(() => {
-    if (gameStatus === 'playing') return;
-    const handler = event => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        resetGame();
-        return;
-      }
-
-      // Trap focus within overlay
-      if (event.key === 'Tab' && overlayRef.current) {
-        const focusableNodeList = overlayRef.current.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-
-        const focusables = Array.from(focusableNodeList).filter(el => {
-          // Optionally exclude disabled or aria-hidden elements from the focus trap
-          if (el.disabled) return false;
-          if (el.getAttribute && el.getAttribute('aria-hidden') === 'true') return false;
-          return true;
-        });
-
-        if (focusables.length === 0) return;
-
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        const active = document.activeElement;
-        const isInTrap = focusables.includes(active);
-
-        // If focus has escaped the overlay, move it back inside
-        if (!isInTrap) {
-          event.preventDefault();
-          if (event.shiftKey) {
-            last.focus();
-          } else {
-            first.focus();
-          }
-          return;
-        }
-
-        if (event.shiftKey) {
-          if (active === first) {
-            event.preventDefault();
-            last.focus();
-          }
-        } else {
-          if (active === last) {
-            event.preventDefault();
-            first.focus();
-          }
-        }
-      }
-    };
-    document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
-  }, [gameStatus, resetGame]);
+  // Use shared hook for focus trapping and keyboard navigation
+  useFocusTrap({
+    isOpen: gameStatus !== 'playing',
+    containerRef: overlayRef,
+    onClose: resetGame,
+    preventScroll: false,
+  });
 
   /**
    * Changes difficulty level and resets both game and scores.
