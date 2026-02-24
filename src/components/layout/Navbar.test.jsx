@@ -6,22 +6,22 @@ import { BrowserRouter } from 'react-router-dom';
 // Mock Theme Context
 vi.mock('../shared/theme-context', () => ({
   useTheme: vi.fn(),
-  ThemeProvider: ({ children }) => <div>{children}</div>
+  ThemeProvider: ({ children }) => <div>{children}</div>,
 }));
 import { useTheme } from '../shared/theme-context';
 
 // Mock Framer Motion
 vi.mock('framer-motion', async () => {
-    const actual = await vi.importActual('framer-motion');
-    return {
-        ...actual,
-        AnimatePresence: ({ children }) => <>{children}</>,
-        motion: {
-            div: ({ children, ...props }) => <div {...props}>{children}</div>,
-            nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
-        },
-        useReducedMotion: () => false,
-    };
+  const actual = await vi.importActual('framer-motion');
+  return {
+    ...actual,
+    AnimatePresence: ({ children }) => <>{children}</>,
+    motion: {
+      div: ({ children, ...props }) => <div {...props}>{children}</div>,
+      nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
+    },
+    useReducedMotion: () => false,
+  };
 });
 
 describe('Navbar', () => {
@@ -92,7 +92,7 @@ describe('Navbar', () => {
 
     // Wait for menu to appear
     await waitFor(() => {
-        expect(container.querySelector('#mobile-nav-menu')).toBeInTheDocument();
+      expect(container.querySelector('#mobile-nav-menu')).toBeInTheDocument();
     });
 
     // Close menu by clicking a link (mobile links are rendered when menu is open)
@@ -104,16 +104,16 @@ describe('Navbar', () => {
 
     // Menu should close
     await waitFor(() => {
-         expect(container.querySelector('#mobile-nav-menu')).not.toBeInTheDocument();
+      expect(container.querySelector('#mobile-nav-menu')).not.toBeInTheDocument();
     });
   });
 
   it('renders liquid theme correctly', () => {
-     useTheme.mockReturnValue({ theme: 'liquid', toggleTheme: mockToggleTheme });
-     renderNavbar();
+    useTheme.mockReturnValue({ theme: 'liquid', toggleTheme: mockToggleTheme });
+    renderNavbar();
 
-     // Check for "Switch to Neubrutalism theme" label
-     const themeBtn = screen.getByLabelText('Switch to Neubrutalism theme');
-     expect(themeBtn).toBeInTheDocument();
+    // Check for "Switch to Neubrutalism theme" label
+    const themeBtn = screen.getByLabelText('Switch to Neubrutalism theme');
+    expect(themeBtn).toBeInTheDocument();
   });
 });

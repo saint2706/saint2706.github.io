@@ -6,7 +6,7 @@ import * as storage from '../utils/storage';
 // Mock dependencies
 vi.mock('@google/generative-ai');
 vi.mock('../utils/storage');
-vi.mock('../utils/security', async (importOriginal) => {
+vi.mock('../utils/security', async importOriginal => {
   const actual = await importOriginal();
   return {
     ...actual,
@@ -87,14 +87,14 @@ describe('AI Service', () => {
       // Second call - immediately after, should be rate limited
       const response = await chatWithGemini('Second message');
 
-      expect(response).toContain("give me a moment");
+      expect(response).toContain('give me a moment');
       // Should have been called only once for the first message
       expect(mockStartChat).toHaveBeenCalledTimes(1);
     });
 
     it('should handle API errors', async () => {
-       // Reset rate limit by advancing time
-       vi.advanceTimersByTime(3000);
+      // Reset rate limit by advancing time
+      vi.advanceTimersByTime(3000);
 
       mockSendMessage.mockRejectedValue(new Error('API Error'));
 
@@ -104,17 +104,17 @@ describe('AI Service', () => {
     });
 
     it('should handle input too long', async () => {
-        const longMessage = 'a'.repeat(1001);
-        const response = await chatWithGemini(longMessage);
-        expect(response).toContain('Whoa, that\'s a lot of text');
-        expect(mockStartChat).not.toHaveBeenCalled();
+      const longMessage = 'a'.repeat(1001);
+      const response = await chatWithGemini(longMessage);
+      expect(response).toContain("Whoa, that's a lot of text");
+      expect(mockStartChat).not.toHaveBeenCalled();
     });
   });
 
   describe('roastResume', () => {
     it('should generate roast successfully', async () => {
-       // Reset rate limit
-       vi.advanceTimersByTime(3000);
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
 
       mockGenerateContent.mockResolvedValue({
         response: { text: () => 'Roasted!' },
@@ -127,10 +127,10 @@ describe('AI Service', () => {
     });
 
     it('should handle rate limiting', async () => {
-       // Reset rate limit
-       vi.advanceTimersByTime(3000);
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
 
-       mockGenerateContent.mockResolvedValue({
+      mockGenerateContent.mockResolvedValue({
         response: { text: () => 'Roasted!' },
       });
 
@@ -157,24 +157,22 @@ describe('AI Service', () => {
     });
 
     it('should filter invalid roles', () => {
-      const history = [
-        { role: 'hacker', parts: [{ text: 'Hello' }] },
-      ];
+      const history = [{ role: 'hacker', parts: [{ text: 'Hello' }] }];
 
       const sanitized = sanitizeHistoryForGemini(history);
       expect(sanitized).toEqual([]);
     });
 
     it('should filter invalid structure', () => {
-        const history = [
-            null,
-            { role: 'user' }, // missing parts
-            { role: 'user', parts: 'not an array' },
-            { role: 'user', parts: [{ text: 123 }] }, // text not string
-        ];
+      const history = [
+        null,
+        { role: 'user' }, // missing parts
+        { role: 'user', parts: 'not an array' },
+        { role: 'user', parts: [{ text: 123 }] }, // text not string
+      ];
 
-        const sanitized = sanitizeHistoryForGemini(history);
-        expect(sanitized).toEqual([]);
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
     });
   });
 });

@@ -7,7 +7,7 @@ import * as storage from '../../utils/storage';
 // Mock AI Service
 vi.mock('../../services/ai', () => ({
   chatWithGemini: vi.fn(),
-  sanitizeHistoryForGemini: vi.fn((h) => h), // identity mock
+  sanitizeHistoryForGemini: vi.fn(h => h), // identity mock
 }));
 
 // Mock Storage
@@ -22,7 +22,7 @@ vi.mock('../../utils/storage', () => ({
 // or a mock provider if the real one is complex.
 // The real ThemeProvider uses localStorage and has logic.
 // Let's mock the hook instead for better control.
-vi.mock('./theme-context', async (importOriginal) => {
+vi.mock('./theme-context', async importOriginal => {
   const actual = await importOriginal();
   return {
     ...actual,
@@ -33,16 +33,16 @@ import { useTheme } from './theme-context';
 
 // Mock Framer Motion to avoid animation issues
 vi.mock('framer-motion', async () => {
-    const actual = await vi.importActual('framer-motion');
-    return {
-        ...actual,
-        AnimatePresence: ({ children }) => <>{children}</>,
-        motion: {
-            div: ({ children, ...props }) => <div {...props}>{children}</div>,
-            nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
-        },
-        useReducedMotion: () => false,
-    };
+  const actual = await vi.importActual('framer-motion');
+  return {
+    ...actual,
+    AnimatePresence: ({ children }) => <>{children}</>,
+    motion: {
+      div: ({ children, ...props }) => <div {...props}>{children}</div>,
+      nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
+    },
+    useReducedMotion: () => false,
+  };
 });
 
 // Mock ScrollIntoView
@@ -100,7 +100,7 @@ describe('ChatInterface', () => {
 
     // Wait for response
     await waitFor(() => {
-        expect(screen.getByText('I am good')).toBeInTheDocument();
+      expect(screen.getByText('I am good')).toBeInTheDocument();
     });
 
     expect(aiService.chatWithGemini).toHaveBeenCalledWith('How are you?', expect.any(Array));
@@ -132,30 +132,33 @@ describe('ChatInterface', () => {
     // Verify history cleared (default message should be there? Or empty?)
     // createDefaultMessage text: "Hi! I'm Digital Rishabh..."
     await waitFor(() => {
-        expect(screen.queryByText('Hello')).not.toBeInTheDocument();
-        expect(storage.safeRemoveLocalStorage).toHaveBeenCalled();
+      expect(screen.queryByText('Hello')).not.toBeInTheDocument();
+      expect(storage.safeRemoveLocalStorage).toHaveBeenCalled();
     });
   });
 
   it('handles quick replies', async () => {
-      aiService.chatWithGemini.mockResolvedValue('AI Response');
+    aiService.chatWithGemini.mockResolvedValue('AI Response');
 
-      render(<ChatInterface onClose={mockOnClose} />);
+    render(<ChatInterface onClose={mockOnClose} />);
 
-      const quickReply = screen.getByText('Tell me about your projects');
-      fireEvent.click(quickReply);
+    const quickReply = screen.getByText('Tell me about your projects');
+    fireEvent.click(quickReply);
 
-      await waitFor(() => {
-        expect(aiService.chatWithGemini).toHaveBeenCalledWith('Tell me about your projects', expect.any(Array));
-        expect(screen.getByText('AI Response')).toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(aiService.chatWithGemini).toHaveBeenCalledWith(
+        'Tell me about your projects',
+        expect.any(Array)
+      );
+      expect(screen.getByText('AI Response')).toBeInTheDocument();
+    });
   });
 
   it('closes on escape key', () => {
-      render(<ChatInterface onClose={mockOnClose} />);
+    render(<ChatInterface onClose={mockOnClose} />);
 
-      fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
 
-      expect(mockOnClose).toHaveBeenCalled();
+    expect(mockOnClose).toHaveBeenCalled();
   });
 });
