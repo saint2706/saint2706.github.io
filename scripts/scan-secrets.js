@@ -30,7 +30,7 @@ function scanFile(filePath) {
     SECRET_REGEX.lastIndex = 0;
 
     while ((match = SECRET_REGEX.exec(content)) !== null) {
-      const [fullMatch, variableName, value] = match;
+      const [, variableName, value] = match;
 
       // Ignore empty strings or short strings (less than 8 chars are likely not secrets)
       if (value.length < 8) continue;
