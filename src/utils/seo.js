@@ -6,6 +6,7 @@
  */
 
 import { resumeData } from '../data/resume';
+import blogs from '../data/blogs.json';
 
 /* ──────────────────────────────────────────────────────── */
 /*  Constants                                              */
@@ -162,6 +163,17 @@ export function blogCollectionSchema() {
     description:
       'Read articles on analytics, product thinking, and the intersection of data and creativity.',
     author: personSchemaCompact(),
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: blogs.length,
+      itemListElement: blogs.map((blog, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: blog.title,
+        url: blog.link,
+        description: blog.summary,
+      })),
+    },
   };
 }
 

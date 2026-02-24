@@ -1,0 +1,9 @@
+# Site Architecture
+
+- /: Homepage with personal introduction and key highlights.
+- /projects: Portfolio of data science, analytics, and full-stack projects.
+- /blog: Articles on analytics, product thinking, and data storytelling.
+- /resume: Professional experience, education, skills, and certifications.
+- /contact: Contact form and social links.
+- /games: Interactive games and experiments (Snake, Tic-Tac-Toe, Minesweeper).
+- /playground: Interactive Python playground with Pyodide integration.
