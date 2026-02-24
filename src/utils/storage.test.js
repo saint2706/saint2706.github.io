@@ -127,8 +127,8 @@ describe('Storage Utils', () => {
       it('returns fallback when storage is not available', () => {
         const originalLocalStorage = global.window.localStorage;
         Object.defineProperty(global.window, 'localStorage', {
-            value: undefined,
-            writable: true
+          value: undefined,
+          writable: true,
         });
 
         expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
@@ -152,11 +152,11 @@ describe('Storage Utils', () => {
       });
 
       it('returns false when storage is not available', () => {
-         const originalLocalStorage = global.window.localStorage;
-         Object.defineProperty(global.window, 'localStorage', {
-             value: undefined,
-             writable: true
-         });
+        const originalLocalStorage = global.window.localStorage;
+        Object.defineProperty(global.window, 'localStorage', {
+          value: undefined,
+          writable: true,
+        });
 
         expect(safeSetLocalStorage('key', 'value')).toBe(false);
 
@@ -179,11 +179,11 @@ describe('Storage Utils', () => {
       });
 
       it('returns false when storage is not available', () => {
-         const originalLocalStorage = global.window.localStorage;
-         Object.defineProperty(global.window, 'localStorage', {
-             value: undefined,
-             writable: true
-         });
+        const originalLocalStorage = global.window.localStorage;
+        Object.defineProperty(global.window, 'localStorage', {
+          value: undefined,
+          writable: true,
+        });
 
         expect(safeRemoveLocalStorage('key')).toBe(false);
 

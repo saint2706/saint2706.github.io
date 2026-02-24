@@ -3,7 +3,8 @@ import { executePythonWithCapturedStdout } from './pythonExecution';
 
 describe('executePythonWithCapturedStdout', () => {
   it('executes code and returns captured stdout', () => {
-    const runPythonMock = vi.fn()
+    const runPythonMock = vi
+      .fn()
       .mockImplementationOnce(() => {}) // Setup capture
       .mockImplementationOnce(() => {}) // User code
       .mockImplementationOnce(() => 'captured output') // Get stdout
@@ -26,9 +27,12 @@ describe('executePythonWithCapturedStdout', () => {
 
   it('restores stdout even if user code throws', () => {
     const error = new Error('User code failed');
-    const runPythonMock = vi.fn()
+    const runPythonMock = vi
+      .fn()
       .mockImplementationOnce(() => {}) // Setup capture
-      .mockImplementationOnce(() => { throw error; }) // User code throws
+      .mockImplementationOnce(() => {
+        throw error;
+      }) // User code throws
       // Get stdout skipped
       .mockImplementationOnce(() => {}); // Restore stdout
 
