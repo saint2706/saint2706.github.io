@@ -195,7 +195,7 @@ const GameOverlay = React.memo(
             onClick={startGame}
             className={ui.buttonPrimary}
             style={ui.style.raised}
-            autoFocus
+            autoFocus aria-label="Start Snake Game"
           >
             <Play size={20} aria-hidden="true" />
             Start Game
@@ -291,7 +291,7 @@ const GameOverlay = React.memo(
             onClick={startGame}
             className={ui.buttonPrimary}
             style={ui.style.raised}
-            autoFocus
+            autoFocus aria-label="Play Snake Game Again"
           >
             <RotateCcw size={18} aria-hidden="true" />
             Play Again

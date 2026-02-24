@@ -81,7 +81,7 @@ describe('Navbar', () => {
   it('handles mobile menu', async () => {
     const { container } = renderNavbar();
 
-    const menuBtn = screen.getByLabelText('Toggle navigation menu');
+    const menuBtn = screen.getByLabelText('Open navigation menu');
     expect(menuBtn).toBeInTheDocument();
 
     // Initial check: menu should be closed

@@ -1,0 +1,11 @@
+
+> rishabh-portfolio@0.0.0 dev /app
+> vite --port 3000
+
+
+  VITE v7.3.1  ready in 316 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
