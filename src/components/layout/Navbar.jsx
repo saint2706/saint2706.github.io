@@ -244,7 +244,7 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
             onClick={() => setIsMenuOpen(prev => !prev)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
-            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
             {isMenuOpen ? (
               <X size={20} aria-hidden="true" />
