@@ -33,6 +33,7 @@
   - Output rendered via `react-markdown` with strict `allowedElements`.
   - Links validated via `isSafeHref` (http, https, mailto).
   - Images validated via `isSafeImageSrc` (http, https).
+    - **Update**: Enhanced test coverage for `isSafeImageSrc` in `scripts/test-security-utils.js` to explicitly verify handling of relative paths vs protocol-relative URLs.
 - **Python Runner**:
   - Input passed via `pyodide.globals.set` (no string interpolation).
   - Output captured via `StringIO` redirection.
@@ -40,7 +41,8 @@
 ## 5. Secrets Management
 
 - `VITE_GEMINI_API_KEY` loaded via `import.meta.env`.
-- No hardcoded secrets found in source code.
+- **Tooling**: Added `scripts/scan-secrets.js` to automate detection of hardcoded secrets (API keys, tokens, passwords) in the `src` directory.
+- **Status**: No hardcoded secrets found in source code (verified by `scan-secrets.js`).
 
 ## 6. Headers
 
