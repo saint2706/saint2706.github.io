@@ -515,13 +515,25 @@ const SnakeGame = () => {
    * Game loop: runs moveSnake at intervals based on current speed.
    * Only active when gameState is 'playing'.
    * Speed increases as player scores, making game progressively harder.
+   *
+   * Optimization: We use a ref to store the latest moveSnake callback.
+   * This prevents the interval from being cleared and restarted every time
+   * moveSnake changes (which happens on every score update due to dependencies),
+   * ensuring a smooth, consistent game tick without stutter.
    */
+  const savedMoveSnake = useRef(moveSnake);
+
+  useEffect(() => {
+    savedMoveSnake.current = moveSnake;
+  }, [moveSnake]);
+
   useEffect(() => {
     if (gameState === 'playing') {
-      gameLoopRef.current = setInterval(moveSnake, speed);
+      const tick = () => savedMoveSnake.current();
+      gameLoopRef.current = setInterval(tick, speed);
       return () => clearInterval(gameLoopRef.current);
     }
-  }, [gameState, speed, moveSnake]);
+  }, [gameState, speed]);
 
   /**
    * Keyboard controls for snake direction and pause.
