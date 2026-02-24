@@ -38,7 +38,7 @@ function generateLLMsText() {
     content += `*${job.startDate} - ${job.endDate || 'Present'} | ${job.location || basics.location.city}*\n`;
     content += `${job.summary}\n`;
     if (job.highlights && job.highlights.length > 0) {
-      job.highlights.forEach(h => content += `- ${h}\n`);
+      job.highlights.forEach(h => (content += `- ${h}\n`));
     }
     content += `\n`;
   });
