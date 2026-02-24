@@ -1,0 +1,178 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { chatWithGemini, roastResume, sanitizeHistoryForGemini } from './ai';
+import * as storage from '../utils/storage';
+
+// Mock dependencies
+vi.mock('@google/generative-ai');
+vi.mock('../utils/storage');
+vi.mock('../utils/security', async importOriginal => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    // We can spy on these if needed, or just let them pass through since they are pure functions
+    // For now, let's use the actual implementation for security utils as they are critical to test integration
+  };
+});
+
+describe('AI Service', () => {
+  let mockGenerateContent;
+  let mockSendMessage;
+  let mockStartChat;
+  let mockGetGenerativeModel;
+  // Start with a base time
+  let currentTime = new Date(2025, 0, 1).getTime();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.useFakeTimers();
+
+    // Increment time for each test to ensure we are past any previous rate limits
+    currentTime += 10000;
+    vi.setSystemTime(currentTime);
+
+    // Setup GoogleGenerativeAI mocks
+    mockGenerateContent = vi.fn();
+    mockSendMessage = vi.fn();
+    mockStartChat = vi.fn().mockReturnValue({
+      sendMessage: mockSendMessage,
+    });
+    mockGetGenerativeModel = vi.fn().mockReturnValue({
+      startChat: mockStartChat,
+      generateContent: mockGenerateContent,
+    });
+
+    GoogleGenerativeAI.prototype.getGenerativeModel = mockGetGenerativeModel;
+
+    // Default storage mocks
+    vi.spyOn(storage, 'safeGetLocalStorage').mockReturnValue('0');
+    vi.spyOn(storage, 'safeSetLocalStorage');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  describe('chatWithGemini', () => {
+    it('should send message successfully', async () => {
+      mockSendMessage.mockResolvedValue({
+        response: { text: () => 'AI Response' },
+      });
+
+      const response = await chatWithGemini('Hello');
+
+      expect(response).toBe('AI Response');
+      expect(mockStartChat).toHaveBeenCalled();
+      expect(mockSendMessage).toHaveBeenCalledWith('Hello');
+      expect(storage.safeSetLocalStorage).toHaveBeenCalled();
+    });
+
+    it('should handle empty input', async () => {
+      const response = await chatWithGemini('');
+      expect(response).toContain("I didn't catch that");
+      expect(mockStartChat).not.toHaveBeenCalled();
+    });
+
+    it('should handle rate limiting', async () => {
+      // Advance time to ensure we are not rate limited from previous tests
+      vi.advanceTimersByTime(3000);
+
+      mockSendMessage.mockResolvedValue({
+        response: { text: () => 'Response' },
+      });
+
+      // First call - should succeed and update timestamp
+      await chatWithGemini('First message');
+
+      // Second call - immediately after, should be rate limited
+      const response = await chatWithGemini('Second message');
+
+      expect(response).toContain('give me a moment');
+      // Should have been called only once for the first message
+      expect(mockStartChat).toHaveBeenCalledTimes(1);
+    });
+
+    it('should handle API errors', async () => {
+      // Reset rate limit by advancing time
+      vi.advanceTimersByTime(3000);
+
+      mockSendMessage.mockRejectedValue(new Error('API Error'));
+
+      const response = await chatWithGemini('Hello');
+
+      expect(response).toContain('connection glitch');
+    });
+
+    it('should handle input too long', async () => {
+      const longMessage = 'a'.repeat(1001);
+      const response = await chatWithGemini(longMessage);
+      expect(response).toContain("Whoa, that's a lot of text");
+      expect(mockStartChat).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('roastResume', () => {
+    it('should generate roast successfully', async () => {
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
+
+      mockGenerateContent.mockResolvedValue({
+        response: { text: () => 'Roasted!' },
+      });
+
+      const response = await roastResume();
+
+      expect(response).toBe('Roasted!');
+      expect(mockGenerateContent).toHaveBeenCalled();
+    });
+
+    it('should handle rate limiting', async () => {
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
+
+      mockGenerateContent.mockResolvedValue({
+        response: { text: () => 'Roasted!' },
+      });
+
+      // First call
+      await roastResume();
+
+      // Second call
+      const response = await roastResume();
+
+      expect(response).toContain('cooling down');
+      expect(mockGenerateContent).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('sanitizeHistoryForGemini', () => {
+    it('should valid history', () => {
+      const history = [
+        { role: 'user', parts: [{ text: 'Hello' }] },
+        { role: 'model', parts: [{ text: 'Hi' }] },
+      ];
+
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual(history);
+    });
+
+    it('should filter invalid roles', () => {
+      const history = [{ role: 'hacker', parts: [{ text: 'Hello' }] }];
+
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should filter invalid structure', () => {
+      const history = [
+        null,
+        { role: 'user' }, // missing parts
+        { role: 'user', parts: 'not an array' },
+        { role: 'user', parts: [{ text: 123 }] }, // text not string
+      ];
+
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+  });
+});

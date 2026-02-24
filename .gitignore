@@ -7,3 +7,4 @@ legacy_backup/
 .vscode
 .agent
 /brainstorm.md
+coverage/
