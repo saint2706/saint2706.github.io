@@ -1,9 +1,88 @@
-# Site Architecture
+# Rishabh Agrawal - Data Storyteller & Analytics Strategist
 
-- /: Homepage with personal introduction and key highlights.
-- /projects: Portfolio of data science, analytics, and full-stack projects.
-- /blog: Articles on analytics, product thinking, and data storytelling.
-- /resume: Professional experience, education, skills, and certifications.
-- /contact: Contact form and social links.
-- /games: Interactive games and experiments (Snake, Tic-Tac-Toe, Minesweeper).
-- /playground: Interactive Python playground with Pyodide integration.
+## Summary
+Big Data Analytics postgraduate at Goa Institute of Management with a Computer Science background. I thrive at the intersection of data, technology, and creativity—using analytics, AI, and software development to turn complex challenges into actionable insights. Skilled in Python, SQL, R, AWS, Tableau, Power BI, TensorFlow, and PyTorch. I'm passionate about using data and AI not just to solve problems, but to tell stories, create value, and enable smarter decisions.
+
+## Site Architecture
+- /: Homepage (Introduction, Highlights)
+- /projects: Portfolio of work (Data Science, Analytics, Web Dev)
+- /resume: Professional Experience, Skills, Education
+- /blog: Technical Articles & Insights
+- /contact: Get in touch
+- /games: Interactive mini-games (Snake, Minesweeper)
+- /playground: Python playground (Pyodide)
+
+## Key Skills
+- **Programming**: Python, Java, C++, JavaScript, SQL, HTML/CSS, R
+- **Data Science & AI**: Data Analytics, Machine Learning, Pandas, NumPy, Scikit-learn, Matplotlib/Seaborn, Tableau, Power BI
+- **Frameworks & Cloud**: AWS, Azure, Google Cloud, TensorFlow, PyTorch, React, Node.js, Hugging Face
+- **Soft Skills**: Business Strategy, Leadership, Project Management, Communication, Problem Solving
+
+## Professional Experience
+### TheSmartBridge - Data Intern
+*May 2023 - July 2023 | Goa*
+Evaluated SaaS market opportunities and aligned stakeholders on a roadmap for a new analytics product.
+- Researched product gaps and competitive benchmarks to shape the go-to-market plan.
+- Developed personas, positioning, and phased delivery milestones with a five-member intern cohort.
+- Presented recommendations to senior management.
+
+### Mood Indigo, IIT Bombay - Indigo Squad Member
+*July 2022 - Dec 2022 | Goa*
+Drove experiential marketing, partnerships, and community engagement for Asia's largest college cultural festival.
+- Amplified outreach to 1,700+ colleges through storytelling-led campaigns.
+- Boosted social engagement by 25% via multi-platform content strategies.
+- Secured three new sponsorships.
+
+## Top Projects
+### Coding-For-MBA
+A comprehensive Python coding curriculum designed for MBA students - bridging business strategy and technical implementation. Features 15 structured lessons from basics to data analysis.
+- **Tech Stack**: Python, Education, Data Analytics, GitHub Pages
+- **Demo**: https://saint2706.github.io/Coding-For-MBA/
+- **Code**: https://github.com/saint2706/Coding-For-MBA
+
+### AI Attendance Management System
+Full-stack facial recognition attendance platform with real-time face detection, automated check-ins, and comprehensive analytics dashboard.
+- **Tech Stack**: Python, Computer Vision, Face Recognition, OpenCV
+- **Code**: https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition
+
+### Client Modding Guide
+Comprehensive guide for Discord client modding with step-by-step tutorials. Most starred personal project with active community engagement.
+- **Tech Stack**: Documentation, Discord, Modding, Community
+- **Code**: https://github.com/saint2706/Client-Modding-Guide
+
+### Scroll of Dharma
+An interactive meditation journey application combining philosophy with technology for mindful experiences.
+- **Tech Stack**: Python, Meditation, Interactive, Wellness
+- **Code**: https://github.com/saint2706/scroll-of-dharma
+
+### VITable
+Elegant timetable viewer for VIT students built with Nim programming language. Clean UI for schedule management.
+- **Tech Stack**: Nim, Utility, VIT, Scheduling
+- **Code**: https://github.com/saint2706/vitable
+
+### Geralt Discord Bot
+Feature-rich Discord bot with custom commands, moderation tools, and entertainment features.
+- **Tech Stack**: Python, Discord.py, Bot, Automation
+- **Code**: https://github.com/saint2706/geralt
+
+### VIT Academics Enhancer
+Chrome extension that enhances VIT's Academics Portal with improved UI/UX and additional features.
+- **Tech Stack**: JavaScript, Chrome Extension, VIT, UI/UX
+- **Code**: https://github.com/saint2706/Enhancer-for-VIT-Vellore-Academics
+
+### Python Course - GIM BDA
+Jupyter notebook-based Python course materials for Big Data Analytics students at GIM.
+- **Tech Stack**: Python, Jupyter, Education, Data Science
+- **Code**: https://github.com/saint2706/Python-Course-GIM-BDA
+
+## Education
+- **Goa Institute of Management (GIM)**: PGDM - Big Data Analytics (Jun 2025 - Jul 2027)
+  - Focusing on data-driven decision making and advanced analytics.
+- **Vellore Institute of Technology**: Bachelor of Technology (B.Tech) - Computer Science (2020 - 2024)
+  - Core foundation in algorithms, software development, and data science.
+
+## Contact & Socials
+- Email: rishabh.agrawal25b@gim.ac.in
+- Location: Goa, India
+- LinkedIn: https://www.linkedin.com/in/rishabh-agrawal-1807321b9
+- GitHub: https://github.com/saint2706
