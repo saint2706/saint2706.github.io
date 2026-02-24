@@ -39,6 +39,8 @@ const Contact = () => {
     message: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -46,6 +48,8 @@ const Contact = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     // Sanitize inputs to prevent control character injection or bidi spoofing
     const safeName = sanitizeInput(formData.name || 'Portfolio');
     const safeMessage = sanitizeInput(formData.message || '');
@@ -55,8 +59,12 @@ const Contact = () => {
     const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
       `Contact from ${safeName}`
     )}&body=${encodeURIComponent(`${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`)}`;
-    // Navigate to mailto URL (opens default email client)
-    window.location.href = mailtoUrl;
+
+    // Simulate network delay for better UX before opening email client
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+      setIsSubmitting(false);
+    }, 800);
   };
 
   const description =
@@ -146,10 +154,11 @@ const Contact = () => {
                   type="submit"
                   variant="primary"
                   size="lg"
+                  isLoading={isSubmitting}
                   className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
                 >
-                  <Send size={20} />
-                  Send via Email
+                  {!isSubmitting && <Send size={20} />}
+                  {isSubmitting ? 'Opening Email Client...' : 'Send via Email'}
                 </ThemedButton>
               </form>
 
