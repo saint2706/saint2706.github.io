@@ -5,12 +5,10 @@ Disallow: /games
 
 # ─── AI Crawlers ───
 # Block AI training crawlers to protect content from being used without permission.
-# These bots scrape for LLM training datasets rather than search indexing.
+# However, allow search-specific AI agents (like ChatGPT-User) to discover and answer questions.
 
+# Training Bots (Blocked)
 User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
 Disallow: /
 
 User-agent: CCBot
@@ -27,6 +25,10 @@ Disallow: /
 
 User-agent: Bytespider
 Disallow: /
+
+# Search Bots (Allowed for Discovery)
+User-agent: ChatGPT-User
+Allow: /
 
 User-agent: FacebookBot
 Allow: /
