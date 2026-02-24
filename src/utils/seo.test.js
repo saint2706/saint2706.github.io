@@ -28,15 +28,13 @@ vi.mock('../data/resume', () => ({
         title: 'Project 2',
         github: 'https://github.com/p2',
         description: 'Desc 2',
-      }
+      },
     ],
   },
 }));
 
 vi.mock('../data/blogs.json', () => ({
-  default: [
-    { title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' },
-  ],
+  default: [{ title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' }],
 }));
 
 describe('seo utils', () => {
@@ -99,7 +97,10 @@ describe('seo utils', () => {
 
   describe('breadcrumbSchema', () => {
     it('returns BreadcrumbList schema', () => {
-      const items = [{ name: 'Home', url: '/' }, { name: 'About', url: '/about' }];
+      const items = [
+        { name: 'Home', url: '/' },
+        { name: 'About', url: '/about' },
+      ];
       const schema = seo.breadcrumbSchema(items);
       expect(schema['@type']).toBe('BreadcrumbList');
       expect(schema.itemListElement).toHaveLength(2);
@@ -130,7 +131,7 @@ describe('seo utils', () => {
             {
               title: 'Project No Link',
               description: 'Desc',
-            }
+            },
           ],
         },
       }));
@@ -179,13 +180,13 @@ describe('seo utils', () => {
             summary: 'Test summary',
             location: { city: 'Test City', country: 'Test Country' },
             socials: [],
-            languages: []
+            languages: [],
           },
           education: [],
           experience: [], // Empty experience
           skills: [],
           certifications: [],
-          projects: []
+          projects: [],
         },
       }));
 

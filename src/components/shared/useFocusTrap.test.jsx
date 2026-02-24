@@ -12,7 +12,7 @@ const TestComponent = ({ isOpen, onClose, preventScroll = true, initialFocus = f
     containerRef,
     onClose,
     initialFocusRef: initialFocus ? initialFocusRef : undefined,
-    preventScroll
+    preventScroll,
   });
 
   return (
@@ -196,15 +196,15 @@ describe('useFocusTrap', () => {
   });
 
   it('does nothing if containerRef is invalid', () => {
-     // Test component where ref is not attached
-     const TestInvalidRef = ({ isOpen }) => {
-       const containerRef = useRef(null);
-       useFocusTrap({ isOpen, containerRef, onClose: vi.fn() });
-       return <div>No Ref</div>;
-     };
+    // Test component where ref is not attached
+    const TestInvalidRef = ({ isOpen }) => {
+      const containerRef = useRef(null);
+      useFocusTrap({ isOpen, containerRef, onClose: vi.fn() });
+      return <div>No Ref</div>;
+    };
 
-     render(<TestInvalidRef isOpen={true} />);
-     fireEvent.keyDown(document, { key: 'Tab' });
-     // Should return early
+    render(<TestInvalidRef isOpen={true} />);
+    fireEvent.keyDown(document, { key: 'Tab' });
+    // Should return early
   });
 });
