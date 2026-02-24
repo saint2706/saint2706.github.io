@@ -4,34 +4,34 @@ Allow: /
 Disallow: /games
 
 # ─── AI Crawlers ───
-# Block AI training crawlers to protect content from being used without permission.
-# However, allow search-specific AI agents (like ChatGPT-User) to discover and answer questions.
+# Optimization for GEO (Generative Engine Optimization)
+# Allowing major AI agents to discover and index content for better answers.
 
-# Training Bots (Blocked)
+# OpenAI (ChatGPT Search & Training)
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
-User-agent: CCBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
-
-# Search Bots (Allowed for Discovery)
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: FacebookBot
+# Google (Gemini / Bard)
+User-agent: Google-Extended
 Allow: /
+
+# Anthropic (Claude)
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Common Crawl (Blocked to reduce heavy crawling load, can be enabled if desired for broader training inclusion)
+User-agent: CCBot
+Disallow: /
+
+# ByteDance
+User-agent: Bytespider
+Disallow: /
 
 # ─── Sitemap ───
 Sitemap: https://saint2706.github.io/sitemap.xml
