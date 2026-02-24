@@ -105,56 +105,52 @@ const ADJACENT_COLORS = [
 ];
 
 const MinesweeperCell = React.memo(
-  React.forwardRef(
-    (
-      {
-        r,
-        c,
-        mine,
-        revealed,
-        flagged,
-        adjacent,
-        ui,
-        onReveal,
-        onFlag,
-        onFocus,
-        isGameOver,
-        isFocused,
-        isLiquid,
-      },
-      ref
-    ) => {
-      const longPressRef = useRef(null);
+  ({
+    r,
+    c,
+    mine,
+    revealed,
+    flagged,
+    adjacent,
+    ui,
+    onReveal,
+    onFlag,
+    onFocus,
+    isGameOver,
+    isFocused,
+    isLiquid,
+  }) => {
+    const longPressRef = useRef(null);
 
-      const handleTouchStart = useCallback(() => {
-        longPressRef.current = setTimeout(() => onFlag(r, c), 500);
-      }, [onFlag, r, c]);
+    const handleTouchStart = useCallback(() => {
+      longPressRef.current = setTimeout(() => onFlag(r, c), 500);
+    }, [onFlag, r, c]);
 
-      const handleTouchEnd = useCallback(() => {
-        clearTimeout(longPressRef.current);
-      }, []);
+    const handleTouchEnd = useCallback(() => {
+      clearTimeout(longPressRef.current);
+    }, []);
 
-      const cellContent = (() => {
-        if (!revealed && flagged) return '🚩';
-        if (!revealed) return '';
-        if (mine) return '💣';
-        if (adjacent === 0) return '';
-        return adjacent;
-      })();
+    const cellContent = (() => {
+      if (!revealed && flagged) return '🚩';
+      if (!revealed) return '';
+      if (mine) return '💣';
+      if (adjacent === 0) return '';
+      return adjacent;
+    })();
 
-      return (
-        <button
-          ref={ref}
-          onClick={() => onReveal(r, c)}
-          onContextMenu={e => onFlag(r, c, e)}
-          onFocus={() => onFocus(r, c)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onTouchMove={handleTouchEnd}
-          disabled={isGameOver}
-          tabIndex={isFocused ? 0 : -1}
-          aria-label={`Row ${r + 1}, Column ${c + 1}${revealed ? (mine ? ', mine' : adjacent > 0 ? `, ${adjacent} adjacent mines` : ', empty') : flagged ? ', flagged' : ', hidden'}. Press F to flag.`}
-          className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm cursor-pointer flex items-center justify-center transition-colors motion-reduce:transition-none ${ui.tileBase}
+    return (
+      <button
+        id={`minesweeper-cell-${r}-${c}`}
+        onClick={() => onReveal(r, c)}
+        onContextMenu={e => onFlag(r, c, e)}
+        onFocus={() => onFocus(r, c)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchMove={handleTouchEnd}
+        disabled={isGameOver}
+        tabIndex={isFocused ? 0 : -1}
+        aria-label={`Row ${r + 1}, Column ${c + 1}${revealed ? (mine ? ', mine' : adjacent > 0 ? `, ${adjacent} adjacent mines` : ', empty') : flagged ? ', flagged' : ', hidden'}. Press F to flag.`}
+        className={`w-7 h-7 md:w-8 md:h-8 text-xs md:text-sm cursor-pointer flex items-center justify-center transition-colors motion-reduce:transition-none ${ui.tileBase}
         ${
           revealed
             ? mine
@@ -162,14 +158,13 @@ const MinesweeperCell = React.memo(
               : 'bg-secondary'
             : `${ui.tileIdle} ${isLiquid ? 'hover:brightness-110' : 'hover:bg-accent/10'} ${isFocused ? 'ring-2 ring-accent' : ''}`
         }`}
-        >
-          <span className={adjacent > 0 && revealed ? ADJACENT_COLORS[adjacent] : ''}>
-            {cellContent}
-          </span>
-        </button>
-      );
-    }
-  )
+      >
+        <span className={adjacent > 0 && revealed ? ADJACENT_COLORS[adjacent] : ''}>
+          {cellContent}
+        </span>
+      </button>
+    );
+  }
 );
 MinesweeperCell.displayName = 'MinesweeperCell';
 
@@ -225,7 +220,6 @@ const Minesweeper = () => {
   });
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
-  const cellRefs = useRef({});
 
   const checkWin = useCallback(
     b => {
@@ -370,7 +364,7 @@ const Minesweeper = () => {
         e.stopPropagation(); // Stop bubbling
         setFocusR(r);
         setFocusC(c);
-        const nextCell = cellRefs.current[`${r}-${c}`];
+        const nextCell = document.getElementById(`minesweeper-cell-${r}-${c}`);
         if (nextCell) nextCell.focus();
       }
     },
@@ -443,7 +437,6 @@ const Minesweeper = () => {
               row.map((cell, c) => (
                 <MinesweeperCell
                   key={`${r}-${c}`}
-                  ref={el => (cellRefs.current[`${r}-${c}`] = el)}
                   r={r}
                   c={c}
                   mine={cell.mine}
