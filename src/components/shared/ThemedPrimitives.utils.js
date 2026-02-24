@@ -65,3 +65,15 @@ export const getOverlayShell = ({
     },
   };
 };
+
+/** Map shadow color names to NB 2.0 colored shadow CSS classes */
+export const NB_SHADOW_COLOR_MAP = {
+  yellow: 'nb-shadow-yellow',
+  pink: 'nb-shadow-pink',
+  blue: 'nb-shadow-blue',
+  red: 'nb-shadow-red',
+  lime: 'nb-shadow-lime',
+  coral: 'nb-shadow-coral',
+  violet: 'nb-shadow-violet',
+  orange: 'nb-shadow-orange',
+};

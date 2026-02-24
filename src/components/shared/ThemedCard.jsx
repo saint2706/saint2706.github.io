@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from './theme-context';
-import { joinClasses } from './ThemedPrimitives.utils';
+import { joinClasses, NB_SHADOW_COLOR_MAP } from './ThemedPrimitives.utils';
 
 const VARIANTS = {
   default: {
@@ -22,18 +22,6 @@ const VARIANTS = {
     neubrutalism: 'bg-card border-nb border-[color:var(--color-border)] rounded-nb nb-halftone-bg',
     liquid: 'lg-surface-2 lg-specular-rim',
   },
-};
-
-/** Map shadow color names to NB 2.0 colored shadow CSS classes */
-const NB_SHADOW_COLOR_MAP = {
-  yellow: 'nb-shadow-yellow',
-  pink: 'nb-shadow-pink',
-  blue: 'nb-shadow-blue',
-  red: 'nb-shadow-red',
-  lime: 'nb-shadow-lime',
-  coral: 'nb-shadow-coral',
-  violet: 'nb-shadow-violet',
-  orange: 'nb-shadow-orange',
 };
 
 const ThemedCard = ({
