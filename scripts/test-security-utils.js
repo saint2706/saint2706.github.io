@@ -304,7 +304,11 @@ const imageSrcTests = [
   { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },
   { name: 'URL with missing slashes (auto-fixed)', input: 'https:example.com', expected: true },
   { name: 'Explicit valid relative path', input: '/images/pic.jpg', expected: true },
-  { name: 'Explicit malicious protocol-relative', input: '//malicious.site/img.jpg', expected: false },
+  {
+    name: 'Explicit malicious protocol-relative',
+    input: '//malicious.site/img.jpg',
+    expected: false,
+  },
   { name: 'Explicit valid absolute path', input: 'https://google.com/logo.png', expected: true },
 ];
 

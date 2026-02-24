@@ -13,7 +13,8 @@ const SRC_DIR = path.resolve(__dirname, '../src');
 // - Variables named with KEY, SECRET, TOKEN, PASSWORD
 // - Followed by an assignment
 // - Followed by a string literal
-const SECRET_REGEX = /(?<!import\s)(?:const|let|var)\s+([A-Z0-9_]*(?:KEY|SECRET|TOKEN|PASSWORD)[A-Z0-9_]*)\s*=\s*['"`]([^'"`\s]+)['"`]/gi;
+const SECRET_REGEX =
+  /(?<!import\s)(?:const|let|var)\s+([A-Z0-9_]*(?:KEY|SECRET|TOKEN|PASSWORD)[A-Z0-9_]*)\s*=\s*['"`]([^'"`\s]+)['"`]/gi;
 
 // Files/directories to exclude
 const EXCLUDE_DIRS = ['node_modules', '.git', 'dist', 'build', 'coverage'];
@@ -35,7 +36,8 @@ function scanFile(filePath) {
       if (value.length < 8) continue;
 
       // Ignore placeholders
-      if (value.includes('YOUR_') || value.includes('EXAMPLE') || value.includes('REDACTED')) continue;
+      if (value.includes('YOUR_') || value.includes('EXAMPLE') || value.includes('REDACTED'))
+        continue;
 
       // Ignore common environment variable references (e.g., process.env.KEY)
       // The regex above already captures string literals, so process.env won't match directly unless it's in a string.
@@ -70,7 +72,13 @@ function scanDirectory(dir) {
         if (scanDirectory(fullPath)) hasSecrets = true;
       }
     } else {
-      if (!EXCLUDE_FILES.includes(file) && (file.endsWith('.js') || file.endsWith('.jsx') || file.endsWith('.ts') || file.endsWith('.tsx'))) {
+      if (
+        !EXCLUDE_FILES.includes(file) &&
+        (file.endsWith('.js') ||
+          file.endsWith('.jsx') ||
+          file.endsWith('.ts') ||
+          file.endsWith('.tsx'))
+      ) {
         if (scanFile(fullPath)) hasSecrets = true;
       }
     }
