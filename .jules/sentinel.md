@@ -1,6 +1,7 @@
 # Sentinel Security Report 🛡️
 
 ## 1. Vulnerability Mitigation
+
 - **NPM Vulnerabilities**:
   - `minimatch` (<10.2.1) and `ajv` (<6.14.0) were identified as vulnerable (ReDoS).
   - **Mitigation**: Applied `pnpm.overrides` in `package.json`:
@@ -9,6 +10,7 @@
   - **Status**: `pnpm audit` reports 0 vulnerabilities.
 
 ## 2. Content Security Policy (CSP)
+
 - **Status**: Strict CSP enforced via `<meta>` tag in `index.html`.
 - **Configuration**:
   - `default-src 'self'`
@@ -18,12 +20,14 @@
   - `upgrade-insecure-requests`: Enforced.
 
 ## 3. Subresource Integrity (SRI)
+
 - **Pyodide Loader**:
   - `src/components/shared/pyodideLoader.js` manually enforces SRI for the Pyodide script.
   - **Hash**: `sha384-+R8PTzDXzivdjpxOqwVwRhPS9dlske7tKAjwj0O0Kr361gKY5d2Xe6Osl+faRLT7` (Verified).
   - **Verification**: `scripts/verify-sri.js` passes.
 
 ## 4. Input Validation & Sanitization
+
 - **Chat Interface**:
   - Inputs limited to 500 chars.
   - Output rendered via `react-markdown` with strict `allowedElements`.
@@ -34,10 +38,12 @@
   - Output captured via `StringIO` redirection.
 
 ## 5. Secrets Management
+
 - `VITE_GEMINI_API_KEY` loaded via `import.meta.env`.
 - No hardcoded secrets found in source code.
 
 ## 6. Headers
+
 - `Referrer-Policy: strict-origin-when-cross-origin` present in `index.html`.
 - `X-Frame-Options` covered by CSP `frame-ancestors`.
 - `X-Content-Type-Options` (nosniff) omitted as meta tags are ineffective for this header; reliance on strict MIME types served by host recommended.
