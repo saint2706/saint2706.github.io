@@ -67,8 +67,32 @@ try {
     process.exit(1);
   }
 
+  // Check for frame-ancestors 'none' (prevent clickjacking)
+  if (!cspContent.includes("frame-ancestors 'none'")) {
+    console.error(
+      "FAILED: CSP does not contain frame-ancestors 'none'. This is required to prevent clickjacking."
+    );
+    process.exit(1);
+  }
+
+  // Check for object-src 'none' (prevent Flash/Java applets)
+  if (!cspContent.includes("object-src 'none'")) {
+    console.error(
+      "FAILED: CSP does not contain object-src 'none'. This is required to prevent plugin vulnerabilities."
+    );
+    process.exit(1);
+  }
+
+  // Check for base-uri 'self' (prevent base tag hijacking)
+  if (!cspContent.includes("base-uri 'self'")) {
+    console.error(
+      "FAILED: CSP does not contain base-uri 'self'. This is required to prevent base tag hijacking."
+    );
+    process.exit(1);
+  }
+
   console.log(
-    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval', and 'upgrade-insecure-requests')."
+    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval', 'upgrade-insecure-requests', and anti-clickjacking measures)."
   );
 } catch (error) {
   console.error('Error reading index.html:', error);

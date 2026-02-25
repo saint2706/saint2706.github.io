@@ -28,7 +28,7 @@ vi.mock('./theme-context', async importOriginal => {
 });
 import { useTheme } from './theme-context';
 
-// Mock Framer Motion to avoid animation issues
+// Mock Framer Motion
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
   return {
@@ -241,29 +241,53 @@ describe('ChatInterface', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
-  it('validates input max length', () => {
+  it('renders markdown content correctly', () => {
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: 'Link: [Google](https://google.com)\nImage: ![Alt Text](https://example.com/image.png)\nCode: `console.log("hello")`',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const link = screen.getByText('Google');
+    expect(link).toHaveAttribute('href', 'https://google.com');
+    expect(link).toHaveAttribute('target', '_blank');
+
+    const image = screen.getByAltText('Alt Text');
+    expect(image).toHaveAttribute('src', 'https://example.com/image.png');
+
+    expect(screen.getByText('console.log("hello")')).toBeInTheDocument();
+  });
+
+  it('displays error message from AI service', async () => {
+    aiService.chatWithGemini.mockResolvedValue('I seem to be having a connection glitch.');
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Crash' } });
+    fireEvent.click(screen.getByLabelText('Send message'));
+
+    await waitFor(() => {
+      expect(screen.getByText('I seem to be having a connection glitch.')).toBeInTheDocument();
+    });
+  });
+
+  it('updates character count and validates input', () => {
     render(<ChatInterface onClose={mockOnClose} />);
     const input = screen.getByRole('textbox');
 
-    // Check maxLength attribute
-    expect(input).toHaveAttribute('maxLength', '500');
-
-    // Simulate typing near limit
-    const longText = 'a'.repeat(501);
-    fireEvent.change(input, { target: { value: longText } });
-
-    // The input should respect the value set (even if greater than maxLength in synthetic event)
-    // but the component might truncate or the character counter should show.
-    // The component logic: value={input} and onChange updates state.
-    // If maxLength is on input, browser prevents typing more.
-    // Testing maxLength attribute is enough for browser behavior.
-
-    // Let's check the character counter
     fireEvent.change(input, { target: { value: 'a'.repeat(450) } });
     expect(screen.getByText('450/500')).toHaveClass('text-orange-500');
 
     fireEvent.change(input, { target: { value: 'a'.repeat(500) } });
     expect(screen.getByText('500/500')).toHaveClass('text-red-500');
+
+    expect(input).toHaveAttribute('maxLength', '500');
   });
 
   it('disables send button when input is empty', () => {
@@ -299,50 +323,16 @@ describe('ChatInterface', () => {
     // Verify error was logged
     expect(consoleSpy).toHaveBeenCalledWith('Failed to send message', expect.any(Error));
 
-    // Verify messages didn't update with a new model response (or did it? The component catch block logs error but doesn't add error message to UI?)
-    // Looking at the code:
-    // try { await chatWithGemini... } catch (error) { console.error(...) }
-    // It catches the error in handleSubmit -> handleSendMessage throws?
-    // handleSendMessage doesn't have try/catch around chatWithGemini call, oh wait it does:
-
-    /*
-    try {
-      const responseText = await chatWithGemini(userMsg.text, history);
-      if (isMountedRef.current) {
-        setMessages(...)
-      }
-    } finally {
-       setIsTyping(false);
-    }
-    */
-
-    // Wait, chatWithGemini itself handles errors and returns error messages string!
-    // So chatWithGemini shouldn't throw normally unless something catastrophic happens inside it that isn't caught.
-    // But if we mock it to reject, then handleSendMessage's try/catch (if it had one) would catch it.
-    // Wait, handleSendMessage implementation:
-    /*
-    try {
-      const responseText = await chatWithGemini(userMsg.text, history);
-      // ...
-    } finally {
-      // ...
-    }
-    */
-    // There is NO catch block in handleSendMessage!
-    // But handleSubmit has one:
-    /*
-    const handleSubmit = async e => {
-      e.preventDefault();
-      try {
-        await handleSendMessage(input);
-      } catch (error) {
-        console.error('Failed to send message', error);
-      }
-    };
-    */
-    // So if chatWithGemini rejects, handleSubmit catches it and logs it.
-    // And state.messages is NOT updated with an error message in this case.
-
     consoleSpy.mockRestore();
+  });
+
+  it('applies liquid theme classes', () => {
+    useTheme.mockReturnValue({ theme: 'liquid' });
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    // Check for a known liquid theme class
+    const botIconContainer =
+      screen.getByText('Digital Rishabh').parentElement.previousElementSibling;
+    expect(botIconContainer).toHaveClass('lg-surface-3');
   });
 });
