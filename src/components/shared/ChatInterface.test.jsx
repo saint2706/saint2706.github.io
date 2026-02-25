@@ -18,10 +18,6 @@ vi.mock('../../utils/storage', () => ({
 }));
 
 // Mock Theme Context
-// Instead of mocking the module, we can wrap the component in a real ThemeProvider
-// or a mock provider if the real one is complex.
-// The real ThemeProvider uses localStorage and has logic.
-// Let's mock the hook instead for better control.
 vi.mock('./theme-context', async importOriginal => {
   const actual = await importOriginal();
   return {
@@ -31,7 +27,7 @@ vi.mock('./theme-context', async importOriginal => {
 });
 import { useTheme } from './theme-context';
 
-// Mock Framer Motion to avoid animation issues
+// Mock Framer Motion
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
   return {
@@ -48,14 +44,19 @@ vi.mock('framer-motion', async () => {
 // Mock ScrollIntoView
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
 
+// Mock Clipboard
+Object.assign(navigator, {
+  clipboard: {
+    writeText: vi.fn(),
+  },
+});
+
 describe('ChatInterface', () => {
   const mockOnClose = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
     useTheme.mockReturnValue({ theme: 'neubrutalism', toggleTheme: vi.fn() });
-
-    // Default storage return (empty history)
     storage.safeGetLocalStorage.mockReturnValue(null);
   });
 
@@ -91,14 +92,9 @@ describe('ChatInterface', () => {
     const sendButton = screen.getByLabelText('Send message');
     fireEvent.click(sendButton);
 
-    // Should display user message immediately
     expect(screen.getByText('How are you?')).toBeInTheDocument();
-
-    // Should verify loading state (implementation detail: typing indicator)
-    // We can check if input is disabled or placeholder changed
     expect(input).toBeDisabled();
 
-    // Wait for response
     await waitFor(() => {
       expect(screen.getByText('I am good')).toBeInTheDocument();
     });
@@ -107,7 +103,6 @@ describe('ChatInterface', () => {
   });
 
   it('handles cleared history', async () => {
-    // Start with some history
     const mockHistory = [
       { id: '1', role: 'user', text: 'Hello' },
       { id: '2', role: 'model', text: 'Hi there' },
@@ -116,21 +111,15 @@ describe('ChatInterface', () => {
 
     render(<ChatInterface onClose={mockOnClose} />);
 
-    // Initial check
     expect(screen.getByText('Hello')).toBeInTheDocument();
 
-    // Find clear button
     const clearButton = screen.getByText('Clear');
     fireEvent.click(clearButton);
 
-    // Verify confirmation
     expect(screen.getByText('Confirm?')).toBeInTheDocument();
 
-    // Click confirm
     fireEvent.click(screen.getByText('Confirm?'));
 
-    // Verify history cleared (default message should be there? Or empty?)
-    // createDefaultMessage text: "Hi! I'm Digital Rishabh..."
     await waitFor(() => {
       expect(screen.queryByText('Hello')).not.toBeInTheDocument();
       expect(storage.safeRemoveLocalStorage).toHaveBeenCalled();
@@ -160,5 +149,64 @@ describe('ChatInterface', () => {
     fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
 
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('renders markdown content correctly', () => {
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: 'Link: [Google](https://google.com)\nImage: ![Alt Text](https://example.com/image.png)\nCode: `console.log("hello")`',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const link = screen.getByText('Google');
+    expect(link).toHaveAttribute('href', 'https://google.com');
+    expect(link).toHaveAttribute('target', '_blank');
+
+    const image = screen.getByAltText('Alt Text');
+    expect(image).toHaveAttribute('src', 'https://example.com/image.png');
+
+    expect(screen.getByText('console.log("hello")')).toBeInTheDocument();
+  });
+
+  it('displays error message from AI service', async () => {
+    aiService.chatWithGemini.mockResolvedValue('I seem to be having a connection glitch.');
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Crash' } });
+    fireEvent.click(screen.getByLabelText('Send message'));
+
+    await waitFor(() => {
+      expect(screen.getByText('I seem to be having a connection glitch.')).toBeInTheDocument();
+    });
+  });
+
+  it('updates character count and validates input', () => {
+    render(<ChatInterface onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: 'a'.repeat(450) } });
+    expect(screen.getByText('450/500')).toHaveClass('text-orange-500');
+
+    fireEvent.change(input, { target: { value: 'a'.repeat(500) } });
+    expect(screen.getByText('500/500')).toHaveClass('text-red-500');
+
+    expect(input).toHaveAttribute('maxLength', '500');
+  });
+
+  it('applies liquid theme classes', () => {
+    useTheme.mockReturnValue({ theme: 'liquid' });
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    // Check for a known liquid theme class
+    const botIconContainer =
+      screen.getByText('Digital Rishabh').parentElement.previousElementSibling;
+    expect(botIconContainer).toHaveClass('lg-surface-3');
   });
 });

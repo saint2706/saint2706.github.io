@@ -143,6 +143,37 @@ describe('AI Service', () => {
       expect(response).toContain('cooling down');
       expect(mockGenerateContent).toHaveBeenCalledTimes(1);
     });
+
+    it('should handle API errors', async () => {
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
+      mockGenerateContent.mockRejectedValue(new Error('API Error'));
+      const response = await roastResume();
+      expect(response).toContain("I can't roast right now");
+    });
+
+    it('should handle timeout', async () => {
+      // Reset rate limit
+      vi.advanceTimersByTime(3000);
+
+      // Mock generateContent to never resolve
+      mockGenerateContent.mockReturnValue(new Promise(() => {}));
+
+      const roastPromise = roastResume();
+
+      // Advance time past timeout (15000ms)
+      vi.advanceTimersByTime(16000);
+
+      const response = await roastPromise;
+      expect(response).toContain('took too long');
+    });
+
+    it('should handle leaked key error', async () => {
+      vi.advanceTimersByTime(3000);
+      mockGenerateContent.mockRejectedValue(new Error('Key reported as leaked'));
+      const response = await roastResume();
+      expect(response).toContain('flagged as leaked');
+    });
   });
 
   describe('sanitizeHistoryForGemini', () => {
