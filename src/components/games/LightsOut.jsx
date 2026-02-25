@@ -1,5 +1,5 @@
 /**
- * @fileoverview Lights Out — Toggle puzzle game.
+ * @fileoverview LightsOut — Toggle puzzle game.
  *
  * Features:
  * - 5×5 grid of toggleable lights
@@ -56,6 +56,36 @@ const createPuzzle = () => {
   return grid;
 };
 
+/**
+ * Individual cell component for the grid.
+ * Memoized to prevent re-renders of unaffected cells.
+ */
+const LightsOutCell = React.memo(
+  ({ r, c, isOn, isFocused, isDisabled, onToggle, shouldReduceMotion }) => {
+    return (
+      <motion.button
+        onClick={() => onToggle(r, c)}
+        disabled={isDisabled}
+        tabIndex={isFocused ? 0 : -1}
+        whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
+        aria-label={`Row ${r + 1}, Column ${c + 1}: light ${isOn ? 'on' : 'off'}`}
+        aria-pressed={isOn}
+        className={`w-12 h-12 md:w-14 md:h-14 border-[3px] border-[color:var(--color-border)] rounded-nb cursor-pointer select-none transition-all motion-reduce:transition-none
+        ${isOn ? 'bg-fun-yellow -translate-x-0.5 -translate-y-0.5' : 'bg-secondary'}
+        ${isFocused && !isDisabled ? 'ring-2 ring-accent' : ''}`}
+        style={{
+          boxShadow: isOn ? 'var(--nb-shadow-hover)' : '2px 2px 0 var(--color-border)',
+        }}
+      >
+        <span className="text-lg" aria-hidden="true">
+          {isOn ? '💡' : ''}
+        </span>
+      </motion.button>
+    );
+  }
+);
+LightsOutCell.displayName = 'LightsOutCell';
+
 const LightsOut = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -71,6 +101,23 @@ const LightsOut = () => {
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
 
+  // Check for win condition whenever grid updates
+  useEffect(() => {
+    if (gameState !== 'playing') return;
+
+    // Check if all lights are off
+    const allOff = grid.every(row => row.every(cell => !cell));
+
+    if (allOff) {
+      // eslint-disable-next-line
+      setGameState('won');
+      if (!bestScore || moves < bestScore) {
+        setBestScore(moves);
+        localStorage.setItem('lightsOutBest', moves.toString());
+      }
+    }
+  }, [grid, moves, gameState, bestScore]);
+
   const toggleCell = useCallback(
     (r, c) => {
       if (gameState !== 'playing') return;
@@ -83,22 +130,11 @@ const LightsOut = () => {
         if (r < SIZE - 1) next[r + 1][c] = !next[r + 1][c];
         if (c > 0) next[r][c - 1] = !next[r][c - 1];
         if (c < SIZE - 1) next[r][c + 1] = !next[r][c + 1];
-
-        // Check win
-        const newMoves = moves + 1;
-        if (next.every(row => row.every(cell => !cell))) {
-          if (!bestScore || newMoves < bestScore) {
-            setBestScore(newMoves);
-            localStorage.setItem('lightsOutBest', newMoves.toString());
-          }
-          setGameState('won');
-        }
-
         return next;
       });
       setMoves(m => m + 1);
     },
-    [gameState, moves, bestScore]
+    [gameState]
   );
 
   const startGame = useCallback(() => {
@@ -212,25 +248,16 @@ const LightsOut = () => {
           >
             {grid.map((row, r) =>
               row.map((isOn, c) => (
-                <motion.button
+                <LightsOutCell
                   key={`${r}-${c}`}
-                  onClick={() => toggleCell(r, c)}
-                  disabled={gameState !== 'playing'}
-                  tabIndex={focusR === r && focusC === c ? 0 : -1}
-                  whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
-                  aria-label={`Row ${r + 1}, Column ${c + 1}: light ${isOn ? 'on' : 'off'}`}
-                  aria-pressed={isOn}
-                  className={`w-12 h-12 md:w-14 md:h-14 border-[3px] border-[color:var(--color-border)] rounded-nb cursor-pointer select-none transition-all motion-reduce:transition-none
-                    ${isOn ? 'bg-fun-yellow -translate-x-0.5 -translate-y-0.5' : 'bg-secondary'}
-                    ${focusR === r && focusC === c && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`}
-                  style={{
-                    boxShadow: isOn ? 'var(--nb-shadow-hover)' : '2px 2px 0 var(--color-border)',
-                  }}
-                >
-                  <span className="text-lg" aria-hidden="true">
-                    {isOn ? '💡' : ''}
-                  </span>
-                </motion.button>
+                  r={r}
+                  c={c}
+                  isOn={isOn}
+                  isFocused={focusR === r && focusC === c}
+                  isDisabled={gameState !== 'playing'}
+                  onToggle={toggleCell}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
               ))
             )}
           </div>
