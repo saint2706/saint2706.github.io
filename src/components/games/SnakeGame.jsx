@@ -188,7 +188,7 @@ const GameOverlay = React.memo(
           <div id="snake-start-desc" className="text-sm text-secondary text-center px-4 font-sans">
             Use arrow keys or swipe to control
             <br />
-            <span className="text-muted">Space to pause</span>
+            <span className="text-muted">Space to pause. Focus to play.</span>
           </div>
           <motion.button
             whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
@@ -402,6 +402,7 @@ const SnakeGame = () => {
   const directionRef = useRef(direction); // Ref to prevent stale closure in game loop
   const canvasRef = useRef(null); // Canvas element for rendering
   const touchStartRef = useRef(null); // Touch start position for swipe detection
+  const containerRef = useRef(null); // Ref for the game container div
 
   // Ref to cache theme colors to avoid expensive getComputedStyle calls in render loop
   const themeColorsRef = useRef(null);
@@ -551,8 +552,8 @@ const SnakeGame = () => {
    * - Prevents 180-degree turns (e.g., left when moving right)
    * - Only processes input when game is playing or paused
    */
-  useEffect(() => {
-    const handleKeyDown = e => {
+  const handleKeyDown = useCallback(
+    e => {
       if (gameState !== 'playing' && gameState !== 'paused') return;
 
       // Map keys to direction vectors
@@ -582,11 +583,9 @@ const SnakeGame = () => {
         e.preventDefault();
         setGameState(prev => (prev === 'playing' ? 'paused' : 'playing'));
       }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [gameState]);
+    },
+    [gameState]
+  );
 
   /**
    * Records touch start position for swipe gesture detection.
@@ -758,6 +757,10 @@ const SnakeGame = () => {
     setScore(0);
     setSpeed(INITIAL_SPEED);
     setGameState('playing');
+    // Ensure the game container gets focus so keyboard controls work immediately
+    if (containerRef.current) {
+      containerRef.current.focus();
+    }
   }, []);
 
   /**
@@ -766,6 +769,13 @@ const SnakeGame = () => {
   const togglePause = useCallback(() => {
     setGameState(prev => (prev === 'playing' ? 'paused' : 'playing'));
   }, []);
+
+  const handleBlur = useCallback(() => {
+    // Automatically pause if focus leaves the game area while playing
+    if (gameState === 'playing') {
+      setGameState('paused');
+    }
+  }, [gameState]);
 
   const gameAnnouncement = useMemo(() => {
     if (gameState === 'idle') return 'Snake game ready. Press Start Game to begin.';
@@ -791,7 +801,16 @@ const SnakeGame = () => {
       />
 
       {/* Game Canvas - Neubrutalism */}
-      <div className="relative" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <div
+        ref={containerRef}
+        className="relative outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        tabIndex={0}
+        aria-label="Snake Game Board. Use arrow keys to move."
+      >
         <motion.div
           initial={shouldReduceMotion ? false : { scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
