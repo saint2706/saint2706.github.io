@@ -79,7 +79,7 @@ const QUICK_REPLIES = [
  * @param {React.ReactNode} props.children - Link text content
  * @returns {JSX.Element} Either a safe anchor tag or plain text span
  */
-const LinkRenderer = ({ href, children, ...rest }) => {
+export const LinkRenderer = ({ href, children, ...rest }) => {
   // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
   const isValidHref = isSafeHref(href);
 
@@ -111,7 +111,7 @@ const LinkRenderer = ({ href, children, ...rest }) => {
  * @param {string} props.alt - The image alt text
  * @returns {JSX.Element} Either the image tag or a placeholder/warning
  */
-const ImageRenderer = ({ src, alt, ...rest }) => {
+export const ImageRenderer = ({ src, alt, ...rest }) => {
   // Security: Validate image source to prevent dangerous protocols (e.g., javascript:)
   // Uses isSafeImageSrc which only allows http/https (not mailto: which doesn't make sense for images)
   const isValidSrc = isSafeImageSrc(src);
@@ -141,7 +141,7 @@ const ImageRenderer = ({ src, alt, ...rest }) => {
  *
  * @component
  */
-const CodeRenderer = ({ className, children, node, ...props }) => {
+export const CodeRenderer = ({ className, children, node, ...props }) => {
   const inline = !node?.position || node.position.start.line === node.position.end.line;
   const [isCopied, setIsCopied] = useState(false);
   const copyResetTimeoutRef = useRef(null);

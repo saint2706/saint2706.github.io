@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import ChatInterface from './ChatInterface';
+import ChatInterface, { LinkRenderer, ImageRenderer, CodeRenderer } from './ChatInterface';
 import * as aiService from '../../services/ai';
 import * as storage from '../../utils/storage';
+import React from 'react';
 
 // Mock AI Service
 vi.mock('../../services/ai', () => ({
@@ -18,10 +19,6 @@ vi.mock('../../utils/storage', () => ({
 }));
 
 // Mock Theme Context
-// Instead of mocking the module, we can wrap the component in a real ThemeProvider
-// or a mock provider if the real one is complex.
-// The real ThemeProvider uses localStorage and has logic.
-// Let's mock the hook instead for better control.
 vi.mock('./theme-context', async importOriginal => {
   const actual = await importOriginal();
   return {
@@ -45,8 +42,104 @@ vi.mock('framer-motion', async () => {
   };
 });
 
+// Mock SyntaxHighlighter to avoid lazy loading issues in tests
+vi.mock('./SyntaxHighlighter', () => ({
+  default: ({ code, language }) => (
+    <pre data-testid="syntax-highlighter" data-language={language}>
+      {code}
+    </pre>
+  ),
+}));
+
 // Mock ScrollIntoView
 window.HTMLElement.prototype.scrollIntoView = vi.fn();
+
+// Mock Navigator Clipboard
+Object.assign(navigator, {
+  clipboard: {
+    writeText: vi.fn(),
+  },
+});
+
+describe('ChatInterface Subcomponents', () => {
+  describe('LinkRenderer', () => {
+    it('renders safe links correctly', () => {
+      render(<LinkRenderer href="https://example.com">Safe Link</LinkRenderer>);
+      const link = screen.getByRole('link', { name: 'Safe Link' });
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', 'https://example.com');
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+
+    it('renders unsafe links as text', () => {
+      render(<LinkRenderer href="javascript:alert(1)">Unsafe Link</LinkRenderer>);
+      const link = screen.queryByRole('link');
+      expect(link).not.toBeInTheDocument();
+      expect(screen.getByText('Unsafe Link')).toBeInTheDocument();
+    });
+  });
+
+  describe('ImageRenderer', () => {
+    it('renders safe images correctly', () => {
+      render(<ImageRenderer src="https://example.com/image.png" alt="Test Image" />);
+      const img = screen.getByRole('img', { name: 'Test Image' });
+      expect(img).toBeInTheDocument();
+      expect(img).toHaveAttribute('src', 'https://example.com/image.png');
+    });
+
+    it('renders fallback for unsafe images', () => {
+      render(<ImageRenderer src="javascript:alert(1)" alt="Unsafe Image" />);
+      const img = screen.queryByRole('img');
+      expect(img).not.toBeInTheDocument();
+      expect(screen.getByText('[Image blocked for security]')).toBeInTheDocument();
+    });
+  });
+
+  describe('CodeRenderer', () => {
+    it('renders inline code correctly', () => {
+      render(<CodeRenderer>const x = 1;</CodeRenderer>);
+      // Inline code usually renders as a <code> element without SyntaxHighlighter
+      const code = screen.getByText('const x = 1;');
+      expect(code.tagName).toBe('CODE');
+    });
+
+    it('renders code blocks with syntax highlighter and copy button', async () => {
+      // Mock node prop to simulate block code
+      const node = {
+        position: {
+          start: { line: 1 },
+          end: { line: 3 },
+        },
+      };
+
+      render(
+        <CodeRenderer className="language-js" node={node}>
+          {'console.log("test");'}
+        </CodeRenderer>
+      );
+
+      // Check for SyntaxHighlighter mock
+      await waitFor(() => {
+        expect(screen.getByTestId('syntax-highlighter')).toBeInTheDocument();
+      });
+      expect(screen.getByText('console.log("test");')).toBeInTheDocument();
+
+      // Check for copy button
+      const copyButton = screen.getByLabelText('Copy code to clipboard');
+      expect(copyButton).toBeInTheDocument();
+
+      // Test copy functionality
+      fireEvent.click(copyButton);
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith('console.log("test");');
+
+      // Check if button state changes (optimistic update)
+      await waitFor(() => {
+        expect(screen.getByLabelText('Copied code')).toBeInTheDocument();
+      });
+    });
+  });
+});
 
 describe('ChatInterface', () => {
   const mockOnClose = vi.fn();
@@ -54,8 +147,6 @@ describe('ChatInterface', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useTheme.mockReturnValue({ theme: 'neubrutalism', toggleTheme: vi.fn() });
-
-    // Default storage return (empty history)
     storage.safeGetLocalStorage.mockReturnValue(null);
   });
 
@@ -91,14 +182,9 @@ describe('ChatInterface', () => {
     const sendButton = screen.getByLabelText('Send message');
     fireEvent.click(sendButton);
 
-    // Should display user message immediately
     expect(screen.getByText('How are you?')).toBeInTheDocument();
-
-    // Should verify loading state (implementation detail: typing indicator)
-    // We can check if input is disabled or placeholder changed
     expect(input).toBeDisabled();
 
-    // Wait for response
     await waitFor(() => {
       expect(screen.getByText('I am good')).toBeInTheDocument();
     });
@@ -107,7 +193,6 @@ describe('ChatInterface', () => {
   });
 
   it('handles cleared history', async () => {
-    // Start with some history
     const mockHistory = [
       { id: '1', role: 'user', text: 'Hello' },
       { id: '2', role: 'model', text: 'Hi there' },
@@ -116,21 +201,15 @@ describe('ChatInterface', () => {
 
     render(<ChatInterface onClose={mockOnClose} />);
 
-    // Initial check
     expect(screen.getByText('Hello')).toBeInTheDocument();
 
-    // Find clear button
     const clearButton = screen.getByText('Clear');
     fireEvent.click(clearButton);
 
-    // Verify confirmation
     expect(screen.getByText('Confirm?')).toBeInTheDocument();
 
-    // Click confirm
     fireEvent.click(screen.getByText('Confirm?'));
 
-    // Verify history cleared (default message should be there? Or empty?)
-    // createDefaultMessage text: "Hi! I'm Digital Rishabh..."
     await waitFor(() => {
       expect(screen.queryByText('Hello')).not.toBeInTheDocument();
       expect(storage.safeRemoveLocalStorage).toHaveBeenCalled();
@@ -160,5 +239,110 @@ describe('ChatInterface', () => {
     fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
 
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('validates input max length', () => {
+    render(<ChatInterface onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox');
+
+    // Check maxLength attribute
+    expect(input).toHaveAttribute('maxLength', '500');
+
+    // Simulate typing near limit
+    const longText = 'a'.repeat(501);
+    fireEvent.change(input, { target: { value: longText } });
+
+    // The input should respect the value set (even if greater than maxLength in synthetic event)
+    // but the component might truncate or the character counter should show.
+    // The component logic: value={input} and onChange updates state.
+    // If maxLength is on input, browser prevents typing more.
+    // Testing maxLength attribute is enough for browser behavior.
+
+    // Let's check the character counter
+    fireEvent.change(input, { target: { value: 'a'.repeat(450) } });
+    expect(screen.getByText('450/500')).toHaveClass('text-orange-500');
+
+    fireEvent.change(input, { target: { value: 'a'.repeat(500) } });
+    expect(screen.getByText('500/500')).toHaveClass('text-red-500');
+  });
+
+  it('disables send button when input is empty', () => {
+    render(<ChatInterface onClose={mockOnClose} />);
+    const sendButton = screen.getByLabelText('Send message');
+    expect(sendButton).toBeDisabled();
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: '  ' } }); // Whitespace only
+    expect(sendButton).toBeDisabled();
+
+    fireEvent.change(input, { target: { value: 'Hi' } });
+    expect(sendButton).not.toBeDisabled();
+  });
+
+  it('handles API errors gracefully', async () => {
+    // Mock console.error to avoid noise
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    aiService.chatWithGemini.mockRejectedValue(new Error('Network Error'));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Hello' } });
+    fireEvent.click(screen.getByLabelText('Send message'));
+
+    // Should wait for loading to finish
+    await waitFor(() => {
+      expect(input).not.toBeDisabled();
+    });
+
+    // Verify error was logged
+    expect(consoleSpy).toHaveBeenCalledWith('Failed to send message', expect.any(Error));
+
+    // Verify messages didn't update with a new model response (or did it? The component catch block logs error but doesn't add error message to UI?)
+    // Looking at the code:
+    // try { await chatWithGemini... } catch (error) { console.error(...) }
+    // It catches the error in handleSubmit -> handleSendMessage throws?
+    // handleSendMessage doesn't have try/catch around chatWithGemini call, oh wait it does:
+
+    /*
+    try {
+      const responseText = await chatWithGemini(userMsg.text, history);
+      if (isMountedRef.current) {
+        setMessages(...)
+      }
+    } finally {
+       setIsTyping(false);
+    }
+    */
+
+    // Wait, chatWithGemini itself handles errors and returns error messages string!
+    // So chatWithGemini shouldn't throw normally unless something catastrophic happens inside it that isn't caught.
+    // But if we mock it to reject, then handleSendMessage's try/catch (if it had one) would catch it.
+    // Wait, handleSendMessage implementation:
+    /*
+    try {
+      const responseText = await chatWithGemini(userMsg.text, history);
+      // ...
+    } finally {
+      // ...
+    }
+    */
+    // There is NO catch block in handleSendMessage!
+    // But handleSubmit has one:
+    /*
+    const handleSubmit = async e => {
+      e.preventDefault();
+      try {
+        await handleSendMessage(input);
+      } catch (error) {
+        console.error('Failed to send message', error);
+      }
+    };
+    */
+    // So if chatWithGemini rejects, handleSubmit catches it and logs it.
+    // And state.messages is NOT updated with an error message in this case.
+
+    consoleSpy.mockRestore();
   });
 });

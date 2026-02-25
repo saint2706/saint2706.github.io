@@ -109,6 +109,27 @@ describe('AI Service', () => {
       expect(response).toContain("Whoa, that's a lot of text");
       expect(mockStartChat).not.toHaveBeenCalled();
     });
+
+    it('should handle leaked key error', async () => {
+      vi.advanceTimersByTime(3000);
+      mockSendMessage.mockRejectedValue(new Error('Key reported as leaked!'));
+
+      const response = await chatWithGemini('Hello');
+      expect(response).toContain('Gemini API key was blocked');
+    });
+
+    it('should handle timeout', async () => {
+      vi.advanceTimersByTime(3000);
+      mockSendMessage.mockImplementation(() => new Promise(() => {})); // Never resolves
+
+      const promise = chatWithGemini('Hello');
+
+      // Advance time past timeout (15000ms)
+      vi.advanceTimersByTime(16000);
+
+      const response = await promise;
+      expect(response).toContain('connection seems to be slow');
+    });
   });
 
   describe('roastResume', () => {
@@ -142,6 +163,27 @@ describe('AI Service', () => {
 
       expect(response).toContain('cooling down');
       expect(mockGenerateContent).toHaveBeenCalledTimes(1);
+    });
+
+    it('should handle leaked key error', async () => {
+      vi.advanceTimersByTime(3000);
+      mockGenerateContent.mockRejectedValue(new Error('Key reported as leaked!'));
+
+      const response = await roastResume();
+      expect(response).toContain('Roast mode is offline');
+    });
+
+    it('should handle timeout', async () => {
+      vi.advanceTimersByTime(3000);
+      mockGenerateContent.mockImplementation(() => new Promise(() => {})); // Never resolves
+
+      const promise = roastResume();
+
+      // Advance time past timeout (15000ms)
+      vi.advanceTimersByTime(16000);
+
+      const response = await promise;
+      expect(response).toContain('took too long');
     });
   });
 
