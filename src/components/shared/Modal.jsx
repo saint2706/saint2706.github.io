@@ -17,16 +17,17 @@
  * @module components/shared/Modal
  */
 
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useTheme } from './theme-context';
 import { getOverlayShell } from './ThemedPrimitives.utils';
+import { useFocusTrap } from './useFocusTrap';
 
 /**
  * Accessible modal dialog component.
  *
- * This modal implements a complete focus management system:
+ * This modal implements a complete focus management system using the useFocusTrap hook:
  * - Stores the previously focused element before opening
  * - Automatically focuses the close button when modal opens
  * - Prevents body scrolling while modal is open
@@ -49,116 +50,24 @@ import { getOverlayShell } from './ThemedPrimitives.utils';
  */
 const Modal = ({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
-  const previousFocus = useRef(null); // Stores element to restore focus to
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const shell = getOverlayShell({ theme, depth: 'hover' });
 
   /**
    * Manages focus and scroll behavior when modal opens/closes.
-   *
-   * When modal opens:
-   * - Store the currently focused element for restoration later
-   * - Focus the close button after a short delay (allows animation to start)
-   * - Lock body scroll to prevent background scrolling
-   *
-   * When modal closes:
-   * - Restore body scroll
-   * - Return focus to the element that was focused before modal opened
-   *
-   * This ensures proper keyboard navigation and user experience.
+   * This hook handles:
+   * - Focus trapping
+   * - Focus restoration
+   * - Body scroll locking
+   * - Escape key handling
    */
-  useEffect(() => {
-    if (isOpen) {
-      // Store current focus for restoration on close
-      previousFocus.current = document.activeElement;
-
-      // Focus the close button after animation starts (50ms delay)
-      setTimeout(() => {
-        modalRef.current?.querySelector('button')?.focus();
-      }, 50);
-
-      // Prevent body scroll while modal is open
-      document.body.style.overflow = 'hidden';
-    } else {
-      // Re-enable body scroll
-      document.body.style.overflow = '';
-
-      // Restore focus to element that triggered the modal
-      previousFocus.current?.focus?.();
-    }
-
-    // Cleanup: ensure scroll is restored even if component unmounts
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  /**
-   * Closes the modal when Escape key is pressed.
-   * This is a standard modal behavior expected by users.
-   *
-   * @param {KeyboardEvent} e - Keyboard event
-   */
-  const handleKeyDown = useCallback(
-    e => {
-      if (e.key === 'Escape') {
-        onClose();
-        return;
-      }
-
-      if (e.key !== 'Tab') {
-        return;
-      }
-
-      const focusableSelectors = [
-        'a[href]',
-        'button:not([disabled])',
-        'input:not([disabled])',
-        'select:not([disabled])',
-        'textarea:not([disabled])',
-        "[tabindex]:not([tabindex='-1'])",
-        "[contenteditable='true']",
-      ];
-      const focusableElements = modalRef.current
-        ? Array.from(modalRef.current.querySelectorAll(focusableSelectors.join(', ')))
-        : [];
-
-      if (focusableElements.length === 0) {
-        return;
-      }
-
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
-      const activeElement = document.activeElement;
-      const focusableSet = new Set(focusableElements);
-
-      if (e.shiftKey) {
-        if (activeElement === firstElement || !focusableSet.has(activeElement)) {
-          e.preventDefault();
-          lastElement.focus();
-        }
-        return;
-      }
-
-      if (activeElement === lastElement || !focusableSet.has(activeElement)) {
-        e.preventDefault();
-        firstElement.focus();
-      }
-    },
-    [onClose]
-  );
-
-  /**
-   * Registers Escape key listener when modal is open.
-   * Cleanup function removes the listener when modal closes or unmounts.
-   */
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [isOpen, handleKeyDown]);
+  useFocusTrap({
+    isOpen,
+    containerRef: modalRef,
+    onClose,
+    preventScroll: true,
+  });
 
   /**
    * Closes the modal when clicking on the backdrop (outside the modal content).
