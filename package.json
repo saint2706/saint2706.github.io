@@ -18,7 +18,8 @@
     "verify:sri": "node scripts/verify-sri.js",
     "test:python-runner-stdout": "node scripts/test-python-runner-stdout.js",
     "test:pyodide-loader-retry": "node scripts/test-pyodide-loader-retry.js",
-    "test:no-aura": "node scripts/check-no-aura.js"
+    "test:no-aura": "node scripts/check-no-aura.js",
+    "test:security-full": "npm run test:security && npm run test:csp && npm run verify:sri && node scripts/audit-deps.js && node scripts/scan-secrets.js"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.6",
