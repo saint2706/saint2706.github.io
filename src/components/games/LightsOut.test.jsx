@@ -26,12 +26,8 @@ vi.mock('framer-motion', async () => {
   };
 });
 
-const renderWithTheme = (component) => {
-  return render(
-    <ThemeProvider>
-      {component}
-    </ThemeProvider>
-  );
+const renderWithTheme = component => {
+  return render(<ThemeProvider>{component}</ThemeProvider>);
 };
 
 describe('LightsOut Game', () => {
