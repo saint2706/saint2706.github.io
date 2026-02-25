@@ -52,6 +52,7 @@ export default [
       'react/prop-types': 'off',
       'no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
       'react/no-unescaped-entities': 'off',
+      'react/no-danger': 'error',
     },
   },
 ];

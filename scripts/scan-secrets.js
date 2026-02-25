@@ -7,13 +7,18 @@ const __dirname = path.dirname(__filename);
 
 const SRC_DIR = path.resolve(__dirname, '../src');
 
-// Regex to find potential secrets (high entropy strings assigned to variables)
-// This is a heuristic and may produce false positives.
-// It looks for:
-// - Variables named with KEY, SECRET, TOKEN, PASSWORD
-// - Followed by an assignment
-// - Followed by a string literal
-const SECRET_REGEX =
+// Regex patterns for specific high-risk secrets
+const PATTERNS = [
+  { name: 'AWS Access Key', regex: /AKIA[0-9A-Z]{16}/ },
+  { name: 'GitHub Token', regex: /ghp_[a-zA-Z0-9]{36}/ },
+  { name: 'Stripe Secret Key', regex: /sk_live_[0-9a-zA-Z]{24}/ },
+  { name: 'Google API Key', regex: /AIza[0-9A-Za-z-_]{35}/ },
+  { name: 'Slack Token', regex: /xox[baprs]-([0-9a-zA-Z]{10,48})/ },
+  { name: 'Private Key', regex: /-----BEGIN PRIVATE KEY-----/ },
+];
+
+// Heuristic Regex to find potential secrets (high entropy strings assigned to variables)
+const GENERIC_SECRET_REGEX =
   /(?<!import\s)(?:const|let|var)\s+([A-Z0-9_]*(?:KEY|SECRET|TOKEN|PASSWORD)[A-Z0-9_]*)\s*=\s*['"`]([^'"`\s]+)['"`]/gi;
 
 // Files/directories to exclude
@@ -23,29 +28,43 @@ const EXCLUDE_FILES = ['.DS_Store', 'package-lock.json', 'pnpm-lock.yaml'];
 function scanFile(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8');
-    let match;
     let found = false;
 
-    // Reset regex state
-    SECRET_REGEX.lastIndex = 0;
+    // 1. Check for specific patterns
+    for (const { name, regex } of PATTERNS) {
+      if (regex.test(content)) {
+        console.error(`CRITICAL SECRET FOUND in ${path.relative(process.cwd(), filePath)}:`);
+        console.error(`  Type: ${name}`);
+        found = true;
+      }
+    }
 
-    while ((match = SECRET_REGEX.exec(content)) !== null) {
+    // 2. Check for generic secrets
+    GENERIC_SECRET_REGEX.lastIndex = 0;
+    let match;
+    while ((match = GENERIC_SECRET_REGEX.exec(content)) !== null) {
       const [, variableName, value] = match;
 
-      // Ignore empty strings or short strings (less than 8 chars are likely not secrets)
+      // Ignore empty strings or short strings
       if (value.length < 8) continue;
 
       // Ignore placeholders
-      if (value.includes('YOUR_') || value.includes('EXAMPLE') || value.includes('REDACTED'))
+      if (
+        value.includes('YOUR_') ||
+        value.includes('EXAMPLE') ||
+        value.includes('REDACTED') ||
+        value.includes('xxxx')
+      )
         continue;
 
-      // Ignore common environment variable references (e.g., process.env.KEY)
-      // The regex above already captures string literals, so process.env won't match directly unless it's in a string.
-      // But we should check if the value looks like a template literal for env vars.
+      // Ignore template literals like ${env.VAR}
       if (value.startsWith('${') && value.endsWith('}')) continue;
 
-      // Ignore storage keys and rate limit keys (often public)
+      // Ignore storage keys and rate limit keys
       if (variableName.endsWith('STORAGE_KEY') || variableName.endsWith('LIMIT_KEY')) continue;
+
+      // Ignore color hex codes (if someone named a variable COLOR_KEY or something)
+      if (value.match(/^#[0-9A-Fa-f]{6}$/)) continue;
 
       console.error(`POTENTIAL SECRET FOUND in ${path.relative(process.cwd(), filePath)}:`);
       console.error(`  Variable: ${variableName}`);
@@ -77,7 +96,9 @@ function scanDirectory(dir) {
         (file.endsWith('.js') ||
           file.endsWith('.jsx') ||
           file.endsWith('.ts') ||
-          file.endsWith('.tsx'))
+          file.endsWith('.tsx') ||
+          file.endsWith('.json') || // Also scan JSON files
+          file.endsWith('.env')) // And .env files (though usually ignored by git)
       ) {
         if (scanFile(fullPath)) hasSecrets = true;
       }
