@@ -7,7 +7,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 - **Dual Theme System**: Toggle between "Neubrutalism" (bold, high-contrast) and "Liquid" (editorial, translucent) themes.
 - **AI Integration**: Chat with a digital version of myself powered by Google's Gemini AI.
 - **Python Playground**: Run Python code directly in the browser using Pyodide, with standard output capture.
-- **Interactive Games**: Includes implementations of Snake, Minesweeper, Tic-Tac-Toe, and more.
+- **Interactive Games**: Includes implementations of Snake, Minesweeper, Tic-Tac-Toe, Simon Says, Memory Match, Whack-A-Mole, and Lights Out.
 - **Security First**: strict Content Security Policy (CSP), Subresource Integrity (SRI), and input sanitization.
 - **Automated Blog Sync**: Fetches and updates blog posts from RSS feeds automatically.
 
@@ -66,6 +66,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 | `pnpm format`        | Format code with Prettier            |
 | `pnpm test`          | Run unit tests with Vitest           |
 | `pnpm test:security` | Run security verification scripts    |
+| `pnpm test:csp`      | Verify Content Security Policy (CSP) |
 
 ## 🔒 Security
 
@@ -86,7 +87,7 @@ The chat interface connects to the Google Gemini API to simulate a conversation 
 
 ### Pyodide
 
-The Python runner executes code in the browser using WebAssembly. It captures standard output and supports basic Python libraries.
+The Python runner executes code in the browser using WebAssembly. It captures standard output and supports basic Python libraries. You can try it out at the `/playground` route.
 
 ## 📄 License
 

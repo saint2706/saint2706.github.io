@@ -1,5 +1,35 @@
+/**
+ * Game Theme Styles Utility
+ *
+ * Provides a centralized way to generate class names and inline styles for game components,
+ * switching between "Liquid" and "Neubrutalism" themes based on the `isLiquid` flag.
+ *
+ * @module components/games/gameThemeStyles
+ */
+
 const join = (...parts) => parts.filter(Boolean).join(' ');
 
+/**
+ * Generates theme-specific styles and classes for game components.
+ *
+ * @param {boolean} isLiquid - Whether the current theme is "Liquid" (true) or "Neubrutalism" (false).
+ * @returns {object} An object containing Tailwind class strings and inline style objects for various game elements.
+ * @property {string} scoreboard - Classes for the score display container.
+ * @property {string} statBlock - Classes for individual statistic blocks.
+ * @property {string} separator - Classes for the separator line between stats.
+ * @property {string} boardShell - Classes for the outer container of the game board.
+ * @property {string} boardPadding - Padding classes for the board.
+ * @property {string} overlay - Classes for the game over/start overlay.
+ * @property {string} banner - Classes for game banners.
+ * @property {string} statusBanner - Classes for status messages.
+ * @property {string} buttonPrimary - Classes for primary action buttons.
+ * @property {string} buttonSecondary - Classes for secondary/utility buttons.
+ * @property {string} tileBase - Base classes for game tiles/cells.
+ * @property {string} tileIdle - Classes for inactive/empty tiles.
+ * @property {string} tileActive - Classes for active/selected tiles.
+ * @property {string} tileWin - Classes for winning state tiles.
+ * @property {object} style - Object containing inline styles for specific effects (like shadows).
+ */
 export const getGameThemeStyles = isLiquid => {
   const panel = isLiquid
     ? 'lg-surface-2 rounded-2xl'
