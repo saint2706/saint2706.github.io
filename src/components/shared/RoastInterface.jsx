@@ -10,6 +10,7 @@ import { roastResume } from '../../services/ai';
 import { useFocusTrap } from './useFocusTrap';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
+import { useIsMounted } from './useIsMounted';
 
 /**
  * Roast interface dialog component
@@ -36,17 +37,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const [isCopied, setIsCopied] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
-  const isMountedRef = useRef(true); // Track mount status to prevent state updates after unmount
+  const isMountedRef = useIsMounted(); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
   const shell = getOverlayShell({ theme, depth: 'hover', tone: 'pink' });
-
-  // Track component mount status
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   /**
    * Generate roast using AI service
@@ -64,7 +57,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         setRoastLoading(false);
       }
     }
-  }, [onRoastComplete]);
+  }, [onRoastComplete, isMountedRef]);
 
   // Auto-load roast on mount if not provided
   useEffect(() => {
@@ -94,7 +87,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     } catch (err) {
       console.error('Failed to copy roast:', err);
     }
-  }, [roastContent]);
+  }, [roastContent, isMountedRef]);
 
   // Use shared hook for focus trapping and keyboard navigation
   useFocusTrap({
