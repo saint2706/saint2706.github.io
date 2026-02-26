@@ -38,16 +38,16 @@ describe('Storage Utilities', () => {
     });
 
     it('should return fallback when matchMedia throws', () => {
-        const matchMedia = vi.fn().mockImplementation(() => {
-            throw new Error('Error');
-        });
-        window.matchMedia = matchMedia;
-        expect(safeMediaQueryMatch('(min-width: 768px)', false)).toBe(false);
+      const matchMedia = vi.fn().mockImplementation(() => {
+        throw new Error('Error');
+      });
+      window.matchMedia = matchMedia;
+      expect(safeMediaQueryMatch('(min-width: 768px)', false)).toBe(false);
     });
 
     it('should return fallback when matchMedia is not a function', () => {
-        window.matchMedia = undefined;
-        expect(safeMediaQueryMatch('(min-width: 768px)', true)).toBe(true);
+      window.matchMedia = undefined;
+      expect(safeMediaQueryMatch('(min-width: 768px)', true)).toBe(true);
     });
 
     it('should return fallback when DOM is not available', () => {
@@ -82,47 +82,47 @@ describe('Storage Utilities', () => {
     });
 
     it('should return false if DOM is not available', () => {
-        const originalWindow = global.window;
-        vi.stubGlobal('window', undefined);
-        expect(safeSetDocumentTheme('dark')).toBe(false);
-        vi.stubGlobal('window', originalWindow);
+      const originalWindow = global.window;
+      vi.stubGlobal('window', undefined);
+      expect(safeSetDocumentTheme('dark')).toBe(false);
+      vi.stubGlobal('window', originalWindow);
     });
 
     it('should return false if documentElement is missing', () => {
-        const originalDocument = global.document;
-        // Temporarily mock document to not have documentElement
-        vi.stubGlobal('document', { });
-        expect(safeSetDocumentTheme('dark')).toBe(false);
-        vi.stubGlobal('document', originalDocument);
+      const originalDocument = global.document;
+      // Temporarily mock document to not have documentElement
+      vi.stubGlobal('document', {});
+      expect(safeSetDocumentTheme('dark')).toBe(false);
+      vi.stubGlobal('document', originalDocument);
     });
 
     it('should return false if setting throws', () => {
-       // Mock dataset to throw. In JSDOM/Node environment, modifying prototype might be tricky or affect other tests
-       // A safer way is to spy on document.documentElement property access if possible, or mock document.documentElement
-       const originalDocumentElement = document.documentElement;
+      // Mock dataset to throw. In JSDOM/Node environment, modifying prototype might be tricky or affect other tests
+      // A safer way is to spy on document.documentElement property access if possible, or mock document.documentElement
+      const originalDocumentElement = document.documentElement;
 
-       // Create a proxy that throws on dataset access
-       const throwingElement = new Proxy(document.createElement('div'), {
-           get(target, prop) {
-               if (prop === 'dataset') throw new Error('Access denied');
-               return Reflect.get(target, prop);
-           }
-       });
+      // Create a proxy that throws on dataset access
+      const throwingElement = new Proxy(document.createElement('div'), {
+        get(target, prop) {
+          if (prop === 'dataset') throw new Error('Access denied');
+          return Reflect.get(target, prop);
+        },
+      });
 
-       Object.defineProperty(document, 'documentElement', {
-           value: throwingElement,
-           writable: true,
-           configurable: true
-       });
+      Object.defineProperty(document, 'documentElement', {
+        value: throwingElement,
+        writable: true,
+        configurable: true,
+      });
 
-       expect(safeSetDocumentTheme('dark')).toBe(false);
+      expect(safeSetDocumentTheme('dark')).toBe(false);
 
-       // Restore
-       Object.defineProperty(document, 'documentElement', {
-           value: originalDocumentElement,
-           writable: true,
-           configurable: true
-       });
+      // Restore
+      Object.defineProperty(document, 'documentElement', {
+        value: originalDocumentElement,
+        writable: true,
+        configurable: true,
+      });
     });
   });
 
@@ -152,10 +152,10 @@ describe('Storage Utilities', () => {
       });
 
       it('should return fallback if storage not available', () => {
-         const originalWindow = global.window;
-         vi.stubGlobal('window', undefined);
-         expect(safeGetLocalStorage('key', 'default')).toBe('default');
-         vi.stubGlobal('window', originalWindow);
+        const originalWindow = global.window;
+        vi.stubGlobal('window', undefined);
+        expect(safeGetLocalStorage('key', 'default')).toBe('default');
+        vi.stubGlobal('window', originalWindow);
       });
     });
 
@@ -174,10 +174,10 @@ describe('Storage Utilities', () => {
       });
 
       it('should return false if storage not available', () => {
-         const originalWindow = global.window;
-         vi.stubGlobal('window', undefined);
-         expect(safeSetLocalStorage('key', 'value')).toBe(false);
-         vi.stubGlobal('window', originalWindow);
+        const originalWindow = global.window;
+        vi.stubGlobal('window', undefined);
+        expect(safeSetLocalStorage('key', 'value')).toBe(false);
+        vi.stubGlobal('window', originalWindow);
       });
     });
 
@@ -197,10 +197,10 @@ describe('Storage Utilities', () => {
       });
 
       it('should return false if storage not available', () => {
-         const originalWindow = global.window;
-         vi.stubGlobal('window', undefined);
-         expect(safeRemoveLocalStorage('key')).toBe(false);
-         vi.stubGlobal('window', originalWindow);
+        const originalWindow = global.window;
+        vi.stubGlobal('window', undefined);
+        expect(safeRemoveLocalStorage('key')).toBe(false);
+        vi.stubGlobal('window', originalWindow);
       });
     });
   });

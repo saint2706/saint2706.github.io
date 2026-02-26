@@ -88,7 +88,7 @@ describe('ThemeProvider', () => {
 
   it('sets theme using startViewTransition if available', async () => {
     // Mock startViewTransition
-    document.startViewTransition = vi.fn((cb) => cb());
+    document.startViewTransition = vi.fn(cb => cb());
 
     render(
       <ThemeProvider>
@@ -126,7 +126,7 @@ describe('ThemeProvider', () => {
   });
 
   it('prevents setting invalid theme', () => {
-      render(
+    render(
       <ThemeProvider>
         <TestComponent />
       </ThemeProvider>

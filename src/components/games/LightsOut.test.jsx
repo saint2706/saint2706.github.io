@@ -17,7 +17,7 @@ vi.mock('lucide-react', () => ({
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
   // Helper to filter out motion-specific props
-  const filterMotionProps = (props) => {
+  const filterMotionProps = props => {
     // eslint-disable-next-line no-unused-vars
     const { whileTap, initial, animate, exit, transition, variants, ...domProps } = props;
     return domProps;
@@ -42,7 +42,7 @@ describe('LightsOut Game', () => {
     vi.restoreAllMocks();
     // Reset reduced motion default
     if (useReducedMotion.mock) {
-        useReducedMotion.mockReturnValue(false);
+      useReducedMotion.mockReturnValue(false);
     }
   });
 
@@ -155,7 +155,7 @@ describe('LightsOut Game', () => {
     fireEvent.click(centerCell);
 
     await waitFor(() => {
-        expect(screen.getByText(/Congratulations!/i)).toBeInTheDocument();
+      expect(screen.getByText(/Congratulations!/i)).toBeInTheDocument();
     });
 
     // Check for "New Puzzle" button
@@ -165,7 +165,7 @@ describe('LightsOut Game', () => {
     // Start new game
     fireEvent.click(newPuzzleBtn);
     await waitFor(() => {
-        expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
+      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
     });
 
     randomSpy.mockRestore();
