@@ -93,6 +93,7 @@ describe('AI Service', () => {
     });
 
     it('should handle API errors', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       // Reset rate limit by advancing time
       vi.advanceTimersByTime(3000);
 
@@ -101,6 +102,7 @@ describe('AI Service', () => {
       const response = await chatWithGemini('Hello');
 
       expect(response).toContain('connection glitch');
+      consoleSpy.mockRestore();
     });
 
     it('should handle input too long', async () => {
@@ -145,11 +147,13 @@ describe('AI Service', () => {
     });
 
     it('should handle API errors', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       // Reset rate limit
       vi.advanceTimersByTime(3000);
       mockGenerateContent.mockRejectedValue(new Error('API Error'));
       const response = await roastResume();
       expect(response).toContain("I can't roast right now");
+      consoleSpy.mockRestore();
     });
 
     it('should handle timeout', async () => {
@@ -169,10 +173,12 @@ describe('AI Service', () => {
     });
 
     it('should handle leaked key error', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       vi.advanceTimersByTime(3000);
       mockGenerateContent.mockRejectedValue(new Error('Key reported as leaked'));
       const response = await roastResume();
       expect(response).toContain('flagged as leaked');
+      consoleSpy.mockRestore();
     });
   });
 
