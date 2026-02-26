@@ -3,8 +3,10 @@
 ## 1. Vulnerability Mitigation
 
 - **NPM Vulnerabilities**:
+  - `rollup` (<4.59.0) was identified as vulnerable (Arbitrary File Write via Path Traversal).
   - `minimatch` (<10.2.1) and `ajv` (<6.14.0) were identified as vulnerable (ReDoS).
   - **Mitigation**: Applied `pnpm.overrides` in `package.json`:
+    - `rollup`: `>=4.59.0`
     - `minimatch`: `>=10.2.1`
     - `ajv`: `^6.14.0` (Pinned to v6 branch to maintain compatibility with ESLint while applying security patch).
   - **Status**: `pnpm audit` reports 0 vulnerabilities.
