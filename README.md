@@ -57,16 +57,21 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 📜 Scripts
 
-| Script               | Description                          |
-| :------------------- | :----------------------------------- |
-| `pnpm dev`           | Start the development server         |
-| `pnpm build`         | Build the production bundle          |
-| `pnpm preview`       | Preview the production build locally |
-| `pnpm lint`          | Run ESLint checks                    |
-| `pnpm format`        | Format code with Prettier            |
-| `pnpm test`          | Run unit tests with Vitest           |
-| `pnpm test:security` | Run security verification scripts    |
-| `pnpm test:csp`      | Verify Content Security Policy (CSP) |
+| Script                    | Description                                        |
+| :------------------------ | :------------------------------------------------- |
+| `pnpm dev`                | Start the development server                       |
+| `pnpm build`              | Build the production bundle                        |
+| `pnpm preview`            | Preview the production build locally               |
+| `pnpm lint`               | Run ESLint checks                                  |
+| `pnpm lint:fix`           | Run ESLint checks and fix auto-fixable issues      |
+| `pnpm format`             | Format code with Prettier                          |
+| `pnpm format:check`       | Check code formatting with Prettier                |
+| `pnpm test`               | Run unit tests with Vitest (watch mode)            |
+| `pnpm test:run`           | Run unit tests with Vitest (single run)            |
+| `pnpm test:security`      | Run security verification scripts                  |
+| `pnpm test:csp`           | Verify Content Security Policy (CSP)               |
+| `pnpm verify:sri`         | Verify Subresource Integrity (SRI)                 |
+| `pnpm test:security-full` | Run comprehensive security checks (CSP, SRI, deps) |
 
 ## 🔒 Security
 

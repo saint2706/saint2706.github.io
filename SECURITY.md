@@ -14,7 +14,7 @@ Use this section to tell people about which versions of your project are current
 We take the security of this project seriously. If you discover a security vulnerability, please follow these steps:
 
 1.  **Do not create a public issue.** Security vulnerabilities should be reported privately to prevent exploitation before a fix is available.
-2.  **Email us.** Please send a detailed report to security@rishabhagrawal.com (replace with actual email if known, or leave generic for now).
+2.  **Email us.** Please send a detailed report to security@rishabhagrawal.com.
 3.  **Include details.** Provide as much information as possible, including:
     - The type of vulnerability (e.g., XSS, SQL Injection).
     - Steps to reproduce the issue.
