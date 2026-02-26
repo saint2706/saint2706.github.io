@@ -20,8 +20,10 @@ vi.mock('framer-motion', async () => {
     useReducedMotion: () => false,
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
-      div: ({ children, ...props }) => <div {...props}>{children}</div>,
-      button: ({ children, ...props }) => <button {...props}>{children}</button>,
+      // eslint-disable-next-line no-unused-vars
+      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <div {...props}>{children}</div>,
+      // eslint-disable-next-line no-unused-vars
+      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <button {...props}>{children}</button>,
     },
   };
 });
