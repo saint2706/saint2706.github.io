@@ -320,147 +320,149 @@ const Playground = () => {
  * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Snippet card with code and actions
  */
-const SnippetCard = React.memo(({
-  snippet,
-  colorClass,
-  variants,
-  copiedId,
-  onCopy,
-  onOpenPreview,
-  onOpenRunner,
-  shouldReduceMotion,
-}) => {
-  const { theme } = useTheme();
-  const isLiquid = theme === 'liquid';
-  const hasPreview = !!snippet.preview;
-  const hasInteractive = !!snippet.interactive;
-  const isCopied = copiedId === snippet.id;
-  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
+const SnippetCard = React.memo(
+  ({
+    snippet,
+    colorClass,
+    variants,
+    copiedId,
+    onCopy,
+    onOpenPreview,
+    onOpenRunner,
+    shouldReduceMotion,
+  }) => {
+    const { theme } = useTheme();
+    const isLiquid = theme === 'liquid';
+    const hasPreview = !!snippet.preview;
+    const hasInteractive = !!snippet.interactive;
+    const isCopied = copiedId === snippet.id;
+    const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-  return (
-    <motion.article
-      variants={variants}
-      layout={!shouldReduceMotion}
-      className={themeClass(
-        'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
-        'lg-surface-2 overflow-hidden flex flex-col rounded-3xl'
-      )}
-      style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
-    >
-      <div className={`h-3 ${colorClass}`} />
+    return (
+      <motion.article
+        variants={variants}
+        layout={!shouldReduceMotion}
+        className={themeClass(
+          'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
+          'lg-surface-2 overflow-hidden flex flex-col rounded-3xl'
+        )}
+        style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+      >
+        <div className={`h-3 ${colorClass}`} />
 
-      <div className="p-5 flex-grow flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-start mb-3">
-          <div className="flex items-center gap-2">
-            {snippet.language === 'python' ? (
-              <Terminal size={18} className="text-accent" aria-hidden="true" />
-            ) : (
-              <Palette size={18} className="text-fun-pink" aria-hidden="true" />
-            )}
-            <h3 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
-              {snippet.title}
-            </h3>
-          </div>
-          <ThemedChip
-            variant={snippet.language === 'python' ? 'accent' : 'pink'}
-            className={themeClass(
-              'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
-              'text-xs font-semibold px-2.5 py-1 rounded-full'
-            )}
-            style={isLiquid ? undefined : { '--sticker-rotate': '3deg' }}
-          >
-            {snippet.language.toUpperCase()}
-          </ThemedChip>
-        </div>
-
-        {/* Description */}
-        <p className="text-secondary text-sm mb-4 font-sans leading-relaxed">
-          {snippet.description}
-        </p>
-
-        {/* Code Block */}
-        <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64">
-          <SyntaxHighlighter code={snippet.code} language={snippet.language} />
-
-          {/* Copy Button */}
-          <button
-            onClick={() => onCopy(snippet.code, snippet.id)}
-            className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
-              isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
-            }`}
-            aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
-          >
-            {isCopied ? (
-              <Check size={16} aria-hidden="true" />
-            ) : (
-              <Copy size={16} aria-hidden="true" />
-            )}
-            <span
-              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
-              aria-hidden="true"
-            >
-              {isCopied ? 'Copied!' : 'Copy code'}
-            </span>
-          </button>
-        </div>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {snippet.tags.map(tag => (
+        <div className="p-5 flex-grow flex flex-col">
+          {/* Header */}
+          <div className="flex justify-between items-start mb-3">
+            <div className="flex items-center gap-2">
+              {snippet.language === 'python' ? (
+                <Terminal size={18} className="text-accent" aria-hidden="true" />
+              ) : (
+                <Palette size={18} className="text-fun-pink" aria-hidden="true" />
+              )}
+              <h3 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
+                {snippet.title}
+              </h3>
+            </div>
             <ThemedChip
-              key={tag}
-              variant="neutral"
+              variant={snippet.language === 'python' ? 'accent' : 'pink'}
               className={themeClass(
-                'text-xs font-bold font-heading px-2.5 py-1 rounded-nb',
+                'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
                 'text-xs font-semibold px-2.5 py-1 rounded-full'
               )}
+              style={isLiquid ? undefined : { '--sticker-rotate': '3deg' }}
             >
-              {tag}
+              {snippet.language.toUpperCase()}
             </ThemedChip>
-          ))}
-        </div>
+          </div>
 
-        {/* Action Buttons */}
-        <div className="mt-auto flex gap-2">
-          {/* Live Preview Button (CSS) */}
-          {hasPreview && (
-            <ThemedButton
-              onClick={onOpenPreview}
-              variant="secondary"
-              className={themeClass(
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full lg-surface-3 lg-pill text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
-              )}
-              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
-            >
-              <Play size={14} aria-hidden="true" />
-              Live Preview
-            </ThemedButton>
-          )}
+          {/* Description */}
+          <p className="text-secondary text-sm mb-4 font-sans leading-relaxed">
+            {snippet.description}
+          </p>
 
-          {/* Python Runner Button */}
-          {hasInteractive && snippet.interactive.type === 'python-runner' && (
-            <ThemedButton
-              onClick={onOpenRunner}
-              onMouseEnter={() => loadPyodide().catch(() => {})}
-              onFocus={() => loadPyodide().catch(() => {})}
-              variant="secondary"
-              className={themeClass(
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
-                'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
-              )}
-              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+          {/* Code Block */}
+          <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64">
+            <SyntaxHighlighter code={snippet.code} language={snippet.language} />
+
+            {/* Copy Button */}
+            <button
+              onClick={() => onCopy(snippet.code, snippet.id)}
+              className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
+                isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+              }`}
+              aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
             >
-              <Play size={14} aria-hidden="true" />
-              Try It Live! 🐍
-            </ThemedButton>
-          )}
+              {isCopied ? (
+                <Check size={16} aria-hidden="true" />
+              ) : (
+                <Copy size={16} aria-hidden="true" />
+              )}
+              <span
+                className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                aria-hidden="true"
+              >
+                {isCopied ? 'Copied!' : 'Copy code'}
+              </span>
+            </button>
+          </div>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {snippet.tags.map(tag => (
+              <ThemedChip
+                key={tag}
+                variant="neutral"
+                className={themeClass(
+                  'text-xs font-bold font-heading px-2.5 py-1 rounded-nb',
+                  'text-xs font-semibold px-2.5 py-1 rounded-full'
+                )}
+              >
+                {tag}
+              </ThemedChip>
+            ))}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="mt-auto flex gap-2">
+            {/* Live Preview Button (CSS) */}
+            {hasPreview && (
+              <ThemedButton
+                onClick={onOpenPreview}
+                variant="secondary"
+                className={themeClass(
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full lg-surface-3 lg-pill text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                )}
+                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              >
+                <Play size={14} aria-hidden="true" />
+                Live Preview
+              </ThemedButton>
+            )}
+
+            {/* Python Runner Button */}
+            {hasInteractive && snippet.interactive.type === 'python-runner' && (
+              <ThemedButton
+                onClick={onOpenRunner}
+                onMouseEnter={() => loadPyodide().catch(() => {})}
+                onFocus={() => loadPyodide().catch(() => {})}
+                variant="secondary"
+                className={themeClass(
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                )}
+                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              >
+                <Play size={14} aria-hidden="true" />
+                Try It Live! 🐍
+              </ThemedButton>
+            )}
+          </div>
         </div>
-      </div>
-    </motion.article>
-  );
-});
+      </motion.article>
+    );
+  }
+);
 
 SnippetCard.displayName = 'SnippetCard';
 
