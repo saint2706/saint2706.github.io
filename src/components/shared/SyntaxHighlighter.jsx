@@ -25,7 +25,7 @@ import 'prismjs/components/prism-css';
  * @param {string} props.language - Language for syntax highlighting (python, css, javascript, js)
  * @returns {JSX.Element} Highlighted code block
  */
-const SyntaxHighlighter = ({ code, language }) => {
+const SyntaxHighlighter = React.memo(({ code, language }) => {
   const codeRef = useRef(null);
 
   // Re-highlight when code or language changes
@@ -51,6 +51,8 @@ const SyntaxHighlighter = ({ code, language }) => {
       </code>
     </pre>
   );
-};
+});
+
+SyntaxHighlighter.displayName = 'SyntaxHighlighter';
 
 export default SyntaxHighlighter;

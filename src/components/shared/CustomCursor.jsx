@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, useSpring, useMotionValue, useReducedMotion } from 'framer-motion';
 import { useTheme } from './theme-context';
 
@@ -47,6 +47,9 @@ const CustomCursor = ({ enabled }) => {
   const shadowXSpring = useSpring(cursorX, shadowSpringConfig);
   const shadowYSpring = useSpring(cursorY, shadowSpringConfig);
 
+  const requestRef = useRef(null);
+  const latestTargetRef = useRef(null);
+
   /**
    * Update cursor position on mouse move
    */
@@ -64,41 +67,57 @@ const CustomCursor = ({ enabled }) => {
   /**
    * Detect hover target and update cursor style accordingly
    * Checks element type and sets appropriate cursor variant
+   * Throttled using requestAnimationFrame to improve performance
    */
   const updateCursorVariant = useCallback(e => {
-    const target = e.target;
+    // Update ref with latest target immediately
+    latestTargetRef.current = e.target;
 
-    if (!target || !target.matches) return;
+    if (requestRef.current) return;
 
-    // 1. Check for Inputs (Fastest check, high priority)
-    if (target.matches('input, textarea, select')) {
-      setCursorVariant('input');
-      return;
-    }
+    requestRef.current = requestAnimationFrame(() => {
+      const target = latestTargetRef.current;
 
-    // 2. Check for Clickables (Links, Buttons)
-    if (
-      target.matches('a, button, [role="button"], [onclick]') ||
-      target.closest('a, button, [role="button"]')
-    ) {
-      setCursorVariant('pointer');
-      return;
-    }
+      if (!target || !target.matches) {
+        requestRef.current = null;
+        return;
+      }
 
-    // 3. Check for Cards (Expensive 'closest' check)
-    if (target.closest('[class*="card"], article, [class*="project"]')) {
-      setCursorVariant('card');
-      return;
-    }
+      // 1. Check for Inputs (Fastest check, high priority)
+      if (target.matches('input, textarea, select')) {
+        setCursorVariant('input');
+        requestRef.current = null;
+        return;
+      }
 
-    // 4. Check for Text (Fast 'matches' check)
-    if (target.matches('p, span, h1, h2, h3, h4, h5, h6, li, label')) {
-      setCursorVariant('text');
-      return;
-    }
+      // 2. Check for Clickables (Links, Buttons)
+      if (
+        target.matches('a, button, [role="button"], [onclick]') ||
+        target.closest('a, button, [role="button"]')
+      ) {
+        setCursorVariant('pointer');
+        requestRef.current = null;
+        return;
+      }
 
-    // Default
-    setCursorVariant('default');
+      // 3. Check for Cards (Expensive 'closest' check)
+      if (target.closest('[class*="card"], article, [class*="project"]')) {
+        setCursorVariant('card');
+        requestRef.current = null;
+        return;
+      }
+
+      // 4. Check for Text (Fast 'matches' check)
+      if (target.matches('p, span, h1, h2, h3, h4, h5, h6, li, label')) {
+        setCursorVariant('text');
+        requestRef.current = null;
+        return;
+      }
+
+      // Default
+      setCursorVariant('default');
+      requestRef.current = null;
+    });
   }, []);
 
   const isEnabled = enabled && !prefersReducedMotion;
@@ -134,6 +153,9 @@ const CustomCursor = ({ enabled }) => {
     document.addEventListener('mouseenter', handleMouseEnter);
 
     return () => {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', updateCursorVariant);
       window.removeEventListener('mousedown', handleMouseDown);

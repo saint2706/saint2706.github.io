@@ -3,7 +3,7 @@
  * Features live previews, code copying, and interactive Python execution.
  */
 
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
 import { resumeData } from '../../data/resume';
@@ -52,7 +52,7 @@ const Playground = () => {
     ]),
   ];
 
-  const filteredSnippets = getSnippetsByLanguage(activeFilter);
+  const filteredSnippets = useMemo(() => getSnippetsByLanguage(activeFilter), [activeFilter]);
 
   /** Filter tabs configuration */
   const filters = [
@@ -97,25 +97,31 @@ const Playground = () => {
     setModalType(null);
   }, []);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        duration: shouldReduceMotion ? 0 : undefined,
+  const container = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.08,
+          duration: shouldReduceMotion ? 0 : undefined,
+        },
       },
-    },
-  };
+    }),
+    [shouldReduceMotion]
+  );
 
-  const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined,
-    },
-  };
+  const item = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: shouldReduceMotion ? { duration: 0 } : undefined,
+      },
+    }),
+    [shouldReduceMotion]
+  );
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
@@ -314,7 +320,7 @@ const Playground = () => {
  * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Snippet card with code and actions
  */
-const SnippetCard = ({
+const SnippetCard = React.memo(({
   snippet,
   colorClass,
   variants,
@@ -454,7 +460,9 @@ const SnippetCard = ({
       </div>
     </motion.article>
   );
-};
+});
+
+SnippetCard.displayName = 'SnippetCard';
 
 /**
  * Live CSS preview component using iframe for isolation
