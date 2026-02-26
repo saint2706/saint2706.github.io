@@ -34,6 +34,7 @@ import {
 import { useFocusTrap } from './useFocusTrap';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
+import { useIsMounted } from './useIsMounted';
 
 const SyntaxHighlighter = lazy(() => import('./SyntaxHighlighter'));
 
@@ -339,25 +340,13 @@ const ChatInterface = ({ onClose }) => {
   const inputFocusTimeoutRef = useRef(null); // For delayed input focus timeout
   const chatDialogRef = useRef(null); // For focus trapping
   const confirmTimeoutRef = useRef(null); // For clearing confirmation state
-  const isMountedRef = useRef(true); // Prevents state updates after unmount
+  const isMountedRef = useIsMounted(); // Prevents state updates after unmount
   const prefersReducedMotion = useReducedMotion();
 
   // ARIA identifiers for accessibility
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
   const shell = getOverlayShell({ theme, depth: 'hover' });
-
-  /**
-   * Track component mount status to prevent state updates after unmount.
-   * This prevents memory leaks and React warnings when async operations complete
-   * after the component has been unmounted.
-   */
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   /**
    * Load chat history from localStorage on component mount.

@@ -11,3 +11,9 @@
 - **Fixed Duplicate Code**: Centralized `NB_SHADOW_COLOR_MAP` in `src/components/shared/ThemedPrimitives.utils.js` and removed duplicates from `ThemedButton.jsx` and `ThemedCard.jsx`.
 - **Standardized Component**: Replaced custom SVG spinner in `ThemedButton.jsx` with shared `Loader2` from `lucide-react` to match `PageLoading.jsx`.
 - **Verified**: Build and Lint passed.
+
+## Session 3
+
+- **Fixed Duplicate Code**: Created `src/components/shared/useIsMounted.js` to centralize component mount tracking logic.
+- **Refactored Components**: Updated `ChatInterface.jsx` and `RoastInterface.jsx` to use the shared `useIsMounted` hook, removing repetitive `useRef`/`useEffect` patterns.
+- **Verified**: Build and Lint passed. Tests for `ChatInterface` passed.
