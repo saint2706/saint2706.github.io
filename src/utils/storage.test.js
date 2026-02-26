@@ -91,19 +91,21 @@ describe('Storage Utils', () => {
     });
 
     it('returns false if error occurs', () => {
-       // Simulate error by making dataset read-only or similar
-       const originalDataset = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'dataset');
-       Object.defineProperty(HTMLElement.prototype, 'dataset', {
-         get: () => { throw new Error('Access denied'); },
-         configurable: true
-       });
+      // Simulate error by making dataset read-only or similar
+      const originalDataset = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'dataset');
+      Object.defineProperty(HTMLElement.prototype, 'dataset', {
+        get: () => {
+          throw new Error('Access denied');
+        },
+        configurable: true,
+      });
 
-       expect(safeSetDocumentTheme('dark')).toBe(false);
+      expect(safeSetDocumentTheme('dark')).toBe(false);
 
-       // Restore
-       if (originalDataset) {
-          Object.defineProperty(HTMLElement.prototype, 'dataset', originalDataset);
-       }
+      // Restore
+      if (originalDataset) {
+        Object.defineProperty(HTMLElement.prototype, 'dataset', originalDataset);
+      }
     });
   });
 
@@ -131,18 +133,21 @@ describe('Storage Utils', () => {
       });
 
       it('returns fallback if window.localStorage is undefined', () => {
-         const originalLocalStorage = window.localStorage;
-         // We can't delete localStorage from window in JSDOM easily,
-         // but we can try to shadow it or use stubGlobal if applicable,
-         // but checking 'typeof window.localStorage' logic:
-         // hasStorage() checks typeof window.localStorage !== 'undefined'
+        const originalLocalStorage = window.localStorage;
+        // We can't delete localStorage from window in JSDOM easily,
+        // but we can try to shadow it or use stubGlobal if applicable,
+        // but checking 'typeof window.localStorage' logic:
+        // hasStorage() checks typeof window.localStorage !== 'undefined'
 
-         // In JSDOM, window.localStorage is a property.
-         Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
+        // In JSDOM, window.localStorage is a property.
+        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
 
-         expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
+        expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
 
-         Object.defineProperty(window, 'localStorage', { value: originalLocalStorage, configurable: true });
+        Object.defineProperty(window, 'localStorage', {
+          value: originalLocalStorage,
+          configurable: true,
+        });
       });
     });
 

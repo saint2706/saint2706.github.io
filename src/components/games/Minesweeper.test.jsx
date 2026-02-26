@@ -21,9 +21,13 @@ vi.mock('framer-motion', async () => {
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
       // eslint-disable-next-line no-unused-vars
-      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <div {...props}>{children}</div>,
+      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+        <div {...props}>{children}</div>
+      ),
       // eslint-disable-next-line no-unused-vars
-      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <button {...props}>{children}</button>,
+      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+        <button {...props}>{children}</button>
+      ),
     },
   };
 });
@@ -43,7 +47,7 @@ const localStorageMock = (() => {
 })();
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-  writable: true
+  writable: true,
 });
 
 const renderWithTheme = component => {
@@ -52,11 +56,11 @@ const renderWithTheme = component => {
 
 describe('Minesweeper Game', () => {
   beforeEach(() => {
-     localStorageMock.clear();
+    localStorageMock.clear();
   });
 
   afterEach(() => {
-     vi.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders initial game state', () => {
@@ -105,24 +109,24 @@ describe('Minesweeper Game', () => {
 
     let calls = 0;
     vi.spyOn(Math, 'random').mockImplementation(() => {
-        calls++;
-        if (calls === 1) return 0;
-        if (calls === 2) return 0.25;
+      calls++;
+      if (calls === 1) return 0;
+      if (calls === 2) return 0.25;
 
-        const i = Math.floor((calls - 3) / 2);
-        const isRow = (calls - 3) % 2 === 0;
-        const row = 5 + Math.floor(i / 9);
-        const col = i % 9;
+      const i = Math.floor((calls - 3) / 2);
+      const isRow = (calls - 3) % 2 === 0;
+      const row = 5 + Math.floor(i / 9);
+      const col = i % 9;
 
-        if (isRow) return (row + 0.1) / 9;
-        return (col + 0.1) / 9;
+      if (isRow) return (row + 0.1) / 9;
+      return (col + 0.1) / 9;
     });
 
     const cells = screen.getAllByRole('button', { name: /Row \d+, Column \d+/i });
     fireEvent.click(cells[0]);
 
     await waitFor(() => {
-       expect(screen.queryByText(/Minesweeper ready/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Minesweeper ready/i)).not.toBeInTheDocument();
     });
 
     fireEvent.click(cells[2]);
@@ -144,19 +148,19 @@ describe('Minesweeper Game', () => {
     fireEvent.keyDown(grid, { key: 'ArrowRight' });
 
     await waitFor(() => {
-        expect(cells[1]).toHaveFocus();
+      expect(cells[1]).toHaveFocus();
     });
 
     fireEvent.keyDown(grid, { key: 'ArrowDown' });
 
     await waitFor(() => {
-        expect(cells[10]).toHaveFocus();
+      expect(cells[10]).toHaveFocus();
     });
 
     fireEvent.keyDown(grid, { key: 'f' });
 
     await waitFor(() => {
-        expect(cells[10]).toHaveAttribute('aria-label', expect.stringContaining('flagged'));
+      expect(cells[10]).toHaveAttribute('aria-label', expect.stringContaining('flagged'));
     });
   });
 });

@@ -20,9 +20,13 @@ vi.mock('framer-motion', async () => {
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
       // eslint-disable-next-line no-unused-vars
-      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <div {...props}>{children}</div>,
+      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+        <div {...props}>{children}</div>
+      ),
       // eslint-disable-next-line no-unused-vars
-      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => <button {...props}>{children}</button>,
+      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+        <button {...props}>{children}</button>
+      ),
     },
   };
 });
@@ -58,7 +62,7 @@ const localStorageMock = (() => {
 })();
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-  writable: true
+  writable: true,
 });
 
 const renderWithTheme = component => {
@@ -81,7 +85,7 @@ describe('SnakeGame', () => {
       return intervalIdCounter;
     });
 
-    vi.spyOn(window, 'clearInterval').mockImplementation((id) => {
+    vi.spyOn(window, 'clearInterval').mockImplementation(id => {
       intervals.delete(id);
     });
 
@@ -125,7 +129,7 @@ describe('SnakeGame', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
 
     await waitFor(() => {
-       expect(screen.queryByRole('button', { name: 'Start Snake Game' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Start Snake Game' })).not.toBeInTheDocument();
     });
 
     mockContext.fillRect.mockClear();
@@ -143,11 +147,11 @@ describe('SnakeGame', () => {
     // Snake at (10, 10). Food at (15, 10). Distance 5.
     // Need 5 ticks.
     for (let i = 0; i < 5; i++) {
-        tickGame();
+      tickGame();
     }
 
     await waitFor(() => {
-        expect(screen.getAllByText('10').length).toBeGreaterThan(0);
+      expect(screen.getAllByText('10').length).toBeGreaterThan(0);
     });
   });
 
@@ -167,12 +171,12 @@ describe('SnakeGame', () => {
 
     // Just tick 15 times to be sure.
     for (let i = 0; i < 15; i++) {
-        tickGame();
+      tickGame();
     }
 
     await waitFor(() => {
-        const gameOvers = screen.getAllByText(/Game Over/i);
-        expect(gameOvers.length).toBeGreaterThan(0);
+      const gameOvers = screen.getAllByText(/Game Over/i);
+      expect(gameOvers.length).toBeGreaterThan(0);
     });
   });
 
@@ -186,24 +190,24 @@ describe('SnakeGame', () => {
     fireEvent.keyDown(container, { key: ' ' }); // Space
 
     await waitFor(() => {
-        const pausedElements = screen.getAllByText(/Paused/i);
-        expect(pausedElements.length).toBeGreaterThan(0);
+      const pausedElements = screen.getAllByText(/Paused/i);
+      expect(pausedElements.length).toBeGreaterThan(0);
     });
 
     fireEvent.keyDown(container, { key: ' ' }); // Resume
 
     await waitFor(() => {
-        const pausedElements = screen.queryAllByText(/Paused/i);
-        // Only visible elements matter, but queryAllByText finds hidden ones too?
-        // Wait, "Game paused" sr-only text vs "Paused" banner.
-        // If unpaused, both should be gone.
-        // Except maybe "Playing..." replaces sr-only.
-        // "Paused" banner is conditional {gameState === 'paused'}.
-        // So it should be gone.
+      const pausedElements = screen.queryAllByText(/Paused/i);
+      // Only visible elements matter, but queryAllByText finds hidden ones too?
+      // Wait, "Game paused" sr-only text vs "Paused" banner.
+      // If unpaused, both should be gone.
+      // Except maybe "Playing..." replaces sr-only.
+      // "Paused" banner is conditional {gameState === 'paused'}.
+      // So it should be gone.
 
-        // Let's check banner specifically if possible, or just length 0.
-        // If "Playing..." contains "Paused"? No.
-        expect(pausedElements.length).toBe(0);
+      // Let's check banner specifically if possible, or just length 0.
+      // If "Playing..." contains "Paused"? No.
+      expect(pausedElements.length).toBe(0);
     });
   });
 });
