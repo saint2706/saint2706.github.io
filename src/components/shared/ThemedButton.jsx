@@ -30,6 +30,23 @@ const VARIANTS = {
   },
 };
 
+/**
+ * A flexible button component that adapts to the current theme (Neubrutalism or Liquid).
+ * Supports different sizes, variants, loading states, and polymorphic rendering.
+ *
+ * @component
+ * @param {object} props
+ * @param {React.ElementType} [props.as='button'] - The component or element to render as (e.g., 'a', Link).
+ * @param {'primary' | 'secondary' | 'subtle'} [props.variant='secondary'] - The visual style variant.
+ * @param {'sm' | 'md' | 'lg'} [props.size='md'] - The size of the button.
+ * @param {boolean} [props.isActive=false] - Whether the button is in an active state.
+ * @param {boolean} [props.isLoading=false] - Whether the button is in a loading state.
+ * @param {string} [props.coloredShadow] - The color of the shadow (Neubrutalism only).
+ * @param {string} [props.className] - Additional CSS classes.
+ * @param {object} [props.style] - Inline styles.
+ * @param {React.ReactNode} props.children - The content of the button.
+ * @returns {JSX.Element} The themed button component.
+ */
 const ThemedButton = ({
   as: Component = 'button',
   variant = 'secondary',
