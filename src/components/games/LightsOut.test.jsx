@@ -87,4 +87,39 @@ describe('LightsOut Game', () => {
     // Check moves incremented
     expect(screen.getByText('1')).toBeInTheDocument(); // Moves count
   });
+
+  it('handles keyboard navigation', async () => {
+    renderWithTheme(<LightsOut />);
+    const startButton = screen.getByText(/Start Puzzle/i);
+    fireEvent.click(startButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
+    });
+
+    const cells = screen.getAllByLabelText(/Row \d+, Column \d+: light (on|off)/i);
+    const cell00 = cells[0];
+    const cell01 = cells[1];
+
+    // Initial focus should be on (0,0)
+    await waitFor(() => {
+      expect(cell00).toHaveFocus();
+    });
+
+    // Move right
+    fireEvent.keyDown(cell00, { key: 'ArrowRight', code: 'ArrowRight' });
+
+    // Focus should move to (0,1)
+    await waitFor(() => {
+      expect(cell01).toHaveFocus();
+    });
+
+    // Toggle with Enter
+    const initialLabel = cell01.getAttribute('aria-label');
+    fireEvent.keyDown(cell01, { key: 'Enter', code: 'Enter' });
+
+    // Check if toggled
+    const updatedLabel = cell01.getAttribute('aria-label');
+    expect(updatedLabel).not.toBe(initialLabel);
+  });
 });

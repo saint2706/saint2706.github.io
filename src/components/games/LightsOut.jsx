@@ -14,7 +14,7 @@
  * @module components/games/LightsOut
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Lightbulb } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
@@ -62,8 +62,17 @@ const createPuzzle = () => {
  */
 const LightsOutCell = React.memo(
   ({ r, c, isOn, isFocused, isDisabled, onToggle, shouldReduceMotion }) => {
+    const buttonRef = useRef(null);
+
+    useEffect(() => {
+      if (isFocused && !isDisabled) {
+        buttonRef.current?.focus();
+      }
+    }, [isFocused, isDisabled]);
+
     return (
       <motion.button
+        ref={buttonRef}
         onClick={() => onToggle(r, c)}
         disabled={isDisabled}
         tabIndex={isFocused ? 0 : -1}
@@ -146,28 +155,29 @@ const LightsOut = () => {
   }, []);
 
   // Keyboard navigation
-  useEffect(() => {
-    const handleKey = e => {
+  const handleKeyDown = useCallback(
+    e => {
       if (gameState !== 'playing') return;
       let r = focusR;
       let c = focusC;
+      let handled = false;
 
       switch (e.key) {
         case 'ArrowRight':
           c = Math.min(SIZE - 1, c + 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowLeft':
           c = Math.max(0, c - 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowDown':
           r = Math.min(SIZE - 1, r + 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'ArrowUp':
           r = Math.max(0, r - 1);
-          e.preventDefault();
+          handled = true;
           break;
         case 'Enter':
         case ' ':
@@ -177,12 +187,16 @@ const LightsOut = () => {
         default:
           return;
       }
-      setFocusR(r);
-      setFocusC(c);
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [gameState, focusR, focusC, toggleCell]);
+
+      if (handled) {
+        e.preventDefault();
+        e.stopPropagation();
+        setFocusR(r);
+        setFocusC(c);
+      }
+    },
+    [gameState, focusR, focusC, toggleCell]
+  );
 
   const lightsOn = grid.flat().filter(Boolean).length;
 
@@ -241,10 +255,11 @@ const LightsOut = () => {
           style={ui.style.board}
         >
           <div
-            className="grid gap-2"
+            className="grid gap-2 outline-none"
             style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)` }}
             role="grid"
             aria-label="Lights Out puzzle grid"
+            onKeyDown={handleKeyDown}
           >
             {grid.map((row, r) =>
               row.map((isOn, c) => (
