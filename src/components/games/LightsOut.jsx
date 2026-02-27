@@ -245,6 +245,19 @@ const LightsOut = () => {
         </div>
       </div>
 
+      {/* Reset Button */}
+      {gameState === 'playing' && (
+        <button
+          onClick={startGame}
+          className={`${ui.buttonSecondary} text-xs py-1.5 px-3`}
+          style={ui.style.raised}
+          aria-label="Reset Puzzle"
+        >
+          <RotateCcw size={14} aria-hidden="true" />
+          Reset Puzzle
+        </button>
+      )}
+
       {/* Puzzle grid */}
       <div className="relative">
         <motion.div

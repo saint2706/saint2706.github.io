@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, Send, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Github, Send, Sparkles, Loader2, CheckCircle } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, contactPageSchema, SITE_URL } from '../../utils/seo';
@@ -40,6 +40,7 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -64,7 +65,9 @@ const Contact = () => {
     setTimeout(() => {
       window.location.href = mailtoUrl;
       setIsSubmitting(false);
-    }, 800);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 5000); // Reset after 5s
+    }, 1500);
   };
 
   const description =
@@ -115,52 +118,68 @@ const Contact = () => {
                 {resumeData.basics.email}.
               </p>
 
-              <form className="space-y-4" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  aria-label="Your name"
-                  required
-                  maxLength={100}
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Your email"
-                  aria-label="Your email"
-                  required
-                  maxLength={320}
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <textarea
-                  rows={5}
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Project details"
-                  aria-label="Project details"
-                  required
-                  maxLength={2000}
-                  className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y"
-                />
+              {success ? (
+                <div className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
+                  <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" />
+                  <h3 className="text-lg font-bold text-green-800">Draft Opened!</h3>
+                  <p className="text-green-700">Please check your email client to send the message.</p>
+                </div>
+              ) : (
+                <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    aria-label="Your name"
+                    required
+                    maxLength={100}
+                    disabled={isSubmitting}
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your email"
+                    aria-label="Your email"
+                    required
+                    maxLength={320}
+                    disabled={isSubmitting}
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                  />
+                  <textarea
+                    rows={5}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Project details"
+                    aria-label="Project details"
+                    required
+                    maxLength={2000}
+                    disabled={isSubmitting}
+                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y disabled:opacity-50"
+                  />
 
-                <ThemedButton
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  isLoading={isSubmitting}
-                  className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
-                >
-                  {!isSubmitting && <Send size={20} />}
-                  {isSubmitting ? 'Opening Email Client...' : 'Send via Email'}
-                </ThemedButton>
-              </form>
+                  <ThemedButton
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    isLoading={isSubmitting}
+                    disabled={isSubmitting}
+                    className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
+                  >
+                    {!isSubmitting ? (
+                      <Send size={20} />
+                    ) : (
+                      <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />
+                    )}
+                    {isSubmitting ? 'Opening...' : 'Send via Email'}
+                  </ThemedButton>
+                </form>
+              )}
 
               <div className="mt-6 pt-5 border-t border-[color:var(--border-soft)] flex flex-wrap items-center justify-between gap-3 text-sm text-secondary">
                 <span className="inline-flex items-center gap-2">
