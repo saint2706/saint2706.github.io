@@ -122,7 +122,9 @@ const Contact = () => {
                 <div className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
                   <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" />
                   <h3 className="text-lg font-bold text-green-800">Draft Opened!</h3>
-                  <p className="text-green-700">Please check your email client to send the message.</p>
+                  <p className="text-green-700">
+                    Please check your email client to send the message.
+                  </p>
                 </div>
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
