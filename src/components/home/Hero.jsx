@@ -110,7 +110,7 @@ const Hero = () => {
 
         {/* Main Heading */}
         <motion.h1
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
