@@ -66,7 +66,14 @@ const CustomCursor = ({ enabled }) => {
    * Checks element type and sets appropriate cursor variant
    */
   const updateCursorVariant = useCallback(e => {
-    const target = e.target;
+    let target = e.target;
+
+    if (!target) return;
+
+    // Handle text nodes by using their parent element
+    if (target.nodeType === 3) {
+      target = target.parentNode;
+    }
 
     if (!target || !target.matches) return;
 
