@@ -3,7 +3,7 @@
  * Features live previews, code copying, and interactive Python execution.
  */
 
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
 import { resumeData } from '../../data/resume';
@@ -12,12 +12,13 @@ import { breadcrumbSchema, SITE_URL } from '../../utils/seo';
 import { getSnippetsByLanguage } from '../../data/snippets';
 import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
-import SyntaxHighlighter from '../shared/SyntaxHighlighter';
 import Modal from '../shared/Modal';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
+
+const SyntaxHighlighter = lazy(() => import('../shared/SyntaxHighlighter'));
 
 /**
  * Playground page for code snippets and interactive demos
@@ -375,7 +376,9 @@ const SnippetCard = ({
 
         {/* Code Block */}
         <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64">
-          <SyntaxHighlighter code={snippet.code} language={snippet.language} />
+          <Suspense fallback={<div className="h-48 bg-card animate-pulse rounded-nb border-2 border-[color:var(--color-border)]" />}>
+            <SyntaxHighlighter code={snippet.code} language={snippet.language} />
+          </Suspense>
 
           {/* Copy Button */}
           <button
