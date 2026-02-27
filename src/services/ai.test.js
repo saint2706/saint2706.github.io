@@ -93,6 +93,7 @@ describe('AI Service', () => {
     });
 
     it('should handle API errors', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       // Reset rate limit by advancing time
       vi.advanceTimersByTime(3000);
 
@@ -101,6 +102,7 @@ describe('AI Service', () => {
       const response = await chatWithGemini('Hello');
 
       expect(response).toContain('connection glitch');
+      consoleSpy.mockRestore();
     });
 
     it('should handle input too long', async () => {

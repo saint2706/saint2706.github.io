@@ -104,28 +104,48 @@ describe('LightsOut Game', () => {
     });
 
     const cells = screen.getAllByLabelText(/Row \d+, Column \d+: light (on|off)/i);
+
+    // Grid is 5x5. Index = row * 5 + col
     const cell00 = cells[0];
     const cell01 = cells[1];
+    const cell10 = cells[5];
 
     // Initial focus should be on (0,0)
     await waitFor(() => {
       expect(cell00).toHaveFocus();
     });
 
-    // Move right
+    // Move Right -> (0,1)
     fireEvent.keyDown(cell00, { key: 'ArrowRight', code: 'ArrowRight' });
+    await waitFor(() => expect(cell01).toHaveFocus());
 
-    // Focus should move to (0,1)
-    await waitFor(() => {
-      expect(cell01).toHaveFocus();
-    });
+    // Move Down -> (1,1) (index 6)
+    fireEvent.keyDown(cell01, { key: 'ArrowDown', code: 'ArrowDown' });
+    const cell11 = cells[6];
+    await waitFor(() => expect(cell11).toHaveFocus());
+
+    // Move Left -> (1,0) (index 5)
+    fireEvent.keyDown(cell11, { key: 'ArrowLeft', code: 'ArrowLeft' });
+    await waitFor(() => expect(cell10).toHaveFocus());
+
+    // Move Up -> (0,0) (index 0)
+    fireEvent.keyDown(cell10, { key: 'ArrowUp', code: 'ArrowUp' });
+    await waitFor(() => expect(cell00).toHaveFocus());
+
+    // Check boundary constraints (Up from 0,0 should stay 0,0)
+    fireEvent.keyDown(cell00, { key: 'ArrowUp', code: 'ArrowUp' });
+    await waitFor(() => expect(cell00).toHaveFocus());
 
     // Toggle with Enter
-    const initialLabel = cell01.getAttribute('aria-label');
-    fireEvent.keyDown(cell01, { key: 'Enter', code: 'Enter' });
-
-    // Check if toggled
-    const updatedLabel = cell01.getAttribute('aria-label');
+    const initialLabel = cell00.getAttribute('aria-label');
+    fireEvent.keyDown(cell00, { key: 'Enter', code: 'Enter' });
+    const updatedLabel = cell00.getAttribute('aria-label');
     expect(updatedLabel).not.toBe(initialLabel);
+
+    // Toggle with Space
+    fireEvent.keyDown(cell00, { key: ' ', code: 'Space' });
+    // Should flip back (or at least change again)
+    const finalLabel = cell00.getAttribute('aria-label');
+    expect(finalLabel).toBe(initialLabel);
   });
 });
