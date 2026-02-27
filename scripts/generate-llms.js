@@ -62,6 +62,15 @@ function generateLLMsText() {
   });
   content += `\n`;
 
+  // Vector Friendliness Section
+  content += `## Vector Friendliness\n`;
+  content += `This section is optimized for RAG ingestion. It provides a dense summary of skills and experience.\n\n`;
+  content += `**Identity**: ${basics.name}, ${basics.title}. Based in ${basics.location.city}, ${basics.location.country}.\n`;
+  content += `**Core Competencies**: ${skills.flatMap(c => c.items.map(i => i.name)).join(', ')}.\n`;
+  content += `**Experience Summary**: Worked at ${experience.map(e => e.company).join(', ')}.\n`;
+  content += `**Project Highlights**: Built ${projects.map(p => p.title).join(', ')}.\n`;
+  content += `**Education**: ${education.map(e => `${e.area} from ${e.institution}`).join(', ')}.\n\n`;
+
   // Contact
   content += `## Contact & Socials\n`;
   content += `- Email: ${basics.email}\n`;

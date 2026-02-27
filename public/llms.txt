@@ -81,6 +81,15 @@ Jupyter notebook-based Python course materials for Big Data Analytics students a
 - **Vellore Institute of Technology**: Bachelor of Technology (B.Tech) - Computer Science (2020 - 2024)
   - Core foundation in algorithms, software development, and data science.
 
+## Vector Friendliness
+This section is optimized for RAG ingestion. It provides a dense summary of skills and experience.
+
+**Identity**: Rishabh Agrawal, Data Storyteller & Analytics Strategist. Based in Goa, India.
+**Core Competencies**: Python, Java, C++, JavaScript, SQL, HTML/CSS, R, Data Analytics, Machine Learning, Pandas, NumPy, Scikit-learn, Matplotlib/Seaborn, Tableau, Power BI, AWS, Azure, Google Cloud, TensorFlow, PyTorch, React, Node.js, Hugging Face, Business Strategy, Leadership, Project Management, Communication, Problem Solving.
+**Experience Summary**: Worked at TheSmartBridge, Mood Indigo, IIT Bombay.
+**Project Highlights**: Built Coding-For-MBA, AI Attendance Management System, Client Modding Guide, Scroll of Dharma, VITable, Geralt Discord Bot, VIT Academics Enhancer, Python Course - GIM BDA.
+**Education**: PGDM - Big Data Analytics from Goa Institute of Management (GIM), Bachelor of Technology (B.Tech) - Computer Science from Vellore Institute of Technology.
+
 ## Contact & Socials
 - Email: rishabh.agrawal25b@gim.ac.in
 - Location: Goa, India

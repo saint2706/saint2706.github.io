@@ -44,6 +44,17 @@ const LIQUID_SHADOW_BY_DEPTH = {
   subtle: 'var(--glass-drop-shadow-subtle, 0 2px 8px rgba(0,0,0,0.05))',
 };
 
+/**
+ * Generates the shell styles (className and inline styles) for overlay components
+ * like Modals, Cards, and Floating Action Buttons, adapting to the active theme.
+ *
+ * @param {object} options
+ * @param {string} options.theme - The current active theme ('neubrutalism' or 'liquid').
+ * @param {'card'|'accent'|'pink'|'secondary'|'yellow'} [options.tone='card'] - The color tone/variant of the surface.
+ * @param {'default'|'hover'|'subtle'} [options.depth='default'] - The elevation depth (shadow intensity).
+ * @param {string} [options.className=''] - Additional custom classes to append.
+ * @returns {{className: string, style: object}} An object containing the combined className string and style object.
+ */
 export const getOverlayShell = ({
   theme,
   tone = 'card',
@@ -66,7 +77,11 @@ export const getOverlayShell = ({
   };
 };
 
-/** Map shadow color names to NB 2.0 colored shadow CSS classes */
+/**
+ * Map shadow color names to NB 2.0 colored shadow CSS classes.
+ * Used for applying specific shadow colors in the Neubrutalism theme.
+ * @type {Object.<string, string>}
+ */
 export const NB_SHADOW_COLOR_MAP = {
   yellow: 'nb-shadow-yellow',
   pink: 'nb-shadow-pink',

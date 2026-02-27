@@ -96,6 +96,27 @@ export function personSchemaFull() {
 }
 
 /**
+ * SoftwareApplication schema for the Playground.
+ */
+export function playgroundSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Python Playground',
+    operatingSystem: 'Browser',
+    applicationCategory: 'DeveloperApplication',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description:
+      'Interactive Python playground running directly in the browser via Pyodide. Test snippets, visualize algorithms, and learn Python.',
+    author: personSchemaCompact(),
+  };
+}
+
+/**
  * ProfilePage schema – wraps the Person for homepage.
  */
 export function profilePageSchema() {
