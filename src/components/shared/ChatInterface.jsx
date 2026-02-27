@@ -298,7 +298,11 @@ const MessageList = React.memo(({ messages, isTyping, messagesEndRef }) => (
     {messages.map(msg => (
       <MessageItem key={msg.id} msg={msg} />
     ))}
-    {isTyping && <TypingIndicator />}
+    {isTyping && (
+      <div role="status" aria-label="AI is typing">
+        <TypingIndicator />
+      </div>
+    )}
     <div ref={messagesEndRef} />
   </div>
 ));
@@ -607,6 +611,7 @@ const ChatInterface = ({ onClose }) => {
             onClick={onClose}
             className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-accent rounded-sm"
             aria-label="Close chat (Escape)"
+            title="Close chat"
           >
             <X size={20} />
             <span

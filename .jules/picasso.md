@@ -1,14 +1,29 @@
-# Picasso Learnings
+# Picasso UX Improvements
 
-## Accessibility
+## Summary
 
-- **Dynamic ARIA Labels**: For toggle buttons (like mobile menu), using a dynamic `aria-label` (e.g., "Open menu" vs "Close menu") provides better context than a static "Toggle menu" label combined with `aria-expanded`.
-- **Game Accessibility**: Interactive game elements (like "Start Game" overlay buttons) should have clear labels, especially when the visual text might be stylized or icon-heavy.
-- **Focus Management**: While `useFocusTrap` is powerful, applying it to conditionally rendered internal components requires careful ref management. Sometimes simpler focus management (like `autoFocus`) combined with correct ARIA roles (`role="dialog"`) is a pragmatic first step.
-- **Keyboard Navigation Scope**: Avoid attaching `keydown` listeners to `window` for game controls. Instead, attach them to the game container and use `tabIndex` and `focus()` to scope keyboard interactions. This prevents interference with global page navigation (like scrolling) and improves accessibility for screen reader users who expect focus to remain within the interactive widget.
-- **Programmatic Focus**: When implementing custom keyboard navigation (e.g., roving tabindex), ensure focus is programmatically moved to the active element using `ref.current.focus()` inside a `useEffect` hook that watches for focus state changes. This ensures the browser's focus matches the application's internal state.
+Implements various UX and accessibility enhancements across the application, focusing on interactive feedback and screen reader support.
 
-## Testing
+## Changes
 
-- **Query by Label**: Using `getByLabelText` in tests is a great way to enforce accessible names. If a test fails because it can't find a label, it likely means the implementation is inaccessible or the label is incorrect.
-- **Playwright Verification**: Playwright's `get_by_label()` locator is excellent for verifying that accessibility attributes are correctly rendered in the browser.
+### 1. Game Accessibility
+
+- **LightsOut**: Added a dedicated "Reset Puzzle" button visible during gameplay. This allows users to restart without needing to win or lose first.
+- **TicTacToe**: Verified ARIA labels and announcements are sufficient for screen readers.
+
+### 2. Contact Form UX
+
+- **Loading State**: Replaced the "Send" icon with a spinning loader (`Loader2`) during form submission.
+- **Success Feedback**: Added a visual success state (green banner with `CheckCircle` icon) that appears after the "email client opening" simulation completes. This provides clear confirmation to the user that the action succeeded.
+- **Accessibility**: Added `aria-busy` to the form during submission.
+
+### 3. Chat Interface Accessibility
+
+- **Typing Indicator**: Wrapped the typing indicator in a container with `role="status"` and `aria-label="AI is typing"` to ensure screen readers announce when the bot is processing.
+- **Close Button**: Added a native `title="Close chat"` tooltip to the chat window's close button for better discoverability.
+
+## Verification
+
+- `pnpm lint` passed.
+- `pnpm test` passed (207 tests).
+- Manual code review confirmed logical correctness of state transitions and conditional rendering.
