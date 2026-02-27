@@ -3,6 +3,7 @@
 ## 2024-05-22: Dependency Update - Minimatch
 
 ### Vulnerability
+
 - **NPM Vulnerabilities**:
   - `rollup` (<4.59.0) was identified as vulnerable (Arbitrary File Write via Path Traversal).
   - `minimatch` (<10.2.1) and `ajv` (<6.14.0) were identified as vulnerable (ReDoS).
