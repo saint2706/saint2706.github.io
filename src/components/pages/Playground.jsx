@@ -8,7 +8,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
-import { breadcrumbSchema, SITE_URL } from '../../utils/seo';
+import { breadcrumbSchema, playgroundSchema, SITE_URL } from '../../utils/seo';
 import { getSnippetsByLanguage } from '../../data/snippets';
 import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
@@ -50,6 +50,7 @@ const Playground = () => {
       { name: 'Home', url: SITE_URL },
       { name: 'Playground', url: `${SITE_URL}/playground` },
     ]),
+    playgroundSchema(),
   ];
 
   const filteredSnippets = getSnippetsByLanguage(activeFilter);
