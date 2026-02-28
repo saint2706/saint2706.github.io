@@ -4,13 +4,15 @@ import { vi, describe, beforeEach, afterEach, it, expect } from 'vitest';
 import WhackAMole from './WhackAMole';
 
 // Mock matchMedia to prevent errors from framer-motion if any
-window.matchMedia = window.matchMedia || function() {
-  return {
-    matches: false,
-    addListener: function() {},
-    removeListener: function() {}
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    };
   };
-};
 
 // Mock dependencies
 vi.mock('framer-motion', async () => {
@@ -36,7 +38,7 @@ describe('WhackAMole', () => {
   beforeEach(() => {
     // Mock localStorage
     const store = {};
-    vi.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => store[key] || null);
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(key => store[key] || null);
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation((key, value) => {
       store[key] = value.toString();
     });

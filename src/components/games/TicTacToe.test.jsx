@@ -36,7 +36,9 @@ describe('TicTacToe', () => {
     render(<TicTacToe />);
 
     // Check status announcements
-    expect(screen.getByText('Your turn. Select an empty cell to place your X.')).toBeInTheDocument();
+    expect(
+      screen.getByText('Your turn. Select an empty cell to place your X.')
+    ).toBeInTheDocument();
 
     // Check difficulty selectors
     expect(screen.getByRole('button', { name: 'Easy' })).toBeInTheDocument();
@@ -63,7 +65,9 @@ describe('TicTacToe', () => {
     });
 
     // Verify cell is marked by player ('X')
-    expect(screen.getByRole('button', { name: 'Row 1, Column 1, marked by you' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Row 1, Column 1, marked by you' })
+    ).toBeInTheDocument();
     expect(screen.getByText('X')).toBeInTheDocument();
   });
 
@@ -95,7 +99,9 @@ describe('TicTacToe', () => {
     });
 
     // AI should pick the next available cell (index 1) because of Math.random mock
-    expect(screen.getByRole('button', { name: 'Row 1, Column 2, marked by AI' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Row 1, Column 2, marked by AI' })
+    ).toBeInTheDocument();
     expect(screen.getByText('O')).toBeInTheDocument();
 
     vi.useRealTimers();
@@ -173,10 +179,10 @@ describe('TicTacToe', () => {
 
     // We'll mock it such that it picks the exact index we want from the `emptyIndices` array.
     vi.spyOn(Math, 'random').mockImplementation(() => {
-        // Need to figure out the emptyIndices array to give the right float
-        // Or better yet, just let the AI pick whatever if we can find a draw sequence.
-        // Easiest is to force AI to pick the *first* empty cell by returning 0, and we play around it.
-        return 0;
+      // Need to figure out the emptyIndices array to give the right float
+      // Or better yet, just let the AI pick whatever if we can find a draw sequence.
+      // Easiest is to force AI to pick the *first* empty cell by returning 0, and we play around it.
+      return 0;
     });
 
     // If AI always picks first empty cell:
@@ -257,23 +263,24 @@ describe('TicTacToe', () => {
     // No winners! Draw!
 
     const moves = [
-        { player: 'Row 2, Column 2, empty' }, // 4
-        { player: 'Row 1, Column 2, empty' }, // 1
-        { player: 'Row 3, Column 1, empty' }, // 6
-        { player: 'Row 2, Column 3, empty' }, // 5
-        { player: 'Row 3, Column 3, empty' }  // 8
+      { player: 'Row 2, Column 2, empty' }, // 4
+      { player: 'Row 1, Column 2, empty' }, // 1
+      { player: 'Row 3, Column 1, empty' }, // 6
+      { player: 'Row 2, Column 3, empty' }, // 5
+      { player: 'Row 3, Column 3, empty' }, // 8
     ];
 
     for (let i = 0; i < moves.length; i++) {
-        await act(async () => {
-            fireEvent.click(screen.getByRole('button', { name: moves[i].player }));
-        });
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: moves[i].player }));
+      });
 
-        if (i < 4) { // AI moves 4 times
-            await act(async () => {
-                await vi.advanceTimersByTimeAsync(500);
-            });
-        }
+      if (i < 4) {
+        // AI moves 4 times
+        await act(async () => {
+          await vi.advanceTimersByTimeAsync(500);
+        });
+      }
     }
 
     // Check if draw
@@ -303,7 +310,9 @@ describe('TicTacToe', () => {
     });
 
     // Verify cell is marked
-    expect(screen.getByRole('button', { name: 'Row 1, Column 1, marked by you' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Row 1, Column 1, marked by you' })
+    ).toBeInTheDocument();
 
     // Give AI a score to verify reset (using previous mock for win)
     vi.spyOn(Math, 'random').mockReturnValue(0);
