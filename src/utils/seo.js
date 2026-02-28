@@ -12,12 +12,19 @@ import blogs from '../data/blogs.json';
 /*  Constants                                              */
 /* ──────────────────────────────────────────────────────── */
 
+/** @type {string} The base URL of the website. */
 export const SITE_URL = resumeData.basics.website;
+/** @type {string} The name of the site. */
 export const SITE_NAME = 'Rishabh Agrawal';
+/** @type {string} The suffix appended to page titles. */
 export const SITE_TITLE_SUFFIX = '| Rishabh Agrawal';
+/** @type {string} The default Open Graph image URL. */
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+/** @type {string} The Twitter handle associated with the site. */
 export const TWITTER_HANDLE = '@saint2706'; // update if you have one
+/** @type {string} The default locale. */
 export const LOCALE = 'en_US';
+/** @type {string} The primary theme color for the site. */
 export const THEME_COLOR = '#1e1e2e'; // dark background
 
 /* ──────────────────────────────────────────────────────── */
@@ -25,8 +32,9 @@ export const THEME_COLOR = '#1e1e2e'; // dark background
 /* ──────────────────────────────────────────────────────── */
 
 /**
- * WebSite schema – enables Google Sitelinks search box.
+ * Generates the WebSite schema, which enables the Google Sitelinks search box.
  * Should be injected on the homepage only.
+ * @returns {object} The WebSite schema object.
  */
 export function websiteSchema() {
   return {
@@ -48,7 +56,9 @@ export function websiteSchema() {
 }
 
 /**
- * Compact Person reference (used as nested author/creator).
+ * Generates a compact Person reference schema.
+ * Used as a nested author/creator in other schemas.
+ * @returns {object} The compact Person schema object.
  */
 export function personSchemaCompact() {
   return {
@@ -59,7 +69,8 @@ export function personSchemaCompact() {
 }
 
 /**
- * Full Person schema – homepage / about.
+ * Generates the full Person schema for the homepage or about page.
+ * @returns {object} The full Person schema object.
  */
 export function personSchemaFull() {
   return {
@@ -96,7 +107,8 @@ export function personSchemaFull() {
 }
 
 /**
- * SoftwareApplication schema for the Playground.
+ * Generates the SoftwareApplication schema for the Python Playground.
+ * @returns {object} The SoftwareApplication schema object.
  */
 export function playgroundSchema() {
   return {
@@ -117,7 +129,8 @@ export function playgroundSchema() {
 }
 
 /**
- * ProfilePage schema – wraps the Person for homepage.
+ * Generates the ProfilePage schema, wrapping the Person schema for the homepage.
+ * @returns {object} The ProfilePage schema object.
  */
 export function profilePageSchema() {
   return {
@@ -131,8 +144,9 @@ export function profilePageSchema() {
 }
 
 /**
- * BreadcrumbList schema helper.
- * @param {Array<{name:string, url:string}>} items
+ * Generates a BreadcrumbList schema based on the provided items.
+ * @param {Array<{name:string, url:string}>} items - The breadcrumb items.
+ * @returns {object} The BreadcrumbList schema object.
  */
 export function breadcrumbSchema(items) {
   return {
@@ -148,7 +162,8 @@ export function breadcrumbSchema(items) {
 }
 
 /**
- * ItemList schema for the Projects page (CollectionPage).
+ * Generates the CollectionPage and ItemList schema for the Projects page.
+ * @returns {object} The CollectionPage schema object.
  */
 export function projectsCollectionSchema() {
   return {
@@ -173,7 +188,8 @@ export function projectsCollectionSchema() {
 }
 
 /**
- * CollectionPage schema for the Blog listing.
+ * Generates the CollectionPage and ItemList schema for the Blog listing.
+ * @returns {object} The CollectionPage schema object.
  */
 export function blogCollectionSchema() {
   return {
@@ -199,7 +215,8 @@ export function blogCollectionSchema() {
 }
 
 /**
- * ContactPage schema.
+ * Generates the ContactPage schema.
+ * @returns {object} The ContactPage schema object.
  */
 export function contactPageSchema() {
   return {
@@ -224,7 +241,8 @@ export function contactPageSchema() {
 }
 
 /**
- * Resume/CV page – Person with employment aggregate.
+ * Generates the Person schema tailored for the Resume/CV page, including employment aggregates.
+ * @returns {object} The modified Person schema object.
  */
 export function resumePersonSchema() {
   return {
