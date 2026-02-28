@@ -31,3 +31,23 @@ Optimized the codebase for better Discoverability (GEO), Performance (LCP), and 
 
 - Monitor Search Console for coverage of new schemas.
 - Check Core Web Vitals field data after deployment.
+
+---
+
+## Date: 2024-05-25
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the Projects page for better Performance (LCP).
+
+### Changes
+
+1.  **[PERF] Optimized Projects LCP**:
+    - Modified `src/components/pages/Projects.jsx` to add `fetchPriority={idx < 3 ? 'high' : 'auto'}` to the `<img>` tags for eagerly loaded project thumbnails.
+    - This ensures the top 3 images prioritize fetching, improving LCP and Core Web Vitals for the Projects page.
+
+### Next Steps
+
+- Continue to monitor Core Web Vitals and address any other image loading priority improvements needed.
