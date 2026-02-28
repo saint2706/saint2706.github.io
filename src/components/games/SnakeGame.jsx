@@ -33,6 +33,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Pause } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 // Game configuration constants
 const GRID_SIZE = 20; // 20x20 grid
@@ -392,8 +393,9 @@ const SnakeGame = () => {
 
   // High score with localStorage persistence
   const [highScore, setHighScore] = useState(() => {
-    const saved = localStorage.getItem('snakeHighScore');
-    return saved ? parseInt(saved, 10) : 0;
+    const saved = safeGetLocalStorage('snakeHighScore', '0');
+    const parsed = parseInt(saved, 10);
+    return Number.isFinite(parsed) ? parsed : 0;
   });
   const [speed, setSpeed] = useState(INITIAL_SPEED); // Game speed (ms per frame)
 
@@ -497,7 +499,7 @@ const SnakeGame = () => {
           // Update high score if needed
           if (newScore > highScore) {
             setHighScore(newScore);
-            localStorage.setItem('snakeHighScore', newScore.toString());
+            safeSetLocalStorage('snakeHighScore', newScore.toString());
           }
           return newScore;
         });
