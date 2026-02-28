@@ -19,6 +19,41 @@ const indexPath = path.resolve(__dirname, '../index.html');
 try {
   const content = fs.readFileSync(indexPath, 'utf8');
 
+  // Ensure index.html contains no inline <script> blocks.
+  // We only allow scripts loaded from explicit external references.
+  const scriptTagRegex = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+  const inlineScripts = [];
+  const externalScripts = [];
+
+  for (const match of content.matchAll(scriptTagRegex)) {
+    const attributes = match[1] ?? '';
+    const body = (match[2] ?? '').trim();
+    const srcMatch = attributes.match(/\ssrc\s*=\s*(["'])(.*?)\1/i);
+
+    if (srcMatch) {
+      externalScripts.push(srcMatch[2]);
+      if (body.length > 0) {
+        inlineScripts.push(`<script${attributes}>...`);
+      }
+      continue;
+    }
+
+    if (body.length > 0) {
+      inlineScripts.push(`<script${attributes}>...`);
+    }
+  }
+
+  if (inlineScripts.length > 0) {
+    console.error('FAILED: index.html contains inline <script> blocks.');
+    inlineScripts.forEach(script => console.error(` - ${script}`));
+    process.exit(1);
+  }
+
+  if (externalScripts.length === 0) {
+    console.error('FAILED: index.html does not include any external <script src="..."> tags.');
+    process.exit(1);
+  }
+
   // Extract CSP meta tag content
   // First find the meta tag with CSP, then extract content attribute
   const metaTagMatch = content.match(
@@ -92,7 +127,7 @@ try {
   }
 
   console.log(
-    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval', 'upgrade-insecure-requests', and anti-clickjacking measures)."
+    "PASS: CSP is secure and index.html avoids inline scripts (only explicit external script references are present)."
   );
 } catch (error) {
   console.error('Error reading index.html:', error);
