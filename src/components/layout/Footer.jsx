@@ -3,13 +3,14 @@
  * and a hidden easter egg.
  */
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTheme } from '../shared/theme-context';
 import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
 import { resumeData } from '../../data/resume';
+import { useSafeTimeout } from '../shared/useSafeTimeout';
 
 /**
  * Footer component with social links, attribution, and easter egg
@@ -21,7 +22,7 @@ const Footer = () => {
   const [heartClicks, setHeartClicks] = useState(0);
   const [showSecret, setShowSecret] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const confettiTimeoutRef = useRef(null);
+  const { setSafeTimeout, clearAll } = useSafeTimeout();
   const HEARTS_REQUIRED = 5;
 
   /** Handle easter egg heart clicks */
@@ -31,12 +32,10 @@ const Footer = () => {
     if (next >= HEARTS_REQUIRED && !showSecret) {
       setShowSecret(true);
       setShowConfetti(true);
-      clearTimeout(confettiTimeoutRef.current);
-      confettiTimeoutRef.current = setTimeout(() => setShowConfetti(false), 3000);
+      clearAll();
+      setSafeTimeout(() => setShowConfetti(false), 3000);
     }
-  }, [heartClicks, showSecret]);
-
-  useEffect(() => () => clearTimeout(confettiTimeoutRef.current), []);
+  }, [heartClicks, showSecret, clearAll, setSafeTimeout]);
 
   /** Pre-generate confetti particle styles (only computed once on mount) */
   const [confettiParticles] = useState(() =>

@@ -9,6 +9,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import { useTheme } from './theme-context';
+import { useSafeTimeout } from './useSafeTimeout';
 
 /** Map of page aliases to routes */
 const PAGE_MAP = {
@@ -44,13 +45,11 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
   const [cmdIndex, setCmdIndex] = useState(-1);
   const inputRef = useRef(null);
   const outputRef = useRef(null);
-  const focusTimeoutRef = useRef(null);
-  const navigationTimeoutRef = useRef(null);
-  const closeTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
+  const { setSafeTimeout, clearAll } = useSafeTimeout();
 
   /** Initialize terminal with welcome message when opened */
   useEffect(() => {
@@ -72,16 +71,10 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
       setInput('');
       setCmdHistory([]);
       setCmdIndex(-1);
-      clearTimeout(focusTimeoutRef.current);
-      focusTimeoutRef.current = setTimeout(() => inputRef.current?.focus(), 100);
+      clearAll();
+      setSafeTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [isOpen, welcomeMessage]);
-
-  useEffect(() => () => {
-    clearTimeout(focusTimeoutRef.current);
-    clearTimeout(navigationTimeoutRef.current);
-    clearTimeout(closeTimeoutRef.current);
-  }, []);
+  }, [isOpen, welcomeMessage, clearAll, setSafeTimeout]);
 
   /** Auto-scroll to bottom when new output is added */
   useEffect(() => {
@@ -149,8 +142,7 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
           const route = PAGE_MAP[page];
           if (route) {
             pushOutput(`Navigating to /${page}...`);
-            clearTimeout(navigationTimeoutRef.current);
-            navigationTimeoutRef.current = setTimeout(() => {
+            setSafeTimeout(() => {
               onClose();
               navigate(route);
             }, 400);
@@ -204,8 +196,7 @@ ${resumeData.basics.title}
         case 'exit':
         case 'quit':
           pushOutput('Goodbye! 👋');
-          clearTimeout(closeTimeoutRef.current);
-          closeTimeoutRef.current = setTimeout(() => onClose(), 500);
+          setSafeTimeout(() => onClose(), 500);
           break;
 
         case 'sudo':
@@ -225,7 +216,7 @@ Just kidding... but seriously, let's chat!
           pushOutput(`Command not found: '${cmd}'. Type 'help' for available commands.`, 'error');
       }
     },
-    [navigate, onClose, pushOutput]
+    [navigate, onClose, pushOutput, setSafeTimeout]
   );
 
   /**

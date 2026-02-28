@@ -2,7 +2,7 @@
  * @fileoverview Hero section for homepage with interactive elements and animations.
  */
 
-import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { StampBadge } from '../shared/NbDecorative';
 import { useTheme } from '../shared/theme-context';
+import { useSafeTimeout } from '../shared/useSafeTimeout';
 import HeroBackground from './HeroBackground';
 
 /**
@@ -28,20 +29,17 @@ const Hero = () => {
   // Easter egg state (click stack array to unlock games page)
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
-  const resetClickTimeoutRef = useRef(null);
-  const navigateTimeoutRef = useRef(null);
+  const { setSafeTimeout, clear } = useSafeTimeout();
   const CLICKS_REQUIRED = 3;
 
   // Reset click count after 2 seconds of inactivity
   useEffect(() => {
     if (clickCount > 0 && clickCount < CLICKS_REQUIRED) {
-      clearTimeout(resetClickTimeoutRef.current);
-      resetClickTimeoutRef.current = setTimeout(() => setClickCount(0), 2000);
+      const id = setSafeTimeout(() => setClickCount(0), 2000);
+      return () => clear(id);
     }
-    return () => clearTimeout(resetClickTimeoutRef.current);
-  }, [clickCount]);
-
-  useEffect(() => () => clearTimeout(navigateTimeoutRef.current), []);
+    return undefined;
+  }, [clickCount, clear, setSafeTimeout]);
 
   /**
    * Handle easter egg activation
@@ -54,12 +52,11 @@ const Hero = () => {
 
     if (newCount >= CLICKS_REQUIRED) {
       setIsGlitching(true);
-      clearTimeout(navigateTimeoutRef.current);
-      navigateTimeoutRef.current = setTimeout(() => {
+      setSafeTimeout(() => {
         navigate('/games');
       }, 1500);
     }
-  }, [clickCount, isGlitching, navigate]);
+  }, [clickCount, isGlitching, navigate, setSafeTimeout]);
 
   /**
    * Keyboard handler for easter egg accessibility

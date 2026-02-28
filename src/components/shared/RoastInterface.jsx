@@ -11,6 +11,7 @@ import { useFocusTrap } from './useFocusTrap';
 import { useTheme } from './theme-context';
 import { getOverlayShell, joinClasses } from './ThemedPrimitives.utils';
 import { useIsMounted } from './useIsMounted';
+import { useSafeTimeout } from './useSafeTimeout';
 
 /**
  * Roast interface dialog component
@@ -37,11 +38,10 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const [isCopied, setIsCopied] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
-  const focusTimeoutRef = useRef(null);
-  const copyResetTimeoutRef = useRef(null);
   const isMountedRef = useIsMounted(); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
   const shell = getOverlayShell({ theme, depth: 'hover', tone: 'pink' });
+  const { setSafeTimeout, clearAll } = useSafeTimeout();
 
   /**
    * Generate roast using AI service
@@ -71,10 +71,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   // Auto-focus close button on mount
   useEffect(() => {
     if (roastCloseRef.current) {
-      clearTimeout(focusTimeoutRef.current);
-      focusTimeoutRef.current = setTimeout(() => roastCloseRef.current?.focus(), 100);
+      setSafeTimeout(() => roastCloseRef.current?.focus(), 100);
     }
-  }, []);
+  }, [setSafeTimeout]);
 
   /**
    * Copy roast text to clipboard
@@ -84,19 +83,14 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     try {
       await navigator.clipboard.writeText(roastContent);
       setIsCopied(true);
-      clearTimeout(copyResetTimeoutRef.current);
-      copyResetTimeoutRef.current = setTimeout(() => {
+      clearAll();
+      setSafeTimeout(() => {
         if (isMountedRef.current) setIsCopied(false);
       }, 2000);
     } catch (err) {
       console.error('Failed to copy roast:', err);
     }
-  }, [roastContent, isMountedRef]);
-
-  useEffect(() => () => {
-    clearTimeout(focusTimeoutRef.current);
-    clearTimeout(copyResetTimeoutRef.current);
-  }, []);
+  }, [roastContent, isMountedRef, clearAll, setSafeTimeout]);
 
   // Use shared hook for focus trapping and keyboard navigation
   useFocusTrap({
