@@ -37,6 +37,8 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const [isCopied, setIsCopied] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
+  const focusTimeoutRef = useRef(null);
+  const copyResetTimeoutRef = useRef(null);
   const isMountedRef = useIsMounted(); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
   const shell = getOverlayShell({ theme, depth: 'hover', tone: 'pink' });
@@ -69,7 +71,8 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   // Auto-focus close button on mount
   useEffect(() => {
     if (roastCloseRef.current) {
-      setTimeout(() => roastCloseRef.current?.focus(), 100);
+      clearTimeout(focusTimeoutRef.current);
+      focusTimeoutRef.current = setTimeout(() => roastCloseRef.current?.focus(), 100);
     }
   }, []);
 
@@ -81,13 +84,19 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     try {
       await navigator.clipboard.writeText(roastContent);
       setIsCopied(true);
-      setTimeout(() => {
+      clearTimeout(copyResetTimeoutRef.current);
+      copyResetTimeoutRef.current = setTimeout(() => {
         if (isMountedRef.current) setIsCopied(false);
       }, 2000);
     } catch (err) {
       console.error('Failed to copy roast:', err);
     }
   }, [roastContent, isMountedRef]);
+
+  useEffect(() => () => {
+    clearTimeout(focusTimeoutRef.current);
+    clearTimeout(copyResetTimeoutRef.current);
+  }, []);
 
   // Use shared hook for focus trapping and keyboard navigation
   useFocusTrap({

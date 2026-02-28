@@ -18,6 +18,7 @@ export const useFocusTrap = ({
   preventScroll = true,
 }) => {
   const previousFocus = useRef(null);
+  const initialFocusTimeoutRef = useRef(null);
 
   // Manage focus restoration and scroll lock
   useEffect(() => {
@@ -26,7 +27,8 @@ export const useFocusTrap = ({
 
       // Initial focus
       // Small timeout to allow mounting/animation
-      setTimeout(() => {
+      clearTimeout(initialFocusTimeoutRef.current);
+      initialFocusTimeoutRef.current = setTimeout(() => {
         if (initialFocusRef?.current) {
           initialFocusRef.current.focus();
         } else if (containerRef?.current) {
@@ -47,9 +49,12 @@ export const useFocusTrap = ({
     }
 
     return () => {
+      clearTimeout(initialFocusTimeoutRef.current);
       document.body.style.overflow = '';
     };
   }, [isOpen, initialFocusRef, containerRef, preventScroll]);
+
+  useEffect(() => () => clearTimeout(initialFocusTimeoutRef.current), []);
 
   // Handle keyboard navigation (Trap + Escape)
   const handleKeyDown = useCallback(
