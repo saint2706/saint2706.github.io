@@ -44,6 +44,9 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
   const [cmdIndex, setCmdIndex] = useState(-1);
   const inputRef = useRef(null);
   const outputRef = useRef(null);
+  const focusTimeoutRef = useRef(null);
+  const navigationTimeoutRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
   const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -69,9 +72,16 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
       setInput('');
       setCmdHistory([]);
       setCmdIndex(-1);
-      setTimeout(() => inputRef.current?.focus(), 100);
+      clearTimeout(focusTimeoutRef.current);
+      focusTimeoutRef.current = setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [isOpen, welcomeMessage]);
+
+  useEffect(() => () => {
+    clearTimeout(focusTimeoutRef.current);
+    clearTimeout(navigationTimeoutRef.current);
+    clearTimeout(closeTimeoutRef.current);
+  }, []);
 
   /** Auto-scroll to bottom when new output is added */
   useEffect(() => {
@@ -139,7 +149,8 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
           const route = PAGE_MAP[page];
           if (route) {
             pushOutput(`Navigating to /${page}...`);
-            setTimeout(() => {
+            clearTimeout(navigationTimeoutRef.current);
+            navigationTimeoutRef.current = setTimeout(() => {
               onClose();
               navigate(route);
             }, 400);
@@ -193,7 +204,8 @@ ${resumeData.basics.title}
         case 'exit':
         case 'quit':
           pushOutput('Goodbye! 👋');
-          setTimeout(() => onClose(), 500);
+          clearTimeout(closeTimeoutRef.current);
+          closeTimeoutRef.current = setTimeout(() => onClose(), 500);
           break;
 
         case 'sudo':
