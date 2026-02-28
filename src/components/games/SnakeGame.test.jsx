@@ -19,12 +19,12 @@ vi.mock('framer-motion', async () => {
     useReducedMotion: () => false,
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
-      // eslint-disable-next-line no-unused-vars
-      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+
+      div: ({ children, whileTap: _whileTap, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
         <div {...props}>{children}</div>
       ),
-      // eslint-disable-next-line no-unused-vars
-      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
+
+      button: ({ children, whileTap: _whileTap, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
         <button {...props}>{children}</button>
       ),
     },
@@ -78,8 +78,8 @@ describe('SnakeGame', () => {
     intervals = new Map();
     intervalIdCounter = 0;
 
-    // eslint-disable-next-line no-unused-vars
-    vi.spyOn(window, 'setInterval').mockImplementation((cb, ms) => {
+
+    vi.spyOn(window, 'setInterval').mockImplementation((cb, _ms) => {
       intervalIdCounter++;
       intervals.set(intervalIdCounter, cb);
       return intervalIdCounter;
