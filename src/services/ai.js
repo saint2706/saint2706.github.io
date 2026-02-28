@@ -144,10 +144,6 @@ export const chatWithGemini = async (userMessage, history = []) => {
     return "I'm processing a lot of thoughts right now! Please give me a moment to catch my breath.";
   }
 
-  // Update persistent rate limit immediately to prevent race conditions and enforce attempt limits
-  lastChatRequestTime = now;
-  safeSetLocalStorage(CHAT_RATE_LIMIT_KEY, now.toString());
-
   const model = getModel();
   if (!model) {
     return MISSING_API_KEY_ERROR;
@@ -173,7 +169,13 @@ export const chatWithGemini = async (userMessage, history = []) => {
     });
 
     // Send message with timeout protection to prevent hanging requests
-    const result = await withTimeout(chat.sendMessage(sanitizedMessage), API_TIMEOUT);
+    const requestPromise = chat.sendMessage(sanitizedMessage);
+
+    // Persist rate-limit timestamp only after request dispatch begins
+    lastChatRequestTime = now;
+    safeSetLocalStorage(CHAT_RATE_LIMIT_KEY, now.toString());
+
+    const result = await withTimeout(requestPromise, API_TIMEOUT);
     const responseText = result.response.text();
     return responseText;
   } catch (error) {
@@ -268,10 +270,6 @@ export const roastResume = async () => {
     return 'Roast oven is cooling down! Give it a second.';
   }
 
-  // Update persistent rate limit immediately to prevent race conditions and enforce attempt limits
-  lastRoastRequestTime = now;
-  safeSetLocalStorage(ROAST_RATE_LIMIT_KEY, now.toString());
-
   const model = getModel();
   if (!model) {
     return MISSING_API_KEY_ERROR;
@@ -288,7 +286,13 @@ export const roastResume = async () => {
 
   try {
     // Generate roast with timeout protection
-    const result = await withTimeout(model.generateContent(prompt), API_TIMEOUT);
+    const requestPromise = model.generateContent(prompt);
+
+    // Persist rate-limit timestamp only after request dispatch begins
+    lastRoastRequestTime = now;
+    safeSetLocalStorage(ROAST_RATE_LIMIT_KEY, now.toString());
+
+    const result = await withTimeout(requestPromise, API_TIMEOUT);
     const responseText = result.response.text();
     return responseText;
   } catch (error) {
