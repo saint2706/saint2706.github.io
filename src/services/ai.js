@@ -19,6 +19,12 @@ const API_TIMEOUT = 15000; // Maximum time (ms) to wait for API response before 
 const MAX_INPUT_LENGTH = 1000; // Maximum allowed characters in user input to prevent token exhaustion
 const RATE_LIMIT_MS = 2000; // Minimum time (ms) between consecutive requests to prevent API abuse
 const ALLOWED_HISTORY_ROLES = new Set(['user', 'model']);
+const HISTORY_SANITIZATION_LIMITS = {
+  maxEntries: 20,
+  maxPartsPerEntry: 8,
+  maxPartTextLength: 500,
+  maxTotalChars: 4000,
+};
 const MISSING_API_KEY_ERROR =
   'My AI circuits are currently offline. Please check the configuration.';
 const CHAT_RATE_LIMIT_KEY = 'chat_last_request_time';
@@ -205,14 +211,29 @@ export const chatWithGemini = async (userMessage, history = []) => {
  * Sanitizes Gemini chat history and drops malformed entries.
  *
  * @param {Array<object>} history - Candidate chat history entries
+ * @param {object} [limits] - Optional limit overrides
  * @returns {Array<object>} Strictly valid history entries for Gemini API
  */
-export const sanitizeHistoryForGemini = history => {
+export const sanitizeHistoryForGemini = (history, limits = HISTORY_SANITIZATION_LIMITS) => {
   if (!Array.isArray(history)) {
     return [];
   }
 
-  return history.flatMap(entry => {
+  const {
+    maxEntries,
+    maxPartsPerEntry,
+    maxPartTextLength,
+    maxTotalChars,
+  } = { ...HISTORY_SANITIZATION_LIMITS, ...limits };
+
+  const recentHistory = history.slice(-maxEntries);
+  let remainingChars = Number.isFinite(maxTotalChars) ? maxTotalChars : Infinity;
+
+  return recentHistory.flatMap(entry => {
+    if (remainingChars <= 0) {
+      return [];
+    }
+
     if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
       return [];
     }
@@ -221,7 +242,7 @@ export const sanitizeHistoryForGemini = history => {
       return [];
     }
 
-    const sanitizedParts = entry.parts.flatMap(part => {
+    const sanitizedParts = entry.parts.slice(0, maxPartsPerEntry).flatMap(part => {
       if (
         !part ||
         typeof part !== 'object' ||
@@ -236,7 +257,18 @@ export const sanitizeHistoryForGemini = history => {
         return [];
       }
 
-      return [{ text: sanitizedText }];
+      const truncatedText = sanitizedText.slice(0, maxPartTextLength);
+      if (!truncatedText) {
+        return [];
+      }
+
+      if (truncatedText.length > remainingChars) {
+        return [];
+      }
+
+      remainingChars -= truncatedText.length;
+
+      return [{ text: truncatedText }];
     });
 
     if (sanitizedParts.length === 0) {
