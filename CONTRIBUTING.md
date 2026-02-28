@@ -34,14 +34,8 @@ See `docs/THEMING.md` for more details.
 ## Development Workflow
 
 1.  **Clone**: Clone the repository to your local machine.
-2.  **Install Dependencies**: This project is `pnpm`-only. Run `pnpm install` to ensure consistent lockfiles.
+2.  **Install Dependencies**: This project uses `pnpm`. Run `pnpm install` to ensure consistent lockfiles.
 3.  **Branch**: Create a feature branch for your changes (e.g., `feature/new-game` or `fix/typo`).
-
-### Package Manager Policy
-
-- Use only `pnpm` commands (`pnpm install`, `pnpm run <script>`).
-- Do not commit `package-lock.json` or `yarn.lock`.
-- Pull requests that add multiple lockfiles are rejected by CI.
 
 ## Code Standards
 

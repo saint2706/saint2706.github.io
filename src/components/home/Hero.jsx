@@ -2,7 +2,7 @@
  * @fileoverview Hero section for homepage with interactive elements and animations.
  */
 
-import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -28,20 +28,15 @@ const Hero = () => {
   // Easter egg state (click stack array to unlock games page)
   const [clickCount, setClickCount] = useState(0);
   const [isGlitching, setIsGlitching] = useState(false);
-  const resetClickTimeoutRef = useRef(null);
-  const navigateTimeoutRef = useRef(null);
   const CLICKS_REQUIRED = 3;
 
   // Reset click count after 2 seconds of inactivity
   useEffect(() => {
     if (clickCount > 0 && clickCount < CLICKS_REQUIRED) {
-      clearTimeout(resetClickTimeoutRef.current);
-      resetClickTimeoutRef.current = setTimeout(() => setClickCount(0), 2000);
+      const timeout = setTimeout(() => setClickCount(0), 2000);
+      return () => clearTimeout(timeout);
     }
-    return () => clearTimeout(resetClickTimeoutRef.current);
   }, [clickCount]);
-
-  useEffect(() => () => clearTimeout(navigateTimeoutRef.current), []);
 
   /**
    * Handle easter egg activation
@@ -54,8 +49,7 @@ const Hero = () => {
 
     if (newCount >= CLICKS_REQUIRED) {
       setIsGlitching(true);
-      clearTimeout(navigateTimeoutRef.current);
-      navigateTimeoutRef.current = setTimeout(() => {
+      setTimeout(() => {
         navigate('/games');
       }, 1500);
     }

@@ -15,17 +15,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+        with:
+          version: 10.28.0
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           # Keep this aligned with the main CI runtime version.
           node-version: '20'
           cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -36,5 +36,5 @@ jobs:
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         with:
-          commit_message: 'chore: sync blogs [skip ci]'
+          commit_message: "chore: sync blogs [skip ci]"
           file_pattern: src/data/blogs.json

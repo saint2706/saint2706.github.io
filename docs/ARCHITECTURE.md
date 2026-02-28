@@ -51,8 +51,7 @@ A React Context that provides the current theme (`neubrutalism` or `liquid`) and
 
 Security is a primary concern.
 
-- **CSP**: A strict Content Security Policy is enforced via `index.html`, and the file only allows external `<script src="...">` references (no inline scripts).
-- **SEO Schema Strategy**: JSON-LD schema markup is injected dynamically through `src/components/shared/SEOHead.jsx` so route-level metadata stays data-driven instead of being hardcoded in `index.html`.
+- **CSP**: A strict Content Security Policy is enforced via `index.html`.
 - **Sanitization**: All user inputs are sanitized before being processed or rendered.
 - **SRI**: Subresource Integrity is verified for external scripts like Pyodide.
 - **Secrets**: API keys are managed via environment variables and checked for leaks during the build process.
