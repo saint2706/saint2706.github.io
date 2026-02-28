@@ -20,11 +20,11 @@
     "test:python-runner-stdout": "node scripts/test-python-runner-stdout.js",
     "test:pyodide-loader-retry": "node scripts/test-pyodide-loader-retry.js",
     "test:no-aura": "node scripts/check-no-aura.js",
-    "test:security-full": "npm run test:security && npm run test:csp && npm run verify:sri && node scripts/audit-deps.js && node scripts/scan-secrets.js",
+    "test:security-full": "pnpm run test:security && pnpm run test:csp && pnpm run verify:sri && node scripts/audit-deps.js && node scripts/scan-secrets.js",
     "generate:llms": "node scripts/generate-llms.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
-    "generate:geo": "npm run generate:llms && npm run generate:sitemap",
-    "prebuild": "npm run generate:geo"
+    "generate:geo": "pnpm run generate:llms && pnpm run generate:sitemap",
+    "prebuild": "pnpm run generate:geo"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.6",
@@ -73,5 +73,6 @@
       "minimatch": ">=10.2.3",
       "rollup": ">=4.59.0"
     }
-  }
+  },
+  "packageManager": "pnpm@9.0.0"
 }

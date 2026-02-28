@@ -27,6 +27,8 @@ Welcome to the repository for my personal portfolio website. This project showca
 - Node.js 20+
 - pnpm 9+
 
+> ⚠️ This repository is **pnpm-only**. Do not use `npm` or `yarn` commands here.
+
 ### Installation
 
 1. Clone the repository:
@@ -41,6 +43,8 @@ Welcome to the repository for my personal portfolio website. This project showca
    ```bash
    pnpm install
    ```
+
+   The project enforces a single lockfile policy (`pnpm-lock.yaml` only).
 
 3. Set up environment variables:
    Copy `.env.example` to `.env` and add your API keys (e.g., `VITE_GEMINI_API_KEY`).
