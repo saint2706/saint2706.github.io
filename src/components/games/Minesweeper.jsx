@@ -18,6 +18,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RotateCcw, Trophy, Flag, Bomb, Timer } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 const ROWS = 9;
 const COLS = 9;
@@ -215,8 +216,9 @@ const Minesweeper = () => {
   const startTimeRef = useRef(null);
 
   const [bestTime, setBestTime] = useState(() => {
-    const s = localStorage.getItem('minesweeperBest');
-    return s ? parseInt(s, 10) : null;
+    const saved = safeGetLocalStorage('minesweeperBest', '');
+    const parsed = parseInt(saved, 10);
+    return Number.isFinite(parsed) ? parsed : null;
   });
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
@@ -234,7 +236,7 @@ const Minesweeper = () => {
 
       if (!bestTime || duration < bestTime) {
         setBestTime(duration);
-        localStorage.setItem('minesweeperBest', duration.toString());
+        safeSetLocalStorage('minesweeperBest', duration.toString());
       }
       return true;
     },

@@ -2,9 +2,9 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_run:
-    workflows: [ "CI" ]
-    types: [ completed ]
-    branches: [ "main", "master" ]
+    workflows: ['CI']
+    types: [completed]
+    branches: ['main', 'master']
   workflow_dispatch:
 
 permissions:
@@ -36,6 +36,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

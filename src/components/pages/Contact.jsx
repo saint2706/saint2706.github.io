@@ -3,7 +3,7 @@
  * Features call-to-action and availability status.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin, Linkedin, Github, Send, Sparkles, Loader2, CheckCircle } from 'lucide-react';
 import { resumeData } from '../../data/resume';
@@ -41,6 +41,8 @@ const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const submitTimeoutRef = useRef(null);
+  const successTimeoutRef = useRef(null);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -62,13 +64,21 @@ const Contact = () => {
     )}&body=${encodeURIComponent(`${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`)}`;
 
     // Simulate network delay for better UX before opening email client
-    setTimeout(() => {
+    clearTimeout(submitTimeoutRef.current);
+    clearTimeout(successTimeoutRef.current);
+
+    submitTimeoutRef.current = setTimeout(() => {
       window.location.href = mailtoUrl;
       setIsSubmitting(false);
       setSuccess(true);
-      setTimeout(() => setSuccess(false), 5000); // Reset after 5s
+      successTimeoutRef.current = setTimeout(() => setSuccess(false), 5000); // Reset after 5s
     }, 1500);
   };
+
+  useEffect(() => () => {
+    clearTimeout(submitTimeoutRef.current);
+    clearTimeout(successTimeoutRef.current);
+  }, []);
 
   const description =
     'Get in touch for collaborations, analytics consulting, or data storytelling projects.';

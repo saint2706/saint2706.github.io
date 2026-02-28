@@ -164,6 +164,7 @@ const Projects = () => {
                     alt={`Screenshot of ${project.title} project`}
                     className="w-full h-full object-cover"
                     loading={idx < 3 ? 'eager' : 'lazy'}
+                    fetchPriority={idx < 3 ? 'high' : 'auto'}
                     decoding="async"
                   />
                 </div>

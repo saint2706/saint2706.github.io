@@ -33,6 +33,17 @@ jobs:
           node-version: 20
           cache: pnpm
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Enforce pnpm lockfile policy
+        run: |
+          test -f pnpm-lock.yaml
+          test ! -f package-lock.json
+          test ! -f yarn.lock
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

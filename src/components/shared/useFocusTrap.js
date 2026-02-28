@@ -1,5 +1,30 @@
 import { useEffect, useRef, useCallback } from 'react';
 
+let bodyScrollLockCount = 0;
+let previousBodyOverflow = '';
+
+const lockBodyScroll = () => {
+  if (bodyScrollLockCount === 0) {
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+
+  bodyScrollLockCount += 1;
+};
+
+const unlockBodyScroll = () => {
+  if (bodyScrollLockCount === 0) {
+    return;
+  }
+
+  bodyScrollLockCount -= 1;
+
+  if (bodyScrollLockCount === 0) {
+    document.body.style.overflow = previousBodyOverflow;
+    previousBodyOverflow = '';
+  }
+};
+
 /**
  * Hook to trap focus within a container, lock body scroll, and restore focus on close.
  *
@@ -18,6 +43,8 @@ export const useFocusTrap = ({
   preventScroll = true,
 }) => {
   const previousFocus = useRef(null);
+  const initialFocusTimeoutRef = useRef(null);
+  const hasScrollLock = useRef(false);
 
   // Manage focus restoration and scroll lock
   useEffect(() => {
@@ -26,7 +53,8 @@ export const useFocusTrap = ({
 
       // Initial focus
       // Small timeout to allow mounting/animation
-      setTimeout(() => {
+      clearTimeout(initialFocusTimeoutRef.current);
+      initialFocusTimeoutRef.current = setTimeout(() => {
         if (initialFocusRef?.current) {
           initialFocusRef.current.focus();
         } else if (containerRef?.current) {
@@ -38,18 +66,35 @@ export const useFocusTrap = ({
         }
       }, 50);
 
-      if (preventScroll) {
-        document.body.style.overflow = 'hidden';
-      }
     } else {
-      document.body.style.overflow = '';
       previousFocus.current?.focus?.();
     }
 
     return () => {
-      document.body.style.overflow = '';
+      clearTimeout(initialFocusTimeoutRef.current);
     };
-  }, [isOpen, initialFocusRef, containerRef, preventScroll]);
+  }, [isOpen, initialFocusRef, containerRef]);
+
+  useEffect(() => {
+    if (isOpen && preventScroll && !hasScrollLock.current) {
+      lockBodyScroll();
+      hasScrollLock.current = true;
+    }
+
+    if ((!isOpen || !preventScroll) && hasScrollLock.current) {
+      unlockBodyScroll();
+      hasScrollLock.current = false;
+    }
+
+    return () => {
+      if (hasScrollLock.current) {
+        unlockBodyScroll();
+        hasScrollLock.current = false;
+      }
+    };
+  }, [isOpen, preventScroll]);
+
+  useEffect(() => () => clearTimeout(initialFocusTimeoutRef.current), []);
 
   // Handle keyboard navigation (Trap + Escape)
   const handleKeyDown = useCallback(
