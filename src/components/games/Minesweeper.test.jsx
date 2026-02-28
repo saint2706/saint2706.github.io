@@ -20,14 +20,25 @@ vi.mock('framer-motion', async () => {
     useReducedMotion: () => false,
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
+      div: ({
+        children,
+        whileTap: _whileTap,
+        initial: _initial,
+        animate: _animate,
+        exit: _exit,
+        transition: _transition,
+        ...props
+      }) => <div {...props}>{children}</div>,
 
-      div: ({ children, whileTap: _whileTap, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
-        <div {...props}>{children}</div>
-      ),
-
-      button: ({ children, whileTap: _whileTap, initial: _initial, animate: _animate, exit: _exit, transition: _transition, ...props }) => (
-        <button {...props}>{children}</button>
-      ),
+      button: ({
+        children,
+        whileTap: _whileTap,
+        initial: _initial,
+        animate: _animate,
+        exit: _exit,
+        transition: _transition,
+        ...props
+      }) => <button {...props}>{children}</button>,
     },
   };
 });
