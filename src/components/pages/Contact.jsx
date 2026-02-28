@@ -128,7 +128,11 @@ const Contact = () => {
                 </div>
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
+                  <label htmlFor="name" className="sr-only">
+                    Your name
+                  </label>
                   <input
+                    id="name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -140,7 +144,11 @@ const Contact = () => {
                     disabled={isSubmitting}
                     className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                   />
+                  <label htmlFor="email" className="sr-only">
+                    Your email
+                  </label>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={formData.email}
