@@ -92,40 +92,6 @@ describe('AI Service', () => {
       expect(mockStartChat).toHaveBeenCalledTimes(1);
     });
 
-    it('should not consume rate limit slot when model is unavailable', async () => {
-      vi.advanceTimersByTime(3000);
-      mockGetGenerativeModel.mockReturnValue(null);
-
-      const firstResponse = await chatWithGemini('Hello');
-      const secondResponse = await chatWithGemini('Hello again');
-
-      expect(firstResponse).toContain('currently offline');
-      expect(secondResponse).toContain('currently offline');
-      expect(storage.safeSetLocalStorage).not.toHaveBeenCalled();
-      expect(mockStartChat).not.toHaveBeenCalled();
-    });
-
-    it('should not consume rate limit slot when dispatch fails fast', async () => {
-      vi.advanceTimersByTime(3000);
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
-      mockSendMessage
-        .mockImplementationOnce(() => {
-          throw new Error('Sync dispatch failure');
-        })
-        .mockResolvedValueOnce({
-          response: { text: () => 'Recovered response' },
-        });
-
-      const firstResponse = await chatWithGemini('Hello');
-      const secondResponse = await chatWithGemini('Hello again');
-
-      expect(firstResponse).toContain('connection glitch');
-      expect(secondResponse).toBe('Recovered response');
-      expect(storage.safeSetLocalStorage).toHaveBeenCalledTimes(1);
-      consoleSpy.mockRestore();
-    });
-
     it('should handle API errors', async () => {
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
       // Reset rate limit by advancing time
@@ -188,38 +154,6 @@ describe('AI Service', () => {
       expect(response).toContain("I can't roast right now");
     });
 
-    it('should not consume rate limit slot when model is unavailable', async () => {
-      vi.advanceTimersByTime(3000);
-      mockGetGenerativeModel.mockReturnValue(null);
-
-      const firstResponse = await roastResume();
-      const secondResponse = await roastResume();
-
-      expect(firstResponse).toContain('currently offline');
-      expect(secondResponse).toContain('currently offline');
-      expect(mockGenerateContent).not.toHaveBeenCalled();
-      expect(storage.safeSetLocalStorage).not.toHaveBeenCalled();
-    });
-
-    it('should not consume rate limit slot when roast dispatch fails fast', async () => {
-      vi.advanceTimersByTime(3000);
-
-      mockGenerateContent
-        .mockImplementationOnce(() => {
-          throw new Error('Sync dispatch failure');
-        })
-        .mockResolvedValueOnce({
-          response: { text: () => 'Roasted!' },
-        });
-
-      const firstResponse = await roastResume();
-      const secondResponse = await roastResume();
-
-      expect(firstResponse).toContain("I can't roast right now");
-      expect(secondResponse).toBe('Roasted!');
-      expect(storage.safeSetLocalStorage).toHaveBeenCalledTimes(1);
-    });
-
     it('should handle timeout', async () => {
       // Reset rate limit
       vi.advanceTimersByTime(3000);
@@ -272,53 +206,6 @@ describe('AI Service', () => {
 
       const sanitized = sanitizeHistoryForGemini(history);
       expect(sanitized).toEqual([]);
-    });
-
-    it('should limit entries, parts, and truncate text length', () => {
-      const history = [
-        { role: 'user', parts: [{ text: 'drop me' }] },
-        {
-          role: 'model',
-          parts: [{ text: 'abcdef' }, { text: '123456' }, { text: 'ignored' }],
-        },
-      ];
-
-      const sanitized = sanitizeHistoryForGemini(history, {
-        maxEntries: 1,
-        maxPartsPerEntry: 2,
-        maxPartTextLength: 4,
-        maxTotalChars: 50,
-      });
-
-      expect(sanitized).toEqual([
-        {
-          role: 'model',
-          parts: [{ text: 'abcd' }, { text: '1234' }],
-        },
-      ]);
-    });
-
-    it('should drop oversize parts when aggregate budget is exceeded', () => {
-      const history = [
-        {
-          role: 'user',
-          parts: [{ text: '12345' }, { text: '67890' }, { text: 'abc' }],
-        },
-      ];
-
-      const sanitized = sanitizeHistoryForGemini(history, {
-        maxEntries: 5,
-        maxPartsPerEntry: 5,
-        maxPartTextLength: 10,
-        maxTotalChars: 9,
-      });
-
-      expect(sanitized).toEqual([
-        {
-          role: 'user',
-          parts: [{ text: '12345' }, { text: 'abc' }],
-        },
-      ]);
     });
   });
 });

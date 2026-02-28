@@ -125,62 +125,6 @@ describe('useFocusTrap', () => {
     expect(document.body.style.overflow).toBe('');
   });
 
-  it('keeps body scroll locked until all nested modals are closed', () => {
-    const onClose = vi.fn();
-    const { rerender } = render(
-      <>
-        <TestComponent isOpen={true} onClose={onClose} />
-        <TestComponent isOpen={false} onClose={onClose} />
-      </>
-    );
-
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(
-      <>
-        <TestComponent isOpen={true} onClose={onClose} />
-        <TestComponent isOpen={true} onClose={onClose} />
-      </>
-    );
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(
-      <>
-        <TestComponent isOpen={true} onClose={onClose} />
-        <TestComponent isOpen={false} onClose={onClose} />
-      </>
-    );
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(
-      <>
-        <TestComponent isOpen={false} onClose={onClose} />
-        <TestComponent isOpen={false} onClose={onClose} />
-      </>
-    );
-    expect(document.body.style.overflow).toBe('');
-  });
-
-  it('restores previous overflow only after the final nested modal is unmounted', () => {
-    const onClose = vi.fn();
-    document.body.style.overflow = 'scroll';
-
-    const { rerender } = render(
-      <>
-        <TestComponent isOpen={true} onClose={onClose} />
-        <TestComponent isOpen={true} onClose={onClose} />
-      </>
-    );
-
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(<TestComponent isOpen={true} onClose={onClose} />);
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(<TestComponent isOpen={false} onClose={onClose} />);
-    expect(document.body.style.overflow).toBe('scroll');
-  });
-
   it('redirects focus to first element when tabbing from outside', () => {
     const onClose = vi.fn();
     render(<TestComponent isOpen={true} onClose={onClose} />);

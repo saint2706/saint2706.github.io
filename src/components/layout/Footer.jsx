@@ -3,7 +3,7 @@
  * and a hidden easter egg.
  */
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTheme } from '../shared/theme-context';
 import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
 import ScrollReveal from '../shared/ScrollReveal';
@@ -21,7 +21,6 @@ const Footer = () => {
   const [heartClicks, setHeartClicks] = useState(0);
   const [showSecret, setShowSecret] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const confettiTimeoutRef = useRef(null);
   const HEARTS_REQUIRED = 5;
 
   /** Handle easter egg heart clicks */
@@ -31,12 +30,9 @@ const Footer = () => {
     if (next >= HEARTS_REQUIRED && !showSecret) {
       setShowSecret(true);
       setShowConfetti(true);
-      clearTimeout(confettiTimeoutRef.current);
-      confettiTimeoutRef.current = setTimeout(() => setShowConfetti(false), 3000);
+      setTimeout(() => setShowConfetti(false), 3000);
     }
   }, [heartClicks, showSecret]);
-
-  useEffect(() => () => clearTimeout(confettiTimeoutRef.current), []);
 
   /** Pre-generate confetti particle styles (only computed once on mount) */
   const [confettiParticles] = useState(() =>
