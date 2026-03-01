@@ -118,7 +118,7 @@ const LightsOut = () => {
     const allOff = grid.every(row => row.every(cell => !cell));
 
     if (allOff) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setGameState('won');
       if (!bestScore || moves < bestScore) {
         setBestScore(moves);
