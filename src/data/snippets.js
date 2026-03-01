@@ -1,6 +1,10 @@
 // Curated code snippets for the Playground page
 // Focus: Advanced, impressive one-liners and techniques
 
+/**
+ * Pre-defined code snippets available in the Python Playground and CSS examples.
+ * @type {Array<Object>}
+ */
 export const snippets = [
   // ===== PYTHON ONE-LINERS =====
   {
@@ -596,12 +600,23 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
 ];
 
 // Helper to get snippets by language
+/**
+ * Retrieves snippets matching a specific programming language.
+ *
+ * @param {string} language - The language to filter by (e.g., 'python', 'css', 'all').
+ * @returns {Array<Object>} An array of snippet objects for the given language.
+ */
 export const getSnippetsByLanguage = language => {
   if (language === 'all') return snippets;
   return snippets.filter(s => s.language === language);
 };
 
 // Get unique categories
+/**
+ * Extracts a unique list of snippet categories from the available snippets.
+ *
+ * @returns {Array<string>} An array of unique category names.
+ */
 export const getCategories = () => {
   return [...new Set(snippets.map(s => s.category))];
 };

@@ -1,3 +1,8 @@
+/**
+ * Motion configuration constants for the "liquid" theme.
+ * Defines durations, easings, spring physics, and positional offsets.
+ * @type {Object}
+ */
 export const LIQUID_MOTION = {
   duration: {
     reveal: 0.6,
@@ -68,6 +73,13 @@ const getLiquidVariants = () => {
   };
 };
 
+/**
+ * Retrieves the Framer Motion variant object for a given animation name in the "liquid" theme.
+ * Caches the variants internally for performance.
+ *
+ * @param {string} variant - The name of the variant to retrieve (e.g., 'fade-up', 'scale-in').
+ * @returns {Object} The Framer Motion variant object containing `hidden` and `visible` states.
+ */
 export const getLiquidRevealVariant = variant => {
   if (!LIQUID_VARIANTS_CACHE) {
     LIQUID_VARIANTS_CACHE = getLiquidVariants();

@@ -1,4 +1,9 @@
 // Source of truth for the portfolio site
+/**
+ * Centralized resume and portfolio data object.
+ * Used across the application for the Resume page, Projects, and AI context.
+ * @type {Object}
+ */
 export const resumeData = {
   basics: {
     name: 'Rishabh Agrawal',

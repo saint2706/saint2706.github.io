@@ -14,6 +14,14 @@ const THEMES = {
 
 const isValidTheme = theme => [THEMES.neubrutalism, THEMES.liquid].includes(theme);
 
+/**
+ * Provides the application theme context to its children.
+ * Handles theme retrieval, persistence, toggling, and View Transitions API.
+ *
+ * @param {object} props - Component props.
+ * @param {React.ReactNode} props.children - Child components to wrap.
+ * @returns {JSX.Element} The ThemeContext provider.
+ */
 export const ThemeProvider = ({ children }) => {
   const [theme, setThemeState] = useState(() => {
     const storedTheme = safeGetLocalStorage(THEME_STORAGE_KEY, THEMES.neubrutalism);
