@@ -12,12 +12,25 @@ import blogs from '../data/blogs.json';
 /*  Constants                                              */
 /* ──────────────────────────────────────────────────────── */
 
+/** @type {string} Base URL of the website */
 export const SITE_URL = resumeData.basics.website;
+
+/** @type {string} Name of the website/owner */
 export const SITE_NAME = 'Rishabh Agrawal';
+
+/** @type {string} Suffix for the page title */
 export const SITE_TITLE_SUFFIX = '| Rishabh Agrawal';
+
+/** @type {string} Default Open Graph image URL */
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+
+/** @type {string} Twitter handle of the website owner */
 export const TWITTER_HANDLE = '@saint2706'; // update if you have one
+
+/** @type {string} Locale of the website */
 export const LOCALE = 'en_US';
+
+/** @type {string} Theme color for PWA and browser UI */
 export const THEME_COLOR = '#1e1e2e'; // dark background
 
 /* ──────────────────────────────────────────────────────── */

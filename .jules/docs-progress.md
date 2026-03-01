@@ -1,0 +1,2 @@
+- Added JSDocs to exported functions in src/utils/seo.js, src/components/shared/themeMotion.js, src/components/shared/chatHistory.js, src/components/shared/ThemeProvider.jsx, src/components/shared/pyodideLoader.js
+- Fixed broken localhost link in README.md

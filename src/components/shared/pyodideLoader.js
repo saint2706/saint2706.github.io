@@ -53,6 +53,12 @@ export const loadPyodide = async () => {
   return pyodideLoadingPromise;
 };
 
+/**
+ * Resets the internal Pyodide loader state.
+ * This is primarily used for testing purposes to ensure a clean state between tests.
+ *
+ * @private
+ */
 export const __resetPyodideLoaderForTests = () => {
   pyodideInstance = null;
   pyodideLoadingPromise = null;
