@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
-import { breadcrumbSchema, SITE_URL } from '../../utils/seo';
+import { breadcrumbSchema, SITE_URL, gamesSchema } from '../../utils/seo';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -60,6 +60,7 @@ const Games = () => {
       { name: 'Home', url: SITE_URL },
       { name: 'Games', url: `${SITE_URL}/games` },
     ]),
+    gamesSchema(),
   ];
 
   /** Available games configuration */
@@ -81,13 +82,7 @@ const Games = () => {
 
   return (
     <>
-      <SEOHead
-        title={title}
-        description={description}
-        path="/games"
-        noindex
-        schemas={gamesSchemas}
-      />
+      <SEOHead title={title} description={description} path="/games" schemas={gamesSchemas} />
 
       <div className="max-w-4xl mx-auto py-12 px-4 text-[color:var(--text-primary)]">
         {/* Header */}
