@@ -1,7 +1,6 @@
 # ─── Search Engine Crawlers ───
 User-agent: *
 Allow: /
-Disallow: /games
 
 # ─── AI Crawlers ───
 # Optimization for GEO (Generative Engine Optimization)

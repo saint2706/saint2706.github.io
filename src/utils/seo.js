@@ -96,6 +96,27 @@ export function personSchemaFull() {
 }
 
 /**
+ * SoftwareApplication schema for the Games page.
+ */
+export function gamesSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Interactive Mini-Games',
+    operatingSystem: 'Browser',
+    applicationCategory: 'GameApplication',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description:
+      'A collection of interactive mini-games including Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.',
+    author: personSchemaCompact(),
+  };
+}
+
+/**
  * SoftwareApplication schema for the Playground.
  */
 export function playgroundSchema() {
