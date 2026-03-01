@@ -68,7 +68,9 @@ describe('TicTacToe', () => {
     fireEvent.click(emptyCells[4]);
 
     // Now cell 4 should be marked by player
-    expect(screen.getByRole('button', { name: /Row 2, Column 2, marked by you/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Row 2, Column 2, marked by you/i })
+    ).toBeInTheDocument();
 
     // AI thinks
     const aiThinkingMessages = screen.getAllByText('AI is thinking...');
@@ -80,7 +82,9 @@ describe('TicTacToe', () => {
     });
 
     // AI (using deterministic random 0) will pick the first empty slot, which is index 0.
-    expect(screen.getByRole('button', { name: /Row 1, Column 1, marked by AI/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Row 1, Column 1, marked by AI/i })
+    ).toBeInTheDocument();
 
     // Back to player's turn
     expect(screen.getByText('Your turn')).toBeInTheDocument();
@@ -90,7 +94,7 @@ describe('TicTacToe', () => {
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
 
-    const getCell = (index) => {
+    const getCell = index => {
       const row = Math.floor(index / 3) + 1;
       const col = (index % 3) + 1;
       return screen.getByRole('button', { name: new RegExp(`Row ${row}, Column ${col}`) });
@@ -98,11 +102,15 @@ describe('TicTacToe', () => {
 
     // P X(4) -> AI O(0)
     fireEvent.click(getCell(4));
-    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
 
     // P X(1) -> AI O(2)
     fireEvent.click(getCell(1));
-    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
 
     // P X(7) -> win line 1,4,7
     fireEvent.click(getCell(7));
@@ -115,16 +123,20 @@ describe('TicTacToe', () => {
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
 
-    const getCell = (index) => {
+    const getCell = index => {
       const row = Math.floor(index / 3) + 1;
       const col = (index % 3) + 1;
       return screen.getByRole('button', { name: new RegExp(`Row ${row}, Column ${col}`) });
     };
 
     fireEvent.click(getCell(4));
-    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
     fireEvent.click(getCell(1));
-    await act(async () => { await vi.advanceTimersByTimeAsync(500); });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
     fireEvent.click(getCell(7));
 
     // Restart
