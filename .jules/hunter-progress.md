@@ -22,3 +22,9 @@
 
 - **Fixed Runtime Safety**: Updated `src/components/shared/CustomCursor.jsx` to handle text nodes safely by checking `nodeType` and accessing the parent node before checking matches. This prevents runtime errors when hovering over text directly.
 - **Verified**: Build and Lint passed.
+
+## Session 5
+
+- **Fixed Formatting**: Fixed Prettier formatting violation in `src/data/blogs.json` preventing `pnpm run format:check` from passing.
+- **Fixed Lint Warning**: Addressed incomplete `// eslint-disable-next-line` in `src/components/games/LightsOut.jsx` by explicitly declaring the `react-hooks/set-state-in-effect` rule that caused an ESLint error when running `pnpm run lint`.
+- **Verified**: Build, Lint, and Tests passed.
