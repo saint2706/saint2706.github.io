@@ -160,7 +160,11 @@ const Contact = () => {
                     disabled={isSubmitting}
                     className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                   />
+                  <label htmlFor="message" className="sr-only">
+                    Project details
+                  </label>
                   <textarea
+                    id="message"
                     rows={5}
                     name="message"
                     value={formData.message}

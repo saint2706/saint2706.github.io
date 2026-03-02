@@ -670,6 +670,9 @@ const ChatInterface = ({ onClose }) => {
         >
           <div className="flex gap-2 items-start">
             <div className="flex-grow relative">
+              <label htmlFor="chatbot-input" className="sr-only">
+                Type a message
+              </label>
               <input
                 ref={inputRef}
                 type="text"

@@ -21,6 +21,13 @@ Implements various UX and accessibility enhancements across the application, foc
 
 - **Typing Indicator**: Wrapped the typing indicator in a container with `role="status"` and `aria-label="AI is typing"` to ensure screen readers announce when the bot is processing.
 - **Close Button**: Added a native `title="Close chat"` tooltip to the chat window's close button for better discoverability.
+- **Form Inputs**: Added an explicitly linked hidden `<label>` to the `<input>` element to improve form accessibility for screen readers.
+
+### 4. Form Labels Accessibility
+
+- **Contact Form**: Added explicitly linked hidden `<label>` tags to the `message` `<textarea>` to improve form accessibility for screen readers.
+- **Terminal Mode**: Added explicitly linked hidden `<label>` tags to the `<input>` element.
+- **Command Palette**: Added explicitly linked hidden `<label>` tags to the `<input>` element.
 
 ## Verification
 

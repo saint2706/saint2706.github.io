@@ -265,7 +265,11 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                 )}
               >
                 <Search size={20} className="text-secondary flex-shrink-0" />
+                <label htmlFor="command-palette-input" className="sr-only">
+                  Search commands
+                </label>
                 <input
+                  id="command-palette-input"
                   ref={inputRef}
                   type="text"
                   value={query}
