@@ -19,7 +19,12 @@ import blogs from '../../data/blogs.json';
 import { resumeData } from '../../data/resume';
 import { isSafeHref } from '../../utils/security';
 import SEOHead from '../shared/SEOHead';
-import { breadcrumbSchema, blogCollectionSchema, SITE_URL } from '../../utils/seo';
+import {
+  breadcrumbSchema,
+  blogCollectionSchema,
+  blogPostingSchema,
+  SITE_URL,
+} from '../../utils/seo';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -60,6 +65,7 @@ const Blog = () => {
       { name: 'Blog', url: `${SITE_URL}/blog` },
     ]),
     blogCollectionSchema(),
+    ...blogs.map(blog => blogPostingSchema(blog)),
   ];
 
   /**
