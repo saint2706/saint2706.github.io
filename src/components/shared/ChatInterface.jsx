@@ -127,6 +127,8 @@ const ImageRenderer = ({ src, alt, ...rest }) => {
       alt={alt || 'Chat image'}
       className="max-w-full h-auto rounded-lg my-2 border-2 border-[color:var(--color-border)]"
       loading="lazy"
+      width={800}
+      height={600}
       {...rest}
     />
   );

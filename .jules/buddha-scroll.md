@@ -52,3 +52,25 @@ Implemented Core Web Vitals, traditional SEO, and AI discoverability improvement
 
 3.  **[PERF] Optimized Image Priority on Projects Page**:
     - Modified `src/components/pages/Projects.jsx` to add `fetchPriority="high"` to the first three project images, matching their `loading="eager"` behavior. This optimizes the Largest Contentful Paint (LCP) for faster initial rendering.
+
+## Date: $(date +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Implemented Core Web Vitals (CLS), traditional SEO, and AI discoverability improvements for JSON-LD and Image handling.
+
+### Changes
+
+1.  **[GEO] Fixed JSON-LD Script Injection:**
+    - Updated `src/components/shared/SEOHead.jsx` to use `dangerouslySetInnerHTML={{ __html: json }}` for `<script type="application/ld+json">`.
+    - This prevents React from improperly escaping JSON strings, ensuring search engines and AI agents can correctly parse the structured data across the site.
+
+2.  **[PERF] Improved Image CLS:**
+    - Added explicit `width` and `height` dimensions to `<img>` tags in `src/components/pages/Projects.jsx` (`width={600}` `height={400}`) and `src/components/shared/ChatInterface.jsx` (`width={800}` `height={600}`).
+    - This prevents Cumulative Layout Shifts (CLS) as images load, improving Core Web Vitals.
+
+3.  **[SEO] Added TechArticle Schema:**
+    - Created `blogPostingSchema` in `src/utils/seo.js` mapped to individual blog posts.
+    - Implemented dynamically in `src/components/pages/Blog.jsx` so each article gets item-level structured data (`TechArticle`), enhancing search visibility and intelligence for AI agents.

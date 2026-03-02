@@ -61,6 +61,28 @@ export function websiteSchema() {
 }
 
 /**
+ * TechArticle/BlogPosting schema for an individual blog post.
+ * @param {Object} blog - Blog post object from blogs.json
+ */
+export function blogPostingSchema(blog) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: blog.title,
+    description: blog.summary,
+    url: blog.link,
+    datePublished: blog.date,
+    author: personSchemaCompact(),
+    image: blog.coverImage || DEFAULT_OG_IMAGE,
+    publisher: {
+      '@type': 'Organization',
+      name: blog.source,
+    },
+    keywords: blog.tags?.join(', '),
+  };
+}
+
+/**
  * Compact Person reference (used as nested author/creator).
  */
 export function personSchemaCompact() {

@@ -87,9 +87,12 @@ const SEOHead = ({
 
       {/* JSON-LD Structured Data */}
       {serializedSchemas.map((json, i) => (
-        <script key={i} type="application/ld+json">
-          {json}
-        </script>
+        <script
+          key={i}
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: json }}
+        />
       ))}
 
       {children}

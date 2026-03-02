@@ -166,6 +166,8 @@ const Projects = () => {
                     loading={idx < 3 ? 'eager' : 'lazy'}
                     fetchPriority={idx < 3 ? 'high' : undefined}
                     decoding="async"
+                    width={600}
+                    height={400}
                   />
                 </div>
               )}
