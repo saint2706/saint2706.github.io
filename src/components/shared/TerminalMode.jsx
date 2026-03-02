@@ -358,8 +358,12 @@ Just kidding... but seriously, let's chat!
 
                 {/* Input Line */}
                 <div className="flex items-center gap-2 mt-1">
+                  <label htmlFor="terminal-input" className="sr-only">
+                    Terminal input
+                  </label>
                   <span className="text-green-400 flex-shrink-0">$</span>
                   <input
+                    id="terminal-input"
                     ref={inputRef}
                     type="text"
                     value={input}
