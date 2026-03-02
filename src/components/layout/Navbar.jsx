@@ -38,8 +38,11 @@ const NAV_ITEMS = [
 /**
  * Navigation bar component with desktop and mobile layouts.
  * Renders the same structural HTML for both themes — only visual classes differ.
+ *
+ * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
+ * when parent Layout state (like CustomCursor position or CommandPalette) changes.
  */
-const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
+const Navbar = React.memo(({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
@@ -307,6 +310,8 @@ const Navbar = ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onTogg
       </div>
     </motion.nav>
   );
-};
+});
+
+Navbar.displayName = 'Navbar';
 
 export default Navbar;
