@@ -42,275 +42,279 @@ const NAV_ITEMS = [
  * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
  * when parent Layout state (like CustomCursor position or CommandPalette) changes.
  */
-const Navbar = React.memo(({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const menuRef = useRef(null);
-  const menuButtonRef = useRef(null);
-  const shouldReduceMotion = useReducedMotion();
-  const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
-  const isLiquid = theme === 'liquid';
+const Navbar = React.memo(
+  ({ cursorEnabled, cursorToggleDisabled, cursorToggleLabel, onToggleCursor }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const menuRef = useRef(null);
+    const menuButtonRef = useRef(null);
+    const shouldReduceMotion = useReducedMotion();
+    const location = useLocation();
+    const { theme, toggleTheme } = useTheme();
+    const isLiquid = theme === 'liquid';
 
-  // Scroll-aware navbar compaction for liquid theme
-  useEffect(() => {
-    if (!isLiquid) {
-      setIsScrolled(false);
-      return undefined;
-    }
-    const handleScroll = () => setIsScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isLiquid]);
+    // Scroll-aware navbar compaction for liquid theme
+    useEffect(() => {
+      if (!isLiquid) {
+        setIsScrolled(false);
+        return undefined;
+      }
+      const handleScroll = () => setIsScrolled(window.scrollY > 60);
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [isLiquid]);
 
-  // Close chatbot when mobile menu opens to prevent UI conflicts
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.dispatchEvent(new CustomEvent('closeChatbot'));
-    }
-  }, [isMenuOpen]);
+    // Close chatbot when mobile menu opens to prevent UI conflicts
+    useEffect(() => {
+      if (isMenuOpen) {
+        document.dispatchEvent(new CustomEvent('closeChatbot'));
+      }
+    }, [isMenuOpen]);
 
-  // Close mobile menu when navigating between routes
-  useEffect(() => {
-    if (isMenuOpen) {
+    // Close mobile menu when navigating between routes
+    useEffect(() => {
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.pathname]);
+
+    const handleCloseMenu = () => {
       setIsMenuOpen(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+      menuButtonRef.current?.focus();
+    };
 
-  const handleCloseMenu = () => {
-    setIsMenuOpen(false);
-    menuButtonRef.current?.focus();
-  };
+    // Use shared hook for focus trapping and keyboard navigation
+    useFocusTrap({
+      isOpen: isMenuOpen,
+      containerRef: menuRef,
+      onClose: handleCloseMenu,
+      preventScroll: false,
+    });
 
-  // Use shared hook for focus trapping and keyboard navigation
-  useFocusTrap({
-    isOpen: isMenuOpen,
-    containerRef: menuRef,
-    onClose: handleCloseMenu,
-    preventScroll: false,
-  });
+    // Manage aria-hidden when menu toggles
+    useEffect(() => {
+      const main = document.getElementById('main-content');
+      if (isMenuOpen) {
+        if (main) main.setAttribute('aria-hidden', 'true');
+      } else {
+        if (main) main.removeAttribute('aria-hidden');
+      }
+    }, [isMenuOpen]);
 
-  // Manage aria-hidden when menu toggles
-  useEffect(() => {
-    const main = document.getElementById('main-content');
-    if (isMenuOpen) {
-      if (main) main.setAttribute('aria-hidden', 'true');
-    } else {
-      if (main) main.removeAttribute('aria-hidden');
-    }
-  }, [isMenuOpen]);
+    // Listen for custom event from chatbot to close this menu
+    useEffect(() => {
+      const handleCloseMobileMenu = () => setIsMenuOpen(false);
+      document.addEventListener('closeMobileMenu', handleCloseMobileMenu);
+      return () => document.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
+    }, []);
 
-  // Listen for custom event from chatbot to close this menu
-  useEffect(() => {
-    const handleCloseMobileMenu = () => setIsMenuOpen(false);
-    document.addEventListener('closeMobileMenu', handleCloseMobileMenu);
-    return () => document.removeEventListener('closeMobileMenu', handleCloseMobileMenu);
-  }, []);
+    /* ── Theme-dependent class maps ── */
 
-  /* ── Theme-dependent class maps ── */
-
-  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${
-    isLiquid
-      ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}`
-      : 'py-4 md:py-5'
-  }`;
-
-  const containerCls = isLiquid
-    ? 'lg-surface-1 lg-specular-rim flex items-center justify-between w-full max-w-5xl h-[64px] px-6 pointer-events-auto transition-all duration-300'
-    : 'relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
-
-  const logoCls = isLiquid
-    ? 'lg-surface-3 px-4 py-1.5 rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap text-sm'
-    : 'text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb whitespace-nowrap';
-
-  const desktopLinkCls = useCallback(
-    isActive =>
+    const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${
       isLiquid
-        ? `touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
-            isActive
-              ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
-              : 'text-[color:var(--text-secondary)] hover:bg-white/40'
-          }`
-        : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
-            isActive
-              ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
-              : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
-          }`,
-    [isLiquid]
-  );
+        ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}`
+        : 'py-4 md:py-5'
+    }`;
 
-  const actionBtnCls = isLiquid
-    ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
-    : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary';
+    const containerCls = isLiquid
+      ? 'lg-surface-1 lg-specular-rim flex items-center justify-between w-full max-w-5xl h-[64px] px-6 pointer-events-auto transition-all duration-300'
+      : 'relative max-w-5xl mx-auto px-4 py-3 flex justify-between items-center bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
 
-  const mobileBtnCls = isLiquid
-    ? 'text-[color:var(--text-primary)] lg-surface-3 rounded-full'
-    : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb';
+    const logoCls = isLiquid
+      ? 'lg-surface-3 px-4 py-1.5 rounded-full text-[color:var(--text-primary)] font-heading font-bold whitespace-nowrap text-sm'
+      : 'text-xl font-heading font-bold text-primary bg-fun-yellow px-2 py-1 border-2 border-[color:var(--color-border)] rounded-nb whitespace-nowrap';
 
-  const mobileMenuCls = isLiquid
-    ? 'lg-surface-2 lg-specular-rim'
-    : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
+    const desktopLinkCls = useCallback(
+      isActive =>
+        isLiquid
+          ? `touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
+              isActive
+                ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
+                : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+            }`
+          : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
+              isActive
+                ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
+                : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+            }`,
+      [isLiquid]
+    );
 
-  const mobileThemeBtnCls = isLiquid
-    ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
-    : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb';
+    const actionBtnCls = isLiquid
+      ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+      : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary';
 
-  const mobileLinkCls = useCallback(
-    (isActive, index) => {
-      const base =
-        'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200';
-      const activeStyle = isLiquid
-        ? isActive
-          ? 'bg-white/60 text-[color:var(--text-primary)]'
-          : 'text-[color:var(--text-secondary)] hover:bg-white/40'
-        : isActive
-          ? 'bg-fun-yellow text-black'
-          : 'text-primary hover:bg-secondary';
-      const separator =
-        !isLiquid && index < NAV_ITEMS.length - 1
-          ? 'border-b-2 border-[color:var(--color-border)]'
-          : '';
-      return `${base} ${activeStyle} ${separator}`;
-    },
-    [isLiquid]
-  );
+    const mobileBtnCls = isLiquid
+      ? 'text-[color:var(--text-primary)] lg-surface-3 rounded-full'
+      : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb';
 
-  return (
-    <motion.nav
-      initial={shouldReduceMotion ? false : { y: -100 }}
-      animate={{ y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={navCls}
-    >
-      <div className={containerCls}>
-        {/* ── Logo ── */}
-        <NavLink
-          to="/"
-          className="flex items-center gap-4 group flex-shrink-0"
-          aria-label="Rishabh Agrawal - Home page"
-        >
-          <span className={logoCls}>&lt;Rishabh /&gt;</span>
-        </NavLink>
+    const mobileMenuCls = isLiquid
+      ? 'lg-surface-2 lg-specular-rim'
+      : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
 
-        {/* ── Desktop Navigation ── */}
-        <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
-          {NAV_ITEMS.map(item => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) => desktopLinkCls(isActive)}
+    const mobileThemeBtnCls = isLiquid
+      ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+      : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb';
+
+    const mobileLinkCls = useCallback(
+      (isActive, index) => {
+        const base =
+          'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200';
+        const activeStyle = isLiquid
+          ? isActive
+            ? 'bg-white/60 text-[color:var(--text-primary)]'
+            : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+          : isActive
+            ? 'bg-fun-yellow text-black'
+            : 'text-primary hover:bg-secondary';
+        const separator =
+          !isLiquid && index < NAV_ITEMS.length - 1
+            ? 'border-b-2 border-[color:var(--color-border)]'
+            : '';
+        return `${base} ${activeStyle} ${separator}`;
+      },
+      [isLiquid]
+    );
+
+    return (
+      <motion.nav
+        initial={shouldReduceMotion ? false : { y: -100 }}
+        animate={{ y: 0 }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+        }
+        className={navCls}
+      >
+        <div className={containerCls}>
+          {/* ── Logo ── */}
+          <NavLink
+            to="/"
+            className="flex items-center gap-4 group flex-shrink-0"
+            aria-label="Rishabh Agrawal - Home page"
+          >
+            <span className={logoCls}>&lt;Rishabh /&gt;</span>
+          </NavLink>
+
+          {/* ── Desktop Navigation ── */}
+          <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
+            {NAV_ITEMS.map(item => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) => desktopLinkCls(isActive)}
+              >
+                <span className="hidden lg:inline opacity-70" aria-hidden="true">
+                  {item.icon}
+                </span>
+                <span>{item.name}</span>
+              </NavLink>
+            ))}
+          </div>
+
+          {/* ── Right Actions ── */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
+              aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
             >
-              <span className="hidden lg:inline opacity-70" aria-hidden="true">
-                {item.icon}
+              {isLiquid ? <Grid size={18} /> : <Moon size={18} />}
+              <span
+                className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                aria-hidden="true"
+              >
+                {isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}
               </span>
-              <span>{item.name}</span>
-            </NavLink>
-          ))}
-        </div>
+            </button>
 
-        {/* ── Right Actions ── */}
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
-            aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
-          >
-            {isLiquid ? <Grid size={18} /> : <Moon size={18} />}
-            <span
-              className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
-              aria-hidden="true"
+            {/* Cursor Toggle */}
+            <button
+              type="button"
+              onClick={onToggleCursor}
+              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
+              aria-pressed={cursorEnabled}
+              aria-label={cursorToggleLabel}
+              disabled={cursorToggleDisabled}
             >
-              {isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}
-            </span>
-          </button>
+              <MousePointer2 size={18} aria-hidden="true" />
+              <span
+                className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
+                aria-hidden="true"
+              >
+                {cursorToggleLabel}
+              </span>
+            </button>
 
-          {/* Cursor Toggle */}
-          <button
-            type="button"
-            onClick={onToggleCursor}
-            className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
-            aria-pressed={cursorEnabled}
-            aria-label={cursorToggleLabel}
-            disabled={cursorToggleDisabled}
-          >
-            <MousePointer2 size={18} aria-hidden="true" />
-            <span
-              className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
-              aria-hidden="true"
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              ref={menuButtonRef}
+              className={`md:hidden p-3 cursor-pointer ${mobileBtnCls}`}
+              onClick={() => setIsMenuOpen(prev => !prev)}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             >
-              {cursorToggleLabel}
-            </span>
-          </button>
+              {isMenuOpen ? (
+                <X size={20} aria-hidden="true" />
+              ) : (
+                <Menu size={20} aria-hidden="true" />
+              )}
+            </button>
+          </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            type="button"
-            ref={menuButtonRef}
-            className={`md:hidden p-3 cursor-pointer ${mobileBtnCls}`}
-            onClick={() => setIsMenuOpen(prev => !prev)}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav-menu"
-            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          >
-            {isMenuOpen ? (
-              <X size={20} aria-hidden="true" />
-            ) : (
-              <Menu size={20} aria-hidden="true" />
-            )}
-          </button>
-        </div>
-
-        {/* ── Mobile Menu Dropdown ── */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              id="mobile-nav-menu"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${mobileMenuCls}`}
-              ref={menuRef}
-            >
-              <div className="flex flex-col">
-                {/* Theme switcher row */}
-                <div
-                  className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}
-                >
-                  <button
-                    onClick={toggleTheme}
-                    className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${mobileThemeBtnCls}`}
+          {/* ── Mobile Menu Dropdown ── */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                id="mobile-nav-menu"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${mobileMenuCls}`}
+                ref={menuRef}
+              >
+                <div className="flex flex-col">
+                  {/* Theme switcher row */}
+                  <div
+                    className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}
                   >
-                    <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
-                    {isLiquid ? <Grid size={16} /> : <Moon size={16} />}
-                  </button>
+                    <button
+                      onClick={toggleTheme}
+                      className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${mobileThemeBtnCls}`}
+                    >
+                      <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
+                      {isLiquid ? <Grid size={16} /> : <Moon size={16} />}
+                    </button>
+                  </div>
+
+                  {/* Nav links */}
+                  {NAV_ITEMS.map((item, index) => (
+                    <NavLink
+                      key={item.name}
+                      to={item.path}
+                      onClick={handleCloseMenu}
+                      className={({ isActive }) => mobileLinkCls(isActive, index)}
+                    >
+                      <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
+                        {item.icon}
+                      </span>
+                      <span>{item.name}</span>
+                    </NavLink>
+                  ))}
                 </div>
-
-                {/* Nav links */}
-                {NAV_ITEMS.map((item, index) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.path}
-                    onClick={handleCloseMenu}
-                    className={({ isActive }) => mobileLinkCls(isActive, index)}
-                  >
-                    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
-                      {item.icon}
-                    </span>
-                    <span>{item.name}</span>
-                  </NavLink>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.nav>
-  );
-});
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
+    );
+  }
+);
 
 Navbar.displayName = 'Navbar';
 
