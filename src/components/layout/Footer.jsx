@@ -13,8 +13,11 @@ import { resumeData } from '../../data/resume';
 
 /**
  * Footer component with social links, attribution, and easter egg
+ *
+ * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
+ * during frequent Layout state updates (e.g., custom cursor mouse movements).
  */
-const Footer = () => {
+const Footer = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
 
@@ -234,6 +237,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

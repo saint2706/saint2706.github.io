@@ -17,3 +17,8 @@
 
 **Learning:** Even small computations like `JSON.stringify` with regex replacements for SEO metadata (`<script type="application/ld+json">`) can add up if executed on every render, especially in interactive components like Hero or Games.
 **Action:** Always memoize static or semi-static SEO data preparation using `useMemo` to keep the render loop tight.
+
+## 2026-03-02 - Layout Child Rendering Optimization
+
+**Learning:** The `Layout.jsx` component updates state frequently (e.g. mouse movements via `CustomCursor`, or Command Palette interactions) which triggers unnecessary re-renders in heavy static components like `Navbar` and `Footer`.
+**Action:** Wrapped `Navbar` and `Footer` with `React.memo` to prevent cascading re-renders when parent layout state changes. Also assigned explicit `displayName`s to pass linting.
