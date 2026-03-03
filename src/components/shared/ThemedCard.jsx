@@ -24,6 +24,18 @@ const VARIANTS = {
   },
 };
 
+/**
+ * A highly reusable themed card component that adapts to both Neubrutalism and Liquid themes.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ElementType} [props.as='div'] - The HTML element or React component to render as.
+ * @param {'default'|'interactive'|'highlighted'|'decorated'} [props.variant='default'] - The visual variant of the card.
+ * @param {'yellow'|'pink'|'blue'|'red'|'lime'|'coral'|'violet'|'orange'} [props.shadowColor] - Optional shadow color for the Neubrutalism theme.
+ * @param {string} [props.className] - Additional CSS classes to apply.
+ * @param {Object} [props.style] - Additional inline styles to apply.
+ * @param {React.ReactNode} [props.children] - The contents of the card.
+ * @returns {React.ReactElement} The themed card component.
+ */
 const ThemedCard = ({
   as: Component = 'div',
   variant = 'default',
