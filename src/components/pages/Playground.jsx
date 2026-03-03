@@ -354,9 +354,9 @@ const SnippetCard = ({
             ) : (
               <Palette size={18} className="text-fun-pink" aria-hidden="true" />
             )}
-            <h3 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
+            <h2 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
               {snippet.title}
-            </h3>
+            </h2>
           </div>
           <ThemedChip
             variant={snippet.language === 'python' ? 'accent' : 'pink'}

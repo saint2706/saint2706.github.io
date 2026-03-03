@@ -121,7 +121,7 @@ const Contact = () => {
               {success ? (
                 <div className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
                   <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" />
-                  <h3 className="text-lg font-bold text-green-800">Draft Opened!</h3>
+                  <h2 className="text-lg font-bold text-green-800">Draft Opened!</h2>
                   <p className="text-green-700">
                     Please check your email client to send the message.
                   </p>
@@ -282,12 +282,12 @@ const Contact = () => {
 
               {/* Follow Me */}
               <ThemedCard className="p-6">
-                <h3
+                <h2
                   className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
                   Follow Me
-                </h3>
+                </h2>
                 <div className="flex gap-4">
                   {resumeData.basics.socials.map(social => (
                     <ThemedButton
@@ -345,9 +345,9 @@ const Contact = () => {
                   <Mail size={40} className="text-white" />
                 </div>
 
-                <h3 className="font-heading text-2xl font-bold text-primary mb-4">
+                <h2 className="font-heading text-2xl font-bold text-primary mb-4">
                   Ready to start a conversation?
-                </h3>
+                </h2>
 
                 <p className="text-secondary mb-8 font-sans">
                   Whether it&apos;s making sense of messy data, designing AI/ML solutions, or

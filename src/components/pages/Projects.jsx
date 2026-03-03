@@ -176,7 +176,7 @@ const Projects = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-start gap-2">
                     <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-                    <h3 className="text-xl font-heading font-bold text-primary">{project.title}</h3>
+                    <h2 className="text-xl font-heading font-bold text-primary">{project.title}</h2>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {project.stars && (
