@@ -74,3 +74,6 @@ Implemented Core Web Vitals (CLS), traditional SEO, and AI discoverability impro
 3.  **[SEO] Added TechArticle Schema:**
     - Created `blogPostingSchema` in `src/utils/seo.js` mapped to individual blog posts.
     - Implemented dynamically in `src/components/pages/Blog.jsx` so each article gets item-level structured data (`TechArticle`), enhancing search visibility and intelligence for AI agents.
+
+- **[GEO][SEO]**: Fixed Semantic HTML in multiple pages (`Projects`, `Blog`, `Contact`, `Playground`) by replacing invalid `<h3>` tags jumping hierarchy with proper `<h2>` tags.
+- **[PERF]**: Fixed font preloading in `index.html` where `<link rel="preload">` URL did not match the corresponding `<link rel="stylesheet">` URL. Ensuring exact matches prevents the browser from double-fetching stylesheets and improves LCP.
