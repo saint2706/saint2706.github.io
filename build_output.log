@@ -1,0 +1,67 @@
+
+> rishabh-portfolio@0.0.0 prebuild /app
+> npm run generate:geo
+
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm.
+npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm.
+
+> rishabh-portfolio@0.0.0 generate:geo
+> npm run generate:llms && npm run generate:sitemap
+
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm.
+npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm.
+
+> rishabh-portfolio@0.0.0 generate:llms
+> node scripts/generate-llms.js
+
+Successfully generated /app/public/llms.txt
+npm warn Unknown env config "verify-deps-before-run". This will stop working in the next major version of npm.
+npm warn Unknown env config "npm-globalconfig". This will stop working in the next major version of npm.
+npm warn Unknown env config "_jsr-registry". This will stop working in the next major version of npm.
+
+> rishabh-portfolio@0.0.0 generate:sitemap
+> node scripts/generate-sitemap.js
+
+Successfully generated /app/public/sitemap.xml
+
+> rishabh-portfolio@0.0.0 build /app
+> vite build
+
+vite v7.3.1 building client environment for production...
+transforming...
+✓ 2375 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                 6.29 kB │ gzip:  1.94 kB
+dist/assets/SyntaxHighlighter-DwCY2K8p.css      1.28 kB │ gzip:  0.57 kB
+dist/assets/index-8049Eeyz.css                 83.85 kB │ gzip: 15.32 kB
+dist/assets/ThemedSectionHeading-vtWQcsY2.js    0.35 kB │ gzip:  0.26 kB
+dist/assets/gameThemeStyles-BJUxIgn_.js         2.32 kB │ gzip:  0.76 kB
+dist/assets/useIsMounted-DVV7_EeG.js            3.98 kB │ gzip:  2.05 kB
+dist/assets/Projects-43hDv1TV.js                4.70 kB │ gzip:  2.03 kB
+dist/assets/RoastInterface-Doo3DtDC.js          5.55 kB │ gzip:  1.91 kB
+dist/assets/Chatbot-DDZZVPYU.js                 5.64 kB │ gzip:  1.92 kB
+dist/assets/SimonSays-BVKl_bHH.js               6.41 kB │ gzip:  2.31 kB
+dist/assets/TerminalMode-BAnJDiiS.js            6.53 kB │ gzip:  2.69 kB
+dist/assets/CommandPalette-zJXgb-M1.js          6.56 kB │ gzip:  2.47 kB
+dist/assets/MemoryMatch-6GCLzgin.js             6.93 kB │ gzip:  2.47 kB
+dist/assets/WhackAMole-CrxgxYkr.js              6.95 kB │ gzip:  2.39 kB
+dist/assets/Games-DDaFyPF5.js                   7.05 kB │ gzip:  2.46 kB
+dist/assets/LightsOut-DzluTZRN.js               7.19 kB │ gzip:  2.58 kB
+dist/assets/NotFound-XBFTX3_z.js                7.49 kB │ gzip:  2.46 kB
+dist/assets/TicTacToe-B6hxt04k.js               7.82 kB │ gzip:  2.88 kB
+dist/assets/Blog-aWoTmao1.js                    8.25 kB │ gzip:  3.19 kB
+dist/assets/Minesweeper-DMj7FN7y.js             9.13 kB │ gzip:  3.39 kB
+dist/assets/Contact-BoiHhoUv.js                10.01 kB │ gzip:  3.07 kB
+dist/assets/SnakeGame-BL3Zv5sV.js              10.84 kB │ gzip:  3.76 kB
+dist/assets/Resume--431Exnl.js                 14.54 kB │ gzip:  4.24 kB
+dist/assets/vendor-ai-CZZ1HbHH.js              19.40 kB │ gzip:  5.86 kB
+dist/assets/SyntaxHighlighter-C4pkb4xQ.js      22.96 kB │ gzip:  8.36 kB
+dist/assets/Playground-BBwbBu9G.js             33.98 kB │ gzip:  9.92 kB
+dist/assets/vendor-react-DprNbJ5V.js           59.73 kB │ gzip: 21.00 kB
+dist/assets/ChatInterface-IpQRt-gf.js         129.93 kB │ gzip: 40.36 kB
+dist/assets/vendor-ui-DgC79oCh.js             141.12 kB │ gzip: 47.60 kB
+dist/assets/index-DQjpIBDL.js                 252.79 kB │ gzip: 78.79 kB
+✓ built in 7.67s

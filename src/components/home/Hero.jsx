@@ -18,8 +18,9 @@ import HeroBackground from './HeroBackground';
 
 /**
  * Hero section component for homepage
+ * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
  */
-const Hero = () => {
+const Hero = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
   const { theme } = useTheme();
@@ -358,6 +359,8 @@ const Hero = () => {
       </div>
     </>
   );
-};
+});
+
+Hero.displayName = 'Hero';
 
 export default Hero;
