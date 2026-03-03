@@ -1,24 +1,7 @@
-## 2026-02-02 - Cascading Renders in Layout and Pages
+# Bolt Optimization Log
 
-**Learning:** The codebase has multiple instances of `setState` calls inside `useEffect` without conditions or in a way that triggers immediate re-renders (cascading renders). This is flagged by the linter (`react-hooks/set-state-in-effect`) and hurts performance by forcing React to render twice.
-**Action:** In future optimizations, refactor these state updates to happen during event handling or derive state during render where possible.
+## Optimizations
 
-## 2026-02-02 - Bundle Splitting Effectiveness
+### Frontend
 
-**Learning:** Using `manualChunks` to separate stable vendors (React, Framer Motion) from application code significantly cleaner output in `dist/assets` and likely improves caching.
-**Action:** Always check `vite.config.js` for `manualChunks` in React projects with large dependencies like `framer-motion` or `three.js`.
-
-## 2026-02-02 - Lazy Loading with AnimatePresence
-
-**Learning:** When lazy loading components inside `AnimatePresence`, the `Suspense` boundary must be placed _inside_ the `motion.div`. If `Suspense` wraps `AnimatePresence`, the exit animations are lost because the entire tree is replaced by the fallback immediately upon state change.
-**Action:** Always nest `Suspense` inside the animated container when using code splitting with Framer Motion to preserve exit transitions.
-
-## 2025-02-14 - SEO Data Memoization
-
-**Learning:** Even small computations like `JSON.stringify` with regex replacements for SEO metadata (`<script type="application/ld+json">`) can add up if executed on every render, especially in interactive components like Hero or Games.
-**Action:** Always memoize static or semi-static SEO data preparation using `useMemo` to keep the render loop tight.
-
-## 2026-03-02 - Layout Child Rendering Optimization
-
-**Learning:** The `Layout.jsx` component updates state frequently (e.g. mouse movements via `CustomCursor`, or Command Palette interactions) which triggers unnecessary re-renders in heavy static components like `Navbar` and `Footer`.
-**Action:** Wrapped `Navbar` and `Footer` with `React.memo` to prevent cascading re-renders when parent layout state changes. Also assigned explicit `displayName`s to pass linting.
+- **Hero Component Memoization**: Wrapped the `Hero` component (`src/components/home/Hero.jsx`) in `React.memo` to prevent unnecessary re-renders when parent states change, especially given its position as the main landing page element and its relatively large UI tree. This is an initial defensive optimization to ensure the landing page remains snappy.
