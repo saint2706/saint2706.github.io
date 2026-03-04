@@ -198,16 +198,100 @@ describe('SnakeGame', () => {
 
     await waitFor(() => {
       const pausedElements = screen.queryAllByText(/Paused/i);
-      // Only visible elements matter, but queryAllByText finds hidden ones too?
-      // Wait, "Game paused" sr-only text vs "Paused" banner.
-      // If unpaused, both should be gone.
-      // Except maybe "Playing..." replaces sr-only.
-      // "Paused" banner is conditional {gameState === 'paused'}.
-      // So it should be gone.
-
-      // Let's check banner specifically if possible, or just length 0.
-      // If "Playing..." contains "Paused"? No.
       expect(pausedElements.length).toBe(0);
+    });
+
+    fireEvent.keyDown(container, { key: 'Escape' }); // Pause with Escape
+
+    await waitFor(() => {
+      const pausedElements = screen.getAllByText(/Paused/i);
+      expect(pausedElements.length).toBeGreaterThan(0);
+    });
+  });
+
+  it('updates direction correctly and prevents 180 degree turns', async () => {
+    renderWithTheme(<SnakeGame />);
+    fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
+
+    const container = screen.getByLabelText('Snake Game Board. Use arrow keys to move.');
+    container.focus();
+
+    // Initially moving right. Try moving left (180 degree).
+    fireEvent.keyDown(container, { key: 'ArrowLeft' });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: 'w' });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: 's' });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: 'a' });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: 'd' });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: 'x' });
+    tickGame();
+
+    expect(screen.queryByText(/Game Over/i)).not.toBeInTheDocument();
+  });
+
+  it('handles touch controls (swipe)', async () => {
+    renderWithTheme(<SnakeGame />);
+    fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
+
+    const container = screen.getByLabelText('Snake Game Board. Use arrow keys to move.');
+
+    fireEvent.touchStart(container, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(container, { changedTouches: [{ clientX: 100, clientY: 200 }] });
+    tickGame();
+
+    fireEvent.touchStart(container, { touches: [{ clientX: 100, clientY: 200 }] });
+    fireEvent.touchEnd(container, { changedTouches: [{ clientX: 0, clientY: 200 }] });
+    tickGame();
+
+    fireEvent.keyDown(container, { key: ' ' });
+    fireEvent.touchStart(container, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(container, { changedTouches: [{ clientX: 100, clientY: 200 }] });
+
+    expect(screen.queryByText(/Game Over/i)).not.toBeInTheDocument();
+  });
+
+  it('pauses on blur', async () => {
+    renderWithTheme(<SnakeGame />);
+    fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
+
+    const container = screen.getByLabelText('Snake Game Board. Use arrow keys to move.');
+    container.focus();
+
+    fireEvent.blur(container);
+
+    await waitFor(() => {
+      const pausedElements = screen.getAllByText(/Paused/i);
+      expect(pausedElements.length).toBeGreaterThan(0);
+    });
+  });
+
+  it('restarts game on Play Again', async () => {
+    renderWithTheme(<SnakeGame />);
+    fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
+
+    // Force Game Over
+    for (let i = 0; i < 30; i++) {
+      tickGame();
+    }
+
+    await waitFor(() => {
+      expect(screen.getAllByText(/Game Over/i).length).toBeGreaterThan(0);
+    });
+
+    const playAgainButton = screen.getByRole('button', { name: 'Play Snake Game Again' });
+    fireEvent.click(playAgainButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText(/Game Over/i)).not.toBeInTheDocument();
     });
   });
 });
