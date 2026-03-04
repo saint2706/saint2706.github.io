@@ -150,7 +150,6 @@ const Blog = () => {
     },
   };
 
-
   return (
     <>
       <SEOHead title={title} description={description} path="/blog" schemas={blogSchemas} />
@@ -453,9 +452,7 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
         {/* Title */}
         <div className="flex items-start gap-2 mb-3">
           <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
-          <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">
-            {blog.title}
-          </h2>
+          <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">{blog.title}</h2>
         </div>
 
         {/* Summary */}
@@ -491,8 +488,7 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
             </ThemedButton>
           ) : (
             <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
-              Link unavailable{' '}
-              <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
+              Link unavailable <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
             </span>
           )}
         </div>
