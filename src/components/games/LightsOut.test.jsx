@@ -173,13 +173,12 @@ describe('LightsOut Game', () => {
 
     // Navigate back to cell00 for subsequent tests
     for (let i = 0; i < 4; i++) {
-        fireEvent.keyDown(cells[24 - i], { key: 'ArrowLeft', code: 'ArrowLeft' }); // back to 4,0
+      fireEvent.keyDown(cells[24 - i], { key: 'ArrowLeft', code: 'ArrowLeft' }); // back to 4,0
     }
     for (let i = 0; i < 4; i++) {
-        fireEvent.keyDown(cells[20 - i * 5], { key: 'ArrowUp', code: 'ArrowUp' }); // back to 0,0
+      fireEvent.keyDown(cells[20 - i * 5], { key: 'ArrowUp', code: 'ArrowUp' }); // back to 0,0
     }
     await waitFor(() => expect(cell00).toHaveFocus());
-
 
     // Toggle with Enter
     const initialLabel = cell00.getAttribute('aria-label');
