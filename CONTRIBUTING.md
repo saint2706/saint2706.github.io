@@ -68,6 +68,14 @@ Please ensure all checks pass before submitting a Pull Request.
 
 Please refer to `.jules/sentinel.md` for security policies, including vulnerability reporting and mitigation strategies.
 
+## Documentation
+
+For deep dives into specific areas of the codebase, refer to the documentation:
+
+- [Architecture Overview](docs/ARCHITECTURE.md): Application structure, components, and data flow.
+- [Theming System](docs/THEMING.md): Details on the dual-theme system (Neubrutalism and Liquid).
+- [Games](docs/GAMES.md): Guide to adding new interactive mini-games.
+
 ## License
 
 This project is private and proprietary.

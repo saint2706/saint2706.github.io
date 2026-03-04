@@ -90,6 +90,15 @@ Security is a core focus of this project. Key measures include:
 
 For a detailed security report, see [.jules/sentinel.md](.jules/sentinel.md).
 
+## 📚 Documentation
+
+Detailed documentation can be found in the `docs/` directory:
+
+- [Documentation Index](docs/README.md)
+- [Architecture Overview](docs/ARCHITECTURE.md)
+- [Theming System](docs/THEMING.md)
+- [Games Setup](docs/GAMES.md)
+
 ## 🤖 AI & Python Integration
 
 ### Gemini AI

@@ -6,3 +6,7 @@
 
 - Audited documentation for broken links and formatting issues.
 - Added missing JSDoc comments to `src/components/shared/ThemedCard.jsx` and `src/components/shared/ThemedSectionHeading.jsx`.
+
+- Created `docs/README.md` to serve as a directory index.
+- Added explicit documentation links to `README.md` and `CONTRIBUTING.md`.
+- Added missing JSDoc comments to schema generation functions in `src/utils/seo.js`.
