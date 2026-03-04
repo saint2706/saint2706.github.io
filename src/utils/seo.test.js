@@ -152,11 +152,61 @@ describe('seo utils', () => {
     });
   });
 
+  describe('blogPostingSchema', () => {
+    it('returns TechArticle schema for a blog post', () => {
+      const blog = {
+        title: 'Blog Post Title',
+        summary: 'This is a summary.',
+        link: 'https://blog.com/post-1',
+        date: '2023-01-01',
+        source: 'Medium',
+        tags: ['React', 'JavaScript'],
+      };
+      const schema = seo.blogPostingSchema(blog);
+      expect(schema['@type']).toBe('TechArticle');
+      expect(schema.headline).toBe('Blog Post Title');
+      expect(schema.keywords).toBe('React, JavaScript');
+      expect(schema.image).toBe(seo.DEFAULT_OG_IMAGE); // since no coverImage
+    });
+
+    it('uses cover image and handles missing tags', () => {
+      const blog = {
+        title: 'Blog Post Title',
+        summary: 'This is a summary.',
+        link: 'https://blog.com/post-1',
+        date: '2023-01-01',
+        source: 'Medium',
+        coverImage: 'https://test.com/cover.jpg',
+      };
+      const schema = seo.blogPostingSchema(blog);
+      expect(schema.image).toBe('https://test.com/cover.jpg');
+      expect(schema.keywords).toBeUndefined();
+    });
+  });
+
   describe('contactPageSchema', () => {
     it('returns ContactPage schema', () => {
       const schema = seo.contactPageSchema();
       expect(schema['@type']).toBe('ContactPage');
       expect(schema.mainEntity.email).toBe('mailto:test@example.com');
+    });
+  });
+
+  describe('gamesSchema', () => {
+    it('returns SoftwareApplication schema for games', () => {
+      const schema = seo.gamesSchema();
+      expect(schema['@type']).toBe('SoftwareApplication');
+      expect(schema.name).toBe('Interactive Mini-Games');
+      expect(schema.author['@type']).toBe('Person');
+    });
+  });
+
+  describe('playgroundSchema', () => {
+    it('returns SoftwareApplication schema for playground', () => {
+      const schema = seo.playgroundSchema();
+      expect(schema['@type']).toBe('SoftwareApplication');
+      expect(schema.name).toBe('Python Playground');
+      expect(schema.author['@type']).toBe('Person');
     });
   });
 

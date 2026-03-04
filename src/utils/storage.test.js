@@ -163,6 +163,18 @@ describe('Storage Utils', () => {
         });
         expect(safeSetLocalStorage('key', 'value')).toBe(false);
       });
+
+      it('returns false if window.localStorage is undefined', () => {
+        const originalLocalStorage = window.localStorage;
+        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
+
+        expect(safeSetLocalStorage('key', 'value')).toBe(false);
+
+        Object.defineProperty(window, 'localStorage', {
+          value: originalLocalStorage,
+          configurable: true,
+        });
+      });
     });
 
     describe('safeRemoveLocalStorage', () => {
@@ -177,6 +189,18 @@ describe('Storage Utils', () => {
           throw new Error('Error');
         });
         expect(safeRemoveLocalStorage('key')).toBe(false);
+      });
+
+      it('returns false if window.localStorage is undefined', () => {
+        const originalLocalStorage = window.localStorage;
+        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
+
+        expect(safeRemoveLocalStorage('key')).toBe(false);
+
+        Object.defineProperty(window, 'localStorage', {
+          value: originalLocalStorage,
+          configurable: true,
+        });
       });
     });
   });
