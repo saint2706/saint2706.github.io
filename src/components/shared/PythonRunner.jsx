@@ -80,9 +80,8 @@ const PythonRunner = ({ snippet }) => {
       try {
         await loadPyodide();
         setPyodideReady(true);
-      } catch (err) {
+      } catch {
         setError('Failed to load Python runtime');
-        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -138,7 +137,6 @@ const PythonRunner = ({ snippet }) => {
     } catch (err) {
       // Display Python errors to user (syntax, runtime, etc.)
       setError(err.message);
-      console.error('Python execution error:', err);
     } finally {
       setIsRunning(false);
     }

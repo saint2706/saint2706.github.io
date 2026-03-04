@@ -76,8 +76,8 @@ const Playground = () => {
       await navigator.clipboard.writeText(code);
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
+    } catch {
+      // Ignore copy errors
     }
   }, []);
 
