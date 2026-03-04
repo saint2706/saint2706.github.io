@@ -75,7 +75,10 @@ const Hero = React.memo(() => {
   // Helper to switch classes based on theme
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
-  const homeSchemas = useMemo(() => [websiteSchema(), profilePageSchema(), personSchemaFull(), faqSchema()], []);
+  const homeSchemas = useMemo(
+    () => [websiteSchema(), profilePageSchema(), personSchemaFull(), faqSchema()],
+    []
+  );
 
   return (
     <>
