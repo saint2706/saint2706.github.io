@@ -280,6 +280,42 @@ export function contactPageSchema() {
 }
 
 /**
+ * FAQPage schema for Chatbot quick replies or general FAQs.
+ */
+export function faqSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Tell me about your projects',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'I have built various projects spanning analytics, AI, and full-stack development. Check out my Projects page for more details.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What are your top skills?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'My core competencies include Python, Data Analytics, Machine Learning, React, Node.js, and Business Strategy.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How can I contact you?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'You can reach me via email at rishabh.agrawal25b@gim.ac.in or connect with me on LinkedIn and GitHub.',
+        },
+      },
+    ],
+  };
+}
+
+/**
  * Resume/CV page – Person with employment aggregate.
  */
 export function resumePersonSchema() {

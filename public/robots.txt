@@ -32,5 +32,13 @@ Disallow: /
 User-agent: Bytespider
 Disallow: /
 
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# OpenAI Search
+User-agent: OAI-SearchBot
+Allow: /
+
 # ─── Sitemap ───
 Sitemap: https://saint2706.github.io/sitemap.xml
