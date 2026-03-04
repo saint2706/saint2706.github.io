@@ -150,38 +150,6 @@ const Blog = () => {
     },
   };
 
-  /**
-   * Get background color class for blog source badge
-   * @param {string} source - Blog source name
-   * @returns {string} Tailwind background color class
-   */
-  const getSourceColor = source => {
-    switch (source) {
-      case 'Dev.to':
-        return 'bg-accent';
-      case 'Medium':
-        return 'bg-fun-yellow';
-      case 'Substack':
-        return 'bg-fun-pink';
-      default:
-        return 'bg-secondary';
-    }
-  };
-
-  /**
-   * Get text color class for blog source badge
-   * @param {string} source - Blog source name
-   * @returns {string} Tailwind text color class
-   */
-  const getSourceTextColor = source => {
-    switch (source) {
-      case 'Medium':
-        return 'text-black';
-      default:
-        return 'text-white';
-    }
-  };
-
   return (
     <>
       <SEOHead title={title} description={description} path="/blog" schemas={blogSchemas} />
@@ -307,80 +275,14 @@ const Blog = () => {
           className={`grid grid-cols-1 ${isLiquid ? 'gap-5' : 'md:grid-cols-2 lg:grid-cols-3 gap-6'}`}
         >
           {paginatedBlogs.map((blog, idx) => (
-            <ThemedCard
-              as={motion.article}
+            <BlogCard
               key={`${blog.title}-${idx}`}
+              blog={blog}
+              idx={idx}
               variants={item}
-              variant="interactive"
-              className={`overflow-hidden flex flex-col h-full ${isLiquid ? 'rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
-            >
-              {/* Color accent bar based on source */}
-              {!isLiquid && <div className={`h-3 ${getSourceColor(blog.source)}`} />}
-
-              <div className="p-6 flex-grow flex flex-col">
-                {/* Source and Date */}
-                <div
-                  className={`flex justify-between items-start mb-4 ${isLiquid ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}
-                >
-                  <ThemedChip
-                    className={`font-heading font-bold px-3 ${isLiquid ? 'tracking-wide uppercase text-xs' : `${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}`}
-                  >
-                    {blog.source}
-                  </ThemedChip>
-                  <ThemedChip variant="neutral" className="text-secondary font-sans">
-                    <Calendar size={12} />
-                    {formatDate(blog.date)}
-                  </ThemedChip>
-                </div>
-
-                {/* Title */}
-                <div className="flex items-start gap-2 mb-3">
-                  <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
-                  <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">
-                    {blog.title}
-                  </h2>
-                </div>
-
-                {/* Summary */}
-                <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow font-sans leading-relaxed">
-                  {blog.summary}
-                </p>
-
-                {/* Tags */}
-                {blog.tags && blog.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {blog.tags.slice(0, 3).map(tag => (
-                      <ThemedChip key={tag} variant="neutral" className="font-sans">
-                        #{tag}
-                      </ThemedChip>
-                    ))}
-                  </div>
-                )}
-
-                {/* Read Link */}
-                <div className="mt-auto">
-                  {isSafeHref(blog.link) ? (
-                    <ThemedButton
-                      as="a"
-                      href={blog.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
-                      variant="primary"
-                      size="md"
-                      className="hover:-translate-y-0.5"
-                    >
-                      Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
-                    </ThemedButton>
-                  ) : (
-                    <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
-                      Link unavailable{' '}
-                      <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
-                    </span>
-                  )}
-                </div>
-              </div>
-            </ThemedCard>
+              isLiquid={isLiquid}
+              formatDate={formatDate}
+            />
           ))}
 
           {/* Empty State */}
@@ -484,5 +386,117 @@ const Blog = () => {
     </>
   );
 };
+
+/**
+ * Blog Card Component
+ */
+const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
+  /**
+   * Get background color class for blog source badge
+   * @param {string} source - Blog source name
+   * @returns {string} Tailwind background color class
+   */
+  const getSourceColor = source => {
+    switch (source) {
+      case 'Dev.to':
+        return 'bg-accent';
+      case 'Medium':
+        return 'bg-fun-yellow';
+      case 'Substack':
+        return 'bg-fun-pink';
+      default:
+        return 'bg-secondary';
+    }
+  };
+
+  /**
+   * Get text color class for blog source badge
+   * @param {string} source - Blog source name
+   * @returns {string} Tailwind text color class
+   */
+  const getSourceTextColor = source => {
+    switch (source) {
+      case 'Medium':
+        return 'text-black';
+      default:
+        return 'text-white';
+    }
+  };
+
+  return (
+    <ThemedCard
+      as={motion.article}
+      variants={variants}
+      variant="interactive"
+      className={`overflow-hidden flex flex-col h-full ${isLiquid ? 'rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
+    >
+      {/* Color accent bar based on source */}
+      {!isLiquid && <div className={`h-3 ${getSourceColor(blog.source)}`} />}
+
+      <div className="p-6 flex-grow flex flex-col">
+        {/* Source and Date */}
+        <div
+          className={`flex justify-between items-start mb-4 ${isLiquid ? 'border-b border-[color:var(--border-soft)] pb-3' : ''}`}
+        >
+          <ThemedChip
+            className={`font-heading font-bold px-3 ${isLiquid ? 'tracking-wide uppercase text-xs' : `${getSourceColor(blog.source)} ${getSourceTextColor(blog.source)}`}`}
+          >
+            {blog.source}
+          </ThemedChip>
+          <ThemedChip variant="neutral" className="text-secondary font-sans">
+            <Calendar size={12} />
+            {formatDate(blog.date)}
+          </ThemedChip>
+        </div>
+
+        {/* Title */}
+        <div className="flex items-start gap-2 mb-3">
+          <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
+          <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">{blog.title}</h2>
+        </div>
+
+        {/* Summary */}
+        <p className="text-secondary text-sm mb-4 line-clamp-3 flex-grow font-sans leading-relaxed">
+          {blog.summary}
+        </p>
+
+        {/* Tags */}
+        {blog.tags && blog.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {blog.tags.slice(0, 3).map(tag => (
+              <ThemedChip key={tag} variant="neutral" className="font-sans">
+                #{tag}
+              </ThemedChip>
+            ))}
+          </div>
+        )}
+
+        {/* Read Link */}
+        <div className="mt-auto">
+          {isSafeHref(blog.link) ? (
+            <ThemedButton
+              as="a"
+              href={blog.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Read "${blog.title}" on ${blog.source} (opens in new tab)`}
+              variant="primary"
+              size="md"
+              className="hover:-translate-y-0.5"
+            >
+              Read on {blog.source} <ExternalLink size={14} aria-hidden="true" />
+            </ThemedButton>
+          ) : (
+            <span className="text-sm text-muted italic flex items-center gap-2 px-4 py-2 border-[3px] border-transparent">
+              Link unavailable <ExternalLink size={14} className="opacity-50" aria-hidden="true" />
+            </span>
+          )}
+        </div>
+      </div>
+    </ThemedCard>
+  );
+});
+
+BlogCard.displayName = 'BlogCard';
 
 export default Blog;

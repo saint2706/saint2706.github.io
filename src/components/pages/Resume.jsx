@@ -45,7 +45,7 @@ const SECTION_VARIANTS = {
   'bg-accent': 'accent',
 };
 
-const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
+const Section = React.memo(({ title, icon, color = 'bg-fun-yellow', children }) => (
   <div className="mb-12">
     <ThemedSectionHeading
       title={title}
@@ -58,7 +58,9 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
     {/* NB 2.0: wavy doodle divider between sections */}
     <DoodleDivider pattern="wavy" className="mt-8" />
   </div>
-);
+));
+
+Section.displayName = 'Section';
 
 /**
  * Timeline card for experience/education entries
@@ -74,78 +76,82 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
  * @param {string} props.accentColor - Tailwind color class for accent bar
  * @returns {JSX.Element} Timeline card with details
  */
-const TimelineCard = ({
-  title,
-  subtitle,
-  date,
-  location,
-  description,
-  tags,
-  accentColor = 'bg-accent',
-  shadowColor,
-  isLiquid = false,
-}) => (
-  <ThemedCard
-    variant="interactive"
-    shadowColor={!isLiquid ? shadowColor : undefined}
-    className={`p-6 ${isLiquid ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
-  >
-    {/* Color accent bar */}
-    {isLiquid ? (
-      <span className="absolute -left-[1.45rem] top-8 w-3 h-3 rounded-full bg-[color:var(--accent)] border border-[color:var(--border-soft)] shadow-[0_0_12px_rgba(141,162,255,0.45)]" />
-    ) : (
-      <div
-        className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`}
-      />
-    )}
+const TimelineCard = React.memo(
+  ({
+    title,
+    subtitle,
+    date,
+    location,
+    description,
+    tags,
+    accentColor = 'bg-accent',
+    shadowColor,
+    isLiquid = false,
+  }) => (
+    <ThemedCard
+      variant="interactive"
+      shadowColor={!isLiquid ? shadowColor : undefined}
+      className={`p-6 ${isLiquid ? 'relative rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
+    >
+      {/* Color accent bar */}
+      {isLiquid ? (
+        <span className="absolute -left-[1.45rem] top-8 w-3 h-3 rounded-full bg-[color:var(--accent)] border border-[color:var(--border-soft)] shadow-[0_0_12px_rgba(141,162,255,0.45)]" />
+      ) : (
+        <div
+          className={`h-2 ${accentColor} -mx-6 -mt-6 mb-4 border-b-nb border-[color:var(--color-border)] rounded-t-nb`}
+        />
+      )}
 
-    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
-      <div>
-        <h3 className="text-xl font-heading font-bold text-primary">{title}</h3>
-        <p className="text-lg text-secondary font-sans">{subtitle}</p>
-      </div>
-      <div className="flex flex-col items-start md:items-end gap-1">
-        <ThemedChip variant="yellow" className="font-bold">
-          <Calendar size={12} />
-          {date}
-        </ThemedChip>
-        {location && (
-          <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
-            <MapPin size={12} />
-            {location}
-          </span>
-        )}
-      </div>
-    </div>
-
-    {description && (
-      <div className="text-secondary text-sm leading-relaxed mb-4 font-sans">
-        {Array.isArray(description) ? (
-          <ul className="space-y-2">
-            {description.map((d, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="w-2 h-2 bg-accent mt-1.5 flex-shrink-0" />
-                <span>{d}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>{description}</p>
-        )}
-      </div>
-    )}
-
-    {tags && tags.length > 0 && (
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag, i) => (
-          <ThemedChip key={i} variant="neutral" className="font-sans">
-            {tag}
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
+        <div>
+          <h3 className="text-xl font-heading font-bold text-primary">{title}</h3>
+          <p className="text-lg text-secondary font-sans">{subtitle}</p>
+        </div>
+        <div className="flex flex-col items-start md:items-end gap-1">
+          <ThemedChip variant="yellow" className="font-bold">
+            <Calendar size={12} />
+            {date}
           </ThemedChip>
-        ))}
+          {location && (
+            <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
+              <MapPin size={12} />
+              {location}
+            </span>
+          )}
+        </div>
       </div>
-    )}
-  </ThemedCard>
+
+      {description && (
+        <div className="text-secondary text-sm leading-relaxed mb-4 font-sans">
+          {Array.isArray(description) ? (
+            <ul className="space-y-2">
+              {description.map((d, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="w-2 h-2 bg-accent mt-1.5 flex-shrink-0" />
+                  <span>{d}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>{description}</p>
+          )}
+        </div>
+      )}
+
+      {tags && tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag, i) => (
+            <ThemedChip key={i} variant="neutral" className="font-sans">
+              {tag}
+            </ThemedChip>
+          ))}
+        </div>
+      )}
+    </ThemedCard>
+  )
 );
+
+TimelineCard.displayName = 'TimelineCard';
 
 /** Filter section identifiers */
 const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'Languages'];
