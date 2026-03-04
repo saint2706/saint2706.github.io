@@ -173,8 +173,8 @@ const CodeRenderer = ({ className, children, node, ...props }) => {
         setIsCopied(false);
         copyResetTimeoutRef.current = null;
       }, 2000);
-    } catch (err) {
-      console.error('Failed to copy code:', err);
+    } catch {
+      // Ignore copy errors
     }
   };
 
@@ -496,8 +496,8 @@ const ChatInterface = ({ onClose }) => {
     e.preventDefault();
     try {
       await handleSendMessage(input);
-    } catch (error) {
-      console.error('Failed to send message', error);
+    } catch {
+      // Ignore send errors
     }
   };
 

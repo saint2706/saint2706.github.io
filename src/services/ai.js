@@ -182,8 +182,6 @@ export const chatWithGemini = async (userMessage, history = []) => {
     const isLeakedKey = errorMessage.toLowerCase().includes('reported as leaked');
     const isTimeout = error instanceof TimeoutError;
 
-    console.error('Gemini Error:', error);
-
     // Handle leaked API key scenario (requires key rotation)
     if (isLeakedKey) {
       return 'The Gemini API key was blocked because it was detected as leaked. Rotate the key in GitHub Secrets, restrict it to the deployed domain, and try again.';

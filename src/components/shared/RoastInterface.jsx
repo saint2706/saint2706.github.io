@@ -84,8 +84,8 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       setTimeout(() => {
         if (isMountedRef.current) setIsCopied(false);
       }, 2000);
-    } catch (err) {
-      console.error('Failed to copy roast:', err);
+    } catch {
+      // Ignore copy errors
     }
   }, [roastContent, isMountedRef]);
 
