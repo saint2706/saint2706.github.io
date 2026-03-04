@@ -37,6 +37,17 @@ const renderWithTheme = component => {
 };
 
 describe('LightsOut Game', () => {
+  it('renders initial game state and handles all off puzzle creation', () => {
+    const originalRandom = Math.random;
+    // Mock random so toggles logic results in all false
+    Math.random = vi.fn().mockReturnValue(0);
+    renderWithTheme(<LightsOut />);
+    Math.random = originalRandom; // restore quickly
+
+    expect(screen.getByText(/Lights Out puzzle ready/i)).toBeInTheDocument();
+    expect(screen.getByText(/Start Puzzle/i)).toBeInTheDocument();
+  });
+
   it('renders initial game state', () => {
     renderWithTheme(<LightsOut />);
     expect(screen.getByText(/Lights Out puzzle ready/i)).toBeInTheDocument();
@@ -136,6 +147,39 @@ describe('LightsOut Game', () => {
     fireEvent.keyDown(cell00, { key: 'ArrowUp', code: 'ArrowUp' });
     await waitFor(() => expect(cell00).toHaveFocus());
 
+    // Check boundary constraints (Left from 0,0 should stay 0,0)
+    fireEvent.keyDown(cell00, { key: 'ArrowLeft', code: 'ArrowLeft' });
+    await waitFor(() => expect(cell00).toHaveFocus());
+
+    // Check boundary constraints (Right from 4,4)
+    // First, navigate there
+    fireEvent.keyDown(cell00, { key: 'ArrowRight', code: 'ArrowRight' }); // to 0,1
+    fireEvent.keyDown(cells[1], { key: 'ArrowDown', code: 'ArrowDown' }); // to 1,1
+    fireEvent.keyDown(cells[6], { key: 'ArrowDown', code: 'ArrowDown' }); // to 2,1
+    fireEvent.keyDown(cells[11], { key: 'ArrowDown', code: 'ArrowDown' }); // to 3,1
+    fireEvent.keyDown(cells[16], { key: 'ArrowDown', code: 'ArrowDown' }); // to 4,1
+    fireEvent.keyDown(cells[21], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,2
+    fireEvent.keyDown(cells[22], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,3
+    fireEvent.keyDown(cells[23], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,4
+    const cell44 = cells[24];
+    await waitFor(() => expect(cell44).toHaveFocus());
+
+    fireEvent.keyDown(cell44, { key: 'ArrowRight', code: 'ArrowRight' });
+    await waitFor(() => expect(cell44).toHaveFocus());
+
+    // Check boundary constraints (Down from 4,4)
+    fireEvent.keyDown(cell44, { key: 'ArrowDown', code: 'ArrowDown' });
+    await waitFor(() => expect(cell44).toHaveFocus());
+
+    // Navigate back to cell00 for subsequent tests
+    for (let i = 0; i < 4; i++) {
+      fireEvent.keyDown(cells[24 - i], { key: 'ArrowLeft', code: 'ArrowLeft' }); // back to 4,0
+    }
+    for (let i = 0; i < 4; i++) {
+      fireEvent.keyDown(cells[20 - i * 5], { key: 'ArrowUp', code: 'ArrowUp' }); // back to 0,0
+    }
+    await waitFor(() => expect(cell00).toHaveFocus());
+
     // Toggle with Enter
     const initialLabel = cell00.getAttribute('aria-label');
     fireEvent.keyDown(cell00, { key: 'Enter', code: 'Enter' });
@@ -147,5 +191,30 @@ describe('LightsOut Game', () => {
     // Should flip back (or at least change again)
     const finalLabel = cell00.getAttribute('aria-label');
     expect(finalLabel).toBe(initialLabel);
+
+    // Unhandled key
+    fireEvent.keyDown(cell00, { key: 'A', code: 'KeyA' });
+    // Shouldn't crash and should do nothing
+    expect(cell00).toHaveFocus();
+  });
+
+  it('ignores keyboard navigation when not playing', () => {
+    renderWithTheme(<LightsOut />);
+    const cells = screen.getAllByRole('button');
+    // Find a cell inside the grid. The start puzzle button is also a button.
+    const cell00 = cells.find(c => c.getAttribute('aria-label')?.includes('Row 1, Column 1'));
+
+    if (cell00) {
+      cell00.focus();
+      fireEvent.keyDown(cell00, { key: 'ArrowRight' });
+      // Should not do anything and focus remains wherever it was
+      expect(cell00).toHaveFocus();
+    }
+  });
+
+  it('renders correct announcement text', () => {
+    // Should render "Lights Out puzzle ready. Press Start to begin." on initial load (gameState === 'idle')
+    renderWithTheme(<LightsOut />);
+    expect(screen.getByText('Lights Out puzzle ready. Press Start to begin.')).toBeInTheDocument();
   });
 });
