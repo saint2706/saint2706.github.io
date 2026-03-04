@@ -34,3 +34,13 @@ Implements various UX and accessibility enhancements across the application, foc
 - `pnpm lint` passed.
 - `pnpm test` passed (207 tests).
 - Manual code review confirmed logical correctness of state transitions and conditional rendering.
+
+### 5. Form Fields Accessibility
+- **Contact Form**: Replaced `sr-only` class on labels with visually presented labels including an explicit `*` required indicator. Added `aria-required="true"` to Name, Email, and Message inputs to improve form accessibility.
+
+### 6. Search Interface Polish
+- **Blog Search**: Enhanced keyboard navigation by adding explicit `focus-visible:ring-2` and `focus-visible:ring-accent` classes to the "Clear search" (`X`) button.
+- **Terminal Mode**: Added `aria-label="Minimize terminal"` and `aria-label="Maximize terminal"` to the decorative window control buttons to improve screen reader context.
+
+### 7. Playground Empty States
+- **Empty Filters**: Implemented a dedicated empty state UI for the code playground using `InboxIcon` from `lucide-react`. When filtering results in `filteredSnippets.length === 0`, it now displays a clear message rather than a blank grid.

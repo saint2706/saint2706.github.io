@@ -266,7 +266,7 @@ const Blog = () => {
                   setSearchTerm('');
                   setCurrentPage(1);
                 }}
-                className="group absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1 motion-reduce:transition-none"
+                className="group absolute right-4 top-1/2 transform -translate-y-1/2 text-muted hover:text-primary transition-colors p-1 motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
                 aria-label="Clear search"
               >
                 <X size={16} />

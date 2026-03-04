@@ -128,8 +128,8 @@ const Contact = () => {
                 </div>
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
-                  <label htmlFor="name" className="sr-only">
-                    Your name
+                  <label htmlFor="name" className="block text-sm font-medium mb-1 ml-1 text-primary">
+                    Your name <span className="text-red-500" aria-hidden="true">*</span>
                   </label>
                   <input
                     id="name"
@@ -140,12 +140,13 @@ const Contact = () => {
                     placeholder="Your name"
                     aria-label="Your name"
                     required
+                    aria-required="true"
                     maxLength={100}
                     disabled={isSubmitting}
                     className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                   />
-                  <label htmlFor="email" className="sr-only">
-                    Your email
+                  <label htmlFor="email" className="block text-sm font-medium mb-1 ml-1 text-primary">
+                    Your email <span className="text-red-500" aria-hidden="true">*</span>
                   </label>
                   <input
                     id="email"
@@ -156,12 +157,13 @@ const Contact = () => {
                     placeholder="Your email"
                     aria-label="Your email"
                     required
+                    aria-required="true"
                     maxLength={320}
                     disabled={isSubmitting}
                     className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
                   />
-                  <label htmlFor="message" className="sr-only">
-                    Project details
+                  <label htmlFor="message" className="block text-sm font-medium mb-1 ml-1 text-primary">
+                    Project details <span className="text-red-500" aria-hidden="true">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -172,6 +174,7 @@ const Contact = () => {
                     placeholder="Project details"
                     aria-label="Project details"
                     required
+                    aria-required="true"
                     maxLength={2000}
                     disabled={isSubmitting}
                     className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y disabled:opacity-50"

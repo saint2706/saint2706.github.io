@@ -311,8 +311,16 @@ Just kidding... but seriously, let's chat!
                       className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                       aria-label="Close terminal"
                     />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                    <button
+                      onClick={onClose}
+                      className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] cursor-default"
+                      aria-label="Minimize terminal"
+                    />
+                    <button
+                      onClick={onClose}
+                      className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] cursor-default"
+                      aria-label="Maximize terminal"
+                    />
                   </div>
                   <span
                     className={

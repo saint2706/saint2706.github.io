@@ -5,7 +5,7 @@
 
 import React, { useState, useCallback, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
+import { Code2, Palette, Copy, Check, Play, Terminal, InboxIcon } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, playgroundSchema, SITE_URL } from '../../utils/seo';
@@ -231,31 +231,41 @@ const Playground = () => {
         </div>
 
         {/* Snippets Grid */}
-        <motion.div
-          id="snippets-grid"
-          role="tabpanel"
-          variants={container}
-          initial={shouldReduceMotion ? false : 'hidden'}
-          animate="show"
-          key={activeFilter}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredSnippets.map((snippet, idx) => (
-              <SnippetCard
-                key={snippet.id}
-                snippet={snippet}
-                colorClass={cardColors[idx % cardColors.length]}
-                variants={item}
-                copiedId={copiedId}
-                onCopy={handleCopy}
-                onOpenPreview={() => openPreviewModal(snippet)}
-                onOpenRunner={() => openRunnerModal(snippet)}
-                shouldReduceMotion={shouldReduceMotion}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {filteredSnippets.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center col-span-full">
+            <InboxIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" aria-hidden="true" />
+            <h3 className="text-xl font-heading font-bold text-primary mb-2">No snippets found</h3>
+            <p className="text-secondary max-w-md font-sans">
+              There are no snippets available for the selected filter.
+            </p>
+          </div>
+        ) : (
+          <motion.div
+            id="snippets-grid"
+            role="tabpanel"
+            variants={container}
+            initial={shouldReduceMotion ? false : 'hidden'}
+            animate="show"
+            key={activeFilter}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredSnippets.map((snippet, idx) => (
+                <SnippetCard
+                  key={snippet.id}
+                  snippet={snippet}
+                  colorClass={cardColors[idx % cardColors.length]}
+                  variants={item}
+                  copiedId={copiedId}
+                  onCopy={handleCopy}
+                  onOpenPreview={() => openPreviewModal(snippet)}
+                  onOpenRunner={() => openRunnerModal(snippet)}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         {/* Footer hint */}
         <motion.div
