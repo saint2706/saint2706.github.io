@@ -64,7 +64,7 @@ const Games = () => {
   ];
 
   /** Available games configuration */
-  const games = [
+  const games = React.useMemo(() => [
     { id: 'tictactoe', label: 'Tic Tac Toe', icon: Grid3X3, color: 'bg-accent' },
     { id: 'snake', label: 'Snake', icon: Sparkles, color: 'bg-fun-pink' },
     { id: 'memory', label: 'Memory', icon: Layers, color: 'bg-fun-yellow' },
@@ -72,7 +72,7 @@ const Games = () => {
     { id: 'simon', label: 'Simon', icon: Disc, color: 'bg-violet-500' },
     { id: 'whack', label: 'Whack', icon: Target, color: 'bg-orange-500' },
     { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
-  ];
+  ], []);
 
   const handleGameSelect = gameId => {
     setActiveGame(gameId);

@@ -54,14 +54,14 @@ const Playground = () => {
     playgroundSchema(),
   ];
 
-  const filteredSnippets = getSnippetsByLanguage(activeFilter);
+  const filteredSnippets = React.useMemo(() => getSnippetsByLanguage(activeFilter), [activeFilter]);
 
   /** Filter tabs configuration */
-  const filters = [
+  const filters = React.useMemo(() => [
     { id: 'all', label: 'All', icon: Code2, color: 'bg-fun-yellow' },
     { id: 'python', label: 'Python', icon: Terminal, color: 'bg-accent' },
     { id: 'css', label: 'CSS', icon: Palette, color: 'bg-fun-pink' },
-  ];
+  ], []);
 
   /** Color classes for snippet card accent bars */
   const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
@@ -247,10 +247,10 @@ const Playground = () => {
                 snippet={snippet}
                 colorClass={cardColors[idx % cardColors.length]}
                 variants={item}
-                copiedId={copiedId}
+                isCopied={copiedId === snippet.id}
                 onCopy={handleCopy}
-                onOpenPreview={() => openPreviewModal(snippet)}
-                onOpenRunner={() => openRunnerModal(snippet)}
+                onOpenPreview={openPreviewModal}
+                onOpenRunner={openRunnerModal}
                 shouldReduceMotion={shouldReduceMotion}
               />
             ))}
@@ -309,18 +309,18 @@ const Playground = () => {
  * @param {Object} props.snippet - Snippet data object
  * @param {string} props.colorClass - Tailwind color class for accent bar
  * @param {Object} props.variants - Framer Motion variants for animation
- * @param {string|null} props.copiedId - ID of currently copied snippet
+ * @param {boolean} props.isCopied - Whether the snippet is currently copied
  * @param {Function} props.onCopy - Callback to copy code
  * @param {Function} props.onOpenPreview - Callback to open preview modal
  * @param {Function} props.onOpenRunner - Callback to open runner modal
  * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Snippet card with code and actions
  */
-const SnippetCard = ({
+const SnippetCard = React.memo(({
   snippet,
   colorClass,
   variants,
-  copiedId,
+  isCopied,
   onCopy,
   onOpenPreview,
   onOpenRunner,
@@ -330,7 +330,6 @@ const SnippetCard = ({
   const isLiquid = theme === 'liquid';
   const hasPreview = !!snippet.preview;
   const hasInteractive = !!snippet.interactive;
-  const isCopied = copiedId === snippet.id;
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   return (
@@ -428,7 +427,7 @@ const SnippetCard = ({
           {/* Live Preview Button (CSS) */}
           {hasPreview && (
             <ThemedButton
-              onClick={onOpenPreview}
+              onClick={() => onOpenPreview(snippet)}
               variant="secondary"
               className={themeClass(
                 'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
@@ -444,7 +443,7 @@ const SnippetCard = ({
           {/* Python Runner Button */}
           {hasInteractive && snippet.interactive.type === 'python-runner' && (
             <ThemedButton
-              onClick={onOpenRunner}
+              onClick={() => onOpenRunner(snippet)}
               onMouseEnter={() => loadPyodide().catch(() => {})}
               onFocus={() => loadPyodide().catch(() => {})}
               variant="secondary"
@@ -462,7 +461,9 @@ const SnippetCard = ({
       </div>
     </motion.article>
   );
-};
+});
+
+SnippetCard.displayName = 'SnippetCard';
 
 /**
  * Live CSS preview component using iframe for isolation
@@ -472,7 +473,7 @@ const SnippetCard = ({
  * @param {Object} props.preview - Preview configuration with html and css
  * @returns {JSX.Element} Isolated CSS preview in iframe
  */
-const LivePreview = ({ preview }) => {
+const LivePreview = React.memo(({ preview }) => {
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -524,6 +525,8 @@ const LivePreview = ({ preview }) => {
       />
     </div>
   );
-};
+});
+
+LivePreview.displayName = 'LivePreview';
 
 export default Playground;

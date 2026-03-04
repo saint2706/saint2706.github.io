@@ -45,7 +45,7 @@ const SECTION_VARIANTS = {
   'bg-accent': 'accent',
 };
 
-const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
+const Section = React.memo(({ title, icon, color = 'bg-fun-yellow', children }) => (
   <div className="mb-12">
     <ThemedSectionHeading
       title={title}
@@ -58,7 +58,9 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
     {/* NB 2.0: wavy doodle divider between sections */}
     <DoodleDivider pattern="wavy" className="mt-8" />
   </div>
-);
+));
+
+Section.displayName = 'Section';
 
 /**
  * Timeline card for experience/education entries
@@ -74,7 +76,7 @@ const Section = ({ title, icon, color = 'bg-fun-yellow', children }) => (
  * @param {string} props.accentColor - Tailwind color class for accent bar
  * @returns {JSX.Element} Timeline card with details
  */
-const TimelineCard = ({
+const TimelineCard = React.memo(({
   title,
   subtitle,
   date,
@@ -145,7 +147,9 @@ const TimelineCard = ({
       </div>
     )}
   </ThemedCard>
-);
+));
+
+TimelineCard.displayName = 'TimelineCard';
 
 /** Filter section identifiers */
 const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'Languages'];
