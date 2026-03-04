@@ -77,3 +77,20 @@ Implemented Core Web Vitals (CLS), traditional SEO, and AI discoverability impro
 
 - **[GEO][SEO]**: Fixed Semantic HTML in multiple pages (`Projects`, `Blog`, `Contact`, `Playground`) by replacing invalid `<h3>` tags jumping hierarchy with proper `<h2>` tags.
 - **[PERF]**: Fixed font preloading in `index.html` where `<link rel="preload">` URL did not match the corresponding `<link rel="stylesheet">` URL. Ensuring exact matches prevents the browser from double-fetching stylesheets and improves LCP.
+
+## Date: $(date +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the codebase for AI discoverability and rich snippets.
+
+### Changes
+
+1.  **[GEO] Allowed AI crawlers:**
+    - Updated `public/robots.txt` to allow `PerplexityBot` and `OAI-SearchBot` to index the site.
+
+2.  **[SEO][GEO] Added FAQ schema:**
+    - Exported a new `faqSchema` in `src/utils/seo.js` that structures the Chatbot's quick replies as FAQs.
+    - Injected the `faqSchema` into the homepage via `src/components/home/Hero.jsx` to provide direct answers to search engines and AI agents.
