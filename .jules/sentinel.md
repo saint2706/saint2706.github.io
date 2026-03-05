@@ -30,3 +30,7 @@
 - `npm run test:security-full`: Passed
 - `pnpm lint`: Passed
 - `pnpm test:run`: Passed
+
+### Security Improvement: Pseudo-Random Number Generator
+- **Issue**: `src/components/shared/ChatInterface.jsx` was using `Math.random()` to generate chat message identifiers if `crypto.randomUUID()` was unavailable. `Math.random()` is not cryptographically secure and can be predictable.
+- **Fix**: Updated `generateMessageId` to prioritize `crypto.getRandomValues()` as a fallback over `Math.random()`, ensuring cryptographically secure pseudo-randomness for message identifiers across a broader range of browsers, maintaining defense-in-depth principles.
