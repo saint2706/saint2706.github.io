@@ -42,6 +42,7 @@ const Hero = React.memo(() => {
   /**
    * Handle easter egg activation
    */
+  // ⚡ Bolt: Memoized handler to avoid unnecessary component renders
   const handleEasterEggClick = useCallback(() => {
     if (isGlitching) return;
 

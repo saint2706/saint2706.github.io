@@ -15,6 +15,132 @@ import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 import { useTheme } from '../shared/theme-context';
 
 /**
+ * ProjectCard Component
+ */
+// ⚡ Bolt: Wrapped card in React.memo to prevent unnecessary re-renders in list
+const ProjectCard = React.memo(
+  ({ project, idx, isLiquid, shadowColors, cardColors, item, onClick }) => {
+    const handleClick = useCallback(() => {
+      if (onClick) onClick(project);
+    }, [onClick, project]);
+
+    return (
+      <ThemedCard
+        as={motion.article}
+        variant="interactive"
+        shadowColor={isLiquid ? undefined : shadowColors[idx % shadowColors.length]}
+        variants={item}
+        onClick={handleClick}
+        role="link"
+        tabIndex={0}
+        onKeyDown={event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.currentTarget.click();
+          }
+        }}
+        className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
+        style={{
+          '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
+        }}
+      >
+        {/* Color accent bar */}
+        {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
+
+        {/* Project Image */}
+        {project.image && (
+          <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
+            <img
+              src={project.image}
+              alt={`Screenshot of ${project.title} project`}
+              className="w-full h-full object-cover"
+              loading={idx < 3 ? 'eager' : 'lazy'}
+              fetchPriority={idx < 3 ? 'high' : undefined}
+              decoding="async"
+              width={600}
+              height={400}
+            />
+          </div>
+        )}
+
+        <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
+          <div className="flex justify-between items-start mb-4">
+            <div className="flex items-start gap-2">
+              <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
+              <h2 className="text-xl font-heading font-bold text-primary">{project.title}</h2>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              {project.stars && (
+                <ThemedChip variant="yellow" className="font-bold">
+                  <Star size={12} className="fill-black" />
+                  {project.stars}
+                </ThemedChip>
+              )}
+              {project.featured && (
+                <ThemedChip
+                  variant="accent"
+                  className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
+                  style={{ '--sticker-rotate': '3deg' }}
+                >
+                  Featured
+                </ThemedChip>
+              )}
+            </div>
+          </div>
+
+          <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3 font-sans">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tags.map(tag => (
+              <ThemedChip key={tag} variant="neutral" className="font-sans">
+                {tag}
+              </ThemedChip>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4 mt-auto">
+            {project.link && (
+              <ThemedButton
+                as="a"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                variant="primary"
+                size="sm"
+                className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
+                aria-label={`Live Demo for ${project.title} (opens in new tab)`}
+              >
+                <ExternalLink size={14} aria-hidden="true" /> Demo
+              </ThemedButton>
+            )}
+            {project.github && (
+              <ThemedButton
+                as="a"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                variant="secondary"
+                size="sm"
+                className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
+                aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
+              >
+                <Github size={14} aria-hidden="true" /> Code
+              </ThemedButton>
+            )}
+          </div>
+        </div>
+      </ThemedCard>
+    );
+  }
+);
+
+ProjectCard.displayName = 'ProjectCard';
+
+/**
  * Projects showcase page component
  *
  * Features:
@@ -77,17 +203,15 @@ const Projects = () => {
    * Checks for text selection to avoid accidental navigation.
    */
   const handleCardClick = useCallback(project => {
-    return () => {
-      // Ignore if user is selecting text
-      const selection = window.getSelection();
-      if (selection && selection.toString().length > 0) return;
+    // Ignore if user is selecting text
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
 
-      // Prioritize Live Demo, fallback to GitHub
-      const targetUrl = project.link || project.github;
-      if (targetUrl) {
-        window.open(targetUrl, '_blank', 'noopener,noreferrer');
-      }
-    };
+    // Prioritize Live Demo, fallback to GitHub
+    const targetUrl = project.link || project.github;
+    if (targetUrl) {
+      window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    }
   }, []);
 
   return (
@@ -131,118 +255,16 @@ const Projects = () => {
             </div>
           )}
           {resumeData.projects.map((project, idx) => (
-            <ThemedCard
-              as={motion.article}
+            <ProjectCard
               key={idx}
-              variant="interactive"
-              shadowColor={isLiquid ? undefined : shadowColors[idx % shadowColors.length]}
-              variants={item}
-              onClick={handleCardClick(project)}
-              role="link"
-              tabIndex={0}
-              onKeyDown={event => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault();
-                  event.currentTarget.click();
-                }
-              }}
-              className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
-              style={{
-                '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
-              }}
-            >
-              {/* Color accent bar */}
-              {!isLiquid && (
-                <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />
-              )}
-
-              {/* Project Image */}
-              {project.image && (
-                <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
-                  <img
-                    src={project.image}
-                    alt={`Screenshot of ${project.title} project`}
-                    className="w-full h-full object-cover"
-                    loading={idx < 3 ? 'eager' : 'lazy'}
-                    fetchPriority={idx < 3 ? 'high' : undefined}
-                    decoding="async"
-                    width={600}
-                    height={400}
-                  />
-                </div>
-              )}
-
-              <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-start gap-2">
-                    <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-                    <h2 className="text-xl font-heading font-bold text-primary">{project.title}</h2>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    {project.stars && (
-                      <ThemedChip variant="yellow" className="font-bold">
-                        <Star size={12} className="fill-black" />
-                        {project.stars}
-                      </ThemedChip>
-                    )}
-                    {project.featured && (
-                      <ThemedChip
-                        variant="accent"
-                        className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
-                        style={{ '--sticker-rotate': '3deg' }}
-                      >
-                        Featured
-                      </ThemedChip>
-                    )}
-                  </div>
-                </div>
-
-                <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3 font-sans">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map(tag => (
-                    <ThemedChip key={tag} variant="neutral" className="font-sans">
-                      {tag}
-                    </ThemedChip>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-4 mt-auto">
-                  {project.link && (
-                    <ThemedButton
-                      as="a"
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      variant="primary"
-                      size="sm"
-                      className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
-                      aria-label={`Live Demo for ${project.title} (opens in new tab)`}
-                    >
-                      <ExternalLink size={14} aria-hidden="true" /> Demo
-                    </ThemedButton>
-                  )}
-                  {project.github && (
-                    <ThemedButton
-                      as="a"
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      variant="secondary"
-                      size="sm"
-                      className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
-                      aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
-                    >
-                      <Github size={14} aria-hidden="true" /> Code
-                    </ThemedButton>
-                  )}
-                </div>
-              </div>
-            </ThemedCard>
+              project={project}
+              idx={idx}
+              isLiquid={isLiquid}
+              shadowColors={shadowColors}
+              cardColors={cardColors}
+              item={item}
+              onClick={handleCardClick}
+            />
           ))}
         </motion.div>
       </div>

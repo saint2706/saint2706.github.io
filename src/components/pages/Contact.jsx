@@ -42,33 +42,37 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleChange = e => {
+  // ⚡ Bolt: Memoized handler to prevent recreation on render
+  const handleChange = React.useCallback(e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = React.useCallback(
+    e => {
+      e.preventDefault();
+      setIsSubmitting(true);
 
-    // Sanitize inputs to prevent control character injection or bidi spoofing
-    const safeName = sanitizeInput(formData.name || 'Portfolio');
-    const safeMessage = sanitizeInput(formData.message || '');
-    const safeEmail = sanitizeInput(formData.email || '');
+      // Sanitize inputs to prevent control character injection or bidi spoofing
+      const safeName = sanitizeInput(formData.name || 'Portfolio');
+      const safeMessage = sanitizeInput(formData.message || '');
+      const safeEmail = sanitizeInput(formData.email || '');
 
-    // Generate mailto URL with form data
-    const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
-      `Contact from ${safeName}`
-    )}&body=${encodeURIComponent(`${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`)}`;
+      // Generate mailto URL with form data
+      const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(
+        `Contact from ${safeName}`
+      )}&body=${encodeURIComponent(`${safeMessage}\n\nFrom: ${safeName} (${safeEmail})`)}`;
 
-    // Simulate network delay for better UX before opening email client
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-      setIsSubmitting(false);
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 5000); // Reset after 5s
-    }, 1500);
-  };
+      // Simulate network delay for better UX before opening email client
+      setTimeout(() => {
+        window.location.href = mailtoUrl;
+        setIsSubmitting(false);
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 5000); // Reset after 5s
+      }, 1500);
+    },
+    [formData]
+  );
 
   const description =
     'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
