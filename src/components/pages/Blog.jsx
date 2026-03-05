@@ -35,6 +35,52 @@ import { useTheme } from '../shared/theme-context';
 const POSTS_PER_PAGE = 6;
 
 /**
+ * Format date string to DD/MM/YYYY format
+ * @param {string} dateStr - ISO date string
+ * @returns {string} Formatted date
+ */
+// ⚡ Bolt: Extracted static pure functions outside the component scope to prevent recreation on every render
+const formatDate = dateStr => {
+  const date = new Date(dateStr);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
+/**
+ * Get background color class for blog source badge
+ * @param {string} source - Blog source name
+ * @returns {string} Tailwind background color class
+ */
+const getSourceColor = source => {
+  switch (source) {
+    case 'Dev.to':
+      return 'bg-accent';
+    case 'Medium':
+      return 'bg-fun-yellow';
+    case 'Substack':
+      return 'bg-fun-pink';
+    default:
+      return 'bg-secondary';
+  }
+};
+
+/**
+ * Get text color class for blog source badge
+ * @param {string} source - Blog source name
+ * @returns {string} Tailwind text color class
+ */
+const getSourceTextColor = source => {
+  switch (source) {
+    case 'Medium':
+      return 'text-black';
+    default:
+      return 'text-white';
+  }
+};
+
+/**
  * Blog listing page component
  *
  * Features:
@@ -88,19 +134,6 @@ const Blog = () => {
 
   /** Extract unique blog sources for filter buttons */
   const sources = ['All', ...new Set(processedBlogs.map(blog => blog.source))];
-
-  /**
-   * Format date string to DD/MM/YYYY format
-   * @param {string} dateStr - ISO date string
-   * @returns {string} Formatted date
-   */
-  const formatDate = dateStr => {
-    const date = new Date(dateStr);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
 
   /**
    * Filter and search blogs based on current filter and search term
@@ -391,38 +424,6 @@ const Blog = () => {
  * Blog Card Component
  */
 const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
-  /**
-   * Get background color class for blog source badge
-   * @param {string} source - Blog source name
-   * @returns {string} Tailwind background color class
-   */
-  const getSourceColor = source => {
-    switch (source) {
-      case 'Dev.to':
-        return 'bg-accent';
-      case 'Medium':
-        return 'bg-fun-yellow';
-      case 'Substack':
-        return 'bg-fun-pink';
-      default:
-        return 'bg-secondary';
-    }
-  };
-
-  /**
-   * Get text color class for blog source badge
-   * @param {string} source - Blog source name
-   * @returns {string} Tailwind text color class
-   */
-  const getSourceTextColor = source => {
-    switch (source) {
-      case 'Medium':
-        return 'text-black';
-      default:
-        return 'text-white';
-    }
-  };
-
   return (
     <ThemedCard
       as={motion.article}

@@ -46,6 +46,59 @@ const GameLoader = () => (
   </div>
 );
 
+const GameTabButton = React.memo(({ game, activeGame, isLiquid, onClick }) => {
+  const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
+
+  return (
+    <ThemedButton
+      as="button"
+      variant="secondary"
+      size="md"
+      onClick={() => onClick(game.id)}
+      role="tab"
+      aria-selected={activeGame === game.id}
+      aria-controls={`${game.id}-panel`}
+      id={`${game.id}-tab`}
+      className={themeClass(
+        `flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
+          ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--text-primary)]'}`,
+
+        `flex items-center gap-2 px-6 py-3 font-heading font-semibold text-sm rounded-full transition-all
+          ${
+            activeGame === game.id
+              ? 'lg-surface-3 lg-pill text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
+              : 'lg-surface-2 text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
+          }`
+      )}
+      style={{
+        boxShadow:
+          !isLiquid && activeGame === game.id
+            ? 'var(--nb-shadow-hover)'
+            : !isLiquid
+              ? 'var(--nb-shadow)'
+              : undefined,
+      }}
+    >
+      <game.icon size={18} aria-hidden="true" />
+      <span className="flex items-center gap-2">
+        <span>{game.label}</span>
+        <span
+          className={themeClass(
+            `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity border-[2px] border-[color:var(--color-border)] bg-card text-primary ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`,
+            `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity lg-surface-3 lg-pill text-[color:var(--text-secondary)] ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`
+          )}
+          aria-hidden={activeGame !== game.id}
+        >
+          <Check className="h-3 w-3" aria-hidden="true" />
+          Selected
+        </span>
+      </span>
+    </ThemedButton>
+  );
+});
+
+GameTabButton.displayName = 'GameTabButton';
+
 const Games = () => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();
@@ -77,9 +130,10 @@ const Games = () => {
     []
   );
 
-  const handleGameSelect = gameId => {
+  // ⚡ Bolt: Wrapped handler in useCallback to prevent recreation on re-render
+  const handleGameSelect = React.useCallback(gameId => {
     setActiveGame(gameId);
-  };
+  }, []);
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
@@ -152,51 +206,13 @@ const Games = () => {
             aria-label="Select a game to play"
           >
             {games.map(game => (
-              <ThemedButton
-                as="button"
-                variant="secondary"
-                size="md"
+              <GameTabButton
                 key={game.id}
-                onClick={() => handleGameSelect(game.id)}
-                role="tab"
-                aria-selected={activeGame === game.id}
-                aria-controls={`${game.id}-panel`}
-                id={`${game.id}-tab`}
-                className={themeClass(
-                  `flex items-center gap-2 px-6 py-3 font-heading font-bold text-sm rounded-nb
-                    ${activeGame === game.id ? `${game.color} text-white` : 'bg-card text-[color:var(--text-primary)]'}`,
-
-                  `flex items-center gap-2 px-6 py-3 font-heading font-semibold text-sm rounded-full transition-all
-                    ${
-                      activeGame === game.id
-                        ? 'lg-surface-3 lg-pill text-[color:var(--text-primary)] brightness-110 scale-[1.015]'
-                        : 'lg-surface-2 text-[color:var(--text-secondary)] hover:brightness-110 hover:scale-[1.015]'
-                    }`
-                )}
-                style={{
-                  boxShadow:
-                    !isLiquid && activeGame === game.id
-                      ? 'var(--nb-shadow-hover)'
-                      : !isLiquid
-                        ? 'var(--nb-shadow)'
-                        : undefined,
-                }}
-              >
-                <game.icon size={18} aria-hidden="true" />
-                <span className="flex items-center gap-2">
-                  <span>{game.label}</span>
-                  <span
-                    className={themeClass(
-                      `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity border-[2px] border-[color:var(--color-border)] bg-card text-primary ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`,
-                      `inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wide transition-opacity lg-surface-3 lg-pill text-[color:var(--text-secondary)] ${activeGame === game.id ? 'opacity-100' : 'opacity-0'}`
-                    )}
-                    aria-hidden={activeGame !== game.id}
-                  >
-                    <Check className="h-3 w-3" aria-hidden="true" />
-                    Selected
-                  </span>
-                </span>
-              </ThemedButton>
+                game={game}
+                activeGame={activeGame}
+                isLiquid={isLiquid}
+                onClick={handleGameSelect}
+              />
             ))}
           </div>
         </motion.div>
