@@ -40,6 +40,7 @@ export const THEME_COLOR = '#1e1e2e'; // dark background
 /**
  * WebSite schema – enables Google Sitelinks search box.
  * Should be injected on the homepage only.
+ * @returns {Object} WebSite structured data schema.
  */
 export function websiteSchema() {
   return {
@@ -63,6 +64,7 @@ export function websiteSchema() {
 /**
  * TechArticle/BlogPosting schema for an individual blog post.
  * @param {Object} blog - Blog post object from blogs.json
+ * @returns {Object} TechArticle structured data schema.
  */
 export function blogPostingSchema(blog) {
   return {
@@ -84,6 +86,7 @@ export function blogPostingSchema(blog) {
 
 /**
  * Compact Person reference (used as nested author/creator).
+ * @returns {Object} Compact Person structured data schema.
  */
 export function personSchemaCompact() {
   return {
@@ -95,6 +98,7 @@ export function personSchemaCompact() {
 
 /**
  * Full Person schema – homepage / about.
+ * @returns {Object} Full Person structured data schema.
  */
 export function personSchemaFull() {
   return {
@@ -132,6 +136,7 @@ export function personSchemaFull() {
 
 /**
  * SoftwareApplication schema for the Games page.
+ * @returns {Object} SoftwareApplication structured data schema for games.
  */
 export function gamesSchema() {
   return {
@@ -153,6 +158,7 @@ export function gamesSchema() {
 
 /**
  * SoftwareApplication schema for the Playground.
+ * @returns {Object} SoftwareApplication structured data schema for the playground.
  */
 export function playgroundSchema() {
   return {
@@ -174,6 +180,7 @@ export function playgroundSchema() {
 
 /**
  * ProfilePage schema – wraps the Person for homepage.
+ * @returns {Object} ProfilePage structured data schema.
  */
 export function profilePageSchema() {
   return {
@@ -189,6 +196,7 @@ export function profilePageSchema() {
 /**
  * BreadcrumbList schema helper.
  * @param {Array<{name:string, url:string}>} items
+ * @returns {Object} BreadcrumbList structured data schema.
  */
 export function breadcrumbSchema(items) {
   return {
@@ -205,6 +213,7 @@ export function breadcrumbSchema(items) {
 
 /**
  * ItemList schema for the Projects page (CollectionPage).
+ * @returns {Object} CollectionPage structured data schema for projects.
  */
 export function projectsCollectionSchema() {
   return {
@@ -230,6 +239,7 @@ export function projectsCollectionSchema() {
 
 /**
  * CollectionPage schema for the Blog listing.
+ * @returns {Object} CollectionPage structured data schema for the blog.
  */
 export function blogCollectionSchema() {
   return {
@@ -256,6 +266,7 @@ export function blogCollectionSchema() {
 
 /**
  * ContactPage schema.
+ * @returns {Object} ContactPage structured data schema.
  */
 export function contactPageSchema() {
   return {
@@ -281,6 +292,7 @@ export function contactPageSchema() {
 
 /**
  * FAQPage schema for Chatbot quick replies or general FAQs.
+ * @returns {Object} FAQPage structured data schema.
  */
 export function faqSchema() {
   return {
@@ -317,6 +329,7 @@ export function faqSchema() {
 
 /**
  * Resume/CV page – Person with employment aggregate.
+ * @returns {Object} Person structured data schema with employment history.
  */
 export function resumePersonSchema() {
   return {
