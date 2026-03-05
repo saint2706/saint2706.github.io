@@ -46,9 +46,18 @@ const STORAGE_KEY = 'portfolio_chat_history';
 const MAX_STORED_MESSAGES = 100;
 
 const generateMessageId = () => {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return crypto.randomUUID();
+  if (typeof crypto !== 'undefined') {
+    if (typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    if (typeof crypto.getRandomValues === 'function') {
+      const array = new Uint32Array(4);
+      crypto.getRandomValues(array);
+      return Array.from(array, dec => dec.toString(16).padStart(8, '0')).join('-');
+    }
   }
+
+  // Final fallback if crypto is entirely unavailable (very rare in modern browsers)
   const timestamp = Date.now();
   const randomPart = Math.random().toString(36).slice(2, 11);
   return `${timestamp}-${randomPart}`;
