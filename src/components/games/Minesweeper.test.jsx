@@ -242,16 +242,26 @@ describe('Minesweeper Game', () => {
 
       // Fixed cells for the 10 mines:
       // (8,0), (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), (8,7), (8,8), (7,8)
-      if (calls === 1) return 8 / 9; if (calls === 2) return 0 / 9; // Mine 1: (8, 0)
-      if (calls === 3) return 8 / 9; if (calls === 4) return 1 / 9; // Mine 2: (8, 1)
-      if (calls === 5) return 8 / 9; if (calls === 6) return 2 / 9; // Mine 3: (8, 2)
-      if (calls === 7) return 8 / 9; if (calls === 8) return 3 / 9; // Mine 4: (8, 3)
-      if (calls === 9) return 8 / 9; if (calls === 10) return 4 / 9; // Mine 5: (8, 4)
-      if (calls === 11) return 8 / 9; if (calls === 12) return 5 / 9; // Mine 6: (8, 5)
-      if (calls === 13) return 8 / 9; if (calls === 14) return 6 / 9; // Mine 7: (8, 6)
-      if (calls === 15) return 8 / 9; if (calls === 16) return 7 / 9; // Mine 8: (8, 7)
-      if (calls === 17) return 8 / 9; if (calls === 18) return 8 / 9; // Mine 9: (8, 8)
-      if (calls === 19) return 7 / 9; if (calls === 20) return 8 / 9; // Mine 10: (7, 8)
+      if (calls === 1) return 8 / 9;
+      if (calls === 2) return 0 / 9; // Mine 1: (8, 0)
+      if (calls === 3) return 8 / 9;
+      if (calls === 4) return 1 / 9; // Mine 2: (8, 1)
+      if (calls === 5) return 8 / 9;
+      if (calls === 6) return 2 / 9; // Mine 3: (8, 2)
+      if (calls === 7) return 8 / 9;
+      if (calls === 8) return 3 / 9; // Mine 4: (8, 3)
+      if (calls === 9) return 8 / 9;
+      if (calls === 10) return 4 / 9; // Mine 5: (8, 4)
+      if (calls === 11) return 8 / 9;
+      if (calls === 12) return 5 / 9; // Mine 6: (8, 5)
+      if (calls === 13) return 8 / 9;
+      if (calls === 14) return 6 / 9; // Mine 7: (8, 6)
+      if (calls === 15) return 8 / 9;
+      if (calls === 16) return 7 / 9; // Mine 8: (8, 7)
+      if (calls === 17) return 8 / 9;
+      if (calls === 18) return 8 / 9; // Mine 9: (8, 8)
+      if (calls === 19) return 7 / 9;
+      if (calls === 20) return 8 / 9; // Mine 10: (7, 8)
 
       // Fallback
       return 0.99;
@@ -272,7 +282,7 @@ describe('Minesweeper Game', () => {
     for (let c = 0; c <= 7; c++) {
       const index = 7 * 9 + c;
       if (cells[index].getAttribute('aria-label').includes('hidden')) {
-          fireEvent.click(cells[index]);
+        fireEvent.click(cells[index]);
       }
     }
 
@@ -307,16 +317,26 @@ describe('Minesweeper Game', () => {
       // Each mine placement calls random() twice (row, col)
       // Return fixed cells for the 10 mines:
       // (8,0), (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), (8,7), (8,8), (7,8)
-      if (calls === 1) return 8 / 9; if (calls === 2) return 0 / 9; // Mine 1: (8, 0)
-      if (calls === 3) return 8 / 9; if (calls === 4) return 1 / 9; // Mine 2: (8, 1)
-      if (calls === 5) return 8 / 9; if (calls === 6) return 2 / 9; // Mine 3: (8, 2)
-      if (calls === 7) return 8 / 9; if (calls === 8) return 3 / 9; // Mine 4: (8, 3)
-      if (calls === 9) return 8 / 9; if (calls === 10) return 4 / 9; // Mine 5: (8, 4)
-      if (calls === 11) return 8 / 9; if (calls === 12) return 5 / 9; // Mine 6: (8, 5)
-      if (calls === 13) return 8 / 9; if (calls === 14) return 6 / 9; // Mine 7: (8, 6)
-      if (calls === 15) return 8 / 9; if (calls === 16) return 7 / 9; // Mine 8: (8, 7)
-      if (calls === 17) return 8 / 9; if (calls === 18) return 8 / 9; // Mine 9: (8, 8)
-      if (calls === 19) return 7 / 9; if (calls === 20) return 8 / 9; // Mine 10: (7, 8)
+      if (calls === 1) return 8 / 9;
+      if (calls === 2) return 0 / 9; // Mine 1: (8, 0)
+      if (calls === 3) return 8 / 9;
+      if (calls === 4) return 1 / 9; // Mine 2: (8, 1)
+      if (calls === 5) return 8 / 9;
+      if (calls === 6) return 2 / 9; // Mine 3: (8, 2)
+      if (calls === 7) return 8 / 9;
+      if (calls === 8) return 3 / 9; // Mine 4: (8, 3)
+      if (calls === 9) return 8 / 9;
+      if (calls === 10) return 4 / 9; // Mine 5: (8, 4)
+      if (calls === 11) return 8 / 9;
+      if (calls === 12) return 5 / 9; // Mine 6: (8, 5)
+      if (calls === 13) return 8 / 9;
+      if (calls === 14) return 6 / 9; // Mine 7: (8, 6)
+      if (calls === 15) return 8 / 9;
+      if (calls === 16) return 7 / 9; // Mine 8: (8, 7)
+      if (calls === 17) return 8 / 9;
+      if (calls === 18) return 8 / 9; // Mine 9: (8, 8)
+      if (calls === 19) return 7 / 9;
+      if (calls === 20) return 8 / 9; // Mine 10: (7, 8)
 
       // Fallback
       return 0.99;
