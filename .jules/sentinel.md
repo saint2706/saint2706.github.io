@@ -35,3 +35,7 @@
 
 - **Issue**: `src/components/shared/ChatInterface.jsx` was using `Math.random()` to generate chat message identifiers if `crypto.randomUUID()` was unavailable. `Math.random()` is not cryptographically secure and can be predictable.
 - **Fix**: Updated `generateMessageId` to prioritize `crypto.getRandomValues()` as a fallback over `Math.random()`, ensuring cryptographically secure pseudo-randomness for message identifiers across a broader range of browsers, maintaining defense-in-depth principles.
+
+### Security Improvement: HTTP Security Headers
+- **Issue**: Missing explicit security headers for static site deployments (e.g., Cloudflare Pages, Netlify, GitHub Pages). While index.html contains a strong CSP, other headers like HSTS and X-Frame-Options were not enforced via HTTP response headers.
+- **Fix**: Added a \`public/_headers\` file containing \`X-Frame-Options: DENY\`, \`X-Content-Type-Options: nosniff\`, \`Referrer-Policy: strict-origin-when-cross-origin\`, and \`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload\`. This hardens the application against Clickjacking, MIME sniffing, and ensures secure transport.
