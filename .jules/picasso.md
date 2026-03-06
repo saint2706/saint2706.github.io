@@ -34,3 +34,4 @@ Implements various UX and accessibility enhancements across the application, foc
 - `pnpm lint` passed.
 - `pnpm test` passed (207 tests).
 - Manual code review confirmed logical correctness of state transitions and conditional rendering.
+- Added dynamic aria-label to PythonRunner component based on execution state (isRunning) to improve accessibility for screen readers.

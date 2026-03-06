@@ -199,6 +199,7 @@ const PythonRunner = ({ snippet }) => {
           <button
             onClick={runCode}
             disabled={isRunning || !pyodideReady || isLoading}
+            aria-label={isRunning ? 'Running Python code' : 'Run Python code'}
             className={`flex items-center gap-2 px-4 py-2 font-heading font-bold text-sm border-2 border-[color:var(--color-border)] rounded-md transition-all ${
               isRunning || !pyodideReady
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
