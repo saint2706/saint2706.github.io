@@ -49,7 +49,7 @@ A React Context that provides the current theme (`neubrutalism` or `liquid`) and
 
 ## Security
 
-Security is a primary concern.
+Security is a primary concern. For a detailed security report, see [Sentinel Security Report](../.jules/sentinel.md).
 
 - **CSP**: A strict Content Security Policy is enforced via `index.html`.
 - **Sanitization**: All user inputs are sanitized before being processed or rendered.
