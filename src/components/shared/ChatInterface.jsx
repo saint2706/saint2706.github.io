@@ -398,8 +398,8 @@ const ChatInterface = ({ onClose }) => {
           }
         }
       }
-    } catch (e) {
-      console.warn('Failed to load chat history:', e);
+    } catch {
+      // console.warn('Failed to load chat history:', e);
     }
   }, []);
 
@@ -412,8 +412,8 @@ const ChatInterface = ({ onClose }) => {
     if (messages.length > 1) {
       try {
         safeSetLocalStorage(STORAGE_KEY, JSON.stringify(messages));
-      } catch (e) {
-        console.warn('Failed to save chat history:', e);
+      } catch {
+        // console.warn('Failed to save chat history:', e);
       }
     }
   }, [messages]);

@@ -20,14 +20,24 @@ vi.mock('framer-motion', async () => {
     useReducedMotion: () => false,
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
-      // eslint-disable-next-line no-unused-vars
-      div: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
-        <div {...props}>{children}</div>
-      ),
-      // eslint-disable-next-line no-unused-vars
-      button: ({ children, whileTap, initial, animate, exit, transition, ...props }) => (
-        <button {...props}>{children}</button>
-      ),
+      div: ({ children, ...props }) => {
+        const domProps = Object.keys(props).reduce((acc, key) => {
+          if (!['whileTap', 'initial', 'animate', 'exit', 'transition', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].includes(key)) {
+            acc[key] = props[key];
+          }
+          return acc;
+        }, {});
+        return <div {...domProps}>{children}</div>;
+      },
+      button: ({ children, ...props }) => {
+        const domProps = Object.keys(props).reduce((acc, key) => {
+          if (!['whileTap', 'initial', 'animate', 'exit', 'transition', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].includes(key)) {
+            acc[key] = props[key];
+          }
+          return acc;
+        }, {});
+        return <button {...domProps}>{children}</button>;
+      },
     },
   };
 });

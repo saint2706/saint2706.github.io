@@ -12,21 +12,21 @@ vi.mock('../shared/theme-context', () => ({
 vi.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }) => {
-      // eslint-disable-next-line no-unused-vars
-      const { initial, animate, exit, transition, whileTap, ...domProps } = props;
+      const domProps = { ...props };
+      ['initial', 'animate', 'exit', 'transition', 'whileTap', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].forEach(k => delete domProps[k]);
       return <div {...domProps}>{children}</div>;
     },
     button: ({ children, ...props }) => {
-      // eslint-disable-next-line no-unused-vars
-      const { initial, animate, exit, transition, whileTap, ...domProps } = props;
+      const domProps = { ...props };
+      ['initial', 'animate', 'exit', 'transition', 'whileTap', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].forEach(k => delete domProps[k]);
       return <button {...domProps}>{children}</button>;
     },
     span: ({ children, ...props }) => {
-      // eslint-disable-next-line no-unused-vars
-      const { initial, animate, exit, transition, whileTap, ...domProps } = props;
+      const domProps = { ...props };
+      ['initial', 'animate', 'exit', 'transition', 'whileTap', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].forEach(k => delete domProps[k]);
       return <span {...domProps}>{children}</span>;
     },
-  },
+    },
   AnimatePresence: ({ children }) => <>{children}</>,
   useReducedMotion: vi.fn().mockReturnValue(true),
 }));
