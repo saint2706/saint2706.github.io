@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import React from 'react';
 import LightsOut from './LightsOut';
 import { ThemeProvider } from '../shared/ThemeProvider';
@@ -81,12 +81,14 @@ const renderWithTheme = component => {
 };
 
 describe('LightsOut Game', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('renders initial game state and handles all off puzzle creation', () => {
-    const originalRandom = Math.random;
     // Mock random so toggles logic results in all false
-    Math.random = vi.fn().mockReturnValue(0);
+    vi.spyOn(Math, 'random').mockReturnValue(0);
     renderWithTheme(<LightsOut />);
-    Math.random = originalRandom; // restore quickly
 
     expect(screen.getByText(/Lights Out puzzle ready/i)).toBeInTheDocument();
     expect(screen.getByText(/Start Puzzle/i)).toBeInTheDocument();
@@ -260,5 +262,81 @@ describe('LightsOut Game', () => {
     // Should render "Lights Out puzzle ready. Press Start to begin." on initial load (gameState === 'idle')
     renderWithTheme(<LightsOut />);
     expect(screen.getByText('Lights Out puzzle ready. Press Start to begin.')).toBeInTheDocument();
+  });
+
+  it('handles game win condition and updates best score', async () => {
+    // Clear localStorage to ensure we start without a best score
+    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
+
+    // Mock random to return 0. The puzzle generation will toggle cell (0,0) 8 times,
+    // ending in all off. The fallback logic will then turn on the center cross:
+    // cells (2,2), (1,2), (3,2), (2,1), (2,3).
+    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+
+    renderWithTheme(<LightsOut />);
+
+    const startButton = screen.getByText(/Start Puzzle/i);
+    fireEvent.click(startButton);
+
+    // Restore random so other components aren't affected
+    randomSpy.mockRestore();
+
+    await waitFor(() => {
+      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
+    });
+
+    // We can solve this grid by clicking the center cell (Row 3, Column 3)
+    const centerCell = screen.getByLabelText(/Row 3, Column 3: light on/i);
+    fireEvent.click(centerCell);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Lights Out! 🎉/i)).toBeInTheDocument();
+    });
+
+    // Check if it's solved in 1 move
+    expect(screen.getByText(/Solved in/i)).toBeInTheDocument();
+
+    // Use getAllByText as '1' might appear in multiple places (moves count, timer, etc)
+    const ones = screen.getAllByText('1');
+    expect(ones.length).toBeGreaterThan(0);
+
+    // Check localStorage was called to save the new best score
+    expect(setItemSpy).toHaveBeenCalledWith('lightsOutBest', '1');
+  });
+
+  it('displays New Best notification when previous best score is beaten', async () => {
+    // Set localStorage to simulate a previous best score of 10
+    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => key === 'lightsOutBest' ? '10' : null);
+
+    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
+
+    renderWithTheme(<LightsOut />);
+
+    const startButton = screen.getByText(/Start Puzzle/i);
+    fireEvent.click(startButton);
+
+    randomSpy.mockRestore();
+
+    await waitFor(() => {
+      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
+    });
+
+    // Solve the grid in 1 move
+    const centerCell = screen.getByLabelText(/Row 3, Column 3: light on/i);
+    fireEvent.click(centerCell);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Lights Out! 🎉/i)).toBeInTheDocument();
+    });
+
+    // Verify the New Best! notification appears
+    // Use getAllByText since "New Best!" might appear in the SR announcement as well as visually
+    const newBestNodes = screen.getAllByText(/New best!/i);
+    expect(newBestNodes.length).toBeGreaterThan(0);
+
+    // Verify localStorage was updated with the new best score
+    expect(setItemSpy).toHaveBeenCalledWith('lightsOutBest', '1');
   });
 });
