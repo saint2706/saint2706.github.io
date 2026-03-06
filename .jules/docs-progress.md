@@ -9,3 +9,6 @@
 
 - Audited `src/utils/seo.js` for missing JSDoc documentation
 - Added `@returns {Object}` type descriptions to all exported structured data schema functions in `src/utils/seo.js` for completeness
+
+- Audited codebase for missing JSDocs on exported functions/components.
+- Added missing JSDoc comments to `ThemedChip` component in `src/components/shared/ThemedChip.jsx`.
