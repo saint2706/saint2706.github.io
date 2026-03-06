@@ -11,6 +11,9 @@
 - **Projects Memoization**: Extracted static `cardColors` and `shadowColors` arrays into `useMemo` so they aren't instantiated on every render.
 - **Games Memoization**: Extracted the static `games` configuration array into `useMemo` to prevent object recreation on every render.
 - **Resume Memoization**: Wrapped the `Section` and `TimelineCard` components with `React.memo` to prevent unnecessary re-rendering during state updates like section toggling.
+- **Chatbot Memoization**: Wrapped the `Chatbot` and `LoadingDialog` components with `React.memo` to prevent them from re-rendering unnecessarily during layout state changes.
+- **Playground Memoization**: Extracted `cardColors` static array outside of `Playground` component to prevent recreation on every render.
+- **Contact Memoization**: Wrapped static metadata like `description`, `title`, and `contactSchemas` in `useMemo` hooks to prevent recreation on every render.
 
 ## ⚡ Bolt Optimizations
 

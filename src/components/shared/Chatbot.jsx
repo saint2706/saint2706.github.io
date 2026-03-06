@@ -36,7 +36,7 @@ const RoastInterface = lazy(() => import('./RoastInterface'));
  * @param {'chat'|'roast'} props.type - Type of dialog being loaded (affects styling)
  * @returns {JSX.Element} Loading skeleton with appropriate styling
  */
-const LoadingDialog = ({ type }) => {
+const LoadingDialog = React.memo(({ type }) => {
   const prefersReducedMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -92,7 +92,9 @@ const LoadingDialog = ({ type }) => {
       </div>
     </motion.div>
   );
-};
+});
+
+LoadingDialog.displayName = 'LoadingDialog';
 
 /**
  * Chatbot component with expandable floating action button (FAB).
@@ -120,7 +122,7 @@ const LoadingDialog = ({ type }) => {
  * @component
  * @returns {JSX.Element} The chatbot FAB and lazy-loaded interfaces
  */
-const Chatbot = () => {
+const Chatbot = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   // FAB (Floating Action Button) expansion state
@@ -340,6 +342,8 @@ const Chatbot = () => {
       </AnimatePresence>
     </>
   );
-};
+});
+
+Chatbot.displayName = 'Chatbot';
 
 export default Chatbot;

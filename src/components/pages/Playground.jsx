@@ -20,6 +20,9 @@ import { useTheme } from '../shared/theme-context';
 
 const SyntaxHighlighter = lazy(() => import('../shared/SyntaxHighlighter'));
 
+/** Color classes for snippet card accent bars */
+const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+
 /**
  * Playground page for code snippets and interactive demos
  *
@@ -65,9 +68,6 @@ const Playground = () => {
     ],
     []
   );
-
-  /** Color classes for snippet card accent bars */
-  const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
 
   /**
    * Copy code to clipboard and show visual feedback
