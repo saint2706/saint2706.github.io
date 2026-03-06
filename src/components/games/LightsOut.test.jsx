@@ -308,7 +308,9 @@ describe('LightsOut Game', () => {
   it('displays New Best notification when previous best score is beaten', async () => {
     // Set localStorage to simulate a previous best score of 10
     const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
-    vi.spyOn(Storage.prototype, 'getItem').mockImplementation((key) => key === 'lightsOutBest' ? '10' : null);
+    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(key =>
+      key === 'lightsOutBest' ? '10' : null
+    );
 
     const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
 
