@@ -212,6 +212,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         <button
           onClick={handleRoast}
           disabled={roastLoading}
+          aria-label="Roast resume again"
           className={joinClasses(
             'flex-1 py-3 font-heading font-bold cursor-pointer disabled:bg-secondary disabled:text-muted flex items-center justify-center gap-2 motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
             isLiquid
@@ -228,6 +229,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
         </button>
         <button
           onClick={onClose}
+          aria-label="Close roast interface"
           className={joinClasses(
             'py-3 px-6 font-heading font-bold cursor-pointer motion-reduce:transform-none motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary transition-transform',
             isLiquid

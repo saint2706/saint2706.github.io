@@ -662,13 +662,13 @@ const ChatInterface = ({ onClose }) => {
                     inputRef.current.focus();
                   }
                 }}
+                aria-label={`Ask: ${reply}`}
                 className={
                   isLiquid
                     ? 'lg-surface-3 lg-pill lg-spring-hover text-xs font-semibold whitespace-nowrap px-3 py-2 rounded-full text-[color:var(--text-primary)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
                     : 'bg-card border-[2px] border-[color:var(--color-border)] text-xs font-bold font-heading whitespace-nowrap px-3 py-2 rounded-nb hover:bg-fun-yellow hover:-translate-y-0.5 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-secondary'
                 }
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
-                aria-label={`Ask: ${reply}`}
               >
                 {reply}
               </button>

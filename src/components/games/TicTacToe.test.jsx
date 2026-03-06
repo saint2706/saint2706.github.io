@@ -103,7 +103,7 @@ describe('TicTacToe', () => {
     render(<TicTacToe />);
 
     // Switch to easy mode
-    fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
 
     // Play a move
     // The easiest way is to query by aria-label.
@@ -188,7 +188,7 @@ describe('TicTacToe', () => {
   it('handles AI hard difficulty optimal move', async () => {
     render(<TicTacToe />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Hard' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Hard' }));
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -211,7 +211,7 @@ describe('TicTacToe', () => {
 
   it('detects a player win', async () => {
     render(<TicTacToe />);
-    fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -240,7 +240,7 @@ describe('TicTacToe', () => {
 
   it('handles game reset', async () => {
     render(<TicTacToe />);
-    fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -324,7 +324,7 @@ describe('TicTacToe', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.0);
 
     render(<TicTacToe />);
-    fireEvent.click(screen.getByRole('button', { name: 'Easy' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;

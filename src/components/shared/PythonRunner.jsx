@@ -186,6 +186,7 @@ const PythonRunner = ({ snippet }) => {
           <input
             id={inputId}
             type="text"
+            aria-label="Provide program input"
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}

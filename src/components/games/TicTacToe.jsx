@@ -438,6 +438,7 @@ const TicTacToe = () => {
             key={diff.id}
             onClick={() => changeDifficulty(diff.id)}
             aria-pressed={difficulty === diff.id}
+            aria-label={`Set difficulty to ${diff.label}`}
             className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
                             ${
                               difficulty === diff.id
