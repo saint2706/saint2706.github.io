@@ -39,6 +39,74 @@ const shuffle = arr => {
 const createDeck = () =>
   shuffle([...ICONS, ...ICONS].map((icon, i) => ({ id: i, icon, matched: false })));
 
+const MemoryMatchCard = React.memo(
+  ({
+    card,
+    index,
+    isFlipped,
+    isLiquid,
+    gameState,
+    focusIndex,
+    ui,
+    shouldReduceMotion,
+    onClick,
+  }) => {
+    return (
+      <button
+        onClick={() => onClick(index)}
+        aria-label={isFlipped ? `Card ${index + 1}: ${card.icon}` : `Card ${index + 1}: face down`}
+        aria-pressed={isFlipped}
+        tabIndex={gameState === 'playing' && focusIndex === index ? 0 : -1}
+        className={`relative w-16 h-16 md:w-[72px] md:h-[72px] ${ui.tileBase} text-2xl cursor-pointer
+          transition-all motion-reduce:transition-none
+          ${
+            card.matched
+              ? ui.tileWin
+              : isFlipped
+                ? `${ui.tileActive} ${isLiquid ? 'scale-[0.985]' : ''}`
+                : `${ui.tileIdle} text-transparent ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'} ${focusIndex === index && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
+          }`}
+        style={{
+          ...(isFlipped ? ui.style.tileActive : ui.style.tile),
+        }}
+      >
+        <AnimatePresence mode="wait">
+          {isFlipped ? (
+            <motion.span
+              key="face"
+              initial={shouldReduceMotion ? false : { rotateY: 90, opacity: 0 }}
+              animate={{ rotateY: 0, opacity: 1 }}
+              exit={shouldReduceMotion ? undefined : { rotateY: -90, opacity: 0 }}
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
+              }
+              className="absolute inset-0 flex items-center justify-center text-2xl"
+              aria-hidden="true"
+            >
+              {card.icon}
+            </motion.span>
+          ) : (
+            <motion.span
+              key="back"
+              initial={shouldReduceMotion ? false : { rotateY: -90, opacity: 0 }}
+              animate={{ rotateY: 0, opacity: 1 }}
+              exit={shouldReduceMotion ? undefined : { rotateY: 90, opacity: 0 }}
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
+              }
+              className="absolute inset-0 flex items-center justify-center text-xl text-secondary"
+              aria-hidden="true"
+            >
+              ?
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </button>
+    );
+  }
+);
+MemoryMatchCard.displayName = 'MemoryMatchCard';
+
 const MemoryMatch = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -209,59 +277,18 @@ const MemoryMatch = () => {
             aria-label="Memory Match game board"
           >
             {cards.map((card, i) => (
-              <button
+              <MemoryMatchCard
                 key={card.id}
-                onClick={() => flipCard(i)}
-                aria-label={
-                  isFlipped(i) ? `Card ${i + 1}: ${card.icon}` : `Card ${i + 1}: face down`
-                }
-                aria-pressed={isFlipped(i)}
-                tabIndex={gameState === 'playing' && focusIndex === i ? 0 : -1}
-                className={`relative w-16 h-16 md:w-[72px] md:h-[72px] ${ui.tileBase} text-2xl cursor-pointer
-                  transition-all motion-reduce:transition-none
-                  ${
-                    card.matched
-                      ? ui.tileWin
-                      : isFlipped(i)
-                        ? `${ui.tileActive} ${isLiquid ? 'scale-[0.985]' : ''}`
-                        : `${ui.tileIdle} text-transparent ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'} ${focusIndex === i && gameState === 'playing' ? 'ring-2 ring-accent' : ''}`
-                  }`}
-                style={{
-                  ...(isFlipped(i) ? ui.style.tileActive : ui.style.tile),
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  {isFlipped(i) ? (
-                    <motion.span
-                      key="face"
-                      initial={shouldReduceMotion ? false : { rotateY: 90, opacity: 0 }}
-                      animate={{ rotateY: 0, opacity: 1 }}
-                      exit={shouldReduceMotion ? undefined : { rotateY: -90, opacity: 0 }}
-                      transition={
-                        shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
-                      }
-                      className="absolute inset-0 flex items-center justify-center text-2xl"
-                      aria-hidden="true"
-                    >
-                      {card.icon}
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="back"
-                      initial={shouldReduceMotion ? false : { rotateY: -90, opacity: 0 }}
-                      animate={{ rotateY: 0, opacity: 1 }}
-                      exit={shouldReduceMotion ? undefined : { rotateY: 90, opacity: 0 }}
-                      transition={
-                        shouldReduceMotion ? { duration: 0 } : { duration: isLiquid ? 0.15 : 0.2 }
-                      }
-                      className="absolute inset-0 flex items-center justify-center text-xl text-secondary"
-                      aria-hidden="true"
-                    >
-                      ?
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
+                card={card}
+                index={i}
+                isFlipped={isFlipped(i)}
+                isLiquid={isLiquid}
+                gameState={gameState}
+                focusIndex={focusIndex}
+                ui={ui}
+                shouldReduceMotion={shouldReduceMotion}
+                onClick={flipCard}
+              />
             ))}
           </div>
         </motion.div>
