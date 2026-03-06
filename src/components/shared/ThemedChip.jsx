@@ -35,6 +35,20 @@ const SHADOW_COLORS = {
   red: 'var(--nb-shadow-color-red)',
 };
 
+/**
+ * A flexible themed chip component for badges, tags, and small decorative labels.
+ * Adapts its styling to match the current theme context (Liquid or Neubrutalism).
+ *
+ * @component
+ * @param {object} props - Component props
+ * @param {React.ElementType} [props.as='span'] - The HTML element or component to render as.
+ * @param {'yellow'|'accent'|'pink'|'neutral'|'sticker'} [props.variant='neutral'] - The visual style variant.
+ * @param {'yellow'|'pink'|'blue'|'red'} [props.shadowColor] - Optional shadow color specific to Neubrutalism theme.
+ * @param {string} [props.className] - Additional CSS classes.
+ * @param {React.CSSProperties} [props.style] - Inline styles to apply.
+ * @param {any} [props.children] - The content of the chip.
+ * @returns {JSX.Element} The rendered themed chip.
+ */
 const ThemedChip = ({
   as: Component = 'span',
   variant = 'neutral',
