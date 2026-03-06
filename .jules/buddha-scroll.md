@@ -112,3 +112,4 @@ Conducted a thorough verification to confirm SEO, GEO, and Core Web Vitals optim
     - Ensured JSON-LD schema objects are appropriately injected across different routes.
     - Ensured no unused scripts or raw `dangerouslySetInnerHTML` injections exist without sanitization via `safeJSONStringify`.
     - Verified zero build and lint errors to ensure performance reliability.
+    - Added descriptive `title` attributes to links in `src/components/pages/Projects.jsx` for enhanced context.
