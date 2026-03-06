@@ -41,3 +41,9 @@
 - **Fixed Code Cleanliness**: Removed an unused `ms` argument from a `setInterval` mock in `SnakeGame.test.jsx`.
 - **Fixed Code Cleanliness**: Commented out `console.warn` statements in `src/components/shared/ChatInterface.jsx` and used ES2019 optional catch binding (`catch { ... }`) to remove unused error variables.
 - **Verified**: Build, Lint, and Tests passed cleanly.
+
+## Session 8
+
+- **Fixed Lint Warnings**: Removed unused `eslint-disable-next-line no-console` directives in `src/main.jsx` and `src/components/pages/NotFound.jsx`.
+- **Fixed JSDoc Types**: Fixed JSDoc `@example` formatting in `src/services/ai.js` to prevent `@typescript-eslint` or similar tools from parsing `console.log` and warning about it.
+- **Verified**: Build, Lint, and Tests passed cleanly.
