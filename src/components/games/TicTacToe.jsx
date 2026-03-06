@@ -149,6 +149,55 @@ const getWinningLine = board => {
   return null;
 };
 
+const TicTacToeCell = React.memo(
+  ({
+    cell,
+    index,
+    isPlayerTurn,
+    gameStatus,
+    isWinningCell,
+    isLiquid,
+    ui,
+    shouldReduceMotion,
+    onClick,
+    getCellLabel,
+  }) => {
+    return (
+      <motion.button
+        onClick={() => onClick(index)}
+        disabled={!!cell || !isPlayerTurn || gameStatus !== 'playing'}
+        aria-label={getCellLabel(index, cell)}
+        className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl flex items-center justify-center transition-transform motion-reduce:transform-none motion-reduce:transition-none ${ui.tileBase}
+                          ${isWinningCell ? ui.tileWin : ui.tileIdle}
+                          ${!cell && isPlayerTurn && gameStatus === 'playing' ? `cursor-pointer ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'}` : 'cursor-default'}
+                      `}
+        style={ui.style.raised}
+        whileTap={
+          !cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion
+            ? { scale: 0.95 }
+            : undefined
+        }
+      >
+        <AnimatePresence mode="wait">
+          {cell && (
+            <motion.span
+              initial={shouldReduceMotion ? false : { scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={shouldReduceMotion ? undefined : { scale: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : undefined}
+              className={cell === 'X' ? 'text-accent' : 'text-fun-pink'}
+              aria-hidden="true"
+            >
+              {cell}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
+    );
+  }
+);
+TicTacToeCell.displayName = 'TicTacToeCell';
+
 /**
  * Tic Tac Toe game component with AI opponent.
  *
@@ -361,12 +410,12 @@ const TicTacToe = () => {
     { id: 'hard', label: 'Hard', color: 'bg-fun-pink' },
   ];
 
-  const getCellLabel = (index, cell) => {
+  const getCellLabel = useCallback((index, cell) => {
     const row = Math.floor(index / 3) + 1;
     const col = (index % 3) + 1;
     const state = cell ? (cell === 'X' ? 'marked by you' : 'marked by AI') : 'empty';
     return `Row ${row}, Column ${col}, ${state}`;
-  };
+  }, []);
 
   const getStatusAnnouncement = () => {
     if (gameStatus === 'won') return 'Congratulations! You won the game!';
@@ -444,37 +493,19 @@ const TicTacToe = () => {
           aria-label="Tic Tac Toe game board"
         >
           {board.map((cell, index) => (
-            <motion.button
+            <TicTacToeCell
               key={index}
-              onClick={() => handleCellClick(index)}
-              disabled={!!cell || !isPlayerTurn || gameStatus !== 'playing'}
-              aria-label={getCellLabel(index, cell)}
-              className={`w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl flex items-center justify-center transition-transform motion-reduce:transform-none motion-reduce:transition-none ${ui.tileBase}
-                                ${winningLine?.includes(index) ? ui.tileWin : ui.tileIdle}
-                                ${!cell && isPlayerTurn && gameStatus === 'playing' ? `cursor-pointer ${isLiquid ? 'hover:brightness-110' : 'hover:-translate-x-0.5 hover:-translate-y-0.5'}` : 'cursor-default'}
-                            `}
-              style={ui.style.raised}
-              whileTap={
-                !cell && isPlayerTurn && gameStatus === 'playing' && !shouldReduceMotion
-                  ? { scale: 0.95 }
-                  : undefined
-              }
-            >
-              <AnimatePresence mode="wait">
-                {cell && (
-                  <motion.span
-                    initial={shouldReduceMotion ? false : { scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={shouldReduceMotion ? undefined : { scale: 0 }}
-                    transition={shouldReduceMotion ? { duration: 0 } : undefined}
-                    className={cell === 'X' ? 'text-accent' : 'text-fun-pink'}
-                    aria-hidden="true"
-                  >
-                    {cell}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              cell={cell}
+              index={index}
+              isPlayerTurn={isPlayerTurn}
+              gameStatus={gameStatus}
+              isWinningCell={winningLine?.includes(index)}
+              isLiquid={isLiquid}
+              ui={ui}
+              shouldReduceMotion={shouldReduceMotion}
+              onClick={handleCellClick}
+              getCellLabel={getCellLabel}
+            />
           ))}
         </motion.div>
 

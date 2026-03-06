@@ -25,6 +25,60 @@ const INITIAL_MOLE_TIME = 1200; // ms mole stays visible
 const MIN_MOLE_TIME = 400;
 const SPAWN_INTERVAL = 800; // ms between spawns
 
+const MoleHole = React.memo(
+  ({ index, isActive, isWhacked, isLiquid, gameState, ui, shouldReduceMotion, onClick }) => {
+    return (
+      <button
+        onClick={() => onClick(index)}
+        disabled={gameState !== 'playing'}
+        aria-label={`Hole ${index + 1}${isActive ? ' — Mole! Click to whack!' : ''}`}
+        className={`w-20 h-20 md:w-24 md:h-24 rounded-full cursor-pointer flex items-center justify-center text-3xl transition-all motion-reduce:transition-none ${ui.tileBase}
+          ${
+            isWhacked
+              ? `${ui.tileWin} scale-90`
+              : isActive
+                ? `bg-fun-pink hover:bg-fun-pink/80 ${isLiquid ? 'brightness-110' : '-translate-y-1'}`
+                : `${isLiquid ? 'bg-[color:var(--surface-muted)]/80 hover:brightness-110' : 'bg-secondary hover:bg-secondary/80'}`
+          }`}
+        style={{
+          ...(isActive ? ui.style.tileActive : ui.style.raised),
+        }}
+      >
+        <AnimatePresence mode="wait">
+          {isActive && (
+            <motion.span
+              key={`mole-${index}`}
+              initial={shouldReduceMotion ? false : { scale: 0, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { scale: 0, y: 20 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
+              }
+              aria-hidden="true"
+            >
+              🐹
+            </motion.span>
+          )}
+          {isWhacked && (
+            <motion.span
+              key={`hit-${index}`}
+              initial={shouldReduceMotion ? false : { scale: 1.5 }}
+              animate={{ scale: 1 }}
+              transition={shouldReduceMotion ? { duration: 0 } : undefined}
+              aria-hidden="true"
+            >
+              💥
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </button>
+    );
+  }
+);
+MoleHole.displayName = 'MoleHole';
+
 const WhackAMole = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -233,53 +287,17 @@ const WhackAMole = () => {
         >
           <div className="grid grid-cols-3 gap-4" role="grid" aria-label="Whack-a-Mole game board">
             {Array.from({ length: GRID_SIZE }, (_, i) => (
-              <button
+              <MoleHole
                 key={i}
-                onClick={() => whackMole(i)}
-                disabled={gameState !== 'playing'}
-                aria-label={`Hole ${i + 1}${activeMoles.has(i) ? ' — Mole! Click to whack!' : ''}`}
-                className={`w-20 h-20 md:w-24 md:h-24 rounded-full cursor-pointer flex items-center justify-center text-3xl transition-all motion-reduce:transition-none ${ui.tileBase}
-                  ${
-                    whackedMoles.has(i)
-                      ? `${ui.tileWin} scale-90`
-                      : activeMoles.has(i)
-                        ? `bg-fun-pink hover:bg-fun-pink/80 ${isLiquid ? 'brightness-110' : '-translate-y-1'}`
-                        : `${isLiquid ? 'bg-[color:var(--surface-muted)]/80 hover:brightness-110' : 'bg-secondary hover:bg-secondary/80'}`
-                  }`}
-                style={{
-                  ...(activeMoles.has(i) ? ui.style.tileActive : ui.style.raised),
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  {activeMoles.has(i) && (
-                    <motion.span
-                      key={`mole-${i}`}
-                      initial={shouldReduceMotion ? false : { scale: 0, y: 20 }}
-                      animate={{ scale: 1, y: 0 }}
-                      exit={shouldReduceMotion ? undefined : { scale: 0, y: 20 }}
-                      transition={
-                        shouldReduceMotion
-                          ? { duration: 0 }
-                          : { type: 'spring', bounce: isLiquid ? 0.2 : 0.5 }
-                      }
-                      aria-hidden="true"
-                    >
-                      🐹
-                    </motion.span>
-                  )}
-                  {whackedMoles.has(i) && (
-                    <motion.span
-                      key={`hit-${i}`}
-                      initial={shouldReduceMotion ? false : { scale: 1.5 }}
-                      animate={{ scale: 1 }}
-                      transition={shouldReduceMotion ? { duration: 0 } : undefined}
-                      aria-hidden="true"
-                    >
-                      💥
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
+                index={i}
+                isActive={activeMoles.has(i)}
+                isWhacked={whackedMoles.has(i)}
+                isLiquid={isLiquid}
+                gameState={gameState}
+                ui={ui}
+                shouldReduceMotion={shouldReduceMotion}
+                onClick={whackMole}
+              />
             ))}
           </div>
         </motion.div>
