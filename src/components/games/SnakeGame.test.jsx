@@ -21,7 +21,24 @@ vi.mock('framer-motion', async () => {
     motion: {
       div: ({ children, ...props }) => {
         const domProps = Object.keys(props).reduce((acc, key) => {
-          if (!['whileTap', 'initial', 'animate', 'exit', 'transition', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].includes(key)) {
+          if (
+            ![
+              'whileTap',
+              'initial',
+              'animate',
+              'exit',
+              'transition',
+              'whileHover',
+              'variants',
+              'layoutId',
+              'style',
+              'drag',
+              'dragConstraints',
+              'dragElastic',
+              'dragMomentum',
+              'onUpdate',
+            ].includes(key)
+          ) {
             acc[key] = props[key];
           }
           return acc;
@@ -30,7 +47,24 @@ vi.mock('framer-motion', async () => {
       },
       button: ({ children, ...props }) => {
         const domProps = Object.keys(props).reduce((acc, key) => {
-          if (!['whileTap', 'initial', 'animate', 'exit', 'transition', 'whileHover', 'variants', 'layoutId', 'style', 'drag', 'dragConstraints', 'dragElastic', 'dragMomentum', 'onUpdate'].includes(key)) {
+          if (
+            ![
+              'whileTap',
+              'initial',
+              'animate',
+              'exit',
+              'transition',
+              'whileHover',
+              'variants',
+              'layoutId',
+              'style',
+              'drag',
+              'dragConstraints',
+              'dragElastic',
+              'dragMomentum',
+              'onUpdate',
+            ].includes(key)
+          ) {
             acc[key] = props[key];
           }
           return acc;
@@ -87,7 +121,7 @@ describe('SnakeGame', () => {
     // Manual interval mocking
     intervals = new Map();
     intervalIdCounter = 0;
-    vi.spyOn(window, 'setInterval').mockImplementation((cb) => {
+    vi.spyOn(window, 'setInterval').mockImplementation(cb => {
       intervalIdCounter++;
       intervals.set(intervalIdCounter, cb);
       return intervalIdCounter;
