@@ -245,14 +245,14 @@ describe('Playground Component', () => {
     expect(copyButtons.length).toBeGreaterThan(0);
 
     await act(async () => {
-        fireEvent.click(copyButtons[0]);
+      fireEvent.click(copyButtons[0]);
     });
 
     expect(navigator.clipboard.writeText).toHaveBeenCalled();
     expect(screen.getByText('Copied!')).toBeInTheDocument();
 
     await act(async () => {
-        vi.advanceTimersByTime(2500);
+      vi.advanceTimersByTime(2500);
     });
 
     expect(screen.queryByText('Copied!')).not.toBeInTheDocument();
