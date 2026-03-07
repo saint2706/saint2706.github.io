@@ -112,6 +112,7 @@ const ProjectCard = React.memo(
                 size="sm"
                 className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
                 aria-label={`Live Demo for ${project.title} (opens in new tab)`}
+                title={`View live demo for ${project.title}`}
               >
                 <ExternalLink size={14} aria-hidden="true" /> Demo
               </ThemedButton>
@@ -127,6 +128,7 @@ const ProjectCard = React.memo(
                 size="sm"
                 className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
                 aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
+                title={`View source code for ${project.title} on GitHub`}
               >
                 <Github size={14} aria-hidden="true" /> Code
               </ThemedButton>
