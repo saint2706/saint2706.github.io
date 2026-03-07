@@ -12,6 +12,7 @@ jobs:
   actionlint:
     name: Lint GitHub Actions workflows
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,6 +25,7 @@ jobs:
   workflow-security:
     name: Check workflow security guardrails
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
