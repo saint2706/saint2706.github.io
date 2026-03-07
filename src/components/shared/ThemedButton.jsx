@@ -88,7 +88,7 @@ const ThemedButton = ({
       aria-busy={isLoading}
       {...props}
     >
-      {isLoading && <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4" />}
+      {isLoading && <Loader2 className="animate-spin -ml-1 mr-2 h-4 w-4" aria-hidden="true" />}
       {children}
     </Component>
   );

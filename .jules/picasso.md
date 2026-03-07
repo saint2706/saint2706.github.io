@@ -36,3 +36,7 @@ Implements various UX and accessibility enhancements across the application, foc
 - Manual code review confirmed logical correctness of state transitions and conditional rendering.
 - Added dynamic aria-label to PythonRunner component based on execution state (isRunning) to improve accessibility for screen readers.
 - Added `aria-label` attributes to missing buttons and inputs to improve screen reader accessibility.
+
+### 5. Themed Button Accessibility
+
+- Always add `aria-hidden="true"` to visual loading spinners like `<Loader2 />` inside buttons when the button itself is already marked with `aria-busy`. This prevents screen readers from redundantly announcing the spinner icon.
