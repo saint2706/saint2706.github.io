@@ -43,9 +43,7 @@ const SimonButton = React.memo(
         ...(isActive ? ui.style.tileActive : ui.style.tile),
       }}
     >
-      <span className="text-lg font-heading font-bold text-white drop-shadow-md">
-        {color.key}
-      </span>
+      <span className="text-lg font-heading font-bold text-white drop-shadow-md">{color.key}</span>
     </motion.button>
   )
 );
