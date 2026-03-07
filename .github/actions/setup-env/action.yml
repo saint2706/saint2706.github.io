@@ -1,0 +1,24 @@
+name: "Setup Environment"
+description: "Sets up Node.js, pnpm, and installs dependencies with caching"
+inputs:
+  node-version:
+    description: "The Node.js version to use"
+    required: false
+    default: "20"
+runs:
+  using: "composite"
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+      with:
+        version: 10.28.0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      shell: bash
