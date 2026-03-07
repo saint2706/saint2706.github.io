@@ -90,6 +90,7 @@ const SEOHead = ({
         <script
           key={i}
           type="application/ld+json"
+          // SECURITY: safeJSONStringify escapes dangerous HTML characters (<, >, &, ', and line separators) to prevent XSS.
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: json }}
         />
