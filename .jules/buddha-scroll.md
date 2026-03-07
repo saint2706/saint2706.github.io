@@ -113,3 +113,20 @@ Conducted a thorough verification to confirm SEO, GEO, and Core Web Vitals optim
     - Ensured no unused scripts or raw `dangerouslySetInnerHTML` injections exist without sanitization via `safeJSONStringify`.
     - Verified zero build and lint errors to ensure performance reliability.
     - Added descriptive `title` attributes to links in `src/components/pages/Projects.jsx` for enhanced context.
+
+## Date: 2026-03-06
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the codebase for better Discoverability (GEO), Creative Work representation, and Metadata (SEO).
+
+### Changes
+
+1.  **[GEO/SEO] Added `projectCreativeWorkSchema`:**
+    - Created a new standard CreativeWork JSON-LD schema generator in `src/utils/seo.js` mapped to resume project data to ensure projects are accurately represented as Creative Work entities.
+2.  **[GEO/SEO] Injected CreativeWork Schemas:**
+    - Dynamically integrated the new schemas to the `SEOHead` inside `src/components/pages/Projects.jsx`, ensuring search engines and LLM agents retrieve structured context on creative experiments and tools.
+3.  **[PERF] Validated LCP Lazy Loading:**
+    - Confirmed the hero text serves as the main LCP for the index without lazy-loaded blocking items, and validated priority loading limits (`fetchPriority="high"`, `loading="eager"`) for above-the-fold image assets.

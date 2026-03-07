@@ -238,6 +238,23 @@ export function projectsCollectionSchema() {
 }
 
 /**
+ * CreativeWork schema for an individual project.
+ * @param {Object} project - Project object from resumeData.projects
+ * @returns {Object} CreativeWork structured data schema.
+ */
+export function projectCreativeWorkSchema(project) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.description,
+    image: project.image ? `${SITE_URL}${project.image}` : DEFAULT_OG_IMAGE,
+    url: project.link || project.github || `${SITE_URL}/projects`,
+    author: personSchemaCompact(),
+  };
+}
+
+/**
  * CollectionPage schema for the Blog listing.
  * @returns {Object} CollectionPage structured data schema for the blog.
  */

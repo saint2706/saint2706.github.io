@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
-import { breadcrumbSchema, projectsCollectionSchema, SITE_URL } from '../../utils/seo';
+import { breadcrumbSchema, projectsCollectionSchema, projectCreativeWorkSchema, SITE_URL } from '../../utils/seo';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedChip from '../shared/ThemedChip';
@@ -169,6 +169,7 @@ const Projects = () => {
       { name: 'Projects', url: `${SITE_URL}/projects` },
     ]),
     projectsCollectionSchema(),
+    ...resumeData.projects.map(project => projectCreativeWorkSchema(project)),
   ];
 
   // Animation variants for stagger effect
