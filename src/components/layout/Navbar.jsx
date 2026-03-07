@@ -285,6 +285,7 @@ const Navbar = React.memo(
                   >
                     <button
                       onClick={toggleTheme}
+                      aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
                       className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${mobileThemeBtnCls}`}
                     >
                       <span>{isLiquid ? 'Switch to Neubrutalism' : 'Switch to Liquid'}</span>
