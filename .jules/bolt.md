@@ -26,3 +26,5 @@
 6. **TicTacToe.jsx:** Extracted `TicTacToeCell` into a new component and wrapped it in `React.memo`. Memoized `getCellLabel` with `useCallback`. This prevents all 9 grid cells from re-rendering when a single cell is clicked or game state updates.
 7. **MemoryMatch.jsx:** Extracted `MemoryMatchCard` into a new component and wrapped it in `React.memo`. This prevents all 16 cards from re-rendering every time a card is flipped or a match is found.
 8. **WhackAMole.jsx:** Extracted `MoleHole` into a new component and wrapped it in `React.memo`. This avoids unnecessary re-rendering of all 9 holes whenever the timer counts down or a mole pops up/is whacked.
+
+9. **SimonSays.jsx:** Extracted `SimonButton` component and wrapped it in `React.memo` to prevent re-rendering all 4 buttons whenever the game's state (such as the active sequence or current user turn) changes.
