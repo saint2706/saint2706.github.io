@@ -123,7 +123,7 @@ ${JSON.stringify(redactPII(resumeData))}
  *
  * @example
  * const response = await chatWithGemini("What are Rishabh's skills?");
- * console.log(response); // "Rishabh has expertise in..."
+ * // => "Rishabh has expertise in..."
  *
  * @example
  * // With history for multi-turn conversation
@@ -268,7 +268,7 @@ export const sanitizeHistoryForGemini = history => {
  *
  * @example
  * const roast = await roastResume();
- * console.log(roast); // "Oh wow, 'Data Storytelling'? So you make spreadsheets with feelings?"
+ * // => "Oh wow, 'Data Storytelling'? So you make spreadsheets with feelings?"
  */
 export const roastResume = async () => {
   // Rate limiting: Prevent spam roast requests
