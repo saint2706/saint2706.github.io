@@ -26,6 +26,31 @@ const COLORS = [
   { id: 3, name: 'Green', bg: 'bg-emerald-500', active: 'bg-emerald-500/60', key: '4' },
 ];
 
+const SimonButton = React.memo(
+  ({ color, isActive, gameState, isLiquid, ui, shouldReduceMotion, onPress }) => (
+    <motion.button
+      onClick={() => onPress(color.id)}
+      disabled={gameState !== 'input'}
+      whileTap={shouldReduceMotion || gameState !== 'input' ? undefined : { scale: 0.9 }}
+      aria-label={`${color.name} button (key ${color.key})`}
+      className={`w-24 h-24 md:w-28 md:h-28 cursor-pointer transition-all motion-reduce:transition-none ${ui.tileBase}
+        ${
+          isActive
+            ? `${color.active} ${isLiquid ? 'brightness-125 scale-[0.98]' : 'scale-95 brightness-150'}`
+            : `${color.bg} ${gameState === 'input' ? (isLiquid ? 'hover:brightness-110' : 'hover:-translate-y-1') : 'opacity-70'}`
+        }`}
+      style={{
+        ...(isActive ? ui.style.tileActive : ui.style.tile),
+      }}
+    >
+      <span className="text-lg font-heading font-bold text-white drop-shadow-md">
+        {color.key}
+      </span>
+    </motion.button>
+  )
+);
+SimonButton.displayName = 'SimonButton';
+
 const SimonSays = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -222,22 +247,16 @@ const SimonSays = () => {
           {/* 2×2 button grid */}
           <div className="grid grid-cols-2 gap-4" role="group" aria-label="Simon Says buttons">
             {COLORS.map(color => (
-              <motion.button
+              <SimonButton
                 key={color.id}
-                onClick={() => handlePress(color.id)}
-                disabled={gameState !== 'input'}
-                whileTap={shouldReduceMotion || gameState !== 'input' ? undefined : { scale: 0.9 }}
-                aria-label={`${color.name} button (key ${color.key})`}
-                className={`w-24 h-24 md:w-28 md:h-28 cursor-pointer transition-all motion-reduce:transition-none ${ui.tileBase}
-                  ${activeButton === color.id ? `${color.active} ${isLiquid ? 'brightness-125 scale-[0.98]' : 'scale-95 brightness-150'}` : `${color.bg} ${gameState === 'input' ? (isLiquid ? 'hover:brightness-110' : 'hover:-translate-y-1') : 'opacity-70'}`}`}
-                style={{
-                  ...(activeButton === color.id ? ui.style.tileActive : ui.style.tile),
-                }}
-              >
-                <span className="text-lg font-heading font-bold text-white drop-shadow-md">
-                  {color.key}
-                </span>
-              </motion.button>
+                color={color}
+                isActive={activeButton === color.id}
+                gameState={gameState}
+                isLiquid={isLiquid}
+                ui={ui}
+                shouldReduceMotion={shouldReduceMotion}
+                onPress={handlePress}
+              />
             ))}
           </div>
         </motion.div>
