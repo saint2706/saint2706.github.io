@@ -15,6 +15,7 @@ The project follows a standard React application structure:
 - `src/utils`: Utility functions (security, storage, seo).
 - `scripts/`: Build and verification scripts (security checks, sitemap generation).
 - `public/`: Static assets (images, fonts, llms.txt).
+- `docs/`: Project documentation (Architecture, Theming, Games). See [`docs/README.md`](docs/README.md).
 
 ## Theme System
 
