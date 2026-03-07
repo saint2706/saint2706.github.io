@@ -74,16 +74,22 @@ const Contact = () => {
     [formData]
   );
 
-  const description =
-    'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
-  const title = `Contact | ${resumeData.basics.name}`;
-  const contactSchemas = [
-    breadcrumbSchema([
-      { name: 'Home', url: SITE_URL },
-      { name: 'Contact', url: `${SITE_URL}/contact` },
-    ]),
-    contactPageSchema(),
-  ];
+  const description = React.useMemo(
+    () => 'Get in touch for collaborations, analytics consulting, or data storytelling projects.',
+    []
+  );
+  const title = React.useMemo(() => `Contact | ${resumeData.basics.name}`, []);
+  const contactSchemas = React.useMemo(
+    () => [
+      breadcrumbSchema([
+        { name: 'Home', url: SITE_URL },
+        { name: 'Contact', url: `${SITE_URL}/contact` },
+      ]),
+      contactPageSchema(),
+    ],
+    []
+  );
+
   return (
     <>
       <SEOHead title={title} description={description} path="/contact" schemas={contactSchemas} />
