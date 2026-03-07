@@ -66,7 +66,7 @@ Please ensure all checks pass before submitting a Pull Request.
 
 ## Security
 
-Please refer to `.jules/sentinel.md` for security policies, including vulnerability reporting and mitigation strategies.
+Please refer to [.jules/sentinel.md](.jules/sentinel.md) for security policies, including vulnerability reporting and mitigation strategies.
 
 ## License
 

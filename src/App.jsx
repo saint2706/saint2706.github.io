@@ -105,6 +105,10 @@ const AnimatedRoutes = () => {
   );
 };
 
+/**
+ * Main application component setting up routing, theme provider, and global layout.
+ * @returns {JSX.Element} The root application component.
+ */
 function App() {
   return (
     <Router>

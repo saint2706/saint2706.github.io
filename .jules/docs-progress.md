@@ -12,3 +12,5 @@
 
 - Audited codebase for missing JSDocs on exported functions/components.
 - Added missing JSDoc comments to `ThemedChip` component in `src/components/shared/ThemedChip.jsx`.
+- Updated `docs/ARCHITECTURE.md` and `CONTRIBUTING.md` security report links
+- Added missing JSDoc for `App` component
