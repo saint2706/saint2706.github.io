@@ -267,6 +267,43 @@ describe('TicTacToe', () => {
     expect(emptyCells).toHaveLength(9);
   });
 
+  it('handles game reset via escape key', async () => {
+    render(<TicTacToe />);
+    fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+
+    const getCell = index => {
+      const row = Math.floor(index / 3) + 1;
+      const col = (index % 3) + 1;
+      return screen.getByRole('button', { name: new RegExp(`Row ${row}, Column ${col}`) });
+    };
+
+    // P X(4) -> AI O(0)
+    fireEvent.click(getCell(4));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
+
+    // P X(1) -> AI O(2)
+    fireEvent.click(getCell(1));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
+
+    // P X(7) -> win line 1,4,7
+    fireEvent.click(getCell(7));
+
+    const winMessages = screen.getAllByText('You Won!');
+    expect(winMessages.length).toBeGreaterThan(0);
+
+    // Escape
+    // According to useFocusTrap, the event needs to bubble up to document or match the focus trap logic
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    // Cells should be empty again
+    const emptyCells = screen.getAllByRole('button', { name: /empty/i });
+    expect(emptyCells).toHaveLength(9);
+  });
+
   it('detects a draw', async () => {
     // Math.random() < 0.3 evaluates to true if random is 0
     vi.spyOn(Math, 'random').mockReturnValue(0.1);

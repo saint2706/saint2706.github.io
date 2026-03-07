@@ -118,31 +118,24 @@ describe('MemoryMatch', () => {
   });
 
   it('handles matching two cards', async () => {
-    render(<MemoryMatch />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
-
-    // We need to find two matching cards. Since they are randomized, we click the first and look for its match.
-    // However, for testing, we could spy on or mock the shuffle logic, but let's just test clicking two cards.
-    // Instead of forcing a match, let's just test the sequence of flipping two cards.
-
-    const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
-
     // Mock random to be deterministic
     const originalRandom = Math.random;
     Math.random = () => 0.5;
 
     try {
+      render(<MemoryMatch />);
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+      const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
+
       // Click first card
       fireEvent.click(cards[0]);
       expect(cards[0]).toHaveAttribute('aria-pressed', 'true');
 
-      // Click second card (ensure it's not a match for test robustness, or if it is, handle it)
-      // Since cards are pseudo-randomly shuffled, we just test the flip interaction and moves
+      // Click second card
       fireEvent.click(cards[1]);
       expect(cards[1]).toHaveAttribute('aria-pressed', 'true');
 
-      // They are pseudo-randomly shuffled, but with random=0.5 they match.
-      // cards[0] and cards[1] have the same icon in our deterministic shuffle.
       // Wait for match logic
       await act(async () => {
         await vi.advanceTimersByTimeAsync(500);
@@ -150,23 +143,6 @@ describe('MemoryMatch', () => {
 
       // Moves should be 1
       expect(screen.getByText('1')).toBeInTheDocument();
-
-      // Let's print out what icons are left, to be able to match them.
-      // We don't need to match all of them, just testing match logic is sufficient here.
-      // To test bestScore, we would need to match all 8 pairs.
-      // We can do this by getting all cards and matching by icon.
-      // Match the rest sequentially in tests for speed and simplicity.
-      // We know Math.random = 0.5 yields a deterministic layout,
-      // so finding pairs dynamically is slower. Let's just uncover them and match them.
-      // But instead of an exhaustive while loop that times out, let's just
-      // mock out the internal `cards` state if needed, or simply let the next test
-      // handle what is needed.
-      // The previous test logic timed out because of the slow matching.
-
-      // Let's create an efficient way to win by getting all labels up front
-      // since the first click exposes the label.
-      // Actually, since this is a test, we can just test the win state if we can trigger it fast.
-      // With Math.random=0.5, we can figure out the indices that match.
     } finally {
       Math.random = originalRandom;
     }
@@ -189,8 +165,9 @@ describe('MemoryMatch', () => {
       // The deck is `[...ICONS, ...ICONS]`.
       // So indices 0 and 8 match, 1 and 9 match, etc.
       for (let i = 0; i < 8; i++) {
-        fireEvent.click(screen.getAllByRole('button', { name: /Card/i })[i]);
-        fireEvent.click(screen.getAllByRole('button', { name: /Card/i })[i + 8]);
+        const cardsToClick = screen.getAllByRole('button', { name: /Card/i });
+        fireEvent.click(cardsToClick[i]);
+        fireEvent.click(cardsToClick[i + 8]);
         await act(async () => {
           await vi.advanceTimersByTimeAsync(600);
         });

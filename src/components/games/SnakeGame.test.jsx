@@ -89,6 +89,33 @@ const mockContext = {
   drawImage: vi.fn(),
 };
 
+// Mock the DOM properties that might be needed by the canvas drawing logic
+Object.defineProperty(document, 'documentElement', {
+  value: {
+    style: {
+      getPropertyValue: vi.fn().mockReturnValue('#000000'),
+    },
+  },
+  configurable: true,
+});
+
+window.getComputedStyle = vi.fn().mockReturnValue({
+  getPropertyValue: vi.fn(prop => {
+    switch (prop) {
+      case '--color-border':
+        return '#000000';
+      case '--color-accent':
+        return '#0052CC';
+      case '--color-fun-pink':
+        return '#9C0E4B';
+      case '--color-fun-yellow':
+        return '#FFEB3B';
+      default:
+        return '';
+    }
+  }),
+});
+
 HTMLCanvasElement.prototype.getContext = vi.fn(() => mockContext);
 
 // Mock localStorage
@@ -334,6 +361,22 @@ describe('SnakeGame', () => {
 
     await waitFor(() => {
       expect(screen.queryByText(/Game Over/i)).not.toBeInTheDocument();
+    });
+  });
+
+  it('handles pause by blurring the game container', async () => {
+    renderWithTheme(<SnakeGame />);
+    fireEvent.click(screen.getByRole('button', { name: 'Start Snake Game' }));
+
+    const container = screen.getByLabelText('Snake Game Board. Use arrow keys to move.');
+    container.focus();
+
+    // Blur should trigger a pause
+    fireEvent.blur(container);
+
+    await waitFor(() => {
+      const pausedElements = screen.getAllByText(/Paused/i);
+      expect(pausedElements.length).toBeGreaterThan(0);
     });
   });
 });
