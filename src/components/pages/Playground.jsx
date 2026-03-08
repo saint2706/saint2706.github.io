@@ -185,6 +185,7 @@ const Playground = () => {
             {filters.map(filter => (
               <ThemedButton
                 key={filter.id}
+                id={`tab-${filter.id}`}
                 onClick={() => setActiveFilter(filter.id)}
                 role="tab"
                 aria-selected={activeFilter === filter.id}
@@ -237,6 +238,7 @@ const Playground = () => {
         <motion.div
           id="snippets-grid"
           role="tabpanel"
+          aria-labelledby={`tab-${activeFilter}`}
           variants={container}
           initial={shouldReduceMotion ? false : 'hidden'}
           animate="show"

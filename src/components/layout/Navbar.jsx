@@ -129,12 +129,12 @@ const Navbar = React.memo(
     const desktopLinkCls = useCallback(
       isActive =>
         isLiquid
-          ? `touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
+            ? `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
               isActive
                 ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
                 : 'text-[color:var(--text-secondary)] hover:bg-white/40'
             }`
-          : `flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
+            : `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fun-yellow focus-visible:ring-offset-2 flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
               isActive
                 ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
                 : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
@@ -161,14 +161,14 @@ const Navbar = React.memo(
     const mobileLinkCls = useCallback(
       (isActive, index) => {
         const base =
-          'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200';
+          'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
         const activeStyle = isLiquid
           ? isActive
-            ? 'bg-white/60 text-[color:var(--text-primary)]'
-            : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+            ? 'bg-white/60 text-[color:var(--text-primary)] focus-visible:ring-[color:var(--focus-ring)]'
+            : 'text-[color:var(--text-secondary)] hover:bg-white/40 focus-visible:ring-[color:var(--focus-ring)]'
           : isActive
-            ? 'bg-fun-yellow text-black'
-            : 'text-primary hover:bg-secondary';
+            ? 'bg-fun-yellow text-black focus-visible:ring-fun-pink'
+            : 'text-primary hover:bg-secondary focus-visible:ring-fun-pink';
         const separator =
           !isLiquid && index < NAV_ITEMS.length - 1
             ? 'border-b-2 border-[color:var(--color-border)]'
