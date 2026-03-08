@@ -157,6 +157,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
 
   // Reset selected index when filtered results change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedIndex(0);
   }, [filteredCommands.length, query]);
 
@@ -171,7 +172,9 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
   // Reset state when palette opens
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery('');
+
       setSelectedIndex(0);
     }
   }, [isOpen]);
