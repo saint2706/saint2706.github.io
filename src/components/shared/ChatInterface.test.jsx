@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import ChatInterface from './ChatInterface';
 import * as aiService from '../../services/ai';
 import * as storage from '../../utils/storage';
@@ -208,5 +208,277 @@ describe('ChatInterface', () => {
     const botIconContainer =
       screen.getByText('Digital Rishabh').parentElement.previousElementSibling;
     expect(botIconContainer).toHaveClass('lg-surface-3');
+  });
+
+  it('renders safe and unsafe links correctly', () => {
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: 'Safe: [Google](https://google.com)\nUnsafe: [Bad](javascript:alert(1))',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const safeLink = screen.getByText('Google');
+    expect(safeLink.tagName).toBe('A');
+    expect(safeLink).toHaveAttribute('href', 'https://google.com');
+
+    const unsafeLink = screen.getByText('Bad');
+    expect(unsafeLink.tagName).toBe('SPAN');
+    expect(unsafeLink).not.toHaveAttribute('href');
+  });
+
+  it('renders safe and unsafe images correctly', () => {
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: 'Safe: ![Safe Image](https://example.com/safe.png)\nUnsafe: ![Unsafe Image](javascript:alert(1))',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const safeImage = screen.getByAltText('Safe Image');
+    expect(safeImage.tagName).toBe('IMG');
+    expect(safeImage).toHaveAttribute('src', 'https://example.com/safe.png');
+
+    const unsafeImage = screen.getByText('[Image blocked for security]');
+    expect(unsafeImage).toBeInTheDocument();
+  });
+
+  it('handles code block copy', async () => {
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: '```javascript\nconsole.log("hello");\n```',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    const { unmount } = render(<ChatInterface onClose={mockOnClose} />);
+
+    // The copy button is available on blocks, not inline.
+    const copyButton = await screen.findByRole(
+      'button',
+      { name: /copy code to clipboard/i },
+      { timeout: 3000 }
+    );
+
+    await act(async () => {
+      await fireEvent.click(copyButton);
+    });
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('console.log("hello");');
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /copied code/i })).toBeInTheDocument();
+    });
+
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('button', { name: /copied code/i })).not.toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
+
+    unmount();
+  });
+
+  it('handles component unmount during code copy timeout', async () => {
+    const setTimeoutSpy = vi.spyOn(global, 'setTimeout');
+    const clearTimeoutSpy = vi.spyOn(global, 'clearTimeout');
+
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: '```javascript\nconsole.log("hello");\n```',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    const { unmount } = render(<ChatInterface onClose={mockOnClose} />);
+
+    const copyButton = await screen.findByRole('button', { name: /copy code to clipboard/i });
+
+    await act(async () => {
+      await fireEvent.click(copyButton);
+    });
+
+    // Grab the timeout id
+    const setCall = setTimeoutSpy.mock.calls.find(call => call[1] === 2000);
+    expect(setCall).toBeDefined();
+
+    // Unmount before timeout finishes to test cleanup
+    unmount();
+
+    // Expect clearTimeout to have been called with the ID (since spy doesn't give us the ID easily unless we mock implementation, we just check it was called)
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+
+    setTimeoutSpy.mockRestore();
+    clearTimeoutSpy.mockRestore();
+  });
+
+  it('handles parsing errors gracefully when loading history', () => {
+    storage.safeGetLocalStorage.mockReturnValue('{invalid-json');
+    render(<ChatInterface onClose={mockOnClose} />);
+    // Should render default greeting
+    expect(screen.getAllByText(/Digital Rishabh/)[0]).toBeInTheDocument();
+  });
+
+  it('handles local storage save errors gracefully', async () => {
+    vi.useRealTimers();
+    aiService.chatWithGemini.mockResolvedValue('I am good');
+    storage.safeSetLocalStorage.mockImplementation(() => {
+      throw new Error('Quota Exceeded');
+    });
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'How are you?' } });
+
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText('Send message'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('I am good')).toBeInTheDocument();
+    });
+    // Test passes if no unhandled exception
+  });
+
+  it('limits number of messages loaded from history', () => {
+    const mockHistory = Array.from({ length: 110 }).map((_, i) => ({
+      id: `id-${i}`,
+      role: 'user',
+      text: `Message ${i}`,
+    }));
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    // It should load the last 100 messages (MAX_STORED_MESSAGES)
+    expect(screen.getByText('Message 109')).toBeInTheDocument();
+    expect(screen.queryByText('Message 0')).not.toBeInTheDocument();
+  });
+
+  it('handles code block copy failure gracefully', async () => {
+    navigator.clipboard.writeText.mockRejectedValueOnce(new Error('Failed to copy'));
+
+    const mockHistory = [
+      {
+        id: '1',
+        role: 'model',
+        text: '```javascript\nconsole.log("hello");\n```',
+      },
+    ];
+    storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+    const { unmount } = render(<ChatInterface onClose={mockOnClose} />);
+    const copyButton = await screen.findByRole(
+      'button',
+      { name: /copy code to clipboard/i },
+      { timeout: 3000 }
+    );
+
+    await act(async () => {
+      await fireEvent.click(copyButton);
+    });
+
+    // Should still be visible as copy, not copied
+    expect(screen.getByRole('button', { name: /copy code to clipboard/i })).toBeInTheDocument();
+
+    unmount();
+  });
+
+  it('handles chatWithGemini API failure in handleSendMessage', async () => {
+    aiService.chatWithGemini.mockRejectedValueOnce(new Error('API failed'));
+
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Trigger error' } });
+
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText('Send message'));
+    });
+
+    // Should not crash, and typing indicator should be hidden
+    await waitFor(() => {
+      expect(screen.queryByLabelText('AI is typing')).not.toBeInTheDocument();
+    });
+  });
+
+  it('handles form submission error in handleSubmit', async () => {
+    render(<ChatInterface onClose={mockOnClose} />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Trigger error' } });
+
+    const form = screen.getByRole('textbox').closest('form');
+
+    await act(async () => {
+      fireEvent.submit(form, {
+        preventDefault: () => {
+          throw new Error('Simulated sync error in form submit');
+        },
+      });
+    });
+
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+  });
+
+  it('generates message ID with crypto fallback', () => {
+    const originalCrypto = global.crypto;
+
+    try {
+      // Test randomUUID missing
+      Object.defineProperty(global, 'crypto', {
+        value: {
+          getRandomValues: arr => {
+            for (let i = 0; i < arr.length; i++) arr[i] = 12345;
+            return arr;
+          },
+        },
+        writable: true,
+        configurable: true,
+      });
+
+      const mockHistory = [
+        { id: '', role: 'user', text: 'Hello' }, // will trigger generateMessageId
+      ];
+      storage.safeGetLocalStorage.mockReturnValue(JSON.stringify(mockHistory));
+
+      render(<ChatInterface onClose={mockOnClose} />);
+      expect(screen.getByText('Hello')).toBeInTheDocument();
+
+      // Test completely missing crypto
+      Object.defineProperty(global, 'crypto', {
+        value: undefined,
+        writable: true,
+        configurable: true,
+      });
+
+      storage.safeGetLocalStorage.mockReturnValue(
+        JSON.stringify([{ id: null, role: 'model', text: 'Hi' }])
+      );
+
+      render(<ChatInterface onClose={mockOnClose} />);
+      expect(screen.getByText('Hi')).toBeInTheDocument();
+    } finally {
+      // Restore crypto reliably
+      Object.defineProperty(global, 'crypto', {
+        value: originalCrypto,
+        writable: true,
+        configurable: true,
+      });
+    }
   });
 });
