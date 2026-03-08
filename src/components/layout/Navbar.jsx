@@ -77,7 +77,6 @@ const Navbar = React.memo(
       if (isMenuOpen) {
         setIsMenuOpen(false);
       }
-
     }, [location.pathname]);
 
     const handleCloseMenu = () => {

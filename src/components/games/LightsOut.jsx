@@ -118,7 +118,6 @@ const LightsOut = () => {
     const allOff = grid.every(row => row.every(cell => !cell));
 
     if (allOff) {
-
       setGameState('won');
       if (!bestScore || moves < bestScore) {
         setBestScore(moves);

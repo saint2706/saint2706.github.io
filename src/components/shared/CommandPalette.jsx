@@ -157,7 +157,6 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
 
   // Reset selected index when filtered results change
   useEffect(() => {
-
     setSelectedIndex(0);
   }, [filteredCommands.length, query]);
 
@@ -172,7 +171,6 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
   // Reset state when palette opens
   useEffect(() => {
     if (isOpen) {
-
       setQuery('');
       setSelectedIndex(0);
     }
