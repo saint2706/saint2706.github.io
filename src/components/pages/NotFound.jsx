@@ -36,20 +36,6 @@ const NotFound = () => {
   const [clickCount, setClickCount] = useState(0); // Track ghost clicks for easter egg
   const glitchTimeoutRef = useRef(null);
 
-  // 🕵️ Console easter egg for curious developers who inspect the 404 page
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-
-    console.log(
-      '%c🕵️ SECRET AGENT MODE ACTIVATED',
-      'background: #9c0e4b; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 16px;'
-    );
-    console.log(
-      "%cYou found the 404 page AND opened DevTools? You're clearly a person of taste.\nTry pressing Ctrl+K for a surprise, or type the Konami Code anywhere on the site!",
-      'color: #ffd54f; font-size: 12px; line-height: 1.6;'
-    );
-  }, []);
-
   // Generate random floating particles for background animation (only once on mount)
   const [particles] = useState(() =>
     Array.from({ length: 8 }, (_, i) => ({
