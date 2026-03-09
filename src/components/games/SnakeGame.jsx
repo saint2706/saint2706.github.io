@@ -592,12 +592,12 @@ const SnakeGame = () => {
    *
    * @param {TouchEvent} e - Touch start event
    */
-  const handleTouchStart = e => {
+  const handleTouchStart = useCallback(e => {
     touchStartRef.current = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     };
-  };
+  }, []);
 
   /**
    * Detects swipe direction from touch gestures.
@@ -609,7 +609,7 @@ const SnakeGame = () => {
    *
    * @param {TouchEvent} e - Touch end event
    */
-  const handleTouchEnd = e => {
+  const handleTouchEnd = useCallback(e => {
     if (!touchStartRef.current || gameState !== 'playing') return;
 
     const touchEnd = {
@@ -636,7 +636,7 @@ const SnakeGame = () => {
     }
 
     touchStartRef.current = null;
-  };
+  }, [gameState]);
 
   /**
    * Canvas rendering with Neubrutalism design styling.
