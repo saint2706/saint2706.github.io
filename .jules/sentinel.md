@@ -45,3 +45,8 @@
 
 - **Issue**: The `src/components/shared/SEOHead.jsx` component uses `dangerouslySetInnerHTML` to inject structured JSON-LD schemas into the head, which could be an XSS vector if improperly formatted or sanitized.
 - **Fix**: Documented the current robust mitigation within the codebase by adding explicit security context comments explaining that `safeJSONStringify` (from `src/utils/security.js`) prevents XSS attacks by safely escaping dangerous HTML characters (`<`, `>`, `&`, `'`, and line separators) prior to injection.
+
+### Security Improvement: Enforcement of rel="noopener noreferrer"
+
+- **Issue**: Usage of `target="_blank"` on external links without `rel="noopener noreferrer"` can expose the site to reverse tabnabbing attacks, where the newly opened page gains access to the `window.opener` object.
+- **Fix**: Implemented the `react/jsx-no-target-blank` rule as an `error` in `eslint.config.js` to strictly enforce the presence of `rel="noopener noreferrer"` for any `target="_blank"` usages across the entire repository. This acts as a preventative control for current and future developments.

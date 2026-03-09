@@ -53,6 +53,7 @@ export default [
       'no-unused-vars': ['error', { varsIgnorePattern: '^React$', argsIgnorePattern: '^_' }],
       'react/no-unescaped-entities': 'off',
       'react/no-danger': 'error',
+      'react/jsx-no-target-blank': 'error',
     },
   },
 ];
