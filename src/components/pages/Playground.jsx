@@ -396,7 +396,7 @@ const SnippetCard = React.memo(
             {/* Copy Button */}
             <button
               onClick={() => onCopy(snippet.code, snippet.id)}
-              className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all ${
+              className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 ${
                 isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
               }`}
               aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
