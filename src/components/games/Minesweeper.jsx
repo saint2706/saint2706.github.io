@@ -172,6 +172,15 @@ MinesweeperCell.displayName = 'MinesweeperCell';
  * TimerDisplay component to isolate timer re-renders.
  * Only this component re-renders every second, not the entire grid.
  */
+/**
+ * Timer display for the Minesweeper game.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isPlaying - Whether the game is currently active.
+ * @param {boolean} props.isGameOver - Whether the game has ended (win or loss).
+ * @param {boolean} props.isWin - Whether the player has won the game.
+ * @returns {React.ReactElement} The timer display component.
+ */
 const TimerDisplay = React.memo(({ startTime, finalTime, gameState }) => {
   const [elapsed, setElapsed] = useState(0);
 
@@ -198,6 +207,14 @@ const TimerDisplay = React.memo(({ startTime, finalTime, gameState }) => {
 });
 TimerDisplay.displayName = 'TimerDisplay';
 
+/**
+ * Minesweeper Game Component
+ *
+ * A classic logic game where the player must uncover cells without detonating hidden mines.
+ * Features a dynamic timer, flag count, and supports both mouse and keyboard/touch interactions.
+ *
+ * @returns {React.ReactElement} The Minesweeper game component.
+ */
 const Minesweeper = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();

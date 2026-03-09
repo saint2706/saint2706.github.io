@@ -99,6 +99,14 @@ const GameTabButton = React.memo(({ game, activeGame, isLiquid, onClick }) => {
 
 GameTabButton.displayName = 'GameTabButton';
 
+/**
+ * Games Page Component
+ *
+ * Displays a grid of playable mini-games and handles the selection and rendering of the active game.
+ * Uses SEO tags for indexing.
+ *
+ * @returns {React.ReactElement} The games page component.
+ */
 const Games = () => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();

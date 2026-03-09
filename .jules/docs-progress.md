@@ -15,3 +15,8 @@
 - Updated `docs/ARCHITECTURE.md` and `CONTRIBUTING.md` security report links
 - Added missing JSDoc for `App` component
 - Updated JSDoc `@example` blocks in `src/utils/security.js` to use `// => 'expected output'` format instead of `// Returns:` to prevent AST linter `no-console` warnings.
+- Audited `src/utils/seo.js` for missing JSDoc documentation
+- Verified all exported structured data schema functions in `src/utils/seo.js` include JSDoc comments and `@returns {Object}` type descriptions
+- Audited codebase for missing JSDocs on exported functions/components.
+- Added missing JSDoc comments to `SITE_NAME`, `SITE_TITLE_SUFFIX`, `DEFAULT_OG_IMAGE`, `TWITTER_HANDLE`, `LOCALE`, and `THEME_COLOR` constants in `src/utils/seo.js`.
+- Added missing JSDoc comments to `LightsOut`, `MemoryMatch`, `TimerDisplay` (Minesweeper), `Minesweeper`, `SimonSays`, `WhackAMole`, `HeroBackground`, and `Games` components.

@@ -49,6 +49,14 @@ const SimonButton = React.memo(
 );
 SimonButton.displayName = 'SimonButton';
 
+/**
+ * SimonSays Game Component
+ *
+ * A classic memory sequence game where the player must repeat a growing pattern of colors.
+ * Features keyboard support (1-4 or arrow keys) for accessibility.
+ *
+ * @returns {React.ReactElement} The SimonSays game component.
+ */
 const SimonSays = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();

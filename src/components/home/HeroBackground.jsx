@@ -6,6 +6,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+/**
+ * HeroBackground Component
+ *
+ * Provides a dynamic, themed background for the Hero section.
+ * Adapts to 'liquid' (animated gradients and glassmorphism) and 'neubrutalism' (solid colors and bold shapes) themes.
+ * Uses Framer Motion for subtle entry animations.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isLiquid - True if the active theme is liquid.
+ * @param {boolean} props.shouldReduceMotion - True if the user prefers reduced motion.
+ * @returns {React.ReactElement} The animated hero background component.
+ */
 const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
   if (isLiquid) {
     return (
