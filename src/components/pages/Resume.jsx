@@ -172,7 +172,8 @@ const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'La
  * @component
  * @returns {JSX.Element} Resume page with professional information
  */
-const Resume = () => {
+// ⚡ Bolt: Wrapped `Resume` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Resume = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -204,9 +205,10 @@ const Resume = () => {
   }, []);
 
   /** Trigger browser print dialog */
-  const handlePrint = () => {
+  // ⚡ Bolt: Memoized `handlePrint` with `useCallback` to ensure a stable function reference is passed to `ThemedButton`.
+  const handlePrint = useCallback(() => {
     window.print();
-  };
+  }, []);
 
   return (
     <>
@@ -496,6 +498,8 @@ const Resume = () => {
       </div>
     </>
   );
-};
+});
+
+Resume.displayName = 'Resume';
 
 export default Resume;

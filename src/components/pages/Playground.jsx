@@ -37,7 +37,8 @@ const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
  * @component
  * @returns {JSX.Element} Playground page with filterable code snippets
  */
-const Playground = () => {
+// ⚡ Bolt: Wrapped `Playground` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Playground = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const [activeFilter, setActiveFilter] = useState('all');
@@ -304,7 +305,9 @@ const Playground = () => {
       </Modal>
     </>
   );
-};
+});
+
+Playground.displayName = 'Playground';
 
 /**
  * Individual snippet card component
