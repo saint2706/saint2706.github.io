@@ -130,3 +130,17 @@ Optimized the codebase for better Discoverability (GEO), Creative Work represent
     - Dynamically integrated the new schemas to the `SEOHead` inside `src/components/pages/Projects.jsx`, ensuring search engines and LLM agents retrieve structured context on creative experiments and tools.
 3.  **[PERF] Validated LCP Lazy Loading:**
     - Confirmed the hero text serves as the main LCP for the index without lazy-loaded blocking items, and validated priority loading limits (`fetchPriority="high"`, `loading="eager"`) for above-the-fold image assets.
+
+## Date: 2026-03-08
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the codebase for better accessibility, SEO, and semantic HTML structure.
+
+### Changes
+
+1.  **[SEO][GEO] Fixed Semantic Hierarchy in Overlays:**
+    - Modified `src/components/shared/ChatInterface.jsx`, `src/components/shared/Chatbot.jsx`, and `src/components/shared/RoastInterface.jsx` to use `<h2>` instead of jumping directly to `<h3>` for their dialog headers.
+    - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.

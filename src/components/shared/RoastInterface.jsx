@@ -130,9 +130,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           >
             <Flame size={20} className="text-fun-pink" />
           </div>
-          <h3 className="font-heading font-bold text-white" id="roast-title">
+          <h2 className="font-heading font-bold text-white" id="roast-title">
             Resume Roasted 🔥
-          </h3>
+          </h2>
         </div>
         <button
           ref={roastCloseRef}

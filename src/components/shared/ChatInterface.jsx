@@ -595,9 +595,9 @@ const ChatInterface = ({ onClose }) => {
             <Bot size={20} className="text-black" />
           </div>
           <div>
-            <h3 className="font-heading font-bold text-white" id={titleId}>
+            <h2 className="font-heading font-bold text-white" id={titleId}>
               Digital Rishabh
-            </h3>
+            </h2>
             <p className="text-xs text-white/80 flex items-center gap-1 font-sans">
               <span className="w-2 h-2 bg-fun-yellow rounded-full animate-pulse motion-reduce:animate-none"></span>
               Online

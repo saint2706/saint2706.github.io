@@ -80,9 +80,9 @@ const LoadingDialog = React.memo(({ type }) => {
             <Flame size={20} className="text-fun-pink" />
           )}
         </div>
-        <h3 className="font-heading font-bold text-white">
+        <h2 className="font-heading font-bold text-white">
           {isChat ? 'Loading chat...' : 'Loading roast...'}
-        </h3>
+        </h2>
       </div>
       <div className={isLiquid ? 'p-6 bg-[color:var(--surface)]' : 'p-6 bg-white'}>
         <div className="animate-pulse motion-reduce:animate-none space-y-3">
