@@ -174,6 +174,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     if (isOpen) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery('');
+
       setSelectedIndex(0);
     }
   }, [isOpen]);

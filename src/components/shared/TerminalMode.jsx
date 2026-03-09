@@ -64,6 +64,7 @@ const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
       if (welcomeMessage) {
         initial.push({ type: 'system', text: welcomeMessage });
       }
+
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setHistory(initial);
       setInput('');
