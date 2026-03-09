@@ -17,7 +17,7 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     strategy:
       matrix:
         node-version: [20, 22]
@@ -54,7 +54,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
