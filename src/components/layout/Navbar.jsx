@@ -47,7 +47,11 @@ const DesktopNavItem = React.memo(({ item, getClassName }) => (
 DesktopNavItem.displayName = 'DesktopNavItem';
 
 const MobileNavItem = React.memo(({ item, index, isLiquid, onClick, getClassName }) => (
-  <NavLink to={item.path} onClick={onClick} className={({ isActive }) => getClassName(isActive, index)}>
+  <NavLink
+    to={item.path}
+    onClick={onClick}
+    className={({ isActive }) => getClassName(isActive, index)}
+  >
     <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
       {item.icon}
     </span>
@@ -222,11 +226,7 @@ const Navbar = React.memo(
           {/* ── Desktop Navigation ── */}
           <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
             {NAV_ITEMS.map(item => (
-              <DesktopNavItem
-                key={item.name}
-                item={item}
-                getClassName={desktopLinkCls}
-              />
+              <DesktopNavItem key={item.name} item={item} getClassName={desktopLinkCls} />
             ))}
           </div>
 
