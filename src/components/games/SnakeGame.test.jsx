@@ -379,4 +379,149 @@ describe('SnakeGame', () => {
       expect(pausedElements.length).toBeGreaterThan(0);
     });
   });
+
+  it('handles space key to pause/resume game', async () => {
+    vi.useFakeTimers();
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    // Space to pause
+    const container = screen.getAllByLabelText(/Snake Game Board/i)[0];
+    act(() => {
+      fireEvent.keyDown(container, { key: ' ' });
+    });
+    expect(screen.getByText('Paused')).toBeInTheDocument();
+
+    // Space to resume
+    act(() => {
+      fireEvent.keyDown(container, { key: ' ' });
+    });
+    expect(screen.queryByText('Paused')).not.toBeInTheDocument();
+
+    vi.useRealTimers();
+  });
+
+  it('handles touch events for mobile controls', () => {
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    const gameContainer = screen.getAllByLabelText(/Snake Game Board/i)[0];
+
+    // Simulate swipe up
+    fireEvent.touchStart(gameContainer, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(gameContainer, { changedTouches: [{ clientX: 100, clientY: 50 }] });
+
+    // Simulate swipe down
+    fireEvent.touchStart(gameContainer, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(gameContainer, { changedTouches: [{ clientX: 100, clientY: 150 }] });
+
+    // Simulate swipe left
+    fireEvent.touchStart(gameContainer, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(gameContainer, { changedTouches: [{ clientX: 50, clientY: 100 }] });
+
+    // Simulate swipe right
+    fireEvent.touchStart(gameContainer, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(gameContainer, { changedTouches: [{ clientX: 150, clientY: 100 }] });
+
+    // Short swipe should not trigger
+    fireEvent.touchStart(gameContainer, { touches: [{ clientX: 100, clientY: 100 }] });
+    fireEvent.touchEnd(gameContainer, { changedTouches: [{ clientX: 105, clientY: 105 }] });
+  });
+
+  it('ticks game forward safely', () => {
+    // Tests tickGame logic specifically by firing multiple fast ticks
+    vi.useFakeTimers();
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    const container = screen.getAllByLabelText(/Snake Game Board/i)[0];
+    // Move up
+    act(() => {
+      fireEvent.keyDown(container, { code: 'ArrowUp' });
+    });
+
+    // Move fast to trigger edge cases
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
+    vi.useRealTimers();
+  });
+
+  it('handles invalid rgb formats from css variables', () => {
+    const originalGetComputedStyle = window.getComputedStyle;
+    window.getComputedStyle = () => ({
+      getPropertyValue: prop => {
+        if (prop === '--color-fun-yellow') return 'rgb(NaN, 0, 0)';
+        return 'rgb(255, 0, 0)';
+      },
+    });
+
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    // Should fallback gracefully without crashing
+    expect(screen.getByText('Score')).toBeInTheDocument();
+
+    window.getComputedStyle = originalGetComputedStyle;
+  });
+
+  it('ignores keyboard navigation when not playing or paused', () => {
+    render(<SnakeGame />);
+    const container = screen.getAllByLabelText(/Snake Game Board/i)[0];
+    // State is 'idle'
+    fireEvent.keyDown(container, { key: 'ArrowUp' });
+    // It shouldn't crash
+    expect(screen.getByText('Start Game')).toBeInTheDocument();
+  });
+
+  it('ignores multi-touch starts or touch ends without starts', () => {
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    const container = screen.getAllByLabelText(/Snake Game Board/i)[0];
+
+    // Test missing touch start reference
+    fireEvent.touchEnd(container, { changedTouches: [{ clientX: 100, clientY: 50 }] });
+
+    // Test multi-touch
+    fireEvent.touchStart(container, {
+      touches: [
+        { clientX: 100, clientY: 100 },
+        { clientX: 120, clientY: 120 },
+      ],
+    });
+
+    // Shouldn't crash and should remain playing
+    expect(screen.getByText('Score')).toBeInTheDocument();
+  });
+
+  it('toggles pause from playing to paused and vice versa', async () => {
+    render(<SnakeGame />);
+    const startButton = screen.getByText('Start Game');
+    fireEvent.click(startButton);
+
+    // There is a pause button visible on mobile layout md:hidden maybe?
+    // <button aria-label="Pause game">
+    const pauseButton = screen.getByLabelText('Pause game');
+
+    await act(async () => {
+      fireEvent.click(pauseButton);
+    });
+
+    // Resume button appears
+    const resumeButton = screen.getByText('Resume');
+    expect(resumeButton).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(resumeButton);
+    });
+
+    expect(screen.queryByText('Resume')).not.toBeInTheDocument();
+  });
 });
