@@ -25,7 +25,7 @@
  * @example
  * const data = { script: '<script>alert("xss")</script>' };
  * const safe = safeJSONStringify(data);
- * // Returns: {"script":"\\u003cscript\\u003ealert(\"xss\")\\u003c/script\\u003e"}
+ * // => '{"script":"\\u003cscript\\u003ealert(\"xss\")\\u003c/script\\u003e"}'
  */
 export const safeJSONStringify = (value, replacer, space) => {
   let json;
@@ -262,7 +262,7 @@ export const isValidChatMessage = message => {
  * @example
  * const data = { basics: { email: 'test@example.com' } };
  * const safe = redactPII(data);
- * // Returns: { basics: { email: '[REDACTED]' } }
+ * // => { basics: { email: '[REDACTED]' } }
  */
 export const redactPII = data => {
   if (!data || typeof data !== 'object') {

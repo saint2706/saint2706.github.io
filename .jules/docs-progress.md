@@ -14,3 +14,4 @@
 - Added missing JSDoc comments to `ThemedChip` component in `src/components/shared/ThemedChip.jsx`.
 - Updated `docs/ARCHITECTURE.md` and `CONTRIBUTING.md` security report links
 - Added missing JSDoc for `App` component
+- Updated JSDoc `@example` blocks in `src/utils/security.js` to use `// => 'expected output'` format instead of `// Returns:` to prevent AST linter `no-console` warnings.
