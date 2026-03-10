@@ -255,9 +255,7 @@ const Layout = ({ children }) => {
         Skip to main content
       </a>
 
-      <Navbar
-        onOpenSettings={() => setIsSettingsOpen(true)}
-      />
+      <Navbar onOpenSettings={() => setIsSettingsOpen(true)} />
 
       <main id="main-content" className="grow pt-28 px-4 z-10 relative">
         {children}

@@ -9,17 +9,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import {
-  Terminal,
-  User,
-  Briefcase,
-  FileText,
-  Mail,
-  Menu,
-  X,
-  Code2,
-  Settings,
-} from 'lucide-react';
+import { Terminal, User, Briefcase, FileText, Mail, Menu, X, Code2, Settings } from 'lucide-react';
 import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
 
@@ -205,9 +195,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     <motion.nav
       initial={shouldReduceMotion ? false : { y: -100 }}
       animate={{ y: 0 }}
-      transition={
-        shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
-      }
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={navCls}
     >
       <div className={containerCls}>
@@ -286,7 +274,10 @@ const Navbar = React.memo(({ onOpenSettings }) => {
                   className={`px-5 py-4 ${isLiquid ? 'border-b border-black/5' : 'border-b-2 border-[color:var(--color-border)]'}`}
                 >
                   <button
-                    onClick={() => { handleCloseMenu(); onOpenSettings(); }}
+                    onClick={() => {
+                      handleCloseMenu();
+                      onOpenSettings();
+                    }}
                     aria-label="Open settings"
                     className={`w-full flex items-center justify-between text-sm font-bold px-3 py-2 rounded-lg transition-colors ${mobileSettingsBtnCls}`}
                   >

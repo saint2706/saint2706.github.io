@@ -59,11 +59,7 @@ const ThemeCard = ({ option, isActive, onClick }) => {
       data-style={option.swatchStyle}
     >
       {/* Swatch preview */}
-      <div
-        className="settings-swatch"
-        style={{ background: option.swatch[0] }}
-        aria-hidden="true"
-      >
+      <div className="settings-swatch" style={{ background: option.swatch[0] }} aria-hidden="true">
         {isLiquidStyle ? (
           <>
             <div className="swatch-blob swatch-blob-1" style={{ background: option.swatch[1] }} />
@@ -90,7 +86,13 @@ const ThemeCard = ({ option, isActive, onClick }) => {
       {isActive && (
         <div className="settings-card-check" aria-hidden="true">
           <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-            <path d="M1 4L3.5 6.5L9 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M1 4L3.5 6.5L9 1"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </div>
       )}
@@ -108,7 +110,13 @@ const ThemeCard = ({ option, isActive, onClick }) => {
  * @param {boolean} props.cursorToggleDisabled - Whether cursor toggle is locked by a11y prefs.
  * @param {Function} props.onToggleCursor - Cursor toggle handler.
  */
-const SettingsModal = ({ isOpen, onClose, cursorEnabled, cursorToggleDisabled, onToggleCursor }) => {
+const SettingsModal = ({
+  isOpen,
+  onClose,
+  cursorEnabled,
+  cursorToggleDisabled,
+  onToggleCursor,
+}) => {
   const { theme, setTheme } = useTheme();
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
@@ -165,7 +173,9 @@ const SettingsModal = ({ isOpen, onClose, cursorEnabled, cursorToggleDisabled, o
 
         {/* Theme section */}
         <section aria-labelledby="settings-theme-heading" className="settings-section">
-          <h3 id="settings-theme-heading" className="settings-section-title">Appearance</h3>
+          <h3 id="settings-theme-heading" className="settings-section-title">
+            Appearance
+          </h3>
           <div className="settings-theme-grid" role="radiogroup" aria-label="Select theme">
             {THEME_OPTIONS.map(option => (
               <ThemeCard
@@ -179,10 +189,15 @@ const SettingsModal = ({ isOpen, onClose, cursorEnabled, cursorToggleDisabled, o
         </section>
 
         {/* Cursor section */}
-        <section aria-labelledby="settings-cursor-heading" className="settings-section settings-section--cursor">
+        <section
+          aria-labelledby="settings-cursor-heading"
+          className="settings-section settings-section--cursor"
+        >
           <div className="settings-cursor-row">
             <div className="settings-cursor-info">
-              <h3 id="settings-cursor-heading" className="settings-section-title">Custom Cursor</h3>
+              <h3 id="settings-cursor-heading" className="settings-section-title">
+                Custom Cursor
+              </h3>
               <p className="settings-cursor-desc">
                 {cursorToggleDisabled
                   ? 'Disabled by motion or pointer preferences'

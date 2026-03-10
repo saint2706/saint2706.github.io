@@ -134,7 +134,10 @@ const Contact = () => {
                   aria-live="assertive"
                   className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300"
                 >
-                  <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" aria-hidden="true" />
+                  <CheckCircle
+                    className="mx-auto h-12 w-12 text-green-600 mb-2"
+                    aria-hidden="true"
+                  />
                   <h2 className="text-lg font-bold text-green-800">Draft Opened!</h2>
                   <p className="text-green-700">
                     Please check your email client to send the message.
@@ -143,7 +146,10 @@ const Contact = () => {
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
                   <div className="space-y-1">
-                    <label htmlFor="name" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-semibold text-[color:var(--text-secondary)]"
+                    >
                       Your name
                     </label>
                     <input
@@ -160,7 +166,10 @@ const Contact = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label htmlFor="email" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-semibold text-[color:var(--text-secondary)]"
+                    >
                       Your email
                     </label>
                     <input
@@ -177,7 +186,10 @@ const Contact = () => {
                     />
                   </div>
                   <div className="space-y-1">
-                    <label htmlFor="message" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-semibold text-[color:var(--text-secondary)]"
+                    >
                       Project details
                     </label>
                     <textarea
