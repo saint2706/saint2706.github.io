@@ -1,6 +1,7 @@
 # ─── Search Engine Crawlers ───
 User-agent: *
 Allow: /
+Crawl-delay: 5
 
 # ─── AI Crawlers ───
 # Optimization for GEO (Generative Engine Optimization)
@@ -42,3 +43,5 @@ Allow: /
 
 # ─── Sitemap ───
 Sitemap: https://saint2706.github.io/sitemap.xml
+
+Host: https://saint2706.github.io

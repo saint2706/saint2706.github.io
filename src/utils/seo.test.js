@@ -47,6 +47,8 @@ describe('seo utils', () => {
       expect(seo.SITE_URL).toBe('https://test.com');
       expect(seo.SITE_NAME).toBe('Rishabh Agrawal');
       expect(seo.DEFAULT_OG_IMAGE).toBe('https://test.com/og-image.png');
+      expect(seo.SITE_LANGUAGE).toBe('en');
+      expect(seo.DEFAULT_OG_IMAGE_ALT).toContain('Rishabh Agrawal');
     });
   });
 
@@ -58,6 +60,18 @@ describe('seo utils', () => {
       expect(schema.url).toBe('https://test.com');
       expect(schema.author['@type']).toBe('Person');
       expect(schema.potentialAction['@type']).toBe('SearchAction');
+    });
+  });
+
+
+  describe('organizationSchema', () => {
+    it('returns Organization schema', () => {
+      const schema = seo.organizationSchema();
+      expect(schema['@type']).toBe('Organization');
+      expect(schema.name).toBe('Rishabh Agrawal');
+      expect(schema.logo).toBe('https://test.com/og-image.png');
+      expect(schema.sameAs).toContain('https://social.com');
+      expect(schema.founder['@type']).toBe('Person');
     });
   });
 

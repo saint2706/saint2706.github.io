@@ -71,6 +71,15 @@ function generateLLMsText() {
   content += `**Project Highlights**: Built ${projects.map(p => p.title).join(', ')}.\n`;
   content += `**Education**: ${education.map(e => `${e.area} from ${e.institution}`).join(', ')}.\n\n`;
 
+  // GEO-friendly FAQ snippets for answer engines
+  content += `## Answer Engine Ready FAQs\n`;
+  content += `Q: Who is ${basics.name}?\n`;
+  content += `A: ${basics.name} is a ${basics.title} focused on analytics, AI, and product strategy.\n\n`;
+  content += `Q: What does ${basics.name} specialize in?\n`;
+  content += `A: Core specialties include ${skills.flatMap(c => c.items.map(i => i.name)).slice(0, 12).join(', ')}.\n\n`;
+  content += `Q: Where can I see ${basics.name}'s projects?\n`;
+  content += `A: Visit ${basics.website}/projects for portfolio case studies and live demos.\n\n`;
+
   // Contact
   content += `## Contact & Socials\n`;
   content += `- Email: ${basics.email}\n`;
