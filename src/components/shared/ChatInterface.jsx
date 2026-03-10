@@ -203,7 +203,7 @@ const CodeRenderer = ({ className, children, node, ...props }) => {
         </Suspense>
         <button
           onClick={handleCopy}
-          className="absolute top-2 right-2 p-1.5 bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="absolute top-2 right-2 p-1.5 bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2"
           aria-label={isCopied ? 'Copied code' : 'Copy code to clipboard'}
           title={isCopied ? 'Copied!' : 'Copy code'}
         >

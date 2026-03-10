@@ -42,3 +42,5 @@ Implements various UX and accessibility enhancements across the application, foc
 - Always add `aria-hidden="true"` to visual loading spinners like `<Loader2 />` inside buttons when the button itself is already marked with `aria-busy`. This prevents screen readers from redundantly announcing the spinner icon.
 - Added `focus-visible` styling to navigation links for both Liquid and Neubrutalism themes in `Navbar.jsx` to ensure consistent keyboard focus visibility.
 - Added `id` properties to tab buttons and an `aria-labelledby` property to the tab panel in `Playground.jsx` to properly link the tabs to their content for screen readers.
+
+- Always add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2` classes to icon-only buttons (e.g., copy buttons, close buttons) to ensure consistent and accessible keyboard focus visibility across the application.
