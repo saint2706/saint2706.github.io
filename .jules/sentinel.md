@@ -41,6 +41,11 @@
 - **Issue**: Missing explicit security headers for static site deployments (e.g., Cloudflare Pages, Netlify, GitHub Pages). While index.html contains a strong CSP, other headers like HSTS and X-Frame-Options were not enforced via HTTP response headers.
 - **Fix**: Added a \`public/\_headers\` file containing \`X-Frame-Options: DENY\`, \`X-Content-Type-Options: nosniff\`, \`Referrer-Policy: strict-origin-when-cross-origin\`, and \`Strict-Transport-Security: max-age=31536000; includeSubDomains; preload\`. This hardens the application against Clickjacking, MIME sniffing, and ensures secure transport.
 
+### Security Improvement: Fallback Identifier Generation (Math.random)
+
+- **Issue**: The fallback identifier generation for chat messages in `src/components/shared/ChatInterface.jsx` was using `Math.random()`, which can be predictable and is an insecure pseudo-randomness mechanism.
+- **Fix**: Replaced the `Math.random()` fallback mechanism inside `generateMessageId` with a monotonic counter. This guarantees unique IDs during the session while adhering to secure coding principles by avoiding insecure pseudo-random sources for generating unique identifiers.
+
 ### Security Improvement: Safe Use of dangerouslySetInnerHTML
 
 - **Issue**: The `src/components/shared/SEOHead.jsx` component uses `dangerouslySetInnerHTML` to inject structured JSON-LD schemas into the head, which could be an XSS vector if improperly formatted or sanitized.

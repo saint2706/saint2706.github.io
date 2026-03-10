@@ -45,6 +45,9 @@ const STORAGE_KEY = 'portfolio_chat_history';
 // ReactMarkdown rendering is expensive; limit to most recent messages
 const MAX_STORED_MESSAGES = 100;
 
+// Monotonic counter for ID fallback to prevent insecure pseudo-randomness
+let fallbackCounter = 0;
+
 const generateMessageId = () => {
   if (typeof crypto !== 'undefined') {
     if (typeof crypto.randomUUID === 'function') {
@@ -58,9 +61,10 @@ const generateMessageId = () => {
   }
 
   // Final fallback if crypto is entirely unavailable (very rare in modern browsers)
+  // 🛡️ Sentinel: Replaced Math.random() with a monotonic counter to avoid insecure pseudo-randomness
   const timestamp = Date.now();
-  const randomPart = Math.random().toString(36).slice(2, 11);
-  return `${timestamp}-${randomPart}`;
+  fallbackCounter += 1;
+  return `${timestamp}-${fallbackCounter}`;
 };
 
 const DEFAULT_MESSAGE_ID = 'default-message';
