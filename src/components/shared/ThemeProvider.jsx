@@ -4,19 +4,15 @@ import {
   safeSetLocalStorage,
   safeSetDocumentTheme,
 } from '../../utils/storage';
-import { ThemeContext } from './theme-context';
+import { ThemeContext, THEMES } from './theme-context';
 
 const THEME_STORAGE_KEY = 'preferred_theme';
-const THEMES = {
-  neubrutalism: 'neubrutalism',
-  liquid: 'liquid',
-};
 
-const isValidTheme = theme => [THEMES.neubrutalism, THEMES.liquid].includes(theme);
+const isValidTheme = theme => Object.values(THEMES).includes(theme);
 
 /**
  * Provides the application theme context to its children.
- * Handles theme retrieval, persistence, toggling, and View Transitions API.
+ * Handles theme retrieval, persistence, setting, and View Transitions API.
  *
  * @param {object} props - Component props.
  * @param {React.ReactNode} props.children - Child components to wrap.
@@ -43,11 +39,6 @@ export const ThemeProvider = ({ children }) => {
     [applyTheme]
   );
 
-  const toggleTheme = useCallback(() => {
-    const next = theme === THEMES.neubrutalism ? THEMES.liquid : THEMES.neubrutalism;
-    setTheme(next);
-  }, [theme, setTheme]);
-
   useEffect(() => {
     safeSetDocumentTheme(theme);
     safeSetLocalStorage(THEME_STORAGE_KEY, theme);
@@ -57,9 +48,8 @@ export const ThemeProvider = ({ children }) => {
     () => ({
       theme,
       setTheme,
-      toggleTheme,
     }),
-    [theme, setTheme, toggleTheme]
+    [theme, setTheme]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

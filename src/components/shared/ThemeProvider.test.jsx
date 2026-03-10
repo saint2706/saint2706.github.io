@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
-import { useTheme } from './theme-context';
+import { useTheme, THEMES } from './theme-context';
 import * as storage from '../../utils/storage';
 
 // Mock storage
@@ -16,13 +16,14 @@ vi.mock('../../utils/storage', () => ({
 document.startViewTransition = vi.fn(cb => cb());
 
 const TestConsumer = () => {
-  const { theme, toggleTheme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   return (
     <div>
       <span data-testid="theme-value">{theme}</span>
-      <button onClick={toggleTheme}>Toggle</button>
-      <button onClick={() => setTheme('liquid')}>Set Liquid</button>
-      <button onClick={() => setTheme('neubrutalism')}>Set Neubrutalism</button>
+      <button onClick={() => setTheme(THEMES.liquid)}>Set Liquid</button>
+      <button onClick={() => setTheme(THEMES.neubrutalism)}>Set Neubrutalism</button>
+      <button onClick={() => setTheme(THEMES.neubrutalismDark)}>Set Neubrutalism Dark</button>
+      <button onClick={() => setTheme(THEMES.liquidDark)}>Set Liquid Dark</button>
       <button onClick={() => setTheme('invalid')}>Set Invalid</button>
     </div>
   );
@@ -58,6 +59,26 @@ describe('ThemeProvider', () => {
     expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid');
   });
 
+  it('initializes with neubrutalism-dark if stored', () => {
+    storage.safeGetLocalStorage.mockReturnValue('neubrutalism-dark');
+    render(
+      <ThemeProvider>
+        <TestConsumer />
+      </ThemeProvider>
+    );
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('neubrutalism-dark');
+  });
+
+  it('initializes with liquid-dark if stored', () => {
+    storage.safeGetLocalStorage.mockReturnValue('liquid-dark');
+    render(
+      <ThemeProvider>
+        <TestConsumer />
+      </ThemeProvider>
+    );
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid-dark');
+  });
+
   it('falls back to default if stored theme is invalid', () => {
     storage.safeGetLocalStorage.mockReturnValue('dark-mode-9000');
     render(
@@ -65,26 +86,6 @@ describe('ThemeProvider', () => {
         <TestConsumer />
       </ThemeProvider>
     );
-    expect(screen.getByTestId('theme-value')).toHaveTextContent('neubrutalism');
-  });
-
-  it('toggles theme correctly', () => {
-    render(
-      <ThemeProvider>
-        <TestConsumer />
-      </ThemeProvider>
-    );
-
-    const toggleBtn = screen.getByText('Toggle');
-
-    // Toggle to liquid
-    fireEvent.click(toggleBtn);
-    expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid');
-    expect(storage.safeSetLocalStorage).toHaveBeenCalledWith('preferred_theme', 'liquid');
-    expect(storage.safeSetDocumentTheme).toHaveBeenCalledWith('liquid');
-
-    // Toggle back to neubrutalism
-    fireEvent.click(toggleBtn);
     expect(screen.getByTestId('theme-value')).toHaveTextContent('neubrutalism');
   });
 
@@ -97,9 +98,16 @@ describe('ThemeProvider', () => {
 
     fireEvent.click(screen.getByText('Set Liquid'));
     expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid');
+    expect(storage.safeSetLocalStorage).toHaveBeenCalledWith('preferred_theme', 'liquid');
 
     fireEvent.click(screen.getByText('Set Neubrutalism'));
     expect(screen.getByTestId('theme-value')).toHaveTextContent('neubrutalism');
+
+    fireEvent.click(screen.getByText('Set Neubrutalism Dark'));
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('neubrutalism-dark');
+
+    fireEvent.click(screen.getByText('Set Liquid Dark'));
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid-dark');
   });
 
   it('ignores invalid theme setting', () => {

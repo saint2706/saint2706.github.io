@@ -7,6 +7,12 @@ import { BrowserRouter } from 'react-router-dom';
 vi.mock('../shared/theme-context', () => ({
   useTheme: vi.fn(),
   ThemeProvider: ({ children }) => <div>{children}</div>,
+  THEMES: {
+    neubrutalism: 'neubrutalism',
+    neubrutalismDark: 'neubrutalism-dark',
+    liquid: 'liquid',
+    liquidDark: 'liquid-dark',
+  },
 }));
 import { useTheme } from '../shared/theme-context';
 
@@ -25,22 +31,18 @@ vi.mock('framer-motion', async () => {
 });
 
 describe('Navbar', () => {
-  const mockToggleTheme = vi.fn();
-  const mockOnToggleCursor = vi.fn();
+  const mockOnOpenSettings = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    useTheme.mockReturnValue({ theme: 'neubrutalism', toggleTheme: mockToggleTheme });
+    useTheme.mockReturnValue({ theme: 'neubrutalism' });
   });
 
   const renderNavbar = (props = {}) => {
     return render(
       <BrowserRouter>
         <Navbar
-          cursorEnabled={true}
-          cursorToggleDisabled={false}
-          cursorToggleLabel="Disable Cursor"
-          onToggleCursor={mockOnToggleCursor}
+          onOpenSettings={mockOnOpenSettings}
           {...props}
         />
       </BrowserRouter>
@@ -58,24 +60,13 @@ describe('Navbar', () => {
     expect(screen.getByText('Contact')).toBeInTheDocument();
   });
 
-  it('toggles theme', () => {
+  it('opens settings when gear button clicked', () => {
     renderNavbar();
 
-    // Find theme toggle button (desktop)
-    // It has aria-label "Switch to Liquid theme" when theme is neubrutalism
-    const themeBtn = screen.getByLabelText('Switch to Liquid theme');
-    fireEvent.click(themeBtn);
+    const settingsBtn = screen.getByLabelText('Open settings');
+    fireEvent.click(settingsBtn);
 
-    expect(mockToggleTheme).toHaveBeenCalled();
-  });
-
-  it('toggles cursor', () => {
-    renderNavbar();
-
-    const cursorBtn = screen.getByLabelText('Disable Cursor');
-    fireEvent.click(cursorBtn);
-
-    expect(mockOnToggleCursor).toHaveBeenCalled();
+    expect(mockOnOpenSettings).toHaveBeenCalled();
   });
 
   it('handles mobile menu', async () => {
@@ -109,11 +100,17 @@ describe('Navbar', () => {
   });
 
   it('renders liquid theme correctly', () => {
-    useTheme.mockReturnValue({ theme: 'liquid', toggleTheme: mockToggleTheme });
+    useTheme.mockReturnValue({ theme: 'liquid' });
     renderNavbar();
 
-    // Check for "Switch to Neubrutalism theme" label
-    const themeBtn = screen.getByLabelText('Switch to Neubrutalism theme');
-    expect(themeBtn).toBeInTheDocument();
+    // Settings button should still be present in liquid theme
+    expect(screen.getByLabelText('Open settings')).toBeInTheDocument();
+  });
+
+  it('renders liquid-dark theme correctly', () => {
+    useTheme.mockReturnValue({ theme: 'liquid-dark' });
+    renderNavbar();
+
+    expect(screen.getByLabelText('Open settings')).toBeInTheDocument();
   });
 });

@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
+import SettingsModal from '../shared/SettingsModal';
 import { useTheme } from '../shared/theme-context';
 import {
   canUseDOM,
@@ -59,7 +60,7 @@ const TerminalMode = lazy(() => import('../shared/TerminalMode'));
  */
 const Layout = ({ children }) => {
   const { theme } = useTheme();
-  const isLiquid = theme === 'liquid';
+  const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
   const { pathname } = useLocation();
 
   // Per-page ambient tint for liquid theme
@@ -99,6 +100,7 @@ const Layout = ({ children }) => {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [terminalWelcome, setTerminalWelcome] = useState('');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // ── Konami Code Tracking ──
   const konamiIndexRef = useRef(0);
@@ -238,7 +240,7 @@ const Layout = ({ children }) => {
         isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
       }`}
       style={{ background: isLiquid ? 'var(--bg)' : undefined }}
-      data-theme={isLiquid ? 'liquid' : 'neubrutalism'}
+      data-theme={theme}
       data-contrast={prefersContrast ? 'more' : 'no-preference'}
       {...(liquidTint ? { 'data-liquid-tint': liquidTint } : {})}
     >
@@ -254,14 +256,7 @@ const Layout = ({ children }) => {
       </a>
 
       <Navbar
-        cursorEnabled={effectiveCursorEnabled}
-        cursorToggleDisabled={cursorForcedOff}
-        cursorToggleLabel={
-          cursorForcedOff
-            ? 'Custom cursor disabled by motion/contrast or pointer settings'
-            : 'Toggle custom cursor'
-        }
-        onToggleCursor={toggleCursor}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
       <main id="main-content" className="grow pt-28 px-4 z-10 relative">
@@ -283,6 +278,14 @@ const Layout = ({ children }) => {
           welcomeMessage={terminalWelcome}
         />
       </Suspense>
+
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        cursorEnabled={effectiveCursorEnabled}
+        cursorToggleDisabled={cursorForcedOff}
+        onToggleCursor={toggleCursor}
+      />
     </div>
   );
 };
