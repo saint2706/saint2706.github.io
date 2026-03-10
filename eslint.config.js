@@ -15,7 +15,15 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', '.eslintrc.cjs', 'coverage/**', '.agent/**', '.agents/**', 'skills/**'],
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      '.eslintrc.cjs',
+      'coverage/**',
+      '.agent/**',
+      '.agents/**',
+      'skills/**',
+    ],
   },
   js.configs.recommended,
   {

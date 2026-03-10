@@ -41,10 +41,7 @@ describe('Navbar', () => {
   const renderNavbar = (props = {}) => {
     return render(
       <BrowserRouter>
-        <Navbar
-          onOpenSettings={mockOnOpenSettings}
-          {...props}
-        />
+        <Navbar onOpenSettings={mockOnOpenSettings} {...props} />
       </BrowserRouter>
     );
   };

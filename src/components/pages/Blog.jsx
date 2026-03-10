@@ -409,7 +409,11 @@ const Blog = () => {
 
         {/* Results info */}
         {filteredBlogs.length > 0 && (
-          <p className="text-center text-muted text-sm mt-6 font-mono" aria-live="polite" aria-atomic="true">
+          <p
+            className="text-center text-muted text-sm mt-6 font-mono"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-
             {Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length}{' '}
             posts
