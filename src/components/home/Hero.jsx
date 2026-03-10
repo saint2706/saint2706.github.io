@@ -83,7 +83,13 @@ const Hero = React.memo(() => {
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   const homeSchemas = useMemo(
-    () => [websiteSchema(), profilePageSchema(), personSchemaFull(), organizationSchema(), faqSchema()],
+    () => [
+      websiteSchema(),
+      profilePageSchema(),
+      personSchemaFull(),
+      organizationSchema(),
+      faqSchema(),
+    ],
     []
   );
 
