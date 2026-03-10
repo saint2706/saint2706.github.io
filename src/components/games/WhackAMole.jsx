@@ -79,6 +79,14 @@ const MoleHole = React.memo(
 );
 MoleHole.displayName = 'MoleHole';
 
+/**
+ * WhackAMole Game Component
+ *
+ * A fast-paced reflex game where players must "whack" moles that pop up from holes within a time limit.
+ * Features customizable grid size and randomized spawn intervals.
+ *
+ * @returns {React.ReactElement} The WhackAMole game component.
+ */
 const WhackAMole = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();

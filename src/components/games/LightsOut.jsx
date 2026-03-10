@@ -95,6 +95,14 @@ const LightsOutCell = React.memo(
 );
 LightsOutCell.displayName = 'LightsOutCell';
 
+/**
+ * LightsOut Game Component
+ *
+ * A classic puzzle game where the objective is to turn off all the lights on a 5x5 grid.
+ * Clicking a cell toggles the state of the clicked cell and its adjacent horizontal and vertical neighbors.
+ *
+ * @returns {React.ReactElement} The LightsOut game component.
+ */
 const LightsOut = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();

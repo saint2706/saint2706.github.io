@@ -107,6 +107,14 @@ const MemoryMatchCard = React.memo(
 );
 MemoryMatchCard.displayName = 'MemoryMatchCard';
 
+/**
+ * MemoryMatch Game Component
+ *
+ * A classic card matching game where the player must find pairs of matching emojis.
+ * Supports keyboard navigation for accessibility.
+ *
+ * @returns {React.ReactElement} The MemoryMatch game component.
+ */
 const MemoryMatch = () => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
