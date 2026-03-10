@@ -20,8 +20,11 @@ import {
   SITE_NAME,
   SITE_TITLE_SUFFIX,
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  DEFAULT_SEO_KEYWORDS,
   TWITTER_HANDLE,
   LOCALE,
+  SITE_LANGUAGE,
 } from '../../utils/seo';
 
 /**
@@ -31,6 +34,8 @@ import {
  * @param {string}  props.path         — Pathname, e.g. "/projects" (used for canonical + OG url)
  * @param {string}  [props.ogImage]    — Override og:image URL
  * @param {string}  [props.ogType]     — Override og:type (default "website")
+ * @param {string}  [props.ogImageAlt] — Override OG/Twitter image alt text
+ * @param {string}  [props.keywords]   — Comma separated keywords
  * @param {boolean} [props.noindex]    — If true, add noindex,nofollow
  * @param {Array}   [props.schemas]    — Array of JSON-LD schema objects to inject
  * @param {string}  [props.author]     — Override author name
@@ -42,6 +47,8 @@ const SEOHead = ({
   path = '/',
   ogImage,
   ogType = 'website',
+  ogImageAlt = DEFAULT_OG_IMAGE_ALT,
+  keywords = DEFAULT_SEO_KEYWORDS,
   noindex = false,
   schemas = [],
   author,
@@ -61,10 +68,19 @@ const SEOHead = ({
       <title>{fullTitle}</title>
       <link rel="canonical" href={canonicalUrl} />
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
       <meta name="author" content={resolvedAuthor} />
+      <meta name="language" content={SITE_LANGUAGE} />
 
       {/* Robots */}
-      {noindex && <meta name="robots" content="noindex, nofollow" />}
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      )}
 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />
@@ -73,6 +89,7 @@ const SEOHead = ({
       <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:image" content={resolvedImage} />
+      <meta property="og:image:alt" content={ogImageAlt} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:locale" content={LOCALE} />
@@ -82,8 +99,11 @@ const SEOHead = ({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={resolvedImage} />
+      <meta name="twitter:image:alt" content={ogImageAlt} />
       <meta name="twitter:site" content={TWITTER_HANDLE} />
       <meta name="twitter:creator" content={TWITTER_HANDLE} />
+      <link rel="alternate" hrefLang="en" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
 
       {/* JSON-LD Structured Data */}
       {serializedSchemas.map((json, i) => (

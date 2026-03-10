@@ -30,6 +30,25 @@ export const TWITTER_HANDLE = '@saint2706'; // update if you have one
 /** @type {string} Locale of the website */
 export const LOCALE = 'en_US';
 
+/** @type {string} Primary language used in SEO tags */
+export const SITE_LANGUAGE = 'en';
+
+/** @type {string} Default OG/Twitter image alt text */
+export const DEFAULT_OG_IMAGE_ALT =
+  'Rishabh Agrawal portfolio showcasing analytics, data storytelling, and AI projects';
+
+/** @type {string} Fallback SEO keywords */
+export const DEFAULT_SEO_KEYWORDS = [
+  'Rishabh Agrawal',
+  'Data Storyteller',
+  'Analytics Strategist',
+  'AI Portfolio',
+  'Machine Learning Projects',
+  'Data Analytics',
+  'Python Developer',
+  'React Portfolio',
+].join(', ');
+
 /** @type {string} Theme color for PWA and browser UI */
 export const THEME_COLOR = '#1e1e2e'; // dark background
 
@@ -58,6 +77,22 @@ export function websiteSchema() {
       },
       'query-input': 'required name=search_term_string',
     },
+  };
+}
+
+/**
+ * Organization schema for rich profile panels and identity consistency.
+ * @returns {Object} Organization structured data schema.
+ */
+export function organizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: DEFAULT_OG_IMAGE,
+    sameAs: resumeData.basics.socials.map(s => s.url),
+    founder: personSchemaCompact(),
   };
 }
 

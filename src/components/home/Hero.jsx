@@ -8,7 +8,13 @@ import { ArrowRight, Bot, Code2, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
-import { websiteSchema, profilePageSchema, personSchemaFull, faqSchema } from '../../utils/seo';
+import {
+  websiteSchema,
+  profilePageSchema,
+  personSchemaFull,
+  organizationSchema,
+  faqSchema,
+} from '../../utils/seo';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
@@ -77,7 +83,7 @@ const Hero = React.memo(() => {
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
   const homeSchemas = useMemo(
-    () => [websiteSchema(), profilePageSchema(), personSchemaFull(), faqSchema()],
+    () => [websiteSchema(), profilePageSchema(), personSchemaFull(), organizationSchema(), faqSchema()],
     []
   );
 

@@ -90,6 +90,16 @@ This section is optimized for RAG ingestion. It provides a dense summary of skil
 **Project Highlights**: Built Coding-For-MBA, AI Attendance Management System, Client Modding Guide, Scroll of Dharma, VITable, Geralt Discord Bot, VIT Academics Enhancer, Python Course - GIM BDA.
 **Education**: PGDM - Big Data Analytics from Goa Institute of Management (GIM), Bachelor of Technology (B.Tech) - Computer Science from Vellore Institute of Technology.
 
+## Answer Engine Ready FAQs
+Q: Who is Rishabh Agrawal?
+A: Rishabh Agrawal is a Data Storyteller & Analytics Strategist focused on analytics, AI, and product strategy.
+
+Q: What does Rishabh Agrawal specialize in?
+A: Core specialties include Python, Java, C++, JavaScript, SQL, HTML/CSS, R, Data Analytics, Machine Learning, Pandas, NumPy, Scikit-learn.
+
+Q: Where can I see Rishabh Agrawal's projects?
+A: Visit https://saint2706.github.io/projects for portfolio case studies and live demos.
+
 ## Contact & Socials
 - Email: rishabh.agrawal25b@gim.ac.in
 - Location: Goa, India
