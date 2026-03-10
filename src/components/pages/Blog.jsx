@@ -94,7 +94,8 @@ const getSourceTextColor = source => {
  * @component
  * @returns {JSX.Element} Blog listing page with filters and posts
  */
-const Blog = () => {
+// ⚡ Bolt: Wrapped `Blog` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Blog = React.memo(() => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const deferredSearchTerm = useDeferredValue(searchTerm); // Deferred for better UX during typing
@@ -422,7 +423,9 @@ const Blog = () => {
       </div>
     </>
   );
-};
+});
+
+Blog.displayName = 'Blog';
 
 /**
  * Blog Card Component

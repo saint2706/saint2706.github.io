@@ -107,7 +107,8 @@ GameTabButton.displayName = 'GameTabButton';
  *
  * @returns {React.ReactElement} The games page component.
  */
-const Games = () => {
+// ⚡ Bolt: Wrapped `Games` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Games = React.memo(() => {
   const [activeGame, setActiveGame] = useState('tictactoe');
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
@@ -287,6 +288,8 @@ const Games = () => {
       </div>
     </>
   );
-};
+});
+
+Games.displayName = 'Games';
 
 export default Games;
