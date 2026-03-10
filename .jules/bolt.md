@@ -31,3 +31,4 @@
 10. **Playground.jsx & Resume.jsx**: Wrapped top-level components in `React.memo` to prevent unnecessary re-renders when parent layout states change (e.g. from Custom Cursor updates). Also memoized `handlePrint` with `useCallback` to ensure a stable function reference.
 11. **Navbar.jsx:** Extracted `DesktopNavItem` and `MobileNavItem` components and wrapped them in `React.memo` to prevent re-rendering unchanged links when the navbar state (like `isMenuOpen` or `isScrolled`) changes.
 12. **SnakeGame.jsx:** Wrapped `handleTouchStart` and `handleTouchEnd` in `useCallback` to prevent redefining them on every render, ensuring stable function references for the game board container.
+\n## Added React.memo to root page components\nWrapped top-level page components (`Blog`, `Contact`, `Games`, `Projects`) in `React.memo()` and explicitly set `displayName`. This prevents full page re-renders when parent layout state (such as custom cursor or focus states) updates.

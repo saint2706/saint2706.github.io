@@ -161,7 +161,8 @@ ProjectCard.displayName = 'ProjectCard';
  * @component
  * @returns {JSX.Element} Projects page with portfolio showcase
  */
-const Projects = () => {
+// ⚡ Bolt: Wrapped `Projects` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Projects = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -278,6 +279,8 @@ const Projects = () => {
       </div>
     </>
   );
-};
+});
+
+Projects.displayName = 'Projects';
 
 export default Projects;

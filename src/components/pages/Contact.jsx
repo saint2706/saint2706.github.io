@@ -28,7 +28,8 @@ import { useTheme } from '../shared/theme-context';
  * @component
  * @returns {JSX.Element} Contact page with information and links
  */
-const Contact = () => {
+// ⚡ Bolt: Wrapped `Contact` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const Contact = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -410,6 +411,8 @@ const Contact = () => {
       </div>
     </>
   );
-};
+});
+
+Contact.displayName = 'Contact';
 
 export default Contact;
