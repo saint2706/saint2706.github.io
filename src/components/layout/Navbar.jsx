@@ -35,6 +35,32 @@ const NAV_ITEMS = [
   { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
 ];
 
+const DesktopNavItem = React.memo(({ item, getClassName }) => (
+  <NavLink to={item.path} className={({ isActive }) => getClassName(isActive)}>
+    <span className="hidden lg:inline opacity-70" aria-hidden="true">
+      {item.icon}
+    </span>
+    <span>{item.name}</span>
+  </NavLink>
+));
+
+DesktopNavItem.displayName = 'DesktopNavItem';
+
+const MobileNavItem = React.memo(({ item, index, isLiquid, onClick, getClassName }) => (
+  <NavLink
+    to={item.path}
+    onClick={onClick}
+    className={({ isActive }) => getClassName(isActive, index)}
+  >
+    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
+      {item.icon}
+    </span>
+    <span>{item.name}</span>
+  </NavLink>
+));
+
+MobileNavItem.displayName = 'MobileNavItem';
+
 /**
  * Navigation bar component with desktop and mobile layouts.
  * Renders the same structural HTML for both themes — only visual classes differ.
@@ -200,16 +226,7 @@ const Navbar = React.memo(
           {/* ── Desktop Navigation ── */}
           <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
             {NAV_ITEMS.map(item => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                className={({ isActive }) => desktopLinkCls(isActive)}
-              >
-                <span className="hidden lg:inline opacity-70" aria-hidden="true">
-                  {item.icon}
-                </span>
-                <span>{item.name}</span>
-              </NavLink>
+              <DesktopNavItem key={item.name} item={item} getClassName={desktopLinkCls} />
             ))}
           </div>
 
@@ -295,17 +312,14 @@ const Navbar = React.memo(
 
                   {/* Nav links */}
                   {NAV_ITEMS.map((item, index) => (
-                    <NavLink
+                    <MobileNavItem
                       key={item.name}
-                      to={item.path}
+                      item={item}
+                      index={index}
+                      isLiquid={isLiquid}
                       onClick={handleCloseMenu}
-                      className={({ isActive }) => mobileLinkCls(isActive, index)}
-                    >
-                      <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
-                        {item.icon}
-                      </span>
-                      <span>{item.name}</span>
-                    </NavLink>
+                      getClassName={mobileLinkCls}
+                    />
                   ))}
                 </div>
               </motion.div>

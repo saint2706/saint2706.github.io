@@ -592,12 +592,12 @@ const SnakeGame = () => {
    *
    * @param {TouchEvent} e - Touch start event
    */
-  const handleTouchStart = e => {
+  const handleTouchStart = useCallback(e => {
     touchStartRef.current = {
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
     };
-  };
+  }, []);
 
   /**
    * Detects swipe direction from touch gestures.
@@ -609,34 +609,37 @@ const SnakeGame = () => {
    *
    * @param {TouchEvent} e - Touch end event
    */
-  const handleTouchEnd = e => {
-    if (!touchStartRef.current || gameState !== 'playing') return;
+  const handleTouchEnd = useCallback(
+    e => {
+      if (!touchStartRef.current || gameState !== 'playing') return;
 
-    const touchEnd = {
-      x: e.changedTouches[0].clientX,
-      y: e.changedTouches[0].clientY,
-    };
+      const touchEnd = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      };
 
-    const dx = touchEnd.x - touchStartRef.current.x;
-    const dy = touchEnd.y - touchStartRef.current.y;
+      const dx = touchEnd.x - touchStartRef.current.x;
+      const dy = touchEnd.y - touchStartRef.current.y;
 
-    // Determine swipe direction based on larger delta
-    if (Math.abs(dx) > Math.abs(dy)) {
-      // Horizontal swipe
-      const newDir = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
-      if (newDir.x !== -directionRef.current.x) {
-        setDirection(newDir);
+      // Determine swipe direction based on larger delta
+      if (Math.abs(dx) > Math.abs(dy)) {
+        // Horizontal swipe
+        const newDir = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+        if (newDir.x !== -directionRef.current.x) {
+          setDirection(newDir);
+        }
+      } else {
+        // Vertical swipe
+        const newDir = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+        if (newDir.y !== -directionRef.current.y) {
+          setDirection(newDir);
+        }
       }
-    } else {
-      // Vertical swipe
-      const newDir = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
-      if (newDir.y !== -directionRef.current.y) {
-        setDirection(newDir);
-      }
-    }
 
-    touchStartRef.current = null;
-  };
+      touchStartRef.current = null;
+    },
+    [gameState]
+  );
 
   /**
    * Canvas rendering with Neubrutalism design styling.

@@ -28,4 +28,6 @@
 8. **WhackAMole.jsx:** Extracted `MoleHole` into a new component and wrapped it in `React.memo`. This avoids unnecessary re-rendering of all 9 holes whenever the timer counts down or a mole pops up/is whacked.
 
 9. **SimonSays.jsx:** Extracted `SimonButton` component and wrapped it in `React.memo` to prevent re-rendering all 4 buttons whenever the game's state (such as the active sequence or current user turn) changes.
-   \n10. **Playground.jsx & Resume.jsx**: Wrapped top-level components in `React.memo` to prevent unnecessary re-renders when parent layout states change (e.g. from Custom Cursor updates). Also memoized `handlePrint` with `useCallback` to ensure a stable function reference.
+10. **Playground.jsx & Resume.jsx**: Wrapped top-level components in `React.memo` to prevent unnecessary re-renders when parent layout states change (e.g. from Custom Cursor updates). Also memoized `handlePrint` with `useCallback` to ensure a stable function reference.
+11. **Navbar.jsx:** Extracted `DesktopNavItem` and `MobileNavItem` components and wrapped them in `React.memo` to prevent re-rendering unchanged links when the navbar state (like `isMenuOpen` or `isScrolled`) changes.
+12. **SnakeGame.jsx:** Wrapped `handleTouchStart` and `handleTouchEnd` in `useCallback` to prevent redefining them on every render, ensuring stable function references for the game board container.
