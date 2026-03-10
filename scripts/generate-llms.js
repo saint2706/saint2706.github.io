@@ -76,7 +76,10 @@ function generateLLMsText() {
   content += `Q: Who is ${basics.name}?\n`;
   content += `A: ${basics.name} is a ${basics.title} focused on analytics, AI, and product strategy.\n\n`;
   content += `Q: What does ${basics.name} specialize in?\n`;
-  content += `A: Core specialties include ${skills.flatMap(c => c.items.map(i => i.name)).slice(0, 12).join(', ')}.\n\n`;
+  content += `A: Core specialties include ${skills
+    .flatMap(c => c.items.map(i => i.name))
+    .slice(0, 12)
+    .join(', ')}.\n\n`;
   content += `Q: Where can I see ${basics.name}'s projects?\n`;
   content += `A: Visit ${basics.website}/projects for portfolio case studies and live demos.\n\n`;
 
