@@ -333,8 +333,11 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                       if (categoryCommands.length === 0) return null;
 
                       return (
-                        <div key={category}>
-                          <div className="px-4 py-1.5 text-xs font-heading font-bold text-muted uppercase tracking-wider">
+                        <div key={category} role="group" aria-label={category}>
+                          <div
+                            className="px-4 py-1.5 text-xs font-heading font-bold text-muted uppercase tracking-wider"
+                            aria-hidden="true"
+                          >
                             {category}
                           </div>
                           {categoryCommands.map(cmd => {

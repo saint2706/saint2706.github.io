@@ -144,7 +144,7 @@ const Hero = React.memo(() => {
           <span
             className={themeClass(
               'text-[color:var(--text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker',
-              'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block'
+              'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block [forced-colors:appearance-auto]'
             )}
             style={
               isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }

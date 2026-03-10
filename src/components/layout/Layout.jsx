@@ -248,7 +248,7 @@ const Layout = ({ children }) => {
       {/* Skip navigation link for keyboard users */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:bg-fun-yellow focus:text-black focus:px-4 focus:py-2 focus:border-2 focus:border-black focus:z-100 focus:font-heading focus:font-bold"
+        className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-4 focus-visible:left-4 focus-visible:bg-fun-yellow focus-visible:text-black focus-visible:px-4 focus-visible:py-2 focus-visible:border-2 focus-visible:border-black focus-visible:z-100 focus-visible:font-heading focus-visible:font-bold"
       >
         Skip to main content
       </a>

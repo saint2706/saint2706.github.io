@@ -607,6 +607,7 @@ const ChatInterface = ({ onClose }) => {
         <div className="flex items-center gap-2">
           {messages.length > 1 && (
             <button
+              type="button"
               onClick={handleClearClick}
               className={`text-xs transition-all duration-200 font-heading font-bold px-2 py-1 border-2 ${
                 showClearConfirm

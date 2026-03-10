@@ -129,8 +129,12 @@ const Contact = () => {
               </p>
 
               {success ? (
-                <div className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300">
-                  <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" />
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="bg-green-100 border border-green-300 rounded-2xl p-6 text-center animate-in fade-in zoom-in duration-300"
+                >
+                  <CheckCircle className="mx-auto h-12 w-12 text-green-600 mb-2" aria-hidden="true" />
                   <h2 className="text-lg font-bold text-green-800">Draft Opened!</h2>
                   <p className="text-green-700">
                     Please check your email client to send the message.
@@ -138,54 +142,57 @@ const Contact = () => {
                 </div>
               ) : (
                 <form className="space-y-4" onSubmit={handleSubmit} aria-busy={isSubmitting}>
-                  <label htmlFor="name" className="sr-only">
-                    Your name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    aria-label="Your name"
-                    required
-                    maxLength={100}
-                    disabled={isSubmitting}
-                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
-                  />
-                  <label htmlFor="email" className="sr-only">
-                    Your email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Your email"
-                    aria-label="Your email"
-                    required
-                    maxLength={320}
-                    disabled={isSubmitting}
-                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
-                  />
-                  <label htmlFor="message" className="sr-only">
-                    Project details
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Project details"
-                    aria-label="Project details"
-                    required
-                    maxLength={2000}
-                    disabled={isSubmitting}
-                    className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y disabled:opacity-50"
-                  />
+                  <div className="space-y-1">
+                    <label htmlFor="name" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                      Your name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g. Jane Smith"
+                      required
+                      maxLength={100}
+                      disabled={isSubmitting}
+                      className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label htmlFor="email" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                      Your email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="e.g. jane@example.com"
+                      required
+                      maxLength={320}
+                      disabled={isSubmitting}
+                      className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label htmlFor="message" className="block text-sm font-semibold text-[color:var(--text-secondary)]">
+                      Project details
+                    </label>
+                    <textarea
+                      id="message"
+                      rows={5}
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell me about your project..."
+                      required
+                      maxLength={2000}
+                      disabled={isSubmitting}
+                      className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y disabled:opacity-50"
+                    />
+                  </div>
 
                   <ThemedButton
                     type="submit"

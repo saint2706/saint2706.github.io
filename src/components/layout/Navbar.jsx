@@ -235,7 +235,7 @@ const Navbar = React.memo(
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
+              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] ${actionBtnCls}`}
               aria-label={`Switch to ${isLiquid ? 'Neubrutalism' : 'Liquid'} theme`}
             >
               {isLiquid ? <Grid size={18} /> : <Moon size={18} />}
@@ -251,7 +251,7 @@ const Navbar = React.memo(
             <button
               type="button"
               onClick={onToggleCursor}
-              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${actionBtnCls}`}
+              className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 cursor-pointer disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] ${actionBtnCls}`}
               aria-pressed={cursorEnabled}
               aria-label={cursorToggleLabel}
               disabled={cursorToggleDisabled}
@@ -294,6 +294,9 @@ const Navbar = React.memo(
                 transition={{ duration: 0.2 }}
                 className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${mobileMenuCls}`}
                 ref={menuRef}
+                role="dialog"
+                aria-label="Navigation menu"
+                aria-modal="true"
               >
                 <div className="flex flex-col">
                   {/* Theme switcher row */}

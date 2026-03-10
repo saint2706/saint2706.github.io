@@ -93,9 +93,6 @@ const Modal = ({ isOpen, onClose, title, children }) => {
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={handleBackdropClick}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
         >
           <motion.div
             ref={modalRef}
@@ -105,6 +102,9 @@ const Modal = ({ isOpen, onClose, title, children }) => {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className={`relative w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col ${shell.className}`}
             style={shell.style}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
           >
             {/* Header */}
             <div

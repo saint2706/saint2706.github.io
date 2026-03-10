@@ -217,7 +217,7 @@
 
   /* Typography */
   --text-primary: #1d1d1f;
-  --text-secondary: #3c3c43;
+  --text-secondary: #2c2c2e;
   --text-muted: #6e6e73;
   --text-subtle: #86868b;
   --text: var(--text-primary);
@@ -331,6 +331,17 @@
 @layer utilities {
   .text-glow {
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  }
+}
+
+/* ===== HIGH CONTRAST / FORCED COLORS OVERRIDES ===== */
+/* bg-clip-text gradient text is invisible in forced-colors mode.
+   This ensures gradient-text spans degrade gracefully to system text color. */
+@media (forced-colors: active) {
+  .bg-clip-text {
+    -webkit-text-fill-color: CanvasText !important;
+    color: CanvasText !important;
+    background: none !important;
   }
 }
 
@@ -681,6 +692,11 @@
 @media (prefers-reduced-motion: reduce) {
   .nb-squish:active {
     animation: none !important;
+  }
+
+  .nb-blink {
+    animation: none;
+    opacity: 1;
   }
 }
 

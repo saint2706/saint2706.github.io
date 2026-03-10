@@ -199,6 +199,13 @@ const Footer = React.memo(() => {
                       Give a like
                     </span>
                   </button>
+                  <span aria-live="polite" aria-atomic="true" className="sr-only">
+                    {heartClicks > 0 && heartClicks < HEARTS_REQUIRED
+                      ? `${HEARTS_REQUIRED - heartClicks} more click${HEARTS_REQUIRED - heartClicks !== 1 ? 's' : ''} for a surprise`
+                      : showSecret
+                        ? 'You found a secret!'
+                        : ''}
+                  </span>
                   by {resumeData.basics.name}
                 </p>
               </div>

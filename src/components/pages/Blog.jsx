@@ -409,7 +409,7 @@ const Blog = () => {
 
         {/* Results info */}
         {filteredBlogs.length > 0 && (
-          <p className="text-center text-muted text-sm mt-6 font-mono">
+          <p className="text-center text-muted text-sm mt-6 font-mono" aria-live="polite" aria-atomic="true">
             Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}-
             {Math.min(currentPage * POSTS_PER_PAGE, filteredBlogs.length)} of {filteredBlogs.length}{' '}
             posts
@@ -432,7 +432,7 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
       className={`overflow-hidden flex flex-col h-full ${isLiquid ? 'rounded-3xl border border-[color:var(--border-soft)]' : ''}`}
     >
       {/* Color accent bar based on source */}
-      {!isLiquid && <div className={`h-3 ${getSourceColor(blog.source)}`} />}
+      {!isLiquid && <div className={`h-3 ${getSourceColor(blog.source)}`} aria-hidden="true" />}
 
       <div className="p-6 flex-grow flex flex-col">
         {/* Source and Date */}
