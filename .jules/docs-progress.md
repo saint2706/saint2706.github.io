@@ -20,3 +20,4 @@
 - Audited codebase for missing JSDocs on exported functions/components.
 - Added missing JSDoc comments to `SITE_NAME`, `SITE_TITLE_SUFFIX`, `DEFAULT_OG_IMAGE`, `TWITTER_HANDLE`, `LOCALE`, and `THEME_COLOR` constants in `src/utils/seo.js`.
 - Added missing JSDoc comments to `LightsOut`, `MemoryMatch`, `TimerDisplay` (Minesweeper), `Minesweeper`, `SimonSays`, `WhackAMole`, `HeroBackground`, and `Games` components.
+- Added `@example` JSDoc blocks to exported functions in `src/utils/storage.js` and `src/utils/seo.js` to improve API documentation completeness and provide usage context.

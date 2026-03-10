@@ -63,7 +63,6 @@ describe('seo utils', () => {
     });
   });
 
-
   describe('organizationSchema', () => {
     it('returns Organization schema', () => {
       const schema = seo.organizationSchema();

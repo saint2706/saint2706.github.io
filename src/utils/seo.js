@@ -60,6 +60,10 @@ export const THEME_COLOR = '#1e1e2e'; // dark background
  * WebSite schema – enables Google Sitelinks search box.
  * Should be injected on the homepage only.
  * @returns {Object} WebSite structured data schema.
+ *
+ * @example
+ * const schema = websiteSchema();
+ * // => { "@context": "https://schema.org", "@type": "WebSite", "name": "Rishabh Agrawal", ... }
  */
 export function websiteSchema() {
   return {
@@ -83,6 +87,10 @@ export function websiteSchema() {
 /**
  * Organization schema for rich profile panels and identity consistency.
  * @returns {Object} Organization structured data schema.
+ *
+ * @example
+ * const schema = organizationSchema();
+ * // => { "@context": "https://schema.org", "@type": "Organization", "name": "Rishabh Agrawal", ... }
  */
 export function organizationSchema() {
   return {
@@ -100,6 +108,10 @@ export function organizationSchema() {
  * TechArticle/BlogPosting schema for an individual blog post.
  * @param {Object} blog - Blog post object from blogs.json
  * @returns {Object} TechArticle structured data schema.
+ *
+ * @example
+ * const schema = blogPostingSchema({ title: "My Blog", summary: "Summary", link: "https...", date: "2023-01-01" });
+ * // => { "@context": "https://schema.org", "@type": "TechArticle", "headline": "My Blog", ... }
  */
 export function blogPostingSchema(blog) {
   return {
@@ -122,6 +134,10 @@ export function blogPostingSchema(blog) {
 /**
  * Compact Person reference (used as nested author/creator).
  * @returns {Object} Compact Person structured data schema.
+ *
+ * @example
+ * const schema = personSchemaCompact();
+ * // => { "@type": "Person", "name": "Rishabh Agrawal", "url": "https://rishabhagrawal.com" }
  */
 export function personSchemaCompact() {
   return {
@@ -134,6 +150,10 @@ export function personSchemaCompact() {
 /**
  * Full Person schema – homepage / about.
  * @returns {Object} Full Person structured data schema.
+ *
+ * @example
+ * const schema = personSchemaFull();
+ * // => { "@context": "https://schema.org", "@type": "Person", "name": "Rishabh Agrawal", ... }
  */
 export function personSchemaFull() {
   return {
@@ -172,6 +192,10 @@ export function personSchemaFull() {
 /**
  * SoftwareApplication schema for the Games page.
  * @returns {Object} SoftwareApplication structured data schema for games.
+ *
+ * @example
+ * const schema = gamesSchema();
+ * // => { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Interactive Mini-Games", ... }
  */
 export function gamesSchema() {
   return {
@@ -194,6 +218,10 @@ export function gamesSchema() {
 /**
  * SoftwareApplication schema for the Playground.
  * @returns {Object} SoftwareApplication structured data schema for the playground.
+ *
+ * @example
+ * const schema = playgroundSchema();
+ * // => { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Python Playground", ... }
  */
 export function playgroundSchema() {
   return {
@@ -216,6 +244,10 @@ export function playgroundSchema() {
 /**
  * ProfilePage schema – wraps the Person for homepage.
  * @returns {Object} ProfilePage structured data schema.
+ *
+ * @example
+ * const schema = profilePageSchema();
+ * // => { "@context": "https://schema.org", "@type": "ProfilePage", "mainEntity": { ... }, ... }
  */
 export function profilePageSchema() {
   return {
@@ -232,6 +264,10 @@ export function profilePageSchema() {
  * BreadcrumbList schema helper.
  * @param {Array<{name:string, url:string}>} items
  * @returns {Object} BreadcrumbList structured data schema.
+ *
+ * @example
+ * const schema = breadcrumbSchema([{ name: "Home", url: "https://example.com" }]);
+ * // => { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [ ... ] }
  */
 export function breadcrumbSchema(items) {
   return {
@@ -249,6 +285,10 @@ export function breadcrumbSchema(items) {
 /**
  * ItemList schema for the Projects page (CollectionPage).
  * @returns {Object} CollectionPage structured data schema for projects.
+ *
+ * @example
+ * const schema = projectsCollectionSchema();
+ * // => { "@context": "https://schema.org", "@type": "CollectionPage", "name": "Projects | Rishabh Agrawal", ... }
  */
 export function projectsCollectionSchema() {
   return {
@@ -276,6 +316,10 @@ export function projectsCollectionSchema() {
  * CreativeWork schema for an individual project.
  * @param {Object} project - Project object from resumeData.projects
  * @returns {Object} CreativeWork structured data schema.
+ *
+ * @example
+ * const schema = projectCreativeWorkSchema({ title: "My Project", description: "Desc", image: "/img.png" });
+ * // => { "@context": "https://schema.org", "@type": "CreativeWork", "name": "My Project", ... }
  */
 export function projectCreativeWorkSchema(project) {
   return {
@@ -292,6 +336,10 @@ export function projectCreativeWorkSchema(project) {
 /**
  * CollectionPage schema for the Blog listing.
  * @returns {Object} CollectionPage structured data schema for the blog.
+ *
+ * @example
+ * const schema = blogCollectionSchema();
+ * // => { "@context": "https://schema.org", "@type": "CollectionPage", "name": "Blog | Rishabh Agrawal", ... }
  */
 export function blogCollectionSchema() {
   return {
@@ -319,6 +367,10 @@ export function blogCollectionSchema() {
 /**
  * ContactPage schema.
  * @returns {Object} ContactPage structured data schema.
+ *
+ * @example
+ * const schema = contactPageSchema();
+ * // => { "@context": "https://schema.org", "@type": "ContactPage", "name": "Contact | Rishabh Agrawal", ... }
  */
 export function contactPageSchema() {
   return {
@@ -345,6 +397,10 @@ export function contactPageSchema() {
 /**
  * FAQPage schema for Chatbot quick replies or general FAQs.
  * @returns {Object} FAQPage structured data schema.
+ *
+ * @example
+ * const schema = faqSchema();
+ * // => { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [ ... ] }
  */
 export function faqSchema() {
   return {
@@ -382,6 +438,10 @@ export function faqSchema() {
 /**
  * Resume/CV page – Person with employment aggregate.
  * @returns {Object} Person structured data schema with employment history.
+ *
+ * @example
+ * const schema = resumePersonSchema();
+ * // => { "@context": "https://schema.org", "@type": "Person", "name": "Rishabh Agrawal", "jobTitle": "...", ... }
  */
 export function resumePersonSchema() {
   return {
