@@ -412,6 +412,9 @@ const SnippetCard = React.memo(
               >
                 {isCopied ? 'Copied!' : 'Copy code'}
               </span>
+              <span className="sr-only" aria-live="polite">
+                {isCopied ? 'Copied!' : ''}
+              </span>
             </button>
           </div>
 

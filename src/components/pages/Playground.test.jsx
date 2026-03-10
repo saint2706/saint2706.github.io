@@ -249,7 +249,9 @@ describe('Playground Component', () => {
     });
 
     expect(navigator.clipboard.writeText).toHaveBeenCalled();
-    expect(screen.getByText('Copied!')).toBeInTheDocument();
+    const copiedElements = screen.getAllByText('Copied!');
+    expect(copiedElements.length).toBeGreaterThan(0);
+    expect(copiedElements[0]).toBeInTheDocument();
 
     await act(async () => {
       vi.advanceTimersByTime(2500);
