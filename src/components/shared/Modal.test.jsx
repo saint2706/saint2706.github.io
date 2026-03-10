@@ -66,7 +66,7 @@ describe('Modal Component', () => {
     const dialog = screen.getByRole('dialog');
     const backdrop = dialog.parentElement;
 
-    expect(backdrop).not.toBeNull();
+    expect(backdrop).toBeInTheDocument();
     fireEvent.click(backdrop);
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
