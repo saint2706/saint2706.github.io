@@ -63,8 +63,10 @@ describe('Modal Component', () => {
         <Modal {...defaultProps} />
       </ThemeProvider>
     );
-    // The backdrop is the outer div with role="dialog"
-    const backdrop = screen.getByRole('dialog');
+    const dialog = screen.getByRole('dialog');
+    const backdrop = dialog.parentElement;
+
+    expect(backdrop).not.toBeNull();
     fireEvent.click(backdrop);
     expect(defaultProps.onClose).toHaveBeenCalled();
   });
