@@ -44,3 +44,6 @@ Implements various UX and accessibility enhancements across the application, foc
 - Added `id` properties to tab buttons and an `aria-labelledby` property to the tab panel in `Playground.jsx` to properly link the tabs to their content for screen readers.
 
 - Always add `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2` classes to icon-only buttons (e.g., copy buttons, close buttons) to ensure consistent and accessible keyboard focus visibility across the application.
+
+### 6. Copy Action Accessibility
+- When changing the text or icon of a copy button to "Copied!", screen readers may not automatically read the update. Ensure there is a visually hidden element with `aria-live="polite"` that receives the "Copied!" text, so screen readers immediately notify the user of the successful action. Fixed this pattern in `Playground.jsx` and `ChatInterface.jsx`.
