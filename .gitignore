@@ -5,6 +5,5 @@ legacy_backup/
 .env
 .env.local
 .vscode
-.agent
 /brainstorm.md
 coverage/
