@@ -34,10 +34,15 @@ try {
     process.exit(1);
   }
 
-  // Check for the expected hash value
-  if (!content.includes(`'${EXPECTED_HASH}'`)) {
-    console.error('FAILED: SRI hash value is missing or incorrect.');
-    console.error(`Expected: '${EXPECTED_HASH}'`);
+  // Check that the constant is assigned the expected hash value
+  const escapedExpectedHash = EXPECTED_HASH.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const sriAssignmentPattern = new RegExp(
+    `PYODIDE_SCRIPT_SRI\\s*=\\s*(['\"])${escapedExpectedHash}\\1`
+  );
+
+  if (!sriAssignmentPattern.test(content)) {
+    console.error('FAILED: PYODIDE_SCRIPT_SRI is not assigned the expected SRI hash.');
+    console.error(`Expected assignment to include: '${EXPECTED_HASH}'`);
     process.exit(1);
   }
 
