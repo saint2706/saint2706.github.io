@@ -9,3 +9,6 @@
   ➜  Network: use --host to expose
 
 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+7:42:21 PM [vite] (client) hmr update /src/index.css
+7:42:23 PM [vite] (client) hmr update /src/components/pages/Contact.jsx, /src/index.css
+7:42:24 PM [vite] (client) hmr update /src/index.css

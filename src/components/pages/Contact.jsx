@@ -151,7 +151,10 @@ const Contact = React.memo(() => {
                       htmlFor="name"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Your name <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
+                      Your name{' '}
+                      <span className="text-red-500 ml-0.5" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       id="name"
@@ -172,7 +175,10 @@ const Contact = React.memo(() => {
                       htmlFor="email"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Your email <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
+                      Your email{' '}
+                      <span className="text-red-500 ml-0.5" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       id="email"
@@ -193,7 +199,10 @@ const Contact = React.memo(() => {
                       htmlFor="message"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Project details <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
+                      Project details{' '}
+                      <span className="text-red-500 ml-0.5" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <textarea
                       id="message"
