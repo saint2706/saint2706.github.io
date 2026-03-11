@@ -479,50 +479,56 @@ const ChatInterface = ({ onClose }) => {
    * @async
    * @param {string} text - The message text to send
    */
-  const handleSendMessage = useCallback(async text => {
-    if (!text.trim()) return;
+  const handleSendMessage = useCallback(
+    async text => {
+      if (!text.trim()) return;
 
-    // Add user message to UI immediately for responsive feel
-    const userMsg = { id: generateMessageId(), role: 'user', text: text };
+      // Add user message to UI immediately for responsive feel
+      const userMsg = { id: generateMessageId(), role: 'user', text: text };
 
-    // Use functional state update to get latest messages and compute history
-    let historyForApi = [];
-    setMessages(prevMessages => {
-      const nextMessages = buildNextMessages(prevMessages, userMsg);
-      historyForApi = buildGeminiHistory(nextMessages);
-      return nextMessages;
-    });
+      // Use functional state update to get latest messages and compute history
+      let historyForApi = [];
+      setMessages(prevMessages => {
+        const nextMessages = buildNextMessages(prevMessages, userMsg);
+        historyForApi = buildGeminiHistory(nextMessages);
+        return nextMessages;
+      });
 
-    // Clear input if this is from the input field
-    // Doing it this way avoids capturing `input` state in closure
-    setInput(prevInput => (text === prevInput ? '' : prevInput));
+      // Clear input if this is from the input field
+      // Doing it this way avoids capturing `input` state in closure
+      setInput(prevInput => (text === prevInput ? '' : prevInput));
 
-    setIsTyping(true);
+      setIsTyping(true);
 
-    try {
-      const responseText = await chatWithGemini(userMsg.text, historyForApi);
-      // Only update state if component is still mounted
-      if (isMountedRef.current) {
-        setMessages(prev => [
-          ...prev,
-          { id: generateMessageId(), role: 'model', text: responseText },
-        ]);
+      try {
+        const responseText = await chatWithGemini(userMsg.text, historyForApi);
+        // Only update state if component is still mounted
+        if (isMountedRef.current) {
+          setMessages(prev => [
+            ...prev,
+            { id: generateMessageId(), role: 'model', text: responseText },
+          ]);
+        }
+      } finally {
+        if (isMountedRef.current) {
+          setIsTyping(false);
+        }
       }
-    } finally {
-      if (isMountedRef.current) {
-        setIsTyping(false);
-      }
-    }
-  }, [isMountedRef]);
+    },
+    [isMountedRef]
+  );
 
-  const handleSubmit = useCallback(async (e, currentInput) => {
-    e.preventDefault();
-    try {
-      await handleSendMessage(currentInput);
-    } catch {
-      // Ignore send errors
-    }
-  }, [handleSendMessage]);
+  const handleSubmit = useCallback(
+    async (e, currentInput) => {
+      e.preventDefault();
+      try {
+        await handleSendMessage(currentInput);
+      } catch {
+        // Ignore send errors
+      }
+    },
+    [handleSendMessage]
+  );
 
   /**
    * Clears the chat history and resets to default greeting message.
@@ -691,7 +697,7 @@ const ChatInterface = ({ onClose }) => {
           </div>
         )}
         <form
-          onSubmit={(e) => handleSubmit(e, input)}
+          onSubmit={e => handleSubmit(e, input)}
           className={`p-4 ${messages.length === 1 && !isTyping ? 'pt-3' : ''}`}
         >
           <div className="flex gap-2 items-start">
