@@ -207,5 +207,26 @@ describe('AI Service', () => {
       const sanitized = sanitizeHistoryForGemini(history);
       expect(sanitized).toEqual([]);
     });
+
+    it('should limit history entries, parts, and text budgets', () => {
+      const history = Array.from({ length: 35 }, (_, index) => ({
+        role: index % 2 === 0 ? 'user' : 'model',
+        parts: [
+          { text: 'x'.repeat(5000) },
+          { text: 'ignored part' },
+        ],
+      }));
+
+      const sanitized = sanitizeHistoryForGemini(history);
+      const totalChars = sanitized.reduce(
+        (sum, entry) => sum + entry.parts.reduce((partSum, part) => partSum + part.text.length, 0),
+        0
+      );
+
+      expect(sanitized.length).toBeLessThanOrEqual(30);
+      expect(sanitized.every(entry => entry.parts.length === 1)).toBe(true);
+      expect(sanitized.every(entry => entry.parts[0].text.length <= 4000)).toBe(true);
+      expect(totalChars).toBe(60000);
+    });
   });
 });

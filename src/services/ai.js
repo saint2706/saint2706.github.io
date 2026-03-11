@@ -19,6 +19,12 @@ const API_TIMEOUT = 15000; // Maximum time (ms) to wait for API response before 
 const MAX_INPUT_LENGTH = 1000; // Maximum allowed characters in user input to prevent token exhaustion
 const RATE_LIMIT_MS = 2000; // Minimum time (ms) between consecutive requests to prevent API abuse
 const ALLOWED_HISTORY_ROLES = new Set(['user', 'model']);
+const HISTORY_SANITIZATION_LIMITS = {
+  maxEntries: 30,
+  maxPartsPerEntry: 1,
+  maxCharsPerPart: 4000,
+  maxTotalChars: 60000,
+};
 const MISSING_API_KEY_ERROR =
   'My AI circuits are currently offline. Please check the configuration.';
 const CHAT_RATE_LIMIT_KEY = 'chat_last_request_time';
@@ -219,7 +225,9 @@ export const sanitizeHistoryForGemini = history => {
     return [];
   }
 
-  return history.flatMap(entry => {
+  let totalChars = 0;
+
+  return history.slice(-HISTORY_SANITIZATION_LIMITS.maxEntries).flatMap(entry => {
     if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
       return [];
     }
@@ -228,23 +236,37 @@ export const sanitizeHistoryForGemini = history => {
       return [];
     }
 
-    const sanitizedParts = entry.parts.flatMap(part => {
-      if (
-        !part ||
-        typeof part !== 'object' ||
-        Array.isArray(part) ||
-        typeof part.text !== 'string'
-      ) {
-        return [];
-      }
+    const sanitizedParts = entry.parts
+      .slice(0, HISTORY_SANITIZATION_LIMITS.maxPartsPerEntry)
+      .flatMap(part => {
+        if (
+          !part ||
+          typeof part !== 'object' ||
+          Array.isArray(part) ||
+          typeof part.text !== 'string'
+        ) {
+          return [];
+        }
 
-      const sanitizedText = sanitizeInput(part.text);
-      if (!sanitizedText) {
-        return [];
-      }
+        const sanitizedText = sanitizeInput(part.text);
+        if (!sanitizedText) {
+          return [];
+        }
 
-      return [{ text: sanitizedText }];
-    });
+        const cappedText = sanitizedText.slice(0, HISTORY_SANITIZATION_LIMITS.maxCharsPerPart);
+        const remainingBudget = HISTORY_SANITIZATION_LIMITS.maxTotalChars - totalChars;
+        if (remainingBudget <= 0) {
+          return [];
+        }
+
+        const budgetedText = cappedText.slice(0, remainingBudget);
+        if (!budgetedText) {
+          return [];
+        }
+
+        totalChars += budgetedText.length;
+        return [{ text: budgetedText }];
+      });
 
     if (sanitizedParts.length === 0) {
       return [];
