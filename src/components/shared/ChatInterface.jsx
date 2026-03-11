@@ -485,7 +485,7 @@ const ChatInterface = ({ onClose }) => {
     // Add user message to UI immediately for responsive feel
     const userMsg = { id: generateMessageId(), role: 'user', text: text };
     const nextMessages = buildNextMessages(messages, userMsg);
-    setMessages(nextMessages);
+    setMessages(prev => buildNextMessages(prev, userMsg));
     if (text === input) setInput(''); // Clear input if this is from the input field
     setIsTyping(true);
 
