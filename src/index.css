@@ -135,36 +135,36 @@
 
 /* ===== NEUBRUTALISM DARK MODE ("Midnight Brutalism") — explicit user choice ===== */
 [data-theme='neubrutalism-dark'] {
-  /* Dark backgrounds */
-  --bg: #121212;
-  --bg-layer-1: #1a1a1a;
-  --bg-layer-2: #2a2a2a;
-  --surface: #1e1e1e;
-  --surface-muted: #2a2a2a;
-  --surface-strong: #333333;
-  --surface-glass: rgba(30, 30, 30, 0.85);
-  --surface-overlay: rgba(18, 18, 18, 0.95);
+  /* Deep, cool-tinted dark backgrounds with clear surface hierarchy */
+  --bg: #0d0d10;
+  --bg-layer-1: #131317;
+  --bg-layer-2: #1c1c21;
+  --surface: #18181d;
+  --surface-muted: #222228;
+  --surface-strong: #2d2d35;
+  --surface-glass: rgba(24, 24, 29, 0.9);
+  --surface-overlay: rgba(13, 13, 16, 0.97);
 
-  /* Light text on dark */
-  --text-primary: #f5f5f5;
-  --text-secondary: #d4d4d4;
-  --text-muted: #a0a0a0;
-  --text-subtle: #757575;
+  /* Crisp text hierarchy — pure white primary for maximum legibility */
+  --text-primary: #ffffff;
+  --text-secondary: #c8c8d6;
+  --text-muted: #8a8a9c;
+  --text-subtle: #56566a;
   --text: var(--text-primary);
 
-  /* Vibrant accents pop harder on dark */
-  --accent: #448aff;
-  --accent-soft: rgba(68, 138, 255, 0.25);
-  --fun-pink: #ff4081;
-  --fun-yellow: #ffd54f;
+  /* Electric accents that pop against dark — bolder, more saturated */
+  --accent: #5c9fff;
+  --accent-soft: rgba(92, 159, 255, 0.22);
+  --fun-pink: #ff3d78;
+  --fun-yellow: #ffe033;
 
-  /* White/bright borders for contrast */
-  --border-color: #f5f5f5;
-  --border-soft: rgba(255, 255, 255, 0.18);
-  --border-strong: rgba(255, 255, 255, 0.4);
-  --focus-ring: #ffd54f;
+  /* Cool-white borders for sharp definition */
+  --border-color: #e8e8f2;
+  --border-soft: rgba(232, 232, 242, 0.2);
+  --border-strong: rgba(232, 232, 242, 0.52);
+  --focus-ring: #ffe033;
   --glass-blur: 0;
-  --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
+  --glow-soft: 0 0 20px rgba(255, 224, 51, 0.12);
 
   /* Neubrutalism layout vars */
   --radius-xs: 0px;
@@ -176,14 +176,24 @@
   --space-3: 0.75rem;
   --space-4: 1rem;
 
-  /* Colored offset shadows — the Midnight Brutalism signature */
+  /* Midnight Brutalism signature — bigger, bolder offset shadows */
   --nb-border-width: 3px;
-  --nb-shadow-color: #ffd54f;
-  --nb-shadow: 4px 4px 0 var(--nb-shadow-color);
-  --nb-shadow-hover: 6px 6px 0 var(--nb-shadow-color);
-  --nb-shadow-xl: 8px 8px 0 var(--nb-shadow-color);
+  --nb-shadow-color: #ffe033;
+  --nb-shadow: 5px 5px 0 var(--nb-shadow-color);
+  --nb-shadow-hover: 7px 7px 0 var(--nb-shadow-color);
+  --nb-shadow-xl: 9px 9px 0 var(--nb-shadow-color);
   --nb-shadow-pressed: inset 2px 2px 0 var(--nb-shadow-color);
   --nb-radius: 0px;
+
+  /* Brighter, more saturated shadow color palette for dark mode */
+  --nb-shadow-color-yellow: #ffe033;
+  --nb-shadow-color-pink: #ff3d78;
+  --nb-shadow-color-blue: #5c9fff;
+  --nb-shadow-color-red: #ff453a;
+  --nb-shadow-color-lime: #30d158;
+  --nb-shadow-color-coral: #ff6b6b;
+  --nb-shadow-color-violet: #bf5af2;
+  --nb-shadow-color-orange: #ff9f0a;
 
   /* Legacy aliases */
   --color-primary: var(--bg);
@@ -194,8 +204,15 @@
   --color-border: var(--border-color);
   --color-card-bg: var(--surface);
   --color-overlay: var(--surface-overlay);
+  --color-accent: var(--accent);
+  --color-fun-pink: var(--fun-pink);
+  --color-fun-yellow: var(--fun-yellow);
 
-  --color-skeleton: rgba(255, 255, 255, 0.08);
+  --color-skeleton: rgba(255, 255, 255, 0.06);
+
+  /* Ambient gradient color stops (used in nb-paper-bg background-image) */
+  --nb-ambient-1: rgba(92, 159, 255, 0.05);
+  --nb-ambient-2: rgba(255, 61, 120, 0.04);
 
   --font-sans: 'DM Sans', sans-serif;
 }
@@ -714,6 +731,130 @@
     opacity: 0.12;
     filter: invert(1);
   }
+}
+
+/* ===== NEUBRUTALISM DARK MODE — ENHANCED UTILITIES ===== */
+
+/* Font smoothing: antialiased rendering is crisper on dark backgrounds */
+[data-theme='neubrutalism-dark'] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chalk/grain texture: inverted paper noise reads as bright dust on dark canvas */
+[data-theme='neubrutalism-dark'] .nb-paper-bg::before {
+  opacity: 0.06;
+  filter: invert(1);
+}
+
+/* Subtle ambient depth gradient for the page background */
+[data-theme='neubrutalism-dark'] .nb-paper-bg {
+  background-image:
+    radial-gradient(ellipse 70% 50% at 10% 0%, var(--nb-ambient-1) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 90% 100%, var(--nb-ambient-2) 0%, transparent 50%);
+}
+
+/* Pattern overlays — more visible against dark surfaces */
+[data-theme='neubrutalism-dark'] .nb-halftone-bg::after {
+  opacity: 0.18;
+}
+
+[data-theme='neubrutalism-dark'] .nb-crosshatch-bg::after {
+  opacity: 0.14;
+}
+
+[data-theme='neubrutalism-dark'] .nb-grid-bg::after {
+  opacity: 0.12;
+}
+
+/* Focus ring — bright yellow for clear keyboard navigation in dark mode */
+[data-theme='neubrutalism-dark'] *:focus-visible {
+  outline-color: var(--focus-ring, #ffe033);
+}
+
+/* Scrollbar — dark track with yellow thumb, themed to Midnight Brutalism */
+[data-theme='neubrutalism-dark'] .nb-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-layer-2, #1c1c21);
+  border-color: var(--border-color, #e8e8f2);
+}
+
+[data-theme='neubrutalism-dark'] .nb-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--fun-yellow, #ffe033);
+  border-color: var(--border-color, #e8e8f2);
+}
+
+[data-theme='neubrutalism-dark'] .nb-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent, #5c9fff);
+}
+
+[data-theme='neubrutalism-dark'] .nb-scrollbar::-webkit-scrollbar-corner {
+  background: var(--bg-layer-2, #1c1c21);
+  border-color: var(--border-color, #e8e8f2);
+}
+
+/* Colored shadow utilities — use updated dark-mode palette */
+[data-theme='neubrutalism-dark'] .nb-shadow-yellow {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-yellow);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-pink {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-pink);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-blue {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-blue);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-red {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-red);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-lime {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-lime);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-coral {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-coral);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-violet {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-violet);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-orange {
+  box-shadow: 5px 5px 0 var(--nb-shadow-color-orange);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-yellow:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-yellow);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-pink:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-pink);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-blue:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-blue);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-red:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-red);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-lime:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-lime);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-coral:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-coral);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-violet:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-violet);
+}
+
+[data-theme='neubrutalism-dark'] .nb-shadow-orange:hover {
+  box-shadow: 7px 7px 0 var(--nb-shadow-color-orange);
 }
 
 /* Reduced motion overrides for new animations */

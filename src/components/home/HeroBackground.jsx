@@ -5,12 +5,14 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../shared/theme-context';
 
 /**
  * HeroBackground Component
  *
  * Provides a dynamic, themed background for the Hero section.
- * Adapts to 'liquid' (animated gradients and glassmorphism) and 'neubrutalism' (solid colors and bold shapes) themes.
+ * Adapts to 'liquid' (animated gradients and glassmorphism), 'neubrutalism' (solid colors and bold shapes),
+ * and 'neubrutalism-dark' (vibrant shapes with atmospheric glow effects) themes.
  * Uses Framer Motion for subtle entry animations.
  *
  * @param {Object} props - The component props.
@@ -19,6 +21,9 @@ import { motion } from 'framer-motion';
  * @returns {React.ReactElement} The animated hero background component.
  */
 const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
+  const { theme } = useTheme();
+  const isNBDark = theme === 'neubrutalism-dark';
+
   if (isLiquid) {
     return (
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
@@ -59,7 +64,9 @@ const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
         transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.2 }}
         className="absolute top-10 left-10 w-32 h-32 md:w-48 md:h-48 bg-fun-yellow border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob nb-halftone-bg"
         style={{
-          boxShadow: '4px 4px 0 var(--nb-shadow-color-pink)',
+          boxShadow: isNBDark
+            ? '5px 5px 0 var(--nb-shadow-color-pink), 0 0 32px rgba(255, 61, 120, 0.2)'
+            : '4px 4px 0 var(--nb-shadow-color-pink)',
           '--sticker-rotate': '3deg',
         }}
       />
@@ -69,7 +76,9 @@ const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
         transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.4 }}
         className="absolute bottom-20 left-20 w-24 h-24 md:w-32 md:h-32 bg-fun-pink border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
         style={{
-          boxShadow: '4px 4px 0 var(--nb-shadow-color-yellow)',
+          boxShadow: isNBDark
+            ? '5px 5px 0 var(--nb-shadow-color-yellow), 0 0 24px rgba(255, 224, 51, 0.2)'
+            : '4px 4px 0 var(--nb-shadow-color-yellow)',
           '--sticker-rotate': '-2deg',
           animationDelay: '1s',
         }}
@@ -80,7 +89,9 @@ const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
         transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: 0.3 }}
         className="absolute top-20 right-16 w-20 h-20 md:w-28 md:h-28 bg-accent border-nb border-[color:var(--color-border)] rounded-nb nb-float-bob"
         style={{
-          boxShadow: '4px 4px 0 var(--nb-shadow-color-violet)',
+          boxShadow: isNBDark
+            ? '5px 5px 0 var(--nb-shadow-color-violet), 0 0 20px rgba(191, 90, 242, 0.22)'
+            : '4px 4px 0 var(--nb-shadow-color-violet)',
           '--sticker-rotate': '5deg',
           animationDelay: '2s',
         }}
