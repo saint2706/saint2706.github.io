@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
+import { isSafeHref } from '../../utils/security';
 import {
   breadcrumbSchema,
   projectsCollectionSchema,
@@ -218,8 +219,11 @@ const Projects = React.memo(() => {
 
     // Prioritize Live Demo, fallback to GitHub
     const targetUrl = project.link || project.github;
-    if (targetUrl) {
+    // 🛡️ Sentinel: Validate URL before opening to prevent malicious protocol execution (e.g., javascript:)
+    if (targetUrl && isSafeHref(targetUrl)) {
       window.open(targetUrl, '_blank', 'noopener,noreferrer');
+    } else if (targetUrl) {
+      console.warn('Blocked unsafe URL navigation:', targetUrl);
     }
   }, []);
 
