@@ -479,21 +479,28 @@ const ChatInterface = ({ onClose }) => {
    * @async
    * @param {string} text - The message text to send
    */
-  const handleSendMessage = async text => {
+  const handleSendMessage = useCallback(async text => {
     if (!text.trim()) return;
 
     // Add user message to UI immediately for responsive feel
     const userMsg = { id: generateMessageId(), role: 'user', text: text };
-    const nextMessages = buildNextMessages(messages, userMsg);
-    setMessages(prev => buildNextMessages(prev, userMsg));
-    if (text === input) setInput(''); // Clear input if this is from the input field
+
+    // Use functional state update to get latest messages and compute history
+    let historyForApi = [];
+    setMessages(prevMessages => {
+      const nextMessages = buildNextMessages(prevMessages, userMsg);
+      historyForApi = buildGeminiHistory(nextMessages);
+      return nextMessages;
+    });
+
+    // Clear input if this is from the input field
+    // Doing it this way avoids capturing `input` state in closure
+    setInput(prevInput => (text === prevInput ? '' : prevInput));
+
     setIsTyping(true);
 
-    // Limit context to last 30 messages to prevent token exhaustion
-    const history = buildGeminiHistory(nextMessages);
-
     try {
-      const responseText = await chatWithGemini(userMsg.text, history);
+      const responseText = await chatWithGemini(userMsg.text, historyForApi);
       // Only update state if component is still mounted
       if (isMountedRef.current) {
         setMessages(prev => [
@@ -506,16 +513,16 @@ const ChatInterface = ({ onClose }) => {
         setIsTyping(false);
       }
     }
-  };
+  }, [isMountedRef]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = useCallback(async (e, currentInput) => {
     e.preventDefault();
     try {
-      await handleSendMessage(input);
+      await handleSendMessage(currentInput);
     } catch {
       // Ignore send errors
     }
-  };
+  }, [handleSendMessage]);
 
   /**
    * Clears the chat history and resets to default greeting message.
@@ -531,7 +538,7 @@ const ChatInterface = ({ onClose }) => {
    * First click shows "Confirm?", second click actually clears.
    * Confirmation state resets after 3 seconds.
    */
-  const handleClearClick = () => {
+  const handleClearClick = useCallback(() => {
     if (showClearConfirm) {
       clearHistory();
       setShowClearConfirm(false);
@@ -548,7 +555,7 @@ const ChatInterface = ({ onClose }) => {
         confirmTimeoutRef.current = null;
       }, 3000);
     }
-  };
+  }, [showClearConfirm, clearHistory, isMountedRef]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -684,7 +691,7 @@ const ChatInterface = ({ onClose }) => {
           </div>
         )}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => handleSubmit(e, input)}
           className={`p-4 ${messages.length === 1 && !isTyping ? 'pt-3' : ''}`}
         >
           <div className="flex gap-2 items-start">
