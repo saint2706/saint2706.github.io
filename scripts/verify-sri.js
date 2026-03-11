@@ -37,7 +37,7 @@ try {
   // Check that the constant is assigned the expected hash value
   const escapedExpectedHash = EXPECTED_HASH.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const sriAssignmentPattern = new RegExp(
-    `PYODIDE_SCRIPT_SRI\\s*=\\s*(['\"])${escapedExpectedHash}\\1`
+    `PYODIDE_SCRIPT_SRI\\s*=\\s*(['"])${escapedExpectedHash}\\1`
   );
 
   if (!sriAssignmentPattern.test(content)) {

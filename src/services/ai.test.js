@@ -211,10 +211,7 @@ describe('AI Service', () => {
     it('should limit history entries, parts, and text budgets', () => {
       const history = Array.from({ length: 35 }, (_, index) => ({
         role: index % 2 === 0 ? 'user' : 'model',
-        parts: [
-          { text: 'x'.repeat(5000) },
-          { text: 'ignored part' },
-        ],
+        parts: [{ text: 'x'.repeat(5000) }, { text: 'ignored part' }],
       }));
 
       const sanitized = sanitizeHistoryForGemini(history);
