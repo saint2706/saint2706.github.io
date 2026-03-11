@@ -257,7 +257,8 @@ describe('Playground Component', () => {
       vi.advanceTimersByTime(2500);
     });
 
-    expect(screen.queryByText('Copied!')).not.toBeInTheDocument();
+    const copiedElementsAfter = screen.queryAllByText('Copied!');
+    expect(copiedElementsAfter.length).toBe(0);
 
     vi.useRealTimers();
   });

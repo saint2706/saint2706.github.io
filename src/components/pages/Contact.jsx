@@ -151,7 +151,7 @@ const Contact = React.memo(() => {
                       htmlFor="name"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Your name
+                      Your name <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                     </label>
                     <input
                       id="name"
@@ -161,6 +161,7 @@ const Contact = React.memo(() => {
                       onChange={handleChange}
                       placeholder="e.g. Jane Smith"
                       required
+                      aria-required="true"
                       maxLength={100}
                       disabled={isSubmitting}
                       className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
@@ -171,7 +172,7 @@ const Contact = React.memo(() => {
                       htmlFor="email"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Your email
+                      Your email <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                     </label>
                     <input
                       id="email"
@@ -181,6 +182,7 @@ const Contact = React.memo(() => {
                       onChange={handleChange}
                       placeholder="e.g. jane@example.com"
                       required
+                      aria-required="true"
                       maxLength={320}
                       disabled={isSubmitting}
                       className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent disabled:opacity-50"
@@ -191,7 +193,7 @@ const Contact = React.memo(() => {
                       htmlFor="message"
                       className="block text-sm font-semibold text-[color:var(--text-secondary)]"
                     >
-                      Project details
+                      Project details <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -201,6 +203,7 @@ const Contact = React.memo(() => {
                       onChange={handleChange}
                       placeholder="Tell me about your project..."
                       required
+                      aria-required="true"
                       maxLength={2000}
                       disabled={isSubmitting}
                       className="w-full lg-surface-2 rounded-2xl px-4 py-3 text-primary placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent resize-y disabled:opacity-50"

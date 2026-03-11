@@ -217,7 +217,7 @@ const CodeRenderer = ({ className, children, node, ...props }) => {
             <Copy size={14} aria-hidden="true" />
           )}
           <span className="sr-only" aria-live="polite">
-            {isCopied ? 'Copied code' : ''}
+            {isCopied ? 'Copied code' : 'Copy snippet'}
           </span>
         </button>
       </div>

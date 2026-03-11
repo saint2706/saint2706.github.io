@@ -48,3 +48,10 @@ Implements various UX and accessibility enhancements across the application, foc
 ### 6. Copy Action Accessibility
 
 - When changing the text or icon of a copy button to "Copied!", screen readers may not automatically read the update. Ensure there is a visually hidden element with `aria-live="polite"` that receives the "Copied!" text, so screen readers immediately notify the user of the successful action. Fixed this pattern in `Playground.jsx` and `ChatInterface.jsx`.
+
+### 7. Form Required Fields Accessibility
+- In `Contact.jsx`, added visual indicator (a red asterisk) for required form fields (Name, Email, Project Details).
+- Ensured required fields have the `aria-required="true"` attribute so screen readers announce them properly.
+
+### 8. Copy Snippet Screen Reader Feedback
+- In `Playground.jsx` and `ChatInterface.jsx`, updated the `aria-live` region for the copy buttons to have a persistent text content ('Copy snippet' -> 'Copied!'). This prevents screen readers from ignoring empty `aria-live` regions or failing to announce the update when the text conditionally changes. Tests in `Playground.test.jsx` were updated to use `queryAllByText` to correctly verify the unmounted 'Copied!' state.

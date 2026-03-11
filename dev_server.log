@@ -3,13 +3,9 @@
 > vite
 
 
-  VITE v7.3.1  ready in 342 ms
+  VITE v7.3.1  ready in 304 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
 
 A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
-7:20:41 PM [vite] (client) hmr update /src/index.css
-7:20:41 PM [vite] (client) hmr update /src/index.css
-7:20:42 PM [vite] (client) hmr update /src/components/home/Hero.jsx, /src/index.css
-7:20:44 PM [vite] (client) hmr update /src/index.css
