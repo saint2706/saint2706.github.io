@@ -45,7 +45,7 @@ const ThemedCard = ({
   ...props
 }) => {
   const { theme } = useTheme();
-  const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
+  const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
   const variantClasses = VARIANTS[variant]?.[themeKey] ?? VARIANTS.default[themeKey];
 
   // Apply colored shadow class if specified (NB only)

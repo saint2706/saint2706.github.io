@@ -60,7 +60,7 @@ const ThemedButton = ({
   ...props
 }) => {
   const { theme } = useTheme();
-  const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
+  const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
 
   const activeClasses =
     themeKey === 'neubrutalism' && isActive

@@ -49,7 +49,7 @@ const LIQUID_SHADOW_BY_DEPTH = {
  * like Modals, Cards, and Floating Action Buttons, adapting to the active theme.
  *
  * @param {object} options
- * @param {string} options.theme - The current active theme ('neubrutalism' or 'liquid').
+ * @param {string} options.theme - The current active theme ('neubrutalism', 'liquid', or 'liquid-dark').
  * @param {'card'|'accent'|'pink'|'secondary'|'yellow'} [options.tone='card'] - The color tone/variant of the surface.
  * @param {'default'|'hover'|'subtle'} [options.depth='default'] - The elevation depth (shadow intensity).
  * @param {string} [options.className=''] - Additional custom classes to append.
@@ -61,7 +61,7 @@ export const getOverlayShell = ({
   depth = 'default',
   className = '',
 } = {}) => {
-  const isLiquid = theme === 'liquid';
+  const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
   return {
     className: joinClasses(
       isLiquid

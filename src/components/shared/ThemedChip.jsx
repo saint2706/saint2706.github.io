@@ -58,7 +58,7 @@ const ThemedChip = ({
   ...props
 }) => {
   const { theme } = useTheme();
-  const themeKey = theme === 'liquid' ? 'liquid' : 'neubrutalism';
+  const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
 
   const chipShadow =
     themeKey === 'neubrutalism'

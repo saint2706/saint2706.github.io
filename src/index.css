@@ -373,6 +373,34 @@
     sans-serif;
 }
 
+/* ===== LIQUID GLASS DARK MODE — ENHANCED UTILITIES ===== */
+
+/* Font smoothing: antialiased rendering is crisper on dark backgrounds */
+[data-theme='liquid-dark'] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Richer ambient mesh for dark — colors must be more vivid against black */
+[data-theme='liquid-dark'] .lg-ambient-bg::before {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(10, 132, 255, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(191, 90, 242, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 50% 90%, rgba(255, 214, 10, 0.1) 0%, transparent 60%),
+    var(--bg, #000000);
+}
+
+/* Text selection — themed to the iOS accent blue */
+[data-theme='liquid-dark'] ::selection {
+  background: rgba(10, 132, 255, 0.35);
+  color: var(--text-primary);
+}
+
+/* Focus ring — iOS blue for clear keyboard navigation in dark glass mode */
+[data-theme='liquid-dark'] *:focus-visible {
+  outline-color: var(--focus-ring, #0a84ff);
+}
+
 @layer utilities {
   .text-glow {
     text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
@@ -1128,6 +1156,29 @@
   }
 
   [data-theme='liquid'] ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* ---------- Liquid Dark scrollbar ---------- */
+  [data-theme='liquid-dark'] ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  [data-theme='liquid-dark'] ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  [data-theme='liquid-dark'] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+  }
+
+  [data-theme='liquid-dark'] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  [data-theme='liquid-dark'] ::-webkit-scrollbar-corner {
     background: transparent;
   }
 }

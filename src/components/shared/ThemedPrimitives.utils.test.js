@@ -71,5 +71,33 @@ describe('ThemedPrimitives utils', () => {
         expect(result.style.boxShadow).toContain('var(--glass-drop-shadow-hover');
       });
     });
+
+    describe('Liquid Dark theme', () => {
+      it('returns correct defaults for liquid-dark theme', () => {
+        const result = getOverlayShell({ theme: 'liquid-dark' });
+        expect(result.className).toContain('lg-surface-2');
+        expect(result.className).toContain('border border-[color:var(--border-soft)]');
+        expect(result.className).toContain('rounded-2xl');
+        expect(result.style.boxShadow).toContain('var(--glass-drop-shadow');
+      });
+
+      it('handles tone prop for liquid-dark theme', () => {
+        const result = getOverlayShell({ theme: 'liquid-dark', tone: 'accent' });
+        expect(result.className).toContain('lg-surface-2');
+        expect(result.className).toContain('lg-tint-blue');
+      });
+
+      it('handles depth prop for liquid-dark theme', () => {
+        const result = getOverlayShell({ theme: 'liquid-dark', depth: 'hover' });
+        expect(result.style.boxShadow).toContain('var(--glass-drop-shadow-hover');
+      });
+
+      it('does not apply neubrutalism classes for liquid-dark theme', () => {
+        const result = getOverlayShell({ theme: 'liquid-dark' });
+        expect(result.className).not.toContain('border-nb');
+        expect(result.className).not.toContain('rounded-nb');
+        expect(result.style.boxShadow).not.toContain('var(--nb-shadow');
+      });
+    });
   });
 });
