@@ -55,3 +55,8 @@
 
 - **Issue**: Usage of `target="_blank"` on external links without `rel="noopener noreferrer"` can expose the site to reverse tabnabbing attacks, where the newly opened page gains access to the `window.opener` object.
 - **Fix**: Implemented the `react/jsx-no-target-blank` rule as an `error` in `eslint.config.js` to strictly enforce the presence of `rel="noopener noreferrer"` for any `target="_blank"` usages across the entire repository. This acts as a preventative control for current and future developments.
+
+### Security Improvement: Safe URL Navigation in Projects Component
+
+- **Issue**: The `Projects` component (`src/components/pages/Projects.jsx`) used `window.open` to navigate to project links or GitHub repositories dynamically derived from `resumeData` without prior protocol validation. If data sources were compromised or contained malicious protocols (e.g., `javascript:`), this could result in an XSS vulnerability.
+- **Fix**: Added an explicit validation check utilizing the `isSafeHref` utility function from `src/utils/security.js` prior to invoking `window.open`. This ensures only safe, non-malicious protocols (like HTTP and HTTPS) can be executed, reinforcing defense-in-depth even for statically managed data. Blocked navigation attempts are now safely logged as warnings.
