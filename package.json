@@ -59,7 +59,7 @@
     "globals": "^17.4.0",
     "html-to-text": "^9.0.5",
     "jsdom": "^28.1.0",
-    "lint-staged": "^16.3.2",
+    "lint-staged": "^16.3.3",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",
