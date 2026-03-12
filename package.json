@@ -27,11 +27,11 @@
     "prebuild": "pnpm run generate:geo"
   },
   "dependencies": {
-    "@dr.pogodin/react-helmet": "^3.1.0",
+    "@dr.pogodin/react-helmet": "^3.1.1",
     "@google/generative-ai": "^0.24.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
-    "framer-motion": "^12.35.0",
+    "framer-motion": "^12.35.2",
     "lucide-react": "^0.577.0",
     "prismjs": "^1.30.0",
     "react": "^19.2.4",
