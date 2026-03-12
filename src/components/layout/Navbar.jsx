@@ -65,6 +65,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   const location = useLocation();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
+  const isLiquidDark = theme === 'liquid-dark';
 
   // Scroll-aware navbar compaction for liquid theme
   useEffect(() => {
@@ -144,19 +145,23 @@ const Navbar = React.memo(({ onOpenSettings }) => {
       isLiquid
         ? `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
             isActive
-              ? 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
-              : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+              ? isLiquidDark
+                ? 'bg-white/15 text-[color:var(--text-primary)]'
+                : 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
+              : isLiquidDark
+                ? 'text-[color:var(--text-secondary)] hover:bg-white/10'
+                : 'text-[color:var(--text-secondary)] hover:bg-white/40'
           }`
         : `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fun-yellow focus-visible:ring-offset-2 flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
             isActive
               ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
               : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
           }`,
-    [isLiquid]
+    [isLiquid, isLiquidDark]
   );
 
   const actionBtnCls = isLiquid
-    ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+    ? `lg-surface-3 text-[color:var(--text-primary)] ${isLiquidDark ? 'hover:bg-white/20' : 'hover:bg-white/80'}`
     : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary';
 
   const mobileBtnCls = isLiquid
@@ -168,7 +173,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
 
   const mobileSettingsBtnCls = isLiquid
-    ? 'lg-surface-3 text-[color:var(--text-primary)] hover:bg-white/80'
+    ? `lg-surface-3 text-[color:var(--text-primary)] ${isLiquidDark ? 'hover:bg-white/20' : 'hover:bg-white/80'}`
     : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb';
 
   const mobileLinkCls = useCallback(
@@ -177,8 +182,12 @@ const Navbar = React.memo(({ onOpenSettings }) => {
         'flex items-center gap-3 px-5 py-4 text-base font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
       const activeStyle = isLiquid
         ? isActive
-          ? 'bg-white/60 text-[color:var(--text-primary)] focus-visible:ring-[color:var(--focus-ring)]'
-          : 'text-[color:var(--text-secondary)] hover:bg-white/40 focus-visible:ring-[color:var(--focus-ring)]'
+          ? isLiquidDark
+            ? 'bg-white/10 text-[color:var(--text-primary)] focus-visible:ring-[color:var(--focus-ring)]'
+            : 'bg-white/60 text-[color:var(--text-primary)] focus-visible:ring-[color:var(--focus-ring)]'
+          : isLiquidDark
+            ? 'text-[color:var(--text-secondary)] hover:bg-white/10 focus-visible:ring-[color:var(--focus-ring)]'
+            : 'text-[color:var(--text-secondary)] hover:bg-white/40 focus-visible:ring-[color:var(--focus-ring)]'
         : isActive
           ? 'bg-fun-yellow text-black focus-visible:ring-fun-pink'
           : 'text-primary hover:bg-secondary focus-visible:ring-fun-pink';
@@ -188,7 +197,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
           : '';
       return `${base} ${activeStyle} ${separator}`;
     },
-    [isLiquid]
+    [isLiquid, isLiquidDark]
   );
 
   return (
