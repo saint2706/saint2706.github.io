@@ -3,31 +3,34 @@
 
 /* Theme CSS Variables */
 :root {
-  /* Base semantic tokens */
-  --bg: #fafafa;
-  --bg-layer-1: #fafafa;
-  --bg-layer-2: #f5f5f5;
-  --surface: #ffffff;
-  --surface-muted: #f5f5f5;
-  --surface-strong: #ebebeb;
-  --surface-glass: rgba(255, 255, 255, 0.85);
-  --surface-overlay: rgba(250, 250, 250, 0.95);
+  /* Base semantic tokens — warm cream paper defaults (Neubrutalism light) */
+  --bg: #fdf8f0;
+  --bg-layer-1: #fdf8f0;
+  --bg-layer-2: #f5ecde;
+  --surface: #fffdf8;
+  --surface-muted: #f5ecde;
+  --surface-strong: #e9dfd1;
+  --surface-glass: rgba(253, 248, 240, 0.88);
+  --surface-overlay: rgba(253, 248, 240, 0.97);
 
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --text-muted: #555555;
-  --text-subtle: #555555;
+  /* Warm near-black text — rich contrast without pure-black harshness */
+  --text-primary: #1a0e08;
+  --text-secondary: #3d2a1d;
+  --text-muted: #6e5344;
+  --text-subtle: #7a5c50;
   --text: var(--text-primary);
 
-  --accent: #0052cc;
-  --accent-soft: rgba(0, 82, 204, 0.2);
-  --fun-pink: #9c0e4b;
-  --fun-yellow: #ffd54f;
+  --accent: #0050c4;
+  --accent-soft: rgba(0, 80, 196, 0.18);
+  --fun-pink: #c81a4e;
+  --fun-yellow: #f9c427;
 
-  --border-color: #000000;
-  --border-soft: rgba(0, 0, 0, 0.18);
-  --border-strong: rgba(0, 0, 0, 0.4);
-  --focus-ring: #000000;
+  /* Warm near-black borders to match the text */
+  --border-color: #1a0e08;
+  --border-soft: rgba(26, 14, 8, 0.14);
+  --border-strong: rgba(26, 14, 8, 0.38);
+  /* Amber focus ring — clearly distinct from black borders, high visibility */
+  --focus-ring: #c45f00;
   --glass-blur: 0;
   --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
 
@@ -58,25 +61,29 @@
   /* Neubrutalism defaults for backwards compatibility */
   --nb-border-width: 3px;
   --nb-shadow-offset: 4px;
-  --nb-shadow-color: #000000;
+  --nb-shadow-color: #1a0e08;
   --nb-shadow: 4px 4px 0 var(--nb-shadow-color);
   --nb-shadow-hover: 6px 6px 0 var(--nb-shadow-color);
   --nb-shadow-xl: 8px 8px 0 var(--nb-shadow-color);
   --nb-shadow-pressed: inset 2px 2px 0 var(--nb-shadow-color);
   --nb-radius: 0px;
 
-  /* Colored shadow palette */
-  --nb-shadow-color-yellow: #ffd54f;
-  --nb-shadow-color-pink: #ff4081;
-  --nb-shadow-color-blue: #448aff;
-  --nb-shadow-color-red: #e53935;
-  --nb-shadow-color-lime: #76ff03;
-  --nb-shadow-color-coral: #ff6b6b;
-  --nb-shadow-color-violet: #b388ff;
-  --nb-shadow-color-orange: #ff9100;
+  /* Colored shadow palette — saturated for warm cream background */
+  --nb-shadow-color-yellow: #c49600;
+  --nb-shadow-color-pink: #c81a4e;
+  --nb-shadow-color-blue: #0050c4;
+  --nb-shadow-color-red: #c02000;
+  --nb-shadow-color-lime: #3d9400;
+  --nb-shadow-color-coral: #d04848;
+  --nb-shadow-color-violet: #7a28c8;
+  --nb-shadow-color-orange: #c06800;
 
   /* Skeleton colors */
-  --color-skeleton: rgba(0, 0, 0, 0.1);
+  --color-skeleton: rgba(26, 14, 8, 0.1);
+
+  /* Ambient gradient stops for warm paper bg */
+  --nb-ambient-1: rgba(249, 196, 39, 0.08);
+  --nb-ambient-2: rgba(200, 26, 78, 0.05);
 
   /* Default Font */
   --font-sans: 'DM Sans', sans-serif;
@@ -84,30 +91,34 @@
 
 /* Neubrutalism theme tokens */
 [data-theme='neubrutalism'] {
-  --bg: #fafafa;
-  --bg-layer-1: #fafafa;
-  --bg-layer-2: #f5f5f5;
-  --surface: #ffffff;
-  --surface-muted: #f5f5f5;
-  --surface-strong: #ebebeb;
-  --surface-glass: rgba(255, 255, 255, 0.85);
-  --surface-overlay: rgba(250, 250, 250, 0.95);
+  /* Warm cream paper — evokes printed paper, eliminates harsh white glare */
+  --bg: #fdf8f0;
+  --bg-layer-1: #fdf8f0;
+  --bg-layer-2: #f5ecde;
+  --surface: #fffdf8;
+  --surface-muted: #f5ecde;
+  --surface-strong: #e9dfd1;
+  --surface-glass: rgba(253, 248, 240, 0.88);
+  --surface-overlay: rgba(253, 248, 240, 0.97);
 
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --text-muted: #555555;
-  --text-subtle: #555555;
+  /* Warm near-black — rich contrast (≥18:1) without pure-black harshness */
+  --text-primary: #1a0e08;
+  --text-secondary: #3d2a1d;
+  --text-muted: #6e5344;
+  --text-subtle: #7a5c50;
   --text: var(--text-primary);
 
-  --accent: #0052cc;
-  --accent-soft: rgba(0, 82, 204, 0.2);
-  --fun-pink: #9c0e4b;
-  --fun-yellow: #ffd54f;
+  --accent: #0050c4;
+  --accent-soft: rgba(0, 80, 196, 0.18);
+  --fun-pink: #c81a4e;
+  --fun-yellow: #f9c427;
 
-  --border-color: #000000;
-  --border-soft: rgba(0, 0, 0, 0.18);
-  --border-strong: rgba(0, 0, 0, 0.4);
-  --focus-ring: #000000;
+  /* Warm near-black borders — cohesive with text color */
+  --border-color: #1a0e08;
+  --border-soft: rgba(26, 14, 8, 0.14);
+  --border-strong: rgba(26, 14, 8, 0.38);
+  /* Amber focus ring — highly visible against cream bg and dark borders */
+  --focus-ring: #c45f00;
   --glass-blur: 0;
   --glow-soft: 0 0 0 rgba(0, 0, 0, 0);
 
@@ -123,14 +134,87 @@
   /* Neubrutalism specific */
   --nb-border-width: 3px;
   --nb-shadow-offset: 4px;
-  --nb-shadow-color: #000000;
+  --nb-shadow-color: #1a0e08;
   --nb-shadow: 4px 4px 0 var(--nb-shadow-color);
   --nb-shadow-hover: 6px 6px 0 var(--nb-shadow-color);
   --nb-shadow-xl: 8px 8px 0 var(--nb-shadow-color);
   --nb-shadow-pressed: inset 2px 2px 0 var(--nb-shadow-color);
   --nb-radius: 0px;
 
+  /* Colored shadow palette — deeper hues work better on warm cream */
+  --nb-shadow-color-yellow: #c49600;
+  --nb-shadow-color-pink: #c81a4e;
+  --nb-shadow-color-blue: #0050c4;
+  --nb-shadow-color-red: #c02000;
+  --nb-shadow-color-lime: #3d9400;
+  --nb-shadow-color-coral: #d04848;
+  --nb-shadow-color-violet: #7a28c8;
+  --nb-shadow-color-orange: #c06800;
+
+  /* Skeleton */
+  --color-skeleton: rgba(26, 14, 8, 0.1);
+
+  /* Ambient gradient stops for the warm paper background */
+  --nb-ambient-1: rgba(249, 196, 39, 0.08);
+  --nb-ambient-2: rgba(200, 26, 78, 0.05);
+
   --font-sans: 'DM Sans', sans-serif;
+}
+
+/* ===== NEUBRUTALIST LIGHT MODE ENHANCEMENTS ===== */
+
+/* Font smoothing: 'auto' (subpixel) is intentionally used here for light backgrounds.
+   Subpixel rendering leverages the physical LCD layout for sharper text on light surfaces,
+   unlike antialiased which is better suited for dark backgrounds (used in dark mode). */
+[data-theme='neubrutalism'] {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* Text selection — warm golden highlight that matches the NB yellow identity */
+[data-theme='neubrutalism'] ::selection {
+  background: rgba(249, 196, 39, 0.42);
+  color: var(--text-primary);
+}
+
+/* Focus ring — amber outline instead of black, so keyboard focus stays visible
+   even against the thick dark borders already present on each element */
+[data-theme='neubrutalism'] *:focus-visible {
+  outline-color: var(--focus-ring, #c45f00);
+  outline-style: solid;
+  outline-width: 3px;
+}
+
+/* Warm ambient paper gradient — subtle sunrise-yellow & blush at opposing corners */
+[data-theme='neubrutalism'] .nb-paper-bg {
+  background-image:
+    radial-gradient(ellipse 80% 55% at 8% 0%, var(--nb-ambient-1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 92% 100%, var(--nb-ambient-2) 0%, transparent 55%);
+}
+
+/* Paper noise: slightly reduced opacity keeps texture delicate on warm cream */
+[data-theme='neubrutalism'] .nb-paper-bg::before {
+  opacity: 0.22;
+}
+
+/* Scrollbar — warm-cream track, golden thumb, themed to Warm Brutalism */
+[data-theme='neubrutalism'] .nb-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-layer-2, #f5ecde);
+  border-color: var(--border-color, #1a0e08);
+}
+
+[data-theme='neubrutalism'] .nb-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--fun-yellow, #f9c427);
+  border-color: var(--border-color, #1a0e08);
+}
+
+[data-theme='neubrutalism'] .nb-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--accent, #0050c4);
+}
+
+[data-theme='neubrutalism'] .nb-scrollbar::-webkit-scrollbar-corner {
+  background: var(--bg-layer-2, #f5ecde);
+  border-color: var(--border-color, #1a0e08);
 }
 
 /* ===== NEUBRUTALISM DARK MODE ("Midnight Brutalism") — explicit user choice ===== */
