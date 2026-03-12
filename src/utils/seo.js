@@ -13,31 +13,67 @@ import blogs from '../data/blogs.json';
 /* ──────────────────────────────────────────────────────── */
 
 /** @type {string} Base URL of the website */
+/**
+ * The base URL of the website.
+ * @constant {string}
+ */
 export const SITE_URL = resumeData.basics.website;
 
 /** @type {string} Name of the website/owner */
+/**
+ * The name of the website.
+ * @constant {string}
+ */
 export const SITE_NAME = 'Rishabh Agrawal';
 
 /** @type {string} Suffix for the page title */
+/**
+ * The suffix appended to page titles.
+ * @constant {string}
+ */
 export const SITE_TITLE_SUFFIX = '| Rishabh Agrawal';
 
 /** @type {string} Default Open Graph image URL */
+/**
+ * The default Open Graph image URL.
+ * @constant {string}
+ */
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 /** @type {string} Twitter handle of the website owner */
+/**
+ * The Twitter handle associated with the site.
+ * @constant {string}
+ */
 export const TWITTER_HANDLE = '@saint2706'; // update if you have one
 
 /** @type {string} Locale of the website */
+/**
+ * The default locale for the site.
+ * @constant {string}
+ */
 export const LOCALE = 'en_US';
 
 /** @type {string} Primary language used in SEO tags */
+/**
+ * The primary language of the site.
+ * @constant {string}
+ */
 export const SITE_LANGUAGE = 'en';
 
 /** @type {string} Default OG/Twitter image alt text */
+/**
+ * The default alternative text for the Open Graph image.
+ * @constant {string}
+ */
 export const DEFAULT_OG_IMAGE_ALT =
   'Rishabh Agrawal portfolio showcasing analytics, data storytelling, and AI projects';
 
 /** @type {string} Fallback SEO keywords */
+/**
+ * Default SEO keywords used across the site.
+ * @constant {string[]}
+ */
 export const DEFAULT_SEO_KEYWORDS = [
   'Rishabh Agrawal',
   'Data Storyteller',
@@ -50,6 +86,10 @@ export const DEFAULT_SEO_KEYWORDS = [
 ].join(', ');
 
 /** @type {string} Theme color for PWA and browser UI */
+/**
+ * The primary theme color of the site.
+ * @constant {string}
+ */
 export const THEME_COLOR = '#1e1e2e'; // dark background
 
 /* ──────────────────────────────────────────────────────── */

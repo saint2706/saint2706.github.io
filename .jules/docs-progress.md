@@ -21,3 +21,11 @@
 - Added missing JSDoc comments to `SITE_NAME`, `SITE_TITLE_SUFFIX`, `DEFAULT_OG_IMAGE`, `TWITTER_HANDLE`, `LOCALE`, and `THEME_COLOR` constants in `src/utils/seo.js`.
 - Added missing JSDoc comments to `LightsOut`, `MemoryMatch`, `TimerDisplay` (Minesweeper), `Minesweeper`, `SimonSays`, `WhackAMole`, `HeroBackground`, and `Games` components.
 - Added `@example` JSDoc blocks to exported functions in `src/utils/storage.js` and `src/utils/seo.js` to improve API documentation completeness and provide usage context.
+
+# Docs Agent Progress
+
+## Improvements
+
+- Added missing JSDoc comments to `src/services/ai.js` functions: `chatWithGemini`, `sanitizeHistoryForGemini`, and `roastResume`.
+- Added missing JSDoc comments to `src/utils/storage.js` functions: `canUseDOM`, `safeKeyboardKey`, `safeSetDocumentTheme`, `safeGetLocalStorage`, `safeSetLocalStorage`, and `safeRemoveLocalStorage`.
+- Added missing JSDoc comments to `src/utils/security.js` functions: `safeJSONStringify`, `isSafeHref`, `isSafeImageSrc`, `sanitizeInput`, `isValidChatMessage`, and `redactPII`.
