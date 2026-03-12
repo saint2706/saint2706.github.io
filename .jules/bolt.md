@@ -32,3 +32,4 @@
 11. **Navbar.jsx:** Extracted `DesktopNavItem` and `MobileNavItem` components and wrapped them in `React.memo` to prevent re-rendering unchanged links when the navbar state (like `isMenuOpen` or `isScrolled`) changes.
 12. **SnakeGame.jsx:** Wrapped `handleTouchStart` and `handleTouchEnd` in `useCallback` to prevent redefining them on every render, ensuring stable function references for the game board container.
     \n## Added React.memo to root page components\nWrapped top-level page components (`Blog`, `Contact`, `Games`, `Projects`) in `React.memo()` and explicitly set `displayName`. This prevents full page re-renders when parent layout state (such as custom cursor or focus states) updates.
+13. **ChatInterface.jsx:** Wrapped `handleSendMessage`, `handleSubmit`, and `handleClearClick` in `useCallback` to prevent redefining these functions on every render.
