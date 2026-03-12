@@ -17,7 +17,7 @@
  * @module components/shared/Chatbot
  */
 
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Bot, MessageCircle, Flame } from 'lucide-react';
 import { useTheme } from './theme-context';
@@ -184,23 +184,23 @@ const Chatbot = React.memo(() => {
    * Opens the chat interface and closes other dialogs.
    * Stores the currently focused element for restoration later.
    */
-  const openChat = () => {
+  const openChat = useCallback(() => {
     lastFocusedRef.current = document.activeElement;
     setIsChatOpen(true);
     setIsRoastOpen(false);
     setIsFabOpen(false);
-  };
+  }, []);
 
   /**
    * Opens the roast interface and closes other dialogs.
    * Stores the currently focused element for restoration later.
    */
-  const openRoast = () => {
+  const openRoast = useCallback(() => {
     lastFocusedRef.current = document.activeElement;
     setIsRoastOpen(true);
     setIsChatOpen(false);
     setIsFabOpen(false);
-  };
+  }, []);
 
   // Track whether any dialog is currently open
   const anyDialogOpen = isChatOpen || isRoastOpen;
