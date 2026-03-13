@@ -35,3 +35,9 @@
 13. **ChatInterface.jsx:** Wrapped `handleSendMessage`, `handleSubmit`, and `handleClearClick` in `useCallback` to prevent redefining these functions on every render.
     \n14. **ChatInterface.jsx:** Extracted `scrollToBottom` logic directly into `useEffect` and memoized the quick reply click handler with `useCallback` to prevent unnecessary function allocations on every render for each quick reply button.
 14. **Chatbot.jsx:** Wrapped `openChat` and `openRoast` handlers in `useCallback` to prevent unnecessary re-creations on every render.
+
+## TerminalMode Optimization (Date: 2023-10-27)
+
+- **Bottleneck:** The `TerminalMode` component rendered an array of `<pre>` tags based on the `history` state. As the user typed in the `input` state, the entire `history` array was forced to re-render on every keystroke.
+- **Improvement:** Extracted the output lines into a new `TerminalLine` component wrapped in `React.memo()`. I also wrapped the entire `TerminalMode` component in `React.memo()`. Furthermore, I extracted the `lineColor` configuration object out of the component to prevent it from being re-created on each render.
+- **Metrics:** Reduced O(N) re-renders (where N is the number of terminal lines in the history buffer) down to O(1) during user typing, significantly improving input latency and overall interface responsiveness.
