@@ -27,6 +27,13 @@
  * const safe = safeJSONStringify(data);
  * // => '{"script":"\\u003cscript\\u003ealert(\"xss\")\\u003c/script\\u003e"}'
  */
+/**
+ * Safely stringifies a JavaScript object to JSON.
+ * @param {*} value - The value to convert to a JSON string.
+ * @param {function|Array} [replacer] - A function that alters the behavior of the stringification process.
+ * @param {string|number} [space] - A String or Number object that's used to insert white space into the output JSON string for readability purposes.
+ * @returns {string} The JSON string, or '{}' if stringification fails.
+ */
 export const safeJSONStringify = (value, replacer, space) => {
   let json;
 
@@ -77,6 +84,11 @@ export const safeJSONStringify = (value, replacer, space) => {
  * isSafeHref("javascript:alert(1)"); // false
  * isSafeHref("javascript%3Aalert(1)"); // false (catches encoded attacks)
  * isSafeHref("mailto:hello@example.com"); // true
+ */
+/**
+ * Validates a URL to ensure it is safe to use as an href.
+ * @param {string} href - The URL to validate.
+ * @returns {boolean} True if the URL is safe, false otherwise.
  */
 export const isSafeHref = href => {
   if (!href || typeof href !== 'string') {
@@ -142,6 +154,11 @@ export const isSafeHref = href => {
  * isSafeImageSrc("mailto:hello@example.com"); // false (not valid for images)
  * isSafeImageSrc("javascript%253A"); // false (catches double-encoded attacks)
  */
+/**
+ * Validates an image source URL to ensure it is safe.
+ * @param {string} src - The image source URL to validate.
+ * @returns {boolean} True if the source is safe, false otherwise.
+ */
 export const isSafeImageSrc = src => {
   if (!src || typeof src !== 'string') {
     return false;
@@ -204,6 +221,11 @@ export const isSafeImageSrc = src => {
  * @example
  * sanitizeInput("  Hello\u0000World  "); // "HelloWorld"
  */
+/**
+ * Sanitizes user input to prevent XSS and other injection attacks.
+ * @param {string} input - The input string to sanitize.
+ * @returns {string} The sanitized string.
+ */
 export const sanitizeInput = input => {
   if (!input || typeof input !== 'string') {
     return '';
@@ -236,6 +258,13 @@ export const sanitizeInput = input => {
  * @param {object} message - The message object to validate
  * @returns {boolean} True if valid, false otherwise
  */
+/**
+ * Validates a chat message object.
+ * @param {Object} message - The chat message object to validate.
+ * @param {string} message.role - The role of the sender (e.g., 'user' or 'model').
+ * @param {string} message.text - The content of the message.
+ * @returns {boolean} True if the message is valid, false otherwise.
+ */
 export const isValidChatMessage = message => {
   if (!message || typeof message !== 'object') return false;
 
@@ -263,6 +292,11 @@ export const isValidChatMessage = message => {
  * const data = { basics: { email: 'test@example.com' } };
  * const safe = redactPII(data);
  * // => { basics: { email: '[REDACTED]' } }
+ */
+/**
+ * Redacts Personally Identifiable Information (PII) from an object.
+ * @param {Object} data - The data object containing potential PII.
+ * @returns {Object} The redacted data object.
  */
 export const redactPII = data => {
   if (!data || typeof data !== 'object') {

@@ -23,6 +23,10 @@ const hasStorage = () =>
  * const isBrowser = canUseDOM();
  * // => true
  */
+/**
+ * Checks if the DOM is available (i.e., running in a browser environment).
+ * @returns {boolean} True if the DOM is available, false otherwise.
+ */
 export const canUseDOM = () => typeof window !== 'undefined' && typeof document !== 'undefined';
 
 /**
@@ -54,6 +58,11 @@ export const safeMediaQueryMatch = (query, fallback = false) => {
  * const key = safeKeyboardKey(new KeyboardEvent('keydown', { key: 'Enter' }));
  * // => 'Enter'
  */
+/**
+ * Safely extracts the key from a keyboard event.
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @returns {string} The key pressed, or an empty string if unavailable.
+ */
 export const safeKeyboardKey = event => {
   if (!event || typeof event.key !== 'string') return '';
   return event.key;
@@ -67,6 +76,11 @@ export const safeKeyboardKey = event => {
  * @example
  * const success = safeSetDocumentTheme('dark');
  * // => true
+ */
+/**
+ * Safely sets the document's theme attribute.
+ * @param {string} theme - The theme to set (e.g., 'neubrutalism' or 'liquid').
+ * @returns {boolean} True if the theme was successfully set, false otherwise.
  */
 export const safeSetDocumentTheme = theme => {
   if (!canUseDOM() || !document.documentElement) return false;
@@ -89,6 +103,12 @@ export const safeSetDocumentTheme = theme => {
  * const theme = safeGetLocalStorage('theme', 'light');
  * // => 'dark'
  */
+/**
+ * Safely retrieves an item from localStorage.
+ * @param {string} key - The key of the item to retrieve.
+ * @param {*} [fallback=null] - The fallback value if the item is not found or localStorage is unavailable.
+ * @returns {*} The value from localStorage, or the fallback value.
+ */
 export const safeGetLocalStorage = (key, fallback = null) => {
   if (!hasStorage()) return fallback;
 
@@ -110,6 +130,12 @@ export const safeGetLocalStorage = (key, fallback = null) => {
  * const success = safeSetLocalStorage('theme', 'dark');
  * // => true
  */
+/**
+ * Safely sets an item in localStorage.
+ * @param {string} key - The key of the item to set.
+ * @param {string} value - The value to store.
+ * @returns {boolean} True if the item was successfully set, false otherwise.
+ */
 export const safeSetLocalStorage = (key, value) => {
   if (!hasStorage()) return false;
 
@@ -129,6 +155,11 @@ export const safeSetLocalStorage = (key, value) => {
  * @example
  * const success = safeRemoveLocalStorage('theme');
  * // => true
+ */
+/**
+ * Safely removes an item from localStorage.
+ * @param {string} key - The key of the item to remove.
+ * @returns {boolean} True if the item was successfully removed, false otherwise.
  */
 export const safeRemoveLocalStorage = key => {
   if (!hasStorage()) return false;
