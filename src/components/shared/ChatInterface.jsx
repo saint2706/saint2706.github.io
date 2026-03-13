@@ -426,19 +426,11 @@ const ChatInterface = ({ onClose }) => {
   }, [messages]);
 
   /**
-   * Smoothly scrolls to the bottom of the message list.
-   * Uses the messagesEndRef which is positioned at the end of the message list.
-   */
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  /**
    * Auto-scroll to bottom whenever messages change (new message added).
    * This ensures users always see the latest message without manual scrolling.
    */
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   /**
@@ -525,6 +517,19 @@ const ChatInterface = ({ onClose }) => {
         await handleSendMessage(currentInput);
       } catch {
         // Ignore send errors
+      }
+    },
+    [handleSendMessage]
+  );
+
+  const handleQuickReplyClick = useCallback(
+    e => {
+      const reply = e.currentTarget.dataset.reply;
+      if (reply) {
+        handleSendMessage(reply);
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
       }
     },
     [handleSendMessage]
@@ -677,12 +682,8 @@ const ChatInterface = ({ onClose }) => {
               <button
                 key={index}
                 type="button"
-                onClick={() => {
-                  handleSendMessage(reply);
-                  if (inputRef.current) {
-                    inputRef.current.focus();
-                  }
-                }}
+                data-reply={reply}
+                onClick={handleQuickReplyClick}
                 aria-label={`Ask: ${reply}`}
                 className={
                   isLiquid

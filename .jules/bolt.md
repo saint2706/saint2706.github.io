@@ -33,3 +33,5 @@
 12. **SnakeGame.jsx:** Wrapped `handleTouchStart` and `handleTouchEnd` in `useCallback` to prevent redefining them on every render, ensuring stable function references for the game board container.
     \n## Added React.memo to root page components\nWrapped top-level page components (`Blog`, `Contact`, `Games`, `Projects`) in `React.memo()` and explicitly set `displayName`. This prevents full page re-renders when parent layout state (such as custom cursor or focus states) updates.
 13. **ChatInterface.jsx:** Wrapped `handleSendMessage`, `handleSubmit`, and `handleClearClick` in `useCallback` to prevent redefining these functions on every render.
+    \n14. **ChatInterface.jsx:** Extracted `scrollToBottom` logic directly into `useEffect` and memoized the quick reply click handler with `useCallback` to prevent unnecessary function allocations on every render for each quick reply button.
+14. **Chatbot.jsx:** Wrapped `openChat` and `openRoast` handlers in `useCallback` to prevent unnecessary re-creations on every render.
