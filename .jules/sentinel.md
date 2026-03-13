@@ -60,3 +60,8 @@
 
 - **Issue**: The `Projects` component (`src/components/pages/Projects.jsx`) used `window.open` to navigate to project links or GitHub repositories dynamically derived from `resumeData` without prior protocol validation. If data sources were compromised or contained malicious protocols (e.g., `javascript:`), this could result in an XSS vulnerability.
 - **Fix**: Added an explicit validation check utilizing the `isSafeHref` utility function from `src/utils/security.js` prior to invoking `window.open`. This ensures only safe, non-malicious protocols (like HTTP and HTTPS) can be executed, reinforcing defense-in-depth even for statically managed data. Blocked navigation attempts are now safely logged as warnings.
+
+### Security Improvement: Dependency Update - flatted
+
+- **Issue**: A high severity vulnerability (unbounded recursion DoS in `parse()` revive phase) was found in `flatted` < `3.4.0` via `pnpm audit`.
+- **Fix**: Updated `flatted` to `3.4.1` by running `pnpm update flatted` to resolve the vulnerability. This successfully clears the `test:security-full` script warnings and ensures defense against ReDoS in the dependency.
