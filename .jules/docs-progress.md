@@ -26,6 +26,7 @@
 
 ## Improvements
 
+- Cleaned up duplicate JSDoc comments in `src/utils/security.js` and `src/utils/storage.js`.
 - Added missing JSDoc comments to `src/services/ai.js` functions: `chatWithGemini`, `sanitizeHistoryForGemini`, and `roastResume`.
 - Added missing JSDoc comments to `src/utils/storage.js` functions: `canUseDOM`, `safeKeyboardKey`, `safeSetDocumentTheme`, `safeGetLocalStorage`, `safeSetLocalStorage`, and `safeRemoveLocalStorage`.
 - Added missing JSDoc comments to `src/utils/security.js` functions: `safeJSONStringify`, `isSafeHref`, `isSafeImageSrc`, `sanitizeInput`, `isValidChatMessage`, and `redactPII`.
