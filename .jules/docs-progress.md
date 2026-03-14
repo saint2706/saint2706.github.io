@@ -30,3 +30,7 @@
 - Added missing JSDoc comments to `src/services/ai.js` functions: `chatWithGemini`, `sanitizeHistoryForGemini`, and `roastResume`.
 - Added missing JSDoc comments to `src/utils/storage.js` functions: `canUseDOM`, `safeKeyboardKey`, `safeSetDocumentTheme`, `safeGetLocalStorage`, `safeSetLocalStorage`, and `safeRemoveLocalStorage`.
 - Added missing JSDoc comments to `src/utils/security.js` functions: `safeJSONStringify`, `isSafeHref`, `isSafeImageSrc`, `sanitizeInput`, `isValidChatMessage`, and `redactPII`.
+
+## 2026-03-14
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully. No new broken links, unformatted code, or missing JSDocs were found.
