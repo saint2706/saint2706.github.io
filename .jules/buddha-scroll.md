@@ -158,3 +158,17 @@ Resolved build-blocking lint errors to ensure performance reliability and proper
 1.  **[PERF] Fixed Build and Lint Stability:**
     - Fixed an `Unnecessary escape character: \"  no-useless-escape` error in `scripts/verify-sri.js`.
     - Verified that `pnpm build`, `pnpm lint`, and `pnpm run test:run` passed successfully, ensuring a reliable build pipeline and stable artifact generation.
+
+## Date: $(date +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Fixed semantic HTML heading hierarchy in Resume page.
+
+### Changes
+
+1.  **[SEO][GEO] Fixed Semantic Hierarchy in Resume:**
+    - Modified `src/components/pages/Resume.jsx` to use `<h3>` instead of jumping directly to `<h2>` inside `ThemedSectionHeading` sections for "Tech Stack", "Certifications", and "Languages".
+    - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
