@@ -21,6 +21,26 @@ const PAGE_MAP = {
   games: '/games',
 };
 
+/** Color map for different output types */
+const lineColor = {
+  command: 'text-green-400',
+  output: 'text-gray-300',
+  error: 'text-red-400',
+  system: 'text-cyan-400',
+};
+
+/**
+ * Terminal line component.
+ * ⚡ Bolt: Memoized to prevent re-rendering the entire history list on every keystroke.
+ */
+const TerminalLine = React.memo(({ line }) => (
+  <pre className={`whitespace-pre-wrap mb-1 ${lineColor[line.type] || 'text-gray-300'}`}>
+    {line.text}
+  </pre>
+));
+
+TerminalLine.displayName = 'TerminalLine';
+
 /**
  * Terminal Mode overlay component
  *
@@ -37,7 +57,8 @@ const PAGE_MAP = {
  * @param {string} props.welcomeMessage - Optional welcome banner shown on open
  * @returns {JSX.Element} Terminal overlay
  */
-const TerminalMode = ({ isOpen, onClose, welcomeMessage = '' }) => {
+// ⚡ Bolt: Wrapped `TerminalMode` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
+const TerminalMode = React.memo(({ isOpen, onClose, welcomeMessage = '' }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([]);
   const [cmdHistory, setCmdHistory] = useState([]);
@@ -253,14 +274,6 @@ Just kidding... but seriously, let's chat!
 
   if (!isOpen) return null;
 
-  /** Color map for different output types */
-  const lineColor = {
-    command: 'text-green-400',
-    output: 'text-gray-300',
-    error: 'text-red-400',
-    system: 'text-cyan-400',
-  };
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -349,12 +362,7 @@ Just kidding... but seriously, let's chat!
                 onClick={() => inputRef.current?.focus()}
               >
                 {history.map((line, i) => (
-                  <pre
-                    key={i}
-                    className={`whitespace-pre-wrap mb-1 ${lineColor[line.type] || 'text-gray-300'}`}
-                  >
-                    {line.text}
-                  </pre>
+                  <TerminalLine key={i} line={line} />
                 ))}
 
                 {/* Input Line */}
@@ -384,6 +392,8 @@ Just kidding... but seriously, let's chat!
       )}
     </AnimatePresence>
   );
-};
+});
+
+TerminalMode.displayName = 'TerminalMode';
 
 export default TerminalMode;
