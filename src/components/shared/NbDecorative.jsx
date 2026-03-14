@@ -9,6 +9,21 @@ import React from 'react';
 import { joinClasses } from './ThemedPrimitives.utils';
 import { useTheme } from './theme-context';
 
+// ⚡ Bolt: Extracted static configuration objects to prevent unnecessary memory allocations on every render cycle.
+const tapeColorMap = {
+  yellow: 'bg-fun-yellow',
+  pink: 'bg-fun-pink',
+  blue: 'bg-accent',
+  white: 'bg-white',
+};
+
+const tapeCornerMap = {
+  'top-left': '-left-3 -top-2 -rotate-45',
+  'top-right': '-right-3 -top-2 rotate-45',
+  'bottom-left': '-left-3 -bottom-2 rotate-45',
+  'bottom-right': '-right-3 -bottom-2 -rotate-45',
+};
+
 /**
  * Tape strip decoration — a diagonal gradient strip that "tapes" content to the page.
  * Place in a corner of a card or image to add a physical metaphor.
@@ -20,32 +35,26 @@ export const TapeStrip = ({ corner = 'top-right', color = 'yellow', className, s
   const { theme } = useTheme();
   if (theme === 'liquid') return null;
 
-  const colorMap = {
-    yellow: 'bg-fun-yellow',
-    pink: 'bg-fun-pink',
-    blue: 'bg-accent',
-    white: 'bg-white',
-  };
-
-  const cornerMap = {
-    'top-left': '-left-3 -top-2 -rotate-45',
-    'top-right': '-right-3 -top-2 rotate-45',
-    'bottom-left': '-left-3 -bottom-2 rotate-45',
-    'bottom-right': '-right-3 -bottom-2 -rotate-45',
-  };
-
   return (
     <span
       className={joinClasses(
         'absolute w-16 h-5 border-2 border-[color:var(--color-border)] opacity-90 pointer-events-none z-10',
-        colorMap[color] ?? colorMap.yellow,
-        cornerMap[corner] ?? cornerMap['top-right'],
+        tapeColorMap[color] ?? tapeColorMap.yellow,
+        tapeCornerMap[corner] ?? tapeCornerMap['top-right'],
         className
       )}
       style={style}
       aria-hidden="true"
     />
   );
+};
+
+// ⚡ Bolt: Extracted static configuration objects to prevent unnecessary memory allocations on every render cycle.
+const stampColorMap = {
+  yellow: 'text-fun-yellow border-fun-yellow',
+  pink: 'text-fun-pink border-fun-pink',
+  red: 'text-nb-red border-nb-red',
+  blue: 'text-nb-blue border-nb-blue',
 };
 
 /**
@@ -66,18 +75,11 @@ export const StampBadge = ({
   const { theme } = useTheme();
   if (theme === 'liquid') return null;
 
-  const colorMap = {
-    yellow: 'text-fun-yellow border-fun-yellow',
-    pink: 'text-fun-pink border-fun-pink',
-    red: 'text-nb-red border-nb-red',
-    blue: 'text-nb-blue border-nb-blue',
-  };
-
   return (
     <span
       className={joinClasses(
         'inline-block px-3 py-1.5 font-heading font-black text-xs uppercase tracking-widest border-[3px] border-dashed rounded-none opacity-80',
-        colorMap[color] ?? colorMap.red,
+        stampColorMap[color] ?? stampColorMap.red,
         className
       )}
       style={{
@@ -89,6 +91,15 @@ export const StampBadge = ({
       {label}
     </span>
   );
+};
+
+// ⚡ Bolt: Extracted static configuration objects to prevent unnecessary memory allocations on every render cycle.
+const dividerSvgPaths = {
+  wavy: 'M0 10 Q 25 0, 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10',
+  zigzag:
+    'M0 15 L 20 5 L 40 15 L 60 5 L 80 15 L 100 5 L 120 15 L 140 5 L 160 15 L 180 5 L 200 15 L 220 5 L 240 15 L 260 5 L 280 15 L 300 5 L 320 15 L 340 5 L 360 15 L 380 5 L 400 15',
+  scribble:
+    'M0 10 C 20 2, 40 18, 60 10 S 100 2, 120 10 S 160 18, 180 10 S 220 2, 240 10 S 280 18, 300 10 S 340 2, 360 10 S 400 18, 400 10',
 };
 
 /**
@@ -107,14 +118,6 @@ export const DoodleDivider = ({ pattern = 'wavy', className, style }) => {
       />
     );
 
-  const svgPaths = {
-    wavy: 'M0 10 Q 25 0, 50 10 T 100 10 T 150 10 T 200 10 T 250 10 T 300 10 T 350 10 T 400 10',
-    zigzag:
-      'M0 15 L 20 5 L 40 15 L 60 5 L 80 15 L 100 5 L 120 15 L 140 5 L 160 15 L 180 5 L 200 15 L 220 5 L 240 15 L 260 5 L 280 15 L 300 5 L 320 15 L 340 5 L 360 15 L 380 5 L 400 15',
-    scribble:
-      'M0 10 C 20 2, 40 18, 60 10 S 100 2, 120 10 S 160 18, 180 10 S 220 2, 240 10 S 280 18, 300 10 S 340 2, 360 10 S 400 18, 400 10',
-  };
-
   return (
     <div
       className={joinClasses('w-full py-4', className)}
@@ -124,7 +127,7 @@ export const DoodleDivider = ({ pattern = 'wavy', className, style }) => {
     >
       <svg viewBox="0 0 400 20" className="w-full h-5" preserveAspectRatio="none">
         <path
-          d={svgPaths[pattern] ?? svgPaths.wavy}
+          d={dividerSvgPaths[pattern] ?? dividerSvgPaths.wavy}
           fill="none"
           stroke="var(--color-border)"
           strokeWidth="2.5"
