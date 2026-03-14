@@ -25,6 +25,47 @@ import { useTheme } from './theme-context';
  * @param {boolean} props.enabled - Whether custom cursor is enabled
  * @returns {JSX.Element|null} Custom cursor elements or null if disabled
  */
+// Snappy spring for main cursor
+const springConfig = { damping: 30, stiffness: 500, mass: 0.3 };
+
+// Slower spring for shadow/trail element (creates depth)
+const shadowSpringConfig = { damping: 20, stiffness: 200, mass: 0.5 };
+
+/** Color mapping for different cursor states (neubrutalist palette) */
+const colorMap = {
+  default: '#FFD54F', // fun-yellow
+  pointer: '#9C0E4B', // fun-pink
+  text: '#0052CC', // accent blue
+  card: '#0052CC', // accent blue
+  input: '#000000', // black
+};
+
+const liquidColorMap = {
+  default: 'rgba(255, 255, 255, 0.8)',
+  pointer: 'rgba(255, 255, 255, 0.9)',
+  text: 'rgba(255, 255, 255, 1)',
+  card: 'rgba(255, 255, 255, 0.2)',
+  input: 'rgba(255, 255, 255, 1)',
+};
+
+/** Cursor size/rotation variants for different hover states */
+// ⚡ Bolt: Extracted variants to static objects to prevent re-allocation on every render.
+const defaultVariants = {
+  default: { width: 20, height: 20, rotate: 0, borderRadius: 0 },
+  pointer: { width: 32, height: 32, rotate: 45, borderRadius: 0 },
+  text: { width: 4, height: 28, rotate: 0, borderRadius: 0 },
+  card: { width: 48, height: 48, rotate: 0, borderRadius: 0 },
+  input: { width: 3, height: 24, rotate: 0, borderRadius: 0 },
+};
+
+const liquidVariants = {
+  default: { width: 20, height: 20, rotate: 0, borderRadius: '50%' },
+  pointer: { width: 32, height: 32, rotate: 0, borderRadius: '50%' },
+  text: { width: 4, height: 28, rotate: 0, borderRadius: '2px' },
+  card: { width: 48, height: 48, rotate: 0, borderRadius: '50%' },
+  input: { width: 3, height: 24, rotate: 0, borderRadius: '1px' },
+};
+
 const CustomCursor = ({ enabled }) => {
   const prefersReducedMotion = useReducedMotion();
   const [hasMouseMoved, setHasMouseMoved] = useState(false);
@@ -37,13 +78,9 @@ const CustomCursor = ({ enabled }) => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Snappy spring for main cursor
-  const springConfig = { damping: 30, stiffness: 500, mass: 0.3 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  // Slower spring for shadow/trail element (creates depth)
-  const shadowSpringConfig = { damping: 20, stiffness: 200, mass: 0.5 };
   const shadowXSpring = useSpring(cursorX, shadowSpringConfig);
   const shadowYSpring = useSpring(cursorY, shadowSpringConfig);
 
@@ -152,59 +189,8 @@ const CustomCursor = ({ enabled }) => {
 
   if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
-  /** Cursor size/rotation variants for different hover states */
-  const variants = {
-    default: {
-      width: 20,
-      height: 20,
-      rotate: 0,
-      borderRadius: isLiquid ? '50%' : 0,
-    },
-    pointer: {
-      width: 32,
-      height: 32,
-      rotate: isLiquid ? 0 : 45,
-      borderRadius: isLiquid ? '50%' : 0,
-    },
-    text: {
-      width: 4,
-      height: 28,
-      rotate: 0,
-      borderRadius: isLiquid ? '2px' : 0,
-    },
-    card: {
-      width: 48,
-      height: 48,
-      rotate: 0,
-      borderRadius: isLiquid ? '50%' : 0,
-    },
-    input: {
-      width: 3,
-      height: 24,
-      rotate: 0,
-      borderRadius: isLiquid ? '1px' : 0,
-    },
-  };
-
-  /** Color mapping for different cursor states (neubrutalist palette) */
-  const colorMap = {
-    default: '#FFD54F', // fun-yellow
-    pointer: '#9C0E4B', // fun-pink
-    text: '#0052CC', // accent blue
-    card: '#0052CC', // accent blue
-    input: '#000000', // black
-  };
-
-  const liquidColorMap = {
-    default: 'rgba(255, 255, 255, 0.8)',
-    pointer: 'rgba(255, 255, 255, 0.9)',
-    text: 'rgba(255, 255, 255, 1)',
-    card: 'rgba(255, 255, 255, 0.2)',
-    input: 'rgba(255, 255, 255, 1)',
-  };
-
   const currentColor = isLiquid ? liquidColorMap[cursorVariant] : colorMap[cursorVariant];
-  const currentVariant = variants[cursorVariant];
+  const currentVariant = isLiquid ? liquidVariants[cursorVariant] : defaultVariants[cursorVariant];
 
   return (
     <>
