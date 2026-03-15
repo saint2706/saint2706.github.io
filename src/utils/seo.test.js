@@ -1,52 +1,51 @@
 import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('../data/resume', () => {
-    return {
-      resumeData: {
-        basics: {
-          name: 'Test User',
-          title: 'Test Title',
-          email: 'test@example.com',
-          phone: '+1234567890',
-          website: 'https://test.com',
-          summary: 'Test summary',
-          location: { city: 'Test City', country: 'Test Country' },
-          socials: [{ url: 'https://social.com', network: 'Social' }],
+  return {
+    resumeData: {
+      basics: {
+        name: 'Test User',
+        title: 'Test Title',
+        email: 'test@example.com',
+        phone: '+1234567890',
+        website: 'https://test.com',
+        summary: 'Test summary',
+        location: { city: 'Test City', country: 'Test Country' },
+        socials: [{ url: 'https://social.com', network: 'Social' }],
+      },
+      education: [{ institution: 'Test Uni', area: 'CS' }],
+      experience: [{ company: 'Test Corp', position: 'Dev' }],
+      skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
+      certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
+      projects: [
+        {
+          title: 'Project 1',
+          link: 'https://p1.com',
+          description: 'Desc 1',
         },
-        education: [{ institution: 'Test Uni', area: 'CS' }],
-        experience: [{ company: 'Test Corp', position: 'Dev' }],
-        skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
-        certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
-        projects: [
-          {
-            title: 'Project 1',
-            link: 'https://p1.com',
-            description: 'Desc 1',
-          },
-          {
-            title: 'Project 2',
-            github: 'https://github.com/p2',
-            description: 'Desc 2',
-          },
-          {
-            title: 'Project No Link',
-            description: 'Desc'
-          }
-        ],
-      }
-    };
+        {
+          title: 'Project 2',
+          github: 'https://github.com/p2',
+          description: 'Desc 2',
+        },
+        {
+          title: 'Project No Link',
+          description: 'Desc',
+        },
+      ],
+    },
+  };
 });
 
 vi.mock('../data/blogs.json', () => {
-    return {
-        default: [{ title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' }]
-    };
+  return {
+    default: [{ title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' }],
+  };
 });
 
 import * as seo from './seo';
 
 describe('seo utils', () => {
-
   describe('Constants', () => {
     it('exports correct constants based on mocked data', () => {
       expect(seo.SITE_URL).toBe('https://test.com');
@@ -263,32 +262,32 @@ describe('seo utils', () => {
   });
 
   describe('edge cases', () => {
-      it('resumePersonSchema handles empty experience correctly', async () => {
-          vi.resetModules();
-          vi.doMock('../data/resume', () => {
-              return {
-                  resumeData: {
-                    basics: {
-                      name: 'Test User',
-                      title: 'Test Title',
-                      email: 'test@example.com',
-                      phone: '+1234567890',
-                      website: 'https://test.com',
-                      summary: 'Test summary',
-                      location: { city: 'Test City', country: 'Test Country' },
-                      socials: [{ url: 'https://social.com', network: 'Social' }],
-                    },
-                    education: [{ institution: 'Test Uni', area: 'CS' }],
-                    experience: [], // Empty experience
-                    skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
-                    certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
-                    projects: []
-                  }
-              }
-          });
-          const newSeo = await import('./seo');
-          const schema = newSeo.resumePersonSchema();
-          expect(schema.worksFor).toBeUndefined();
+    it('resumePersonSchema handles empty experience correctly', async () => {
+      vi.resetModules();
+      vi.doMock('../data/resume', () => {
+        return {
+          resumeData: {
+            basics: {
+              name: 'Test User',
+              title: 'Test Title',
+              email: 'test@example.com',
+              phone: '+1234567890',
+              website: 'https://test.com',
+              summary: 'Test summary',
+              location: { city: 'Test City', country: 'Test Country' },
+              socials: [{ url: 'https://social.com', network: 'Social' }],
+            },
+            education: [{ institution: 'Test Uni', area: 'CS' }],
+            experience: [], // Empty experience
+            skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
+            certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
+            projects: [],
+          },
+        };
       });
+      const newSeo = await import('./seo');
+      const schema = newSeo.resumePersonSchema();
+      expect(schema.worksFor).toBeUndefined();
+    });
   });
 });

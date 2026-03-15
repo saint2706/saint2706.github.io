@@ -44,10 +44,10 @@ describe('Navbar', () => {
   });
 
   afterEach(() => {
-      const mainContent = document.getElementById('main-content');
-      if (mainContent) {
-          mainContent.remove();
-      }
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.remove();
+    }
   });
 
   const renderNavbar = (props = {}) => {

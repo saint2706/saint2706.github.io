@@ -10,13 +10,8 @@ import {
 } from './storage';
 
 describe('storage utilities', () => {
-
-
-
   beforeEach(() => {
     // Keep reference to original objects
-
-
 
     // Default localStorage mock
     const localStorageMock = {
@@ -117,20 +112,20 @@ describe('storage utilities', () => {
       const mockDocElement = {
         get dataset() {
           throw new Error('Test Error');
-        }
+        },
       };
 
       const originalDocElement = document.documentElement;
       Object.defineProperty(document, 'documentElement', {
         value: mockDocElement,
-        configurable: true
+        configurable: true,
       });
 
       expect(safeSetDocumentTheme('dark')).toBe(false);
 
       Object.defineProperty(document, 'documentElement', {
         value: originalDocElement,
-        configurable: true
+        configurable: true,
       });
     });
   });
@@ -150,14 +145,14 @@ describe('storage utilities', () => {
       // Temporarily redefine property
       const originalLS = global.window.localStorage;
       Object.defineProperty(global.window, 'localStorage', {
-          get: () => undefined,
-          configurable: true
+        get: () => undefined,
+        configurable: true,
       });
       expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
       Object.defineProperty(global.window, 'localStorage', {
-          value: originalLS,
-          configurable: true,
-          writable: true
+        value: originalLS,
+        configurable: true,
+        writable: true,
       });
     });
 
@@ -178,14 +173,14 @@ describe('storage utilities', () => {
     it('returns false if localStorage is undefined', () => {
       const originalLS = global.window.localStorage;
       Object.defineProperty(global.window, 'localStorage', {
-          get: () => undefined,
-          configurable: true
+        get: () => undefined,
+        configurable: true,
       });
       expect(safeSetLocalStorage('key', 'value')).toBe(false);
       Object.defineProperty(global.window, 'localStorage', {
-          value: originalLS,
-          configurable: true,
-          writable: true
+        value: originalLS,
+        configurable: true,
+        writable: true,
       });
     });
 
@@ -206,14 +201,14 @@ describe('storage utilities', () => {
     it('returns false if localStorage is undefined', () => {
       const originalLS = global.window.localStorage;
       Object.defineProperty(global.window, 'localStorage', {
-          get: () => undefined,
-          configurable: true
+        get: () => undefined,
+        configurable: true,
       });
       expect(safeRemoveLocalStorage('key')).toBe(false);
       Object.defineProperty(global.window, 'localStorage', {
-          value: originalLS,
-          configurable: true,
-          writable: true
+        value: originalLS,
+        configurable: true,
+        writable: true,
       });
     });
 
