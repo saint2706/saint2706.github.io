@@ -159,7 +159,7 @@ Resolved build-blocking lint errors to ensure performance reliability and proper
     - Fixed an `Unnecessary escape character: \"  no-useless-escape` error in `scripts/verify-sri.js`.
     - Verified that `pnpm build`, `pnpm lint`, and `pnpm run test:run` passed successfully, ensuring a reliable build pipeline and stable artifact generation.
 
-## Date: $(date +%Y-%m-%d)
+## Date: 2026-03-15
 
 **Agent**: Jules (Buddha Persona)
 
@@ -171,4 +171,19 @@ Fixed semantic HTML heading hierarchy in Resume page.
 
 1.  **[SEO][GEO] Fixed Semantic Hierarchy in Resume:**
     - Modified `src/components/pages/Resume.jsx` to use `<h3>` instead of jumping directly to `<h2>` inside `ThemedSectionHeading` sections for "Tech Stack", "Certifications", and "Languages".
+    - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
+
+## Date: 2026-03-15
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Fixed semantic HTML heading hierarchy in Resume page.
+
+### Changes
+
+1.  **[SEO][GEO] Fixed Semantic Hierarchy in Resume:**
+    - Modified `src/components/pages/Resume.jsx` to use `<h2>` instead of jumping directly to `<h3>` for top-level sections ("Tech Stack", "Certifications", and "Languages") that aren't wrapped in `ThemedSectionHeading`.
+    - This creates a consistent and valid `<h1>` -> `<h2>` -> `<h3>` hierarchy.
     - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
