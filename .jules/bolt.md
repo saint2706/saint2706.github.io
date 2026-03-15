@@ -41,3 +41,5 @@
 - **Bottleneck:** The `TerminalMode` component rendered an array of `<pre>` tags based on the `history` state. As the user typed in the `input` state, the entire `history` array was forced to re-render on every keystroke.
 - **Improvement:** Extracted the output lines into a new `TerminalLine` component wrapped in `React.memo()`. I also wrapped the entire `TerminalMode` component in `React.memo()`. Furthermore, I extracted the `lineColor` configuration object out of the component to prevent it from being re-created on each render.
 - **Metrics:** Reduced O(N) re-renders (where N is the number of terminal lines in the history buffer) down to O(1) during user typing, significantly improving input latency and overall interface responsiveness.
+
+- **[PERF] Optimized \`MarqueeTicker\` props in \`Footer.jsx\`**: Extracted the inline \`items\` array into a memoized variable using \`useMemo\`. This prevents the array from being recreated on every re-render of the \`Footer\` component, which is particularly beneficial given the frequent Layout state updates (e.g., custom cursor mouse movements).

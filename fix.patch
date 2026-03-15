@@ -1,0 +1,63 @@
+--- src/components/layout/Footer.jsx
++++ src/components/layout/Footer.jsx
+@@ -3,14 +3,27 @@
+  * and a hidden easter egg.
+  */
+
+-import React, { useState, useCallback, useMemo } from 'react';
++import React, { useState, useCallback } from 'react';
+ import { useTheme } from '../shared/theme-context';
+ import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
+ import ScrollReveal from '../shared/ScrollReveal';
+ import ZigzagDivider from '../shared/ZigzagDivider';
+ import MarqueeTicker from '../shared/MarqueeTicker';
+ import { resumeData } from '../../data/resume';
+
++// ⚡ Bolt: Extracted static marquee items outside component to prevent re-allocations on every render
++const MARQUEE_ITEMS = [
++  'Python',
++  'React',
++  'SQL',
++  'Tableau',
++  'TensorFlow',
++  'Machine Learning',
++  'Deep Learning',
++  'NLP',
++  'D3.js',
++];
++
+ /**
+  * Footer component with social links, attribution, and easter egg
+  *
+@@ -54,20 +67,6 @@
+   // Helper to switch classes based on theme
+   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
+
+-  // ⚡ Bolt: Memoized marquee items array to prevent unnecessary re-allocations on every render
+-  const marqueeItems = useMemo(
+-    () => [
+-      'Python',
+-      'React',
+-      'SQL',
+-      'Tableau',
+-      'TensorFlow',
+-      'Machine Learning',
+-      'Deep Learning',
+-      'NLP',
+-      'D3.js',
+-    ],
+-    []
+-  );
+-
+   return (
+     <footer
+       className={themeClass(
+@@ -87,7 +86,7 @@
+         variant={isLiquid ? 'liquid' : 'neub'}
+         useBlurBand={isLiquid}
+         bgColor="bg-fun-yellow"
+-        items={marqueeItems}
++        items={MARQUEE_ITEMS}
+       />
+
+       <div className="py-12">
