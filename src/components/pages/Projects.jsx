@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink, Star, Folder } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
-import { isSafeHref } from '../../utils/security';
+import { isSafeHref, isSafeImageSrc } from '../../utils/security';
 import {
   breadcrumbSchema,
   projectsCollectionSchema,
@@ -54,7 +54,7 @@ const ProjectCard = React.memo(
         {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
 
         {/* Project Image */}
-        {project.image && (
+        {project.image && isSafeImageSrc(project.image) && (
           <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
             <img
               src={project.image}
