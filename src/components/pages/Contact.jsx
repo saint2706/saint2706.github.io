@@ -9,7 +9,7 @@ import { Mail, MapPin, Linkedin, Github, Send, Sparkles, Loader2, CheckCircle } 
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, contactPageSchema, SITE_URL } from '../../utils/seo';
-import { sanitizeInput } from '../../utils/security';
+import { sanitizeInput, isSafeHref } from '../../utils/security';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
@@ -66,7 +66,12 @@ const Contact = React.memo(() => {
 
       // Simulate network delay for better UX before opening email client
       setTimeout(() => {
-        window.location.href = mailtoUrl;
+        // 🛡️ Sentinel: Validate mailto URL to prevent arbitrary execution bypass
+        if (isSafeHref(mailtoUrl)) {
+          window.location.href = mailtoUrl;
+        } else {
+          console.warn('Blocked unsafe mailto URL:', mailtoUrl);
+        }
         setIsSubmitting(false);
         setSuccess(true);
         setTimeout(() => setSuccess(false), 5000); // Reset after 5s

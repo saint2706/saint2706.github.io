@@ -65,3 +65,8 @@
 
 - **Issue**: A high severity vulnerability (unbounded recursion DoS in `parse()` revive phase) was found in `flatted` < `3.4.0` via `pnpm audit`.
 - **Fix**: Updated `flatted` to `3.4.1` by running `pnpm update flatted` to resolve the vulnerability. This successfully clears the `test:security-full` script warnings and ensures defense against ReDoS in the dependency.
+
+### Fixed Unsafe Mailto Navigation
+- **Severity**: Low (Defense in Depth)
+- **Vulnerability**: Hardcoded `mailto:` navigation did not validate the constructed URL against potentially unsafe protocols. Although the prefix was hardcoded, adding a validation layer before assigning to `window.location.href` protects against future regressions or bypasses.
+- **Fix**: Wrapped the `window.location.href = mailtoUrl;` assignment in `src/components/pages/Contact.jsx` with an `isSafeHref(mailtoUrl)` check.
