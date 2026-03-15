@@ -76,14 +76,8 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup-env
 
-      - name: Security tests
-        run: pnpm run test:security
-
-      - name: CSP tests
-        run: pnpm run test:csp
-
-      - name: Verify SRI
-        run: pnpm run verify:sri
+      - name: Full Security tests
+        run: pnpm run test:security-full
 
       - name: Python runner stdout tests
         run: pnpm run test:python-runner-stdout
