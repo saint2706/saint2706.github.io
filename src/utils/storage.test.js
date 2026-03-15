@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
   canUseDOM,
   safeMediaQueryMatch,
@@ -9,14 +9,31 @@ import {
   safeRemoveLocalStorage,
 } from './storage';
 
-describe('Storage Utils', () => {
-  const originalWindow = global.window;
-  const originalDocument = global.document;
+describe('storage utilities', () => {
+
+
+
+  beforeEach(() => {
+    // Keep reference to original objects
+
+
+
+    // Default localStorage mock
+    const localStorageMock = {
+      getItem: vi.fn(),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    };
+
+    Object.defineProperty(global.window, 'localStorage', {
+      value: localStorageMock,
+      configurable: true,
+      writable: true,
+    });
+  });
 
   afterEach(() => {
     vi.restoreAllMocks();
-    global.window = originalWindow;
-    global.document = originalDocument;
   });
 
   describe('canUseDOM', () => {
@@ -25,47 +42,49 @@ describe('Storage Utils', () => {
     });
 
     it('returns false when window is undefined', () => {
-      // We need to be careful not to break Vitest runner which might rely on window
-      const original = global.window;
-      global.window = undefined;
+      const tempWindow = global.window;
+      delete global.window;
       expect(canUseDOM()).toBe(false);
-      global.window = original;
+      global.window = tempWindow;
     });
 
     it('returns false when document is undefined', () => {
-      const original = global.document;
-      global.document = undefined;
+      const tempDoc = global.document;
+      delete global.document;
       expect(canUseDOM()).toBe(false);
-      global.document = original;
+      global.document = tempDoc;
     });
   });
 
   describe('safeMediaQueryMatch', () => {
-    it('returns true if query matches', () => {
-      window.matchMedia = vi.fn().mockReturnValue({ matches: true });
-      expect(safeMediaQueryMatch('(min-width: 768px)')).toBe(true);
+    it('returns true if matchMedia matches', () => {
+      global.window.matchMedia = vi.fn().mockReturnValue({ matches: true });
+      expect(safeMediaQueryMatch('(max-width: 768px)')).toBe(true);
     });
 
-    it('returns false if query does not match', () => {
-      window.matchMedia = vi.fn().mockReturnValue({ matches: false });
-      expect(safeMediaQueryMatch('(min-width: 768px)')).toBe(false);
+    it('returns false if matchMedia does not match', () => {
+      global.window.matchMedia = vi.fn().mockReturnValue({ matches: false });
+      expect(safeMediaQueryMatch('(max-width: 768px)')).toBe(false);
     });
 
-    it('returns fallback if matchMedia is not a function', () => {
-      window.matchMedia = undefined;
-      expect(safeMediaQueryMatch('(min-width: 768px)', true)).toBe(true);
+    it('returns fallback if window is undefined', () => {
+      const tempWindow = global.window;
+      delete global.window;
+      expect(safeMediaQueryMatch('(max-width: 768px)', true)).toBe(true);
+      global.window = tempWindow;
     });
 
-    it('returns fallback if matchMedia throws', () => {
-      window.matchMedia = vi.fn().mockImplementation(() => {
-        throw new Error('Error');
+    it('returns fallback if matchMedia throws an error', () => {
+      global.window.matchMedia = vi.fn().mockImplementation(() => {
+        throw new Error('Test error');
       });
-      expect(safeMediaQueryMatch('(min-width: 768px)', true)).toBe(true);
+      expect(safeMediaQueryMatch('(max-width: 768px)', false)).toBe(false);
+      expect(safeMediaQueryMatch('(max-width: 768px)', true)).toBe(true);
     });
   });
 
   describe('safeKeyboardKey', () => {
-    it('returns key value from event', () => {
+    it('returns the key string', () => {
       const event = { key: 'Enter' };
       expect(safeKeyboardKey(event)).toBe('Enter');
     });
@@ -75,133 +94,134 @@ describe('Storage Utils', () => {
     });
 
     it('returns empty string if key is not a string', () => {
-      expect(safeKeyboardKey({ key: 123 })).toBe('');
+      const event = { key: 123 };
+      expect(safeKeyboardKey(event)).toBe('');
     });
   });
 
   describe('safeSetDocumentTheme', () => {
-    it('sets data-theme attribute on documentElement', () => {
+    it('sets the theme dataset property', () => {
       expect(safeSetDocumentTheme('dark')).toBe(true);
       expect(document.documentElement.dataset.theme).toBe('dark');
     });
 
-    it('returns false if documentElement is missing', () => {
-      vi.spyOn(document, 'documentElement', 'get').mockReturnValue(undefined);
+    it('returns false if document is undefined', () => {
+      const tempDoc = global.document;
+      delete global.document;
       expect(safeSetDocumentTheme('dark')).toBe(false);
+      global.document = tempDoc;
     });
 
-    it('returns false if error occurs', () => {
-      // Simulate error by making dataset read-only or similar
-      const originalDataset = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'dataset');
-      Object.defineProperty(HTMLElement.prototype, 'dataset', {
-        get: () => {
-          throw new Error('Access denied');
-        },
-        configurable: true,
+    it('returns false if dataset throws an error', () => {
+      // Create a mock document element that throws when its dataset is accessed
+      const mockDocElement = {
+        get dataset() {
+          throw new Error('Test Error');
+        }
+      };
+
+      const originalDocElement = document.documentElement;
+      Object.defineProperty(document, 'documentElement', {
+        value: mockDocElement,
+        configurable: true
       });
 
       expect(safeSetDocumentTheme('dark')).toBe(false);
 
-      // Restore
-      if (originalDataset) {
-        Object.defineProperty(HTMLElement.prototype, 'dataset', originalDataset);
-      }
+      Object.defineProperty(document, 'documentElement', {
+        value: originalDocElement,
+        configurable: true
+      });
     });
   });
 
-  describe('LocalStorage Utils', () => {
-    beforeEach(() => {
-      vi.restoreAllMocks();
-      window.localStorage.clear();
+  describe('safeGetLocalStorage', () => {
+    it('returns value from localStorage', () => {
+      global.window.localStorage.getItem.mockReturnValue('value');
+      expect(safeGetLocalStorage('key')).toBe('value');
     });
 
-    describe('safeGetLocalStorage', () => {
-      it('returns stored value', () => {
-        window.localStorage.setItem('testKey', 'testValue');
-        expect(safeGetLocalStorage('testKey')).toBe('testValue');
+    it('returns fallback if value is null', () => {
+      global.window.localStorage.getItem.mockReturnValue(null);
+      expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
+    });
+
+    it('returns fallback if localStorage is undefined', () => {
+      // Temporarily redefine property
+      const originalLS = global.window.localStorage;
+      Object.defineProperty(global.window, 'localStorage', {
+          get: () => undefined,
+          configurable: true
       });
-
-      it('returns fallback if key missing', () => {
-        expect(safeGetLocalStorage('missingKey', 'default')).toBe('default');
-      });
-
-      it('returns fallback if localStorage throws', () => {
-        vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
-          throw new Error('QuotaExceeded');
-        });
-        expect(safeGetLocalStorage('testKey', 'default')).toBe('default');
-      });
-
-      it('returns fallback if window.localStorage is undefined', () => {
-        const originalLocalStorage = window.localStorage;
-        // We can't delete localStorage from window in JSDOM easily,
-        // but we can try to shadow it or use stubGlobal if applicable,
-        // but checking 'typeof window.localStorage' logic:
-        // hasStorage() checks typeof window.localStorage !== 'undefined'
-
-        // In JSDOM, window.localStorage is a property.
-        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
-
-        expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
-
-        Object.defineProperty(window, 'localStorage', {
-          value: originalLocalStorage,
+      expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
+      Object.defineProperty(global.window, 'localStorage', {
+          value: originalLS,
           configurable: true,
-        });
+          writable: true
       });
     });
 
-    describe('safeSetLocalStorage', () => {
-      it('sets value in localStorage', () => {
-        expect(safeSetLocalStorage('key', 'value')).toBe(true);
-        expect(window.localStorage.getItem('key')).toBe('value');
+    it('returns fallback if localStorage throws an error', () => {
+      global.window.localStorage.getItem.mockImplementation(() => {
+        throw new Error('Test error');
       });
+      expect(safeGetLocalStorage('key', 'fallback')).toBe('fallback');
+    });
+  });
 
-      it('returns false if localStorage throws', () => {
-        vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-          throw new Error('QuotaExceeded');
-        });
-        expect(safeSetLocalStorage('key', 'value')).toBe(false);
+  describe('safeSetLocalStorage', () => {
+    it('sets value in localStorage', () => {
+      expect(safeSetLocalStorage('key', 'value')).toBe(true);
+      expect(global.window.localStorage.setItem).toHaveBeenCalledWith('key', 'value');
+    });
+
+    it('returns false if localStorage is undefined', () => {
+      const originalLS = global.window.localStorage;
+      Object.defineProperty(global.window, 'localStorage', {
+          get: () => undefined,
+          configurable: true
       });
-
-      it('returns false if window.localStorage is undefined', () => {
-        const originalLocalStorage = window.localStorage;
-        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
-
-        expect(safeSetLocalStorage('key', 'value')).toBe(false);
-
-        Object.defineProperty(window, 'localStorage', {
-          value: originalLocalStorage,
+      expect(safeSetLocalStorage('key', 'value')).toBe(false);
+      Object.defineProperty(global.window, 'localStorage', {
+          value: originalLS,
           configurable: true,
-        });
+          writable: true
       });
     });
 
-    describe('safeRemoveLocalStorage', () => {
-      it('removes value from localStorage', () => {
-        window.localStorage.setItem('key', 'value');
-        expect(safeRemoveLocalStorage('key')).toBe(true);
-        expect(window.localStorage.getItem('key')).toBeNull();
+    it('returns false if localStorage throws an error', () => {
+      global.window.localStorage.setItem.mockImplementation(() => {
+        throw new Error('Test error');
       });
+      expect(safeSetLocalStorage('key', 'value')).toBe(false);
+    });
+  });
 
-      it('returns false if localStorage throws', () => {
-        vi.spyOn(Storage.prototype, 'removeItem').mockImplementation(() => {
-          throw new Error('Error');
-        });
-        expect(safeRemoveLocalStorage('key')).toBe(false);
+  describe('safeRemoveLocalStorage', () => {
+    it('removes value from localStorage', () => {
+      expect(safeRemoveLocalStorage('key')).toBe(true);
+      expect(global.window.localStorage.removeItem).toHaveBeenCalledWith('key');
+    });
+
+    it('returns false if localStorage is undefined', () => {
+      const originalLS = global.window.localStorage;
+      Object.defineProperty(global.window, 'localStorage', {
+          get: () => undefined,
+          configurable: true
       });
-
-      it('returns false if window.localStorage is undefined', () => {
-        const originalLocalStorage = window.localStorage;
-        Object.defineProperty(window, 'localStorage', { value: undefined, configurable: true });
-
-        expect(safeRemoveLocalStorage('key')).toBe(false);
-
-        Object.defineProperty(window, 'localStorage', {
-          value: originalLocalStorage,
+      expect(safeRemoveLocalStorage('key')).toBe(false);
+      Object.defineProperty(global.window, 'localStorage', {
+          value: originalLS,
           configurable: true,
-        });
+          writable: true
       });
+    });
+
+    it('returns false if localStorage throws an error', () => {
+      global.window.localStorage.removeItem.mockImplementation(() => {
+        throw new Error('Test error');
+      });
+      expect(safeRemoveLocalStorage('key')).toBe(false);
     });
   });
 });

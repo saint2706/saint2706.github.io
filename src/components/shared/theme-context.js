@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 
 /**
- * Theme identifiers for all 4 available themes.
- * Used for validation and theme picker rendering.
+ * Available theme names mapping.
+ * @constant {Object}
  */
 export const THEMES = {
   neubrutalism: 'neubrutalism',
@@ -12,8 +12,8 @@ export const THEMES = {
 };
 
 /**
- * Context for managing the application theme.
- * Provides the current theme and a function to set the theme.
+ * Theme Context
+ * Provides the current theme and a function to change it.
  */
 export const ThemeContext = createContext({
   theme: THEMES.neubrutalism,
@@ -21,7 +21,7 @@ export const ThemeContext = createContext({
 });
 
 /**
- * Custom hook to access the theme context.
- * @returns {{theme: string, setTheme: Function}} The theme context value.
+ * Hook to access the ThemeContext easily.
+ * @returns {Object} { theme, setTheme }
  */
 export const useTheme = () => useContext(ThemeContext);

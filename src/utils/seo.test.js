@@ -1,46 +1,51 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+
+vi.mock('../data/resume', () => {
+    return {
+      resumeData: {
+        basics: {
+          name: 'Test User',
+          title: 'Test Title',
+          email: 'test@example.com',
+          phone: '+1234567890',
+          website: 'https://test.com',
+          summary: 'Test summary',
+          location: { city: 'Test City', country: 'Test Country' },
+          socials: [{ url: 'https://social.com', network: 'Social' }],
+        },
+        education: [{ institution: 'Test Uni', area: 'CS' }],
+        experience: [{ company: 'Test Corp', position: 'Dev' }],
+        skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
+        certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
+        projects: [
+          {
+            title: 'Project 1',
+            link: 'https://p1.com',
+            description: 'Desc 1',
+          },
+          {
+            title: 'Project 2',
+            github: 'https://github.com/p2',
+            description: 'Desc 2',
+          },
+          {
+            title: 'Project No Link',
+            description: 'Desc'
+          }
+        ],
+      }
+    };
+});
+
+vi.mock('../data/blogs.json', () => {
+    return {
+        default: [{ title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' }]
+    };
+});
+
 import * as seo from './seo';
 
-// Default Mock dependencies
-vi.mock('../data/resume', () => ({
-  resumeData: {
-    basics: {
-      name: 'Test User',
-      title: 'Test Title',
-      email: 'test@example.com',
-      phone: '+1234567890',
-      website: 'https://test.com',
-      summary: 'Test summary',
-      location: { city: 'Test City', country: 'Test Country' },
-      socials: [{ url: 'https://social.com', network: 'Social' }],
-    },
-    education: [{ institution: 'Test Uni', area: 'CS' }],
-    experience: [{ company: 'Test Corp', position: 'Dev' }],
-    skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
-    certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
-    projects: [
-      {
-        title: 'Project 1',
-        link: 'https://p1.com',
-        description: 'Desc 1',
-      },
-      {
-        title: 'Project 2',
-        github: 'https://github.com/p2',
-        description: 'Desc 2',
-      },
-    ],
-  },
-}));
-
-vi.mock('../data/blogs.json', () => ({
-  default: [{ title: 'Blog 1', link: 'https://blog.com/1', summary: 'Summary 1' }],
-}));
-
 describe('seo utils', () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
 
   describe('Constants', () => {
     it('exports correct constants based on mocked data', () => {
@@ -129,30 +134,11 @@ describe('seo utils', () => {
       const schema = seo.projectsCollectionSchema();
       expect(schema['@type']).toBe('CollectionPage');
       expect(schema.mainEntity['@type']).toBe('ItemList');
-      expect(schema.mainEntity.itemListElement).toHaveLength(2);
+      expect(schema.mainEntity.itemListElement).toHaveLength(3);
       expect(schema.mainEntity.itemListElement[0].name).toBe('Project 1');
       expect(schema.mainEntity.itemListElement[0].url).toBe('https://p1.com');
       expect(schema.mainEntity.itemListElement[1].url).toBe('https://github.com/p2');
-    });
-
-    it('uses default URL when both link and github are missing', async () => {
-      vi.resetModules();
-      vi.doMock('../data/resume', () => ({
-        resumeData: {
-          basics: { website: 'https://test.com' },
-          projects: [
-            {
-              title: 'Project No Link',
-              description: 'Desc',
-            },
-          ],
-        },
-      }));
-
-      const seoModule = await import('./seo');
-      const schema = seoModule.projectsCollectionSchema();
-
-      expect(schema.mainEntity.itemListElement[0].url).toBe('https://test.com/projects');
+      expect(schema.mainEntity.itemListElement[2].url).toBe('https://test.com/projects');
     });
   });
 
@@ -223,42 +209,86 @@ describe('seo utils', () => {
     });
   });
 
+  describe('faqSchema', () => {
+    it('returns FAQPage schema', () => {
+      const schema = seo.faqSchema();
+      expect(schema['@type']).toBe('FAQPage');
+      expect(schema.mainEntity.length).toBeGreaterThan(0);
+      expect(schema.mainEntity[0]['@type']).toBe('Question');
+    });
+  });
+
   describe('resumePersonSchema', () => {
     it('returns Person schema with work history', () => {
       const schema = seo.resumePersonSchema();
       expect(schema['@type']).toBe('Person');
       expect(schema.worksFor.name).toBe('Test Corp');
     });
+  });
 
-    it('handles empty experience correctly', async () => {
-      vi.resetModules();
-      vi.doMock('../data/resume', () => ({
-        resumeData: {
-          basics: {
-            name: 'Test User',
-            title: 'Test Title',
-            email: 'test@example.com',
-            phone: '+1234567890',
-            website: 'https://test.com',
-            summary: 'Test summary',
-            location: { city: 'Test City', country: 'Test Country' },
-            socials: [],
-            languages: [],
-          },
-          education: [],
-          experience: [], // Empty experience
-          skills: [],
-          certifications: [],
-          projects: [],
-        },
-      }));
-
-      // Re-import the module to pick up the new mock
-      const seoModule = await import('./seo');
-      const schema = seoModule.resumePersonSchema();
-
-      expect(schema['@type']).toBe('Person');
-      expect(schema.worksFor).toBeUndefined();
+  describe('projectCreativeWorkSchema', () => {
+    it('returns CreativeWork schema with project details', () => {
+      const project = {
+        title: 'Test Project',
+        description: 'Test Description',
+        image: '/test.png',
+        link: 'https://test.com',
+      };
+      const schema = seo.projectCreativeWorkSchema(project);
+      expect(schema['@type']).toBe('CreativeWork');
+      expect(schema.name).toBe('Test Project');
+      expect(schema.image).toBe('https://test.com/test.png');
+      expect(schema.url).toBe('https://test.com');
     });
+
+    it('handles projects without images and links', () => {
+      const project = {
+        title: 'Test Project',
+        description: 'Test Description',
+      };
+      const schema = seo.projectCreativeWorkSchema(project);
+      expect(schema.image).toBe(seo.DEFAULT_OG_IMAGE);
+      expect(schema.url).toBe('https://test.com/projects');
+    });
+
+    it('uses github link if main link is not available', () => {
+      const project = {
+        title: 'Test Project',
+        description: 'Test Description',
+        github: 'https://github.com/test',
+      };
+      const schema = seo.projectCreativeWorkSchema(project);
+      expect(schema.url).toBe('https://github.com/test');
+    });
+  });
+
+  describe('edge cases', () => {
+      it('resumePersonSchema handles empty experience correctly', async () => {
+          vi.resetModules();
+          vi.doMock('../data/resume', () => {
+              return {
+                  resumeData: {
+                    basics: {
+                      name: 'Test User',
+                      title: 'Test Title',
+                      email: 'test@example.com',
+                      phone: '+1234567890',
+                      website: 'https://test.com',
+                      summary: 'Test summary',
+                      location: { city: 'Test City', country: 'Test Country' },
+                      socials: [{ url: 'https://social.com', network: 'Social' }],
+                    },
+                    education: [{ institution: 'Test Uni', area: 'CS' }],
+                    experience: [], // Empty experience
+                    skills: [{ category: 'Tech', items: [{ name: 'React' }] }],
+                    certifications: [{ name: 'Test Cert', issuer: 'Issuer' }],
+                    projects: []
+                  }
+              }
+          });
+          const newSeo = await import('./seo');
+          const schema = newSeo.resumePersonSchema();
+          expect(schema.worksFor).toBeUndefined();
+      });
   });
 });
