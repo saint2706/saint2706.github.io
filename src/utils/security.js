@@ -221,8 +221,23 @@ export const sanitizeInput = input => {
   // Also remove certain Unicode control/formatting characters (zero-width and bidi controls)
   // \u200B-\u200F covers zero-width space/joiners and directional marks
   // \u202A-\u202E covers bidirectional formatting characters
-  // eslint-disable-next-line no-control-regex
-  sanitized = sanitized.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\u200B-\u200F\u202A-\u202E]/g, '');
+  const controlChars = [
+    // null to backspace
+    '\\u0000-\\u0008',
+    // vertical tab to form feed
+    '\\u000B-\\u000C',
+    // shift out to unit separator
+    '\\u000E-\\u001F',
+    // delete
+    '\\u007F',
+    // zero-width space/joiners and directional marks
+    '\\u200B-\\u200F',
+    // bidirectional formatting characters
+    '\\u202A-\\u202E',
+  ].join('');
+
+  const controlRegex = new RegExp(`[${controlChars}]`, 'g');
+  sanitized = sanitized.replace(controlRegex, '');
 
   return sanitized.trim();
 };

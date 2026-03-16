@@ -150,6 +150,13 @@ describe('WhackAMole', () => {
     // We should see hit feedback briefly
     const hits = screen.getAllByText('💥');
     expect(hits.length).toBeGreaterThan(0);
+
+    // Advance 200ms to clear hit feedback
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(200);
+    });
+    const remainingHits = screen.queryAllByText('💥');
+    expect(remainingHits.length).toBe(0);
   });
 
   it('handles game over (time runs out)', async () => {
@@ -184,5 +191,96 @@ describe('WhackAMole', () => {
 
     const scores = screen.getAllByText('1');
     expect(scores.length).toBeGreaterThan(0);
+  });
+
+  it('ignores clicks and key presses when not playing or hole is inactive', () => {
+    render(<WhackAMole />);
+
+    // Game is idle. Try whacking via click on hole 0
+    const inactiveHole = screen.getByRole('button', { name: 'Hole 1' });
+    fireEvent.click(inactiveHole);
+
+    // Try whacking via keyboard
+    fireEvent.keyDown(window, { key: '1' });
+
+    // Score should still be 0
+    const scores = screen.getAllByText('0');
+    expect(scores.length).toBeGreaterThan(0);
+  });
+
+  it('ignores clicks on inactive holes while playing', async () => {
+    render(<WhackAMole />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Wait for spawn at hole 0
+    });
+
+    // Try clicking hole 1 (inactive)
+    const inactiveHole = screen.getByRole('button', { name: 'Hole 2' });
+    fireEvent.click(inactiveHole);
+
+    // Score should still be 0
+    const scores = screen.getAllByText('0');
+    expect(scores.length).toBeGreaterThan(0);
+  });
+
+  it('handles filling up all holes (no available holes to spawn)', async () => {
+    render(<WhackAMole />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    // Wait enough time for all 9 holes to be filled.
+    // Since we mock Math.random to always pick the first available hole,
+    // advancing by 9 * 800ms will spawn moles in holes 0 to 8.
+    // Advancing one more interval (800ms) will attempt to spawn when no holes are available.
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(10 * 800);
+    });
+
+    // Ensure at least some moles spawned
+    const activeHoles = screen.getAllByRole('button', { name: /Mole! Click to whack!/ });
+    expect(activeHoles.length).toBeGreaterThan(0);
+  });
+
+  it('records a new high score correctly', async () => {
+    render(<WhackAMole />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    // Spawn and whack one mole to get a score of 1
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800);
+    });
+
+    const activeHole = screen.getByRole('button', { name: 'Hole 1 — Mole! Click to whack!' });
+    fireEvent.click(activeHole);
+
+    // Fast forward to game over
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(30000);
+    });
+
+    // Verify local storage is updated and high score is shown
+    expect(localStorage.getItem('whackHighScore')).toBe('1');
+    expect(screen.getAllByText(/New High Score!/i).length).toBeGreaterThan(0);
+  });
+
+  it('does not record a new high score if score is not strictly greater', async () => {
+    // Preset high score to 10
+    localStorage.setItem('whackHighScore', '10');
+    render(<WhackAMole />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    // Fast forward to game over with 0 score
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(30000);
+    });
+
+    // Local storage should still be 10, not 0
+    expect(localStorage.getItem('whackHighScore')).toBe('10');
+    expect(screen.queryByText(/New High Score!/i)).not.toBeInTheDocument();
   });
 });
