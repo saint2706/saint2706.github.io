@@ -30,6 +30,9 @@
 - Added missing JSDoc comments to `src/services/ai.js` functions: `chatWithGemini`, `sanitizeHistoryForGemini`, and `roastResume`.
 - Added missing JSDoc comments to `src/utils/storage.js` functions: `canUseDOM`, `safeKeyboardKey`, `safeSetDocumentTheme`, `safeGetLocalStorage`, `safeSetLocalStorage`, and `safeRemoveLocalStorage`.
 - Added missing JSDoc comments to `src/utils/security.js` functions: `safeJSONStringify`, `isSafeHref`, `isSafeImageSrc`, `sanitizeInput`, `isValidChatMessage`, and `redactPII`.
+- Added missing JSDoc comments to `useFocusTrap` hook.
+- Added missing JSDoc comments to `TapeStrip`, `StampBadge`, and `DoodleDivider` components in `src/components/shared/NbDecorative.jsx`.
+- Enhanced JSDoc typings for the `snippets` array in `src/data/snippets.js` to explicitly define the object structure.
 
 ## 2026-03-14
 

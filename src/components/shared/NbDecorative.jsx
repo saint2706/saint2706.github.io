@@ -30,6 +30,9 @@ const tapeCornerMap = {
  *
  * @param {'top-left'|'top-right'|'bottom-left'|'bottom-right'} corner - Which corner to tape
  * @param {'yellow'|'pink'|'blue'|'white'} color - Tape color
+ * @param {string} [className] - Additional CSS classes
+ * @param {React.CSSProperties} [style] - Additional inline styles
+ * @returns {JSX.Element|null} The tape strip element, or null if in 'liquid' theme
  */
 export const TapeStrip = ({ corner = 'top-right', color = 'yellow', className, style }) => {
   const { theme } = useTheme();
@@ -64,6 +67,9 @@ const stampColorMap = {
  * @param {string} label - Text inside the stamp
  * @param {'yellow'|'pink'|'red'|'blue'} color - Stamp color
  * @param {number} rotate - Rotation in degrees (default: -12)
+ * @param {string} [className] - Additional CSS classes
+ * @param {React.CSSProperties} [style] - Additional inline styles
+ * @returns {JSX.Element|null} The stamp badge element, or null if in 'liquid' theme
  */
 export const StampBadge = ({
   label = 'FEATURED',
@@ -107,6 +113,9 @@ const dividerSvgPaths = {
  * Replaces boring <hr> elements with personality.
  *
  * @param {'wavy'|'zigzag'|'scribble'} pattern - Line pattern style
+ * @param {string} [className] - Additional CSS classes
+ * @param {React.CSSProperties} [style] - Additional inline styles
+ * @returns {JSX.Element} The doodle divider SVG element, or a simple HR in 'liquid' theme
  */
 export const DoodleDivider = ({ pattern = 'wavy', className, style }) => {
   const { theme } = useTheme();

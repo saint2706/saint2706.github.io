@@ -9,6 +9,7 @@ import { useEffect, useRef, useCallback } from 'react';
  * @param {Function} options.onClose - Callback to close the overlay (e.g., on Escape).
  * @param {React.RefObject} [options.initialFocusRef] - Optional ref to focus initially when opened.
  * @param {boolean} [options.preventScroll=true] - Whether to prevent body scroll when open. Defaults to true.
+ * @returns {void}
  */
 export const useFocusTrap = ({
   isOpen,
