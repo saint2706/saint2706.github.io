@@ -65,3 +65,9 @@
 
 - **Issue**: A high severity vulnerability (unbounded recursion DoS in `parse()` revive phase) was found in `flatted` < `3.4.0` via `pnpm audit`.
 - **Fix**: Updated `flatted` to `3.4.1` by running `pnpm update flatted` to resolve the vulnerability. This successfully clears the `test:security-full` script warnings and ensures defense against ReDoS in the dependency.
+
+### Validated Project Image Sources
+
+- **Severity**: Low (Defense in Depth)
+- **Vulnerability**: While project data comes from a trusted local file, dynamically rendering `src={project.image}` inside `src/components/pages/Projects.jsx` could become an XSS vector if a malicious `javascript:` URL was ever injected into the data source.
+- **Fix**: Wrapped the `project.image` property check with an `isSafeImageSrc(project.image)` validation to guarantee only HTTP/HTTPS protocols are evaluated by the browser for image fetching.
