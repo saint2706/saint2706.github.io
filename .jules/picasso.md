@@ -47,4 +47,4 @@ Implements various UX and accessibility enhancements across the application, foc
 
 ### 6. Copy Action Accessibility
 
-- When changing the text or icon of a copy button to "Copied!", screen readers may not automatically read the update. Ensure there is a visually hidden element with `aria-live="polite"` that receives the "Copied!" text, so screen readers immediately notify the user of the successful action. Fixed this pattern in `Playground.jsx` and `ChatInterface.jsx`.
+- When changing the text or icon of a copy button to "Copied!", screen readers may not automatically read the update. Ensure there is a visually hidden element with `aria-live="polite"` that receives the "Copied!" text, so screen readers immediately notify the user of the successful action. Fixed this pattern in `Playground.jsx`, `ChatInterface.jsx`, and `RoastInterface.jsx`.

@@ -235,11 +235,10 @@ const WhackAMole = () => {
   }, [clearAllTimers]);
 
   const getAnnouncement = () => {
-    if (gameState === 'idle') return 'Whack-a-Mole ready. Press Start to begin.';
     if (gameState === 'playing') return `Score: ${score}. Time left: ${timeLeft} seconds.`;
     if (gameState === 'gameOver')
       return `Time's up! Score: ${score}.${score >= highScore && score > 0 ? ' New high score!' : ''}`;
-    return '';
+    return 'Whack-a-Mole ready. Press Start to begin.';
   };
 
   return (
