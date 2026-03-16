@@ -191,6 +191,9 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
               ) : (
                 <Copy size={16} aria-hidden="true" />
               )}
+              <span className="sr-only" aria-live="polite">
+                {isCopied ? 'Copied roast' : ''}
+              </span>
             </button>
           </>
         ) : null}
