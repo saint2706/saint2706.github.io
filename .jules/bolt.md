@@ -43,8 +43,11 @@
 - **Metrics:** Reduced O(N) re-renders (where N is the number of terminal lines in the history buffer) down to O(1) during user typing, significantly improving input latency and overall interface responsiveness.
 
 - **[PERF] Optimized \`MarqueeTicker\` props in \`Footer.jsx\`**: Extracted the inline \`items\` array into a memoized variable using \`useMemo\`. This prevents the array from being recreated on every re-render of the \`Footer\` component, which is particularly beneficial given the frequent Layout state updates (e.g., custom cursor mouse movements).
+
 ## Static Configuration Extraction (Date: 2024-03-XX)
 
 - **Bottleneck:** Components like `CustomCursor` and `NbDecorative` (`TapeStrip`, `StampBadge`, `DoodleDivider`) contained static configuration objects (e.g., color maps, spring configurations, variants) defined directly within their render functions. This caused unnecessary memory allocations and potential reference-equality breakages on every render cycle.
 - **Improvement:** ⚡ Bolt: Extracted static configuration objects outside of components to prevent unnecessary memory allocations on every render cycle. Created a memoized-like pure function `getVariants(isLiquid)` for variants that depend on theme state.
 - **Metrics:** Reduced garbage collection pressure and eliminated unnecessary re-instantiations of objects like `springConfig` passed into hooks, improving the smoothness of continuous interactions like mouse movements.
+
+- **[PERF] Extracted static style and animation objects in Hero and HeroBackground**: Extracted static `style` objects, `initial`, `animate`, and `transition` objects passed to `motion` elements into constants defined outside the `Hero` and `HeroBackground` components. This prevents these objects from being recreated on every render cycle, reducing memory allocations and garbage collection overhead.

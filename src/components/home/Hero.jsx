@@ -26,6 +26,24 @@ import HeroBackground from './HeroBackground';
  * Hero section component for homepage
  * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
  */
+// ⚡ Bolt: Extracted static animation objects to prevent re-renders
+const badgeInitial = { opacity: 0, scale: 1.15, rotate: 3 };
+const badgeAnimate = { opacity: 1, scale: 1, rotate: -2 };
+const badgeTransition = { type: 'spring', stiffness: 400, damping: 15 };
+
+const headingInitial = { opacity: 1, y: 0 };
+const headingAnimate = { opacity: 1, y: 0 };
+const headingTransition = { delay: 0.2 };
+
+const textInitial = { opacity: 0, y: 20 };
+const textAnimate = { opacity: 1, y: 0 };
+const textTransition1 = { delay: 0.4 };
+const textTransition2 = { delay: 0.6 };
+
+const codeInitial = { scale: 1.08, rotate: 2 };
+const codeAnimate = { scale: 1, rotate: -1 };
+const codeTransition = { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 };
+
 const Hero = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
@@ -103,11 +121,9 @@ const Hero = React.memo(() => {
 
         {/* Status Badge */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.15, rotate: 3 }}
-          animate={{ opacity: 1, scale: 1, rotate: -2 }}
-          transition={
-            shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 15 }
-          }
+          initial={shouldReduceMotion ? false : badgeInitial}
+          animate={badgeAnimate}
+          transition={shouldReduceMotion ? { duration: 0 } : badgeTransition}
           className="mb-8"
         >
           <ThemedChip
@@ -127,9 +143,9 @@ const Hero = React.memo(() => {
 
         {/* Main Heading */}
         <motion.h1
-          initial={shouldReduceMotion ? false : { opacity: 1, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2 }}
+          initial={shouldReduceMotion ? false : headingInitial}
+          animate={headingAnimate}
+          transition={shouldReduceMotion ? { duration: 0 } : headingTransition}
           className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
           <span className="block text-[color:var(--text-primary)] mb-2 relative">
@@ -168,9 +184,9 @@ const Hero = React.memo(() => {
 
         {/* Description */}
         <motion.p
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
+          initial={shouldReduceMotion ? false : textInitial}
+          animate={textAnimate}
+          transition={shouldReduceMotion ? { duration: 0 } : textTransition1}
           className="text-secondary text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-sans"
         >
           Turning{' '}
@@ -205,9 +221,9 @@ const Hero = React.memo(() => {
 
         {/* CTA Buttons */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.6 }}
+          initial={shouldReduceMotion ? false : textInitial}
+          animate={textAnimate}
+          transition={shouldReduceMotion ? { duration: 0 } : textTransition2}
           className="flex flex-col md:flex-row gap-4 justify-center"
         >
           <ThemedButton
@@ -249,13 +265,9 @@ const Hero = React.memo(() => {
 
         {/* Code Snippet Card - Translucent in Liquid Mode */}
         <motion.div
-          initial={shouldReduceMotion ? false : { scale: 1.08, rotate: 2 }}
-          animate={{ scale: 1, rotate: -1 }}
-          transition={
-            shouldReduceMotion
-              ? { duration: 0 }
-              : { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 }
-          }
+          initial={shouldReduceMotion ? false : codeInitial}
+          animate={codeAnimate}
+          transition={shouldReduceMotion ? { duration: 0 } : codeTransition}
           className="mt-16 w-full max-w-md"
         >
           <ThemedCard
