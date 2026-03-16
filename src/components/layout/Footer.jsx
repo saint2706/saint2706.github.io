@@ -11,6 +11,19 @@ import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
 import { resumeData } from '../../data/resume';
 
+// ⚡ Bolt: Extracted static marquee items outside component to prevent re-allocations on every render
+const MARQUEE_ITEMS = [
+  'Python',
+  'React',
+  'SQL',
+  'Tableau',
+  'TensorFlow',
+  'Machine Learning',
+  'Deep Learning',
+  'NLP',
+  'D3.js',
+];
+
 /**
  * Footer component with social links, attribution, and easter egg
  *
@@ -72,17 +85,7 @@ const Footer = React.memo(() => {
         variant={isLiquid ? 'liquid' : 'neub'}
         useBlurBand={isLiquid}
         bgColor="bg-fun-yellow"
-        items={[
-          'Python',
-          'React',
-          'SQL',
-          'Tableau',
-          'TensorFlow',
-          'Machine Learning',
-          'Deep Learning',
-          'NLP',
-          'D3.js',
-        ]}
+        items={MARQUEE_ITEMS}
       />
 
       <div className="py-12">
