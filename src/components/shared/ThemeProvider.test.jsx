@@ -12,9 +12,6 @@ vi.mock('../../utils/storage', () => ({
   safeSetDocumentTheme: vi.fn(),
 }));
 
-// Mock View Transition
-document.startViewTransition = vi.fn(cb => cb());
-
 const TestConsumer = () => {
   const { theme, setTheme } = useTheme();
   return (
@@ -30,13 +27,17 @@ const TestConsumer = () => {
 };
 
 describe('ThemeProvider', () => {
+  const originalStartViewTransition = document.startViewTransition;
+
   beforeEach(() => {
     vi.clearAllMocks();
     storage.safeGetLocalStorage.mockReturnValue(null);
+    document.startViewTransition = vi.fn(cb => cb());
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    document.startViewTransition = originalStartViewTransition;
   });
 
   it('renders children and provides default theme', () => {
@@ -131,5 +132,19 @@ describe('ThemeProvider', () => {
 
     fireEvent.click(screen.getByText('Set Liquid'));
     expect(document.startViewTransition).toHaveBeenCalled();
+  });
+
+  it('falls back when view transitions are unavailable', () => {
+    delete document.startViewTransition;
+
+    render(
+      <ThemeProvider>
+        <TestConsumer />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByText('Set Liquid'));
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('liquid');
+    expect(storage.safeSetLocalStorage).toHaveBeenCalledWith('preferred_theme', 'liquid');
   });
 });

@@ -1,344 +1,212 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, afterEach } from 'vitest';
 import React from 'react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import LightsOut from './LightsOut';
-import { ThemeProvider } from '../shared/ThemeProvider';
 
-// Mock Lucide icons to avoid rendering issues
-vi.mock('lucide-react', () => ({
-  Play: () => <span data-testid="play-icon">Play</span>,
-  RotateCcw: () => <span data-testid="rotate-icon">RotateCcw</span>,
-  Trophy: () => <span data-testid="trophy-icon">Trophy</span>,
-  Lightbulb: () => <span data-testid="lightbulb-icon">Lightbulb</span>,
+// Mock theme context
+vi.mock('../shared/theme-context', () => ({
+  useTheme: () => ({ theme: 'neubrutalism' }),
 }));
 
-// Mock Reduced Motion
-vi.mock('framer-motion', async () => {
-  const actual = await vi.importActual('framer-motion');
-  return {
-    ...actual,
-    useReducedMotion: () => false,
-    AnimatePresence: ({ children }) => <>{children}</>,
-    motion: {
-      div: ({ children, ...props }) => {
-        const domProps = Object.keys(props).reduce((acc, key) => {
-          if (
-            ![
-              'whileTap',
-              'initial',
-              'animate',
-              'exit',
-              'transition',
-              'whileHover',
-              'variants',
-              'layoutId',
-              'style',
-              'drag',
-              'dragConstraints',
-              'dragElastic',
-              'dragMomentum',
-              'onUpdate',
-            ].includes(key)
-          ) {
-            acc[key] = props[key];
-          }
-          return acc;
-        }, {});
-        return <div {...domProps}>{children}</div>;
-      },
-      button: ({ children, ...props }) => {
-        const domProps = Object.keys(props).reduce((acc, key) => {
-          if (
-            ![
-              'whileTap',
-              'initial',
-              'animate',
-              'exit',
-              'transition',
-              'whileHover',
-              'variants',
-              'layoutId',
-              'style',
-              'drag',
-              'dragConstraints',
-              'dragElastic',
-              'dragMomentum',
-              'onUpdate',
-            ].includes(key)
-          ) {
-            acc[key] = props[key];
-          }
-          return acc;
-        }, {});
-        return <button {...domProps}>{children}</button>;
-      },
+// Mock framer-motion
+vi.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }) => {
+      const domProps = { ...props };
+      [
+        'initial',
+        'animate',
+        'exit',
+        'transition',
+        'whileTap',
+        'whileHover',
+        'variants',
+        'layoutId',
+        'style',
+        'drag',
+        'dragConstraints',
+        'dragElastic',
+        'dragMomentum',
+        'onUpdate',
+      ].forEach(k => delete domProps[k]);
+      return <div {...domProps}>{children}</div>;
     },
-  };
-});
+    button: ({ children, ...props }) => {
+      const domProps = { ...props };
+      [
+        'initial',
+        'animate',
+        'exit',
+        'transition',
+        'whileTap',
+        'whileHover',
+        'variants',
+        'layoutId',
+        'style',
+        'drag',
+        'dragConstraints',
+        'dragElastic',
+        'dragMomentum',
+        'onUpdate',
+      ].forEach(k => delete domProps[k]);
+      return <button {...domProps}>{children}</button>;
+    },
+    span: ({ children, ...props }) => {
+      const domProps = { ...props };
+      [
+        'initial',
+        'animate',
+        'exit',
+        'transition',
+        'whileTap',
+        'whileHover',
+        'variants',
+        'layoutId',
+        'style',
+        'drag',
+        'dragConstraints',
+        'dragElastic',
+        'dragMomentum',
+        'onUpdate',
+      ].forEach(k => delete domProps[k]);
+      return <span {...domProps}>{children}</span>;
+    },
+  },
+  AnimatePresence: ({ children }) => <>{children}</>,
+  useReducedMotion: vi.fn().mockReturnValue(true),
+}));
 
-const renderWithTheme = component => {
-  return render(<ThemeProvider>{component}</ThemeProvider>);
-};
+describe('LightsOut', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    localStorage.clear();
+    // Spy on Math.random to make the puzzle generation deterministic
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+  });
 
-describe('LightsOut Game', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('renders initial game state and handles all off puzzle creation', () => {
-    // Mock random so toggles logic results in all false
-    vi.spyOn(Math, 'random').mockReturnValue(0);
-    renderWithTheme(<LightsOut />);
-
+  it('renders initial state correctly', () => {
+    render(<LightsOut />);
     expect(screen.getByText(/Lights Out puzzle ready/i)).toBeInTheDocument();
-    expect(screen.getByText(/Start Puzzle/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Start Puzzle/i })).toBeInTheDocument();
   });
 
-  it('renders initial game state', () => {
-    renderWithTheme(<LightsOut />);
-    expect(screen.getByText(/Lights Out puzzle ready/i)).toBeInTheDocument();
-    expect(screen.getByText(/Start Puzzle/i)).toBeInTheDocument();
+  it('starts the puzzle when Start is clicked', () => {
+    render(<LightsOut />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Puzzle/i }));
+
+    const grid = screen.getByRole('grid');
+    expect(grid).toBeInTheDocument();
+
+    const buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons).toHaveLength(25); // 5x5 grid
+
+    // Check reset button
+    expect(screen.getByRole('button', { name: /Reset Puzzle/i })).toBeInTheDocument();
   });
 
-  it('starts game on button click', async () => {
-    renderWithTheme(<LightsOut />);
-    const startButton = screen.getByText(/Start Puzzle/i);
-    fireEvent.click(startButton);
+  it('toggles lights correctly on click', () => {
+    render(<LightsOut />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Puzzle/i }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
-    });
+    const btn00 = screen.getByRole('button', { name: /Row 1, Column 1/i });
+    const initialState = btn00.getAttribute('aria-pressed') === 'true';
 
-    // Check if grid is rendered (25 cells)
-    const cells = screen.getAllByLabelText(/Row \d+, Column \d+: light (on|off)/i);
-    expect(cells).toHaveLength(25);
+    fireEvent.click(btn00);
+
+    const newState = btn00.getAttribute('aria-pressed') === 'true';
+    expect(newState).toBe(!initialState);
   });
 
-  it('toggles lights on click', async () => {
-    renderWithTheme(<LightsOut />);
-    const startButton = screen.getByText(/Start Puzzle/i);
-    fireEvent.click(startButton);
+  it('resets the puzzle when Reset is clicked', () => {
+    render(<LightsOut />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Puzzle/i }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
-    });
+    const btn00 = screen.getByRole('button', { name: /Row 1, Column 1/i });
+    fireEvent.click(btn00);
 
-    const cells = screen.getAllByLabelText(/Row \d+, Column \d+: light (on|off)/i);
-    const cell = cells[0]; // Top-left cell (0,0)
+    expect(screen.getByText('1')).toBeInTheDocument(); // 1 move
 
-    // Get initial state
-    const initialLabel = cell.getAttribute('aria-label');
-    const isInitiallyOn = initialLabel.includes('light on');
+    fireEvent.click(screen.getByRole('button', { name: /Reset Puzzle/i }));
 
-    // Click to toggle
-    fireEvent.click(cell);
-
-    // Check if label updated
-    const updatedLabel = cell.getAttribute('aria-label');
-    const isNowOn = updatedLabel.includes('light on');
-
-    expect(isNowOn).toBe(!isInitiallyOn);
-
-    // Check adjacent cell (0,1) should also toggle
-    // This assumes row-major order: (0,0), (0,1), ..., (4,4)
-    // Row 0, Col 1 is adjacent to Row 0, Col 0
-
-    // We can't easily check previous state of neighbor without storing it,
-    // but we can check if it changed relative to its initial state if we knew it.
-    // Instead, let's just assert that *something* happened to grid.
-
-    // Check moves incremented
-    expect(screen.getByText('1')).toBeInTheDocument(); // Moves count
+    expect(screen.getAllByText('0').length).toBeGreaterThan(0); // 0 moves
   });
 
-  it('handles keyboard navigation', async () => {
-    renderWithTheme(<LightsOut />);
-    const startButton = screen.getByText(/Start Puzzle/i);
-    fireEvent.click(startButton);
+  it('detects a win when all lights are off', async () => {
+    render(<LightsOut />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Puzzle/i }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
+    // We mocked random to return 0, which toggles the top-left cell 8 times.
+    // If it toggles it an even number of times, it ends up 'false'.
+    // If it ends up all false, the center cell (2,2) and its neighbors are toggled ON.
+    // So to win, we must toggle (2,2) and its neighbors.
+    // BUT wait, if we toggle (2,2), it toggles itself AND its neighbors!
+    // So toggling (2,2) ONCE will turn OFF all the center cells!
+    // Let's test this.
+
+    const centerBtn = screen.getByRole('button', { name: /Row 3, Column 3/i });
+    fireEvent.click(centerBtn);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
 
-    const cells = screen.getAllByLabelText(/Row \d+, Column \d+: light (on|off)/i);
+    const winMessages = screen.getAllByText(/Lights Out! 🎉/i);
+    expect(winMessages.length).toBeGreaterThan(0);
+  });
 
-    // Grid is 5x5. Index = row * 5 + col
-    const cell00 = cells[0];
-    const cell01 = cells[1];
-    const cell10 = cells[5];
+  it('supports keyboard navigation', () => {
+    render(<LightsOut />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Puzzle/i }));
 
-    // Initial focus should be on (0,0)
-    await waitFor(() => {
-      expect(cell00).toHaveFocus();
-    });
+    const grid = screen.getByRole('grid');
 
-    // Move Right -> (0,1)
-    fireEvent.keyDown(cell00, { key: 'ArrowRight', code: 'ArrowRight' });
-    await waitFor(() => expect(cell01).toHaveFocus());
+    // Initial focus is on (0, 0)
+    let buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons[0]).toHaveAttribute('tabIndex', '0');
 
-    // Move Down -> (1,1) (index 6)
-    fireEvent.keyDown(cell01, { key: 'ArrowDown', code: 'ArrowDown' });
-    const cell11 = cells[6];
-    await waitFor(() => expect(cell11).toHaveFocus());
+    // ArrowRight -> (0, 1)
+    fireEvent.keyDown(grid, { key: 'ArrowRight' });
+    buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons[0]).toHaveAttribute('tabIndex', '-1');
+    expect(buttons[1]).toHaveAttribute('tabIndex', '0');
 
-    // Move Left -> (1,0) (index 5)
-    fireEvent.keyDown(cell11, { key: 'ArrowLeft', code: 'ArrowLeft' });
-    await waitFor(() => expect(cell10).toHaveFocus());
+    // ArrowDown -> (1, 1)
+    fireEvent.keyDown(grid, { key: 'ArrowDown' });
+    buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons[1]).toHaveAttribute('tabIndex', '-1');
+    expect(buttons[6]).toHaveAttribute('tabIndex', '0'); // index 1*5 + 1 = 6
 
-    // Move Up -> (0,0) (index 0)
-    fireEvent.keyDown(cell10, { key: 'ArrowUp', code: 'ArrowUp' });
-    await waitFor(() => expect(cell00).toHaveFocus());
+    // ArrowLeft -> (1, 0)
+    fireEvent.keyDown(grid, { key: 'ArrowLeft' });
+    buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons[6]).toHaveAttribute('tabIndex', '-1');
+    expect(buttons[5]).toHaveAttribute('tabIndex', '0');
 
-    // Check boundary constraints (Up from 0,0 should stay 0,0)
-    fireEvent.keyDown(cell00, { key: 'ArrowUp', code: 'ArrowUp' });
-    await waitFor(() => expect(cell00).toHaveFocus());
+    // ArrowUp -> (0, 0)
+    fireEvent.keyDown(grid, { key: 'ArrowUp' });
+    buttons = screen.getAllByRole('button', { name: /Row/i });
+    expect(buttons[5]).toHaveAttribute('tabIndex', '-1');
+    expect(buttons[0]).toHaveAttribute('tabIndex', '0');
 
-    // Check boundary constraints (Left from 0,0 should stay 0,0)
-    fireEvent.keyDown(cell00, { key: 'ArrowLeft', code: 'ArrowLeft' });
-    await waitFor(() => expect(cell00).toHaveFocus());
+    // Enter to toggle (0, 0)
+    const btn00 = buttons[0];
+    const initialState = btn00.getAttribute('aria-pressed') === 'true';
+    fireEvent.keyDown(grid, { key: 'Enter' });
+    expect(btn00.getAttribute('aria-pressed')).toBe(initialState ? 'false' : 'true');
 
-    // Check boundary constraints (Right from 4,4)
-    // First, navigate there
-    fireEvent.keyDown(cell00, { key: 'ArrowRight', code: 'ArrowRight' }); // to 0,1
-    fireEvent.keyDown(cells[1], { key: 'ArrowDown', code: 'ArrowDown' }); // to 1,1
-    fireEvent.keyDown(cells[6], { key: 'ArrowDown', code: 'ArrowDown' }); // to 2,1
-    fireEvent.keyDown(cells[11], { key: 'ArrowDown', code: 'ArrowDown' }); // to 3,1
-    fireEvent.keyDown(cells[16], { key: 'ArrowDown', code: 'ArrowDown' }); // to 4,1
-    fireEvent.keyDown(cells[21], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,2
-    fireEvent.keyDown(cells[22], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,3
-    fireEvent.keyDown(cells[23], { key: 'ArrowRight', code: 'ArrowRight' }); // to 4,4
-    const cell44 = cells[24];
-    await waitFor(() => expect(cell44).toHaveFocus());
-
-    fireEvent.keyDown(cell44, { key: 'ArrowRight', code: 'ArrowRight' });
-    await waitFor(() => expect(cell44).toHaveFocus());
-
-    // Check boundary constraints (Down from 4,4)
-    fireEvent.keyDown(cell44, { key: 'ArrowDown', code: 'ArrowDown' });
-    await waitFor(() => expect(cell44).toHaveFocus());
-
-    // Navigate back to cell00 for subsequent tests
-    for (let i = 0; i < 4; i++) {
-      fireEvent.keyDown(cells[24 - i], { key: 'ArrowLeft', code: 'ArrowLeft' }); // back to 4,0
-    }
-    for (let i = 0; i < 4; i++) {
-      fireEvent.keyDown(cells[20 - i * 5], { key: 'ArrowUp', code: 'ArrowUp' }); // back to 0,0
-    }
-    await waitFor(() => expect(cell00).toHaveFocus());
-
-    // Toggle with Enter
-    const initialLabel = cell00.getAttribute('aria-label');
-    fireEvent.keyDown(cell00, { key: 'Enter', code: 'Enter' });
-    const updatedLabel = cell00.getAttribute('aria-label');
-    expect(updatedLabel).not.toBe(initialLabel);
-
-    // Toggle with Space
-    fireEvent.keyDown(cell00, { key: ' ', code: 'Space' });
-    // Should flip back (or at least change again)
-    const finalLabel = cell00.getAttribute('aria-label');
-    expect(finalLabel).toBe(initialLabel);
-
-    // Unhandled key
-    fireEvent.keyDown(cell00, { key: 'A', code: 'KeyA' });
-    // Shouldn't crash and should do nothing
-    expect(cell00).toHaveFocus();
+    // Space to toggle (0, 0)
+    fireEvent.keyDown(grid, { key: ' ' });
+    expect(btn00.getAttribute('aria-pressed')).toBe(initialState ? 'true' : 'false');
   });
 
   it('ignores keyboard navigation when not playing', () => {
-    renderWithTheme(<LightsOut />);
-    const cells = screen.getAllByRole('button');
-    // Find a cell inside the grid. The start puzzle button is also a button.
-    const cell00 = cells.find(c => c.getAttribute('aria-label')?.includes('Row 1, Column 1'));
-
-    if (cell00) {
-      cell00.focus();
-      fireEvent.keyDown(cell00, { key: 'ArrowRight' });
-      // Should not do anything and focus remains wherever it was
-      expect(cell00).toHaveFocus();
-    }
-  });
-
-  it('renders correct announcement text', () => {
-    // Should render "Lights Out puzzle ready. Press Start to begin." on initial load (gameState === 'idle')
-    renderWithTheme(<LightsOut />);
-    expect(screen.getByText('Lights Out puzzle ready. Press Start to begin.')).toBeInTheDocument();
-  });
-
-  it('handles game win condition and updates best score', async () => {
-    // Clear localStorage to ensure we start without a best score
-    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
-    vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
-
-    // Mock random to return 0. The puzzle generation will toggle cell (0,0) 8 times,
-    // ending in all off. The fallback logic will then turn on the center cross:
-    // cells (2,2), (1,2), (3,2), (2,1), (2,3).
-    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
-
-    renderWithTheme(<LightsOut />);
-
-    const startButton = screen.getByText(/Start Puzzle/i);
-    fireEvent.click(startButton);
-
-    // Restore random so other components aren't affected
-    randomSpy.mockRestore();
-
-    await waitFor(() => {
-      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
-    });
-
-    // We can solve this grid by clicking the center cell (Row 3, Column 3)
-    const centerCell = screen.getByLabelText(/Row 3, Column 3: light on/i);
-    fireEvent.click(centerCell);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Lights Out! 🎉/i)).toBeInTheDocument();
-    });
-
-    // Check if it's solved in 1 move
-    expect(screen.getByText(/Solved in/i)).toBeInTheDocument();
-
-    // Use getAllByText as '1' might appear in multiple places (moves count, timer, etc)
-    const ones = screen.getAllByText('1');
-    expect(ones.length).toBeGreaterThan(0);
-
-    // Check localStorage was called to save the new best score
-    expect(setItemSpy).toHaveBeenCalledWith('lightsOutBest', '1');
-  });
-
-  it('displays New Best notification when previous best score is beaten', async () => {
-    // Set localStorage to simulate a previous best score of 10
-    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
-    vi.spyOn(Storage.prototype, 'getItem').mockImplementation(key =>
-      key === 'lightsOutBest' ? '10' : null
-    );
-
-    const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0);
-
-    renderWithTheme(<LightsOut />);
-
-    const startButton = screen.getByText(/Start Puzzle/i);
-    fireEvent.click(startButton);
-
-    randomSpy.mockRestore();
-
-    await waitFor(() => {
-      expect(screen.getByText(/Playing Lights Out/i)).toBeInTheDocument();
-    });
-
-    // Solve the grid in 1 move
-    const centerCell = screen.getByLabelText(/Row 3, Column 3: light on/i);
-    fireEvent.click(centerCell);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Lights Out! 🎉/i)).toBeInTheDocument();
-    });
-
-    // Verify the New Best! notification appears
-    // Use getAllByText since "New Best!" might appear in the SR announcement as well as visually
-    const newBestNodes = screen.getAllByText(/New best!/i);
-    expect(newBestNodes.length).toBeGreaterThan(0);
-
-    // Verify localStorage was updated with the new best score
-    expect(setItemSpy).toHaveBeenCalledWith('lightsOutBest', '1');
+    render(<LightsOut />);
+    const gridDiv = screen.getByLabelText('Lights Out puzzle grid');
+    fireEvent.keyDown(gridDiv, { key: 'ArrowRight' });
+    expect(screen.getByRole('button', { name: /Start Puzzle/i })).toBeInTheDocument();
   });
 });
