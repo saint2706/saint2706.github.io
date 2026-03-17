@@ -94,6 +94,15 @@ Security is a core focus of this project. Key measures include:
 
 For a detailed security report, see [.jules/sentinel.md](.jules/sentinel.md).
 
+## 🔄 CI/CD Optimizations
+
+To ensure reliable, fast, and secure software delivery, the following pipeline optimizations are implemented:
+
+- **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are strictly pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
+- **Caching**: The `setup-env` composite action automatically caches the `pnpm` store via `actions/setup-node`, saving bandwidth and speeding up test executions.
+- **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (`[20, 22]`) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
+- **Concurrency control**: Workflow concurrency correctly cancels in-progress jobs for outdated commits on the same branch or PR.
+
 ## 🤖 AI & Python Integration
 
 ### Gemini AI

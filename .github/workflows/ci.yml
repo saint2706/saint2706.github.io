@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
 
+# Cancels previously running jobs for the same PR/branch to save resources
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -20,7 +21,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
@@ -38,12 +39,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
+      # Fails all other matrix jobs immediately if one fails
       fail-fast: true
       matrix:
         node-version: [20, 22]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
@@ -58,7 +60,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
@@ -71,7 +73,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
