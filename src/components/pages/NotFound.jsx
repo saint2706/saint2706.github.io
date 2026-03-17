@@ -12,6 +12,14 @@ import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
 
+/** Quick navigation links to main pages */
+const QUICK_LINKS = [
+  { path: '/', label: 'Home', icon: <Home size={18} /> },
+  { path: '/projects', label: 'Projects', icon: <Rocket size={18} /> },
+  { path: '/resume', label: 'Resume', icon: <Map size={18} /> },
+  { path: '/contact', label: 'Contact', icon: <Compass size={18} /> },
+];
+
 /**
  * 404 Not Found page component
  *
@@ -94,14 +102,6 @@ const NotFound = () => {
       setClickCount(0);
     }
   };
-
-  /** Quick navigation links to main pages */
-  const quickLinks = [
-    { path: '/', label: 'Home', icon: <Home size={18} /> },
-    { path: '/projects', label: 'Projects', icon: <Rocket size={18} /> },
-    { path: '/resume', label: 'Resume', icon: <Map size={18} /> },
-    { path: '/contact', label: 'Contact', icon: <Compass size={18} /> },
-  ];
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
@@ -317,7 +317,7 @@ const NotFound = () => {
                 Quick Navigation
               </ThemedChip>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {quickLinks.map(link => (
+                {QUICK_LINKS.map(link => (
                   <ThemedButton
                     key={link.path}
                     as={Link}
