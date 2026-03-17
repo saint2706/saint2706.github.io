@@ -247,19 +247,36 @@ const Playground = React.memo(() => {
           className="grid grid-cols-1 lg:grid-cols-2 gap-6"
         >
           <AnimatePresence mode="popLayout">
-            {filteredSnippets.map((snippet, idx) => (
-              <SnippetCard
-                key={snippet.id}
-                snippet={snippet}
-                colorClass={cardColors[idx % cardColors.length]}
-                variants={item}
-                isCopied={copiedId === snippet.id}
-                onCopy={handleCopy}
-                onOpenPreview={openPreviewModal}
-                onOpenRunner={openRunnerModal}
-                shouldReduceMotion={shouldReduceMotion}
-              />
-            ))}
+            {filteredSnippets.length > 0 ? (
+              filteredSnippets.map((snippet, idx) => (
+                <SnippetCard
+                  key={snippet.id}
+                  snippet={snippet}
+                  colorClass={cardColors[idx % cardColors.length]}
+                  variants={item}
+                  isCopied={copiedId === snippet.id}
+                  onCopy={handleCopy}
+                  onOpenPreview={openPreviewModal}
+                  onOpenRunner={openRunnerModal}
+                  shouldReduceMotion={shouldReduceMotion}
+                />
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="col-span-full text-center py-12"
+              >
+                <Code2 className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+                <h3 className="mt-4 text-lg font-heading font-bold text-[color:var(--text-primary)]">
+                  No snippets found
+                </h3>
+                <p className="mt-2 text-sm text-[color:var(--text-secondary)] font-sans">
+                  Try selecting a different category.
+                </p>
+              </motion.div>
+            )}
           </AnimatePresence>
         </motion.div>
 
