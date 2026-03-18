@@ -180,7 +180,7 @@ const Projects = React.memo(() => {
   ];
 
   // Animation variants for stagger effect
-  const container = {
+  const container = useMemo(() => ({
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -189,16 +189,16 @@ const Projects = React.memo(() => {
         duration: shouldReduceMotion ? 0 : undefined,
       },
     },
-  };
+  }), [shouldReduceMotion]);
 
-  const item = {
+  const item = useMemo(() => ({
     hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
     show: {
       opacity: 1,
       y: 0,
       transition: shouldReduceMotion ? { duration: 0 } : undefined,
     },
-  };
+  }), [shouldReduceMotion]);
 
   /** Rotating color classes for project card accent bars */
   const cardColors = useMemo(() => ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'], []);

@@ -57,3 +57,4 @@
 - **[PERF] Optimized routes rendering in App**: Wrapped `ScrollToTopHelper` and `AnimatedRoutes` components with `React.memo` in `src/App.jsx` to prevent them from re-rendering unnecessarily during broader app state updates.
 
 - Moved static array (`QUICK_LINKS`) from `import` declaration in `NotFound.jsx` to correctly resolve `import/first` lint error. Removed testing artifacts from repository to ensure code cleanliness.
+⚡ Bolt: Optimized React.memo array creations in pages
