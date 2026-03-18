@@ -17,16 +17,18 @@ const Games = lazy(() => import('./components/pages/Games'));
 const Playground = lazy(() => import('./components/pages/Playground'));
 const NotFound = lazy(() => import('./components/pages/NotFound'));
 
-const ScrollToTopHelper = () => {
+const ScrollToTopHelper = React.memo(() => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
-};
+});
+
+ScrollToTopHelper.displayName = 'ScrollToTopHelper';
 
 // Animated routes component that uses location for AnimatePresence
-const AnimatedRoutes = () => {
+const AnimatedRoutes = React.memo(() => {
   const location = useLocation();
 
   return (
@@ -103,7 +105,9 @@ const AnimatedRoutes = () => {
       </Suspense>
     </AnimatePresence>
   );
-};
+});
+
+AnimatedRoutes.displayName = 'AnimatedRoutes';
 
 /**
  * Main application component setting up routing, theme provider, and global layout.

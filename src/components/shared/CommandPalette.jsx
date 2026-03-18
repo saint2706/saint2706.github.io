@@ -344,25 +344,14 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                             const globalIndex = filteredCommands.indexOf(cmd);
                             const isSelected = globalIndex === selectedIndex;
                             return (
-                              <div
+                              <CommandItem
                                 key={cmd.id}
-                                id={cmd.id}
-                                data-selected={isSelected}
-                                onClick={() => executeCommand(globalIndex)}
-                                onMouseEnter={() => setSelectedIndex(globalIndex)}
-                                className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-100 cursor-pointer ${
-                                  isSelected
-                                    ? 'bg-fun-yellow text-black'
-                                    : 'text-primary hover:bg-secondary'
-                                }`}
-                                role="option"
-                                aria-selected={isSelected}
-                              >
-                                <span className={isSelected ? 'text-black' : 'text-secondary'}>
-                                  {cmd.icon}
-                                </span>
-                                <span className="font-sans text-sm font-medium">{cmd.label}</span>
-                              </div>
+                                cmd={cmd}
+                                isSelected={isSelected}
+                                globalIndex={globalIndex}
+                                executeCommand={executeCommand}
+                                setSelectedIndex={setSelectedIndex}
+                              />
                             );
                           })}
                         </div>
@@ -404,5 +393,27 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     </AnimatePresence>
   );
 };
+
+const CommandItem = React.memo(
+  ({ cmd, isSelected, globalIndex, executeCommand, setSelectedIndex }) => {
+    return (
+      <div
+        id={cmd.id}
+        data-selected={isSelected}
+        onClick={() => executeCommand(globalIndex)}
+        onMouseEnter={() => setSelectedIndex(globalIndex)}
+        className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-100 cursor-pointer ${
+          isSelected ? 'bg-fun-yellow text-black' : 'text-primary hover:bg-secondary'
+        }`}
+        role="option"
+        aria-selected={isSelected}
+      >
+        <span className={isSelected ? 'text-black' : 'text-secondary'}>{cmd.icon}</span>
+        <span className="font-sans text-sm font-medium">{cmd.label}</span>
+      </div>
+    );
+  }
+);
+CommandItem.displayName = 'CommandItem';
 
 export default CommandPalette;

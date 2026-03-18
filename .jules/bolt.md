@@ -51,3 +51,9 @@
 - **Metrics:** Reduced garbage collection pressure and eliminated unnecessary re-instantiations of objects like `springConfig` passed into hooks, improving the smoothness of continuous interactions like mouse movements.
 
 - **[PERF] Extracted static style and animation objects in Hero and HeroBackground**: Extracted static `style` objects, `initial`, `animate`, and `transition` objects passed to `motion` elements into constants defined outside the `Hero` and `HeroBackground` components. This prevents these objects from being recreated on every render cycle, reducing memory allocations and garbage collection overhead.
+
+- **[PERF] Optimized rendering in CommandPalette**: Extracted `CommandItem` into a separate memoized component (`React.memo`) in `src/components/shared/CommandPalette.jsx`. This prevents the entire command list from re-rendering on every keystroke or selection change.
+- **[PERF] Extracted static array in NotFound**: Extracted the `QUICK_LINKS` array out of the `NotFound` component rendering logic in `src/components/pages/NotFound.jsx` to avoid reallocating memory on every re-render.
+- **[PERF] Optimized routes rendering in App**: Wrapped `ScrollToTopHelper` and `AnimatedRoutes` components with `React.memo` in `src/App.jsx` to prevent them from re-rendering unnecessarily during broader app state updates.
+
+- Moved static array (`QUICK_LINKS`) from `import` declaration in `NotFound.jsx` to correctly resolve `import/first` lint error. Removed testing artifacts from repository to ensure code cleanliness.
