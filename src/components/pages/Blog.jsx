@@ -167,25 +167,31 @@ const Blog = React.memo(() => {
   );
 
   // Animation variants for stagger effect
-  const container = useMemo(() => ({
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.1,
-        duration: shouldReduceMotion ? 0 : undefined,
+  const container = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.1,
+          duration: shouldReduceMotion ? 0 : undefined,
+        },
       },
-    },
-  }), [shouldReduceMotion]);
+    }),
+    [shouldReduceMotion]
+  );
 
-  const item = useMemo(() => ({
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined,
-    },
-  }), [shouldReduceMotion]);
+  const item = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: shouldReduceMotion ? { duration: 0 } : undefined,
+      },
+    }),
+    [shouldReduceMotion]
+  );
 
   return (
     <>
