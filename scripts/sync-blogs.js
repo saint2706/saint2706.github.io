@@ -20,6 +20,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { htmlToText } from 'html-to-text';
+import * as prettier from 'prettier';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -180,9 +181,9 @@ async function fetchSubstack() {
         title: item.title,
         link: postLink,
         date: item.pubDate || item.isoDate,
-        summary: summary,
+        summary,
         source: 'Substack',
-        tags: tags,
+        tags,
         coverImage: item.enclosure?.url || extractImage(item['content:encoded']),
       };
     });
@@ -248,8 +249,15 @@ async function syncBlogs() {
   // Ensure directory exists
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
+  // Format output with prettier so the file always matches project formatting rules
+  const prettierConfig = await prettier.resolveConfig(outputPath);
+  const formatted = await prettier.format(JSON.stringify(allBlogs, null, 2), {
+    ...prettierConfig,
+    filepath: outputPath,
+  });
+
   // Write consolidated blog data to JSON file
-  await fs.writeFile(outputPath, JSON.stringify(allBlogs, null, 2));
+  await fs.writeFile(outputPath, formatted);
   console.log(`Successfully synced ${allBlogs.length} blogs to ${outputPath}`);
 }
 

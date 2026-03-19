@@ -62,6 +62,7 @@ export default [
       'react/no-unescaped-entities': 'off',
       'react/no-danger': 'error',
       'react/jsx-no-target-blank': 'error',
+      'object-shorthand': 'error',
     },
   },
 ];

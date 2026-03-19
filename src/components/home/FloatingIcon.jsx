@@ -46,7 +46,7 @@ const FloatingIcon = ({ icon, delay, x, y }) => {
       transition={{
         duration: 5,
         repeat: Infinity,
-        delay: delay,
+        delay,
         ease: 'easeInOut',
       }}
       className="absolute text-slate-700"
