@@ -156,6 +156,10 @@ TimelineCard.displayName = 'TimelineCard';
 /** Filter section identifiers */
 const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'Languages'];
 
+// ⚡ Bolt: Extracted static array configurations outside component to prevent recreation on every render
+const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
+const eduShadowColors = ['blue', 'yellow', 'lime'];
+
 /**
  * Resume page component
  *
@@ -296,7 +300,6 @@ const Resume = React.memo(() => {
                     }
                   >
                     {resumeData.experience.map((job, i) => {
-                      const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
                       return (
                         <TimelineCard
                           key={i}
@@ -336,7 +339,6 @@ const Resume = React.memo(() => {
                     }
                   >
                     {resumeData.education.map((edu, i) => {
-                      const eduShadowColors = ['blue', 'yellow', 'lime'];
                       return (
                         <TimelineCard
                           key={i}

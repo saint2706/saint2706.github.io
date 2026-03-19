@@ -134,7 +134,10 @@ const Blog = React.memo(() => {
   }, []);
 
   /** Extract unique blog sources for filter buttons */
-  const sources = ['All', ...new Set(processedBlogs.map(blog => blog.source))];
+  const sources = useMemo(
+    () => ['All', ...new Set(processedBlogs.map(blog => blog.source))],
+    [processedBlogs]
+  );
 
   /**
    * Filter and search blogs based on current filter and search term
@@ -164,25 +167,31 @@ const Blog = React.memo(() => {
   );
 
   // Animation variants for stagger effect
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.1,
-        duration: shouldReduceMotion ? 0 : undefined,
+  const container = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.1,
+          duration: shouldReduceMotion ? 0 : undefined,
+        },
       },
-    },
-  };
+    }),
+    [shouldReduceMotion]
+  );
 
-  const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined,
-    },
-  };
+  const item = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: shouldReduceMotion ? { duration: 0 } : undefined,
+      },
+    }),
+    [shouldReduceMotion]
+  );
 
   return (
     <>
