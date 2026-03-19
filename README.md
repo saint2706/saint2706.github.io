@@ -1,5 +1,8 @@
 # Rishabh's Portfolio
 
+[![CI](https://github.com/saint2706/saint2706.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/saint2706/saint2706.github.io/actions/workflows/ci.yml)
+[![Deploy to GitHub Pages](https://github.com/saint2706/saint2706.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/saint2706/saint2706.github.io/actions/workflows/deploy.yml)
+
 Welcome to the repository for my personal portfolio website. This project showcases my skills in frontend development, Python integration, and AI-powered interactions. It is built with modern web technologies and features a unique dual-theme design system.
 
 ## 🚀 Features
@@ -101,6 +104,7 @@ To ensure reliable, fast, and secure software delivery, the following pipeline o
 - **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are strictly pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
 - **Caching**: The `setup-env` composite action automatically caches the `pnpm` store via `actions/setup-node`, saving bandwidth and speeding up test executions.
 - **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (`[20, 22]`) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
+- **Cross-Platform Matrix Builds**: The test job uses a matrix strategy to verify the application across multiple operating systems (`ubuntu-latest`, `windows-latest`, `macos-latest`), ensuring broad compatibility and catching platform-specific issues early.
 - **Concurrency control**: Workflow concurrency correctly cancels in-progress jobs for outdated commits on the same branch or PR.
 
 ## 🤖 AI & Python Integration

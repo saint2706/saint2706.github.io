@@ -36,12 +36,13 @@ jobs:
         run: pnpm run lint
 
   test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       # Fails all other matrix jobs immediately if one fails
       fail-fast: true
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         node-version: [20, 22]
     steps:
       - name: Checkout repository
