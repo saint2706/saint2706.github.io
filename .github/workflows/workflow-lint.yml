@@ -34,9 +34,11 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: '3.x'
+          cache: 'pip'
+          cache-dependency-path: '.github/workflows/requirements.txt'
 
       - name: Install Python dependency for security checks
-        run: python -m pip install --disable-pip-version-check pyyaml
+        run: python -m pip install --disable-pip-version-check -r .github/workflows/requirements.txt
 
       - name: Run workflow security checks
         run: |
