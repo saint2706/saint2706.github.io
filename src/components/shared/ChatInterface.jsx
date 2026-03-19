@@ -476,7 +476,7 @@ const ChatInterface = ({ onClose }) => {
       if (!text.trim()) return;
 
       // Add user message to UI immediately for responsive feel
-      const userMsg = { id: generateMessageId(), role: 'user', text: text };
+      const userMsg = { id: generateMessageId(), role: 'user', text };
 
       // Use functional state update to get latest messages and compute history
       let historyForApi = [];

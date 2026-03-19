@@ -180,9 +180,9 @@ async function fetchSubstack() {
         title: item.title,
         link: postLink,
         date: item.pubDate || item.isoDate,
-        summary: summary,
+        summary,
         source: 'Substack',
-        tags: tags,
+        tags,
         coverImage: item.enclosure?.url || extractImage(item['content:encoded']),
       };
     });
