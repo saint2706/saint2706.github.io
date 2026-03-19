@@ -71,3 +71,8 @@
 - **Severity**: Low (Defense in Depth)
 - **Vulnerability**: While project data comes from a trusted local file, dynamically rendering `src={project.image}` inside `src/components/pages/Projects.jsx` could become an XSS vector if a malicious `javascript:` URL was ever injected into the data source.
 - **Fix**: Wrapped the `project.image` property check with an `isSafeImageSrc(project.image)` validation to guarantee only HTTP/HTTPS protocols are evaluated by the browser for image fetching.
+
+### Security Improvement: Safe URL Navigation in Contact Component
+
+- **Issue**: The `Contact` component (`src/components/pages/Contact.jsx`) used `window.location.href` to navigate to a dynamically generated `mailto:` link using `resumeData` without prior protocol validation. If data sources were compromised or contained malicious protocols (e.g., `javascript:`), this could result in an XSS vulnerability.
+- **Fix**: Added an explicit validation check utilizing the `isSafeHref` utility function from `src/utils/security.js` prior to invoking `window.location.href`. This ensures only safe, non-malicious protocols are executed, reinforcing defense-in-depth. Blocked navigation attempts are safely logged as warnings.
