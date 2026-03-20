@@ -523,7 +523,7 @@ function Text<C extends React.ElementType = 'span'>({
 
 ### Related Skills
 - [web-accessibility](../web-accessibility/SKILL.md): Accessible components
-- [state-management](../state-management/SKILL.md): Component state management
+- state-management: Component state management
 
 ### Tags
 `#UI-components` `#React` `#design-patterns` `#composition` `#TypeScript` `#frontend`

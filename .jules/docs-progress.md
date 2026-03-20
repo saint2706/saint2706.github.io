@@ -43,3 +43,6 @@
 ## 2026-03-17
 
 - Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully. No new broken links, unformatted code, or missing JSDocs were found.
+- Audited documentation and verified no broken links in docs/.
+- Fixed broken links in `.agents/skills` documentation.
+- Added missing module-level JSDocs to `src/App.jsx` and `src/main.jsx`.

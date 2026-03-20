@@ -273,7 +273,7 @@ app.post('/api/auth/refresh', async (req, res) => {
 - **Compatible platforms**: Claude, ChatGPT, Gemini
 
 ### Related skills
-- [authentication-setup](../authentication-setup/SKILL.md)
+- authentication-setup
 - [deployment](../deployment-automation/SKILL.md)
 
 ### Tags

@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Root component for the application routing and layout.
+ *
+ * Implements code splitting with lazy loading for all page routes,
+ * integrates Framer Motion for page transitions, and provides
+ * global application wrappers including the navigation layout,
+ * floating action buttons, and scroll restoration.
+ */
+
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';

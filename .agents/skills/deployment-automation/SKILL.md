@@ -541,8 +541,8 @@ fi
 - **Compatible Platforms**: Claude, ChatGPT, Gemini
 
 ### Related Skills
-- [monitoring](../monitoring/SKILL.md): Post-deployment monitoring
-- [security](../security/SKILL.md): Deployment security
+- monitoring: Post-deployment monitoring
+- security: Deployment security
 
 ### Tags
 `#deployment` `#CI/CD` `#Docker` `#Kubernetes` `#automation` `#infrastructure`
