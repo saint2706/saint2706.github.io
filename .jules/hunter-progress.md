@@ -68,3 +68,9 @@
 
 - **Fixed Code Cleanliness**: Removed `console.warn` statements in `src/components/pages/Projects.jsx` and `src/components/pages/Contact.jsx`.
 - **Verified**: Build, Lint, and Tests passed.
+
+## Session 13
+
+- **Fixed Lint Warnings**: Resolved `react-hooks/set-state-in-effect` lint warnings in `src/components/games/LightsOut.jsx`, `src/components/shared/TerminalMode.jsx`, and `src/components/shared/CommandPalette.jsx` by refactoring state updates into the render phase or event handlers without using `eslint-disable-next-line`.
+- **Fixed Lint Warnings**: Resolved `react-hooks/exhaustive-deps` lint warning in `src/components/layout/Navbar.jsx` by refactoring dependency arrays and utilizing render phase state updates.
+- **Verified**: Build, Lint, and Tests passed.

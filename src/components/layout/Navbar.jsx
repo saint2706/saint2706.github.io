@@ -67,10 +67,25 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
   const isLiquidDark = theme === 'liquid-dark';
 
+  const [prevLocation, setPrevLocation] = useState(location.pathname);
+  if (location.pathname !== prevLocation) {
+    setPrevLocation(location.pathname);
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }
+
+  const [prevIsLiquid, setPrevIsLiquid] = useState(isLiquid);
+  if (isLiquid !== prevIsLiquid) {
+    setPrevIsLiquid(isLiquid);
+    if (!isLiquid && isScrolled) {
+      setIsScrolled(false);
+    }
+  }
+
   // Scroll-aware navbar compaction for liquid theme
   useEffect(() => {
     if (!isLiquid) {
-      setIsScrolled(false);
       return undefined;
     }
     const handleScroll = () => setIsScrolled(window.scrollY > 60);
@@ -85,14 +100,6 @@ const Navbar = React.memo(({ onOpenSettings }) => {
       document.dispatchEvent(new CustomEvent('closeChatbot'));
     }
   }, [isMenuOpen]);
-
-  // Close mobile menu when navigating between routes
-  useEffect(() => {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
 
   const handleCloseMenu = () => {
     setIsMenuOpen(false);

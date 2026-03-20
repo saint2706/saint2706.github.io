@@ -155,11 +155,25 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     );
   }, [query, commands]);
 
+  const [prevFilteredLength, setPrevFilteredLength] = useState(filteredCommands.length);
+  const [prevQuery, setPrevQuery] = useState(query);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+
   // Reset selected index when filtered results change
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  if (filteredCommands.length !== prevFilteredLength || query !== prevQuery) {
+    setPrevFilteredLength(filteredCommands.length);
+    setPrevQuery(query);
     setSelectedIndex(0);
-  }, [filteredCommands.length, query]);
+  }
+
+  // Reset state when palette opens
+  if (isOpen !== prevIsOpen) {
+    setPrevIsOpen(isOpen);
+    if (isOpen) {
+      setQuery('');
+      setSelectedIndex(0);
+    }
+  }
 
   // Initialize focus trap and modal behavior
   useFocusTrap({
@@ -168,16 +182,6 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
     onClose,
     initialFocusRef: inputRef,
   });
-
-  // Reset state when palette opens
-  useEffect(() => {
-    if (isOpen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setQuery('');
-
-      setSelectedIndex(0);
-    }
-  }, [isOpen]);
 
   // Scroll selected item into view
   useEffect(() => {
