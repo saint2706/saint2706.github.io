@@ -68,8 +68,6 @@ const Contact = React.memo(() => {
       setTimeout(() => {
         if (isSafeHref(mailtoUrl)) {
           window.location.href = mailtoUrl;
-        } else {
-          console.warn('Blocked unsafe URL navigation:', mailtoUrl);
         }
         setIsSubmitting(false);
         setSuccess(true);

@@ -228,8 +228,6 @@ const Projects = React.memo(() => {
     // 🛡️ Sentinel: Validate URL before opening to prevent malicious protocol execution (e.g., javascript:)
     if (targetUrl && isSafeHref(targetUrl)) {
       window.open(targetUrl, '_blank', 'noopener,noreferrer');
-    } else if (targetUrl) {
-      console.warn('Blocked unsafe URL navigation:', targetUrl);
     }
   }, []);
 

@@ -63,3 +63,8 @@
 
 - **Fixed Lint Warnings**: Replaced inline control character regex `[\x00-\x08...]` with dynamically constructed regex string in `src/utils/security.js` to fix the `no-control-regex` linting rule violation while maintaining exact logic. Removed the corresponding `eslint-disable-next-line` directive.
 - **Verified**: Build and Lint passed.
+
+## Session 12
+
+- **Fixed Code Cleanliness**: Removed `console.warn` statements in `src/components/pages/Projects.jsx` and `src/components/pages/Contact.jsx`.
+- **Verified**: Build, Lint, and Tests passed.
