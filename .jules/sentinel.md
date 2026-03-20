@@ -76,3 +76,8 @@
 
 - **Issue**: The `Contact` component (`src/components/pages/Contact.jsx`) used `window.location.href` to navigate to a dynamically generated `mailto:` link using `resumeData` without prior protocol validation. If data sources were compromised or contained malicious protocols (e.g., `javascript:`), this could result in an XSS vulnerability.
 - **Fix**: Added an explicit validation check utilizing the `isSafeHref` utility function from `src/utils/security.js` prior to invoking `window.location.href`. This ensures only safe, non-malicious protocols are executed, reinforcing defense-in-depth. Blocked navigation attempts are safely logged as warnings.
+
+### Security Improvement: Dependency Update - flatted (v3.4.2)
+
+- **Issue**: A high severity vulnerability (Prototype Pollution via parse() in NodeJS flatted) was found in `flatted` <= `3.4.1` via `pnpm audit`.
+- **Fix**: Added `"flatted": ">=3.4.2"` to `pnpm.overrides` in `package.json` to resolve the vulnerability. This successfully clears the `test:security-full` script warnings and ensures defense against Prototype Pollution in the dependency tree.
