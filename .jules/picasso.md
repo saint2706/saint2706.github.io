@@ -53,3 +53,6 @@ Implements various UX and accessibility enhancements across the application, foc
 
 - **Contact**: Added explicit red asterisks and `aria-required="true"` to required form fields for better accessible validation feedback.
 - **Playground**: Implemented a responsive empty state for cases where filtering produces no snippets, following best UX practices for data lists.
+
+- Added `aria-label`s to the red traffic-light close button and the main close button inside `TerminalMode.jsx` for accessibility.
+- Added `focus-visible:ring-gray-400` styling to `TerminalMode` close button for neubrutalism theme keyboard accessibility.
