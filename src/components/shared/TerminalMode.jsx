@@ -69,9 +69,12 @@ const TerminalMode = React.memo(({ isOpen, onClose, welcomeMessage = '' }) => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  const [prevWelcomeMessage, setPrevWelcomeMessage] = useState(welcomeMessage);
 
-  /** Initialize terminal with welcome message when opened */
-  useEffect(() => {
+  if (isOpen !== prevIsOpen || welcomeMessage !== prevWelcomeMessage) {
+    setPrevIsOpen(isOpen);
+    setPrevWelcomeMessage(welcomeMessage);
     if (isOpen) {
       const initial = [
         {
@@ -85,15 +88,19 @@ const TerminalMode = React.memo(({ isOpen, onClose, welcomeMessage = '' }) => {
       if (welcomeMessage) {
         initial.push({ type: 'system', text: welcomeMessage });
       }
-
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHistory(initial);
       setInput('');
       setCmdHistory([]);
       setCmdIndex(-1);
+    }
+  }
+
+  /** Initialize terminal with welcome message when opened */
+  useEffect(() => {
+    if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [isOpen, welcomeMessage]);
+  }, [isOpen]);
 
   /** Auto-scroll to bottom when new output is added */
   useEffect(() => {

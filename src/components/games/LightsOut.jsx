@@ -118,40 +118,34 @@ const LightsOut = () => {
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
 
-  // Check for win condition whenever grid updates
-  useEffect(() => {
-    if (gameState !== 'playing') return;
-
-    // Check if all lights are off
-    const allOff = grid.every(row => row.every(cell => !cell));
-
-    if (allOff) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setGameState('won');
-      if (!bestScore || moves < bestScore) {
-        setBestScore(moves);
-        localStorage.setItem('lightsOutBest', moves.toString());
-      }
-    }
-  }, [grid, moves, gameState, bestScore]);
-
   const toggleCell = useCallback(
     (r, c) => {
       if (gameState !== 'playing') return;
 
-      setGrid(prev => {
-        const next = prev.map(row => [...row]);
-        // Toggle cell and adjacent
-        next[r][c] = !next[r][c];
-        if (r > 0) next[r - 1][c] = !next[r - 1][c];
-        if (r < SIZE - 1) next[r + 1][c] = !next[r + 1][c];
-        if (c > 0) next[r][c - 1] = !next[r][c - 1];
-        if (c < SIZE - 1) next[r][c + 1] = !next[r][c + 1];
-        return next;
-      });
-      setMoves(m => m + 1);
+      // Calculate the new grid state synchronously
+      const nextGrid = grid.map(row => [...row]);
+      nextGrid[r][c] = !nextGrid[r][c];
+      if (r > 0) nextGrid[r - 1][c] = !nextGrid[r - 1][c];
+      if (r < SIZE - 1) nextGrid[r + 1][c] = !nextGrid[r + 1][c];
+      if (c > 0) nextGrid[r][c - 1] = !nextGrid[r][c - 1];
+      if (c < SIZE - 1) nextGrid[r][c + 1] = !nextGrid[r][c + 1];
+
+      setGrid(nextGrid);
+
+      const newMoves = moves + 1;
+      setMoves(newMoves);
+
+      // Check for win condition using the newly calculated grid
+      const allOff = nextGrid.every(row => row.every(cell => !cell));
+      if (allOff) {
+        setGameState('won');
+        if (!bestScore || newMoves < bestScore) {
+          setBestScore(newMoves);
+          localStorage.setItem('lightsOutBest', newMoves.toString());
+        }
+      }
     },
-    [gameState]
+    [gameState, grid, moves, bestScore]
   );
 
   const startGame = useCallback(() => {
