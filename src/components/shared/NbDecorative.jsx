@@ -8,50 +8,6 @@
 import React from 'react';
 import { joinClasses } from './ThemedPrimitives.utils';
 import { useTheme } from './theme-context';
-
-// ⚡ Bolt: Extracted static configuration objects to prevent unnecessary memory allocations on every render cycle.
-const tapeColorMap = {
-  yellow: 'bg-fun-yellow',
-  pink: 'bg-fun-pink',
-  blue: 'bg-accent',
-  white: 'bg-white',
-};
-
-const tapeCornerMap = {
-  'top-left': '-left-3 -top-2 -rotate-45',
-  'top-right': '-right-3 -top-2 rotate-45',
-  'bottom-left': '-left-3 -bottom-2 rotate-45',
-  'bottom-right': '-right-3 -bottom-2 -rotate-45',
-};
-
-/**
- * Tape strip decoration — a diagonal gradient strip that "tapes" content to the page.
- * Place in a corner of a card or image to add a physical metaphor.
- *
- * @param {'top-left'|'top-right'|'bottom-left'|'bottom-right'} corner - Which corner to tape
- * @param {'yellow'|'pink'|'blue'|'white'} color - Tape color
- * @param {string} [className] - Additional CSS classes
- * @param {React.CSSProperties} [style] - Additional inline styles
- * @returns {JSX.Element|null} The tape strip element, or null if in 'liquid' theme
- */
-const TapeStrip = ({ corner = 'top-right', color = 'yellow', className, style }) => {
-  const { theme } = useTheme();
-  if (theme === 'liquid') return null;
-
-  return (
-    <span
-      className={joinClasses(
-        'absolute w-16 h-5 border-2 border-[color:var(--color-border)] opacity-90 pointer-events-none z-10',
-        tapeColorMap[color] ?? tapeColorMap.yellow,
-        tapeCornerMap[corner] ?? tapeCornerMap['top-right'],
-        className
-      )}
-      style={style}
-      aria-hidden="true"
-    />
-  );
-};
-
 // ⚡ Bolt: Extracted static configuration objects to prevent unnecessary memory allocations on every render cycle.
 const stampColorMap = {
   yellow: 'text-fun-yellow border-fun-yellow',
