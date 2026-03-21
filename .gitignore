@@ -38,5 +38,4 @@ skills/
 skills-lock.json
 .agents/*
 !.agents/skills/
-/brainstorm.md
 coverage/
