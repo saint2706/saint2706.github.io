@@ -25,16 +25,15 @@ print(flatten(data))`,
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
       codeTemplate: () => `import ast
 flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
+data = None
 if len(user_input) > 200:
-    data = []
     print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
 else:
     try:
         data = ast.literal_eval(user_input)
     except (ValueError, SyntaxError, TypeError):
-        data = []
         print("Error: Invalid list format")
-if data:
+if data is not None:
     print(f"Input: {data}")
     print(f"Flattened: {flatten(data)}")`,
     },
@@ -122,16 +121,15 @@ print(f"Count: {len(result)} primes")`,
       inputLabel: 'Enter 2D matrix',
       codeTemplate: () => `import ast
 transpose = lambda m: list(map(list, zip(*m)))
+matrix = None
 if len(user_input) > 200:
-    matrix = []
     print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
 else:
     try:
         matrix = ast.literal_eval(user_input)
     except (ValueError, SyntaxError, TypeError):
-        matrix = []
         print("Error: Invalid matrix")
-if matrix:
+if matrix is not None:
     result = transpose(matrix)
     print("Original:")
     for row in matrix: print(row)
