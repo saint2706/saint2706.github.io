@@ -610,4 +610,3 @@ export const getSnippetsByLanguage = language => {
   if (language === 'all') return snippets;
   return snippets.filter(s => s.language === language);
 };
-
