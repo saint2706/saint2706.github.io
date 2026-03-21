@@ -175,3 +175,7 @@ Fixed semantic HTML heading hierarchy in Resume page.
 
 - **[SEO][GEO]** Fixed semantic HTML heading hierarchy in `Resume.jsx`. Replaced `<h3`> tags with `<h2>` tags for top-level sections (Tech Stack, Certifications, Languages) to ensure proper semantic hierarchy since they don't have an `<h2>` parent.
 - **[SEO] Semantic HTML Fix**: Fixed heading hierarchy in `Playground.jsx` by changing the empty state text from `<h3>` to `<h2>` to properly follow the main `<h1>` tag.
+
+4.  **[SEO] Semantic HTML Hierarchy Fix**:
+    - Fixed heading hierarchy in `src/components/pages/Resume.jsx` by changing child headings inside `ThemedSectionHeading` from `h2` to `h3`.
+    - Handled sections: "Tech Stack", "Certifications", and "Languages".
