@@ -179,3 +179,22 @@ Fixed semantic HTML heading hierarchy in Resume page.
 4.  **[SEO] Semantic HTML Hierarchy Fix**:
     - Fixed heading hierarchy in `src/components/pages/Resume.jsx` by changing child headings inside `ThemedSectionHeading` from `h2` to `h3`.
     - Handled sections: "Tech Stack", "Certifications", and "Languages".
+
+## Date: $(date +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Fixed semantic HTML heading hierarchy across multiple pages.
+
+### Changes
+
+1.  **[SEO][GEO] Fixed Semantic Hierarchy in Playground:**
+    - Modified `src/components/pages/Playground.jsx` to use `<h3>` instead of `<h2>` for "No snippets found" and `snippet.title`.
+2.  **[SEO][GEO] Fixed Semantic Hierarchy in Blog:**
+    - Modified `src/components/pages/Blog.jsx` to use `<h3>` instead of `<h2>` for "No articles found" and `blog.title`.
+3.  **[SEO][GEO] Fixed Semantic Hierarchy in Contact:**
+    - Modified `src/components/pages/Contact.jsx` to use `<h3>` instead of `<h2>` for "Send a message", "Draft Opened!", "Get in Touch", "Follow Me", and "Ready to start a conversation?".
+4.  **[SEO][GEO] Fixed Semantic Hierarchy in Projects:**
+    - Modified `src/components/pages/Projects.jsx` to use `<h3>` instead of `<h2>` for `project.title`.

@@ -125,7 +125,7 @@ const Contact = React.memo(() => {
             className="max-w-2xl mx-auto"
           >
             <ThemedCard className="p-8 md:p-10 rounded-3xl">
-              <h2 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h2>
+              <h3 className="font-heading text-2xl font-bold text-primary mb-2">Send a message</h3>
               <p className="text-secondary liquid-helper-text mb-6 font-sans">
                 Tell me what you&apos;re building and I&apos;ll get back via{' '}
                 {resumeData.basics.email}.
@@ -141,7 +141,7 @@ const Contact = React.memo(() => {
                     className="mx-auto h-12 w-12 text-green-600 mb-2"
                     aria-hidden="true"
                   />
-                  <h2 className="text-lg font-bold text-green-800">Draft Opened!</h2>
+                  <h3 className="text-lg font-bold text-green-800">Draft Opened!</h3>
                   <p className="text-green-700">
                     Please check your email client to send the message.
                   </p>
@@ -274,12 +274,12 @@ const Contact = React.memo(() => {
             >
               {/* Get in Touch Card */}
               <ThemedCard className="p-6">
-                <h2
+                <h3
                   className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
                   Get in Touch
-                </h2>
+                </h3>
 
                 <div className="space-y-4">
                   {/* Email */}
@@ -326,12 +326,12 @@ const Contact = React.memo(() => {
 
               {/* Follow Me */}
               <ThemedCard className="p-6">
-                <h2
+                <h3
                   className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
                   style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                 >
                   Follow Me
-                </h2>
+                </h3>
                 <div className="flex gap-4">
                   {resumeData.basics.socials.map(social => (
                     <ThemedButton
@@ -389,9 +389,9 @@ const Contact = React.memo(() => {
                   <Mail size={40} className="text-white" />
                 </div>
 
-                <h2 className="font-heading text-2xl font-bold text-primary mb-4">
+                <h3 className="font-heading text-2xl font-bold text-primary mb-4">
                   Ready to start a conversation?
-                </h2>
+                </h3>
 
                 <p className="text-secondary mb-8 font-sans">
                   Whether it&apos;s making sense of messy data, designing AI/ML solutions, or
