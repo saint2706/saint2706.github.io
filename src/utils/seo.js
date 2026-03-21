@@ -90,7 +90,6 @@ export const DEFAULT_SEO_KEYWORDS = [
  * The primary theme color of the site.
  * @constant {string}
  */
-export const THEME_COLOR = '#1e1e2e'; // dark background
 
 /* ──────────────────────────────────────────────────────── */
 /*  JSON-LD Schema Generators                              */

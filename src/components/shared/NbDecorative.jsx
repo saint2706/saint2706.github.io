@@ -34,7 +34,7 @@ const tapeCornerMap = {
  * @param {React.CSSProperties} [style] - Additional inline styles
  * @returns {JSX.Element|null} The tape strip element, or null if in 'liquid' theme
  */
-export const TapeStrip = ({ corner = 'top-right', color = 'yellow', className, style }) => {
+const TapeStrip = ({ corner = 'top-right', color = 'yellow', className, style }) => {
   const { theme } = useTheme();
   if (theme === 'liquid') return null;
 
