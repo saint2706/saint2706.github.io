@@ -170,4 +170,81 @@ describe('SimonSays', () => {
     const scoreElements = screen.getAllByText('1');
     expect(scoreElements.length).toBeGreaterThan(0);
   });
+
+  it('sets a new high score when achieving a higher score and triggers new high score announcement', async () => {
+    // Start with a high score of 0
+    render(<SimonSays />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    // Mock sequence logic: Press correct button for round 1
+    const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
+    fireEvent.click(button0);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Wait for next sequence
+    });
+
+    // Now on round 2, wait for sequence to play then intentionally press wrong button to end game
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Let the sequence display fully
+    });
+
+    const button1 = screen.getByRole('button', { name: /Pink button \(key 2\)/i });
+    fireEvent.click(button1);
+
+    const gameOvers = screen.getAllByText(/Game Over!/i);
+    expect(gameOvers.length).toBeGreaterThan(0);
+
+    // Verify localStorage was updated with the new high score
+    expect(localStorage.getItem('simonHighScore')).toBe('1');
+
+    // Verify the visual announcement
+    expect(screen.getByText('New High Score!')).toBeInTheDocument();
+  });
+
+  it('advances playerIndex when clicking correctly mid-sequence', async () => {
+    // Mock random to generate sequence [0, 0]
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+
+    render(<SimonSays />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    // Round 1
+    const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
+    fireEvent.click(button0);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Advance to Round 2
+    });
+
+    // Round 2 (sequence is [0, 0])
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Let sequence play
+    });
+
+    // Click the first correct button. It shouldn't end the round yet.
+    fireEvent.click(button0);
+
+    // Should still be waiting for the next input, score shouldn't jump yet
+    expect(screen.getByText('Your turn! Repeat the pattern. Round 2.')).toBeInTheDocument();
+
+    // Click the second correct button
+    fireEvent.click(button0);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(800); // Advance to Round 3
+    });
+
+    // Score should now be 2
+    const scoreElements = screen.getAllByText('2');
+    expect(scoreElements.length).toBeGreaterThan(0);
+  });
 });
