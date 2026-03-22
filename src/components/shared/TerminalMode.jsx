@@ -350,7 +350,7 @@ Just kidding... but seriously, let's chat!
                   className={
                     isLiquid
                       ? 'text-[color:var(--text-muted)] hover:text-[color:var(--text)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] rounded'
-                      : 'text-gray-500 hover:text-white transition-colors'
+                      : 'text-gray-500 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded'
                   }
                   aria-label="Close terminal"
                 >
