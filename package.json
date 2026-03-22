@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
+    "audit:baseline": "pnpm lint && pnpm test:run && pnpm build",
     "test:security": "node scripts/test-security-utils.js",
     "test:csp": "node scripts/test-csp.js",
     "verify:sri": "node scripts/verify-sri.js",

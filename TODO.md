@@ -17,30 +17,43 @@
 
 ## Priority 0 — Baseline Audit and Success Metrics
 
+**Status:** In progress
+
+> Keep this section at **Not started** until the first baseline artifact is committed, move it to **In progress** once at least one artifact exists, and mark it **Complete** only after every verification item below is checked.
+
 ### 0.1 Establish the current baseline for performance, bundle size, and interaction quality
 
 **Why this matters**
 
 - The roadmap makes aggressive claims about faster routing, smaller bundles, and smoother interaction, but the repo needs a current baseline before work starts.
 
+**Artifacts**
+
+- [x] `docs/audits/baseline-2026-03-22.md`
+- [ ] `docs/audits/lighthouse-home.json`
+- [ ] `docs/audits/lighthouse-playground.json`
+
 **Actionable tasks**
 
-- Record the current production build size and identify the largest client-side chunks.
-- Capture Lighthouse-style targets for LCP, INP, and CLS on the homepage and one project/detail route.
-- Inventory where Framer Motion, custom modal logic, and `useEffect`-driven fetching are currently used.
-- Document the findings in a short engineering note so future PRs can compare against a stable reference.
+- [x] Record the current production build size and identify the largest client-side chunks.
+- [x] Capture the current audit route pair as `/` and `/playground`, then define Lighthouse-style targets for LCP, INP, and CLS on those existing routes.
+- [x] Inventory where Framer Motion, custom modal logic, and `useEffect`-driven async/browser work are currently used.
+- [x] Document the findings in a short engineering note so future PRs can compare against a stable reference.
+- [x] Add a repeatable baseline runbook tied to the repo’s existing scripts.
 
 **Verification**
 
-- Run `pnpm build` and save the generated bundle summary.
-- Run the project’s existing test and lint suite before making architecture changes.
-- Confirm there is a written baseline artifact checked into the repo or attached to the implementation PR.
+- [ ] Run Lighthouse for `/` and save the JSON output to `docs/audits/lighthouse-home.json`.
+- [ ] Run Lighthouse for `/playground` and save the JSON output to `docs/audits/lighthouse-playground.json`.
+- [x] Run `pnpm build` and save the generated bundle summary.
+- [x] Run the project’s existing test and lint suite before making architecture changes.
+- [x] Confirm there is a written baseline artifact checked into the repo or attached to the implementation PR.
 
 **Definition of done**
 
-- Baseline metrics exist for performance and bundle size.
-- The major refactor targets are listed by file/component.
-- Future tasks below can cite concrete before/after numbers.
+- [ ] Baseline metrics exist for performance and bundle size.
+- [x] The major refactor targets are listed by file/component.
+- [ ] Future tasks below can cite concrete before/after numbers.
 
 ---
 
