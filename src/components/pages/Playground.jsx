@@ -269,9 +269,9 @@ const Playground = React.memo(() => {
                 className="col-span-full text-center py-12"
               >
                 <Code2 className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
-                <h2 className="mt-4 text-lg font-heading font-bold text-[color:var(--text-primary)]">
+                <h3 className="mt-4 text-lg font-heading font-bold text-[color:var(--text-primary)]">
                   No snippets found
-                </h2>
+                </h3>
                 <p className="mt-2 text-sm text-[color:var(--text-secondary)] font-sans">
                   Try selecting a different category.
                 </p>
@@ -379,9 +379,9 @@ const SnippetCard = React.memo(
               ) : (
                 <Palette size={18} className="text-fun-pink" aria-hidden="true" />
               )}
-              <h2 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
+              <h3 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
                 {snippet.title}
-              </h2>
+              </h3>
             </div>
             <ThemedChip
               variant={snippet.language === 'python' ? 'accent' : 'pink'}

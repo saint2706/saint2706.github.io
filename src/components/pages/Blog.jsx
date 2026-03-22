@@ -341,9 +341,9 @@ const Blog = React.memo(() => {
               >
                 <FileQuestion size={48} className="text-muted" aria-hidden="true" />
               </div>
-              <h2 className="text-xl font-heading font-bold text-primary mb-2">
+              <h3 className="text-xl font-heading font-bold text-primary mb-2">
                 No articles found
-              </h2>
+              </h3>
               <p className="text-secondary mb-6 max-w-md font-sans">
                 We couldn&apos;t find any posts
                 {searchTerm && <> matching &quot;{searchTerm}&quot;</>}
@@ -469,7 +469,7 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
         {/* Title */}
         <div className="flex items-start gap-2 mb-3">
           <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
-          <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">{blog.title}</h2>
+          <h3 className="text-lg font-heading font-bold text-primary line-clamp-2">{blog.title}</h3>
         </div>
 
         {/* Summary */}
