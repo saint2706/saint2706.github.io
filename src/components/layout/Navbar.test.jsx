@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import Navbar from './Navbar';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 
 // Mock Theme Context
 vi.mock('../shared/theme-context', () => ({
@@ -134,6 +134,120 @@ describe('Navbar', () => {
     renderNavbar();
 
     expect(screen.getByLabelText('Open settings')).toBeInTheDocument();
+  });
+
+  it('closes menu when location changes', async () => {
+    // To properly simulate location change in BrowserRouter, we need a way to navigate.
+    // We can use window.history.pushState to force a path change which the component
+    // will pick up through the useLocation hook from react-router-dom
+    const TestComponent = () => {
+      return (
+        <div>
+          <Navbar onOpenSettings={mockOnOpenSettings} />
+        </div>
+      );
+    };
+
+    const { container } = render(
+      <BrowserRouter>
+        <TestComponent />
+      </BrowserRouter>
+    );
+
+    // Initial state: menu closed, path is /
+    // Let's set a path to start with
+    window.history.pushState({}, '', '/initial');
+
+    // Re-render to pick up new path if needed
+    fireEvent.click(document.body);
+
+    // Open menu
+    const menuBtn = screen.getByLabelText('Open navigation menu');
+    fireEvent.click(menuBtn);
+
+    await waitFor(() => {
+      expect(container.querySelector('#mobile-nav-menu')).toBeInTheDocument();
+    });
+
+    // We can't easily change location without memory router in test without causing full navigation,
+    // but we can try to click a link
+    const resumeLinks = screen.getAllByText('Resume');
+    const mobileResumeLink = resumeLinks[resumeLinks.length - 1]; // Click the mobile menu link
+    fireEvent.click(mobileResumeLink);
+
+    // Wait for the menu to not be in the document
+    await waitFor(() => {
+      expect(container.querySelector('#mobile-nav-menu')).not.toBeInTheDocument();
+    });
+
+    // Test the specific branch of location change without menu being open
+    const contactLinks = screen.getAllByText('Contact');
+    fireEvent.click(contactLinks[0]); // Click desktop link
+  });
+
+  it('resets isScrolled when theme changes from liquid to non-liquid', async () => {
+    // To hit lines 80-82 we need:
+    // 1. isLiquid previously true, now false.
+    // 2. isScrolled must be true.
+
+    let currentTheme = 'liquid';
+    useTheme.mockImplementation(() => ({ theme: currentTheme }));
+
+    const { container, rerender } = renderNavbar();
+
+    // Trigger scroll to set isScrolled = true
+    fireEvent.scroll(window, { target: { scrollY: 100 } });
+
+    // Ensure state updates and verify 'lg-nav-compact' class is present when scrolled in liquid theme
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      // Find nav inside container and assert
+      const nav = container.querySelector('nav');
+      expect(nav).toHaveClass('lg-nav-compact');
+    });
+
+    // Change theme to neubrutalism
+    currentTheme = 'neubrutalism';
+
+    // Force rerender by passing a different prop
+    rerender(
+      <BrowserRouter>
+        <Navbar onOpenSettings={mockOnOpenSettings} forceRerenderProp={true} />
+      </BrowserRouter>
+    );
+
+    // Verify isScrolled reset by checking 'lg-nav-compact' class is removed
+    await waitFor(() => {
+      const nav = container.querySelector('nav');
+      expect(nav).not.toHaveClass('lg-nav-compact');
+    });
+  });
+
+  it('closes menu when path changes', () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Navbar onOpenSettings={mockOnOpenSettings} />
+        <Routes>
+          <Route path="/" element={<div data-testid="page">Home</div>} />
+          <Route path="/projects" element={<div data-testid="page">Projects Page</div>} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // Open menu
+    const menuBtn = screen.getByLabelText('Open navigation menu');
+    fireEvent.click(menuBtn);
+    expect(container.querySelector('#mobile-nav-menu')).toBeInTheDocument();
+
+    // Click a link that causes navigation
+    const projectsLink = screen.getAllByText('Projects')[0];
+    fireEvent.click(projectsLink);
+
+    // We expect it to be closed immediately since state changes synchronously on path update
+    expect(container.querySelector('#mobile-nav-menu')).not.toBeInTheDocument();
   });
 
   it('closes mobile menu on settings click from mobile menu', async () => {
