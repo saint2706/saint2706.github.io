@@ -25,7 +25,10 @@
     "generate:llms": "node scripts/generate-llms.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:geo": "pnpm run generate:llms && pnpm run generate:sitemap",
-    "prebuild": "pnpm run generate:geo"
+    "prebuild": "pnpm run generate:geo",
+    "audit:lighthouse:install-browser": "playwright install chromium",
+    "audit:lighthouse": "node scripts/run-lighthouse-baseline.mjs",
+    "audit:baseline:full": "pnpm audit:baseline && pnpm audit:lighthouse"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.1.1",
@@ -49,6 +52,7 @@
     "@vitejs/plugin-react": "^5.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.27",
+    "chrome-launcher": "^1.2.1",
     "eslint": "^9.39.2",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -56,7 +60,9 @@
     "globals": "^17.4.0",
     "html-to-text": "^9.0.5",
     "jsdom": "^28.1.0",
+    "lighthouse": "^13.0.3",
     "lint-staged": "^16.3.3",
+    "playwright": "^1.58.2",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",

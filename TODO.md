@@ -17,7 +17,7 @@
 
 ## Priority 0 — Baseline Audit and Success Metrics
 
-**Status:** In progress
+**Status:** Complete
 
 > Keep this section at **Not started** until the first baseline artifact is committed, move it to **In progress** once at least one artifact exists, and mark it **Complete** only after every verification item below is checked.
 
@@ -30,8 +30,8 @@
 **Artifacts**
 
 - [x] `docs/audits/baseline-2026-03-22.md`
-- [ ] `docs/audits/lighthouse-home.json`
-- [ ] `docs/audits/lighthouse-playground.json`
+- [x] `docs/audits/lighthouse-home.json`
+- [x] `docs/audits/lighthouse-playground.json`
 
 **Actionable tasks**
 
@@ -43,17 +43,17 @@
 
 **Verification**
 
-- [ ] Run Lighthouse for `/` and save the JSON output to `docs/audits/lighthouse-home.json`.
-- [ ] Run Lighthouse for `/playground` and save the JSON output to `docs/audits/lighthouse-playground.json`.
+- [x] Run Lighthouse for `/` and save the JSON output to `docs/audits/lighthouse-home.json`.
+- [x] Run Lighthouse for `/playground` and save the JSON output to `docs/audits/lighthouse-playground.json`.
 - [x] Run `pnpm build` and save the generated bundle summary.
 - [x] Run the project’s existing test and lint suite before making architecture changes.
 - [x] Confirm there is a written baseline artifact checked into the repo or attached to the implementation PR.
 
 **Definition of done**
 
-- [ ] Baseline metrics exist for performance and bundle size.
+- [x] Baseline metrics exist for performance and bundle size.
 - [x] The major refactor targets are listed by file/component.
-- [ ] Future tasks below can cite concrete before/after numbers.
+- [x] Future tasks below can cite concrete before/after numbers.
 
 ---
 
