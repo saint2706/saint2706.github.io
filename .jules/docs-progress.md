@@ -46,3 +46,8 @@
 - Audited documentation and verified no broken links in docs/.
 - Fixed broken links in `.agents/skills` documentation.
 - Added missing module-level JSDocs to `src/App.jsx` and `src/main.jsx`.
+
+## 2026-03-21
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Fixed a broken link in `README.md` that was pointing to the non-existent `docs/README.md` directory.
