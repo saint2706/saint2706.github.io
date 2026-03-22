@@ -178,13 +178,3 @@ export const TypingIndicator = () => {
     </div>
   );
 };
-
-/**
- * Collection of all skeleton loader components.
- * @type {Object}
- * @property {Function} BlogSkeleton - The blog post skeleton placeholder.
- * @property {Function} ProjectSkeleton - The project card skeleton placeholder.
- * @property {Function} ChatSkeleton - The chat message skeleton placeholder.
- * @property {Function} TypingIndicator - The animated typing indicator.
- */
-export default { BlogSkeleton, ProjectSkeleton, ChatSkeleton, TypingIndicator };

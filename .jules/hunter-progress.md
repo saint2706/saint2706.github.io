@@ -74,3 +74,11 @@
 - **Fixed Lint Warnings**: Resolved `react-hooks/set-state-in-effect` lint warnings in `src/components/games/LightsOut.jsx`, `src/components/shared/TerminalMode.jsx`, and `src/components/shared/CommandPalette.jsx` by refactoring state updates into the render phase or event handlers without using `eslint-disable-next-line`.
 - **Fixed Lint Warnings**: Resolved `react-hooks/exhaustive-deps` lint warning in `src/components/layout/Navbar.jsx` by refactoring dependency arrays and utilizing render phase state updates.
 - **Verified**: Build, Lint, and Tests passed.
+
+## Session 14
+
+- **Fixed Dead Code**: Removed unused file `src/components/home/FloatingIcon.jsx` and its import in `src/components/home/Hero.jsx`.
+- **Fixed Unused Dependencies**: Removed unused dependencies `date-fns`, `date-fns-tz`, `@tailwindcss/line-clamp`, `baseline-browser-mapping`, and `markdown-link-check` from `package.json`.
+- **Fixed Duplicate Exports**: Removed default export of `useFocusTrap` from `src/components/shared/useFocusTrap.js` as it is already exported as a named export.
+- **Fixed Unused Exports**: Removed unused exports from `src/components/shared/NbDecorative.jsx`, `src/components/shared/SkeletonLoader.jsx`, `src/data/snippets.js`, and `src/utils/seo.js`.
+- **Verified**: Build and Lint passed ✅.

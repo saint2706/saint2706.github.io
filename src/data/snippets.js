@@ -618,13 +618,3 @@ export const getSnippetsByLanguage = language => {
   if (language === 'all') return snippets;
   return snippets.filter(s => s.language === language);
 };
-
-// Get unique categories
-/**
- * Extracts a unique list of snippet categories from the available snippets.
- *
- * @returns {Array<string>} An array of unique category names.
- */
-export const getCategories = () => {
-  return [...new Set(snippets.map(s => s.category))];
-};
