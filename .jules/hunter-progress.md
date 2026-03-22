@@ -82,3 +82,8 @@
 - **Fixed Duplicate Exports**: Removed default export of `useFocusTrap` from `src/components/shared/useFocusTrap.js` as it is already exported as a named export.
 - **Fixed Unused Exports**: Removed unused exports from `src/components/shared/NbDecorative.jsx`, `src/components/shared/SkeletonLoader.jsx`, `src/data/snippets.js`, and `src/utils/seo.js`.
 - **Verified**: Build and Lint passed ✅.
+
+## Session 15
+
+- **Fixed Duplicate Code**: Removed duplicate import of `./theme-context` in `src/components/shared/SettingsModal.jsx`.
+- **Verified**: Build and Lint passed ✅.
