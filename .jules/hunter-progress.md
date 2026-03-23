@@ -87,3 +87,8 @@
 
 - **Fixed Duplicate Code**: Removed duplicate import of `./theme-context` in `src/components/shared/SettingsModal.jsx`.
 - **Verified**: Build and Lint passed ✅.
+
+## Session 16
+
+- **Fixed Unused Exports**: Removed unused exports from `src/components/shared/chatHistory.js` (`MAX_HISTORY_CONTEXT`) and `src/data/snippets.js` (`snippets`).
+- **Verified**: Build and Lint passed ✅.
