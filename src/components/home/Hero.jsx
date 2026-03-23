@@ -391,4 +391,7 @@ const Hero = React.memo(() => {
 
 Hero.displayName = 'Hero';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default Hero;

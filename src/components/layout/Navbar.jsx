@@ -324,4 +324,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
 
 Navbar.displayName = 'Navbar';
 
+/**
+ * @type {React.NamedExoticComponent<{onOpenSettings: function(): void}>}
+ */
 export default Navbar;

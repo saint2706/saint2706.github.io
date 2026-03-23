@@ -57,3 +57,8 @@
 - Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
 - Verified all exported functions and constants in the `src/` directory are properly documented with JSDocs.
 - No new broken links, unformatted code, or missing JSDocs were found.
+
+## 2026-03-23
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Added `@type` JSDoc annotations to default exports in `Hero`, `Navbar`, `Footer`, and `Playground` components to fix missing documentation warnings.
