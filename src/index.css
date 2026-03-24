@@ -576,6 +576,7 @@
 
 /* Gentle float bob for decorative elements */
 @keyframes nb-float-bob {
+
   0%,
   100% {
     transform: translateY(0) rotate(var(--sticker-rotate, 2deg));
@@ -609,6 +610,7 @@
 
 /* Blinking cursor for code snippets */
 @keyframes nb-blink {
+
   0%,
   100% {
     opacity: 1;
@@ -697,20 +699,16 @@
   pointer-events: none;
   opacity: 0.06;
   background-image:
-    repeating-linear-gradient(
-      45deg,
+    repeating-linear-gradient(45deg,
       var(--nb-shadow-color, #000) 0,
       var(--nb-shadow-color, #000) 1px,
       transparent 0,
-      transparent 50%
-    ),
-    repeating-linear-gradient(
-      -45deg,
+      transparent 50%),
+    repeating-linear-gradient(-45deg,
       var(--nb-shadow-color, #000) 0,
       var(--nb-shadow-color, #000) 1px,
       transparent 0,
-      transparent 50%
-    );
+      transparent 50%);
   background-size: 10px 10px;
   border-radius: inherit;
 }
@@ -1038,12 +1036,10 @@
     inset: 0;
     border-radius: inherit;
     padding: 0.5px;
-    background: linear-gradient(
-      180deg,
-      var(--specular-top, rgba(255, 255, 255, 0.8)) 0%,
-      rgba(255, 255, 255, 0.2) 40%,
-      rgba(255, 255, 255, 0.05) 100%
-    );
+    background: linear-gradient(180deg,
+        var(--specular-top, rgba(255, 255, 255, 0.8)) 0%,
+        rgba(255, 255, 255, 0.2) 40%,
+        rgba(255, 255, 255, 0.05) 100%);
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -1269,6 +1265,7 @@
 
 /* Hero gradient orb floating animation */
 @keyframes lg-orb-drift {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -1478,6 +1475,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .lg-spring-hover,
   .lg-surface-1,
   .lg-surface-2,
@@ -1533,6 +1531,7 @@
 
 /* ===== PRINT STYLES ===== */
 @media print {
+
   /* Show link URLs */
   a[href]::after {
     content: ' (' attr(href) ')';
@@ -1614,6 +1613,7 @@
     opacity: 0;
     transform: scale(0.92) translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -1700,11 +1700,11 @@
   padding: 1.25rem 1.5rem;
 }
 
-.settings-section + .settings-section {
+.settings-section+.settings-section {
   border-top: 1px solid var(--border-soft, rgba(0, 0, 0, 0.07));
 }
 
-.settings-modal--nb .settings-section + .settings-section {
+.settings-modal--nb .settings-section+.settings-section {
   border-top: 2px solid var(--border-color, #000);
 }
 
@@ -1815,7 +1815,7 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.swatch-nb-grid > div {
+.swatch-nb-grid>div {
   height: 100%;
 }
 
@@ -1958,6 +1958,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .settings-modal,
   .settings-toggle-thumb,
   .settings-theme-card {

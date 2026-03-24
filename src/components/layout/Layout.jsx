@@ -236,9 +236,8 @@ const Layout = ({ children }) => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${
-        isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
-      }`}
+      className={`min-h-screen flex flex-col text-primary overflow-hidden relative ${isLiquid ? 'lg-ambient-bg' : 'bg-primary nb-paper-bg'
+        }`}
       style={{ background: isLiquid ? 'var(--bg)' : undefined }}
       data-theme={theme}
       data-contrast={prefersContrast ? 'more' : 'no-preference'}
