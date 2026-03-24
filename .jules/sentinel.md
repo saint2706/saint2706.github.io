@@ -81,3 +81,13 @@
 
 - **Issue**: A high severity vulnerability (Prototype Pollution via parse() in NodeJS flatted) was found in `flatted` <= `3.4.1` via `pnpm audit`.
 - **Fix**: Added `"flatted": ">=3.4.2"` to `pnpm.overrides` in `package.json` to resolve the vulnerability. This successfully clears the `test:security-full` script warnings and ensures defense against Prototype Pollution in the dependency tree.
+
+### Security Improvement: Pyodide ast.literal_eval DoS Protection
+
+- **Issue**: In `src/data/snippets.js`, user input was passed directly into `ast.literal_eval` without length limitations in the Pyodide WebAssembly execution environment. While `ast.literal_eval` is safer than `eval()`, processing maliciously crafted, extremely deeply nested structures (e.g., deeply nested lists or matrices) can crash the Python interpreter via a stack overflow, leading to a Denial of Service (DoS) in the user's browser tab.
+- **Fix**: Added explicit input length validation (`if len(user_input) > 200:`) within the Python code templates that utilize `ast.literal_eval()`. This acts as an effective defense-in-depth measure, preemptively rejecting massive or infinitely recursive payloads before they hit the Python parser, securing the WebAssembly execution sandbox against client-side memory exhaustion or interpreter crashes.
+
+### Security Improvement: Safe iframe rendering using srcDoc
+
+- **Issue**: The `LivePreview` component in `src/components/pages/Playground.jsx` used `doc.write()` inside an `iframe` with `sandbox="allow-same-origin"` to render CSS previews dynamically. Using `doc.write()` is not a secure or modern practice and can expose the application to XSS vulnerabilities, especially when using an unsafe `sandbox` attribute like `allow-same-origin`.
+- **Fix**: Replaced `doc.write()` with `srcDoc` attribute on the `iframe` to safely render the HTML structure. Also, restricted the iframe isolation significantly by setting `sandbox=""` instead of `sandbox="allow-same-origin"`, effectively preventing script execution and same-origin data access completely. This strengthens the application's defense against potential XSS attacks in the `LivePreview` sandbox context.

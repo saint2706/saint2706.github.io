@@ -1,291 +1,467 @@
-# 📋 TODO — Portfolio "Quantum Leap" Roadmap
+# Portfolio Modernization TODO
 
-> **Generated from:** `brainstorm.md` (March 2026 Edition)
-> **Last Updated:** 2026-03-21
-> **Principle:** Less JavaScript = More Capability. Native APIs > npm packages.
-
----
-
-## Legend
-
-- `[ ]` — Not started
-- `[~]` — In progress
-- `[x]` — Complete
-- 🔥 — High impact | 💤 — Low effort | ⚠️ — Has dependencies
+> **Last updated:** 2026-03-22  
+> **Source:** Refactored from `brainstorm.md` into an execution-focused plan  
+> **Goal:** Convert the portfolio vision into prioritized, verifiable delivery work that improves UX, performance, maintainability, and the project’s differentiated “Post-Brutalist” identity.
 
 ---
 
-## 🏆 Tier 1 — High-Impact, Stack-Native (Q1–Q2 2026)
+## Working Principles
 
-### 1. 🌊 Liquid Page Transitions `🔥🔥🔥` `Medium Effort` `Q1`
-
-> Pages morph instead of loading — native iOS-like navigation feel using the now-Baseline View Transitions API.
-
-- [ ] **Integrate View Transitions API with React Router v7**
-  - Hook into `document.startViewTransition()` on route changes
-  - Ensure sidebar/header elements persist across transitions (zero flicker)
-- [ ] **Project card → detail page morph**
-  - Assign `view-transition-name` to project card thumbnails
-  - Card thumbnail grows to fill viewport and becomes the hero image of the detail page
-- [ ] **Add graceful fallback**
-  - Content updates normally without animation in unsupported browsers
-- [ ] **Test across Baseline browsers**
-  - Verify in Chrome, Firefox 144+, Safari 18+, Edge
-
-⚠️ **Deps:** View Transitions API (Baseline Oct '25), React Router v7
+- Prefer **native web platform APIs** before adding dependencies.
+- Pair every feature task with a **measurable verification step**.
+- Ship in thin vertical slices: design, implementation, accessibility, and performance should land together.
+- Preserve the portfolio’s core identity: **bold, tactile, interactive, and clearly hand-crafted**.
 
 ---
 
-### 2. ⚡ Predictive Routing (Speculation Rules) `🔥🔥🔥` `Low Effort` `Q1`
+## Priority 0 — Baseline Audit and Success Metrics
 
-> Pages are pre-rendered before the user clicks. Sub-50ms route transitions.
+**Status:** Complete
 
-- [ ] **Add `<script type="speculationrules">` to the document head**
-  - Configure `"eagerness": "moderate"` to balance bandwidth vs. speed
-- [ ] **Detect hover/focus on nav links → trigger `prerender`**
-  - Pre-render the top 3 most-likely-next pages
-- [ ] **Remove manual `<link rel="prefetch">` and SPA route preloading logic**
-  - Native API replaces these patterns
-- [ ] **Measure INP improvement**
-  - Target: INP < 100ms, perceived zero-latency navigation
-  - No spinners, no skeleton screens — the page is just _there_
+> Keep this section at **Not started** until the first baseline artifact is committed, move it to **In progress** once at least one artifact exists, and mark it **Complete** only after every verification item below is checked.
 
-⚠️ **Deps:** None (native API, Chrome + Edge)
+### 0.1 Establish the current baseline for performance, bundle size, and interaction quality
 
----
+**Why this matters**
 
-### 3. 📐 Spatial UI with CSS Anchor Positioning `🔥🔥` `Low Effort` `Q2`
+- The roadmap makes aggressive claims about faster routing, smaller bundles, and smoother interaction, but the repo needs a current baseline before work starts.
 
-> Tooltips, popovers, and contextual menus that position themselves — zero JavaScript.
+**Artifacts**
 
-- [ ] **Skill tag tooltips on project cards**
-  - Hover a tag like "React" → anchored tooltip shows proficiency level + years of experience
-  - Use `anchor-name`, `position-anchor`, `position-area` CSS properties
-- [ ] **Navigation breadcrumb mini-maps**
-  - Anchored mini-maps showing location within a project deep-dive
-- [ ] **Command Palette → Popover API migration**
-  - Replace custom focus-trap JS with `popover` attribute
-  - Built-in light-dismiss, focus management, top-layer rendering
-- [ ] **Delete `@floating-ui` / positioning libraries**
-  - Zero JS for spatial UI — pure CSS
+- [x] `docs/audits/baseline-2026-03-22.md`
+- [x] `docs/audits/lighthouse-home.json`
+- [x] `docs/audits/lighthouse-playground.json`
 
-⚠️ **Deps:** CSS Anchor Positioning (Baseline Jan '26), Popover API (Baseline Jan '25)
+**Actionable tasks**
 
----
+- [x] Record the current production build size and identify the largest client-side chunks.
+- [x] Capture the current audit route pair as `/` and `/playground`, then define Lighthouse-style targets for LCP, INP, and CLS on those existing routes.
+- [x] Inventory where Framer Motion, custom modal logic, and `useEffect`-driven async/browser work are currently used.
+- [x] Document the findings in a short engineering note so future PRs can compare against a stable reference.
+- [x] Add a repeatable baseline runbook tied to the repo’s existing scripts.
 
-### 4. 🗣️ Living AI Assistant (Gemini 2.5 Live) `🔥🔥🔥` `High Effort` `Q3`
+**Verification**
 
-> Upgrade the AI roast bot into a real-time conversational entity that can see and speak.
+- [x] Run Lighthouse for `/` and save the JSON output to `docs/audits/lighthouse-home.json`.
+- [x] Run Lighthouse for `/playground` and save the JSON output to `docs/audits/lighthouse-playground.json`.
+- [x] Run `pnpm build` and save the generated bundle summary.
+- [x] Run the project’s existing test and lint suite before making architecture changes.
+- [x] Confirm there is a written baseline artifact checked into the repo or attached to the implementation PR.
 
-- [ ] **Voice mode implementation**
-  - Integrate Gemini 2.5 Live API via WebSocket streaming
-  - Use `gemini-live-2.5-flash-native-audio` model
-  - Support barge-in (interrupt mid-sentence)
-- [ ] **Multimodal roast feature**
-  - Drag-and-drop / paste screenshot → Gemini sees it and critiques it
-  - Implement affective dialog (matches user's tone)
-- [ ] **Streaming UI with neubrutalist typewriter aesthetic**
-  - Use React 19's streaming + `useOptimistic` for character-by-character rendering
-- [ ] **Conversation memory**
-  - Leverage Gemini's 1M token context window for full conversation history
-- [ ] **Design the voice interaction UI**
-  - Microphone button, audio waveform visualizer, response indicator
+**Definition of done**
 
-⚠️ **Deps:** Gemini 2.5 Live API, WebSocket infrastructure
+- [x] Baseline metrics exist for performance and bundle size.
+- [x] The major refactor targets are listed by file/component.
+- [x] Future tasks below can cite concrete before/after numbers.
 
 ---
 
-## 🎨 Tier 2 — Design & Experience Innovation (Q2–Q3 2026)
+## Priority 1 — UX and Navigation Upgrades
 
-### 5. 📜 Archival Index Blog/Lessons Redesign `🔥🔥` `High Effort` `Q3`
+### 1.1 Implement view-transition-driven page navigation
 
-> Curriculum and blog section redesigned as an archival catalog — turning information density into a design statement.
+**Status:** In progress
 
-- [ ] **Design the archival catalog layout**
-  - Clean monospaced grids, strong hierarchical typography
-  - Visible metadata: dates, tags, reading times
-  - Structured like a library index card system
-- [ ] **Implement CSS scroll-driven animations for browsing**
-  - Progress indicators that scroll with you
-  - Cards unfold on viewport entry
-- [ ] **Optimize for the 140-day data engineering curriculum's volume**
-  - Ensure the archival approach handles massive content gracefully
+**Outcome**
 
----
+- Route changes should feel continuous rather than abrupt, especially when moving from project grids into project detail views.
 
-### 6. 🎮 Gamified Portfolio Navigation `🔥` `High Effort` `Q3`
+**Actionable tasks**
 
-> Make exploring the portfolio an adventure, not a scroll.
+- [ ] Identify high-value transitions, starting with project card → project detail and global navigation link → destination page.
+- [ ] Add route-aware view transition hooks around navigation events.
+- [ ] Assign stable `view-transition-name` values to shared visual elements such as thumbnails, headings, and persistent chrome.
+- [ ] Build a graceful fallback path for browsers that do not support the View Transitions API.
+- [ ] Ensure transitions do not interfere with keyboard navigation, focus restoration, or reduced-motion preferences.
 
-- [ ] **XP system**
-  - Track sections visited (About → Projects → Blog → Contact)
-  - Accumulate XP → unlock easter eggs at thresholds (hidden theme variant, secret project, meme)
-  - Persist with `localStorage`
-- [ ] **Achievement badges**
-  - "Viewed 5 projects" → Badge unlocked
-  - "Sent a message" → Badge unlocked
-  - Display in a tiny HUD corner
-  - Use CSS `@starting-style` for badge reveal animations
-- [ ] **Interactive site map**
-  - Non-linear exploration via a game-world-map-style navigation
-- [ ] **Use `<Activity />` to preserve XP state across route changes**
-- [ ] **Quality check: fun and surprising, NOT gimmicky**
-  - Gamification _reveals_ content, never gatekeeps it
+**Verification**
 
----
+- [ ] With View Transitions enabled, project card → project detail animates shared thumbnail and title without flicker.
+- [ ] With API disabled (feature flag or browser without support), navigation remains correct and instant.
+- [ ] With reduced motion enabled, transition animation is removed/minimized.
+- [ ] Keyboard navigation preserves focus target on destination page.
+- [ ] No layout flash in persistent header/chrome during route change.
+- [ ] `pnpm test:run` and `pnpm build` complete successfully post-change.
 
-### 7. 🧱 Textured Neubrutalism 2.0 `🔥🔥` `Medium Effort` `Q2`
+**Definition of done**
 
-> Evolve flat neubrutalism with digital textures — making the interface feel tactile and handmade.
+- At least one core route flow uses shared-element or layout-preserving transitions.
+- Unsupported browsers still receive correct content updates without regressions.
+- Accessibility behavior remains intact.
 
-- [ ] **Noise/grain overlays on card backgrounds**
-  - Use CSS `filter` or SVG `feTurbulence`
-- [ ] **Halftone dot patterns on hover states**
-  - Print-design-inspired interaction feedback
-- [ ] **Paper-fold effects on card corners**
-  - CSS 3D transforms + shadow tricks
-- [ ] **Rubber-stamp aesthetic for achievement badges**
-  - Grain + rotation + opacity variation
+### 1.2 Add predictive routing with Speculation Rules where safe
 
----
+**Outcome**
 
-### 8. 🔮 Organic Hero Section (Anti-Grid) `🔥🔥🔥` `High Effort` `Q2`
+- High-intent navigations should feel instant without over-consuming bandwidth.
 
-> Break free from "image left, text right." The hero should feel like art, not a template.
+**Actionable tasks**
 
-- [ ] **Massive kinetic typography**
-  - Name animates in with `@starting-style`, settles into bold, slightly rotated placement
-- [ ] **Overlapping elements design**
-  - Text overlaps image, image bleeds off-screen — intentionally breaking the grid
-- [ ] **Cursor-reactive depth (lightweight parallax)**
-  - Elements respond to mouse position using CSS `perspective-*` and custom properties
-  - Lightweight mouse listener updates CSS custom props — no heavy JS libs
-- [ ] **Design review: ensure it looks handcrafted, NEVER templated**
+- Identify routes with the highest likelihood of next-click behavior, such as top navigation items and featured project links.
+- Add speculation rules with conservative eagerness settings.
+- Scope prerendering to routes that are safe to prefetch and do not trigger sensitive side effects.
+- Add guardrails so the feature can be disabled or limited if it hurts mobile bandwidth or debugging.
 
----
+**Verification**
 
-## ⚙️ Tier 3 — Performance & Architecture (Ongoing)
+- Confirm speculation rules are emitted correctly in production output.
+- Manually verify that prerendered pages do not execute unsafe side effects.
+- Compare repeat navigation timing before and after the change.
+- Run `pnpm build` and validate that generated HTML still passes existing CSP/SRI checks when relevant.
 
-### 9. React 19.2 Internal Refactors
+**Definition of done**
 
-> Leverage React 19.2's hidden gems for cleaner code and better performance.
+- Predictive routing is enabled for a small, intentional set of routes.
+- There is a documented rollback strategy if metrics regress.
 
-- [ ] **`<Activity />` adoption**
-  - Wrap Settings Modal, Command Palette, Chat in `<Activity mode={visible ? "visible" : "hidden"}>`
-  - Preserves internal state, deprioritizes hidden re-renders, no remounting
-- [ ] **`useEffectEvent` migration**
-  - Extract event callbacks from `useEffect` deps into `useEffectEvent`
-  - Eliminates stale-closure bugs in chat, forms, theme listeners
-- [ ] **`use()` API for data fetching**
-  - Replace `useEffect` + `useState` fetch pattern for GitHub stats, blog posts
-  - Use `use(fetchPromise)` inside `<Suspense>` for automatic loading states
-- [ ] **Delete all `forwardRef` wrappers**
-  - Pass `ref` as a normal prop (React 19 feature)
-- [ ] **React Compiler adoption (when stable)**
-  - Remove all manual `useMemo`/`useCallback` — compiler auto-memoizes
+### 1.3 Rework the hero into a distinct anti-template landing experience
+
+**Outcome**
+
+- The hero should immediately communicate that this is a custom portfolio, not a commodity template.
+
+**Actionable tasks**
+
+- Audit the current hero for generic layout patterns.
+- Redesign the hero with asymmetric composition, kinetic typography, and controlled overlap.
+- Introduce lightweight depth/parallax only if it remains smooth on low-power devices.
+- Make sure the visual treatment still preserves readability and clear calls to action.
+
+**Verification**
+
+- Review the hero at mobile, tablet, and desktop breakpoints.
+- Confirm headings, CTA buttons, and key introductory copy remain readable at all sizes.
+- If the change affects the running UI, capture a screenshot artifact for the implementation PR.
+- Run `pnpm build` to ensure the redesigned hero does not break the production build.
+
+**Definition of done**
+
+- The hero is visually distinct, accessible, and performant.
+- Layout overlap does not cause clipping, collision, or responsiveness issues.
 
 ---
 
-### 10. Kill `useEffect` for Data Fetching _(PRIORITY #1)_
+## Priority 2 — Native Platform Refactors
 
-> No waterfall requests. Data should be ready before the component renders.
+### 2.1 Replace custom modal and overlay logic with Popover API plus persistent hidden state
 
-- [ ] **Audit all components using `useEffect` + `fetch` on mount**
-  - GitHub stats, blog posts, curriculum data
-- [ ] **Refactor to React Router v7 Loaders or React 19 `use(Promise)`**
-  - Pair with `<Suspense>` for automatic loading/error states
-- [ ] **Pair with Speculation Rules for pre-rendered data**
-  - Data is not only pre-fetched, it's pre-*rendered* in a hidden tab
+**Outcome**
 
----
+- Settings dialogs, command palettes, and similar overlays should rely more on the browser and less on custom JavaScript.
 
-### 11. Replace Custom Modals with Popover API + `<Activity />`
+**Actionable tasks**
 
-> Let the browser handle focus traps, overlays, and state — delete custom JS logic.
+- Audit existing modal/palette implementations and identify duplicated focus, dismissal, and layering logic.
+- Migrate the simplest overlay first using the `popover` attribute.
+- Preserve hidden component state using React’s modern visibility/persistence patterns where appropriate.
+- Remove obsolete escape-key handlers, focus-trap code, and overlay plumbing once parity is confirmed.
+- Validate that top-layer behavior works with the portfolio’s theme and z-index system.
 
-- [ ] **Settings Modal → Popover API migration**
-  - Use native `popover` attribute for light-dismiss, focus management, top-layer
-- [ ] **Command Palette → Popover API migration**
-- [ ] **Wrap modal content in `<Activity />`**
-  - State persists when modal is closed
-- [ ] **Animate entry/exit with `@starting-style`**
-  - Remove framer-motion dependency for open/close transitions
-- [ ] **Remove custom focus-trap code, overlay logic, escape-key handlers**
+**Verification**
 
----
+- Test keyboard open/close flows, outside-click dismissal, and focus return behavior.
+- Confirm the overlay remains usable with only keyboard input.
+- Run `pnpm lint` and `pnpm test:run` after each migrated overlay.
+- Compare the before/after implementation to verify that custom overlay code was actually removed.
 
-### 12. Migrate Scroll Animations to CSS-Only
+**Definition of done**
 
-> Run on compositor thread = zero main-thread blocking, silky 60fps.
+- At least one existing overlay is migrated end-to-end.
+- Browser-native behavior replaces bespoke code without UX regressions.
 
-- [ ] **Audit all framer-motion scroll-triggered animations**
-  - Section entry fades, parallax effects
-- [ ] **Replace with CSS Scroll-Driven Animations**
-  - Use `animation-timeline: scroll()` and `animation-timeline: view()`
-- [ ] **Keep framer-motion ONLY for complex gestures**
-  - Drag, layout reorder, spring physics
-- [ ] **Measure bundle reduction**
-  - Target: 30-40kb bundle savings
+### 2.2 Introduce CSS Anchor Positioning for contextual UI
 
-⚠️ **Deps:** Safari β support — check polyfill needs
+**Outcome**
 
----
+- Tooltips, contextual hints, or small detail cards should align intelligently without a dedicated positioning library.
 
-### 13. Container Queries for Component Portability
+**Actionable tasks**
 
-> Cards adapt to their container, not the viewport. Same component works everywhere.
+- Pick one interaction with clear user value, such as skill-tag tooltips on project cards.
+- Add anchor-based positioning for the trigger and floating element.
+- Design fallback placement behavior for browsers that do not yet support the feature set.
+- Remove any redundant JavaScript positioning logic where the browser now handles layout.
 
-- [ ] **Migrate project cards to `@container` queries (Tailwind v4)**
-- [ ] **Migrate blog cards to `@container` queries**
-- [ ] **Migrate lesson cards to `@container` queries**
-- [ ] **Remove `md:` / `lg:` media queries from migrated components**
-- [ ] **Verify: same card works in grid, sidebar, modal, and homepage**
+**Verification**
 
----
+- Test positioning near viewport edges and inside constrained containers.
+- Verify content remains accessible by keyboard and readable on touch devices.
+- Confirm there is no dependency increase for functionality now handled by native CSS.
+- Run `pnpm build` after implementation.
 
-### 14. OKLCH Color System Migration `💤`
+**Definition of done**
 
-> Wider gamut, perceptually uniform, P3 display support.
+- One contextual UI pattern uses anchor positioning in production.
+- The solution behaves acceptably in both supported and fallback environments.
 
-- [ ] **Migrate all CSS custom properties to OKLCH color space**
-  - Tailwind v4 defaults to OKLCH — align custom definitions
-- [ ] **Verify contrast ratios remain accessible**
-- [ ] **Test on P3 displays for vibrancy**
+### 2.3 Migrate eligible scroll effects from JavaScript animation to CSS scroll-driven techniques
 
----
+**Outcome**
 
-### 15. Type Safety Overhaul
+- Scroll-linked visuals should feel smoother and consume less main-thread time.
 
-> Catch bugs at compile time, not runtime.
+**Actionable tasks**
 
-- [ ] **Ensure `tsc --noEmit` runs on pre-commit hook**
-- [ ] **Delete all `forwardRef` wrappers** (React 19 `ref` as prop)
-- [ ] **Audit `Ref` and `Context` types for React 19.2 compatibility**
-- [ ] **Adopt React Router v7's type-safe route params**
+- Inventory existing scroll-triggered animations and split them into “easy CSS migration” vs. “keep in Framer Motion.”
+- Convert simple fades, reveals, and parallax effects to CSS scroll/view timelines where browser support is acceptable.
+- Keep Framer Motion only for interactions that truly need complex gesture or physics behavior.
+- Document the browser support and fallback strategy so future contributors understand the tradeoffs.
 
----
+**Verification**
 
-## 🧪 Performance Targets
+- Compare animation smoothness before and after on a production build.
+- Confirm reduced-motion preferences are respected.
+- Measure bundle impact after removing or reducing JS animation usage.
+- Run `pnpm build` and `pnpm test:run` after the migration.
 
-| Metric       | Current | Target   | Strategy                                                    |
-| :----------- | :------ | :------- | :---------------------------------------------------------- |
-| **LCP**      | ~1.8s   | < 1.2s   | Prerender via Speculation Rules, optimize hero image        |
-| **INP**      | ~180ms  | < 150ms  | Break long tasks, `useTransition` for heavy updates         |
-| **CLS**      | ~0.05   | < 0.02   | `<Activity />` for layout, `content-visibility: auto`       |
-| **JS Bundle**| ~180kb  | < 120kb  | Replace JS libs with native APIs                            |
+**Definition of done**
+
+- At least one scroll-driven interaction is CSS-first.
+- The repo has a clear rule for when Framer Motion is still justified.
 
 ---
 
-## 🌀 Backlog / Experiments (Wild Ideas)
+## Priority 3 — React 19 and Data Flow Cleanup
 
-> Aspirational, potentially impractical, but worth prototyping.
+### 3.1 Eliminate `useEffect`-on-mount data fetching where router loaders or Suspense patterns are better
 
-- [ ] **Cursor as identity** — visitor's cursor becomes unique shape/color based on browser fingerprint (`CSS cursor: url()` + Canvas API)
-- [ ] **AI-generated project thumbnails** — Gemini Imagen API generates cards from project descriptions on-the-fly
-- [ ] **"Time Machine" mode** — view the portfolio at any git commit via timeline slider (git API + Cloudflare Workers)
-- [ ] **Sound design** — subtle UI sounds on interaction using Web Audio API (respect `prefers-reduced-motion`)
-- [ ] **Web Components export** — ship neubrutalist components as framework-agnostic Web Components (`<neu-button>`)
+**Outcome**
+
+- Route data should load predictably, reduce waterfalls, and integrate with better loading/error states.
+
+**Actionable tasks**
+
+- Find components that fetch data during mount.
+- Group them by route-owned data versus component-local async work.
+- Migrate route-owned data to React Router loaders first.
+- Evaluate whether any remaining async UI should move to `use()`/Suspense-based patterns.
+- Update loading and error UI so users get consistent states across routes.
+
+**Verification**
+
+- Confirm no migrated route still performs a duplicate client fetch on mount.
+- Test loading, success, and error states manually.
+- Run `pnpm lint` and `pnpm test:run` after each migrated route.
+- Compare network waterfall behavior in development tools before and after the change.
+
+**Definition of done**
+
+- At least one route has been migrated away from mount-time data fetching.
+- The replacement approach is documented for the rest of the app.
+
+### 3.2 Modernize React internals: `useEffectEvent`, `ref` cleanup, and state persistence patterns
+
+**Outcome**
+
+- Internal code should be easier to reason about and less prone to stale-closure or ref-forwarding boilerplate.
+
+**Actionable tasks**
+
+- Audit effects with callback dependencies that are only present to keep closures fresh.
+- Refactor suitable cases to `useEffectEvent`.
+- Identify old `forwardRef` wrappers that can be simplified.
+- Introduce persistent hidden-state patterns where they improve UX for chat, palette, or settings surfaces.
+
+**Verification**
+
+- Run `pnpm lint` to catch Hook usage regressions.
+- Run `pnpm test:run` to confirm interactive behavior still works.
+- Review the diff to ensure complexity is genuinely reduced rather than moved around.
+
+**Definition of done**
+
+- At least one effect and one ref-heavy component are simplified with modern React patterns.
+- The repo has a repeatable standard for future modernization work.
+
+### 3.3 Strengthen type and script verification for future refactors
+
+**Outcome**
+
+- The project should make it harder to merge regressions while the architecture evolves.
+
+**Actionable tasks**
+
+- Confirm whether TypeScript checks exist in the current toolchain and add them if applicable.
+- Ensure lint, formatting, unit tests, and security scripts can be run reliably in local and CI workflows.
+- Consider whether a single “verify” script should orchestrate the minimum safe pre-merge checks.
+
+**Verification**
+
+- Run `pnpm lint`, `pnpm format:check`, and `pnpm test:run`.
+- Run targeted security checks already defined in `package.json` if the changed area touches security-sensitive code.
+- Validate that any newly introduced verification script succeeds from a clean working tree.
+
+**Definition of done**
+
+- Verification expectations are explicit and easy to run.
+- Contributors have one obvious way to confirm a refactor is safe.
 
 ---
 
-> **The Thesis:** In 2026, the best portfolio isn't the one with the most JavaScript — it's the one with the _least JavaScript that does the most_. Native APIs are the new frameworks. Ship less, do more, make it **brutal**.
+## Priority 4 — Design System Evolution
+
+### 4.1 Evolve “Neubrutalism” into a more tactile Post-Brutalist system
+
+**Outcome**
+
+- The visual language should stay bold while feeling more human, textured, and current.
+
+**Actionable tasks**
+
+- Define a small set of reusable texture motifs, such as noise, halftone accents, folded corners, or rubber-stamp treatments.
+- Apply those motifs to high-value surfaces first: hero, featured cards, badges, and callouts.
+- Keep the design system disciplined so texture becomes a signature rather than visual clutter.
+- Document where texture is decorative versus where it communicates hierarchy or interaction.
+
+**Verification**
+
+- Review the interface in both theme modes, if multiple themes exist.
+- Check contrast and readability for all textured surfaces.
+- If UI changes are visible, capture screenshots for review.
+- Run `pnpm build` after the visual update.
+
+**Definition of done**
+
+- Texture usage feels deliberate and repeatable.
+- The visual change strengthens the portfolio identity without harming usability.
+
+### 4.2 Migrate theme tokens toward OKLCH and container-aware components
+
+**Outcome**
+
+- Colors should be easier to tune perceptually, and components should adapt to their container rather than only the viewport.
+
+**Actionable tasks**
+
+- Audit current color tokens and identify candidates for OKLCH migration.
+- Convert one theme slice at a time rather than rewriting every token at once.
+- Identify card-like components that should respond to container size.
+- Replace viewport-only assumptions with container query logic where it improves portability.
+
+**Verification**
+
+- Compare old and new color rendering across light/dark or alternate theme contexts.
+- Test components in different layout containers, not just standard page grids.
+- Run `pnpm build` and inspect for styling regressions.
+
+**Definition of done**
+
+- At least one token group uses OKLCH successfully.
+- At least one reusable card component is container-query aware.
+
+### 4.3 Redesign the blog/curriculum area as an archival index
+
+**Outcome**
+
+- Dense content should feel organized, browsable, and intentionally editorial.
+
+**Actionable tasks**
+
+- Audit the current information architecture for blog posts and curriculum content.
+- Design a metadata-forward list or grid pattern with dates, tags, and reading cues.
+- Add subtle motion only where it improves comprehension.
+- Ensure the design supports expansion as more lessons and posts are added.
+
+**Verification**
+
+- Check scannability on mobile and desktop.
+- Confirm metadata is readable and consistently formatted.
+- Capture screenshots if a visible UI redesign is implemented.
+- Run `pnpm build` after the change.
+
+**Definition of done**
+
+- The content index reads like a deliberate archive rather than a generic blog list.
+- Information density improves without overwhelming the user.
+
+---
+
+## Priority 5 — Differentiated Interactive Features
+
+### 5.1 Upgrade the AI assistant into a multimodal, voice-capable experience
+
+**Outcome**
+
+- The AI interaction should feel like a memorable product feature rather than a standard text chatbot.
+
+**Actionable tasks**
+
+- Split the work into phases: improved streaming text UX, voice interaction, then multimodal image critique.
+- Define clear safety and cost boundaries for any live or multimodal API usage.
+- Design an interface that makes conversation state, permissions, and loading states obvious.
+- Add instrumentation or logging hooks to understand feature usage and failure modes.
+
+**Verification**
+
+- Validate text-only fallback behavior when voice or multimodal features are unavailable.
+- Manually test interruption, reconnect, and long-response states.
+- Re-run any AI- or security-related checks that apply to the changed code.
+- Document environment-variable and API setup requirements.
+
+**Definition of done**
+
+- The first phase can be demoed reliably.
+- Advanced capabilities are broken into smaller, reviewable milestones.
+
+### 5.2 Introduce light-touch gamification without blocking content access
+
+**Outcome**
+
+- Exploration should feel playful, but the site must remain professional and immediately usable.
+
+**Actionable tasks**
+
+- Define a tiny achievement/XP model tied to real exploration milestones.
+- Store progress locally without making content inaccessible.
+- Add understated UI treatments for badges, unlocks, or hidden extras.
+- Make sure the system is optional in spirit: rewarding, not distracting.
+
+**Verification**
+
+- Confirm all primary content is still accessible without engaging with gamified elements.
+- Test persistence across reloads and route changes.
+- Review whether the feature adds delight without cluttering the interface.
+- Run `pnpm test:run` if logic is introduced for unlock state or progression rules.
+
+**Definition of done**
+
+- Gamification enhances discovery but never gates essential information.
+- The UX remains coherent for visitors who ignore the feature entirely.
+
+---
+
+## Suggested Execution Order
+
+1. **Baseline audit and verification hardening**
+2. **View transitions and predictive routing**
+3. **Popover/API-native refactors**
+4. **Data-loading modernization**
+5. **Scroll animation and bundle reduction work**
+6. **Hero and design-system evolution**
+7. **Archival content redesign**
+8. **AI and gamification experiments**
+
+---
+
+## Required Verification Checklist for Any Future TODO Item
+
+Before marking any task complete, verify the following when applicable:
+
+- `pnpm lint`
+- `pnpm format:check`
+- `pnpm test:run`
+- `pnpm build`
+- Any targeted security checks relevant to the modified area
+- Manual accessibility review for keyboard flow, focus handling, and reduced-motion behavior
+- Screenshot evidence for visible UI changes
+- Before/after notes for performance-sensitive work
+
+---
+
+## Notes for Future Contributors
+
+- Avoid landing multiple speculative platform experiments in a single PR.
+- Prefer one feature flag or one migration path at a time for anything involving browser support risk.
+- If a feature cannot be measured, narrow its scope until it can be.
+- If a feature looks impressive but weakens clarity, performance, or accessibility, it is not ready.

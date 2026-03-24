@@ -46,3 +46,19 @@
 - Audited documentation and verified no broken links in docs/.
 - Fixed broken links in `.agents/skills` documentation.
 - Added missing module-level JSDocs to `src/App.jsx` and `src/main.jsx`.
+
+## 2026-03-21
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Fixed a broken link in `README.md` that was pointing to the non-existent `docs/README.md` directory.
+
+## 2026-03-22
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Verified all exported functions and constants in the `src/` directory are properly documented with JSDocs.
+- No new broken links, unformatted code, or missing JSDocs were found.
+
+## 2026-03-23
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Added `@type` JSDoc annotations to default exports in `Hero`, `Navbar`, `Footer`, and `Playground` components to fix missing documentation warnings.

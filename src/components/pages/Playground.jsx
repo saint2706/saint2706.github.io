@@ -3,7 +3,7 @@
  * Features live previews, code copying, and interactive Python execution.
  */
 
-import React, { useState, useCallback, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
 import { resumeData } from '../../data/resume';
@@ -504,38 +504,29 @@ SnippetCard.displayName = 'SnippetCard';
  * @returns {JSX.Element} Isolated CSS preview in iframe
  */
 const LivePreview = React.memo(({ preview }) => {
-  const iframeRef = useRef(null);
-
-  useEffect(() => {
-    if (iframeRef.current) {
-      const doc = iframeRef.current.contentDocument;
-      doc.open();
-      doc.write(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <style>
-              * { margin: 0; padding: 0; box-sizing: border-box; }
-              body {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 100%;
-                padding: 20px;
-                background: #f5f5f5;
-                font-family: system-ui, -apple-system, sans-serif;
-              }
-              ${preview.css}
-            </style>
-          </head>
-          <body>
-            ${preview.html}
-          </body>
-        </html>
-      `);
-      doc.close();
-    }
-  }, [preview]);
+  const srcDocContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+            padding: 20px;
+            background: #f5f5f5;
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          ${preview.css}
+        </style>
+      </head>
+      <body>
+        ${preview.html}
+      </body>
+    </html>
+  `;
 
   return (
     <div className="border-2 border-[color:var(--color-border)] rounded-lg overflow-hidden bg-gray-100">
@@ -548,10 +539,10 @@ const LivePreview = React.memo(({ preview }) => {
         <span className="text-xs text-gray-600 font-mono ml-2">Live Preview</span>
       </div>
       <iframe
-        ref={iframeRef}
         title="CSS Preview"
         className="w-full h-48 bg-white"
-        sandbox="allow-same-origin"
+        sandbox=""
+        srcDoc={srcDocContent}
       />
     </div>
   );
@@ -559,4 +550,7 @@ const LivePreview = React.memo(({ preview }) => {
 
 LivePreview.displayName = 'LivePreview';
 
+/**
+ * @type {React.FC}
+ */
 export default Playground;

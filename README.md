@@ -60,7 +60,7 @@ Open `http://localhost:5173` in your browser.
 
 ## 📚 Documentation
 
-Detailed documentation on project architecture, theming, and the games is available in the [`docs/`](docs/README.md) directory.
+Detailed documentation on project architecture, theming, and the games is available in the `.jules/` directory where the agents maintain historical logs and reports.
 
 ## 📜 Scripts
 

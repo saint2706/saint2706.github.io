@@ -5,8 +5,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { X, MousePointer2, Sun, Moon, Droplets, Cloud } from 'lucide-react';
-import { useTheme } from './theme-context';
-import { THEMES } from './theme-context';
+import { useTheme, THEMES } from './theme-context';
 import { useFocusTrap } from './useFocusTrap';
 
 const THEME_OPTIONS = [

@@ -5,7 +5,7 @@
  * Pre-defined code snippets available in the Python Playground and CSS examples.
  * @type {Array<{id: string, title: string, description: string, code: string, language: string, category: string, tags: string[], preview?: {html: string, css: string}}>}
  */
-export const snippets = [
+const snippets = [
   // ===== PYTHON ONE-LINERS =====
   {
     id: 'py-flatten',
@@ -25,13 +25,17 @@ print(flatten(data))`,
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
       codeTemplate: () => `import ast
 flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
-try:
-    data = ast.literal_eval(user_input)
-except (ValueError, SyntaxError, TypeError):
-    data = []
-    print("Error: Invalid list format")
-print(f"Input: {data}")
-print(f"Flattened: {flatten(data)}")`,
+data = None
+if len(user_input) > 200:
+    print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
+else:
+    try:
+        data = ast.literal_eval(user_input)
+    except (ValueError, SyntaxError, TypeError):
+        print("Error: Invalid list format")
+if data is not None:
+    print(f"Input: {data}")
+    print(f"Flattened: {flatten(data)}")`,
     },
   },
   {
@@ -117,16 +121,20 @@ print(f"Count: {len(result)} primes")`,
       inputLabel: 'Enter 2D matrix',
       codeTemplate: () => `import ast
 transpose = lambda m: list(map(list, zip(*m)))
-try:
-    matrix = ast.literal_eval(user_input)
-except (ValueError, SyntaxError, TypeError):
-    matrix = []
-    print("Error: Invalid matrix")
-result = transpose(matrix)
-print("Original:")
-for row in matrix: print(row)
-print("\\nTransposed:")
-for row in result: print(row)`,
+matrix = None
+if len(user_input) > 200:
+    print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
+else:
+    try:
+        matrix = ast.literal_eval(user_input)
+    except (ValueError, SyntaxError, TypeError):
+        print("Error: Invalid matrix")
+if matrix is not None:
+    result = transpose(matrix)
+    print("Original:")
+    for row in matrix: print(row)
+    print("\\nTransposed:")
+    for row in result: print(row)`,
     },
   },
   {
@@ -609,14 +617,4 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
 export const getSnippetsByLanguage = language => {
   if (language === 'all') return snippets;
   return snippets.filter(s => s.language === language);
-};
-
-// Get unique categories
-/**
- * Extracts a unique list of snippet categories from the available snippets.
- *
- * @returns {Array<string>} An array of unique category names.
- */
-export const getCategories = () => {
-  return [...new Set(snippets.map(s => s.category))];
 };

@@ -7,11 +7,16 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Terminal, User, Briefcase, FileText, Mail, Menu, X, Code2, Settings } from 'lucide-react';
 import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
+import {
+  shouldHandleClientNavigationClick,
+  shouldHandleClientNavigationKeydown,
+  viewTransitionNavigate,
+} from '../../navigation/viewTransitionNavigate';
 
 /** Navigation menu items — shared across both themes */
 const NAV_ITEMS = [
@@ -23,8 +28,13 @@ const NAV_ITEMS = [
   { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
 ];
 
-const DesktopNavItem = React.memo(({ item, getClassName }) => (
-  <NavLink to={item.path} className={({ isActive }) => getClassName(isActive)}>
+const DesktopNavItem = React.memo(({ item, getClassName, onClickNavigate, onKeydownNavigate }) => (
+  <NavLink
+    to={item.path}
+    onClick={event => onClickNavigate(event, item.path)}
+    onKeyDown={event => onKeydownNavigate(event, item.path)}
+    className={({ isActive }) => getClassName(isActive)}
+  >
     <span className="hidden lg:inline opacity-70" aria-hidden="true">
       {item.icon}
     </span>
@@ -34,18 +44,21 @@ const DesktopNavItem = React.memo(({ item, getClassName }) => (
 
 DesktopNavItem.displayName = 'DesktopNavItem';
 
-const MobileNavItem = React.memo(({ item, index, isLiquid, onClick, getClassName }) => (
-  <NavLink
-    to={item.path}
-    onClick={onClick}
-    className={({ isActive }) => getClassName(isActive, index)}
-  >
-    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
-      {item.icon}
-    </span>
-    <span>{item.name}</span>
-  </NavLink>
-));
+const MobileNavItem = React.memo(
+  ({ item, index, isLiquid, onClickNavigate, onKeydownNavigate, getClassName }) => (
+    <NavLink
+      to={item.path}
+      onClick={event => onClickNavigate(event, item.path)}
+      onKeyDown={event => onKeydownNavigate(event, item.path)}
+      className={({ isActive }) => getClassName(isActive, index)}
+    >
+      <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
+        {item.icon}
+      </span>
+      <span>{item.name}</span>
+    </NavLink>
+  )
+);
 
 MobileNavItem.displayName = 'MobileNavItem';
 
@@ -62,6 +75,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+  const navigate = useNavigate();
   const location = useLocation();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
@@ -105,6 +119,36 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     setIsMenuOpen(false);
     menuButtonRef.current?.focus();
   };
+
+  const handleRouteNavigate = useCallback(
+    (to, afterNavigate) => {
+      viewTransitionNavigate(navigate, to);
+      if (afterNavigate) {
+        afterNavigate();
+      }
+    },
+    [navigate]
+  );
+
+  const handleNavLinkClick = useCallback(
+    (event, to, afterNavigate) => {
+      if (!shouldHandleClientNavigationClick(event)) return;
+
+      event.preventDefault();
+      handleRouteNavigate(to, afterNavigate);
+    },
+    [handleRouteNavigate]
+  );
+
+  const handleNavLinkKeydown = useCallback(
+    (event, to, afterNavigate) => {
+      if (!shouldHandleClientNavigationKeydown(event)) return;
+
+      event.preventDefault();
+      handleRouteNavigate(to, afterNavigate);
+    },
+    [handleRouteNavigate]
+  );
 
   // Use shared hook for focus trapping and keyboard navigation
   useFocusTrap({
@@ -210,11 +254,13 @@ const Navbar = React.memo(({ onOpenSettings }) => {
       animate={{ y: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={navCls}
+      style={{ viewTransitionName: 'chrome-header' }}
     >
       <div className={containerCls}>
         {/* ── Logo ── */}
         <NavLink
           to="/"
+          onClick={event => handleNavLinkClick(event, '/')}
           className="flex items-center gap-4 group flex-shrink-0"
           aria-label="Rishabh Agrawal - Home page"
         >
@@ -224,7 +270,13 @@ const Navbar = React.memo(({ onOpenSettings }) => {
         {/* ── Desktop Navigation ── */}
         <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
           {NAV_ITEMS.map(item => (
-            <DesktopNavItem key={item.name} item={item} getClassName={desktopLinkCls} />
+            <DesktopNavItem
+              key={item.name}
+              item={item}
+              getClassName={desktopLinkCls}
+              onClickNavigate={handleNavLinkClick}
+              onKeydownNavigate={handleNavLinkKeydown}
+            />
           ))}
         </div>
 
@@ -306,7 +358,16 @@ const Navbar = React.memo(({ onOpenSettings }) => {
                     item={item}
                     index={index}
                     isLiquid={isLiquid}
-                    onClick={handleCloseMenu}
+                    onClickNavigate={(event, to) =>
+                      handleNavLinkClick(event, to, () => {
+                        handleCloseMenu();
+                      })
+                    }
+                    onKeydownNavigate={(event, to) =>
+                      handleNavLinkKeydown(event, to, () => {
+                        handleCloseMenu();
+                      })
+                    }
                     getClassName={mobileLinkCls}
                   />
                 ))}
@@ -321,4 +382,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
 
 Navbar.displayName = 'Navbar';
 
+/**
+ * @type {React.NamedExoticComponent<{onOpenSettings: function(): void}>}
+ */
 export default Navbar;

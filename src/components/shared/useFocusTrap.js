@@ -106,5 +106,3 @@ export const useFocusTrap = ({
     }
   }, [isOpen, handleKeyDown]);
 };
-
-export default useFocusTrap;
