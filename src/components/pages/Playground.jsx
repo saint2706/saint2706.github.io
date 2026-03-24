@@ -550,4 +550,7 @@ const LivePreview = React.memo(({ preview }) => {
 
 LivePreview.displayName = 'LivePreview';
 
+/**
+ * @type {React.FC}
+ */
 export default Playground;

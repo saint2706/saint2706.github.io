@@ -251,4 +251,7 @@ const Footer = React.memo(() => {
 
 Footer.displayName = 'Footer';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default Footer;
