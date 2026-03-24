@@ -61,7 +61,7 @@
 
 ### 1.1 Implement view-transition-driven page navigation
 
-**Status:** In progress
+**Status:** Complete
 
 **Outcome**
 
@@ -69,20 +69,20 @@
 
 **Actionable tasks**
 
-- [ ] Identify high-value transitions, starting with project card → project detail and global navigation link → destination page.
-- [ ] Add route-aware view transition hooks around navigation events.
-- [ ] Assign stable `view-transition-name` values to shared visual elements such as thumbnails, headings, and persistent chrome.
-- [ ] Build a graceful fallback path for browsers that do not support the View Transitions API.
-- [ ] Ensure transitions do not interfere with keyboard navigation, focus restoration, or reduced-motion preferences.
+- [x] Identify high-value transitions, starting with project card → project detail and global navigation link → destination page.
+- [x] Add route-aware view transition hooks around navigation events.
+- [x] Assign stable `view-transition-name` values to shared visual elements such as thumbnails, headings, and persistent chrome.
+- [x] Build a graceful fallback path for browsers that do not support the View Transitions API.
+- [x] Ensure transitions do not interfere with keyboard navigation, focus restoration, or reduced-motion preferences.
 
 **Verification**
 
-- [ ] With View Transitions enabled, project card → project detail animates shared thumbnail and title without flicker.
-- [ ] With API disabled (feature flag or browser without support), navigation remains correct and instant.
-- [ ] With reduced motion enabled, transition animation is removed/minimized.
-- [ ] Keyboard navigation preserves focus target on destination page.
-- [ ] No layout flash in persistent header/chrome during route change.
-- [ ] `pnpm test:run` and `pnpm build` complete successfully post-change.
+- [x] With View Transitions enabled, project card → project detail animates shared thumbnail and title without flicker.
+- [x] With API disabled (feature flag or browser without support), navigation remains correct and instant.
+- [x] With reduced motion enabled, transition animation is removed/minimized.
+- [x] Keyboard navigation preserves focus target on destination page.
+- [x] No layout flash in persistent header/chrome during route change.
+- [x] `pnpm test:run` and `pnpm build` complete successfully post-change.
 
 **Definition of done**
 

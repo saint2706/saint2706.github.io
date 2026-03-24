@@ -1284,19 +1284,77 @@
   }
 }
 
-/* View Transition crossfade for theme switching */
+/* ===== VIEW TRANSITION CHOREOGRAPHY ===== */
+
+/* --- Keyframes for page-content slide+fade --- */
+@keyframes vt-slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vt-slide-down-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  /* Default root crossfade */
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 0.35s;
+    animation-duration: 0.3s;
     animation-timing-function: ease;
+  }
+
+  /* Chrome header stays pinned — no animation */
+  ::view-transition-old(chrome-header),
+  ::view-transition-new(chrome-header) {
+    animation: none;
+  }
+
+  ::view-transition-group(chrome-header) {
+    z-index: 100;
+  }
+
+  /* Page content slide + fade */
+  ::view-transition-old(page-content) {
+    animation: vt-slide-down-out 0.25s ease both;
+  }
+
+  ::view-transition-new(page-content) {
+    animation: vt-slide-up-in 0.3s ease both;
+  }
+
+  /* Shared-element morph for project thumbnails/titles */
+  ::view-transition-group(*) {
+    animation-duration: 0.35s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-new(root),
+  ::view-transition-old(chrome-header),
+  ::view-transition-new(chrome-header),
+  ::view-transition-old(page-content),
+  ::view-transition-new(page-content) {
     animation: none;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: 0s;
   }
 }
 

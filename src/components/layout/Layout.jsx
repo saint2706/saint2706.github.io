@@ -291,7 +291,11 @@ const Layout = ({ children }) => {
         aria-atomic="true"
       />
 
-      <main id="main-content" className="grow pt-28 px-4 z-10 relative">
+      <main
+        id="main-content"
+        className="grow pt-28 px-4 z-10 relative"
+        style={{ viewTransitionName: 'page-content' }}
+      >
         {children}
       </main>
 
