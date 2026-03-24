@@ -12,6 +12,19 @@ export const supportsViewTransition = () =>
   typeof document !== 'undefined' && typeof document.startViewTransition === 'function';
 
 /**
+ * Returns whether motion preferences allow transition animation.
+ *
+ * @returns {boolean}
+ */
+export const canAnimateViewTransitions = () => {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return true;
+  }
+
+  return window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+};
+
+/**
  * Determines whether a link click should be handled as in-app navigation.
  * This preserves default browser behavior for modified clicks/new-tab actions.
  *
@@ -30,6 +43,19 @@ export const shouldHandleClientNavigationClick = event => {
 };
 
 /**
+ * Determines whether Enter/Space should activate client-side navigation.
+ *
+ * @param {KeyboardEvent | React.KeyboardEvent} event
+ * @returns {boolean}
+ */
+export const shouldHandleClientNavigationKeydown = event => {
+  if (!event || event.defaultPrevented) return false;
+  if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) return false;
+
+  return event.key === 'Enter' || event.key === ' ';
+};
+
+/**
  * Runs a React Router navigate function inside startViewTransition when possible.
  *
  * @template TTo
@@ -42,7 +68,7 @@ export const shouldHandleClientNavigationClick = event => {
 export const viewTransitionNavigate = (navigate, to, options, config = {}) => {
   if (typeof navigate !== 'function') return;
 
-  if (config.disabled || !supportsViewTransition()) {
+  if (config.disabled || !supportsViewTransition() || !canAnimateViewTransitions()) {
     navigate(to, options);
     return;
   }
@@ -51,4 +77,3 @@ export const viewTransitionNavigate = (navigate, to, options, config = {}) => {
     navigate(to, options);
   });
 };
-

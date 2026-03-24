@@ -16,6 +16,25 @@ vi.mock('../shared/theme-context', () => ({
 }));
 import { useTheme } from '../shared/theme-context';
 
+vi.mock('../../navigation/viewTransitionNavigate', () => ({
+  shouldHandleClientNavigationClick: vi.fn(event => {
+    if (!event || event.defaultPrevented) return false;
+    if (event.button !== 0) return false;
+    if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) return false;
+    return true;
+  }),
+  shouldHandleClientNavigationKeydown: vi.fn(event => {
+    if (!event || event.defaultPrevented) return false;
+    return event.key === 'Enter' || event.key === ' ';
+  }),
+  viewTransitionNavigate: vi.fn((navigate, to) => navigate(to)),
+}));
+import {
+  shouldHandleClientNavigationClick,
+  shouldHandleClientNavigationKeydown,
+  viewTransitionNavigate,
+} from '../../navigation/viewTransitionNavigate';
+
 // Mock Framer Motion
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
@@ -272,5 +291,20 @@ describe('Navbar', () => {
     await waitFor(() => {
       expect(container.querySelector('#mobile-nav-menu')).not.toBeInTheDocument();
     });
+  });
+
+  it('uses identical routing helper for click and keyboard activation', () => {
+    renderNavbar();
+
+    const homeLink = screen.getAllByText('Home')[0].closest('a');
+    expect(homeLink).toBeInTheDocument();
+
+    fireEvent.click(homeLink);
+    fireEvent.keyDown(homeLink, { key: 'Enter' });
+    fireEvent.keyDown(homeLink, { key: ' ' });
+
+    expect(shouldHandleClientNavigationClick).toHaveBeenCalled();
+    expect(shouldHandleClientNavigationKeydown).toHaveBeenCalledTimes(2);
+    expect(viewTransitionNavigate).toHaveBeenCalledTimes(3);
   });
 });
