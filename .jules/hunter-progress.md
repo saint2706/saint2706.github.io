@@ -92,3 +92,8 @@
 
 - **Fixed Unused Exports**: Removed unused exports from `src/components/shared/chatHistory.js` (`MAX_HISTORY_CONTEXT`) and `src/data/snippets.js` (`snippets`).
 - **Verified**: Build and Lint passed ✅.
+
+## Session 17
+
+- **Fixed Runtime Safety**: Refactored tests in `src/components/layout/Layout.test.jsx` to wrap rendering in `act()` and await `findByRole` to correctly handle `Suspense` and `React.lazy` resolutions for React 19 test environments, eliminating `A suspended resource finished loading inside a test` errors from stderr.
+- **Verified**: Build, Lint, Format, and Tests passed ✅.
