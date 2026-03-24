@@ -20,12 +20,23 @@ import ThemedChip from '../shared/ThemedChip';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 import { useTheme } from '../shared/theme-context';
 
+const projectSlugFromData = project =>
+  `${project?.title || ''}-${project?.link || project?.github || ''}`
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
 /**
  * ProjectCard Component
  */
 // ⚡ Bolt: Wrapped card in React.memo to prevent unnecessary re-renders in list
 const ProjectCard = React.memo(
   ({ project, idx, isLiquid, shadowColors, cardColors, item, onClick }) => {
+    const projectSlug = useMemo(() => projectSlugFromData(project), [project]);
+    const projectThumbTransitionName = `project-thumb-${projectSlug}`;
+    const projectTitleTransitionName = `project-title-${projectSlug}`;
+
     const handleClick = useCallback(() => {
       if (onClick) onClick(project);
     }, [onClick, project]);
@@ -60,6 +71,7 @@ const ProjectCard = React.memo(
               src={project.image}
               alt={`Screenshot of ${project.title} project`}
               className="w-full h-full object-cover"
+              style={{ viewTransitionName: projectThumbTransitionName }}
               loading={idx < 3 ? 'eager' : 'lazy'}
               fetchPriority={idx < 3 ? 'high' : undefined}
               decoding="async"
@@ -73,7 +85,12 @@ const ProjectCard = React.memo(
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-start gap-2">
               <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-              <h2 className="text-xl font-heading font-bold text-primary">{project.title}</h2>
+              <h2
+                className="text-xl font-heading font-bold text-primary"
+                style={{ viewTransitionName: projectTitleTransitionName }}
+              >
+                {project.title}
+              </h2>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
               {project.stars && (
