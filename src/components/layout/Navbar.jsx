@@ -7,11 +7,15 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Terminal, User, Briefcase, FileText, Mail, Menu, X, Code2, Settings } from 'lucide-react';
 import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
+import {
+  shouldHandleClientNavigationClick,
+  viewTransitionNavigate,
+} from '../../navigation/viewTransitionNavigate';
 
 /** Navigation menu items — shared across both themes */
 const NAV_ITEMS = [
@@ -23,8 +27,12 @@ const NAV_ITEMS = [
   { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
 ];
 
-const DesktopNavItem = React.memo(({ item, getClassName }) => (
-  <NavLink to={item.path} className={({ isActive }) => getClassName(isActive)}>
+const DesktopNavItem = React.memo(({ item, getClassName, onNavigate }) => (
+  <NavLink
+    to={item.path}
+    onClick={event => onNavigate(event, item.path)}
+    className={({ isActive }) => getClassName(isActive)}
+  >
     <span className="hidden lg:inline opacity-70" aria-hidden="true">
       {item.icon}
     </span>
@@ -34,10 +42,10 @@ const DesktopNavItem = React.memo(({ item, getClassName }) => (
 
 DesktopNavItem.displayName = 'DesktopNavItem';
 
-const MobileNavItem = React.memo(({ item, index, isLiquid, onClick, getClassName }) => (
+const MobileNavItem = React.memo(({ item, index, isLiquid, onNavigate, getClassName }) => (
   <NavLink
     to={item.path}
-    onClick={onClick}
+    onClick={event => onNavigate(event, item.path)}
     className={({ isActive }) => getClassName(isActive, index)}
   >
     <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
@@ -62,6 +70,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+  const navigate = useNavigate();
   const location = useLocation();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
@@ -105,6 +114,19 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     setIsMenuOpen(false);
     menuButtonRef.current?.focus();
   };
+
+  const handleNavLinkNavigate = useCallback(
+    (event, to, afterNavigate) => {
+      if (!shouldHandleClientNavigationClick(event)) return;
+
+      event.preventDefault();
+      viewTransitionNavigate(navigate, to);
+      if (afterNavigate) {
+        afterNavigate();
+      }
+    },
+    [navigate]
+  );
 
   // Use shared hook for focus trapping and keyboard navigation
   useFocusTrap({
@@ -218,6 +240,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
         {/* ── Logo ── */}
         <NavLink
           to="/"
+          onClick={event => handleNavLinkNavigate(event, '/')}
           className="flex items-center gap-4 group flex-shrink-0"
           aria-label="Rishabh Agrawal - Home page"
         >
@@ -227,7 +250,12 @@ const Navbar = React.memo(({ onOpenSettings }) => {
         {/* ── Desktop Navigation ── */}
         <div className="hidden md:flex items-center gap-1 flex-grow justify-center">
           {NAV_ITEMS.map(item => (
-            <DesktopNavItem key={item.name} item={item} getClassName={desktopLinkCls} />
+            <DesktopNavItem
+              key={item.name}
+              item={item}
+              getClassName={desktopLinkCls}
+              onNavigate={handleNavLinkNavigate}
+            />
           ))}
         </div>
 
@@ -309,7 +337,11 @@ const Navbar = React.memo(({ onOpenSettings }) => {
                     item={item}
                     index={index}
                     isLiquid={isLiquid}
-                    onClick={handleCloseMenu}
+                    onNavigate={(event, to) =>
+                      handleNavLinkNavigate(event, to, () => {
+                        handleCloseMenu();
+                      })
+                    }
                     getClassName={mobileLinkCls}
                   />
                 ))}
