@@ -177,10 +177,11 @@ const Navbar = React.memo(({ onOpenSettings }) => {
 
   /* ── Theme-dependent class maps ── */
 
-  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${isLiquid
+  const navCls = `fixed top-0 left-0 right-0 z-50 px-4 ${
+    isLiquid
       ? `pt-6 flex justify-center pointer-events-none ${isScrolled ? 'lg-nav-compact' : ''}`
       : 'py-4 md:py-5'
-    }`;
+  }`;
 
   const containerCls = isLiquid
     ? 'lg-surface-1 lg-specular-rim flex items-center justify-between w-full max-w-5xl h-[64px] px-6 pointer-events-auto transition-all duration-300'
@@ -193,18 +194,20 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   const desktopLinkCls = useCallback(
     isActive =>
       isLiquid
-        ? `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${isActive
-          ? isLiquidDark
-            ? 'bg-white/15 text-[color:var(--text-primary)]'
-            : 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
-          : isLiquidDark
-            ? 'text-[color:var(--text-secondary)] hover:bg-white/10'
-            : 'text-[color:var(--text-secondary)] hover:bg-white/40'
-        }`
-        : `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fun-yellow focus-visible:ring-offset-2 flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${isActive
-          ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
-          : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
-        }`,
+        ? `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 touch-target flex items-center justify-center gap-1.5 px-4 text-[14px] font-semibold rounded-full transition-all duration-300 whitespace-nowrap ${
+            isActive
+              ? isLiquidDark
+                ? 'bg-white/15 text-[color:var(--text-primary)]'
+                : 'bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.12)] text-[color:var(--text-primary)]'
+              : isLiquidDark
+                ? 'text-[color:var(--text-secondary)] hover:bg-white/10'
+                : 'text-[color:var(--text-secondary)] hover:bg-white/40'
+          }`
+        : `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fun-yellow focus-visible:ring-offset-2 flex items-center gap-1.5 px-3 py-2 text-sm font-heading font-semibold transition-all duration-200 border-2 rounded-nb whitespace-nowrap ${
+            isActive
+              ? 'bg-fun-yellow text-black border-[color:var(--color-border)] -rotate-1 shadow-[inset_2px_2px_0_var(--color-border)] translate-y-[1px]'
+              : 'text-primary border-transparent hover:border-[color:var(--color-border)] hover:bg-secondary nb-shadow-lift'
+          }`,
     [isLiquid, isLiquidDark]
   );
 

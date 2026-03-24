@@ -41,8 +41,7 @@ const pageVariants = {
  * Resolve once whether the browser can use view transitions.
  * Evaluated at module level so it doesn't re-run every render.
  */
-const useNativeViewTransition =
-  VIEW_TRANSITION_NAVIGATION_ENABLED && supportsViewTransition();
+const useNativeViewTransition = VIEW_TRANSITION_NAVIGATION_ENABLED && supportsViewTransition();
 
 /**
  * Page wrapper with animated transitions
