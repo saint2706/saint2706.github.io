@@ -235,6 +235,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
       animate={{ y: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={navCls}
+      style={{ viewTransitionName: 'chrome-header' }}
     >
       <div className={containerCls}>
         {/* ── Logo ── */}
