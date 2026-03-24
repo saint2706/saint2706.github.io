@@ -14,6 +14,7 @@ import { useFocusTrap } from '../shared/useFocusTrap';
 import { useTheme } from '../shared/theme-context';
 import {
   shouldHandleClientNavigationClick,
+  shouldHandleClientNavigationKeydown,
   viewTransitionNavigate,
 } from '../../navigation/viewTransitionNavigate';
 
@@ -27,10 +28,11 @@ const NAV_ITEMS = [
   { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
 ];
 
-const DesktopNavItem = React.memo(({ item, getClassName, onNavigate }) => (
+const DesktopNavItem = React.memo(({ item, getClassName, onClickNavigate, onKeydownNavigate }) => (
   <NavLink
     to={item.path}
-    onClick={event => onNavigate(event, item.path)}
+    onClick={event => onClickNavigate(event, item.path)}
+    onKeyDown={event => onKeydownNavigate(event, item.path)}
     className={({ isActive }) => getClassName(isActive)}
   >
     <span className="hidden lg:inline opacity-70" aria-hidden="true">
@@ -42,18 +44,21 @@ const DesktopNavItem = React.memo(({ item, getClassName, onNavigate }) => (
 
 DesktopNavItem.displayName = 'DesktopNavItem';
 
-const MobileNavItem = React.memo(({ item, index, isLiquid, onNavigate, getClassName }) => (
-  <NavLink
-    to={item.path}
-    onClick={event => onNavigate(event, item.path)}
-    className={({ isActive }) => getClassName(isActive, index)}
-  >
-    <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
-      {item.icon}
-    </span>
-    <span>{item.name}</span>
-  </NavLink>
-));
+const MobileNavItem = React.memo(
+  ({ item, index, isLiquid, onClickNavigate, onKeydownNavigate, getClassName }) => (
+    <NavLink
+      to={item.path}
+      onClick={event => onClickNavigate(event, item.path)}
+      onKeyDown={event => onKeydownNavigate(event, item.path)}
+      className={({ isActive }) => getClassName(isActive, index)}
+    >
+      <span aria-hidden="true" className={isLiquid ? 'opacity-70' : ''}>
+        {item.icon}
+      </span>
+      <span>{item.name}</span>
+    </NavLink>
+  )
+);
 
 MobileNavItem.displayName = 'MobileNavItem';
 
@@ -115,17 +120,34 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     menuButtonRef.current?.focus();
   };
 
-  const handleNavLinkNavigate = useCallback(
-    (event, to, afterNavigate) => {
-      if (!shouldHandleClientNavigationClick(event)) return;
-
-      event.preventDefault();
+  const handleRouteNavigate = useCallback(
+    (to, afterNavigate) => {
       viewTransitionNavigate(navigate, to);
       if (afterNavigate) {
         afterNavigate();
       }
     },
     [navigate]
+  );
+
+  const handleNavLinkClick = useCallback(
+    (event, to, afterNavigate) => {
+      if (!shouldHandleClientNavigationClick(event)) return;
+
+      event.preventDefault();
+      handleRouteNavigate(to, afterNavigate);
+    },
+    [handleRouteNavigate]
+  );
+
+  const handleNavLinkKeydown = useCallback(
+    (event, to, afterNavigate) => {
+      if (!shouldHandleClientNavigationKeydown(event)) return;
+
+      event.preventDefault();
+      handleRouteNavigate(to, afterNavigate);
+    },
+    [handleRouteNavigate]
   );
 
   // Use shared hook for focus trapping and keyboard navigation
@@ -241,7 +263,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
         {/* ── Logo ── */}
         <NavLink
           to="/"
-          onClick={event => handleNavLinkNavigate(event, '/')}
+          onClick={event => handleNavLinkClick(event, '/')}
           className="flex items-center gap-4 group flex-shrink-0"
           aria-label="Rishabh Agrawal - Home page"
         >
@@ -255,7 +277,8 @@ const Navbar = React.memo(({ onOpenSettings }) => {
               key={item.name}
               item={item}
               getClassName={desktopLinkCls}
-              onNavigate={handleNavLinkNavigate}
+              onClickNavigate={handleNavLinkClick}
+              onKeydownNavigate={handleNavLinkKeydown}
             />
           ))}
         </div>
@@ -338,8 +361,13 @@ const Navbar = React.memo(({ onOpenSettings }) => {
                     item={item}
                     index={index}
                     isLiquid={isLiquid}
-                    onNavigate={(event, to) =>
-                      handleNavLinkNavigate(event, to, () => {
+                    onClickNavigate={(event, to) =>
+                      handleNavLinkClick(event, to, () => {
+                        handleCloseMenu();
+                      })
+                    }
+                    onKeydownNavigate={(event, to) =>
+                      handleNavLinkKeydown(event, to, () => {
                         handleCloseMenu();
                       })
                     }

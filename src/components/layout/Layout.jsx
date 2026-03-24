@@ -62,6 +62,7 @@ const Layout = ({ children }) => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid' || theme === 'liquid-dark';
   const { pathname } = useLocation();
+  const routeAnnouncementRef = useRef(null);
 
   // Per-page ambient tint for liquid theme
   const liquidTint = useMemo(() => {
@@ -228,6 +229,32 @@ const Layout = ({ children }) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Restore focus to new route content and announce route changes for assistive tech
+  useEffect(() => {
+    if (!canUseDOM()) return;
+
+    const main = document.getElementById('main-content');
+    if (!main) return;
+
+    const heading = main.querySelector('h1, [role="heading"][aria-level="1"]');
+    const focusTarget = heading || main;
+
+    if (!focusTarget.hasAttribute('tabindex')) {
+      focusTarget.setAttribute('tabindex', '-1');
+    }
+
+    focusTarget.focus({ preventScroll: true });
+
+    const headingText = heading?.textContent?.trim();
+    const nextAnnouncement = headingText
+      ? `Navigated to ${headingText}`
+      : `Navigated to ${pathname}`;
+
+    if (routeAnnouncementRef.current) {
+      routeAnnouncementRef.current.textContent = nextAnnouncement;
+    }
+  }, [pathname]);
+
   /** Open terminal from command palette */
   const handleOpenTerminal = useCallback(() => {
     setTerminalWelcome('');
@@ -256,6 +283,14 @@ const Layout = ({ children }) => {
       </a>
 
       <Navbar onOpenSettings={() => setIsSettingsOpen(true)} />
+
+      <div
+        ref={routeAnnouncementRef}
+        className="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      />
 
       <main id="main-content" className="grow pt-28 px-4 z-10 relative">
         {children}
