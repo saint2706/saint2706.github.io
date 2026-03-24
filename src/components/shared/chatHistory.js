@@ -3,7 +3,7 @@
  * Helps prevent exceeding token limits.
  * @type {number}
  */
-export const MAX_HISTORY_CONTEXT = 30;
+const MAX_HISTORY_CONTEXT = 30;
 
 /**
  * Appends a new user message to the existing message array.

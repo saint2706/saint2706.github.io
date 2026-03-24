@@ -5,7 +5,7 @@
  * Pre-defined code snippets available in the Python Playground and CSS examples.
  * @type {Array<{id: string, title: string, description: string, code: string, language: string, category: string, tags: string[], preview?: {html: string, css: string}}>}
  */
-export const snippets = [
+const snippets = [
   // ===== PYTHON ONE-LINERS =====
   {
     id: 'py-flatten',
