@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   canAnimateViewTransitions,
+  getStartViewTransition,
   shouldHandleClientNavigationClick,
   shouldHandleClientNavigationKeydown,
   supportsViewTransition,
@@ -52,6 +53,20 @@ const mockMatchMedia = matcher => {
     viewTransitionNavigate(navigate, '/projects');
 
     expect(startViewTransition).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledWith('/projects', undefined);
+  });
+
+  it('falls back to plain navigate when View Transitions API is unavailable', () => {
+    const navigate = vi.fn();
+    delete document.startViewTransition;
+
+    mockMatchMedia(query => query === '(prefers-reduced-motion: no-preference)');
+
+    expect(getStartViewTransition()).toBeNull();
+    expect(supportsViewTransition()).toBe(false);
+
+    viewTransitionNavigate(navigate, '/projects');
+
     expect(navigate).toHaveBeenCalledWith('/projects', undefined);
   });
 

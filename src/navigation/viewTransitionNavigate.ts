@@ -4,12 +4,27 @@
  */
 
 /**
+ * Returns the View Transition entrypoint when supported, else null.
+ *
+ * Progressive enhancement note:
+ * - Browsers without `document.startViewTransition` should navigate immediately.
+ * - Transition-only lifecycle styling/hooks must be skipped in that fallback path
+ *   to avoid stale classes or visual state sticking around.
+ *
+ * @returns {Document['startViewTransition'] | null}
+ */
+export const getStartViewTransition = () => {
+  if (typeof document === 'undefined') return null;
+  if (!('startViewTransition' in document)) return null;
+  return typeof document.startViewTransition === 'function' ? document.startViewTransition : null;
+};
+
+/**
  * Returns whether the current browser supports document.startViewTransition.
  *
  * @returns {boolean}
  */
-export const supportsViewTransition = () =>
-  typeof document !== 'undefined' && typeof document.startViewTransition === 'function';
+export const supportsViewTransition = () => Boolean(getStartViewTransition());
 
 /**
  * Returns whether motion preferences allow transition animation.
@@ -67,13 +82,14 @@ export const shouldHandleClientNavigationKeydown = event => {
  */
 export const viewTransitionNavigate = (navigate, to, options, config = {}) => {
   if (typeof navigate !== 'function') return;
+  const startViewTransition = getStartViewTransition();
 
-  if (config.disabled || !supportsViewTransition() || !canAnimateViewTransitions()) {
+  if (config.disabled || !startViewTransition || !canAnimateViewTransitions()) {
     navigate(to, options);
     return;
   }
 
-  document.startViewTransition(() => {
+  startViewTransition(() => {
     navigate(to, options);
   });
 };
