@@ -77,10 +77,12 @@
 
 **Verification**
 
-- [ ] Verify route navigation still works correctly with JavaScript and CSS transition support disabled.
-- [ ] Test reduced-motion behavior and confirm animations are minimized or removed appropriately.
-- [ ] Confirm no visual flicker occurs in persistent layout regions during navigation.
-- [ ] Run `pnpm test:run` and `pnpm build` after the implementation.
+- [ ] With View Transitions enabled, project card → project detail animates shared thumbnail and title without flicker.
+- [ ] With API disabled (feature flag or browser without support), navigation remains correct and instant.
+- [ ] With reduced motion enabled, transition animation is removed/minimized.
+- [ ] Keyboard navigation preserves focus target on destination page.
+- [ ] No layout flash in persistent header/chrome during route change.
+- [ ] `pnpm test:run` and `pnpm build` complete successfully post-change.
 
 **Definition of done**
 
