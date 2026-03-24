@@ -245,20 +245,26 @@ const Contact = React.memo(() => {
                   {resumeData.basics.location.city}, {resumeData.basics.location.country}
                 </span>
                 <div className="flex items-center gap-2">
-                  {resumeData.basics.socials.map(social => (
-                    <ThemedButton
-                      as="a"
-                      key={social.network}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      className="p-2.5"
-                      aria-label={`${social.network} (opens in new tab)`}
-                    >
-                      {social.network === 'GitHub' ? <Github size={20} /> : <Linkedin size={20} />}
-                    </ThemedButton>
-                  ))}
+                  {resumeData.basics.socials
+                    .filter(social => isSafeHref(social.url))
+                    .map(social => (
+                      <ThemedButton
+                        as="a"
+                        key={social.network}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="secondary"
+                        className="p-2.5"
+                        aria-label={`${social.network} (opens in new tab)`}
+                      >
+                        {social.network === 'GitHub' ? (
+                          <Github size={20} />
+                        ) : (
+                          <Linkedin size={20} />
+                        )}
+                      </ThemedButton>
+                    ))}
                 </div>
               </div>
             </ThemedCard>
@@ -333,26 +339,32 @@ const Contact = React.memo(() => {
                   Follow Me
                 </h2>
                 <div className="flex gap-4">
-                  {resumeData.basics.socials.map(social => (
-                    <ThemedButton
-                      as="a"
-                      key={social.network}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="secondary"
-                      className={`group relative p-4 ${social.network === 'GitHub' ? 'hover:bg-fun-yellow' : 'hover:bg-accent'}`}
-                      aria-label={`${social.network} (opens in new tab)`}
-                    >
-                      {social.network === 'GitHub' ? <Github size={24} /> : <Linkedin size={24} />}
-                      <span
-                        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
-                        aria-hidden="true"
+                  {resumeData.basics.socials
+                    .filter(social => isSafeHref(social.url))
+                    .map(social => (
+                      <ThemedButton
+                        as="a"
+                        key={social.network}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="secondary"
+                        className={`group relative p-4 ${social.network === 'GitHub' ? 'hover:bg-fun-yellow' : 'hover:bg-accent'}`}
+                        aria-label={`${social.network} (opens in new tab)`}
                       >
-                        {social.network}
-                      </span>
-                    </ThemedButton>
-                  ))}
+                        {social.network === 'GitHub' ? (
+                          <Github size={24} />
+                        ) : (
+                          <Linkedin size={24} />
+                        )}
+                        <span
+                          className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
+                          aria-hidden="true"
+                        >
+                          {social.network}
+                        </span>
+                      </ThemedButton>
+                    ))}
                 </div>
               </ThemedCard>
 

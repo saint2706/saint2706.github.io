@@ -124,7 +124,7 @@ const ProjectCard = React.memo(
           </div>
 
           <div className="flex items-center gap-4 mt-auto">
-            {project.link && (
+            {project.link && isSafeHref(project.link) && (
               <ThemedButton
                 as="a"
                 href={project.link}
@@ -140,7 +140,7 @@ const ProjectCard = React.memo(
                 <ExternalLink size={14} aria-hidden="true" /> Demo
               </ThemedButton>
             )}
-            {project.github && (
+            {project.github && isSafeHref(project.github) && (
               <ThemedButton
                 as="a"
                 href={project.github}
