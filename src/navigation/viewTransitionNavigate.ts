@@ -4,6 +4,15 @@
  */
 
 /**
+ * Global feature flag to allow one-line rollback of transition-wrapped
+ * navigation behavior.
+ *
+ * Disable by setting `VITE_ENABLE_VIEW_TRANSITION_NAVIGATION=false`.
+ */
+export const VIEW_TRANSITION_NAVIGATION_ENABLED =
+  import.meta.env.VITE_ENABLE_VIEW_TRANSITION_NAVIGATION !== 'false';
+
+/**
  * Returns the View Transition entrypoint when supported, else null.
  *
  * Progressive enhancement note:
@@ -84,7 +93,12 @@ export const viewTransitionNavigate = (navigate, to, options, config = {}) => {
   if (typeof navigate !== 'function') return;
   const startViewTransition = getStartViewTransition();
 
-  if (config.disabled || !startViewTransition || !canAnimateViewTransitions()) {
+  if (
+    config.disabled ||
+    !VIEW_TRANSITION_NAVIGATION_ENABLED ||
+    !startViewTransition ||
+    !canAnimateViewTransitions()
+  ) {
     navigate(to, options);
     return;
   }
