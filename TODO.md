@@ -61,24 +61,26 @@
 
 ### 1.1 Implement view-transition-driven page navigation
 
+**Status:** In progress
+
 **Outcome**
 
 - Route changes should feel continuous rather than abrupt, especially when moving from project grids into project detail views.
 
 **Actionable tasks**
 
-- Identify high-value transitions, starting with project card → project detail and global navigation link → destination page.
-- Add route-aware view transition hooks around navigation events.
-- Assign stable `view-transition-name` values to shared visual elements such as thumbnails, headings, and persistent chrome.
-- Build a graceful fallback path for browsers that do not support the View Transitions API.
-- Ensure transitions do not interfere with keyboard navigation, focus restoration, or reduced-motion preferences.
+- [ ] Identify high-value transitions, starting with project card → project detail and global navigation link → destination page.
+- [ ] Add route-aware view transition hooks around navigation events.
+- [ ] Assign stable `view-transition-name` values to shared visual elements such as thumbnails, headings, and persistent chrome.
+- [ ] Build a graceful fallback path for browsers that do not support the View Transitions API.
+- [ ] Ensure transitions do not interfere with keyboard navigation, focus restoration, or reduced-motion preferences.
 
 **Verification**
 
-- Verify route navigation still works correctly with JavaScript and CSS transition support disabled.
-- Test reduced-motion behavior and confirm animations are minimized or removed appropriately.
-- Confirm no visual flicker occurs in persistent layout regions during navigation.
-- Run `pnpm test:run` and `pnpm build` after the implementation.
+- [ ] Verify route navigation still works correctly with JavaScript and CSS transition support disabled.
+- [ ] Test reduced-motion behavior and confirm animations are minimized or removed appropriately.
+- [ ] Confirm no visual flicker occurs in persistent layout regions during navigation.
+- [ ] Run `pnpm test:run` and `pnpm build` after the implementation.
 
 **Definition of done**
 
