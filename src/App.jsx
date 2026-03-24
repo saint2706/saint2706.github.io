@@ -139,4 +139,5 @@ function App() {
   );
 }
 
+/** @type {React.FC} */
 export default App;

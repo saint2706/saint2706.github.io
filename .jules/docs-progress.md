@@ -62,3 +62,7 @@
 
 - Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
 - Added `@type` JSDoc annotations to default exports in `Hero`, `Navbar`, `Footer`, and `Playground` components to fix missing documentation warnings.
+
+## 2026-03-24
+
+- Added `@type` JSDoc annotation to the default export of `src/App.jsx`.
