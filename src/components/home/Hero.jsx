@@ -35,7 +35,7 @@ const headingInitial = { opacity: 1, y: 0 };
 const headingAnimate = { opacity: 1, y: 0 };
 const headingTransition = { delay: 0.2 };
 
-const textInitial = { opacity: 0, y: 20 };
+const textInitial = { opacity: 1, y: 0 };
 const textAnimate = { opacity: 1, y: 0 };
 const textTransition1 = { delay: 0.4 };
 const textTransition2 = { delay: 0.6 };

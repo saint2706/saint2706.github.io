@@ -217,3 +217,21 @@ Fixed semantic HTML heading hierarchy across multiple pages.
     - Modified `src/components/pages/Contact.jsx` to use `<h2>` instead of `<h3>` for "Send a message", "Draft Opened!", "Get in Touch", "Follow Me", and "Ready to start a conversation?".
 4.  **[SEO][GEO] Fixed Semantic Hierarchy in Projects:**
     - Modified `src/components/pages/Projects.jsx` to use `<h2>` instead of `<h3>` for `project.title`.
+
+## Date: $(date -u +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized Core Web Vitals (LCP) and AI Discoverability (GEO) metrics per prompt instructions.
+
+### Changes
+
+1.  **[PERF] Optimized LCP element in Hero section**:
+    - Modified `src/components/home/Hero.jsx` by updating `textInitial` from `{ opacity: 0, y: 20 }` to `{ opacity: 1, y: 0 }`.
+    - This ensures the Hero text LCP block is immediately visible without delayed fade-in animations, strictly adhering to Core Web Vitals guidance.
+
+2.  **[GEO] Standardized Site Architecture format in `llms.txt`**:
+    - Updated `scripts/generate-llms.js` to strictly follow the AI-friendly Site Architecture mapping format provided.
+    - Verified proper generation of `public/llms.txt`.
