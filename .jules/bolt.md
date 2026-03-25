@@ -58,3 +58,5 @@
 
 - Moved static array (`QUICK_LINKS`) from `import` declaration in `NotFound.jsx` to correctly resolve `import/first` lint error. Removed testing artifacts from repository to ensure code cleanliness.
   ⚡ Bolt: Optimized React.memo array creations in pages
+
+- **[PERF] Optimized event handlers in Navbar**: Wrapped `handleCloseMenu` in `useCallback` to stabilize its reference. Replaced inline arrow functions for `MobileNavItem` click and keydown handlers with memoized functions `handleMobileNavLinkClick` and `handleMobileNavLinkKeydown` to prevent re-renders in child components on every render cycle.
