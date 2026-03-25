@@ -91,3 +91,10 @@
 
 - **Issue**: The `LivePreview` component in `src/components/pages/Playground.jsx` used `doc.write()` inside an `iframe` with `sandbox="allow-same-origin"` to render CSS previews dynamically. Using `doc.write()` is not a secure or modern practice and can expose the application to XSS vulnerabilities, especially when using an unsafe `sandbox` attribute like `allow-same-origin`.
 - **Fix**: Replaced `doc.write()` with `srcDoc` attribute on the `iframe` to safely render the HTML structure. Also, restricted the iframe isolation significantly by setting `sandbox=""` instead of `sandbox="allow-same-origin"`, effectively preventing script execution and same-origin data access completely. This strengthens the application's defense against potential XSS attacks in the `LivePreview` sandbox context.
+
+## Security Improvements
+
+### Href Sanitization
+
+- **Vulnerability**: React's `href` attribute in `<a>` tags does not inherently block malicious protocols such as `javascript:`, which could execute arbitrary scripts when clicked (XSS).
+- **Fix**: Added validation utilizing `isSafeHref` across various components (Projects, Contact, Footer) to ensure only valid protocols (e.g., http, https, mailto) are rendered as hyperlinks.

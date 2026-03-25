@@ -10,6 +10,7 @@ import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
 import { resumeData } from '../../data/resume';
+import { isSafeHref } from '../../utils/security';
 
 // ⚡ Bolt: Extracted static marquee items outside component to prevent re-allocations on every render
 const MARQUEE_ITEMS = [
@@ -112,7 +113,7 @@ const Footer = React.memo(() => {
           <div className="max-w-4xl mx-auto px-4">
             {/* Social Links */}
             <div className="flex justify-center gap-4 mb-8">
-              {githubUrl && (
+              {githubUrl && isSafeHref(githubUrl) && (
                 <a
                   href={githubUrl}
                   target="_blank"
@@ -137,7 +138,7 @@ const Footer = React.memo(() => {
                   </span>
                 </a>
               )}
-              {linkedInUrl && (
+              {linkedInUrl && isSafeHref(linkedInUrl) && (
                 <a
                   href={linkedInUrl}
                   target="_blank"
