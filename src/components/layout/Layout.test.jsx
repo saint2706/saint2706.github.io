@@ -85,7 +85,10 @@ describe('Layout route accessibility behavior', () => {
       );
     });
 
-    const projectsHeading = screen.getByRole('heading', { name: 'Projects Heading', level: 1 });
+    const projectsHeading = await screen.findByRole('heading', {
+      name: 'Projects Heading',
+      level: 1,
+    });
     expect(document.activeElement).toBe(projectsHeading);
 
     const status = screen.getByRole('status');
@@ -116,7 +119,7 @@ describe('Layout route accessibility behavior', () => {
       );
     });
 
-    const heading = screen.getByRole('heading', { name: 'Projects Heading', level: 1 });
+    const heading = await screen.findByRole('heading', { name: 'Projects Heading', level: 1 });
     const actionButton = screen.getByRole('button', { name: 'Projects Action' });
 
     expect(document.activeElement).toBe(heading);
