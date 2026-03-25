@@ -39,3 +39,4 @@ skills-lock.json
 .agents/*
 !.agents/skills/
 coverage/
+.eslintcache

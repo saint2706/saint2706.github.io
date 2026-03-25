@@ -32,6 +32,14 @@ jobs:
       - name: No-Aura tests
         run: pnpm run test:no-aura
 
+      - name: Cache ESLint
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
+        with:
+          path: .eslintcache
+          key: ${{ runner.os }}-eslint-${{ hashFiles('**/*.js', '**/*.jsx') }}
+          restore-keys: |
+            ${{ runner.os }}-eslint-
+
       - name: Lint
         run: pnpm run lint
 
