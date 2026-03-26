@@ -15,3 +15,5 @@
 
 - **Update**: Added ESLint `--cache` to `package.json` scripts and configured `.eslintcache` in `.github/workflows/ci.yml` using `actions/cache`.
 - **Why**: Reduces the time required to run the `lint` job in CI by caching the ESLint analysis results for unmodified files.
+  Verified CI pipeline settings including fail-fast, pinned SHAs, dependency caching, and matrix builds.
+- Pinned actions/checkout to actual v4.2.2 SHA (11bd71901bbe5b1630ceea73d27597364c9af683) instead of invalid version.
