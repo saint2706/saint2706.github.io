@@ -10,3 +10,8 @@
 
 - **Update**: Resolved React warning regarding testing suspended resources in `src/components/layout/Layout.test.jsx`.
 - **Why**: Wrapping `render` calls in `act(...)` with `await` ensures suspended data (e.g. from React.lazy) is resolved properly within the test environment, preventing asynchronous side-effects from failing the Vitest execution silently.
+
+## ESLint Caching
+
+- **Update**: Added ESLint `--cache` to `package.json` scripts and configured `.eslintcache` in `.github/workflows/ci.yml` using `actions/cache`.
+- **Why**: Reduces the time required to run the `lint` job in CI by caching the ESLint analysis results for unmodified files.
