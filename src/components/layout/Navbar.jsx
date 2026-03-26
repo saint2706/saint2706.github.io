@@ -115,10 +115,10 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     }
   }, [isMenuOpen]);
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = useCallback(() => {
     setIsMenuOpen(false);
     menuButtonRef.current?.focus();
-  };
+  }, []);
 
   const handleRouteNavigate = useCallback(
     (to, afterNavigate) => {
@@ -148,6 +148,24 @@ const Navbar = React.memo(({ onOpenSettings }) => {
       handleRouteNavigate(to, afterNavigate);
     },
     [handleRouteNavigate]
+  );
+
+  const handleMobileNavLinkClick = useCallback(
+    (event, to) => {
+      handleNavLinkClick(event, to, () => {
+        handleCloseMenu();
+      });
+    },
+    [handleNavLinkClick, handleCloseMenu]
+  );
+
+  const handleMobileNavLinkKeydown = useCallback(
+    (event, to) => {
+      handleNavLinkKeydown(event, to, () => {
+        handleCloseMenu();
+      });
+    },
+    [handleNavLinkKeydown, handleCloseMenu]
   );
 
   // Use shared hook for focus trapping and keyboard navigation
@@ -361,16 +379,8 @@ const Navbar = React.memo(({ onOpenSettings }) => {
                     item={item}
                     index={index}
                     isLiquid={isLiquid}
-                    onClickNavigate={(event, to) =>
-                      handleNavLinkClick(event, to, () => {
-                        handleCloseMenu();
-                      })
-                    }
-                    onKeydownNavigate={(event, to) =>
-                      handleNavLinkKeydown(event, to, () => {
-                        handleCloseMenu();
-                      })
-                    }
+                    onClickNavigate={handleMobileNavLinkClick}
+                    onKeydownNavigate={handleMobileNavLinkKeydown}
                     getClassName={mobileLinkCls}
                   />
                 ))}
