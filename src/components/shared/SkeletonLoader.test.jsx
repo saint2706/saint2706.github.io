@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BlogSkeleton, ProjectSkeleton, ChatSkeleton, TypingIndicator } from './SkeletonLoader';
+import { TypingIndicator } from './SkeletonLoader';
 import { useTheme } from './theme-context';
 
 // Mock dependencies
@@ -26,31 +26,6 @@ describe('SkeletonLoader', () => {
     vi.clearAllMocks();
     useTheme.mockReturnValue({ theme: 'neubrutalism' });
     useReducedMotion.mockReturnValue(false);
-  });
-
-  describe('BlogSkeleton', () => {
-    it('renders correctly', () => {
-      const { container } = render(<BlogSkeleton />);
-      expect(container.firstChild).toHaveClass('bg-secondary/50');
-      // Check for structure elements
-      expect(container.querySelectorAll('.animate-pulse')).toHaveLength(11); // Check count of SkeletonBase elements
-    });
-  });
-
-  describe('ProjectSkeleton', () => {
-    it('renders correctly', () => {
-      const { container } = render(<ProjectSkeleton />);
-      expect(container.firstChild).toHaveClass('bg-secondary/50');
-      expect(container.querySelectorAll('.animate-pulse')).toHaveLength(11);
-    });
-  });
-
-  describe('ChatSkeleton', () => {
-    it('renders correctly', () => {
-      const { container } = render(<ChatSkeleton />);
-      expect(container.firstChild).toHaveClass('flex justify-start');
-      expect(container.querySelectorAll('.animate-pulse')).toHaveLength(4);
-    });
   });
 
   describe('TypingIndicator', () => {

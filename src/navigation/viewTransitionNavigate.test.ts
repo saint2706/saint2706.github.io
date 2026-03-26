@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
-  canAnimateViewTransitions,
-  getStartViewTransition,
   shouldHandleClientNavigationClick,
   shouldHandleClientNavigationKeydown,
   supportsViewTransition,
@@ -30,18 +28,6 @@ const mockMatchMedia = matcher => {
     vi.restoreAllMocks();
   });
 
-  it('animates only when motion preference is no-preference', () => {
-    mockMatchMedia(query => query === '(prefers-reduced-motion: no-preference)');
-
-    expect(canAnimateViewTransitions()).toBe(true);
-  });
-
-  it('short-circuits transition animation when reduced motion is enabled', () => {
-    mockMatchMedia(query => query === '(prefers-reduced-motion: reduce)');
-
-    expect(canAnimateViewTransitions()).toBe(false);
-  });
-
   it('uses startViewTransition only when supported and allowed', () => {
     const navigate = vi.fn();
     const startViewTransition = vi.fn(cb => cb());
@@ -62,7 +48,6 @@ const mockMatchMedia = matcher => {
 
     mockMatchMedia(query => query === '(prefers-reduced-motion: no-preference)');
 
-    expect(getStartViewTransition()).toBeNull();
     expect(supportsViewTransition()).toBe(false);
 
     viewTransitionNavigate(navigate, '/projects');

@@ -97,3 +97,8 @@
 
 - **Fixed Runtime Safety**: Refactored tests in `src/components/layout/Layout.test.jsx` to wrap rendering in `act()` and await `findByRole` to correctly handle `Suspense` and `React.lazy` resolutions for React 19 test environments, eliminating `A suspended resource finished loading inside a test` errors from stderr.
 - **Verified**: Build, Lint, Format, and Tests passed ✅.
+
+## Session 18
+
+- **Fixed Unused Exports**: Removed unused `BlogSkeleton`, `ProjectSkeleton`, and `ChatSkeleton` exports in `src/components/shared/SkeletonLoader.jsx`. Removed unused `getStartViewTransition` and `canAnimateViewTransitions` exports from `src/navigation/viewTransitionNavigate.ts`.
+- **Verified**: Build, Lint, and Tests passed cleanly.

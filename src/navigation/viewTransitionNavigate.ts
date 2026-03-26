@@ -22,7 +22,7 @@ export const VIEW_TRANSITION_NAVIGATION_ENABLED =
  *
  * @returns {Document['startViewTransition'] | null}
  */
-export const getStartViewTransition = () => {
+const getStartViewTransition = () => {
   if (typeof document === 'undefined') return null;
   if (!('startViewTransition' in document)) return null;
   return typeof document.startViewTransition === 'function' ? document.startViewTransition : null;
@@ -40,7 +40,7 @@ export const supportsViewTransition = () => Boolean(getStartViewTransition());
  *
  * @returns {boolean}
  */
-export const canAnimateViewTransitions = () => {
+const canAnimateViewTransitions = () => {
   if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
     return true;
   }
