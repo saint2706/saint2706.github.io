@@ -5,9 +5,9 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
-      time: "13:00"
+      time: "14:26"
       timezone: "Asia/Kolkata"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 20
     labels:
       - "dependencies"
       - "automated"
@@ -24,7 +24,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
-      time: "13:00"
+      time: "14:26"
       timezone: "Asia/Kolkata"
     open-pull-requests-limit: 10
     labels:
