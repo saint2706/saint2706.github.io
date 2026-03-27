@@ -103,25 +103,33 @@ const Playground = React.memo(() => {
     setModalType(null);
   }, []);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        duration: shouldReduceMotion ? 0 : undefined,
+  // ⚡ Bolt: Extracted container motion variants into a useMemo hook to prevent recreation on each render.
+  const container = React.useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      show: {
+        opacity: 1,
+        transition: {
+          staggerChildren: shouldReduceMotion ? 0 : 0.08,
+          duration: shouldReduceMotion ? 0 : undefined,
+        },
       },
-    },
-  };
+    }),
+    [shouldReduceMotion]
+  );
 
-  const item = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: shouldReduceMotion ? { duration: 0 } : undefined,
-    },
-  };
+  // ⚡ Bolt: Extracted item motion variants into a useMemo hook to prevent recreation on each render.
+  const item = React.useMemo(
+    () => ({
+      hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: shouldReduceMotion ? { duration: 0 } : undefined,
+      },
+    }),
+    [shouldReduceMotion]
+  );
 
   const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
