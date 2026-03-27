@@ -6,14 +6,14 @@ on:
   workflow_dispatch: # Allows manual run
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' }}
 
 jobs:
-  sync:
+  generate:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -25,6 +25,29 @@ jobs:
 
       - name: Run sync script
         run: node scripts/sync-blogs.js
+
+      - name: Upload synced blogs artifact
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        with:
+          name: synced-blogs
+          path: src/data/blogs.json
+          if-no-files-found: error
+
+  commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: generate
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Download synced blogs artifact
+        uses: actions/download-artifact@b14d97074e5f6f0894f57f9e0cbaec4e90f0f5e5 # v4.1.8
+        with:
+          name: synced-blogs
+          path: src/data
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
