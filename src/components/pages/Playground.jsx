@@ -275,6 +275,11 @@ const Playground = React.memo(() => {
                 <p className="mt-2 text-sm text-[color:var(--text-secondary)] font-sans">
                   Try selecting a different category.
                 </p>
+                <div className="mt-6 flex justify-center">
+                  <ThemedButton onClick={() => setActiveFilter('all')} variant="primary">
+                    Clear Filters
+                  </ThemedButton>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
