@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
           path: .eslintcache
-          key: ${{ runner.os }}-eslint-${{ hashFiles('**/*.js', '**/*.jsx') }}
+          key: ${{ runner.os }}-eslint-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-eslint-
 
@@ -44,6 +44,7 @@ jobs:
         run: pnpm run lint
 
   test:
+    needs: lint
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -65,6 +66,7 @@ jobs:
         run: pnpm run test:run
 
   build:
+    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -78,6 +80,7 @@ jobs:
         run: pnpm run build
 
   security:
+    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
