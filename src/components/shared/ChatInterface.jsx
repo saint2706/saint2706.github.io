@@ -93,7 +93,8 @@ const QUICK_REPLIES = [
  * @param {React.ReactNode} props.children - Link text content
  * @returns {JSX.Element} Either a safe anchor tag or plain text span
  */
-const LinkRenderer = ({ href, children, ...rest }) => {
+// ⚡ Bolt: Wrapped LinkRenderer in React.memo to prevent unnecessary re-rendering of expensive Markdown nodes.
+const LinkRenderer = React.memo(({ href, children, ...rest }) => {
   // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
   const isValidHref = isSafeHref(href);
 
@@ -113,7 +114,9 @@ const LinkRenderer = ({ href, children, ...rest }) => {
       {children}
     </a>
   );
-};
+});
+
+LinkRenderer.displayName = 'LinkRenderer';
 
 /**
  * Custom image renderer for ReactMarkdown that validates image sources for security.
@@ -125,7 +128,8 @@ const LinkRenderer = ({ href, children, ...rest }) => {
  * @param {string} props.alt - The image alt text
  * @returns {JSX.Element} Either the image tag or a placeholder/warning
  */
-const ImageRenderer = ({ src, alt, ...rest }) => {
+// ⚡ Bolt: Wrapped ImageRenderer in React.memo to prevent unnecessary re-rendering of expensive Markdown nodes.
+const ImageRenderer = React.memo(({ src, alt, ...rest }) => {
   // Security: Validate image source to prevent dangerous protocols (e.g., javascript:)
   // Uses isSafeImageSrc which only allows http/https (not mailto: which doesn't make sense for images)
   const isValidSrc = isSafeImageSrc(src);
@@ -145,7 +149,9 @@ const ImageRenderer = ({ src, alt, ...rest }) => {
       {...rest}
     />
   );
-};
+});
+
+ImageRenderer.displayName = 'ImageRenderer';
 
 /**
  * Custom code block renderer with syntax highlighting and copy functionality.
@@ -157,7 +163,8 @@ const ImageRenderer = ({ src, alt, ...rest }) => {
  *
  * @component
  */
-const CodeRenderer = ({ className, children, node, ...props }) => {
+// ⚡ Bolt: Wrapped CodeRenderer in React.memo to prevent unnecessary re-rendering of expensive Markdown nodes.
+const CodeRenderer = React.memo(({ className, children, node, ...props }) => {
   const inline = !node?.position || node.position.start.line === node.position.end.line;
   const [isCopied, setIsCopied] = useState(false);
   const copyResetTimeoutRef = useRef(null);
@@ -230,7 +237,9 @@ const CodeRenderer = ({ className, children, node, ...props }) => {
       {children}
     </code>
   );
-};
+});
+
+CodeRenderer.displayName = 'CodeRenderer';
 
 // Stable markdown components object to prevent unnecessary re-renders
 const MARKDOWN_COMPONENTS = {

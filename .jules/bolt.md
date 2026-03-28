@@ -60,3 +60,6 @@
   ⚡ Bolt: Optimized React.memo array creations in pages
 
 - **[PERF] Optimized event handlers in Navbar**: Wrapped `handleCloseMenu` in `useCallback` to stabilize its reference. Replaced inline arrow functions for `MobileNavItem` click and keydown handlers with memoized functions `handleMobileNavLinkClick` and `handleMobileNavLinkKeydown` to prevent re-renders in child components on every render cycle.
+
+- **[PERF] Extracted animation variants in Playground**: Extracted the `container` and `item` motion variant objects in `src/components/pages/Playground.jsx` into `useMemo` hooks. This prevents them from being unnecessarily re-allocated and re-created during each render cycle, improving the React tree reconciliation performance.
+- **[PERF] Memoized Markdown node renderers in ChatInterface**: Wrapped the `LinkRenderer`, `ImageRenderer`, and `CodeRenderer` component definitions inside `src/components/shared/ChatInterface.jsx` with `React.memo()`. This prevents them from re-rendering unless their specific props change, significantly reducing computational overhead during the otherwise-expensive dynamic rendering of the `ReactMarkdown` tree.
