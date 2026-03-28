@@ -127,7 +127,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"
               >
-                <X size={18} />
+                <X size={18} aria-hidden="true" />
                 <span
                   className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
                   aria-hidden="true"

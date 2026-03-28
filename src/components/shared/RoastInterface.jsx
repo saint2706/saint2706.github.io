@@ -140,7 +140,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-fun-pink rounded-sm"
           aria-label="Close roast"
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
           <span
             className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
             aria-hidden="true"

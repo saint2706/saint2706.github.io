@@ -354,7 +354,7 @@ Just kidding... but seriously, let's chat!
                   }
                   aria-label="Close terminal"
                 >
-                  <X size={16} />
+                  <X size={16} aria-hidden="true" />
                 </button>
               </div>
 
