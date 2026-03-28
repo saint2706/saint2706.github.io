@@ -85,6 +85,7 @@ const ThemedButton = ({
         ...style,
       }}
       disabled={isLoading || props.disabled}
+      aria-disabled={isLoading || props.disabled}
       aria-busy={isLoading}
       {...props}
     >
