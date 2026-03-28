@@ -15,3 +15,8 @@
 
 - **Update**: Added ESLint `--cache` to `package.json` scripts and configured `.eslintcache` in `.github/workflows/ci.yml` using `actions/cache`.
 - **Why**: Reduces the time required to run the `lint` job in CI by caching the ESLint analysis results for unmodified files.
+
+## CI/CD Optimizations
+
+- Added `needs: lint` to `test`, `build`, and `security` jobs in `ci.yml` to ensure jobs fail fast and save resources.
+- Updated ESLint cache key to use `github.sha` instead of file hashing to improve cache hit rates.
