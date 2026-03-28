@@ -68,6 +68,10 @@ MobileNavItem.displayName = 'MobileNavItem';
  *
  * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
  * when parent Layout state (like CustomCursor position or CommandPalette) changes.
+ *
+ * @param {Object} props
+ * @param {Function} props.onOpenSettings - Callback to open the settings modal.
+ * @returns {JSX.Element} The rendered navigation bar.
  */
 const Navbar = React.memo(({ onOpenSettings }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
