@@ -20,3 +20,8 @@
 
 - Added `needs: lint` to `test`, `build`, and `security` jobs in `ci.yml` to ensure jobs fail fast and save resources.
 - Updated ESLint cache key to use `github.sha` instead of file hashing to improve cache hit rates.
+
+## Workflow Optimization
+
+- **Update**: Added needs: [actionlint] to workflow-security in workflow-lint.yml and permissions: contents: read to build job in deploy.yml.
+- **Why**: Optimizes pipeline execution and enforces least privilege.
