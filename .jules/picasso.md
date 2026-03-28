@@ -58,4 +58,5 @@ Implements various UX and accessibility enhancements across the application, foc
 - Added `focus-visible:ring-gray-400` styling to `TerminalMode` close button for neubrutalism theme keyboard accessibility.
 
 ## Missing ARIA Hidden on Icon Components
+
 - When using `<button>` elements with nested icons (e.g., `<Heart>`, `<X>`, `<Copy>`), always ensure the icon component has `aria-hidden="true"` attached to it to prevent screen readers from reading out the SVG or icon content when the button already has a descriptive `aria-label`.
