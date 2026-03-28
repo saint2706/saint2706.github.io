@@ -19,6 +19,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Lightbulb } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 const SIZE = 5;
 
@@ -112,7 +113,7 @@ const LightsOut = () => {
   const [grid, setGrid] = useState(createPuzzle);
   const [moves, setMoves] = useState(0);
   const [bestScore, setBestScore] = useState(() => {
-    const s = localStorage.getItem('lightsOutBest');
+    const s = safeGetLocalStorage('lightsOutBest');
     return s ? parseInt(s, 10) : null;
   });
   const [focusR, setFocusR] = useState(0);
@@ -141,7 +142,7 @@ const LightsOut = () => {
         setGameState('won');
         if (!bestScore || newMoves < bestScore) {
           setBestScore(newMoves);
-          localStorage.setItem('lightsOutBest', newMoves.toString());
+          safeSetLocalStorage('lightsOutBest', newMoves.toString());
         }
       }
     },
