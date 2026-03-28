@@ -104,7 +104,12 @@ describe('Minesweeper Game', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    try {
+      vi.runOnlyPendingTimers();
+      vi.useRealTimers();
+    } catch {
+      // ignore
+    }
     vi.restoreAllMocks();
   });
 

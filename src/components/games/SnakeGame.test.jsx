@@ -163,6 +163,12 @@ describe('SnakeGame', () => {
   });
 
   afterEach(() => {
+    try {
+      vi.runOnlyPendingTimers();
+      vi.useRealTimers();
+    } catch {
+      // ignore
+    }
     vi.restoreAllMocks();
   });
 
