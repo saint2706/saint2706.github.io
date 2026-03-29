@@ -196,6 +196,7 @@ const Footer = React.memo(() => {
                   >
                     <Heart
                       size={16}
+                      aria-hidden="true"
                       className={`transition-colors ${showSecret ? 'text-red-500 fill-red-500' : 'text-fun-pink'}`}
                     />
                     <span

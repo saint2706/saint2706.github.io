@@ -305,7 +305,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                   )}
                   aria-label="Close command palette"
                 >
-                  <X size={14} />
+                  <X size={14} aria-hidden="true" />
                   <span
                     className="absolute top-full mt-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
                     aria-hidden="true"
