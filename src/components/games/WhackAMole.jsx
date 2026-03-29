@@ -18,6 +18,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Timer } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 const GRID_SIZE = 9; // 3×3
 const GAME_DURATION = 30; // seconds
@@ -98,7 +99,7 @@ const WhackAMole = () => {
   const [activeMoles, setActiveMoles] = useState(new Set());
   const [whackedMoles, setWhackedMoles] = useState(new Set()); // brief "hit" feedback
   const [highScore, setHighScore] = useState(() => {
-    const s = localStorage.getItem('whackHighScore');
+    const s = safeGetLocalStorage('whackHighScore');
     return s ? parseInt(s, 10) : 0;
   });
   const timerRef = useRef(null);
@@ -119,7 +120,7 @@ const WhackAMole = () => {
     const finalScore = scoreRef.current;
     if (finalScore > highScore) {
       setHighScore(finalScore);
-      localStorage.setItem('whackHighScore', finalScore.toString());
+      safeSetLocalStorage('whackHighScore', finalScore.toString());
     }
     setGameState('gameOver');
   }, [clearAllTimers, highScore]);

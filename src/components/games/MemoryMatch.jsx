@@ -17,6 +17,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy, Sparkles } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 /** Icon set representing tech brands/concepts */
 const ICONS = ['⚛️', '🐍', '🟨', '🌐', '🎨', '🐙', '🐳', '📦'];
@@ -125,7 +126,7 @@ const MemoryMatch = () => {
   const [flipped, setFlipped] = useState([]); // indices of currently flipped cards
   const [moves, setMoves] = useState(0);
   const [bestScore, setBestScore] = useState(() => {
-    const s = localStorage.getItem('memoryBestScore');
+    const s = safeGetLocalStorage('memoryBestScore');
     return s ? parseInt(s, 10) : null;
   });
   const [focusIndex, setFocusIndex] = useState(0);
@@ -169,7 +170,7 @@ const MemoryMatch = () => {
                 const finalMoves = moves + 1;
                 if (!bestScore || finalMoves < bestScore) {
                   setBestScore(finalMoves);
-                  localStorage.setItem('memoryBestScore', finalMoves.toString());
+                  safeSetLocalStorage('memoryBestScore', finalMoves.toString());
                 }
                 setGameState('won');
               }

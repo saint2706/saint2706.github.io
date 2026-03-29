@@ -18,6 +18,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, RotateCcw, Trophy } from 'lucide-react';
 import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
+import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 const COLORS = [
   { id: 0, name: 'Yellow', bg: 'bg-fun-yellow', active: 'bg-fun-yellow/60', key: '1' },
@@ -68,7 +69,7 @@ const SimonSays = () => {
   const [activeButton, setActiveButton] = useState(null);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => {
-    const s = localStorage.getItem('simonHighScore');
+    const s = safeGetLocalStorage('simonHighScore');
     return s ? parseInt(s, 10) : 0;
   });
   const timeoutRef = useRef(null);
@@ -149,7 +150,7 @@ const SimonSays = () => {
         const finalScore = sequence.length - 1;
         if (finalScore > highScore) {
           setHighScore(finalScore);
-          localStorage.setItem('simonHighScore', finalScore.toString());
+          safeSetLocalStorage('simonHighScore', finalScore.toString());
         }
         setScore(finalScore);
         setGameState('gameOver');
