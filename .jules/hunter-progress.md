@@ -108,3 +108,8 @@
 - **Fixed Runtime Safety**: Resolved `no-unused-vars` lint warnings in `src/components/layout/Navbar.test.jsx` by properly destructuring and omitting Framer Motion-specific props (`initial`, `animate`, `exit`, `transition`) in the `motion.div` and `motion.nav` mocks, ensuring standard HTML elements don't receive these props.
 - **Fixed Cleanliness**: Added `vi.restoreAllMocks()` in the `afterEach` hook of `src/components/layout/Navbar.test.jsx` to prevent mock leakage across test files.
 - **Verified**: Build, Lint, Format, and Tests passed cleanly.
+
+## Session 20
+
+- **Fixed Runtime Safety**: Wrapped remaining `fireEvent` calls in `act(...)` blocks across `src/components/games/WhackAMole.test.jsx`, `src/components/games/MemoryMatch.test.jsx`, and `src/components/games/SimonSays.test.jsx` to eliminate React 19 test environment warnings.
+- **Verified**: Build, Lint, Format, and Tests passed cleanly.
