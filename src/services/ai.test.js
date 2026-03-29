@@ -50,7 +50,12 @@ describe('AI Service', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
+    try {
+      vi.runOnlyPendingTimers();
+      vi.useRealTimers();
+    } catch {
+      // ignore
+    }
   });
 
   describe('chatWithGemini', () => {

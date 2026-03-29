@@ -30,6 +30,8 @@ const MARQUEE_ITEMS = [
  *
  * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
  * during frequent Layout state updates (e.g., custom cursor mouse movements).
+ *
+ * @returns {JSX.Element} The rendered footer component.
  */
 const Footer = React.memo(() => {
   const { theme } = useTheme();

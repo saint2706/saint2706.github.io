@@ -213,6 +213,12 @@ describe('Playground Component', () => {
   });
 
   afterEach(() => {
+    try {
+      vi.runOnlyPendingTimers();
+      vi.useRealTimers();
+    } catch {
+      // ignore
+    }
     vi.restoreAllMocks();
   });
 
@@ -225,13 +231,14 @@ describe('Playground Component', () => {
   it('filters snippets when clicking filter tabs', async () => {
     renderPlayground();
 
-    const pythonTab = screen.getByRole('tab', { name: /python/i });
+    const tabs = screen.getAllByRole('tab');
+    const pythonTab = tabs.find(t => t.textContent.includes('Python'));
     fireEvent.click(pythonTab);
 
     // Check if python filter is active (checking the tab list)
     expect(pythonTab).toHaveAttribute('aria-selected', 'true');
 
-    const cssTab = screen.getByRole('tab', { name: /css/i });
+    const cssTab = tabs.find(t => t.textContent.includes('CSS'));
     fireEvent.click(cssTab);
 
     expect(cssTab).toHaveAttribute('aria-selected', 'true');
