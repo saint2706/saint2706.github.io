@@ -12,6 +12,7 @@ import {
   breadcrumbSchema,
   projectsCollectionSchema,
   projectCreativeWorkSchema,
+  productSchema,
   SITE_URL,
 } from '../../utils/seo';
 import ThemedCard from '../shared/ThemedCard';
@@ -194,6 +195,7 @@ const Projects = React.memo(() => {
     ]),
     projectsCollectionSchema(),
     ...resumeData.projects.map(project => projectCreativeWorkSchema(project)),
+    ...resumeData.projects.filter(p => p.featured).map(project => productSchema(project)),
   ];
 
   // Animation variants for stagger effect

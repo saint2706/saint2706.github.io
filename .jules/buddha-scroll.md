@@ -235,3 +235,18 @@ Optimized Core Web Vitals (LCP) and AI Discoverability (GEO) metrics per prompt 
 2.  **[GEO] Standardized Site Architecture format in `llms.txt`**:
     - Updated `scripts/generate-llms.js` to strictly follow the AI-friendly Site Architecture mapping format provided.
     - Verified proper generation of `public/llms.txt`.
+
+## Date: $(date -u +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the codebase for better Discoverability (GEO) by adding `Product` structured data.
+
+### Changes
+
+1.  **[GEO] Added `productSchema`**:
+    - Created `productSchema` in `src/utils/seo.js` to structure featured projects as Products.
+    - Updated `src/components/pages/Projects.jsx` to inject `productSchema` for all featured projects into the `schemas` array.
+    - Added comprehensive unit tests in `src/utils/seo.test.js` to verify the generated schema.
