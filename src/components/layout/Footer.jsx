@@ -131,7 +131,7 @@ const Footer = React.memo(() => {
                   }
                   aria-label="Visit GitHub"
                 >
-                  <Github size={24} />
+                  <Github size={24} aria-hidden="true" />
                   <span
                     className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
                     aria-hidden="true"
@@ -156,7 +156,7 @@ const Footer = React.memo(() => {
                   }
                   aria-label="Visit LinkedIn"
                 >
-                  <Linkedin size={24} />
+                  <Linkedin size={24} aria-hidden="true" />
                   <span
                     className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans rounded"
                     aria-hidden="true"

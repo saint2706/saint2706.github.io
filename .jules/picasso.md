@@ -60,3 +60,5 @@ Implements various UX and accessibility enhancements across the application, foc
 ## Missing ARIA Hidden on Icon Components
 
 - When using `<button>` elements with nested icons (e.g., `<Heart>`, `<X>`, `<Copy>`), always ensure the icon component has `aria-hidden="true"` attached to it to prevent screen readers from reading out the SVG or icon content when the button already has a descriptive `aria-label`.
+
+- 🎨 Added `aria-hidden="true"` to the Github and Linkedin icons in the Footer and the Send icon in the ChatInterface.
