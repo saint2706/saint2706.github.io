@@ -42,8 +42,22 @@ vi.mock('framer-motion', async () => {
     ...actual,
     AnimatePresence: ({ children }) => <>{children}</>,
     motion: {
-      div: ({ children, ...props }) => <div {...props}>{children}</div>,
-      nav: ({ children, ...props }) => <nav {...props}>{children}</nav>,
+      div: ({
+        children,
+        initial: _initial,
+        animate: _animate,
+        exit: _exit,
+        transition: _transition,
+        ...props
+      }) => <div {...props}>{children}</div>,
+      nav: ({
+        children,
+        initial: _initial,
+        animate: _animate,
+        exit: _exit,
+        transition: _transition,
+        ...props
+      }) => <nav {...props}>{children}</nav>,
     },
     useReducedMotion: vi.fn(() => false),
   };
@@ -67,6 +81,7 @@ describe('Navbar', () => {
     if (mainContent) {
       mainContent.remove();
     }
+    vi.restoreAllMocks();
   });
 
   const renderNavbar = (props = {}) => {
