@@ -235,7 +235,9 @@ describe('MemoryMatch', () => {
 
   it('supports keyboard navigation', () => {
     render(<MemoryMatch />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
 
@@ -244,44 +246,60 @@ describe('MemoryMatch', () => {
     expect(cards[1]).toHaveAttribute('tabIndex', '-1');
 
     // Press ArrowRight
-    fireEvent.keyDown(window, { key: 'ArrowRight' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+    });
     expect(cards[0]).toHaveAttribute('tabIndex', '-1');
     expect(cards[1]).toHaveAttribute('tabIndex', '0');
 
     // Press ArrowLeft
-    fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ArrowLeft' });
+    });
     expect(cards[0]).toHaveAttribute('tabIndex', '0');
     expect(cards[1]).toHaveAttribute('tabIndex', '-1');
 
     // Press ArrowDown
-    fireEvent.keyDown(window, { key: 'ArrowDown' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ArrowDown' });
+    });
     // focus should be index 4 (0 + 4)
     const cardsAfterDown = screen.getAllByRole('button', { name: /Card \d+: face/i });
     expect(cardsAfterDown[0]).toHaveAttribute('tabIndex', '-1');
     expect(cardsAfterDown[4]).toHaveAttribute('tabIndex', '0');
 
     // Press ArrowUp
-    fireEvent.keyDown(window, { key: 'ArrowUp' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ArrowUp' });
+    });
     // focus should be index 0
     const cardsAfterUp = screen.getAllByRole('button', { name: /Card \d+: face/i });
     expect(cardsAfterUp[0]).toHaveAttribute('tabIndex', '0');
     expect(cardsAfterUp[4]).toHaveAttribute('tabIndex', '-1');
 
     // Test Space key to flip
-    fireEvent.keyDown(window, { key: ' ' });
+    act(() => {
+      fireEvent.keyDown(window, { key: ' ' });
+    });
     expect(screen.getAllByRole('button', { name: /Card \d+/i })[0]).toHaveAttribute(
       'aria-pressed',
       'true'
     );
 
     // Press Enter to flip
-    fireEvent.keyDown(window, { key: 'ArrowRight' });
-    fireEvent.keyDown(window, { key: 'Enter' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'ArrowRight' });
+    });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'Enter' });
+    });
     const finalCards = screen.getAllByRole('button', { name: /Card \d+/i });
     expect(finalCards[1]).toHaveAttribute('aria-pressed', 'true');
 
     // Unknown key shouldn't do anything
-    fireEvent.keyDown(window, { key: 'a' });
+    act(() => {
+      fireEvent.keyDown(window, { key: 'a' });
+    });
     expect(finalCards[1]).toHaveAttribute('tabIndex', '0');
   });
 });

@@ -102,7 +102,9 @@ describe('SimonSays', () => {
 
   it('starts the game and plays sequence', async () => {
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     // Fast forward timeouts in startGame and playSequence
     await act(async () => {
@@ -118,7 +120,9 @@ describe('SimonSays', () => {
 
   it('handles player input correctly', async () => {
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000); // Let initial setup settle
@@ -127,7 +131,9 @@ describe('SimonSays', () => {
     // We mocked Math.random() to return 0, so the sequence should be just [0]
     const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
 
-    fireEvent.click(button0);
+    act(() => {
+      fireEvent.click(button0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Let the sequence processing finish
@@ -141,7 +147,9 @@ describe('SimonSays', () => {
 
   it('handles incorrect input correctly (Game Over)', async () => {
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000);
@@ -150,7 +158,9 @@ describe('SimonSays', () => {
     // Sequence is [0] (Yellow), so if we click Pink (1), we lose.
     const button1 = screen.getByRole('button', { name: /Pink button \(key 2\)/i });
 
-    fireEvent.click(button1);
+    act(() => {
+      fireEvent.click(button1);
+    });
 
     const gameOvers = screen.getAllByText(/Game Over!/i);
     expect(gameOvers.length).toBeGreaterThan(0);
@@ -159,14 +169,18 @@ describe('SimonSays', () => {
 
   it('supports keyboard inputs', async () => {
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000);
     });
 
     // Press '1'
-    fireEvent.keyDown(window, { key: '1' });
+    act(() => {
+      fireEvent.keyDown(window, { key: '1' });
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(800);
@@ -180,7 +194,9 @@ describe('SimonSays', () => {
   it('sets a new high score when achieving a higher score and triggers new high score announcement', async () => {
     // Start with a high score of 0
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000);
@@ -188,7 +204,9 @@ describe('SimonSays', () => {
 
     // Mock sequence logic: Press correct button for round 1
     const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
-    fireEvent.click(button0);
+    act(() => {
+      fireEvent.click(button0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Wait for next sequence
@@ -200,7 +218,9 @@ describe('SimonSays', () => {
     });
 
     const button1 = screen.getByRole('button', { name: /Pink button \(key 2\)/i });
-    fireEvent.click(button1);
+    act(() => {
+      fireEvent.click(button1);
+    });
 
     const gameOvers = screen.getAllByText(/Game Over!/i);
     expect(gameOvers.length).toBeGreaterThan(0);
@@ -217,7 +237,9 @@ describe('SimonSays', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0);
 
     render(<SimonSays />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000);
@@ -225,7 +247,9 @@ describe('SimonSays', () => {
 
     // Round 1
     const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
-    fireEvent.click(button0);
+    act(() => {
+      fireEvent.click(button0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Advance to Round 2
@@ -237,13 +261,17 @@ describe('SimonSays', () => {
     });
 
     // Click the first correct button. It shouldn't end the round yet.
-    fireEvent.click(button0);
+    act(() => {
+      fireEvent.click(button0);
+    });
 
     // Should still be waiting for the next input, score shouldn't jump yet
     expect(screen.getByText('Your turn! Repeat the pattern. Round 2.')).toBeInTheDocument();
 
     // Click the second correct button
-    fireEvent.click(button0);
+    act(() => {
+      fireEvent.click(button0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Advance to Round 3
