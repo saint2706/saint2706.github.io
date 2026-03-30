@@ -758,7 +758,7 @@ const ChatInterface = ({ onClose }) => {
               style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               aria-label="Send message"
             >
-              <Send size={20} />
+              <Send size={20} aria-hidden="true" />
               <span
                 className="absolute bottom-full mb-2 right-0 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
                 aria-hidden="true"
