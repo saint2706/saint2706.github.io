@@ -261,6 +261,34 @@ describe('seo utils', () => {
     });
   });
 
+  describe('productSchema', () => {
+    it('returns Product schema with project details', () => {
+      const product = {
+        title: 'Test Product',
+        description: 'Product Description',
+        image: '/product.png',
+        link: 'https://product.com',
+      };
+      const schema = seo.productSchema(product);
+      expect(schema['@type']).toBe('Product');
+      expect(schema.name).toBe('Test Product');
+      expect(schema.image).toBe('https://test.com/product.png');
+      expect(schema.url).toBe('https://product.com');
+      expect(schema.offers.price).toBe('0');
+      expect(schema.offers.priceCurrency).toBe('USD');
+    });
+
+    it('handles projects without images and links for products', () => {
+      const product = {
+        title: 'Test Product',
+        description: 'Product Description',
+      };
+      const schema = seo.productSchema(product);
+      expect(schema.image).toBe(seo.DEFAULT_OG_IMAGE);
+      expect(schema.url).toBe('https://test.com/projects');
+    });
+  });
+
   describe('edge cases', () => {
     it('resumePersonSchema handles empty experience correctly', async () => {
       vi.resetModules();

@@ -124,6 +124,35 @@ export function websiteSchema() {
 }
 
 /**
+ * Product schema for a project/application.
+ * @param {Object} product - Product object from resumeData.projects
+ * @returns {Object} Product structured data schema.
+ *
+ * @example
+ * const schema = productSchema({ title: "My App", description: "Desc", image: "/img.png" });
+ * // => { "@context": "https://schema.org", "@type": "Product", "name": "My App", ... }
+ */
+export function productSchema(product) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.description,
+    image: product.image ? `${SITE_URL}${product.image}` : DEFAULT_OG_IMAGE,
+    url: product.link || product.github || `${SITE_URL}/projects`,
+    brand: {
+      '@type': 'Brand',
+      name: SITE_NAME,
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+}
+
+/**
  * Organization schema for rich profile panels and identity consistency.
  * @returns {Object} Organization structured data schema.
  *
