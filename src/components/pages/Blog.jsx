@@ -81,7 +81,11 @@ const getSourceTextColor = source => {
 };
 
 /**
- * Blog listing page component
+ * Blog Page Component
+ *
+ * Displays a listing of blog posts from multiple sources (Dev.to, Medium, Substack)
+ * with filtering, search, and pagination functionality. Uses `React.memo` to prevent
+ * unnecessary re-renders when parent layout state changes.
  *
  * Features:
  * - Filter by source (Dev.to, Medium, Substack, All)
@@ -92,7 +96,7 @@ const getSourceTextColor = source => {
  * - Dynamic color coding by source
  *
  * @component
- * @returns {JSX.Element} Blog listing page with filters and posts
+ * @returns {JSX.Element} The Blog listing page.
  */
 // ⚡ Bolt: Wrapped `Blog` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const Blog = React.memo(() => {
@@ -516,4 +520,5 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
 
 BlogCard.displayName = 'BlogCard';
 
+/** @type {React.NamedExoticComponent} */
 export default Blog;

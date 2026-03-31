@@ -161,20 +161,23 @@ const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
 const eduShadowColors = ['blue', 'yellow', 'lime'];
 
 /**
- * Resume page component
+ * Resume Page Component
+ *
+ * Displays professional experience, education, and skills. Features interactive section
+ * filters and scroll-triggered reveal animations. Pulls data from the centralized `resumeData`.
+ * Uses `React.memo` to prevent unnecessary re-renders.
  *
  * Features:
  * - Interactive filter bar to show/hide sections
  * - Timeline-based experience and education display
  * - Skill categorization with proficiency levels
  * - Certifications list
- * - Language proficiency
- * - Print-friendly layout
- * - Neubrutalist card designs
+ * - Language proficiency display
+ * - Print-friendly layout adaptations
  * - Scroll-triggered reveal animations
  *
  * @component
- * @returns {JSX.Element} Resume page with professional information
+ * @returns {JSX.Element} The Resume page.
  */
 // ⚡ Bolt: Wrapped `Resume` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const Resume = React.memo(() => {
@@ -504,4 +507,5 @@ const Resume = React.memo(() => {
 
 Resume.displayName = 'Resume';
 
+/** @type {React.NamedExoticComponent} */
 export default Resume;

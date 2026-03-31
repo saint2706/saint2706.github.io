@@ -167,18 +167,23 @@ const ProjectCard = React.memo(
 ProjectCard.displayName = 'ProjectCard';
 
 /**
- * Projects showcase page component
+ * Projects Page Component
+ *
+ * Showcases the portfolio projects with interactive filtering and animated grid layout.
+ * Pulls project data from the centralized `resumeData` source. Uses `React.memo`
+ * to prevent unnecessary re-renders when parent layout state changes.
  *
  * Features:
- * - Grid layout of project cards
- * - Project images with lazy loading
- * - Star counts and featured badges
- * - Tech stack tags
- * - Links to live demos and source code
+ * - Filterable project grid (All, React, Data, Python, Backend)
+ * - Animated entrance and layout transitions for cards
+ * - Detailed project information including descriptions and tags
+ * - Support for featured badges and metrics
+ * - Tech stack chip components
+ * - Direct links to live demos and source code repositories
  * - Rotating accent colors for visual interest
  *
  * @component
- * @returns {JSX.Element} Projects page with portfolio showcase
+ * @returns {JSX.Element} The Projects page.
  */
 // ⚡ Bolt: Wrapped `Projects` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const Projects = React.memo(() => {
@@ -310,4 +315,5 @@ const Projects = React.memo(() => {
 
 Projects.displayName = 'Projects';
 
+/** @type {React.NamedExoticComponent} */
 export default Projects;

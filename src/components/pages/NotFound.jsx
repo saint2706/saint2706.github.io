@@ -21,18 +21,22 @@ const QUICK_LINKS = [
 ];
 
 /**
- * 404 Not Found page component
+ * NotFound Page Component
+ *
+ * Displays a 404 error page with interactive animations, quick navigation links,
+ * and helpful suggestions for the user. Provides themed visual elements based on
+ * the active site theme (liquid vs. neubrutalism).
  *
  * Features:
  * - Glitchy 404 text animation
  * - Floating ghost icon with easter egg (click 5 times)
  * - Animated background particles
  * - Quick navigation links to main pages
- * - Displays attempted path
+ * - Displays attempted, incorrect URL path
  * - Helpful chatbot hint
  *
  * @component
- * @returns {JSX.Element} 404 error page with navigation options
+ * @returns {JSX.Element} The 404 Not Found page.
  */
 const NotFound = () => {
   const { theme } = useTheme();
@@ -353,4 +357,5 @@ const NotFound = () => {
   );
 };
 
+/** @type {React.FC} */
 export default NotFound;

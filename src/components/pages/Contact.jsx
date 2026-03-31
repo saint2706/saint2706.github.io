@@ -16,17 +16,21 @@ import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 import { useTheme } from '../shared/theme-context';
 
 /**
- * Contact page component
+ * Contact Page Component
+ *
+ * Displays contact information including email, location, and social links.
+ * Features a call-to-action section and availability status. Uses `React.memo`
+ * to prevent unnecessary re-renders when parent layout state changes.
  *
  * Features:
- * - Email and location display with interactive cards
- * - Social media links (GitHub, LinkedIn)
- * - Availability status badge with pulse animation
+ * - Animated social links
+ * - Copy-to-clipboard functionality for email
+ * - Interactive map pin hover effect
  * - CTA section with email prompt
  * - Neubrutalist card designs with hover effects
  *
  * @component
- * @returns {JSX.Element} Contact page with information and links
+ * @returns {JSX.Element} The Contact page.
  */
 // ⚡ Bolt: Wrapped `Contact` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const Contact = React.memo(() => {
@@ -441,4 +445,5 @@ const Contact = React.memo(() => {
 
 Contact.displayName = 'Contact';
 
+/** @type {React.NamedExoticComponent} */
 export default Contact;
