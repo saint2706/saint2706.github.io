@@ -743,7 +743,7 @@ const ChatInterface = ({ onClose }) => {
                       : 'text-muted'
                 }`}
               >
-                {input.length}/500
+                <span className="sr-only">Character limit:</span> {input.length}/500
               </div>
             </div>
             <button
