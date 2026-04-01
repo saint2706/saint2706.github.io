@@ -102,10 +102,18 @@ GameTabButton.displayName = 'GameTabButton';
 /**
  * Games Page Component
  *
- * Displays a grid of playable mini-games and handles the selection and rendering of the active game.
- * Uses SEO tags for indexing.
+ * Displays a collection of playable mini-games and handles the selection,
+ * lazy-loading, and rendering of the active game. Includes animations and
+ * SEO optimization. Uses `React.memo` to prevent unnecessary re-renders.
  *
- * @returns {React.ReactElement} The games page component.
+ * Features:
+ * - Game selection tabs with icons
+ * - Lazy-loading for game components (Tic-Tac-Toe, Snake, etc.)
+ * - Animated transitions between games
+ * - Themed game containers
+ *
+ * @component
+ * @returns {JSX.Element} The Games page.
  */
 // ⚡ Bolt: Wrapped `Games` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const Games = React.memo(() => {
@@ -292,4 +300,5 @@ const Games = React.memo(() => {
 
 Games.displayName = 'Games';
 
+/** @type {React.NamedExoticComponent} */
 export default Games;

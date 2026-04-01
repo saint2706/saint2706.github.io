@@ -7,19 +7,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../shared/theme-context';
 
-/**
- * HeroBackground Component
- *
- * Provides a dynamic, themed background for the Hero section.
- * Adapts to 'liquid' (animated gradients and glassmorphism), 'neubrutalism' (solid colors and bold shapes),
- * and 'neubrutalism-dark' (vibrant shapes with atmospheric glow effects) themes.
- * Uses Framer Motion for subtle entry animations.
- *
- * @param {Object} props - The component props.
- * @param {boolean} props.isLiquid - True if the active theme is liquid.
- * @param {boolean} props.shouldReduceMotion - True if the user prefers reduced motion.
- * @returns {React.ReactElement} The animated hero background component.
- */
 // ⚡ Bolt: Static liquid background styles extracted
 const orb1Style = {
   background: 'radial-gradient(circle, rgba(0,122,255,0.18) 0%, transparent 70%)',
@@ -84,6 +71,19 @@ const violetBobStyleDark = {
   animationDelay: '2s',
 };
 
+/**
+ * HeroBackground Component
+ *
+ * Provides a dynamic, themed background for the Hero section.
+ * Adapts to 'liquid' (animated gradients and glassmorphism), 'neubrutalism' (solid colors and bold shapes),
+ * and 'neubrutalism-dark' (vibrant shapes with atmospheric glow effects) themes.
+ * Uses Framer Motion for subtle entry animations.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isLiquid - True if the active theme is liquid.
+ * @param {boolean} props.shouldReduceMotion - True if the user prefers reduced motion.
+ * @returns {React.ReactElement} The animated hero background component.
+ */
 const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
   const { theme } = useTheme();
   const isNBDark = theme === 'neubrutalism-dark';
@@ -136,4 +136,5 @@ const HeroBackground = React.memo(({ isLiquid, shouldReduceMotion }) => {
 
 HeroBackground.displayName = 'HeroBackground';
 
+/** @type {React.NamedExoticComponent} */
 export default HeroBackground;

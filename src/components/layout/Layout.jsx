@@ -327,4 +327,5 @@ const Layout = ({ children }) => {
   );
 };
 
+/** @type {React.FC} */
 export default Layout;
