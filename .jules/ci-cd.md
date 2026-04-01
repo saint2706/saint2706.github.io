@@ -25,3 +25,10 @@
 
 - **Update**: Added needs: [actionlint] to workflow-security in workflow-lint.yml and permissions: contents: read to build job in deploy.yml.
 - **Why**: Optimizes pipeline execution and enforces least privilege.
+
+# CI/CD Optimizations
+
+## Workflow Security Improvements
+
+- Updated `actions/upload-pages-artifact` to a more recent v4 SHA (`56afc609e74202658d3ffba0e8f6dda462b719fa`) in `deploy.yml`.
+- Ensured external actions are pinned to 40-character commit SHAs.
