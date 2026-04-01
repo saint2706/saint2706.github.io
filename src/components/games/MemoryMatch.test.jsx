@@ -142,9 +142,10 @@ describe('MemoryMatch', () => {
       fireEvent.click(cards[1]);
       expect(cards[1]).toHaveAttribute('aria-pressed', 'true');
 
-      // Wait for match logic
+      // Wait for match logic and flush state
       await act(async () => {
         await vi.advanceTimersByTimeAsync(500);
+        await vi.advanceTimersByTimeAsync(0);
       });
 
       // Moves should be 1
@@ -292,6 +293,11 @@ describe('MemoryMatch', () => {
     });
     act(() => {
       fireEvent.keyDown(window, { key: 'Enter' });
+    });
+
+    // Flush any pending async state updates from matching
+    act(() => {
+      vi.advanceTimersByTime(0);
     });
     const finalCards = screen.getAllByRole('button', { name: /Card \d+/i });
     expect(finalCards[1]).toHaveAttribute('aria-pressed', 'true');
