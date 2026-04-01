@@ -397,7 +397,7 @@ const Resume = React.memo(() => {
                       }}
                     >
                       <Sparkles size={20} />
-                      <h3 className="text-lg font-heading font-bold">Tech Stack</h3>
+                      <h2 className="text-lg font-heading font-bold">Tech Stack</h2>
                     </div>
 
                     <p className="text-secondary text-sm mb-6 font-sans">
@@ -431,7 +431,7 @@ const Resume = React.memo(() => {
                       style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                     >
                       <Award size={20} />
-                      <h3 className="text-lg font-heading font-bold">Certifications</h3>
+                      <h2 className="text-lg font-heading font-bold">Certifications</h2>
                     </div>
 
                     <ul className="space-y-4">
@@ -478,7 +478,7 @@ const Resume = React.memo(() => {
                     style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
                   >
                     <Globe size={20} />
-                    <h3 className="text-lg font-heading font-bold">Languages</h3>
+                    <h2 className="text-lg font-heading font-bold">Languages</h2>
                   </div>
 
                   <div className="flex flex-wrap gap-4">
