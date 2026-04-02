@@ -159,7 +159,7 @@ Resolved build-blocking lint errors to ensure performance reliability and proper
     - Fixed an `Unnecessary escape character: \"  no-useless-escape` error in `scripts/verify-sri.js`.
     - Verified that `pnpm build`, `pnpm lint`, and `pnpm run test:run` passed successfully, ensuring a reliable build pipeline and stable artifact generation.
 
-## Date: $(date +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -180,7 +180,7 @@ Fixed semantic HTML heading hierarchy in Resume page.
     - Fixed heading hierarchy in `src/components/pages/Resume.jsx` by changing child headings inside `ThemedSectionHeading` from `h2` to `h3`.
     - Handled sections: "Tech Stack", "Certifications", and "Languages".
 
-## Date: $(date +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -199,7 +199,7 @@ Fixed semantic HTML heading hierarchy across multiple pages.
 4.  **[SEO][GEO] Fixed Semantic Hierarchy in Projects:**
     - Modified `src/components/pages/Projects.jsx` to use `<h3>` instead of `<h2>` for `project.title`.
 
-## Date: $(date +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -218,7 +218,7 @@ Fixed semantic HTML heading hierarchy across multiple pages.
 4.  **[SEO][GEO] Fixed Semantic Hierarchy in Projects:**
     - Modified `src/components/pages/Projects.jsx` to use `<h2>` instead of `<h3>` for `project.title`.
 
-## Date: $(date -u +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -236,7 +236,7 @@ Optimized Core Web Vitals (LCP) and AI Discoverability (GEO) metrics per prompt 
     - Updated `scripts/generate-llms.js` to strictly follow the AI-friendly Site Architecture mapping format provided.
     - Verified proper generation of `public/llms.txt`.
 
-## Date: $(date -u +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -251,7 +251,7 @@ Optimized the codebase for better Discoverability (GEO) by adding `Product` stru
     - Updated `src/components/pages/Projects.jsx` to inject `productSchema` for all featured projects into the `schemas` array.
     - Added comprehensive unit tests in `src/utils/seo.test.js` to verify the generated schema.
 
-## Date: $(date -u +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
@@ -265,7 +265,7 @@ Fixed semantic HTML heading hierarchy in Resume page.
     - Modified `src/components/pages/Resume.jsx` to use `<h2>` instead of jumping directly to `<h3>` for "Tech Stack", "Certifications", and "Languages".
     - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
 
-## Date: $(date -u +%Y-%m-%d)
+## Date: 2026-04-02
 
 **Agent**: Jules (Buddha Persona)
 
