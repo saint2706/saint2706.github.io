@@ -44,6 +44,10 @@ const codeInitial = { scale: 1.08, rotate: 2 };
 const codeAnimate = { scale: 1, rotate: -1 };
 const codeTransition = { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 };
 
+/**
+ * Hero section component for homepage
+ * @type {React.NamedExoticComponent}
+ */
 const Hero = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const navigate = useNavigate();
