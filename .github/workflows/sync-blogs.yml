@@ -27,7 +27,7 @@ jobs:
         run: node scripts/sync-blogs.js
 
       - name: Upload synced blogs artifact
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: synced-blogs
           path: src/data/blogs.json
