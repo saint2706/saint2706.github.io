@@ -204,9 +204,9 @@ const Chatbot = React.memo(() => {
 
   // Track whether any dialog is currently open
   const anyDialogOpen = isChatOpen || isRoastOpen;
-  const mainFabShell = getOverlayShell({ theme, tone: 'yellow' });
-  const roastFabShell = getOverlayShell({ theme, tone: 'pink' });
-  const chatFabShell = getOverlayShell({ theme, tone: 'accent' });
+  const mainFabShell = React.useMemo(() => getOverlayShell({ theme, tone: 'yellow' }), [theme]);
+  const roastFabShell = React.useMemo(() => getOverlayShell({ theme, tone: 'pink' }), [theme]);
+  const chatFabShell = React.useMemo(() => getOverlayShell({ theme, tone: 'accent' }), [theme]);
 
   /**
    * Manage accessibility when dialogs open/close.

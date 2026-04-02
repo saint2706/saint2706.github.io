@@ -305,6 +305,10 @@ describe('Minesweeper Game', () => {
       await vi.advanceTimersByTimeAsync(2000);
     });
 
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+
     // We should see "2s" now
     expect(screen.getByText('2s')).toBeInTheDocument();
   });
