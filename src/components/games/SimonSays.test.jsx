@@ -104,6 +104,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Fast forward timeouts in startGame and playSequence
@@ -122,6 +123,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -146,6 +148,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -169,6 +172,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -191,6 +195,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -232,6 +237,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -253,6 +259,7 @@ describe('SimonSays', () => {
     // Click the first correct button. It shouldn't end the round yet.
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Should still be waiting for the next input, score shouldn't jump yet

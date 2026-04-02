@@ -305,8 +305,8 @@ describe('Minesweeper Game', () => {
       await vi.advanceTimersByTimeAsync(2000);
     });
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // We should see "2s" now

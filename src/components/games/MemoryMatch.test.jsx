@@ -98,10 +98,13 @@ describe('MemoryMatch', () => {
     expect(screen.getByRole('button', { name: /Start Game/i })).toBeInTheDocument();
   });
 
-  it('starts the game when Start Game is clicked', () => {
+  it('starts the game when Start Game is clicked', async () => {
     render(<MemoryMatch />);
     const startButton = screen.getByRole('button', { name: /Start Game/i });
-    fireEvent.click(startButton);
+    await act(async () => {
+      fireEvent.click(startButton);
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     expect(screen.getByText('Playing Memory Match. Moves: 0.')).toBeInTheDocument();
 
@@ -110,12 +113,18 @@ describe('MemoryMatch', () => {
     expect(cards).toHaveLength(16);
   });
 
-  it('flips a card when clicked', () => {
+  it('flips a card when clicked', async () => {
     render(<MemoryMatch />);
-    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
-    fireEvent.click(cards[0]);
+    await act(async () => {
+      fireEvent.click(cards[0]);
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // After clicking, the card should no longer be face down
     expect(cards[0]).not.toHaveAttribute('aria-label', expect.stringContaining('face down'));
@@ -130,16 +139,25 @@ describe('MemoryMatch', () => {
 
     try {
       render(<MemoryMatch />);
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+        await vi.advanceTimersByTimeAsync(0);
+      });
 
       const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
 
       // Click first card
-      fireEvent.click(cards[0]);
+      await act(async () => {
+        fireEvent.click(cards[0]);
+        await vi.advanceTimersByTimeAsync(0);
+      });
       expect(cards[0]).toHaveAttribute('aria-pressed', 'true');
 
       // Click second card
-      fireEvent.click(cards[1]);
+      await act(async () => {
+        fireEvent.click(cards[1]);
+        await vi.advanceTimersByTimeAsync(0);
+      });
       expect(cards[1]).toHaveAttribute('aria-pressed', 'true');
 
       // Wait for match logic and flush state
@@ -166,15 +184,24 @@ describe('MemoryMatch', () => {
       Math.random = () => 0.999;
 
       render(<MemoryMatch />);
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+        await vi.advanceTimersByTimeAsync(0);
+      });
 
       // With Math.random = 0.999, the array is NOT shuffled.
       // The deck is `[...ICONS, ...ICONS]`.
       // So indices 0 and 8 match, 1 and 9 match, etc.
       for (let i = 0; i < 8; i++) {
         const cardsToClick = screen.getAllByRole('button', { name: /Card/i });
-        fireEvent.click(cardsToClick[i]);
-        fireEvent.click(cardsToClick[i + 8]);
+        await act(async () => {
+          fireEvent.click(cardsToClick[i]);
+          await vi.advanceTimersByTimeAsync(0);
+        });
+        await act(async () => {
+          fireEvent.click(cardsToClick[i + 8]);
+          await vi.advanceTimersByTimeAsync(0);
+        });
         await act(async () => {
           await vi.advanceTimersByTimeAsync(600);
         });
@@ -193,18 +220,27 @@ describe('MemoryMatch', () => {
 
     try {
       render(<MemoryMatch />);
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await act(async () => {
+        fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+        await vi.advanceTimersByTimeAsync(0);
+      });
 
       const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
 
       // Since we want unmatched cards, we must click two different icons
       // With Math.random() = 0.5, cards[0] and cards[1] are likely the same or different.
       // Let's just find two cards that don't match by checking their aria-label after clicking.
-      fireEvent.click(cards[0]);
+      await act(async () => {
+        fireEvent.click(cards[0]);
+        await vi.advanceTimersByTimeAsync(0);
+      });
       const icon1 = screen.getAllByRole('button')[0].getAttribute('aria-label');
 
       let idx = 1;
-      fireEvent.click(cards[idx]);
+      await act(async () => {
+        fireEvent.click(cards[idx]);
+        await vi.advanceTimersByTimeAsync(0);
+      });
       let icon2 = screen.getAllByRole('button')[idx].getAttribute('aria-label');
 
       // If they magically match, try another one
@@ -215,9 +251,15 @@ describe('MemoryMatch', () => {
         });
         // Try next pair
         idx++;
-        fireEvent.click(cards[idx]);
+        await act(async () => {
+          fireEvent.click(cards[idx]);
+          await vi.advanceTimersByTimeAsync(0);
+        });
         icon2 = screen.getAllByRole('button')[idx].getAttribute('aria-label');
-        fireEvent.click(cards[idx + 1]);
+        await act(async () => {
+          fireEvent.click(cards[idx + 1]);
+          await vi.advanceTimersByTimeAsync(0);
+        });
       }
 
       // Now we wait for the unmatch logic
@@ -234,10 +276,11 @@ describe('MemoryMatch', () => {
     }
   });
 
-  it('supports keyboard navigation', () => {
+  it('supports keyboard navigation', async () => {
     render(<MemoryMatch />);
-    act(() => {
+    await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     const cards = screen.getAllByRole('button', { name: /Card \d+: face down/i });
@@ -247,22 +290,25 @@ describe('MemoryMatch', () => {
     expect(cards[1]).toHaveAttribute('tabIndex', '-1');
 
     // Press ArrowRight
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'ArrowRight' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     expect(cards[0]).toHaveAttribute('tabIndex', '-1');
     expect(cards[1]).toHaveAttribute('tabIndex', '0');
 
     // Press ArrowLeft
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'ArrowLeft' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     expect(cards[0]).toHaveAttribute('tabIndex', '0');
     expect(cards[1]).toHaveAttribute('tabIndex', '-1');
 
     // Press ArrowDown
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'ArrowDown' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     // focus should be index 4 (0 + 4)
     const cardsAfterDown = screen.getAllByRole('button', { name: /Card \d+: face/i });
@@ -270,8 +316,9 @@ describe('MemoryMatch', () => {
     expect(cardsAfterDown[4]).toHaveAttribute('tabIndex', '0');
 
     // Press ArrowUp
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'ArrowUp' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     // focus should be index 0
     const cardsAfterUp = screen.getAllByRole('button', { name: /Card \d+: face/i });
@@ -279,8 +326,9 @@ describe('MemoryMatch', () => {
     expect(cardsAfterUp[4]).toHaveAttribute('tabIndex', '-1');
 
     // Test Space key to flip
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: ' ' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     expect(screen.getAllByRole('button', { name: /Card \d+/i })[0]).toHaveAttribute(
       'aria-pressed',
@@ -288,23 +336,21 @@ describe('MemoryMatch', () => {
     );
 
     // Press Enter to flip
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'ArrowRight' });
+      await vi.advanceTimersByTimeAsync(0);
     });
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'Enter' });
-    });
-
-    // Flush any pending async state updates from matching
-    act(() => {
-      vi.advanceTimersByTime(0);
+      await vi.advanceTimersByTimeAsync(0);
     });
     const finalCards = screen.getAllByRole('button', { name: /Card \d+/i });
     expect(finalCards[1]).toHaveAttribute('aria-pressed', 'true');
 
     // Unknown key shouldn't do anything
-    act(() => {
+    await act(async () => {
       fireEvent.keyDown(window, { key: 'a' });
+      await vi.advanceTimersByTimeAsync(0);
     });
     expect(finalCards[1]).toHaveAttribute('tabIndex', '0');
   });

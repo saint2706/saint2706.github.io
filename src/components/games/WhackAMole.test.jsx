@@ -130,10 +130,6 @@ describe('WhackAMole', () => {
     // The visual mole representation
     const moles = screen.getAllByText('🐹');
     expect(moles.length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('handles whacking a mole', async () => {
@@ -176,10 +172,6 @@ describe('WhackAMole', () => {
     });
     const remainingHits = screen.queryAllByText('💥');
     expect(remainingHits.length).toBe(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('handles game over (time runs out)', async () => {
@@ -198,10 +190,6 @@ describe('WhackAMole', () => {
     const timeUps = screen.getAllByText(/Time's Up!/i);
     expect(timeUps.length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: /Play Again/i })).toBeInTheDocument();
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('supports keyboard play', async () => {
@@ -226,10 +214,6 @@ describe('WhackAMole', () => {
 
     const scores = screen.getAllByText('1');
     expect(scores.length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('ignores clicks and key presses when not playing or hole is inactive', async () => {
@@ -250,10 +234,6 @@ describe('WhackAMole', () => {
     // Score should still be 0
     const scores = screen.getAllByText('0');
     expect(scores.length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('ignores clicks on inactive holes while playing', async () => {
@@ -280,10 +260,6 @@ describe('WhackAMole', () => {
     // Score should still be 0
     const scores = screen.getAllByText('0');
     expect(scores.length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('handles filling up all holes (no available holes to spawn)', async () => {
@@ -308,10 +284,6 @@ describe('WhackAMole', () => {
     // Ensure at least some moles spawned
     const activeHoles = screen.getAllByRole('button', { name: /Mole! Click to whack!/ });
     expect(activeHoles.length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('records a new high score correctly', async () => {
@@ -343,10 +315,6 @@ describe('WhackAMole', () => {
     // Verify local storage is updated and high score is shown
     expect(localStorage.getItem('whackHighScore')).toBe('1');
     expect(screen.getAllByText(/New High Score!/i).length).toBeGreaterThan(0);
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 
   it('does not record a new high score if score is not strictly greater', async () => {
@@ -368,9 +336,5 @@ describe('WhackAMole', () => {
     // Local storage should still be 10, not 0
     expect(localStorage.getItem('whackHighScore')).toBe('10');
     expect(screen.queryByText(/New High Score!/i)).not.toBeInTheDocument();
-
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
   });
 });
