@@ -12,6 +12,7 @@ overrides:
   picomatch@^2: ^2.3.2
   picomatch@^4: ^4.0.4
   yaml: ^2.8.3
+  lodash-es: '>=4.18.0'
 
 importers:
 
@@ -2329,8 +2330,8 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
-  lodash-es@4.17.23:
-    resolution: {integrity: sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==}
+  lodash-es@4.18.1:
+    resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -5711,7 +5712,7 @@ snapshots:
       js-library-detector: 6.7.0
       lighthouse-logger: 2.0.2
       lighthouse-stack-packs: 1.12.3
-      lodash-es: 4.17.23
+      lodash-es: 4.18.1
       lookup-closest-locale: 6.2.0
       open: 8.4.2
       puppeteer-core: 24.40.0
@@ -5801,7 +5802,7 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
-  lodash-es@4.17.23: {}
+  lodash-es@4.18.1: {}
 
   lodash.merge@4.6.2: {}
 
