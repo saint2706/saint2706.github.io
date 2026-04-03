@@ -122,6 +122,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -133,6 +134,10 @@ describe('SimonSays', () => {
 
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Let the sequence processing finish
     });
 
@@ -146,6 +151,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -160,6 +166,10 @@ describe('SimonSays', () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
     const gameOvers = screen.getAllByText(/Game Over!/i);
     expect(gameOvers.length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: /Play Again/i })).toBeInTheDocument();
@@ -169,6 +179,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -178,6 +189,10 @@ describe('SimonSays', () => {
     // Press '1'
     await act(async () => {
       fireEvent.keyDown(window, { key: '1' });
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(800);
     });
 
@@ -191,6 +206,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -201,6 +217,10 @@ describe('SimonSays', () => {
     const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Wait for next sequence
     });
 
@@ -212,6 +232,10 @@ describe('SimonSays', () => {
     const button1 = screen.getByRole('button', { name: /Pink button \(key 2\)/i });
     await act(async () => {
       fireEvent.click(button1);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -232,6 +256,7 @@ describe('SimonSays', () => {
     render(<SimonSays />);
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -242,6 +267,10 @@ describe('SimonSays', () => {
     const button0 = screen.getByRole('button', { name: /Yellow button \(key 1\)/i });
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Advance to Round 2
     });
 
@@ -253,6 +282,11 @@ describe('SimonSays', () => {
     // Click the first correct button. It shouldn't end the round yet.
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Should still be waiting for the next input, score shouldn't jump yet
@@ -261,6 +295,10 @@ describe('SimonSays', () => {
     // Click the second correct button
     await act(async () => {
       fireEvent.click(button0);
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(800); // Advance to Round 3
     });
 

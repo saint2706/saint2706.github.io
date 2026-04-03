@@ -131,8 +131,8 @@ describe('WhackAMole', () => {
     const moles = screen.getAllByText('🐹');
     expect(moles.length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -177,8 +177,8 @@ describe('WhackAMole', () => {
     const remainingHits = screen.queryAllByText('💥');
     expect(remainingHits.length).toBe(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -199,8 +199,8 @@ describe('WhackAMole', () => {
     expect(timeUps.length).toBeGreaterThan(0);
     expect(screen.getByRole('button', { name: /Play Again/i })).toBeInTheDocument();
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -209,6 +209,7 @@ describe('WhackAMole', () => {
 
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -218,17 +219,14 @@ describe('WhackAMole', () => {
     // Whack hole 0 using key '1'
     await act(async () => {
       fireEvent.keyDown(window, { key: '1' });
-    });
-
-    await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
     const scores = screen.getAllByText('1');
     expect(scores.length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -239,6 +237,7 @@ describe('WhackAMole', () => {
     const inactiveHole = screen.getByRole('button', { name: 'Hole 1' });
     await act(async () => {
       fireEvent.click(inactiveHole);
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Try whacking via keyboard
@@ -251,8 +250,8 @@ describe('WhackAMole', () => {
     const scores = screen.getAllByText('0');
     expect(scores.length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -261,6 +260,7 @@ describe('WhackAMole', () => {
 
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -271,9 +271,6 @@ describe('WhackAMole', () => {
     const inactiveHole = screen.getByRole('button', { name: 'Hole 2' });
     await act(async () => {
       fireEvent.click(inactiveHole);
-    });
-
-    await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -281,8 +278,8 @@ describe('WhackAMole', () => {
     const scores = screen.getAllByText('0');
     expect(scores.length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -291,6 +288,7 @@ describe('WhackAMole', () => {
 
     await act(async () => {
       fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Wait enough time for all 9 holes to be filled.
@@ -299,9 +297,6 @@ describe('WhackAMole', () => {
     // Advancing one more interval (800ms) will attempt to spawn when no holes are available.
     await act(async () => {
       await vi.advanceTimersByTimeAsync(10 * 800);
-    });
-
-    await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -309,8 +304,8 @@ describe('WhackAMole', () => {
     const activeHoles = screen.getAllByRole('button', { name: /Mole! Click to whack!/ });
     expect(activeHoles.length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -344,8 +339,8 @@ describe('WhackAMole', () => {
     expect(localStorage.getItem('whackHighScore')).toBe('1');
     expect(screen.getAllByText(/New High Score!/i).length).toBeGreaterThan(0);
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 
@@ -369,8 +364,8 @@ describe('WhackAMole', () => {
     expect(localStorage.getItem('whackHighScore')).toBe('10');
     expect(screen.queryByText(/New High Score!/i)).not.toBeInTheDocument();
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
   });
 });
