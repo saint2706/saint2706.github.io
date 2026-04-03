@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import WhackAMole from './WhackAMole';
 
@@ -85,6 +85,7 @@ describe('WhackAMole', () => {
   });
 
   afterEach(() => {
+    cleanup();
     try {
       vi.runOnlyPendingTimers();
       vi.useRealTimers();
@@ -109,8 +110,8 @@ describe('WhackAMole', () => {
   it('starts the game and spawns moles', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -139,8 +140,8 @@ describe('WhackAMole', () => {
   it('handles whacking a mole', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -152,8 +153,8 @@ describe('WhackAMole', () => {
     const activeHole = screen.getByRole('button', { name: 'Hole 1 — Mole! Click to whack!' });
 
     // Whack it!
+    fireEvent.click(activeHole);
     await act(async () => {
-      fireEvent.click(activeHole);
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -184,8 +185,8 @@ describe('WhackAMole', () => {
 
   it('handles game over (time runs out)', async () => {
     render(<WhackAMole />);
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -207,8 +208,9 @@ describe('WhackAMole', () => {
   it('supports keyboard play', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -216,10 +218,7 @@ describe('WhackAMole', () => {
     });
 
     // Whack hole 0 using key '1'
-    await act(async () => {
-      fireEvent.keyDown(window, { key: '1' });
-    });
-
+    fireEvent.keyDown(window, { key: '1' });
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
@@ -237,13 +236,14 @@ describe('WhackAMole', () => {
 
     // Game is idle. Try whacking via click on hole 0
     const inactiveHole = screen.getByRole('button', { name: 'Hole 1' });
+    fireEvent.click(inactiveHole);
     await act(async () => {
-      fireEvent.click(inactiveHole);
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Try whacking via keyboard
+    fireEvent.keyDown(window, { key: '1' });
     await act(async () => {
-      fireEvent.keyDown(window, { key: '1' });
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -259,8 +259,9 @@ describe('WhackAMole', () => {
   it('ignores clicks on inactive holes while playing', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     await act(async () => {
@@ -269,10 +270,7 @@ describe('WhackAMole', () => {
 
     // Try clicking hole 1 (inactive)
     const inactiveHole = screen.getByRole('button', { name: 'Hole 2' });
-    await act(async () => {
-      fireEvent.click(inactiveHole);
-    });
-
+    fireEvent.click(inactiveHole);
     await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
@@ -289,8 +287,9 @@ describe('WhackAMole', () => {
   it('handles filling up all holes (no available holes to spawn)', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Wait enough time for all 9 holes to be filled.
@@ -299,9 +298,6 @@ describe('WhackAMole', () => {
     // Advancing one more interval (800ms) will attempt to spawn when no holes are available.
     await act(async () => {
       await vi.advanceTimersByTimeAsync(10 * 800);
-    });
-
-    await act(async () => {
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -317,8 +313,8 @@ describe('WhackAMole', () => {
   it('records a new high score correctly', async () => {
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -329,8 +325,8 @@ describe('WhackAMole', () => {
     });
 
     const activeHole = screen.getByRole('button', { name: 'Hole 1 — Mole! Click to whack!' });
+    fireEvent.click(activeHole);
     await act(async () => {
-      fireEvent.click(activeHole);
       await vi.advanceTimersByTimeAsync(0);
     });
 
@@ -354,8 +350,8 @@ describe('WhackAMole', () => {
     localStorage.setItem('whackHighScore', '10');
     render(<WhackAMole />);
 
+    fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Start Game/i }));
       await vi.advanceTimersByTimeAsync(0);
     });
 

@@ -113,3 +113,8 @@
 
 - **Fixed Runtime Safety**: Wrapped remaining `fireEvent` calls in `act(...)` blocks across `src/components/games/WhackAMole.test.jsx`, `src/components/games/MemoryMatch.test.jsx`, and `src/components/games/SimonSays.test.jsx` to eliminate React 19 test environment warnings.
 - **Verified**: Build, Lint, Format, and Tests passed cleanly.
+
+## Session 21
+
+- **Fixed Runtime Safety**: Fully resolved React 19 test environment `act(...)` warnings across `Minesweeper.test.jsx`, `WhackAMole.test.jsx`, `SimonSays.test.jsx`, `MemoryMatch.test.jsx`, `SnakeGame.test.jsx`, `TicTacToe.test.jsx`, and `LightsOut.test.jsx` by adding `@testing-library/react`'s `cleanup()` call inside `afterEach`. This ensures components are unmounted and intervals are cleared before running pending timers, preventing asynchronous state updates on unmounted components.
+- **Verified**: Build, Lint, and Tests passed cleanly without any standard error output warnings.

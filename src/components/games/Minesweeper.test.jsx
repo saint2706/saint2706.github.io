@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 import Minesweeper from './Minesweeper';
@@ -104,6 +104,7 @@ describe('Minesweeper Game', () => {
   });
 
   afterEach(() => {
+    cleanup();
     try {
       vi.runOnlyPendingTimers();
       vi.useRealTimers();
@@ -295,18 +296,16 @@ describe('Minesweeper Game', () => {
     expect(screen.getByText('0s')).toBeInTheDocument();
 
     // First click to start game
+    fireEvent.click(cells[0]);
     await act(async () => {
-      fireEvent.click(cells[0]);
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // Since we mock Date.now, let's advance it explicitly and advance the timer so setInterval fires
     await act(async () => {
       dateSpy.mockReturnValue(1000000000000 + 2000);
       await vi.advanceTimersByTimeAsync(2000);
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(0);
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // We should see "2s" now
