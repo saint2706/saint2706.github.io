@@ -22,6 +22,8 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-env
+        with:
+          node-version: 22
 
       - name: Run sync script
         run: node scripts/sync-blogs.js

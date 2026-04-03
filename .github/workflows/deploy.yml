@@ -31,6 +31,8 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-env
+        with:
+          node-version: 22
 
       - name: Build
         run: pnpm run build
