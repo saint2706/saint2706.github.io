@@ -264,3 +264,17 @@ Fixed semantic HTML heading hierarchy in Resume page.
 1.  **[SEO][GEO] Fixed Semantic Hierarchy in Resume:**
     - Modified `src/components/pages/Resume.jsx` to use `<h2>` instead of jumping directly to `<h3>` for "Tech Stack", "Certifications", and "Languages".
     - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
+
+## Session [New Entry]
+### Overview
+This document logs the SEO, GEO (Generative Engine Optimization), and Performance verification of the codebase.
+
+### Audit Findings
+- **[GEO] `llms.txt`**: Present and correctly structured. It clearly defines the site architecture, skills, and Vector Friendliness for AI agents.
+- **[GEO] `robots.txt`**: Optimally configured. Major AI agents (GPTBot, ClaudeBot, Google-Extended, PerplexityBot) are explicitly allowed.
+- **[GEO] JSON-LD Schema**: Verified across the site. `src/utils/seo.js` correctly builds structured data schemas (Website, Profile, Articles, Products, etc.) which are dynamically injected into `<head>` securely using React Helmet in `src/components/shared/SEOHead.jsx`.
+- **[PERF] LCP Optimization**: No critical LCP elements (e.g. Hero background images/text) are lazy-loaded. In components with images like `Projects.jsx`, the first 3 images use `loading="eager"` and `fetchpriority="high"`, properly optimizing LCP. Fonts are preloaded in `index.html`.
+- **[SEO] Semantic HTML**: Validated proper heading structures (`h1` through `h6`) across `Hero.jsx`, `Projects.jsx`, and `Blog.jsx`.
+
+### Result
+The project meets all critical "Buddha" boundaries. No codebase refactoring or fixes were necessary as the site is already perfectly aligned with these constraints.
