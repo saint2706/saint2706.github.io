@@ -62,3 +62,7 @@ Implements various UX and accessibility enhancements across the application, foc
 - When using `<button>` elements with nested icons (e.g., `<Heart>`, `<X>`, `<Copy>`), always ensure the icon component has `aria-hidden="true"` attached to it to prevent screen readers from reading out the SVG or icon content when the button already has a descriptive `aria-label`.
 
 - 🎨 Added `aria-hidden="true"` to the Github and Linkedin icons in the Footer and the Send icon in the ChatInterface.
+
+### Accessibility Improvements
+
+- Added missing `aria-hidden="true"` to icon components (`<RefreshCw>`, `<MessageCircle>`, `<Loader2>`, `<Play>`) used inside icon-only buttons or status indicators in `RoastInterface`, `Chatbot`, and `PythonRunner`. This prevents screen readers from redundantly reading the SVG content when the parent buttons or elements already have descriptive `aria-label` or role attributes.

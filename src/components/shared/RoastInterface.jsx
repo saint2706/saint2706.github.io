@@ -162,7 +162,11 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
       >
         {roastLoading ? (
           <div className="flex items-center gap-3 text-fun-pink" role="status">
-            <RefreshCw size={20} className="animate-spin motion-reduce:animate-none" />
+            <RefreshCw
+              size={20}
+              className="animate-spin motion-reduce:animate-none"
+              aria-hidden="true"
+            />
             <span className="font-heading font-bold">Roasting your resume...</span>
           </div>
         ) : roastContent ? (
@@ -227,6 +231,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           <RefreshCw
             size={16}
             className={roastLoading ? 'animate-spin motion-reduce:animate-none' : ''}
+            aria-hidden="true"
           />
           Roast Again
         </button>
