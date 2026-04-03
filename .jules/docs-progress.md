@@ -66,3 +66,8 @@
 ## 2026-03-24
 
 - Added `@type` JSDoc annotation to the default export of `src/App.jsx`.
+
+## 2026-03-25
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Added JSDoc descriptions and missing `@type` / `@returns` annotations to `Hero` component in `src/components/home/Hero.jsx` and `CustomCursor` component in `src/components/shared/CustomCursor.jsx`.

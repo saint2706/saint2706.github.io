@@ -66,6 +66,11 @@ const liquidVariants = {
   input: { width: 3, height: 24, rotate: 0, borderRadius: '1px' },
 };
 
+/**
+ * Custom cursor component that follows mouse movement with theme-aware styling.
+ * @param {{ enabled: boolean }} props - Component props.
+ * @returns {React.ReactElement | null} The cursor component.
+ */
 const CustomCursor = ({ enabled }) => {
   const prefersReducedMotion = useReducedMotion();
   const [hasMouseMoved, setHasMouseMoved] = useState(false);
