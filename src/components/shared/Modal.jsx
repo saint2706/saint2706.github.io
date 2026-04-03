@@ -48,7 +48,21 @@ import { useFocusTrap } from './useFocusTrap';
  *   <p>Modal content goes here</p>
  * </Modal>
  */
-const Modal = ({ isOpen, onClose, title, children }) => {
+
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+const modalVariants = {
+  hidden: { scale: 0.9, opacity: 0, y: 20 },
+  visible: { scale: 1, opacity: 1, y: 0 },
+};
+
+const backdropTransition = { duration: 0.2 };
+const modalTransition = { type: 'spring', damping: 25, stiffness: 300 };
+
+const Modal = React.memo(({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -87,19 +101,19 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          initial={backdropVariants.hidden}
+          animate={backdropVariants.visible}
+          exit={backdropVariants.hidden}
+          transition={backdropTransition}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           onClick={handleBackdropClick}
         >
           <motion.div
             ref={modalRef}
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            initial={modalVariants.hidden}
+            animate={modalVariants.visible}
+            exit={modalVariants.hidden}
+            transition={modalTransition}
             className={`relative w-full max-w-2xl max-h-[85vh] overflow-hidden flex flex-col ${shell.className}`}
             style={shell.style}
             role="dialog"
@@ -144,6 +158,8 @@ const Modal = ({ isOpen, onClose, title, children }) => {
       )}
     </AnimatePresence>
   );
-};
+});
+
+Modal.displayName = 'Modal';
 
 export default Modal;
