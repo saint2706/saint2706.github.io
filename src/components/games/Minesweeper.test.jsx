@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 import Minesweeper from './Minesweeper';
@@ -104,6 +104,7 @@ describe('Minesweeper Game', () => {
   });
 
   afterEach(() => {
+    cleanup();
     try {
       vi.runOnlyPendingTimers();
       vi.useRealTimers();
@@ -305,8 +306,8 @@ describe('Minesweeper Game', () => {
       await vi.advanceTimersByTimeAsync(2000);
     });
 
-    act(() => {
-      vi.advanceTimersByTime(0);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
     });
 
     // We should see "2s" now
