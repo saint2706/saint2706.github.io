@@ -110,6 +110,9 @@ describe('TicTacToe', () => {
 
     // Switch to easy mode
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Play a move
     // The easiest way is to query by aria-label.
@@ -117,6 +120,9 @@ describe('TicTacToe', () => {
 
     // Click middle cell (index 4)
     fireEvent.click(emptyCells[4]);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Now cell 4 should be marked by player
     expect(
@@ -154,6 +160,9 @@ describe('TicTacToe', () => {
     // Play a move
     const emptyCells = screen.getAllByRole('button', { name: /empty/i });
     fireEvent.click(emptyCells[4]); // Center
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
@@ -180,6 +189,9 @@ describe('TicTacToe', () => {
 
     // Play a move
     fireEvent.click(getCell(0)); // Top left
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
@@ -195,6 +207,9 @@ describe('TicTacToe', () => {
     render(<TicTacToe />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Hard' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -204,6 +219,9 @@ describe('TicTacToe', () => {
 
     // Play a move
     fireEvent.click(getCell(4)); // Center
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
@@ -218,6 +236,9 @@ describe('TicTacToe', () => {
   it('detects a player win', async () => {
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -228,17 +249,26 @@ describe('TicTacToe', () => {
     // P X(4) -> AI O(0)
     fireEvent.click(getCell(4));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P X(1) -> AI O(2)
     fireEvent.click(getCell(1));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P X(7) -> win line 1,4,7
     fireEvent.click(getCell(7));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const winMessages = screen.getAllByText('You Won!');
     expect(winMessages.length).toBeGreaterThan(0);
@@ -247,6 +277,9 @@ describe('TicTacToe', () => {
   it('handles game reset', async () => {
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -256,17 +289,29 @@ describe('TicTacToe', () => {
 
     fireEvent.click(getCell(4));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
     fireEvent.click(getCell(1));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
     fireEvent.click(getCell(7));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Restart
     const playAgainButton = screen.getByRole('button', { name: /Play Again/i });
     fireEvent.click(playAgainButton);
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Cells should be empty again
     const emptyCells = screen.getAllByRole('button', { name: /empty/i });
@@ -276,6 +321,9 @@ describe('TicTacToe', () => {
   it('handles game reset via escape key', async () => {
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -286,17 +334,26 @@ describe('TicTacToe', () => {
     // P X(4) -> AI O(0)
     fireEvent.click(getCell(4));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P X(1) -> AI O(2)
     fireEvent.click(getCell(1));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P X(7) -> win line 1,4,7
     fireEvent.click(getCell(7));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const winMessages = screen.getAllByText('You Won!');
     expect(winMessages.length).toBeGreaterThan(0);
@@ -304,6 +361,9 @@ describe('TicTacToe', () => {
     // Escape
     // According to useFocusTrap, the event needs to bubble up to document or match the focus trap logic
     fireEvent.keyDown(document, { key: 'Escape' });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Cells should be empty again
     const emptyCells = screen.getAllByRole('button', { name: /empty/i });
@@ -330,11 +390,17 @@ describe('TicTacToe', () => {
     // Turn 1
     fireEvent.click(getCell(1)); // P
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     }); // AI -> 0
 
     // Turn 2
     fireEvent.click(getCell(3)); // P
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     }); // AI -> 2
@@ -342,17 +408,26 @@ describe('TicTacToe', () => {
     // Turn 3
     fireEvent.click(getCell(4)); // P
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     }); // AI -> 5
 
     // Turn 4
     fireEvent.click(getCell(6)); // P
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     }); // AI -> 7
 
     // Turn 5
     fireEvent.click(getCell(8)); // P -> fills board
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
@@ -368,6 +443,9 @@ describe('TicTacToe', () => {
 
     render(<TicTacToe />);
     fireEvent.click(screen.getByRole('button', { name: 'Set difficulty to Easy' }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     const getCell = index => {
       const row = Math.floor(index / 3) + 1;
@@ -378,17 +456,26 @@ describe('TicTacToe', () => {
     // P takes 3 -> AI takes 0
     fireEvent.click(getCell(3));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P takes 4 -> AI takes 1
     fireEvent.click(getCell(4));
     await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
 
     // P takes 6 -> AI takes 2 (AI wins!)
     fireEvent.click(getCell(6));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
@@ -410,6 +497,9 @@ describe('TicTacToe', () => {
 
     // Click cell 0
     fireEvent.click(getCell(0));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Cell 0 should now be marked by you
     expect(
@@ -418,6 +508,9 @@ describe('TicTacToe', () => {
 
     // Click cell 0 again
     fireEvent.click(getCell(0));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
 
     // Wait for AI move (AI takes 1)
     await act(async () => {
@@ -436,6 +529,9 @@ describe('TicTacToe', () => {
 
     // Clicking cell 1 (AI occupied) shouldn't do anything
     fireEvent.click(getCell(1));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
     await act(async () => {
       await vi.advanceTimersByTimeAsync(500);
     });
