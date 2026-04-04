@@ -269,7 +269,7 @@ const Chatbot = React.memo(() => {
             aria-expanded={isFabOpen}
             onClick={() => setIsFabOpen(prev => !prev)}
           >
-            <MessageCircle size={28} />
+            <MessageCircle size={28} aria-hidden="true" />
           </button>
 
           {/* Expandable Options */}

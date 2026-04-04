@@ -212,12 +212,12 @@ const PythonRunner = ({ snippet }) => {
           >
             {isRunning ? (
               <>
-                <Loader2 size={14} className="animate-spin" />
+                <Loader2 size={14} className="animate-spin" aria-hidden="true" />
                 Running...
               </>
             ) : (
               <>
-                <Play size={14} />
+                <Play size={14} aria-hidden="true" />
                 Run
               </>
             )}
