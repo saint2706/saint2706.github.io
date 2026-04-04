@@ -60,22 +60,33 @@ const ThemedChip = ({
   const { theme } = useTheme();
   const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
 
-  const chipShadow =
-    themeKey === 'neubrutalism'
-      ? `2px 2px 0 ${shadowColor && SHADOW_COLORS[shadowColor] ? SHADOW_COLORS[shadowColor] : 'var(--color-border)'}`
-      : undefined;
+  const chipShadow = React.useMemo(
+    () =>
+      themeKey === 'neubrutalism'
+        ? `2px 2px 0 ${shadowColor && SHADOW_COLORS[shadowColor] ? SHADOW_COLORS[shadowColor] : 'var(--color-border)'}`
+        : undefined,
+    [themeKey, shadowColor]
+  );
 
-  return (
-    <Component
-      className={joinClasses(
+  const computedClassName = React.useMemo(
+    () =>
+      joinClasses(
         'inline-flex items-center gap-1 px-2 py-1 text-sm md:text-xs',
         VARIANTS[variant]?.[themeKey],
         className
-      )}
-      style={{ ...(chipShadow ? { boxShadow: chipShadow } : {}), ...style }}
-      {...props}
-    />
+      ),
+    [variant, themeKey, className]
   );
+
+  const computedStyle = React.useMemo(
+    () => ({
+      ...(chipShadow ? { boxShadow: chipShadow } : {}),
+      ...style,
+    }),
+    [chipShadow, style]
+  );
+
+  return <Component className={computedClassName} style={computedStyle} {...props} />;
 };
 
 export default ThemedChip;

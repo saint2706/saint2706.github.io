@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SimonSays from './SimonSays';
 
@@ -85,6 +85,7 @@ describe('SimonSays', () => {
   });
 
   afterEach(() => {
+    cleanup();
     try {
       vi.runOnlyPendingTimers();
       vi.useRealTimers();

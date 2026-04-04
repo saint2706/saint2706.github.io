@@ -46,22 +46,32 @@ const ThemedCard = ({
 }) => {
   const { theme } = useTheme();
   const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
-  const variantClasses = VARIANTS[variant]?.[themeKey] ?? VARIANTS.default[themeKey];
+
+  const variantClasses = React.useMemo(
+    () => VARIANTS[variant]?.[themeKey] ?? VARIANTS.default[themeKey],
+    [variant, themeKey]
+  );
 
   // Apply colored shadow class if specified (NB only)
-  const coloredShadowClass =
-    themeKey === 'neubrutalism' && shadowColor ? NB_SHADOW_COLOR_MAP[shadowColor] : '';
-
-  return (
-    <Component
-      className={joinClasses(variantClasses, coloredShadowClass, className)}
-      style={{
-        ...(themeKey === 'neubrutalism' && !shadowColor ? { boxShadow: 'var(--nb-shadow)' } : {}),
-        ...style,
-      }}
-      {...props}
-    />
+  const coloredShadowClass = React.useMemo(
+    () => (themeKey === 'neubrutalism' && shadowColor ? NB_SHADOW_COLOR_MAP[shadowColor] : ''),
+    [themeKey, shadowColor]
   );
+
+  const computedClassName = React.useMemo(
+    () => joinClasses(variantClasses, coloredShadowClass, className),
+    [variantClasses, coloredShadowClass, className]
+  );
+
+  const computedStyle = React.useMemo(
+    () => ({
+      ...(themeKey === 'neubrutalism' && !shadowColor ? { boxShadow: 'var(--nb-shadow)' } : {}),
+      ...style,
+    }),
+    [themeKey, shadowColor, style]
+  );
+
+  return <Component className={computedClassName} style={computedStyle} {...props} />;
 };
 
 export default ThemedCard;

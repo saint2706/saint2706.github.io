@@ -62,28 +62,44 @@ const ThemedButton = ({
   const { theme } = useTheme();
   const themeKey = theme === 'liquid' || theme === 'liquid-dark' ? 'liquid' : 'neubrutalism';
 
-  const activeClasses =
-    themeKey === 'neubrutalism' && isActive
-      ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
-      : '';
+  const activeClasses = React.useMemo(
+    () =>
+      themeKey === 'neubrutalism' && isActive
+        ? 'bg-fun-yellow text-black -translate-x-0.5 -translate-y-0.5'
+        : '',
+    [themeKey, isActive]
+  );
 
-  const coloredShadowClass =
-    themeKey === 'neubrutalism' && coloredShadow ? NB_SHADOW_COLOR_MAP[coloredShadow] : '';
+  const coloredShadowClass = React.useMemo(
+    () => (themeKey === 'neubrutalism' && coloredShadow ? NB_SHADOW_COLOR_MAP[coloredShadow] : ''),
+    [themeKey, coloredShadow]
+  );
 
-  return (
-    <Component
-      className={joinClasses(
+  const computedClassName = React.useMemo(
+    () =>
+      joinClasses(
         'inline-flex items-center gap-2 font-heading font-bold cursor-pointer transition-all duration-200 motion-reduce:transform-none motion-reduce:transition-none disabled:bg-secondary disabled:text-muted disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fun-yellow focus-visible:ring-offset-2',
         SIZE_CLASSES[size] ?? SIZE_CLASSES.md,
         VARIANTS[variant]?.[themeKey] ?? VARIANTS.secondary[themeKey],
         activeClasses,
         coloredShadowClass,
         className
-      )}
-      style={{
-        ...(themeKey === 'neubrutalism' && !coloredShadow ? { boxShadow: 'var(--nb-shadow)' } : {}),
-        ...style,
-      }}
+      ),
+    [size, variant, themeKey, activeClasses, coloredShadowClass, className]
+  );
+
+  const computedStyle = React.useMemo(
+    () => ({
+      ...(themeKey === 'neubrutalism' && !coloredShadow ? { boxShadow: 'var(--nb-shadow)' } : {}),
+      ...style,
+    }),
+    [themeKey, coloredShadow, style]
+  );
+
+  return (
+    <Component
+      className={computedClassName}
+      style={computedStyle}
       disabled={isLoading || props.disabled}
       aria-disabled={isLoading || props.disabled}
       aria-busy={isLoading}
