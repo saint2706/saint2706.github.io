@@ -58,10 +58,11 @@ const Contact = React.memo(() => {
       e.preventDefault();
       setIsSubmitting(true);
 
-      // Sanitize inputs to prevent control character injection or bidi spoofing
-      const safeName = sanitizeInput(formData.name || 'Portfolio');
-      const safeMessage = sanitizeInput(formData.message || '');
-      const safeEmail = sanitizeInput(formData.email || '');
+      // Sanitize and limit inputs to prevent control character injection or DoS via massive payloads
+      // Using array spread to safely slice strings without breaking surrogate pairs (e.g. emojis)
+      const safeName = [...sanitizeInput(formData.name || 'Portfolio')].slice(0, 100).join('');
+      const safeMessage = [...sanitizeInput(formData.message || '')].slice(0, 1500).join('');
+      const safeEmail = [...sanitizeInput(formData.email || '')].slice(0, 200).join('');
 
       // Generate mailto URL with form data
       const mailtoUrl = `mailto:${resumeData.basics.email}?subject=${encodeURIComponent(

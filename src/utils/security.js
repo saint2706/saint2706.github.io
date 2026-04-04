@@ -93,7 +93,7 @@ export const isSafeHref = href => {
   while (iterations < maxIterations && normalizedHref !== previousHref) {
     previousHref = normalizedHref;
     try {
-      normalizedHref = decodeURIComponent(normalizedHref);
+      normalizedHref = decodeURIComponent(normalizedHref).trim();
     } catch {
       // If decoding fails, stop and use the current value
       break;
@@ -157,7 +157,7 @@ export const isSafeImageSrc = src => {
   while (iterations < maxIterations && normalizedSrc !== previousSrc) {
     previousSrc = normalizedSrc;
     try {
-      normalizedSrc = decodeURIComponent(normalizedSrc);
+      normalizedSrc = decodeURIComponent(normalizedSrc).trim();
     } catch {
       // If decoding fails, stop and use the current value
       break;
