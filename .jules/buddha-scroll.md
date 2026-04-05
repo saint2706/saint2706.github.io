@@ -264,3 +264,10 @@ Fixed semantic HTML heading hierarchy in Resume page.
 1.  **[SEO][GEO] Fixed Semantic Hierarchy in Resume:**
     - Modified `src/components/pages/Resume.jsx` to use `<h2>` instead of jumping directly to `<h3>` for "Tech Stack", "Certifications", and "Languages".
     - Correct heading hierarchy is critical for both accessibility and search engine/AI agent document understanding, preventing structural "jumps" that confuse parsers.
+
+# Buddha Session Log
+
+## Changes Applied
+
+- **[PERF]** Optimized font loading in `index.html` by setting `media="print"` and using an `onload` handler on the Google Fonts stylesheet to remove render-blocking resources.
+- **[GEO]** Verified that the `llms.txt` and structured data (JSON-LD) already exist and accurately represent the site architecture and required SEO metadata.
