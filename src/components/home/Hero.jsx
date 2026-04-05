@@ -44,6 +44,12 @@ const codeInitial = { scale: 1.08, rotate: 2 };
 const codeAnimate = { scale: 1, rotate: -1 };
 const codeTransition = { type: 'spring', stiffness: 350, damping: 18, delay: 0.35 };
 
+const stickerRotateStyle = { '--sticker-rotate': '-2deg' };
+const highlightedStickerStyle = { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' };
+const invertTextYellowStyle = { '--invert-text': 'var(--color-fun-yellow)' };
+const invertTextWhiteStyle = { '--invert-text': '#ffffff' };
+const snippetStickerStyle = { '--sticker-rotate': '-1deg' };
+
 /**
  * Hero section component for homepage
  * @type {React.NamedExoticComponent}
@@ -136,7 +142,7 @@ const Hero = React.memo(() => {
               'font-heading font-semibold px-5 py-2 nb-sticker',
               'font-heading font-semibold px-5 py-2 lg-surface-3 lg-pill'
             )}
-            style={isLiquid ? undefined : { '--sticker-rotate': '-2deg' }}
+            style={isLiquid ? undefined : stickerRotateStyle}
           >
             <Sparkles size={18} className={themeClass('text-black', 'text-fun-yellow')} />
             <span className={isLiquid ? 'text-[color:var(--text-primary)]' : ''}>
@@ -178,9 +184,7 @@ const Hero = React.memo(() => {
               'text-[color:var(--text-primary)] px-4 py-2 border-nb border-[color:var(--color-border)] inline-block bg-fun-yellow rounded-nb nb-sticker',
               'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 inline-block [forced-colors:appearance-auto]'
             )}
-            style={
-              isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)', '--sticker-rotate': '1deg' }
-            }
+            style={isLiquid ? undefined : highlightedStickerStyle}
           >
             & Creative Analyst
           </span>
@@ -239,7 +243,7 @@ const Hero = React.memo(() => {
               'group relative nb-shadow-lift nb-color-invert',
               'group relative liquid-button-primary border border-[color:var(--border-soft)] shadow-[0_0_30px_rgba(141,162,255,0.35)] hover:-translate-y-0.5'
             )}
-            style={isLiquid ? undefined : { '--invert-text': 'var(--color-fun-yellow)' }}
+            style={isLiquid ? undefined : invertTextYellowStyle}
           >
             View Projects
             <ArrowRight
@@ -255,7 +259,7 @@ const Hero = React.memo(() => {
               'nb-shadow-lift nb-color-invert',
               'lg-surface-2 shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--text-primary)]'
             )}
-            style={isLiquid ? undefined : { '--invert-text': '#ffffff' }}
+            style={isLiquid ? undefined : invertTextWhiteStyle}
             aria-label="Open chat with Digital Rishabh"
           >
             <Bot
@@ -281,7 +285,7 @@ const Hero = React.memo(() => {
               `p-6 text-left font-mono text-sm transition-all duration-300 nb-sticker ${isGlitching ? 'animate-glitch' : ''}`,
               `!bg-transparent !border-0 !shadow-none p-0 ${isGlitching ? 'animate-glitch' : ''}`
             )}
-            style={isLiquid ? undefined : { '--sticker-rotate': '-1deg' }}
+            style={isLiquid ? undefined : snippetStickerStyle}
           >
             {isLiquid ? (
               <div className="lg-code-surface p-6 text-left font-mono text-sm">

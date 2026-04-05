@@ -23,6 +23,10 @@ const SyntaxHighlighter = lazy(() => import('../shared/SyntaxHighlighter'));
 /** Color classes for snippet card accent bars */
 const cardColors = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
 
+const nbShadowStyle = { boxShadow: 'var(--nb-shadow)' };
+const borderShadowStyle = { boxShadow: '2px 2px 0 var(--color-border)' };
+const pythonStickerStyle = { '--sticker-rotate': '3deg' };
+
 /**
  * Playground page for code snippets and interactive demos
  *
@@ -168,7 +172,7 @@ const Playground = React.memo(() => {
                 'inline-block bg-accent text-white px-6 py-3 rounded-nb nb-stamp-in',
                 'inline-block px-8 py-4 rounded-3xl lg-surface-2'
               )}
-              style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+              style={isLiquid ? undefined : nbShadowStyle}
             >
               Code Playground
             </ThemedCard>
@@ -305,7 +309,7 @@ const Playground = React.memo(() => {
               'bg-secondary border-nb border-[color:var(--color-border)] px-6 py-3 rounded-nb',
               'lg-surface-2 px-7 py-4 rounded-3xl max-w-2xl'
             )}
-            style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
+            style={isLiquid ? undefined : borderShadowStyle}
           >
             <p className="text-secondary text-sm md:text-xs font-sans text-center leading-relaxed">
               💡 Click the copy button to grab any snippet. Some snippets have live output previews!
@@ -379,7 +383,7 @@ const SnippetCard = React.memo(
           'bg-card border-nb border-[color:var(--color-border)] overflow-hidden flex flex-col rounded-nb',
           'lg-surface-2 overflow-hidden flex flex-col rounded-3xl'
         )}
-        style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+        style={isLiquid ? undefined : nbShadowStyle}
       >
         <div className={`h-3 ${colorClass}`} />
 
@@ -402,7 +406,7 @@ const SnippetCard = React.memo(
                 'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
                 'text-xs font-semibold px-2.5 py-1 rounded-full'
               )}
-              style={isLiquid ? undefined : { '--sticker-rotate': '3deg' }}
+              style={isLiquid ? undefined : pythonStickerStyle}
             >
               {snippet.language.toUpperCase()}
             </ThemedChip>
@@ -475,7 +479,7 @@ const SnippetCard = React.memo(
                   'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-fun-pink text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
                   'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full lg-surface-3 lg-pill text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
                 )}
-                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+                style={isLiquid ? undefined : nbShadowStyle}
               >
                 <Play size={14} aria-hidden="true" />
                 Live Preview
@@ -493,7 +497,7 @@ const SnippetCard = React.memo(
                   'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
                   'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
                 )}
-                style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
+                style={isLiquid ? undefined : nbShadowStyle}
               >
                 <Play size={14} aria-hidden="true" />
                 Try It Live! 🐍

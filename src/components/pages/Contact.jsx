@@ -15,6 +15,9 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 import { useTheme } from '../shared/theme-context';
 
+const borderShadowStyle = { boxShadow: '2px 2px 0 var(--color-border)' };
+const nbShadowStyle = { boxShadow: 'var(--nb-shadow)' };
+
 /**
  * Contact Page Component
  *
@@ -287,7 +290,7 @@ const Contact = React.memo(() => {
               <ThemedCard className="p-6">
                 <h2
                   className="inline-block font-heading text-xl font-bold text-black bg-fun-yellow px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 rounded-nb"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  style={borderShadowStyle}
                 >
                   Get in Touch
                 </h2>
@@ -297,7 +300,7 @@ const Contact = React.memo(() => {
                   <a
                     href={`mailto:${resumeData.basics.email}`}
                     className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    style={borderShadowStyle}
                     aria-label={`Send email to ${resumeData.basics.email}`}
                   >
                     <div className="p-3 bg-accent text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
@@ -317,7 +320,7 @@ const Contact = React.memo(() => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-4 p-4 bg-secondary border-[3px] border-[color:var(--color-border)] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 group motion-reduce:transform-none motion-reduce:transition-none"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    style={borderShadowStyle}
                     aria-label={`View location ${resumeData.basics.location.city}, ${resumeData.basics.location.country} on Google Maps (opens in new tab)`}
                   >
                     <div className="p-3 bg-fun-pink text-white border-2 border-[color:var(--color-border)] group-hover:bg-fun-yellow group-hover:text-black transition-colors">
@@ -339,7 +342,7 @@ const Contact = React.memo(() => {
               <ThemedCard className="p-6">
                 <h2
                   className="inline-block font-heading text-lg font-bold bg-fun-pink px-4 py-2 border-nb border-[color:var(--color-border)] mb-6 text-white rounded-nb"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  style={borderShadowStyle}
                 >
                   Follow Me
                 </h2>
@@ -379,7 +382,7 @@ const Contact = React.memo(() => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4 }}
                 className="bg-fun-yellow border-nb border-[color:var(--color-border)] p-4 rounded-nb"
-                style={{ boxShadow: 'var(--nb-shadow)' }}
+                style={nbShadowStyle}
               >
                 <div className="flex items-center gap-3">
                   <span className="w-4 h-4 bg-green-500 border-2 border-[color:var(--color-border)] animate-pulse motion-reduce:animate-none rounded-nb"></span>
@@ -401,7 +404,7 @@ const Contact = React.memo(() => {
                 {/* Icon */}
                 <div
                   className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
-                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                  style={nbShadowStyle}
                 >
                   <Mail size={40} className="text-white" />
                 </div>
@@ -428,7 +431,7 @@ const Contact = React.memo(() => {
 
                 <div
                   className="mt-8 p-4 bg-secondary border-[3px] border-[color:var(--color-border)]"
-                  style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                  style={borderShadowStyle}
                 >
                   <p className="text-muted text-sm font-sans flex items-center justify-center gap-2">
                     <Sparkles size={16} className="text-fun-yellow" />

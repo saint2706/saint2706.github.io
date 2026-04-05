@@ -28,6 +28,10 @@ const projectSlugFromData = project =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
+const stickerStyles = [{ '--sticker-rotate': '1deg' }, { '--sticker-rotate': '-1deg' }];
+
+const featuredStickerStyle = { '--sticker-rotate': '3deg' };
+
 /**
  * ProjectCard Component
  */
@@ -35,8 +39,14 @@ const projectSlugFromData = project =>
 const ProjectCard = React.memo(
   ({ project, idx, isLiquid, shadowColors, cardColors, item, onClick }) => {
     const projectSlug = useMemo(() => projectSlugFromData(project), [project]);
-    const projectThumbTransitionName = `project-thumb-${projectSlug}`;
-    const projectTitleTransitionName = `project-title-${projectSlug}`;
+    const thumbStyle = useMemo(
+      () => ({ viewTransitionName: `project-thumb-${projectSlug}` }),
+      [projectSlug]
+    );
+    const titleStyle = useMemo(
+      () => ({ viewTransitionName: `project-title-${projectSlug}` }),
+      [projectSlug]
+    );
 
     const handleClick = useCallback(() => {
       if (onClick) onClick(project);
@@ -58,9 +68,7 @@ const ProjectCard = React.memo(
           }
         }}
         className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
-        style={{
-          '--sticker-rotate': idx % 2 === 0 ? '1deg' : '-1deg',
-        }}
+        style={stickerStyles[idx % 2]}
       >
         {/* Color accent bar */}
         {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
@@ -72,7 +80,7 @@ const ProjectCard = React.memo(
               src={project.image}
               alt={`Screenshot of ${project.title} project`}
               className="w-full h-full object-cover"
-              style={{ viewTransitionName: projectThumbTransitionName }}
+              style={thumbStyle}
               loading={idx < 3 ? 'eager' : 'lazy'}
               fetchPriority={idx < 3 ? 'high' : undefined}
               decoding="async"
@@ -86,10 +94,7 @@ const ProjectCard = React.memo(
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-start gap-2">
               <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-              <h2
-                className="text-xl font-heading font-bold text-primary"
-                style={{ viewTransitionName: projectTitleTransitionName }}
-              >
+              <h2 className="text-xl font-heading font-bold text-primary" style={titleStyle}>
                 {project.title}
               </h2>
             </div>
@@ -104,7 +109,7 @@ const ProjectCard = React.memo(
                 <ThemedChip
                   variant="accent"
                   className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
-                  style={{ '--sticker-rotate': '3deg' }}
+                  style={featuredStickerStyle}
                 >
                   Featured
                 </ThemedChip>
