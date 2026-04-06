@@ -69,7 +69,7 @@
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
-    "vite": "^7.2.4",
+    "vite": "^7.3.2",
     "vitest": "^4.0.18"
   },
   "pnpm": {
