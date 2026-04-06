@@ -41,6 +41,7 @@ const TerminalLine = React.memo(({ line }) => (
 
 TerminalLine.displayName = 'TerminalLine';
 
+// ⚡ Bolt: Wrapped `TerminalMode` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 /**
  * Terminal Mode overlay component
  *
@@ -57,7 +58,6 @@ TerminalLine.displayName = 'TerminalLine';
  * @param {string} props.welcomeMessage - Optional welcome banner shown on open
  * @returns {JSX.Element} Terminal overlay
  */
-// ⚡ Bolt: Wrapped `TerminalMode` component in `React.memo` to prevent unnecessary re-renders when parent layout state changes.
 const TerminalMode = React.memo(({ isOpen, onClose, welcomeMessage = '' }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([]);

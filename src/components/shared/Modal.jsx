@@ -62,6 +62,17 @@ const modalVariants = {
 const backdropTransition = { duration: 0.2 };
 const modalTransition = { type: 'spring', damping: 25, stiffness: 300 };
 
+/**
+ * A reusable, themed modal component with animations and focus trapping.
+ *
+ * @type {React.NamedExoticComponent<{ isOpen: boolean, onClose: Function, title: string, children: React.ReactNode }>}
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the modal is currently open.
+ * @param {Function} props.onClose - Callback invoked to close the modal.
+ * @param {string} props.title - The title text displayed in the modal header.
+ * @param {React.ReactNode} props.children - The content to display inside the modal body.
+ * @returns {React.ReactElement|null} The modal element or null if closed.
+ */
 const Modal = React.memo(({ isOpen, onClose, title, children }) => {
   const modalRef = useRef(null);
   const { theme } = useTheme();
