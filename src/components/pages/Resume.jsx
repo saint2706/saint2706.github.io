@@ -160,6 +160,9 @@ const SECTIONS = ['Experience', 'Education', 'Tech Stack', 'Certifications', 'La
 const expShadowColors = ['pink', 'coral', 'violet', 'orange', 'blue'];
 const eduShadowColors = ['blue', 'yellow', 'lime'];
 
+const nbShadowStyle = { boxShadow: 'var(--nb-shadow)' };
+const borderShadowStyle = { boxShadow: '2px 2px 0 var(--color-border)' };
+
 /**
  * Resume Page Component
  *
@@ -424,11 +427,11 @@ const Resume = React.memo(() => {
                 <div className="mb-12">
                   <div
                     className="bg-card border-nb border-[color:var(--color-border)] p-6 rounded-nb"
-                    style={{ boxShadow: 'var(--nb-shadow)' }}
+                    style={nbShadowStyle}
                   >
                     <div
                       className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] rounded-nb mb-6"
-                      style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                      style={borderShadowStyle}
                     >
                       <Award size={20} />
                       <h2 className="text-lg font-heading font-bold">Certifications</h2>
@@ -471,11 +474,11 @@ const Resume = React.memo(() => {
               <ScrollReveal variant="fade-right" delay={0.1}>
                 <div
                   className="bg-card border-[3px] border-[color:var(--color-border)] p-6"
-                  style={{ boxShadow: 'var(--nb-shadow)' }}
+                  style={nbShadowStyle}
                 >
                   <div
                     className="inline-flex items-center gap-2 bg-accent text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
-                    style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                    style={borderShadowStyle}
                   >
                     <Globe size={20} />
                     <h2 className="text-lg font-heading font-bold">Languages</h2>
@@ -486,7 +489,7 @@ const Resume = React.memo(() => {
                       <div
                         key={i}
                         className="flex items-center gap-3 px-4 py-3 bg-secondary border-[3px] border-[color:var(--color-border)]"
-                        style={{ boxShadow: '2px 2px 0 var(--color-border)' }}
+                        style={borderShadowStyle}
                       >
                         <span className="text-primary font-heading font-bold">{lang.name}</span>
                         <span className="text-sm md:text-xs px-2 py-1 bg-fun-yellow text-black border-2 border-[color:var(--color-border)] font-bold">
