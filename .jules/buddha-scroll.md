@@ -271,3 +271,7 @@ Fixed semantic HTML heading hierarchy in Resume page.
 
 - **[PERF]** Optimized font loading in `index.html` by setting `media="print"` and using an `onload` handler on the Google Fonts stylesheet to remove render-blocking resources.
 - **[GEO]** Verified that the `llms.txt` and structured data (JSON-LD) already exist and accurately represent the site architecture and required SEO metadata.
+
+- **[GEO]** Verified that the `llms.txt` and structured data (JSON-LD) already exist and accurately represent the site architecture and required SEO metadata.
+- **[SEO]** Verified that `robots.txt` is already configured for common AI crawlers.
+- **[PERF]** Found images in `Projects.jsx` and `ChatInterface.jsx` have appropriate loading strategies.
