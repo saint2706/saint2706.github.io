@@ -275,3 +275,6 @@ Fixed semantic HTML heading hierarchy in Resume page.
 - **[GEO]** Verified that the `llms.txt` and structured data (JSON-LD) already exist and accurately represent the site architecture and required SEO metadata.
 - **[SEO]** Verified that `robots.txt` is already configured for common AI crawlers.
 - **[PERF]** Found images in `Projects.jsx` and `ChatInterface.jsx` have appropriate loading strategies.
+- [SEO] Verified LCP optimization across projects (already using eager loading and fetchPriority).
+- [GEO] llms.txt and robots.txt are present and correct.
+- [PERF] Verified LCP is not lazy-loaded.
