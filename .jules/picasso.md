@@ -66,3 +66,9 @@ Implements various UX and accessibility enhancements across the application, foc
 ### Accessibility Improvements
 
 - Added missing `aria-hidden="true"` to icon components (`<RefreshCw>`, `<MessageCircle>`, `<Loader2>`, `<Play>`) used inside icon-only buttons or status indicators in `RoastInterface`, `Chatbot`, and `PythonRunner`. This prevents screen readers from redundantly reading the SVG content when the parent buttons or elements already have descriptive `aria-label` or role attributes.
+
+### Accessibility Improvements
+
+- Added missing `aria-hidden="true"` to icon components (`<MapPin>`, `<Sparkles>`, `<Send>`, `<Github>`, `<Linkedin>`) used in `src/components/pages/Contact.jsx`.
+- Added missing `aria-hidden="true"` to icon components (`<ArrowUp>`, `<ArrowDown>`, `<CornerDownLeft>`, `<Search>`) used in `src/components/shared/CommandPalette.jsx`.
+  This prevents screen readers from redundantly reading the SVG content when the parent elements or the surrounding context already convey the meaning.

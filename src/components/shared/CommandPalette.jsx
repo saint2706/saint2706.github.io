@@ -269,7 +269,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                     : 'border-b-nb border-[color:var(--color-border)]'
                 )}
               >
-                <Search size={20} className="text-secondary flex-shrink-0" />
+                <Search size={20} className="text-secondary flex-shrink-0" aria-hidden="true" />
                 <label htmlFor="command-palette-input" className="sr-only">
                   Search commands
                 </label>
@@ -375,12 +375,12 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                 )}
               >
                 <span className="flex items-center gap-1 text-xs text-muted font-sans">
-                  <ArrowUp size={12} />
-                  <ArrowDown size={12} />
+                  <ArrowUp size={12} aria-hidden="true" />
+                  <ArrowDown size={12} aria-hidden="true" />
                   navigate
                 </span>
                 <span className="flex items-center gap-1 text-xs text-muted font-sans">
-                  <CornerDownLeft size={12} />
+                  <CornerDownLeft size={12} aria-hidden="true" />
                   select
                 </span>
                 <span className="flex items-center gap-1 text-xs text-muted font-sans">

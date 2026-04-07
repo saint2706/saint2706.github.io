@@ -238,7 +238,7 @@ const Contact = React.memo(() => {
                     className="w-full justify-center shadow-[0_0_30px_rgba(141,162,255,0.28)]"
                   >
                     {!isSubmitting ? (
-                      <Send size={20} />
+                      <Send size={20} aria-hidden="true" />
                     ) : (
                       <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />
                     )}
@@ -249,7 +249,7 @@ const Contact = React.memo(() => {
 
               <div className="mt-6 pt-5 border-t border-[color:var(--border-soft)] flex flex-wrap items-center justify-between gap-3 text-sm text-secondary">
                 <span className="inline-flex items-center gap-2">
-                  <MapPin size={16} />
+                  <MapPin size={16} aria-hidden="true" />
                   {resumeData.basics.location.city}, {resumeData.basics.location.country}
                 </span>
                 <div className="flex items-center gap-2">
@@ -267,9 +267,9 @@ const Contact = React.memo(() => {
                         aria-label={`${social.network} (opens in new tab)`}
                       >
                         {social.network === 'GitHub' ? (
-                          <Github size={20} />
+                          <Github size={20} aria-hidden="true" />
                         ) : (
-                          <Linkedin size={20} />
+                          <Linkedin size={20} aria-hidden="true" />
                         )}
                       </ThemedButton>
                     ))}
@@ -361,9 +361,9 @@ const Contact = React.memo(() => {
                         aria-label={`${social.network} (opens in new tab)`}
                       >
                         {social.network === 'GitHub' ? (
-                          <Github size={24} />
+                          <Github size={24} aria-hidden="true" />
                         ) : (
-                          <Linkedin size={24} />
+                          <Linkedin size={24} aria-hidden="true" />
                         )}
                         <span
                           className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50 font-sans"
@@ -425,7 +425,7 @@ const Contact = React.memo(() => {
                   variant="primary"
                   size="lg"
                 >
-                  <Send size={20} />
+                  <Send size={20} aria-hidden="true" />
                   Send me an Email
                 </ThemedButton>
 
@@ -434,7 +434,7 @@ const Contact = React.memo(() => {
                   style={borderShadowStyle}
                 >
                   <p className="text-muted text-sm font-sans flex items-center justify-center gap-2">
-                    <Sparkles size={16} className="text-fun-yellow" />
+                    <Sparkles size={16} className="text-fun-yellow" aria-hidden="true" />
                     Or use the chatbot (Ctrl+K) to learn more about me first!
                   </p>
                 </div>
