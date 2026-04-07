@@ -1,5 +1,8 @@
 name: Sync Blogs
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   schedule:
     - cron: '0 0 */3 * *' # Runs every 3 days at midnight UTC
