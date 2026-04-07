@@ -104,7 +104,7 @@ LightsOutCell.displayName = 'LightsOutCell';
  *
  * @returns {React.ReactElement} The LightsOut game component.
  */
-const LightsOut = () => {
+const LightsOut = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -400,6 +400,8 @@ const LightsOut = () => {
       </div>
     </div>
   );
-};
+});
+
+LightsOut.displayName = 'LightsOut';
 
 export default LightsOut;

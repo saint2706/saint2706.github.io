@@ -116,7 +116,7 @@ MemoryMatchCard.displayName = 'MemoryMatchCard';
  *
  * @returns {React.ReactElement} The MemoryMatch game component.
  */
-const MemoryMatch = () => {
+const MemoryMatch = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -413,6 +413,8 @@ const MemoryMatch = () => {
       </div>
     </div>
   );
-};
+});
+
+MemoryMatch.displayName = 'MemoryMatch';
 
 export default MemoryMatch;

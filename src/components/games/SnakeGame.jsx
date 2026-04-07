@@ -377,7 +377,7 @@ MobileControls.displayName = 'MobileControls';
  * @component
  * @returns {JSX.Element} Complete Snake game interface
  */
-const SnakeGame = () => {
+const SnakeGame = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -851,6 +851,8 @@ const SnakeGame = () => {
       />
     </div>
   );
-};
+});
+
+SnakeGame.displayName = 'SnakeGame';
 
 export default SnakeGame;
