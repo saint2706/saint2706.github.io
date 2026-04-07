@@ -275,3 +275,5 @@ Fixed semantic HTML heading hierarchy in Resume page.
 - **[GEO]** Verified that the `llms.txt` and structured data (JSON-LD) already exist and accurately represent the site architecture and required SEO metadata.
 - **[SEO]** Verified that `robots.txt` is already configured for common AI crawlers.
 - **[PERF]** Found images in `Projects.jsx` and `ChatInterface.jsx` have appropriate loading strategies.
+
+- **[SEO]** `index.html`: Changed `<noscript>` `<h1>` fallback element to `<h2>` to prevent multiple `<h1>` elements from appearing on the page when parsed by search engines. This preserves semantic hierarchy since the primary React app injects the true `<h1>`.
