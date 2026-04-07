@@ -304,16 +304,20 @@ const Layout = ({ children }) => {
 
       {/* Command Palette & Terminal Mode overlays */}
       <Suspense fallback={null}>
-        <CommandPalette
-          isOpen={isCommandPaletteOpen}
-          onClose={() => setIsCommandPaletteOpen(false)}
-          onOpenTerminal={handleOpenTerminal}
-        />
-        <TerminalMode
-          isOpen={isTerminalOpen}
-          onClose={() => setIsTerminalOpen(false)}
-          welcomeMessage={terminalWelcome}
-        />
+        {isCommandPaletteOpen && (
+          <CommandPalette
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            onOpenTerminal={handleOpenTerminal}
+          />
+        )}
+        {isTerminalOpen && (
+          <TerminalMode
+            isOpen={isTerminalOpen}
+            onClose={() => setIsTerminalOpen(false)}
+            welcomeMessage={terminalWelcome}
+          />
+        )}
       </Suspense>
 
       <SettingsModal
