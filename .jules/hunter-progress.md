@@ -118,3 +118,8 @@
 
 - **Fixed Runtime Safety**: Added `cleanup()` from `@testing-library/react` to the `afterEach` hook before flushing timers in game component tests (`LightsOut`, `SnakeGame`, `TicTacToe`, `Minesweeper`, `SimonSays`, `MemoryMatch`, `WhackAMole`) to resolve remaining `not wrapped in act(...)` warnings.
 - **Verified**: Build, Lint, Format, and Tests passed cleanly.
+
+## Session 22
+
+- **Fixed Dead Code**: Removed unused file `src/hooks/useViewTransitionActive.js` and its test file `src/hooks/useViewTransitionActive.test.js`. The hook was completely unimported and no longer used anywhere in the codebase.
+- **Verified**: Build, Lint, Format, and Tests passed cleanly.
