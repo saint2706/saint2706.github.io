@@ -105,11 +105,11 @@ const LinkRenderer = React.memo(({ href, children, ...rest }) => {
 
   return (
     <a
+      {...rest}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="text-accent underline font-bold"
-      {...rest}
     >
       {children}
     </a>
@@ -140,13 +140,13 @@ const ImageRenderer = React.memo(({ src, alt, ...rest }) => {
 
   return (
     <img
+      {...rest}
       src={src}
       alt={alt || 'Chat image'}
       className="max-w-full h-auto rounded-lg my-2 border-2 border-[color:var(--color-border)]"
       loading="lazy"
       width={800}
       height={600}
-      {...rest}
     />
   );
 });
