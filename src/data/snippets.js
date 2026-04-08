@@ -23,14 +23,14 @@ print(flatten(data))`,
       type: 'python-runner',
       defaultInput: '[1, [2, 3, [4, 5]], [6, [7, 8, [9]]]]',
       inputLabel: 'Enter nested list (e.g. [1, [2, [3]]])',
-      codeTemplate: () => `import ast
+      codeTemplate: () => `import json
 flatten = lambda x: [i for s in x for i in (flatten(s) if isinstance(s, list) else [s])]
 data = None
 if len(user_input) > 200:
     print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
 else:
     try:
-        data = ast.literal_eval(user_input)
+        data = json.loads(user_input.replace("'", '"'))
     except (ValueError, SyntaxError, TypeError):
         print("Error: Invalid list format")
 if data is not None:
@@ -119,14 +119,14 @@ print(f"Count: {len(result)} primes")`,
       type: 'python-runner',
       defaultInput: '[[1, 2, 3], [4, 5, 6], [7, 8, 9]]',
       inputLabel: 'Enter 2D matrix',
-      codeTemplate: () => `import ast
+      codeTemplate: () => `import json
 transpose = lambda m: list(map(list, zip(*m)))
 matrix = None
 if len(user_input) > 200:
     print("Error: Input too long. Max 200 characters allowed to prevent deeply nested structures.")
 else:
     try:
-        matrix = ast.literal_eval(user_input)
+        matrix = json.loads(user_input.replace("'", '"'))
     except (ValueError, SyntaxError, TypeError):
         print("Error: Invalid matrix")
 if matrix is not None:
