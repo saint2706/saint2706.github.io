@@ -277,3 +277,20 @@ Fixed semantic HTML heading hierarchy in Resume page.
 - **[PERF]** Found images in `Projects.jsx` and `ChatInterface.jsx` have appropriate loading strategies.
 
 - **[SEO]** `index.html`: Changed `<noscript>` `<h1>` fallback element to `<h2>` to prevent multiple `<h1>` elements from appearing on the page when parsed by search engines. This preserves semantic hierarchy since the primary React app injects the true `<h1>`.
+
+## Date: $(date -u +%Y-%m-%d)
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized the codebase for better accessibility, Core Web Vitals (LCP), and Content Security Policy compliance.
+
+### Changes
+
+1.  **[SEO] Fixed Lighthouse Accessibility Warnings in Hero Component**:
+    - Updated `aria-label` for "Talk to Digital Rishabh" button to match visible text.
+    - Updated `aria-label` for Easter egg span to include the visible text.
+2.  **[PERF] Fixed CSP Violation in Font Preloading**:
+    - Removed `onload` inline event handler from font stylesheet link in `index.html`.
+    - Changed `media="print"` to `media="all"` to ensure fonts load without violating the strict Content Security Policy. This improves LCP metrics and resolves console errors.
