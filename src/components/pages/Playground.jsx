@@ -27,6 +27,13 @@ const nbShadowStyle = { boxShadow: 'var(--nb-shadow)' };
 const borderShadowStyle = { boxShadow: '2px 2px 0 var(--color-border)' };
 const pythonStickerStyle = { '--sticker-rotate': '3deg' };
 
+// ⚡ Bolt: Extracted static animation variants outside the functional component to prevent object recreation during re-renders
+const emptyStateVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
 /**
  * Playground page for code snippets and interactive demos
  *
@@ -275,9 +282,10 @@ const Playground = React.memo(() => {
               ))
             ) : (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                variants={emptyStateVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
                 className="col-span-full text-center py-12"
               >
                 <Code2 className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
