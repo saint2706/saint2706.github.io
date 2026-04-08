@@ -25,17 +25,21 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Cache actionlint
+        id: cache-actionlint
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
         with:
-          path: ~/.cache/actionlint
-          key: ${{ runner.os }}-actionlint-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-actionlint-
+          path: ~/.local/bin/actionlint
+          key: ${{ runner.os }}-actionlint-1.7.12
+
+      - name: Install actionlint
+        if: steps.cache-actionlint.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.local/bin
+          bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.12
+          mv actionlint ~/.local/bin/actionlint
 
       - name: Run actionlint
-        uses: rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
-        with:
-          fail_on_error: true
+        run: ~/.local/bin/actionlint
 
   workflow-security:
     name: Check workflow security guardrails
