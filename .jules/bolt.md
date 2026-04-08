@@ -71,6 +71,7 @@
 - **[PERF] Optimized lazy loading in Layout**: Conditionally wrapped `<CommandPalette>` and `<TerminalMode>` inside the `<Suspense>` boundary in `src/components/layout/Layout.jsx` so they only render when `isCommandPaletteOpen` or `isTerminalOpen` is true. This prevents the browser from immediately fetching these lazy-loaded chunks when the layout mounts, significantly improving initial bundle load performance.
 
 - **[PERF] Extracted static complex components in `React.memo`**: Wrapped `Minesweeper`, `SimonSays`, `WhackAMole`, `SnakeGame`, `LightsOut`, `MemoryMatch`, `TicTacToe`, and `ScrollToTop` inside `React.memo()`. As these components have a lot of complex internal states and nested DOM elements, applying `React.memo()` prevents them from unnecessary re-rendering whenever parent components change (like layout shifts, theme toggle, or navigation).
+
 ## Extracted Static Animation Variants
 
 - **Problem:** Inline animation variants defined inside a React component (e.g. `initial={{ opacity: 0 }}`) cause new object references to be created on every render. This forces React (and Framer Motion) to perform unnecessary diffing and can trigger re-renders in deep component trees, wasting CPU cycles and garbage collection overhead.
