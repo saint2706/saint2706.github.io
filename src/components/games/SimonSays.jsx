@@ -58,7 +58,7 @@ SimonButton.displayName = 'SimonButton';
  *
  * @returns {React.ReactElement} The SimonSays game component.
  */
-const SimonSays = () => {
+const SimonSays = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -366,6 +366,8 @@ const SimonSays = () => {
       </div>
     </div>
   );
-};
+});
+
+SimonSays.displayName = 'SimonSays';
 
 export default SimonSays;

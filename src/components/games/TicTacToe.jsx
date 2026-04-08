@@ -215,7 +215,7 @@ TicTacToeCell.displayName = 'TicTacToeCell';
  * @component
  * @returns {JSX.Element} Complete Tic Tac Toe game interface
  */
-const TicTacToe = () => {
+const TicTacToe = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -618,6 +618,8 @@ const TicTacToe = () => {
       )}
     </div>
   );
-};
+});
+
+TicTacToe.displayName = 'TicTacToe';
 
 export default TicTacToe;

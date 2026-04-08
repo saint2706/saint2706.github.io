@@ -24,7 +24,7 @@ const THROTTLE_DELAY = 100;
  * @component
  * @returns {JSX.Element|null} Scroll to top button (hidden when at top)
  */
-const ScrollToTop = () => {
+const ScrollToTop = React.memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
@@ -117,6 +117,8 @@ const ScrollToTop = () => {
       )}
     </AnimatePresence>
   );
-};
+});
+
+ScrollToTop.displayName = 'ScrollToTop';
 
 export default ScrollToTop;

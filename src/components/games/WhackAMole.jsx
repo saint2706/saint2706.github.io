@@ -88,7 +88,7 @@ MoleHole.displayName = 'MoleHole';
  *
  * @returns {React.ReactElement} The WhackAMole game component.
  */
-const WhackAMole = () => {
+const WhackAMole = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -408,6 +408,8 @@ const WhackAMole = () => {
       </div>
     </div>
   );
-};
+});
+
+WhackAMole.displayName = 'WhackAMole';
 
 export default WhackAMole;

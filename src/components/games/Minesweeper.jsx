@@ -216,7 +216,7 @@ TimerDisplay.displayName = 'TimerDisplay';
  *
  * @returns {React.ReactElement} The Minesweeper game component.
  */
-const Minesweeper = () => {
+const Minesweeper = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
@@ -585,6 +585,8 @@ const Minesweeper = () => {
       </div>
     </div>
   );
-};
+});
+
+Minesweeper.displayName = 'Minesweeper';
 
 export default Minesweeper;
