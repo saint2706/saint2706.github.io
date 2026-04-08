@@ -260,7 +260,7 @@ const Hero = React.memo(() => {
               'lg-surface-2 shadow-[0_0_24px_rgba(215,131,255,0.22)] hover:-translate-y-0.5 text-[color:var(--text-primary)]'
             )}
             style={isLiquid ? undefined : invertTextWhiteStyle}
-            aria-label="Open chat with Digital Rishabh"
+            aria-label="Talk to Digital Rishabh"
           >
             <Bot
               size={18}
@@ -329,7 +329,7 @@ const Hero = React.memo(() => {
                         onClick={handleEasterEggClick}
                         onKeyDown={handleEasterEggKeyDown}
                         className="cursor-pointer text-[#c3e88d] hover:text-[#addb67] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-400"
-                        aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
+                        aria-label={`'Python', 'Tableau', 'React' - Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                       >
                         &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
                       </span>
@@ -372,7 +372,7 @@ const Hero = React.memo(() => {
                         onClick={handleEasterEggClick}
                         onKeyDown={handleEasterEggKeyDown}
                         className="cursor-pointer hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 hover:text-fun-pink focus:ring-fun-pink"
-                        aria-label={`Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
+                        aria-label={`'Python', 'Tableau', 'React' - Click ${CLICKS_REQUIRED - clickCount} more time${CLICKS_REQUIRED - clickCount !== 1 ? 's' : ''} for a surprise`}
                       >
                         &lsquo;Python&rsquo;, &lsquo;Tableau&rsquo;, &lsquo;React&rsquo;
                       </span>
