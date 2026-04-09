@@ -20,12 +20,12 @@ import {
 
 /** Navigation menu items — shared across both themes */
 const NAV_ITEMS = [
-  { name: 'Home', path: '/', icon: <Terminal size={18} /> },
-  { name: 'Projects', path: '/projects', icon: <Briefcase size={18} /> },
-  { name: 'Resume', path: '/resume', icon: <User size={18} /> },
-  { name: 'Blog', path: '/blog', icon: <FileText size={18} /> },
-  { name: 'Playground', path: '/playground', icon: <Code2 size={18} /> },
-  { name: 'Contact', path: '/contact', icon: <Mail size={18} /> },
+  { name: 'Home', path: '/', icon: <Terminal size={18} aria-hidden="true" /> },
+  { name: 'Projects', path: '/projects', icon: <Briefcase size={18} aria-hidden="true" /> },
+  { name: 'Resume', path: '/resume', icon: <User size={18} aria-hidden="true" /> },
+  { name: 'Blog', path: '/blog', icon: <FileText size={18} aria-hidden="true" /> },
+  { name: 'Playground', path: '/playground', icon: <Code2 size={18} aria-hidden="true" /> },
+  { name: 'Contact', path: '/contact', icon: <Mail size={18} aria-hidden="true" /> },
 ];
 
 const DesktopNavItem = React.memo(({ item, getClassName, onClickNavigate, onKeydownNavigate }) => (
