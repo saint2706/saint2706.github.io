@@ -13,3 +13,8 @@
     - Replaced `ast.literal_eval` with `json.loads` in `src/data/snippets.js`.
     - Python's `ast.literal_eval` parses strings into an Abstract Syntax Tree (AST), which is recursive. A user providing deeply nested input (e.g., `[[[[...]]]]`) could cause a stack overflow in Python's C core, causing the Pyodide WebAssembly runtime to crash the browser tab (client-side Denial of Service).
     - `json.loads` is not vulnerable to recursive AST stack exhaustion and provides safer JSON parsing for the `py-flatten` and `py-transpose` snippets.
+
+### basic-ftp FTP Command Injection via CRLF
+
+- **Vulnerability**: GHSA-chqc-8p9q-pq6q
+- **Fix**: Added `"basic-ftp": ">=5.2.1"` to `pnpm.overrides` in `package.json` to resolve vulnerability in `puppeteer-core`'s transitive dependency.
