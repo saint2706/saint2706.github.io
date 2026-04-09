@@ -294,3 +294,5 @@ Optimized the codebase for better accessibility, Core Web Vitals (LCP), and Cont
 2.  **[PERF] Fixed CSP Violation in Font Preloading**:
     - Removed `onload` inline event handler from font stylesheet link in `index.html`.
     - Changed `media="print"` to `media="all"` to ensure fonts load without violating the strict Content Security Policy. This improves LCP metrics and resolves console errors.
+
+- **[SEO] / [PERF] Lighthouse Console Error Fix**: Moved `frame-ancestors` from the `index.html` `<meta>` Content-Security-Policy to `public/_headers` as an HTTP response header, fixing a Lighthouse audit failure ("The Content Security Policy directive 'frame-ancestors' is ignored when delivered via a <meta> element.").
