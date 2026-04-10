@@ -81,7 +81,8 @@
       "picomatch@^2": "^2.3.2",
       "picomatch@^4": "^4.0.4",
       "yaml": "^2.8.3",
-      "lodash-es": ">=4.18.0"
+      "lodash-es": ">=4.18.0",
+      "basic-ftp": ">=5.2.1"
     },
     "onlyBuiltDependencies": [
       "esbuild"

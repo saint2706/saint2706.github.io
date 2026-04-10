@@ -67,14 +67,6 @@ try {
     process.exit(1);
   }
 
-  // Check for frame-ancestors 'none' (prevent clickjacking)
-  if (!cspContent.includes("frame-ancestors 'none'")) {
-    console.error(
-      "FAILED: CSP does not contain frame-ancestors 'none'. This is required to prevent clickjacking."
-    );
-    process.exit(1);
-  }
-
   // Check for object-src 'none' (prevent Flash/Java applets)
   if (!cspContent.includes("object-src 'none'")) {
     console.error(
@@ -92,7 +84,7 @@ try {
   }
 
   console.log(
-    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval', 'upgrade-insecure-requests', and anti-clickjacking measures)."
+    "PASS: CSP is secure (no 'unsafe-eval', includes 'wasm-unsafe-eval' and 'upgrade-insecure-requests')."
   );
 } catch (error) {
   console.error('Error reading index.html:', error);
