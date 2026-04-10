@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  basic-ftp: '>=5.2.1'
   ajv: ^6.14.0
   minimatch: '>=10.2.3'
   rollup: '>=4.59.0'
