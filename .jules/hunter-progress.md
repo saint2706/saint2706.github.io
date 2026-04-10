@@ -123,3 +123,9 @@
 
 - **Fixed Dead Code**: Removed unused file `src/hooks/useViewTransitionActive.js` and its test file `src/hooks/useViewTransitionActive.test.js`. The hook was completely unimported and no longer used anywhere in the codebase.
 - **Verified**: Build, Lint, Format, and Tests passed cleanly.
+
+## Session 23
+
+- **Fixed Security Vulnerabilities**: Resolved high-severity vulnerability in `basic-ftp` (transitive dependency via lighthouse) by setting a `pnpm.overrides` rule enforcing `>=5.2.1` in `package.json` to prevent FTP Command Injection via CRLF.
+- **Fixed Unused Dependencies**: Cleaned up unimported dev dependencies `brace-expansion` and `lodash-es` from `package.json`.
+- **Verified**: Build, Lint, and Security suites pass cleanly.
