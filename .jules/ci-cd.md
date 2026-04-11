@@ -32,3 +32,8 @@
 
 - Updated `actions/upload-pages-artifact` to a more recent v4 SHA (`56afc609e74202658d3ffba0e8f6dda462b719fa`) in `deploy.yml`.
 - Ensured external actions are pinned to 40-character commit SHAs.
+
+## Workflow Optimization
+
+- **Update**: Merged `generate` and `commit` jobs into a single `sync` job in `.github/workflows/sync-blogs.yml`.
+- **Why**: Eliminates the sequential `needs: generate` constraint and removes the overhead of uploading and downloading artifacts, bypassing a redundant runner spin-up to reduce pipeline duration.
