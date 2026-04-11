@@ -78,4 +78,4 @@
 - **Solution:** I extracted the `emptyStateVariants` object statically outside the `Playground` component so the reference is stable across renders. I then referred to it using the standard `variants={emptyStateVariants}` pattern with string references for states (`initial="initial"`).
 - **Files Modified:** `src/components/pages/Playground.jsx`
 - **Impact:** Reduces object allocation and unnecessary render work when the Playground component mounts or re-renders.
->> [PERF] Lazy load SettingsModal to reduce initial bundle size
+  > > [PERF] Lazy load SettingsModal to reduce initial bundle size
