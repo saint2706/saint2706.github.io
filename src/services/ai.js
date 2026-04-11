@@ -264,13 +264,15 @@ export const sanitizeHistoryForGemini = history => {
           return [];
         }
 
-        const cappedText = sanitizedText.slice(0, HISTORY_SANITIZATION_LIMITS.maxCharsPerPart);
+        const cappedText = [...sanitizedText]
+          .slice(0, HISTORY_SANITIZATION_LIMITS.maxCharsPerPart)
+          .join('');
         const remainingBudget = HISTORY_SANITIZATION_LIMITS.maxTotalChars - totalChars;
         if (remainingBudget <= 0) {
           return [];
         }
 
-        const budgetedText = cappedText.slice(0, remainingBudget);
+        const budgetedText = [...cappedText].slice(0, remainingBudget).join('');
         if (!budgetedText) {
           return [];
         }

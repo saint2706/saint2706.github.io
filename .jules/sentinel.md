@@ -28,3 +28,8 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
    - Vulnerability found in `=5.2.0`
    - Added `"basic-ftp": ">=5.2.1"` to `pnpm.overrides` in `package.json`.
    - Updated `pnpm-lock.yaml` via `pnpm install --no-frozen-lockfile`.
+     🛡️ **Sentinel Audit**
+
+- Updated `src/services/ai.js` to correctly truncate UTF-16 strings using array spreading (`[...str].slice(...)`) to prevent splitting surrogate pairs, which can cause DoS or URI encoding errors.
+- Verified safe JSON serialization in `SEOHead.jsx`.
+- Verified strict CSP and secure attribute ordering in `ChatInterface.jsx`.
