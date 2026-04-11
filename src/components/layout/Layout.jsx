@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CustomCursor from '../shared/CustomCursor';
-import SettingsModal from '../shared/SettingsModal';
 import { useTheme } from '../shared/theme-context';
 import {
   canUseDOM,
@@ -39,6 +38,7 @@ const KONAMI_CODE = [
 /** Lazy load overlays so they don't impact initial bundle */
 const CommandPalette = lazy(() => import('../shared/CommandPalette'));
 const TerminalMode = lazy(() => import('../shared/TerminalMode'));
+const SettingsModal = lazy(() => import('../shared/SettingsModal'));
 
 /**
  * Layout component that wraps all page content
@@ -318,15 +318,16 @@ const Layout = ({ children }) => {
             welcomeMessage={terminalWelcome}
           />
         )}
+        {isSettingsOpen && (
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            cursorEnabled={effectiveCursorEnabled}
+            cursorToggleDisabled={cursorForcedOff}
+            onToggleCursor={toggleCursor}
+          />
+        )}
       </Suspense>
-
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        cursorEnabled={effectiveCursorEnabled}
-        cursorToggleDisabled={cursorForcedOff}
-        onToggleCursor={toggleCursor}
-      />
     </div>
   );
 };
