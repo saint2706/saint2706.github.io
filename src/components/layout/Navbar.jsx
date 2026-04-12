@@ -106,9 +106,24 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     if (!isLiquid) {
       return undefined;
     }
-    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 60);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial check
     handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isLiquid]);
 
