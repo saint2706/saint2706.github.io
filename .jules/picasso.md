@@ -72,3 +72,5 @@ Implements various UX and accessibility enhancements across the application, foc
 - Added missing `aria-hidden="true"` to icon components (`<MapPin>`, `<Sparkles>`, `<Send>`, `<Github>`, `<Linkedin>`) used in `src/components/pages/Contact.jsx`.
 - Added missing `aria-hidden="true"` to icon components (`<ArrowUp>`, `<ArrowDown>`, `<CornerDownLeft>`, `<Search>`) used in `src/components/shared/CommandPalette.jsx`.
   This prevents screen readers from redundantly reading the SVG content when the parent elements or the surrounding context already convey the meaning.
+
+- Added `aria-hidden="true"` to `ArrowUp` icon within `ScrollToTop` button to improve accessibility by hiding decorative icons from screen readers when the parent element already provides an `aria-label`.
