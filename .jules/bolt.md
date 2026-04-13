@@ -79,3 +79,4 @@
 - **Files Modified:** `src/components/pages/Playground.jsx`
 - **Impact:** Reduces object allocation and unnecessary render work when the Playground component mounts or re-renders.
   > > [PERF] Lazy load SettingsModal to reduce initial bundle size
+- **[PERF] Throttled scroll event in Navbar**: Replaced the direct `window.addEventListener('scroll', handleScroll)` approach in `src/components/layout/Navbar.jsx` with a `requestAnimationFrame` throttled event handler. This significantly reduces the frequency of state updates and re-renders while scrolling in the Liquid theme, preventing layout thrashing and improving scroll frame rates.
