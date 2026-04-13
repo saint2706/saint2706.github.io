@@ -81,3 +81,5 @@
 - Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully. No new broken links, unformatted code, or missing JSDocs were found.
 - Added missing JSDoc block to `Modal` component in `src/components/shared/Modal.jsx`.
 - Fixed JSDoc positioning for `TerminalMode` component in `src/components/shared/TerminalMode.jsx` by moving the `// ⚡ Bolt` comment above the JSDoc block.
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
+- Fixed 4 broken markdown links in `CLAUDE.md` to properly point to `.agents/skills` files.
