@@ -83,3 +83,9 @@
 - Fixed JSDoc positioning for `TerminalMode` component in `src/components/shared/TerminalMode.jsx` by moving the `// ⚡ Bolt` comment above the JSDoc block.
 - Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully.
 - Fixed 4 broken markdown links in `CLAUDE.md` to properly point to `.agents/skills` files.
+
+## 2026-04-14
+
+- Audited codebase documentation for missing JSDoc/TSDoc comments on exported functions.
+- Verified that all exported functions and constants in the `src/` directory are already properly documented.
+- Verified no broken links in `docs/` and `README.md`.
