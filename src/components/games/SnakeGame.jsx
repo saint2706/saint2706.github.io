@@ -231,6 +231,7 @@ const GameOverlay = React.memo(
             className={ui.buttonSecondary}
             style={ui.style.raised}
             autoFocus
+            aria-label="Resume game"
           >
             <Play size={18} aria-hidden="true" />
             Resume
