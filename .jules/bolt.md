@@ -81,3 +81,5 @@
   > > [PERF] Lazy load SettingsModal to reduce initial bundle size
 - **[PERF] Throttled scroll event in Navbar**: Replaced the direct `window.addEventListener('scroll', handleScroll)` approach in `src/components/layout/Navbar.jsx` with a `requestAnimationFrame` throttled event handler. This significantly reduces the frequency of state updates and re-renders while scrolling in the Liquid theme, preventing layout thrashing and improving scroll frame rates.
 - Avoid wrapping simple string concatenations (like generating class names) in `useCallback`. The hook execution and dependency tracking overhead exceeds the cost of native string evaluation and garbage collection.
+
+- Reduced main thread blocking and React render allocations by migrating the scroll listener in `ScrollToTop` from `setTimeout` throttling to `requestAnimationFrame` gating, and extracting Framer Motion variants into static constants.
