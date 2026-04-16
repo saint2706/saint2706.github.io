@@ -12,7 +12,8 @@ vi.mock('lucide-react', async () => {
     if (!lucide[iconName]) {
       throw new Error(`[lucide mock] ${iconName} is not exported by lucide-react.`);
     }
-    return props => ReactLib.createElement('span', { ...props, 'data-testid': `icon-${iconName.toLowerCase()}` });
+    return props =>
+      ReactLib.createElement('span', { ...props, 'data-testid': `icon-${iconName.toLowerCase()}` });
   };
 
   return {

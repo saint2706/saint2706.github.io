@@ -4,7 +4,7 @@ Thanks for contributing to this project.
 
 ## Setup
 
-1. Install **Node.js 20+**.
+1. Install **Node.js `^20.19.0 || >=22.12.0`** (Vite 8 compatible).
 2. Install **pnpm 9+** (required package manager):
 
    ```bash
@@ -37,3 +37,11 @@ This repository is **pnpm-only**.
 - For dependency changes, run `pnpm install` (or `pnpm add/remove ...`) and commit the resulting `pnpm-lock.yaml` updates.
 
 CI enforces this policy and will fail if `package-lock.json` exists.
+
+## CI Node.js support matrix
+
+The main CI workflow validates Node.js versions aligned with Vite 8 support:
+
+- `20.19.0`
+- `22.12.0`
+- `24.x` (recommended current line)
