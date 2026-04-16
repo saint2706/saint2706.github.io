@@ -18,10 +18,6 @@ vi.mock('./Footer', () => ({
   default: () => <footer>Footer</footer>,
 }));
 
-vi.mock('../shared/CustomCursor', () => ({
-  default: () => null,
-}));
-
 vi.mock('../shared/SettingsModal', () => ({
   default: ({ isOpen, onClose, cursorEnabled, cursorToggleDisabled, onToggleCursor }) =>
     isOpen ? (
