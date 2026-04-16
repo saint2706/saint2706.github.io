@@ -198,7 +198,7 @@ const CustomCursor = ({ enabled }) => {
   const currentVariant = isLiquid ? liquidVariants[cursorVariant] : defaultVariants[cursorVariant];
 
   return (
-    <>
+    <div data-testid="custom-cursor">
       {/* Hide default cursor */}
       <style>{`
                 .custom-cursor-enabled * {
@@ -296,7 +296,7 @@ const CustomCursor = ({ enabled }) => {
           transition={{ duration: 0.3, ease: 'easeOut' }}
         />
       )}
-    </>
+    </div>
   );
 };
 
