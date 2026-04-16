@@ -26,14 +26,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Enforce pnpm-only lockfile policy
-        run: node scripts/check-package-manager-policy.js
-
       - name: Setup Environment
         uses: ./.github/actions/setup-env
+        with:
+          node-version: 24
 
       - name: Format check
         run: pnpm run format:check
+
+      - name: Enforce pnpm-only lockfile policy
+        run: pnpm run check:package-manager-policy
 
       - name: No-Aura tests
         run: pnpm run test:no-aura
@@ -57,7 +59,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [20, 22, 23]
+        node-version: [20.19.0, 22.12.0, 24]
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -79,6 +81,8 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
+        with:
+          node-version: 24
 
       - name: Build
         run: pnpm run build
@@ -92,6 +96,8 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup-env
+        with:
+          node-version: 24
 
       - name: Full Security tests
         run: pnpm run test:security-full

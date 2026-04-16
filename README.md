@@ -18,7 +18,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 
 - **Framework**: React 19 + Vite
 - **Styling**: Tailwind CSS v4 + Framer Motion
-- **Runtime**: Node.js 20+ (for build/scripts)
+- **Runtime**: Node.js `^20.19.0 || >=22.12.0` (for build/scripts, aligned with Vite 8)
 - **AI**: Google Generative AI (Gemini)
 - **Python**: Pyodide (WebAssembly)
 - **Testing**: Vitest + React Testing Library
@@ -27,7 +27,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js `^20.19.0 || >=22.12.0`
 - pnpm 9+ (required package manager for installs, scripts, and lockfile updates)
 
 ### Installation
@@ -117,6 +117,7 @@ To ensure reliable, fast, and secure software delivery, the following pipeline o
 - **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are strictly pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
 - **Caching**: The `setup-env` composite action automatically caches the `pnpm` store via `actions/setup-node`, saving bandwidth and speeding up test executions.
 - **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (`[20, 22]`) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
+- **Vite 8 Node Compatibility Matrix**: CI verifies test coverage on all supported Vite 8 Node.js lines: `20.19.0`, `22.12.0`, and `24.x` (recommended current line).
 - **Cross-Platform Matrix Builds**: The test job uses a matrix strategy to verify the application across multiple operating systems (`ubuntu-latest`, `windows-latest`, `macos-latest`), ensuring broad compatibility and catching platform-specific issues early.
 - **Concurrency control**: Workflow concurrency correctly cancels in-progress jobs for outdated commits on the same branch or PR.
 
