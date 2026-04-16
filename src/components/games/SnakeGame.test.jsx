@@ -5,12 +5,23 @@ import SnakeGame from './SnakeGame';
 import { ThemeProvider } from '../shared/ThemeProvider';
 
 // Mock dependencies
-vi.mock('lucide-react', () => ({
-  Play: () => <span data-testid="play-icon">Play</span>,
-  RotateCcw: () => <span data-testid="reset-icon">Reset</span>,
-  Trophy: () => <span data-testid="trophy-icon">Trophy</span>,
-  Pause: () => <span data-testid="pause-icon">Pause</span>,
-}));
+vi.mock('lucide-react', async () => {
+  const ReactLib = await vi.importActual('react');
+  const lucide = await vi.importActual('lucide-react');
+  const mockIcon = iconName => {
+    if (!lucide[iconName]) {
+      throw new Error(`[lucide mock] ${iconName} is not exported by lucide-react.`);
+    }
+    return props => ReactLib.createElement('span', { ...props, 'data-testid': `icon-${iconName.toLowerCase()}` });
+  };
+
+  return {
+    Play: mockIcon('Play'),
+    RotateCcw: mockIcon('RotateCcw'),
+    Trophy: mockIcon('Trophy'),
+    Pause: mockIcon('Pause'),
+  };
+});
 
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
