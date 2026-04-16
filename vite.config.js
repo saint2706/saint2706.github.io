@@ -10,6 +10,31 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+const VENDOR_REACT_PACKAGES = [
+  'react',
+  'react-dom',
+  'react-router-dom',
+  '@dr.pogodin/react-helmet',
+];
+const VENDOR_UI_PACKAGES = ['framer-motion', 'lucide-react'];
+const VENDOR_AI_PACKAGES = ['@google/generative-ai'];
+
+function chunkByDependency(id) {
+  if (!id.includes('node_modules')) return;
+
+  if (VENDOR_REACT_PACKAGES.some(pkg => id.includes(`/node_modules/${pkg}/`))) {
+    return 'vendor-react';
+  }
+
+  if (VENDOR_UI_PACKAGES.some(pkg => id.includes(`/node_modules/${pkg}/`))) {
+    return 'vendor-ui';
+  }
+
+  if (VENDOR_AI_PACKAGES.some(pkg => id.includes(`/node_modules/${pkg}/`))) {
+    return 'vendor-ai';
+  }
+}
+
 export default defineConfig({
   plugins: [react()],
   base: '/', // Base public path when served in production
@@ -17,13 +42,15 @@ export default defineConfig({
     // Increase chunk size warning limit to 1MB (1000 KB)
     // This prevents warnings for larger bundles like the AI service and D3 visualizations
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
+
+    // Vite 8 (Rolldown) expects output.manualChunks to be a function.
+    // We intentionally keep our stable vendor chunk names so long-term bundle
+    // comparisons remain readable across releases.
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom', '@dr.pogodin/react-helmet'],
-          'vendor-ui': ['framer-motion', 'lucide-react'],
-          'vendor-ai': ['@google/generative-ai'],
-        },
+        // Caveat: package-path matching relies on node_modules path segments.
+        // Re-evaluate if dependency paths change (for example in PnP/virtual FS setups).
+        manualChunks: chunkByDependency,
       },
     },
   },
