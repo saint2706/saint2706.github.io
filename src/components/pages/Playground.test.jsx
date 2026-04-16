@@ -67,14 +67,26 @@ vi.mock('framer-motion', () => {
   };
 });
 
-vi.mock('lucide-react', () => ({
-  Code2: () => <div data-testid="icon-code2" />,
-  Palette: () => <div data-testid="icon-palette" />,
-  Copy: () => <div data-testid="icon-copy" />,
-  Check: () => <div data-testid="icon-check" />,
-  Play: () => <div data-testid="icon-play" />,
-  Terminal: () => <div data-testid="icon-terminal" />,
-}));
+vi.mock('lucide-react', async () => {
+  const ReactLib = await vi.importActual('react');
+  const lucide = await vi.importActual('lucide-react');
+  const mockIcon = iconName => {
+    if (!lucide[iconName]) {
+      throw new Error(`[lucide mock] ${iconName} is not exported by lucide-react.`);
+    }
+    return props =>
+      ReactLib.createElement('span', { ...props, 'data-testid': `icon-${iconName.toLowerCase()}` });
+  };
+
+  return {
+    Code2: mockIcon('Code2'),
+    Palette: mockIcon('Palette'),
+    Copy: mockIcon('Copy'),
+    Check: mockIcon('Check'),
+    Play: mockIcon('Play'),
+    Terminal: mockIcon('Terminal'),
+  };
+});
 
 vi.mock('../shared/SEOHead', () => ({
   default: () => <div data-testid="seo-head">SEO Head Mock</div>,

@@ -5,13 +5,24 @@ import Minesweeper from './Minesweeper';
 import { ThemeProvider } from '../shared/ThemeProvider';
 
 // Mock dependencies
-vi.mock('lucide-react', () => ({
-  RotateCcw: () => <span data-testid="reset-icon">Reset</span>,
-  Trophy: () => <span data-testid="trophy-icon">Trophy</span>,
-  Flag: () => <span data-testid="flag-icon">Flag</span>,
-  Bomb: () => <span data-testid="bomb-icon">Bomb</span>,
-  Timer: () => <span data-testid="timer-icon">Timer</span>,
-}));
+vi.mock('lucide-react', async () => {
+  const ReactLib = await vi.importActual('react');
+  const lucide = await vi.importActual('lucide-react');
+  const mockIcon = (iconName, testId = `icon-${iconName.toLowerCase()}`) => {
+    if (!lucide[iconName]) {
+      throw new Error(`[lucide mock] ${iconName} is not exported by lucide-react.`);
+    }
+    return props => ReactLib.createElement('span', { ...props, 'data-testid': testId });
+  };
+
+  return {
+    RotateCcw: mockIcon('RotateCcw', 'reset-icon'),
+    Trophy: mockIcon('Trophy', 'trophy-icon'),
+    Flag: mockIcon('Flag', 'flag-icon'),
+    Bomb: mockIcon('Bomb', 'bomb-icon'),
+    Timer: mockIcon('Timer', 'timer-icon'),
+  };
+});
 
 vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');

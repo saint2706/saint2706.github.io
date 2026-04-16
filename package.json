@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --cache --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --cache --report-unused-disable-directives --max-warnings 0 && pnpm run check:lucide-imports",
     "lint:fix": "eslint . --cache --fix",
     "lint-staged": "lint-staged",
     "format": "prettier --write \"**/*.{js,jsx,json,css,html,md}\"",
@@ -29,7 +29,8 @@
     "prebuild": "pnpm run generate:geo",
     "audit:lighthouse:install-browser": "playwright install chromium",
     "audit:lighthouse": "node scripts/run-lighthouse-baseline.mjs",
-    "audit:baseline:full": "pnpm audit:baseline && pnpm audit:lighthouse"
+    "audit:baseline:full": "pnpm audit:baseline && pnpm audit:lighthouse",
+    "check:lucide-imports": "node scripts/check-lucide-imports.js"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.1.1",
