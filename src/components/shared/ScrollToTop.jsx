@@ -7,15 +7,17 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
-/** Throttle delay in milliseconds for scroll event handler */
-const THROTTLE_DELAY = 100;
+// ⚡ Bolt: Extracted Framer Motion variants to prevent unnecessary allocations during renders
+const buttonInitial = { opacity: 0, scale: 0.8 };
+const buttonAnimate = { opacity: 1, scale: 1 };
+const buttonExit = { opacity: 0, scale: 0.8 };
 
 /**
  * Scroll to top floating action button
  *
  * Features:
  * - Appears after scrolling 300px down
- * - Throttled scroll listener for performance (100ms)
+ * - Optimized scroll listener using requestAnimationFrame and a ticking boolean
  * - Smooth scroll to top (respects reduced motion)
  * - Tooltip on hover
  * - Fade in/out animation
@@ -28,61 +30,27 @@ const ScrollToTop = React.memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  // Throttled scroll listener to show/hide button
+  // ⚡ Bolt: Optimized scroll listener with requestAnimationFrame to prevent layout thrashing
   useEffect(() => {
-    let timeoutId = null;
-    let lastRan = null;
+    let ticking = false;
 
-    const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsVisible(window.scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    /**
-     * Throttle scroll events for better performance
-     * - First call executes immediately
-     * - Subsequent calls wait for throttle delay
-     */
-    const throttledToggleVisibility = () => {
-      const now = Date.now();
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-      if (lastRan === null) {
-        // First call - execute immediately
-        toggleVisibility();
-        lastRan = now;
-      } else {
-        const timeSinceLastRan = now - lastRan;
-
-        if (timeSinceLastRan >= THROTTLE_DELAY) {
-          // Enough time has passed - execute immediately
-          toggleVisibility();
-          lastRan = now;
-          if (timeoutId !== null) {
-            clearTimeout(timeoutId);
-            timeoutId = null;
-          }
-        } else if (timeoutId === null) {
-          // Schedule execution for remaining time
-          timeoutId = setTimeout(() => {
-            toggleVisibility();
-            lastRan = Date.now();
-            timeoutId = null;
-          }, THROTTLE_DELAY - timeSinceLastRan);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', throttledToggleVisibility);
+    // Initial check
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', throttledToggleVisibility);
-      if (timeoutId !== null) {
-        clearTimeout(timeoutId);
-        timeoutId = null;
-      }
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -98,9 +66,9 @@ const ScrollToTop = React.memo(() => {
     <AnimatePresence>
       {isVisible && (
         <motion.button
-          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.8 }}
+          initial={shouldReduceMotion ? false : buttonInitial}
+          animate={buttonAnimate}
+          exit={shouldReduceMotion ? undefined : buttonExit}
           onClick={scrollToTop}
           className="group fixed bottom-6 left-6 z-30 p-3 bg-secondary text-primary rounded-full shadow-lg border border-[color:var(--color-border)] hover:border-accent hover:text-accent hover:bg-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-primary)]"
           aria-label="Scroll to top"
