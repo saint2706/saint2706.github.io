@@ -40,3 +40,6 @@ skills-lock.json
 !.agents/skills/
 coverage/
 .eslintcache
+
+# Package manager policy (pnpm-only)
+package-lock.json

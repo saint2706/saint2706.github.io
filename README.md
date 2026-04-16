@@ -28,7 +28,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 ### Prerequisites
 
 - Node.js 20+
-- pnpm 9+
+- pnpm 9+ (required package manager for installs, scripts, and lockfile updates)
 
 ### Installation
 
@@ -57,6 +57,19 @@ pnpm dev
 ```
 
 Open `http://localhost:5173` in your browser.
+
+## 🤝 Contributing
+
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a PR.
+
+### Package manager policy
+
+This repository is **pnpm-only**:
+
+- Use `pnpm install` for dependency installation.
+- Use `pnpm <script>` for all project scripts.
+- Keep `pnpm-lock.yaml` as the only committed lockfile.
+- Never commit `package-lock.json` (CI fails if it exists).
 
 ## 📚 Documentation
 
