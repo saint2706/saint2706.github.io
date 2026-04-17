@@ -302,3 +302,18 @@ Optimized the codebase for better accessibility, Core Web Vitals (LCP), and Cont
 ### 2026-04-10
 
 - [SEO] Updated `index.html` to use a semantic `<h1>` tag within the `<noscript>` block for better crawler hierarchy indexing.
+
+## Date: 2026-04-17
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Optimized Core Web Vitals (LCP) and Semantic HTML (SEO).
+
+### Changes
+
+1.  **[SEO] Fixed Semantic Hierarchy in `index.html`**:
+    - Changed `<h1>` to `<h2>` in the `<noscript>` block to preserve document hierarchy and avoid multiple `<h1>` tags.
+2.  **[PERF] Optimized LCP Font Loading**:
+    - Added `fetchpriority="high"` to the Google Fonts preload link in `index.html` to ensure critical fonts for the Hero text LCP block are loaded with the highest priority.
