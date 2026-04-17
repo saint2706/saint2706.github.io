@@ -83,3 +83,5 @@
 - Avoid wrapping simple string concatenations (like generating class names) in `useCallback`. The hook execution and dependency tracking overhead exceeds the cost of native string evaluation and garbage collection.
 
 - Reduced main thread blocking and React render allocations by migrating the scroll listener in `ScrollToTop` from `setTimeout` throttling to `requestAnimationFrame` gating, and extracting Framer Motion variants into static constants.
+
+- **[PERF] Extracted simple strings and string returns from useCallback and useMemo**: Extracted `getCellLabel` outside of `TicTacToe` and `description` / `title` strings outside of `Contact` components. This removes the hook's execution and dependency tracking overhead which exceeded the cost of native evaluation and garbage collection.

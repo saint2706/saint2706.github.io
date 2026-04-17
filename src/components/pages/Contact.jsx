@@ -18,6 +18,10 @@ import { useTheme } from '../shared/theme-context';
 const borderShadowStyle = { boxShadow: '2px 2px 0 var(--color-border)' };
 const nbShadowStyle = { boxShadow: 'var(--nb-shadow)' };
 
+const description =
+  'Get in touch for collaborations, analytics consulting, or data storytelling projects.';
+const title = `Contact | ${resumeData.basics.name}`;
+
 /**
  * Contact Page Component
  *
@@ -85,11 +89,6 @@ const Contact = React.memo(() => {
     [formData]
   );
 
-  const description = React.useMemo(
-    () => 'Get in touch for collaborations, analytics consulting, or data storytelling projects.',
-    []
-  );
-  const title = React.useMemo(() => `Contact | ${resumeData.basics.name}`, []);
   const contactSchemas = React.useMemo(
     () => [
       breadcrumbSchema([

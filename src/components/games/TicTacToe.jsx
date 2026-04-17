@@ -149,6 +149,13 @@ const getWinningLine = board => {
   return null;
 };
 
+const getCellLabel = (index, cell) => {
+  const row = Math.floor(index / 3) + 1;
+  const col = (index % 3) + 1;
+  const state = cell ? (cell === 'X' ? 'marked by you' : 'marked by AI') : 'empty';
+  return `Row ${row}, Column ${col}, ${state}`;
+};
+
 const TicTacToeCell = React.memo(
   ({
     cell,
@@ -160,7 +167,6 @@ const TicTacToeCell = React.memo(
     ui,
     shouldReduceMotion,
     onClick,
-    getCellLabel,
   }) => {
     return (
       <motion.button
@@ -410,13 +416,6 @@ const TicTacToe = React.memo(() => {
     { id: 'hard', label: 'Hard', color: 'bg-fun-pink' },
   ];
 
-  const getCellLabel = useCallback((index, cell) => {
-    const row = Math.floor(index / 3) + 1;
-    const col = (index % 3) + 1;
-    const state = cell ? (cell === 'X' ? 'marked by you' : 'marked by AI') : 'empty';
-    return `Row ${row}, Column ${col}, ${state}`;
-  }, []);
-
   const getStatusAnnouncement = () => {
     if (gameStatus === 'won') return 'Congratulations! You won the game!';
     if (gameStatus === 'lost') return 'Game over. AI wins!';
@@ -505,7 +504,6 @@ const TicTacToe = React.memo(() => {
               ui={ui}
               shouldReduceMotion={shouldReduceMotion}
               onClick={handleCellClick}
-              getCellLabel={getCellLabel}
             />
           ))}
         </motion.div>
