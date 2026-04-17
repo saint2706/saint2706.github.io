@@ -250,16 +250,16 @@ const Navbar = React.memo(({ onOpenSettings }) => {
     : 'bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb hover:-translate-x-0.5 hover:-translate-y-0.5 text-primary';
 
   const mobileBtnCls = isLiquid
-    ? 'text-[color:var(--text-primary)] lg-surface-3 rounded-full'
-    : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb';
+    ? 'text-[color:var(--text-primary)] lg-surface-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] focus-visible:ring-[color:var(--focus-ring)]'
+    : 'text-primary bg-card border-2 border-[color:var(--color-border)] rounded-nb shadow-nb focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] focus-visible:ring-[color:var(--focus-ring)]';
 
   const mobileMenuCls = isLiquid
     ? 'lg-surface-2 lg-specular-rim'
     : 'bg-card border-nb border-[color:var(--color-border)] rounded-nb shadow-nb';
 
   const mobileSettingsBtnCls = isLiquid
-    ? `lg-surface-3 text-[color:var(--text-primary)] ${isLiquidDark ? 'hover:bg-white/20' : 'hover:bg-white/80'}`
-    : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb';
+    ? `lg-surface-3 text-[color:var(--text-primary)] ${isLiquidDark ? 'hover:bg-white/20' : 'hover:bg-white/80'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] focus-visible:ring-[color:var(--focus-ring)]`
+    : 'text-primary bg-primary border-2 border-[color:var(--color-border)] rounded-nb focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] focus-visible:ring-[color:var(--focus-ring)]';
 
   const mobileLinkCls = (isActive, index) => {
     const base =
