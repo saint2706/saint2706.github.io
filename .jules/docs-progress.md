@@ -89,3 +89,12 @@
 - Audited codebase documentation for missing JSDoc/TSDoc comments on exported functions.
 - Verified that all exported functions and constants in the `src/` directory are already properly documented.
 - Verified no broken links in `docs/` and `README.md`.
+- **Checked and Fixed Broken Links**:
+  - Removed broken link `../web-quality-audit/SKILL.md` from `.agents/skills/accessibility/SKILL.md` and `.agents/skills/seo/SKILL.md`.
+  - Removed broken link `../core-web-vitals/SKILL.md` from `.agents/skills/seo/SKILL.md`.
+  - Fixed relative links in `.agents/skills/playwright-best-practices/advanced/network-advanced.md` pointing to `error-testing.md` and `service-workers.md`.
+  - Fixed relative link in `.agents/skills/playwright-best-practices/browser-apis/service-workers.md` pointing to `error-testing.md`.
+  - Fixed relative link in `.agents/skills/playwright-best-practices/debugging/error-testing.md` pointing to `service-workers.md`.
+  - Fixed relative link in `.agents/skills/playwright-best-practices/debugging/flaky-tests.md` pointing to `assertions-waiting.md`.
+  - Fixed relative link in `.agents/skills/playwright-best-practices/infrastructure-ci-cd/performance.md` pointing to `fixtures-hooks.md`.
+  - Fixed relative links in `.agents/skills/vercel-react-best-practices/AGENTS.md` pointing to `./async-defer-await.md`, `./async-cheap-condition-before-await.md`, and `./server-hoist-static-io.md`.
