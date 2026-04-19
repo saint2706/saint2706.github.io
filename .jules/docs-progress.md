@@ -98,3 +98,7 @@
   - Fixed relative link in `.agents/skills/playwright-best-practices/debugging/flaky-tests.md` pointing to `assertions-waiting.md`.
   - Fixed relative link in `.agents/skills/playwright-best-practices/infrastructure-ci-cd/performance.md` pointing to `fixtures-hooks.md`.
   - Fixed relative links in `.agents/skills/vercel-react-best-practices/AGENTS.md` pointing to `./async-defer-await.md`, `./async-cheap-condition-before-await.md`, and `./server-hoist-static-io.md`.
+
+## 2026-04-18
+
+- Removed broken table of contents links `#performance-fixtures` and `#cross-browser-testing` from Playwright best practices documentation.
