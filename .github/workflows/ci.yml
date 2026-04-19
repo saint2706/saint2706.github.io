@@ -41,7 +41,7 @@ jobs:
         run: pnpm run test:no-aura
 
       - name: Cache ESLint
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: .eslintcache
           key: ${{ runner.os }}-eslint-${{ github.sha }}
