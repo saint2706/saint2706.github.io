@@ -23,7 +23,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup environment
         uses: ./.github/actions/setup-env
@@ -32,7 +32,7 @@ jobs:
         run: node scripts/sync-blogs.js
 
       - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5.0.1
         with:
           commit_message: "chore: sync blogs [skip ci]"
           file_pattern: src/data/blogs.json

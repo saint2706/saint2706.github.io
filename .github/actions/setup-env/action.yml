@@ -9,12 +9,12 @@ runs:
   using: "composite"
   steps:
     - name: Install pnpm
-      uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+      uses: pnpm/action-setup@fecec9e040f9e6a8ac07bfed935dc626862cd0c6 # v4.1.0
       with:
         version: 10.28.0
 
     - name: Setup Node.js
-      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
       with:
         node-version: ${{ inputs.node-version }}
         # Automatically caches dependencies based on pnpm-lock.yaml to speed up pipeline execution
