@@ -94,7 +94,7 @@ const QUICK_REPLIES = [
  * @returns {JSX.Element} Either a safe anchor tag or plain text span
  */
 // ⚡ Bolt: Wrapped LinkRenderer in React.memo to prevent unnecessary re-rendering of expensive Markdown nodes.
-const LinkRenderer = React.memo(({ href, children, ...rest }) => {
+const LinkRenderer = React.memo(({ href, children, node: _node, ...rest }) => {
   // Security: Only allow http, https, and mailto protocols to prevent XSS (e.g., javascript:)
   const isValidHref = isSafeHref(href);
 
@@ -129,7 +129,7 @@ LinkRenderer.displayName = 'LinkRenderer';
  * @returns {JSX.Element} Either the image tag or a placeholder/warning
  */
 // ⚡ Bolt: Wrapped ImageRenderer in React.memo to prevent unnecessary re-rendering of expensive Markdown nodes.
-const ImageRenderer = React.memo(({ src, alt, ...rest }) => {
+const ImageRenderer = React.memo(({ src, alt, node: _node, ...rest }) => {
   // Security: Validate image source to prevent dangerous protocols (e.g., javascript:)
   // Uses isSafeImageSrc which only allows http/https (not mailto: which doesn't make sense for images)
   const isValidSrc = isSafeImageSrc(src);
