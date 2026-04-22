@@ -124,7 +124,7 @@ ${JSON.stringify(redactPII(resumeData))}
  *
  * @async
  * @param {string} userMessage - The user's message to send to the AI
- * @param {Array<object>} [history=[]] - Optional chat history for context (array of {role, parts} objects)
+ * @param {Array<{role: string, parts: Array<{text: string}>}>} [history=[]] - Optional chat history for context
  * @returns {Promise<string>} The AI's response text or an error message
  *
  * @example
@@ -138,12 +138,6 @@ ${JSON.stringify(redactPII(resumeData))}
  *   { role: "model", parts: [{ text: "Hi! How can I help?" }] }
  * ];
  * const response = await chatWithGemini("Tell me more", history);
- */
-/**
- * Sends a user message to the Gemini API and returns the response.
- * @param {string} userMessage - The user's input message.
- * @param {Array<{role: string, parts: Array<{text: string}>}>} [history=[]] - The conversation history.
- * @returns {Promise<string>} The AI's response text.
  */
 export const chatWithGemini = async (userMessage, history = []) => {
   // Input Validation: Check type and length to prevent DoS/token exhaustion
@@ -221,15 +215,10 @@ export const chatWithGemini = async (userMessage, history = []) => {
 };
 
 /**
- * Sanitizes Gemini chat history and drops malformed entries.
+ * Sanitizes Gemini chat history and drops malformed entries to ensure it complies with Gemini's API limits.
  *
- * @param {Array<object>} history - Candidate chat history entries
- * @returns {Array<object>} Strictly valid history entries for Gemini API
- */
-/**
- * Sanitizes the chat history to ensure it complies with Gemini's API limits.
- * @param {Array<{role: string, text: string}>} history - The raw chat history.
- * @returns {Array<{role: string, parts: Array<{text: string}>}>} The sanitized history format.
+ * @param {Array<{role: string, parts: Array<{text: string}>}>} history - Candidate chat history entries
+ * @returns {Array<{role: string, parts: Array<{text: string}>}>} Strictly valid history entries for Gemini API
  */
 export const sanitizeHistoryForGemini = history => {
   if (!Array.isArray(history)) {
@@ -304,10 +293,6 @@ export const sanitizeHistoryForGemini = history => {
  * @example
  * const roast = await roastResume();
  * // => "Oh wow, 'Data Storytelling'? So you make spreadsheets with feelings?"
- */
-/**
- * Triggers a sarcastic roast of the portfolio/resume using the Gemini API.
- * @returns {Promise<string>} The roast text.
  */
 export const roastResume = async () => {
   // Rate limiting: Prevent spam roast requests
