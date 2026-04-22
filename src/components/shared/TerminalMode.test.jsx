@@ -102,4 +102,176 @@ describe('TerminalMode Component', () => {
 
     expect(screen.getByText(/Command not found/i)).toBeInTheDocument();
   });
+
+  it('initializes history with a welcome message when provided', () => {
+    const { rerender } = render(
+      <TerminalMode isOpen={false} onClose={mockOnClose} welcomeMessage="Hello test user" />
+    );
+    rerender(<TerminalMode isOpen={true} onClose={mockOnClose} welcomeMessage="Hello test user" />);
+
+    expect(screen.getByText('Hello test user')).toBeInTheDocument();
+  });
+
+  it('processes "ls" command correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'ls' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/Available pages:/i)).toBeInTheDocument();
+    expect(screen.getByText(/📁 home/i)).toBeInTheDocument();
+  });
+
+  it('processes "cd" command and navigates to the page', () => {
+    vi.useFakeTimers();
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'cd projects' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/Navigating to \/projects.../i)).toBeInTheDocument();
+
+    vi.runAllTimers();
+    expect(mockOnClose).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith('/projects');
+    vi.useRealTimers();
+  });
+
+  it('processes "goto" command and navigates to home if no argument is passed', () => {
+    vi.useFakeTimers();
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'goto' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/Navigating to \/home.../i)).toBeInTheDocument();
+
+    vi.runAllTimers();
+    expect(mockOnClose).toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledWith('/');
+    vi.useRealTimers();
+  });
+
+  it('shows error for "cd" or "goto" with invalid page', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'cd nonexistentpage' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/Error: page 'nonexistentpage' not found/i)).toBeInTheDocument();
+  });
+
+  it('processes "whoami" command correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'whoami' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Since resumeData is used, we look for the email symbol which is definitely printed in whoami output
+    expect(screen.getByText(/📧/i)).toBeInTheDocument();
+  });
+
+  it('processes "skills" command correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'skills' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Assert that we printed some skills data from the mock, e.g., Programming or Soft Skills
+    expect(screen.getByText(/Programming/i)).toBeInTheDocument();
+  });
+
+  it('processes "projects" command correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'projects' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // Assuming some featured projects are listed
+    expect(screen.getByText(/★/i)).toBeInTheDocument();
+  });
+
+  it('processes "clear" command correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    // By default, terminal may or may not print welcome header immediately in tests depending on state,
+    // but running 'echo test' ensures we have something.
+    fireEvent.change(input, { target: { value: 'echo sometext' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(screen.getByText('sometext')).toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: 'clear' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.queryByText('sometext')).not.toBeInTheDocument();
+  });
+
+  it('processes "exit" and "quit" commands correctly', () => {
+    vi.useFakeTimers();
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'quit' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(screen.getByText(/Goodbye! 👋/i)).toBeInTheDocument();
+
+    vi.runAllTimers();
+    expect(mockOnClose).toHaveBeenCalled();
+    vi.useRealTimers();
+  });
+
+  it('processes "sudo" commands correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    // Unknown sudo command
+    fireEvent.change(input, { target: { value: 'sudo make me a sandwich' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(screen.getByText(/sudo: command not recognized/i)).toBeInTheDocument();
+
+    // sudo hire rishabh
+    fireEvent.change(input, { target: { value: 'sudo hire rishabh' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(screen.getByText(/EXCELLENT CHOICE! Rishabh has been hired!/i)).toBeInTheDocument();
+  });
+
+  it('clears input when pressing ArrowDown at the end of history', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'cmd1' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.value).toBe('cmd1');
+
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(input.value).toBe('');
+  });
+
+  it('focuses input when clicking the terminal output area', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    // Simulate clicking the container - get the div wrapping the output which has the onClick
+    const inputContainer = input.parentElement;
+    const outputArea = inputContainer.parentElement; // The div with flex-1 overflow-y-auto that has the onClick handler
+
+    // Remove focus first
+    input.blur();
+    expect(input).not.toHaveFocus();
+
+    fireEvent.click(outputArea);
+
+    expect(input).toHaveFocus();
+  });
 });
