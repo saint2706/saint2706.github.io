@@ -76,3 +76,4 @@ Implements various UX and accessibility enhancements across the application, foc
 - Added `aria-hidden="true"` to `ArrowUp` icon within `ScrollToTop` button to improve accessibility by hiding decorative icons from screen readers when the parent element already provides an `aria-label`.
 - Added explicit `aria-label` to the Snake Game resume button to improve accessibility and screen reader support.
 - Added `focus-visible` styling to the mobile menu and settings buttons in `Navbar.jsx` to ensure keyboard accessibility.
+>> Added aria-hidden=true to decorative icons nested inside accessible buttons/chips to prevent redundant screen reader announcements.

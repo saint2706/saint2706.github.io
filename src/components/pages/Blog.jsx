@@ -390,7 +390,7 @@ const Blog = React.memo(() => {
               variant="secondary"
               className="gap-1 hover:-translate-y-0.5"
             >
-              <ChevronLeft size={18} /> Prev
+              <ChevronLeft size={18} aria-hidden="true" /> Prev
             </ThemedButton>
 
             <div className="flex items-center gap-2">
@@ -416,7 +416,7 @@ const Blog = React.memo(() => {
               variant="secondary"
               className="gap-1 hover:-translate-y-0.5"
             >
-              Next <ChevronRight size={18} />
+              Next <ChevronRight size={18} aria-hidden="true" />
             </ThemedButton>
           </motion.div>
         )}
