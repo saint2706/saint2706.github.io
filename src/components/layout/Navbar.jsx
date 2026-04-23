@@ -284,6 +284,7 @@ const Navbar = React.memo(({ onOpenSettings }) => {
 
   return (
     <motion.nav
+      aria-label="Main Navigation"
       initial={shouldReduceMotion ? false : { y: -100 }}
       animate={{ y: 0 }}
       transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
