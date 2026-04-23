@@ -102,3 +102,4 @@
 ## 2026-04-18
 
 - Removed broken table of contents links `#performance-fixtures` and `#cross-browser-testing` from Playwright best practices documentation.
+- Removed duplicate/redundant JSDoc blocks in `src/services/ai.js` and `src/utils/seo.js`.
