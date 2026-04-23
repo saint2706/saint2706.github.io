@@ -33,3 +33,8 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
 - Updated `src/services/ai.js` to correctly truncate UTF-16 strings using array spreading (`[...str].slice(...)`) to prevent splitting surrogate pairs, which can cause DoS or URI encoding errors.
 - Verified safe JSON serialization in `SEOHead.jsx`.
 - Verified strict CSP and secure attribute ordering in `ChatInterface.jsx`.
+
+### Security Improvement: React-Markdown DOM Attribute Injection
+
+- **Vulnerability / Warning**: `react-markdown` passes an AST `node` object to custom renderers. When `...rest` is spread onto DOM elements (like `<a>` or `<img>`), this object is passed as an attribute (`node="[object Object]"`), which causes React console warnings and could theoretically be manipulated if the AST structure is compromised.
+- **Fix**: Updated `LinkRenderer` and `ImageRenderer` in `src/components/shared/ChatInterface.jsx` to explicitly destructure `node: _node` from `rest`, ensuring the AST node is never spread into the DOM elements.
