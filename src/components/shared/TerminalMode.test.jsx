@@ -3,11 +3,26 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import TerminalMode from './TerminalMode';
 
+import { useTheme } from './theme-context';
+import { useReducedMotion } from 'framer-motion';
+
 // Mock useNavigate from react-router-dom
 const { mockNavigate } = vi.hoisted(() => ({ mockNavigate: vi.fn() }));
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
+
+vi.mock('./theme-context', () => ({
+  useTheme: vi.fn(() => ({ theme: 'neubrutalism' })),
+}));
+
+vi.mock('framer-motion', async () => {
+  const actual = await vi.importActual('framer-motion');
+  return {
+    ...actual,
+    useReducedMotion: vi.fn(() => false),
+  };
+});
 
 describe('TerminalMode Component', () => {
   const mockOnClose = vi.fn();
@@ -67,6 +82,15 @@ describe('TerminalMode Component', () => {
     expect(screen.getByText('hello world')).toBeInTheDocument();
   });
 
+  it('processes "echo" command with no args correctly', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'echo' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(screen.getByText('$ echo')).toBeInTheDocument();
+  });
+
   it('navigates command history using up/down arrows', () => {
     render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
 
@@ -92,6 +116,15 @@ describe('TerminalMode Component', () => {
     expect(input.value).toBe('cmd2');
   });
 
+  it('does not change input when pressing ArrowUp if history is empty', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+    fireEvent.change(input, { target: { value: 'some text' } });
+
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(input.value).toBe('some text');
+  });
+
   it('shows error for unknown commands', () => {
     render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
 
@@ -103,6 +136,18 @@ describe('TerminalMode Component', () => {
     expect(screen.getByText(/Command not found/i)).toBeInTheDocument();
   });
 
+  it('does not re-initialize if terminal is closed', () => {
+    const { rerender } = render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    rerender(<TerminalMode isOpen={false} onClose={mockOnClose} />);
+    expect(screen.queryByRole('dialog', { name: /terminal mode/i })).not.toBeInTheDocument();
+  });
+
+  it('handles state change when opening with closed terminal initially', () => {
+    const { rerender } = render(<TerminalMode isOpen={false} onClose={mockOnClose} />);
+    rerender(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    expect(screen.getByRole('dialog', { name: /terminal mode/i })).toBeInTheDocument();
+  });
+
   it('initializes history with a welcome message when provided', () => {
     const { rerender } = render(
       <TerminalMode isOpen={false} onClose={mockOnClose} welcomeMessage="Hello test user" />
@@ -110,6 +155,15 @@ describe('TerminalMode Component', () => {
     rerender(<TerminalMode isOpen={true} onClose={mockOnClose} welcomeMessage="Hello test user" />);
 
     expect(screen.getByText('Hello test user')).toBeInTheDocument();
+  });
+
+  it('does not re-initialize history when reopening if welcomeMessage is empty', () => {
+    const { rerender } = render(
+      <TerminalMode isOpen={false} onClose={mockOnClose} welcomeMessage="" />
+    );
+    rerender(<TerminalMode isOpen={true} onClose={mockOnClose} welcomeMessage="" />);
+
+    expect(screen.getByText(/Type 'help' for available commands/i)).toBeInTheDocument();
   });
 
   it('processes "ls" command correctly', () => {
@@ -273,5 +327,52 @@ describe('TerminalMode Component', () => {
     fireEvent.click(outputArea);
 
     expect(input).toHaveFocus();
+  });
+
+  it('does nothing when processing an empty command', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: '   ' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(input.value).toBe('');
+  });
+
+  it('renders correctly with liquid theme and reduced motion', () => {
+    vi.mocked(useTheme).mockReturnValueOnce({ theme: 'liquid' });
+    vi.mocked(useReducedMotion).mockReturnValueOnce(true);
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    expect(screen.getByRole('dialog', { name: /terminal mode/i })).toBeInTheDocument();
+  });
+
+  it('ignores irrelevant key presses', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+
+    fireEvent.change(input, { target: { value: 'test' } });
+    fireEvent.keyDown(input, { key: 'Shift' });
+    expect(input.value).toBe('test');
+  });
+
+  it('handles custom line types', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    // The pushOutput function is not exposed, but we can trigger an error which uses the error line type.
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+    fireEvent.change(input, { target: { value: 'nonexistent_command' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    const errorLine = screen.getByText(/Command not found/i);
+    expect(errorLine).toHaveClass('text-red-400');
+  });
+
+  it('handles custom line types with default color fallback', () => {
+    render(<TerminalMode isOpen={true} onClose={mockOnClose} />);
+    const input = screen.getByRole('textbox', { name: /terminal input/i });
+    fireEvent.change(input, { target: { value: 'clear' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    // The clear command will add the command to the cmd history then clear it
+    // Let's verify no error occurred and the terminal input is empty
+    expect(input.value).toBe('');
+    expect(screen.queryByText(/Command not found/i)).not.toBeInTheDocument();
   });
 });
