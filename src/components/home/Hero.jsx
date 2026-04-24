@@ -144,7 +144,11 @@ const Hero = React.memo(() => {
             )}
             style={isLiquid ? undefined : stickerRotateStyle}
           >
-            <Sparkles size={18} className={themeClass('text-black', 'text-fun-yellow')} />
+            <Sparkles
+              size={18}
+              className={themeClass('text-black', 'text-fun-yellow')}
+              aria-hidden="true"
+            />
             <span className={isLiquid ? 'text-[color:var(--text-primary)]' : ''}>
               Available for hire & collaborations
             </span>
@@ -249,6 +253,7 @@ const Hero = React.memo(() => {
             <ArrowRight
               size={18}
               className="group-hover:translate-x-1 transition-transform motion-reduce:transform-none motion-reduce:transition-none"
+              aria-hidden="true"
             />
           </ThemedButton>
           <ThemedButton
@@ -295,7 +300,7 @@ const Hero = React.memo(() => {
                     <span className="w-3 h-3 rounded-full bg-[#FEBC2E] opacity-80" />
                     <span className="w-3 h-3 rounded-full bg-[#28C840] opacity-80" />
                   </span>
-                  <Code2 size={14} className="text-blue-400/70" />
+                  <Code2 size={14} className="text-blue-400/70" aria-hidden="true" />
                   <span className="font-heading font-semibold text-[13px] text-gray-300 tracking-wide">
                     {isGlitching ? 'game_mode.js' : 'developer.js'}
                   </span>
@@ -346,7 +351,7 @@ const Hero = React.memo(() => {
             ) : (
               <>
                 <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-black/20">
-                  <Code2 size={16} />
+                  <Code2 size={16} aria-hidden="true" />
                   <span className="font-heading font-bold">
                     {isGlitching ? 'game_mode.js' : 'developer.js'}
                   </span>

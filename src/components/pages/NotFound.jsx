@@ -14,10 +14,10 @@ import { useTheme } from '../shared/theme-context';
 
 /** Quick navigation links to main pages */
 const QUICK_LINKS = [
-  { path: '/', label: 'Home', icon: <Home size={18} /> },
-  { path: '/projects', label: 'Projects', icon: <Rocket size={18} /> },
-  { path: '/resume', label: 'Resume', icon: <Map size={18} /> },
-  { path: '/contact', label: 'Contact', icon: <Compass size={18} /> },
+  { path: '/', label: 'Home', icon: <Home size={18} aria-hidden="true" /> },
+  { path: '/projects', label: 'Projects', icon: <Rocket size={18} aria-hidden="true" /> },
+  { path: '/resume', label: 'Resume', icon: <Map size={18} aria-hidden="true" /> },
+  { path: '/contact', label: 'Contact', icon: <Compass size={18} aria-hidden="true" /> },
 ];
 
 /**
@@ -143,7 +143,7 @@ const NotFound = () => {
                 ease: 'easeInOut',
               }}
             >
-              <Star size={12} className="text-accent opacity-40" />
+              <Star size={12} className="text-accent opacity-40" aria-hidden="true" />
             </motion.div>
           ))}
 
@@ -177,7 +177,7 @@ const NotFound = () => {
                 )}
                 style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
               >
-                <Ghost size={48} className="text-black" />
+                <Ghost size={48} className="text-black" aria-hidden="true" />
               </ThemedCard>
             </motion.div>
 
@@ -193,7 +193,7 @@ const NotFound = () => {
                 )}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
-                <Sparkles size={14} className="inline mr-2" />
+                <Sparkles size={14} className="inline mr-2" aria-hidden="true" />
                 Boo! You found me!
               </motion.div>
             )}
@@ -348,7 +348,7 @@ const NotFound = () => {
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.8 }}
             className="mt-8 text-[color:var(--text-secondary)] text-sm font-sans flex items-center justify-center gap-2"
           >
-            <Sparkles size={14} className="text-fun-yellow" />
+            <Sparkles size={14} className="text-fun-yellow" aria-hidden="true" />
             Pro tip: Use the chatbot (Ctrl+K) if you need help navigating!
           </motion.p>
         </section>

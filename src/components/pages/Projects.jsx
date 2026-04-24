@@ -93,7 +93,7 @@ const ProjectCard = React.memo(
         <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-start gap-2">
-              <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
+              <Folder size={20} className="text-muted flex-shrink-0 mt-1" aria-hidden="true" />
               <h2 className="text-xl font-heading font-bold text-primary" style={titleStyle}>
                 {project.title}
               </h2>
@@ -101,7 +101,7 @@ const ProjectCard = React.memo(
             <div className="flex items-center gap-2 flex-shrink-0">
               {project.stars && (
                 <ThemedChip variant="yellow" className="font-bold">
-                  <Star size={12} className="fill-black" />
+                  <Star size={12} className="fill-black" aria-hidden="true" />
                   {project.stars}
                 </ThemedChip>
               )}
