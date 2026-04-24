@@ -109,12 +109,12 @@ const TimelineCard = React.memo(
         </div>
         <div className="flex flex-col items-start md:items-end gap-1">
           <ThemedChip variant="yellow" className="font-bold">
-            <Calendar size={12} />
+            <Calendar size={12} aria-hidden="true" />
             {date}
           </ThemedChip>
           {location && (
             <span className="text-sm md:text-xs text-secondary flex items-center gap-1">
-              <MapPin size={12} />
+              <MapPin size={12} aria-hidden="true" />
               {location}
             </span>
           )}
@@ -262,7 +262,7 @@ const Resume = React.memo(() => {
           className="mb-12 print:hidden"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Filter size={16} className="text-secondary" />
+            <Filter size={16} className="text-secondary" aria-hidden="true" />
             <span className="text-sm font-heading font-bold text-secondary">Filter Sections</span>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -297,7 +297,11 @@ const Resume = React.memo(() => {
               transition={{ duration: 0.3 }}
             >
               <ScrollReveal variant="fade-up" delay={0.1}>
-                <Section title="Experience" icon={<Briefcase size={24} />} color="bg-fun-pink">
+                <Section
+                  title="Experience"
+                  icon={<Briefcase size={24} aria-hidden="true" />}
+                  color="bg-fun-pink"
+                >
                   <div
                     className={
                       isLiquid
@@ -336,7 +340,11 @@ const Resume = React.memo(() => {
               transition={{ duration: 0.3 }}
             >
               <ScrollReveal variant="fade-up" delay={0.2}>
-                <Section title="Education" icon={<GraduationCap size={24} />} color="bg-accent">
+                <Section
+                  title="Education"
+                  icon={<GraduationCap size={24} aria-hidden="true" />}
+                  color="bg-accent"
+                >
                   <div
                     className={
                       isLiquid
@@ -399,7 +407,7 @@ const Resume = React.memo(() => {
                           : '2px 2px 0 var(--color-border)',
                       }}
                     >
-                      <Sparkles size={20} />
+                      <Sparkles size={20} aria-hidden="true" />
                       <h2 className="text-lg font-heading font-bold">Tech Stack</h2>
                     </div>
 
@@ -433,7 +441,7 @@ const Resume = React.memo(() => {
                       className="inline-flex items-center gap-2 bg-fun-yellow text-black px-3 py-2 border-2 border-[color:var(--color-border)] rounded-nb mb-6"
                       style={borderShadowStyle}
                     >
-                      <Award size={20} />
+                      <Award size={20} aria-hidden="true" />
                       <h2 className="text-lg font-heading font-bold">Certifications</h2>
                     </div>
 
@@ -480,7 +488,7 @@ const Resume = React.memo(() => {
                     className="inline-flex items-center gap-2 bg-accent text-white px-3 py-2 border-2 border-[color:var(--color-border)] mb-6"
                     style={borderShadowStyle}
                   >
-                    <Globe size={20} />
+                    <Globe size={20} aria-hidden="true" />
                     <h2 className="text-lg font-heading font-bold">Languages</h2>
                   </div>
 

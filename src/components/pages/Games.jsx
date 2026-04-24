@@ -42,7 +42,10 @@ const GameLoader = () => (
     role="status"
     aria-label="Loading game"
   >
-    <Loader2 className="w-10 h-10 animate-spin text-fun-yellow motion-reduce:animate-none" />
+    <Loader2
+      className="w-10 h-10 animate-spin text-fun-yellow motion-reduce:animate-none"
+      aria-hidden="true"
+    />
   </div>
 );
 
@@ -187,7 +190,7 @@ const Games = React.memo(() => {
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
-              <Gamepad2 className="w-5 h-5" />
+              <Gamepad2 className="w-5 h-5" aria-hidden="true" />
               <span className="text-sm">Easter Egg Found!</span>
             </ThemedChip>
           </motion.div>

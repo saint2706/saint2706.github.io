@@ -128,7 +128,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
-            <Flame size={20} className="text-fun-pink" />
+            <Flame size={20} className="text-fun-pink" aria-hidden="true" />
           </div>
           <h2 className="font-heading font-bold text-white" id="roast-title">
             Resume Roasted 🔥

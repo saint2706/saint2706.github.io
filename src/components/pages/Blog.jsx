@@ -465,14 +465,14 @@ const BlogCard = React.memo(({ blog, variants, isLiquid, formatDate }) => {
             {blog.source}
           </ThemedChip>
           <ThemedChip variant="neutral" className="text-secondary font-sans">
-            <Calendar size={12} />
+            <Calendar size={12} aria-hidden="true" />
             {formatDate(blog.date)}
           </ThemedChip>
         </div>
 
         {/* Title */}
         <div className="flex items-start gap-2 mb-3">
-          <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" />
+          <BookOpen size={18} className="text-muted flex-shrink-0 mt-1" aria-hidden="true" />
           <h2 className="text-lg font-heading font-bold text-primary line-clamp-2">{blog.title}</h2>
         </div>
 

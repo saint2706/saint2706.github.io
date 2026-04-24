@@ -626,7 +626,7 @@ const ChatInterface = ({ onClose }) => {
                 : 'bg-white border-2 border-[color:var(--color-border)] rounded-nb'
             )}
           >
-            <Bot size={20} className="text-black" />
+            <Bot size={20} className="text-black" aria-hidden="true" />
           </div>
           <div>
             <h2 className="font-heading font-bold text-white" id={titleId}>

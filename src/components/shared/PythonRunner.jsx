@@ -168,7 +168,7 @@ const PythonRunner = ({ snippet }) => {
         </div>
         {isLoading && (
           <span className="text-xs text-gray-500 flex items-center gap-1">
-            <Loader2 size={12} className="animate-spin" />
+            <Loader2 size={12} className="animate-spin" aria-hidden="true" />
             Loading Python...
           </span>
         )}
