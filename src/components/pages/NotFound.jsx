@@ -277,7 +277,7 @@ const NotFound = () => {
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
-              <Home size={20} />
+              <Home size={20} aria-hidden="true" />
               Go Home
             </ThemedButton>
             <ThemedButton
@@ -290,7 +290,7 @@ const NotFound = () => {
               )}
               style={isLiquid ? undefined : { boxShadow: 'var(--nb-shadow)' }}
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={20} aria-hidden="true" />
               Go Back
             </ThemedButton>
           </motion.div>
@@ -317,7 +317,7 @@ const NotFound = () => {
                 )}
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               >
-                <Compass size={16} className="inline mr-2" />
+                <Compass size={16} className="inline mr-2" aria-hidden="true" />
                 Quick Navigation
               </ThemedChip>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
