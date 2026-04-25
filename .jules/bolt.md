@@ -85,3 +85,8 @@
 - Reduced main thread blocking and React render allocations by migrating the scroll listener in `ScrollToTop` from `setTimeout` throttling to `requestAnimationFrame` gating, and extracting Framer Motion variants into static constants.
 
 - **[PERF] Extracted simple strings and string returns from useCallback and useMemo**: Extracted `getCellLabel` outside of `TicTacToe` and `description` / `title` strings outside of `Contact` components. This removes the hook's execution and dependency tracking overhead which exceeded the cost of native evaluation and garbage collection.
+
+## ⚡ Bolt Learnings:
+
+- **Optimization Strategy**: Removed `useMemo` and state allocations for static constants like `cardColors` and `shadowColors` in `src/components/pages/Projects.jsx`.
+- **Result**: Reduced memory allocation and component initialization time on re-renders, further optimizing the component tree since the data never changes.
