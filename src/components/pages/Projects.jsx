@@ -32,142 +32,149 @@ const stickerStyles = [{ '--sticker-rotate': '1deg' }, { '--sticker-rotate': '-1
 
 const featuredStickerStyle = { '--sticker-rotate': '3deg' };
 
+/** Rotating color classes for project card accent bars */
+const CARD_COLORS = ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'];
+/** NB 2.0: Cycle colored shadow accents per card */
+const SHADOW_COLORS = ['yellow', 'pink', 'blue', 'coral', 'violet'];
+const TOP_TAGS = [...new Set(resumeData.projects.flatMap(project => project.tags || []))].slice(
+  0,
+  6
+);
+
 /**
  * ProjectCard Component
  */
 // ⚡ Bolt: Wrapped card in React.memo to prevent unnecessary re-renders in list
-const ProjectCard = React.memo(
-  ({ project, idx, isLiquid, shadowColors, cardColors, item, onClick }) => {
-    const projectSlug = useMemo(() => projectSlugFromData(project), [project]);
-    const thumbStyle = useMemo(
-      () => ({ viewTransitionName: `project-thumb-${projectSlug}` }),
-      [projectSlug]
-    );
-    const titleStyle = useMemo(
-      () => ({ viewTransitionName: `project-title-${projectSlug}` }),
-      [projectSlug]
-    );
+const ProjectCard = React.memo(({ project, idx, isLiquid, item, onClick }) => {
+  const projectSlug = useMemo(() => projectSlugFromData(project), [project]);
+  const thumbStyle = useMemo(
+    () => ({ viewTransitionName: `project-thumb-${projectSlug}` }),
+    [projectSlug]
+  );
+  const titleStyle = useMemo(
+    () => ({ viewTransitionName: `project-title-${projectSlug}` }),
+    [projectSlug]
+  );
 
-    const handleClick = useCallback(() => {
-      if (onClick) onClick(project);
-    }, [onClick, project]);
+  const handleClick = useCallback(() => {
+    if (onClick) onClick(project);
+  }, [onClick, project]);
 
-    return (
-      <ThemedCard
-        as={motion.article}
-        variant="interactive"
-        shadowColor={isLiquid ? undefined : shadowColors[idx % shadowColors.length]}
-        variants={item}
-        onClick={handleClick}
-        role="link"
-        tabIndex={0}
-        onKeyDown={event => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            event.currentTarget.click();
-          }
-        }}
-        className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
-        style={stickerStyles[idx % 2]}
-      >
-        {/* Color accent bar */}
-        {!isLiquid && <div className={`h-4 ${cardColors[idx % cardColors.length]} rounded-t-nb`} />}
+  return (
+    <ThemedCard
+      as={motion.article}
+      variant="interactive"
+      shadowColor={isLiquid ? undefined : SHADOW_COLORS[idx % SHADOW_COLORS.length]}
+      variants={item}
+      onClick={handleClick}
+      role="link"
+      tabIndex={0}
+      onKeyDown={event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
+      className={`overflow-hidden flex flex-col h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-fun-yellow ${isLiquid ? 'rounded-3xl p-0' : 'nb-shadow-lift nb-sticker'}`}
+      style={stickerStyles[idx % 2]}
+    >
+      {/* Color accent bar */}
+      {!isLiquid && <div className={`h-4 ${CARD_COLORS[idx % CARD_COLORS.length]} rounded-t-nb`} />}
 
-        {/* Project Image */}
-        {project.image && isSafeImageSrc(project.image) && (
-          <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
-            <img
-              src={project.image}
-              alt={`Screenshot of ${project.title} project`}
-              className="w-full h-full object-cover"
-              style={thumbStyle}
-              loading={idx < 3 ? 'eager' : 'lazy'}
-              fetchPriority={idx < 3 ? 'high' : undefined}
-              decoding="async"
-              width={600}
-              height={400}
-            />
+      {/* Project Image */}
+      {project.image && isSafeImageSrc(project.image) && (
+        <div className="relative h-40 overflow-hidden border-b-nb border-[color:var(--color-border)]">
+          <img
+            src={project.image}
+            alt={`Screenshot of ${project.title} project`}
+            className="w-full h-full object-cover"
+            style={thumbStyle}
+            loading={idx < 3 ? 'eager' : 'lazy'}
+            fetchPriority={idx < 3 ? 'high' : undefined}
+            decoding="async"
+            width={600}
+            height={400}
+          />
+        </div>
+      )}
+
+      <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex items-start gap-2">
+            <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
+            <h2 className="text-xl font-heading font-bold text-primary" style={titleStyle}>
+              {project.title}
+            </h2>
           </div>
-        )}
-
-        <div className={`p-6 flex-grow flex flex-col ${isLiquid ? 'gap-1' : ''}`}>
-          <div className="flex justify-between items-start mb-4">
-            <div className="flex items-start gap-2">
-              <Folder size={20} className="text-muted flex-shrink-0 mt-1" />
-              <h2 className="text-xl font-heading font-bold text-primary" style={titleStyle}>
-                {project.title}
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {project.stars && (
-                <ThemedChip variant="yellow" className="font-bold">
-                  <Star size={12} className="fill-black" />
-                  {project.stars}
-                </ThemedChip>
-              )}
-              {project.featured && (
-                <ThemedChip
-                  variant="accent"
-                  className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
-                  style={featuredStickerStyle}
-                >
-                  Featured
-                </ThemedChip>
-              )}
-            </div>
-          </div>
-
-          <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3 font-sans">
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tags.map(tag => (
-              <ThemedChip key={tag} variant="neutral" className="font-sans">
-                {tag}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {project.stars && (
+              <ThemedChip variant="yellow" className="font-bold">
+                <Star size={12} className="fill-black" />
+                {project.stars}
               </ThemedChip>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-4 mt-auto">
-            {project.link && isSafeHref(project.link) && (
-              <ThemedButton
-                as="a"
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-                variant="primary"
-                size="sm"
-                className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
-                aria-label={`Live Demo for ${project.title} (opens in new tab)`}
-                title={`View live demo for ${project.title}`}
-              >
-                <ExternalLink size={14} aria-hidden="true" /> Demo
-              </ThemedButton>
             )}
-            {project.github && isSafeHref(project.github) && (
-              <ThemedButton
-                as="a"
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-                variant="secondary"
-                size="sm"
-                className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
-                aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
-                title={`View source code for ${project.title} on GitHub`}
+            {project.featured && (
+              <ThemedChip
+                variant="accent"
+                className={`font-bold ${isLiquid ? '' : 'nb-sticker'}`}
+                style={featuredStickerStyle}
               >
-                <Github size={14} aria-hidden="true" /> Code
-              </ThemedButton>
+                Featured
+              </ThemedChip>
             )}
           </div>
         </div>
-      </ThemedCard>
-    );
-  }
-);
+
+        <p className="text-secondary text-sm mb-6 flex-grow leading-relaxed line-clamp-3 font-sans">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-2 mb-6">
+          {project.tags.map(tag => (
+            <ThemedChip key={tag} variant="neutral" className="font-sans">
+              {tag}
+            </ThemedChip>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4 mt-auto">
+          {project.link && isSafeHref(project.link) && (
+            <ThemedButton
+              as="a"
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              variant="primary"
+              size="sm"
+              className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
+              aria-label={`Live Demo for ${project.title} (opens in new tab)`}
+              title={`View live demo for ${project.title}`}
+            >
+              <ExternalLink size={14} aria-hidden="true" /> Demo
+            </ThemedButton>
+          )}
+          {project.github && isSafeHref(project.github) && (
+            <ThemedButton
+              as="a"
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              variant="secondary"
+              size="sm"
+              className={isLiquid ? undefined : 'hover:-translate-y-0.5'}
+              aria-label={`View source code for ${project.title} on GitHub (opens in new tab)`}
+              title={`View source code for ${project.title} on GitHub`}
+            >
+              <Github size={14} aria-hidden="true" /> Code
+            </ThemedButton>
+          )}
+        </div>
+      </div>
+    </ThemedCard>
+  );
+});
 
 ProjectCard.displayName = 'ProjectCard';
 
@@ -235,14 +242,6 @@ const Projects = React.memo(() => {
     [shouldReduceMotion]
   );
 
-  /** Rotating color classes for project card accent bars */
-  const cardColors = useMemo(() => ['bg-fun-yellow', 'bg-accent', 'bg-fun-pink'], []);
-  /** NB 2.0: Cycle colored shadow accents per card */
-  const shadowColors = useMemo(() => ['yellow', 'pink', 'blue', 'coral', 'violet'], []);
-  const topTags = useMemo(() => {
-    return [...new Set(resumeData.projects.flatMap(project => project.tags || []))].slice(0, 6);
-  }, []);
-
   /**
    * Handle card click to open primary link.
    * Checks for text selection to avoid accidental navigation.
@@ -293,7 +292,7 @@ const Projects = React.memo(() => {
         >
           {isLiquid && (
             <div className="col-span-full flex flex-wrap items-center gap-2 mb-2">
-              {topTags.map(tag => (
+              {TOP_TAGS.map(tag => (
                 <ThemedChip key={tag} variant="neutral" className="text-xs tracking-wide uppercase">
                   {tag}
                 </ThemedChip>
@@ -306,8 +305,6 @@ const Projects = React.memo(() => {
               project={project}
               idx={idx}
               isLiquid={isLiquid}
-              shadowColors={shadowColors}
-              cardColors={cardColors}
               item={item}
               onClick={handleCardClick}
             />
