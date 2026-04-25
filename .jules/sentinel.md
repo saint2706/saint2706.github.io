@@ -38,3 +38,9 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
 
 - **Vulnerability / Warning**: `react-markdown` passes an AST `node` object to custom renderers. When `...rest` is spread onto DOM elements (like `<a>` or `<img>`), this object is passed as an attribute (`node="[object Object]"`), which causes React console warnings and could theoretically be manipulated if the AST structure is compromised.
 - **Fix**: Updated `LinkRenderer` and `ImageRenderer` in `src/components/shared/ChatInterface.jsx` to explicitly destructure `node: _node` from `rest`, ensuring the AST node is never spread into the DOM elements.
+
+## PostCSS Update
+
+- Fixed XSS vulnerability in PostCSS by upgrading to version `8.5.10`.
+- Conducted a sweep of codebase for hardcoded secrets, found `import.meta.env.VITE_GEMINI_API_KEY` which is properly secured.
+- Verified application dependencies and build steps are clean.
