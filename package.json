@@ -65,7 +65,7 @@
     "lighthouse": "^13.0.3",
     "lint-staged": "^16.3.3",
     "playwright": "^1.58.2",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.10",
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
