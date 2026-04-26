@@ -50,7 +50,7 @@ const ThemeCard = ({ option, isActive, onClick }) => {
   return (
     <button
       type="button"
-      onClick={() => onClick(option.id)}
+      onClick={e => onClick(option.id, { x: e.clientX, y: e.clientY })}
       aria-pressed={isActive}
       aria-label={`Select ${option.label} theme`}
       className="settings-theme-card"
