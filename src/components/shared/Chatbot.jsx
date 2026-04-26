@@ -75,9 +75,9 @@ const LoadingDialog = React.memo(({ type }) => {
           )}
         >
           {isChat ? (
-            <Bot size={20} className="text-black" />
+            <Bot size={20} className="text-black" aria-hidden="true" />
           ) : (
-            <Flame size={20} className="text-fun-pink" />
+            <Flame size={20} className="text-fun-pink" aria-hidden="true" />
           )}
         </div>
         <h2 className="font-heading font-bold text-white">
@@ -292,7 +292,7 @@ const Chatbot = React.memo(() => {
                   style={roastFabShell.style}
                   aria-label="Roast my resume"
                 >
-                  <Flame size={20} />
+                  <Flame size={20} aria-hidden="true" />
                   <span className="text-sm font-heading font-bold hidden sm:inline">Roast</span>
                 </motion.button>
 
@@ -314,7 +314,7 @@ const Chatbot = React.memo(() => {
                   style={chatFabShell.style}
                   aria-label="Chat with Digital Rishabh"
                 >
-                  <Bot size={20} />
+                  <Bot size={20} aria-hidden="true" />
                   <span className="text-sm font-heading font-bold hidden sm:inline">Chat</span>
                 </motion.button>
               </>

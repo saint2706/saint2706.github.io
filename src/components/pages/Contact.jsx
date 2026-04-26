@@ -239,7 +239,7 @@ const Contact = React.memo(() => {
                     {!isSubmitting ? (
                       <Send size={20} aria-hidden="true" />
                     ) : (
-                      <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" />
+                      <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                     )}
                     {isSubmitting ? 'Opening...' : 'Send via Email'}
                   </ThemedButton>
@@ -405,7 +405,7 @@ const Contact = React.memo(() => {
                   className="w-24 h-24 mx-auto mb-6 bg-accent border-nb border-[color:var(--color-border)] flex items-center justify-center rounded-nb"
                   style={nbShadowStyle}
                 >
-                  <Mail size={40} className="text-white" />
+                  <Mail size={40} className="text-white" aria-hidden="true" />
                 </div>
 
                 <h2 className="font-heading text-2xl font-bold text-primary mb-4">

@@ -460,7 +460,7 @@ const TicTacToe = React.memo(() => {
       {/* Score Board - Neubrutalism */}
       <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="flex items-center gap-2 px-3">
-          <User size={18} className="text-accent" />
+          <User size={18} className="text-accent" aria-hidden="true" />
           <div>
             <div className="text-sm md:text-xs text-secondary font-heading">You</div>
             <div className="text-xl font-heading font-bold text-accent">{scores.player}</div>
@@ -477,7 +477,7 @@ const TicTacToe = React.memo(() => {
             <div className="text-sm md:text-xs text-secondary font-heading">AI</div>
             <div className="text-xl font-heading font-bold text-fun-pink">{scores.ai}</div>
           </div>
-          <Cpu size={18} className="text-fun-pink" />
+          <Cpu size={18} className="text-fun-pink" aria-hidden="true" />
         </div>
       </div>
 
@@ -607,7 +607,7 @@ const TicTacToe = React.memo(() => {
                   ease: 'linear',
                 }}
               >
-                <Cpu size={14} />
+                <Cpu size={14} aria-hidden="true" />
               </motion.span>
               AI is thinking...
             </span>
