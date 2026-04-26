@@ -363,6 +363,15 @@ const Navbar = React.memo(({ onOpenSettings }) => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
               className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${mobileMenuCls}`}
+              style={
+                isLiquid
+                  ? {
+                      '--glass-bg': isLiquidDark
+                        ? 'rgba(44, 44, 46, 0.92)'
+                        : 'rgba(255, 255, 255, 0.92)',
+                    }
+                  : undefined
+              }
               ref={menuRef}
               role="dialog"
               aria-label="Navigation menu"
