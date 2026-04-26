@@ -3,12 +3,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Modal from './Modal';
 import { ThemeProvider } from './theme-context';
 
+import { useTheme } from './theme-context';
+
 // Mock theme context since Modal uses it
 vi.mock('./theme-context', async () => {
   const actual = await vi.importActual('./theme-context');
   return {
     ...actual,
-    useTheme: () => ({ theme: 'neubrutalism', toggleTheme: vi.fn() }),
+    useTheme: vi.fn(() => ({ theme: 'neubrutalism', toggleTheme: vi.fn() })),
     ThemeProvider: ({ children }) => <div>{children}</div>,
   };
 });
@@ -24,6 +26,7 @@ describe('Modal Component', () => {
 
   beforeEach(() => {
     onCloseMock.mockClear();
+    vi.mocked(useTheme).mockReturnValue({ theme: 'neubrutalism', toggleTheme: vi.fn() });
   });
 
   it('renders correctly when open', () => {
@@ -80,5 +83,18 @@ describe('Modal Component', () => {
     const content = screen.getByText('Modal Content');
     fireEvent.click(content);
     expect(defaultProps.onClose).not.toHaveBeenCalled();
+  });
+
+  it('applies liquid theme classes', () => {
+    vi.mocked(useTheme).mockReturnValue({ theme: 'liquid', toggleTheme: vi.fn() });
+    render(
+      <ThemeProvider>
+        <Modal {...defaultProps} />
+      </ThemeProvider>
+    );
+
+    // Check for a specific class that is only rendered when theme is liquid
+    const closeButton = screen.getByLabelText('Close modal');
+    expect(closeButton).toHaveClass('lg-surface-3');
   });
 });
