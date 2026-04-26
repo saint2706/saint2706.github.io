@@ -32,7 +32,7 @@ describe('ThemeProvider', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     storage.safeGetLocalStorage.mockReturnValue(null);
-    document.startViewTransition = vi.fn(cb => cb());
+    document.startViewTransition = vi.fn(cb => { cb(); return { finished: Promise.resolve() }; });
   });
 
   afterEach(() => {
