@@ -25,7 +25,9 @@ export const VIEW_TRANSITION_NAVIGATION_ENABLED =
 const getStartViewTransition = () => {
   if (typeof document === 'undefined') return null;
   if (!('startViewTransition' in document)) return null;
-  return typeof document.startViewTransition === 'function' ? document.startViewTransition : null;
+  return typeof document.startViewTransition === 'function'
+    ? document.startViewTransition.bind(document)
+    : null;
 };
 
 /**
