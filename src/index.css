@@ -1289,7 +1289,16 @@
 
 /* ===== VIEW TRANSITION CHOREOGRAPHY ===== */
 
-/* --- Keyframes for page-content slide+fade --- */
+/* CSS vars on :root control which animation runs — inherited by ::view-transition-* pseudo-elements.
+   JS overrides these inline before theme transitions, then clears them after. */
+:root {
+  --vt-x: 50%;
+  --vt-y: 50%;
+  --vt-root-old-anim: vt-crossfade-out 0.3s ease both;
+  --vt-root-new-anim: vt-crossfade-in 0.3s ease both;
+}
+
+/* --- Page-content slide+fade --- */
 @keyframes vt-slide-up-in {
   from {
     opacity: 0;
@@ -1312,12 +1321,35 @@
   }
 }
 
+/* --- Root crossfade (default / page navigations) --- */
+@keyframes vt-crossfade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes vt-crossfade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* --- Theme switch: radial reveal from click point --- */
+@keyframes vt-theme-reveal {
+  from {
+    clip-path: circle(0% at var(--vt-x) var(--vt-y));
+  }
+  to {
+    clip-path: circle(150% at var(--vt-x) var(--vt-y));
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  /* Default root crossfade */
-  ::view-transition-old(root),
+  /* Root uses CSS-var-driven animation — JS swaps vars for theme transitions */
+  ::view-transition-old(root) {
+    animation: var(--vt-root-old-anim);
+  }
+
   ::view-transition-new(root) {
-    animation-duration: 0.3s;
-    animation-timing-function: ease;
+    animation: var(--vt-root-new-anim);
   }
 
   /* Chrome header stays pinned — no animation */
