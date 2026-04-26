@@ -44,6 +44,20 @@ const DesktopNavItem = React.memo(({ item, getClassName, onClickNavigate, onKeyd
 
 DesktopNavItem.displayName = 'DesktopNavItem';
 
+// ⚡ Bolt: Extracted static animation variants and style objects to prevent unnecessary allocations during renders.
+const navInitial = { y: -100 };
+const navAnimate = { y: 0 };
+const navTransitionReduced = { duration: 0 };
+const navTransition = { duration: 0.5, ease: [0.16, 1, 0.3, 1] };
+const navStyle = { viewTransitionName: 'chrome-header' };
+
+const menuInitial = { opacity: 0, y: -10 };
+const menuAnimate = { opacity: 1, y: 0 };
+const menuExit = { opacity: 0, y: -10 };
+const menuTransition = { duration: 0.2 };
+const menuGlassBgDark = { '--glass-bg': 'rgba(44, 44, 46, 0.92)' };
+const menuGlassBgLight = { '--glass-bg': 'rgba(255, 255, 255, 0.92)' };
+
 const MobileNavItem = React.memo(
   ({ item, index, isLiquid, onClickNavigate, onKeydownNavigate, getClassName }) => (
     <NavLink
@@ -285,11 +299,11 @@ const Navbar = React.memo(({ onOpenSettings }) => {
   return (
     <motion.nav
       aria-label="Main Navigation"
-      initial={shouldReduceMotion ? false : { y: -100 }}
-      animate={{ y: 0 }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      initial={shouldReduceMotion ? false : navInitial}
+      animate={navAnimate}
+      transition={shouldReduceMotion ? navTransitionReduced : navTransition}
       className={navCls}
-      style={{ viewTransitionName: 'chrome-header' }}
+      style={navStyle}
     >
       <div className={containerCls}>
         {/* ── Logo ── */}
@@ -358,20 +372,12 @@ const Navbar = React.memo(({ onOpenSettings }) => {
           {isMenuOpen && (
             <motion.div
               id="mobile-nav-menu"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              initial={menuInitial}
+              animate={menuAnimate}
+              exit={menuExit}
+              transition={menuTransition}
               className={`absolute right-4 top-full mt-3 w-64 md:hidden overflow-hidden ${mobileMenuCls}`}
-              style={
-                isLiquid
-                  ? {
-                      '--glass-bg': isLiquidDark
-                        ? 'rgba(44, 44, 46, 0.92)'
-                        : 'rgba(255, 255, 255, 0.92)',
-                    }
-                  : undefined
-              }
+              style={isLiquid ? (isLiquidDark ? menuGlassBgDark : menuGlassBgLight) : undefined}
               ref={menuRef}
               role="dialog"
               aria-label="Navigation menu"
