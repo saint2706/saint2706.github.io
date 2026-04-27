@@ -85,3 +85,5 @@
 - Reduced main thread blocking and React render allocations by migrating the scroll listener in `ScrollToTop` from `setTimeout` throttling to `requestAnimationFrame` gating, and extracting Framer Motion variants into static constants.
 
 - **[PERF] Extracted simple strings and string returns from useCallback and useMemo**: Extracted `getCellLabel` outside of `TicTacToe` and `description` / `title` strings outside of `Contact` components. This removes the hook's execution and dependency tracking overhead which exceeded the cost of native evaluation and garbage collection.
+
+- **[PERF] Extracted static animation variants and style objects in Navbar**: Extracted Framer Motion animation variants (`navInitial`, `navAnimate`, `menuInitial`, etc.) and inline style objects (`navStyle`, `menuGlassBgDark`, `menuGlassBgLight`) outside of the `Navbar` render function in `src/components/layout/Navbar.jsx`. This prevents React from allocating new object references on every render cycle (e.g. when `isScrolled` updates on scroll), eliminating garbage collection overhead and preventing unnecessary deep tree diffing by Framer Motion.
