@@ -3,6 +3,16 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import ScrollToTop from './ScrollToTop';
 
+import { useReducedMotion } from 'framer-motion';
+
+vi.mock('framer-motion', async () => {
+  const actual = await vi.importActual('framer-motion');
+  return {
+    ...actual,
+    useReducedMotion: vi.fn(),
+  };
+});
+
 describe('ScrollToTop Component', () => {
   beforeEach(() => {
     // Mock window.scrollTo
@@ -46,5 +56,17 @@ describe('ScrollToTop Component', () => {
 
     fireEvent.click(button);
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+  });
+
+  it('respects reduced motion when scrolling to top', () => {
+    vi.mocked(useReducedMotion).mockReturnValue(true);
+    Object.defineProperty(window, 'scrollY', { value: 400, configurable: true });
+    render(<ScrollToTop />);
+
+    fireEvent.scroll(window);
+    const button = screen.getByRole('button', { name: /scroll to top/i });
+
+    fireEvent.click(button);
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'auto' });
   });
 });
