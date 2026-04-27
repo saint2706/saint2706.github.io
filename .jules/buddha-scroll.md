@@ -331,3 +331,9 @@ Audited the codebase for Core Web Vitals (LCP, CLS, INP), structured data (JSON-
 1.  **[SEO][GEO] Audited codebase**:
     - Confirmed `llms.txt`, `robots.txt`, structured data (JSON-LD), `dangerouslySetInnerHTML` sanitization, and semantic HTML hierarchy meet requirements.
     - Confirmed LCP and priority elements were optimized. No additional code changes were necessary as the codebase already satisfies all Buddha persona constraints.
+- **[GEO]** Verified that the `llms.txt` and `robots.txt` exist and accurately represent the site architecture. `robots.txt` correctly allows AI crawlers and points to the sitemap.
+- **[SEO]** Verified `index.html` has primary meta tags, OpenGraph tags, and semantic fallback elements (using `<h2>` inside `<noscript>`).
+- **[SEO]** Verified `src/components/shared/SEOHead.jsx` handles dynamically rendering JSON-LD using `<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />`. The JSON schemas are created in `src/utils/seo.js`.
+- **[SEO/SEC]** `dangerouslySetInnerHTML` is correctly sanitized using `safeJSONStringify` in `SEOHead.jsx`.
+- **[PERF/SEO]** Checked `src/components/pages/Projects.jsx`. The project images are loaded using `img` tags. The first 3 project images (LCP candidates) have `loading="eager"` and `fetchPriority="high"`, whereas the rest have `loading="lazy"`. This correctly optimizes LCP while lazy loading the rest. The Hero section relies on text and CSS for rendering.
+- No further optimizations were necessary for these checks as everything aligns with Buddha SEO/GEO practices.
