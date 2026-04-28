@@ -103,3 +103,9 @@
 
 - Removed broken table of contents links `#performance-fixtures` and `#cross-browser-testing` from Playwright best practices documentation.
 - Removed duplicate/redundant JSDoc blocks in `src/services/ai.js` and `src/utils/seo.js`.
+
+## 2026-04-28
+
+- Audited documentation for broken links using `markdown-link-check`.
+- Replaced dead TPGI color contrast checker link with the valid Vispero landing page URL in `.agents/skills/accessibility/references/WCAG.md`.
+- Verified changes with standard local suite (`pnpm run build && pnpm run format:check && pnpm run lint && pnpm run test:run`) and cleaned up auto-generated `sitemap.xml` modifications to keep commits focused.
