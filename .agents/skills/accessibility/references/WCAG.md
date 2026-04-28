@@ -182,7 +182,7 @@
 | Lighthouse | Built into Chrome | DevTools → Lighthouse |
 | NVDA | Screen reader (Windows) | [nvaccess.org](https://www.nvaccess.org/) |
 | VoiceOver | Screen reader (Mac) | Built into macOS |
-| Colour Contrast Analyser | Desktop app | [tpgi.com](https://www.tpgi.com/color-contrast-checker/) |
+| Colour Contrast Analyser | Desktop app | [vispero.com](https://vispero.com/lp/color-contrast-checker/) |
 
 ## Sources
 
