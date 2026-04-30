@@ -129,3 +129,8 @@
 - **Fixed Security Vulnerabilities**: Resolved high-severity vulnerability in `basic-ftp` (transitive dependency via lighthouse) by setting a `pnpm.overrides` rule enforcing `>=5.2.1` in `package.json` to prevent FTP Command Injection via CRLF.
 - **Fixed Unused Dependencies**: Cleaned up unimported dev dependencies `brace-expansion` and `lodash-es` from `package.json`.
 - **Verified**: Build, Lint, and Security suites pass cleanly.
+
+## Session 24
+
+- **Fixed Dead Code**: Removed `public/spa-redirect.js` and its import from `index.html`. The script was intended for Single Page Apps on GitHub Pages, but the project is configured to use React Router in hash mode, making this script unnecessary and unused.
+- **Verified**: Build, Lint, and Tests passed cleanly.
