@@ -139,6 +139,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           onClick={onClose}
           className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-fun-pink rounded-sm"
           aria-label="Close roast"
+          title="Close roast"
         >
           <X size={20} aria-hidden="true" />
           <span

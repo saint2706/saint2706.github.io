@@ -331,6 +331,7 @@ Just kidding... but seriously, let's chat!
                       onClick={onClose}
                       className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)]"
                       aria-label="Close terminal"
+                      title="Close terminal"
                     />
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-green-500" />
@@ -353,6 +354,7 @@ Just kidding... but seriously, let's chat!
                       : 'text-gray-500 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 rounded'
                   }
                   aria-label="Close terminal"
+                  title="Close terminal"
                 >
                   <X size={16} aria-hidden="true" />
                 </button>

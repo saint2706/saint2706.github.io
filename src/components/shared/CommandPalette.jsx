@@ -304,6 +304,7 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                       : 'bg-secondary border-2 border-[color:var(--color-border)] hover:bg-fun-yellow rounded-nb'
                   )}
                   aria-label="Close command palette"
+                  title="Close command palette"
                 >
                   <X size={14} aria-hidden="true" />
                   <span
