@@ -139,7 +139,6 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
           onClick={onClose}
           className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-fun-pink rounded-sm"
           aria-label="Close roast"
-          title="Close roast"
         >
           <X size={20} aria-hidden="true" />
           <span
@@ -189,7 +188,6 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
                   : 'text-muted hover:text-primary hover:bg-secondary'
               )}
               aria-label={isCopied ? 'Copied roast' : 'Copy roast to clipboard'}
-              title={isCopied ? 'Copied!' : 'Copy roast'}
             >
               {isCopied ? (
                 <Check size={16} aria-hidden="true" />
