@@ -42,6 +42,7 @@ jobs:
         run: ~/.local/bin/actionlint
 
   workflow-security:
+    needs: [actionlint]
     name: Check workflow security guardrails
     runs-on: ubuntu-latest
     timeout-minutes: 5

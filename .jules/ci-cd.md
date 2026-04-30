@@ -37,3 +37,8 @@
 
 - **Update**: Merged `generate` and `commit` jobs into a single `sync` job in `.github/workflows/sync-blogs.yml`.
 - **Why**: Eliminates the sequential `needs: generate` constraint and removes the overhead of uploading and downloading artifacts, bypassing a redundant runner spin-up to reduce pipeline duration.
+
+## Fail Fast Dependencies
+
+- **Update**: Added `needs: [lint]` to `test`, `build`, and `security` jobs in `.github/workflows/ci.yml`. Added `needs: [actionlint]` to `workflow-security` job in `.github/workflows/workflow-lint.yml`.
+- **Why**: Enforces a fail-fast mechanism. If linting fails, it prevents subsequent resource-intensive jobs from running, saving compute resources and reducing overall pipeline time on broken code.
