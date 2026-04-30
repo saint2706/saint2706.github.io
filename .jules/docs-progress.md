@@ -109,3 +109,10 @@
 - Audited documentation for broken links using `markdown-link-check`.
 - Replaced dead TPGI color contrast checker link with the valid Vispero landing page URL in `.agents/skills/accessibility/references/WCAG.md`.
 - Verified changes with standard local suite (`pnpm run build && pnpm run format:check && pnpm run lint && pnpm run test:run`) and cleaned up auto-generated `sitemap.xml` modifications to keep commits focused.
+
+## 2026-04-29
+
+- Audited documentation for broken links using `markdown-link-check`.
+- Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
+- Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
+- Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
