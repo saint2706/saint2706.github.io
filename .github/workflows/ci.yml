@@ -52,6 +52,7 @@ jobs:
         run: pnpm run lint
 
   test:
+    needs: [lint]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     strategy:
@@ -73,6 +74,7 @@ jobs:
         run: pnpm run test:run
 
   build:
+    needs: [lint]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -88,6 +90,7 @@ jobs:
         run: pnpm run build
 
   security:
+    needs: [lint]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
