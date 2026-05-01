@@ -42,3 +42,10 @@
 
 - **Update**: Added `needs: [lint]` to `test`, `build`, and `security` jobs in `.github/workflows/ci.yml`. Added `needs: [actionlint]` to `workflow-security` job in `.github/workflows/workflow-lint.yml`.
 - **Why**: Enforces a fail-fast mechanism. If linting fails, it prevents subsequent resource-intensive jobs from running, saving compute resources and reducing overall pipeline time on broken code.
+
+# CI/CD Optimizations
+
+## Workflow Optimization and Security Audit
+
+- **Update**: Audited the CI/CD pipeline for optimal security and performance.
+- **Why**: Pipeline health check confirmed that dependency caching via `pnpm` is securely managed in `setup-env` action, fast-failing is already well implemented via `needs: [lint]` and `fail-fast: true`, jobs follow least privilege with scoped `permissions`, parallel execution via `matrix` handles cross-platform tests efficiently, and external actions are appropriately pinned using specific `SHA` values, adhering to required boundaries and best practices. No direct alterations were required.
