@@ -338,7 +338,6 @@ const Navbar = React.memo(({ onOpenSettings }) => {
             onClick={onOpenSettings}
             className={`group relative hidden md:flex items-center justify-center p-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] ${actionBtnCls}`}
             aria-label="Open settings"
-            title="Open settings"
             aria-haspopup="dialog"
           >
             <Settings size={18} aria-hidden="true" />

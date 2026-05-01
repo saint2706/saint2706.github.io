@@ -657,7 +657,6 @@ const ChatInterface = ({ onClose }) => {
             onClick={onClose}
             className="group relative p-1 text-white hover:bg-white/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-accent rounded-sm"
             aria-label="Close chat (Escape)"
-            title="Close chat"
           >
             <X size={20} aria-hidden="true" />
             <span
@@ -757,7 +756,6 @@ const ChatInterface = ({ onClose }) => {
               )}
               style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
               aria-label="Send message"
-              title="Send message"
             >
               <Send size={20} aria-hidden="true" />
               <span

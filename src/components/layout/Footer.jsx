@@ -130,7 +130,6 @@ const Footer = React.memo(() => {
                       : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }
                   }
                   aria-label="Visit GitHub"
-                  title="Visit GitHub"
                 >
                   <Github size={24} aria-hidden="true" />
                   <span
@@ -156,7 +155,6 @@ const Footer = React.memo(() => {
                       : { boxShadow: 'var(--nb-shadow)', '--invert-text': '#ffffff' }
                   }
                   aria-label="Visit LinkedIn"
-                  title="Visit LinkedIn"
                 >
                   <Linkedin size={24} aria-hidden="true" />
                   <span
@@ -195,7 +193,6 @@ const Footer = React.memo(() => {
                     onClick={handleHeartClick}
                     className="group relative inline-flex cursor-pointer transition-transform hover:scale-125 p-0 bg-transparent border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-fun-pink focus-visible:rounded-full"
                     aria-label="Give a like"
-                    title="Give a like"
                   >
                     <Heart
                       size={16}

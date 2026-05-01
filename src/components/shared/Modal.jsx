@@ -151,7 +151,6 @@ const Modal = React.memo(({ isOpen, onClose, title, children }) => {
                 }
                 style={isLiquid ? undefined : { boxShadow: '2px 2px 0 var(--color-border)' }}
                 aria-label="Close modal"
-                title="Close modal"
               >
                 <X size={18} aria-hidden="true" />
                 <span
