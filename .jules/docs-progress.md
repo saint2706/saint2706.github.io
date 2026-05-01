@@ -116,3 +116,10 @@
 - Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
 - Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
 - Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
+
+## 2026-05-01
+
+- Audited documentation for broken links using `markdown-link-check`.
+- Identified false positive broken link `https://react.dev/learn/you-might-not-need-an-effect` in `.agents/skills/vercel-react-best-practices/rules/rerender-derived-state-no-effect.md`, `.agents/skills/vercel-react-best-practices/rules/advanced-init-once.md`, and `.agents/skills/vercel-react-best-practices/AGENTS.md` (returned Status 0 due to network configuration/rate limiting/anti-bot protections).
+- Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
+- Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
