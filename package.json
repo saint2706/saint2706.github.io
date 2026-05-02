@@ -36,12 +36,12 @@
     "@dr.pogodin/react-helmet": "^3.1.1",
     "@google/generative-ai": "^0.24.1",
     "framer-motion": "^12.38.0",
-    "lucide-react": "0.577.0",
+    "lucide-react": "1.14.0",
     "prismjs": "^1.30.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.13.1"
+    "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
