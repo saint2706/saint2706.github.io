@@ -73,7 +73,7 @@ This repository is **pnpm-only**:
 
 ## 📚 Documentation
 
-Detailed documentation on project architecture, theming, and the games is available in the `.jules/` directory where the agents maintain historical logs and reports.
+Detailed documentation on project architecture, theming, and the games is available in the `.jules/` directory where the agents maintain historical logs and reports. Additional feature documentation, such as the [View Transition Navigation](docs/view-transition-navigation.md), can be found in the `docs/` directory.
 
 ## 📜 Scripts
 

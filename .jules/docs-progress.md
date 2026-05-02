@@ -116,3 +116,8 @@
 - Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
 - Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
 - Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
+
+## 2026-05-15
+
+- Audited documentation and verified no missing JSDoc comments or broken links.
+- Updated `README.md` to reference the new `docs/view-transition-navigation.md` file in the `docs/` directory under the Documentation section to keep the README in sync with the repository contents.
