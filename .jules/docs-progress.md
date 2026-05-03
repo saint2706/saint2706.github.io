@@ -116,3 +116,9 @@
 - Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
 - Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
 - Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
+
+## 2026-05-03
+
+- Audited documentation for broken links using `markdown-link-check`.
+- All links passed successfully (no real broken links found).
+- Verified workspace passes `pnpm run build`, `pnpm run lint`, `pnpm run format:check`, and `pnpm run test:run`.
