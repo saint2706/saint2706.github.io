@@ -87,3 +87,8 @@
 - **[PERF] Extracted simple strings and string returns from useCallback and useMemo**: Extracted `getCellLabel` outside of `TicTacToe` and `description` / `title` strings outside of `Contact` components. This removes the hook's execution and dependency tracking overhead which exceeded the cost of native evaluation and garbage collection.
 
 - **[PERF] Extracted static animation variants and style objects in Navbar**: Extracted Framer Motion animation variants (`navInitial`, `navAnimate`, `menuInitial`, etc.) and inline style objects (`navStyle`, `menuGlassBgDark`, `menuGlassBgLight`) outside of the `Navbar` render function in `src/components/layout/Navbar.jsx`. This prevents React from allocating new object references on every render cycle (e.g. when `isScrolled` updates on scroll), eliminating garbage collection overhead and preventing unnecessary deep tree diffing by Framer Motion.
+
+## CLS Optimization & Animation Hardware Acceleration
+
+- Replaced hardcoded `h-48` fallback in `Playground.jsx` `Suspense` container with `h-full min-h-[12rem]`. This prevents a massive layout shift (CLS score 0.197) when the `SyntaxHighlighter` component lazily loads and resizes the layout.
+- Added `will-change: transform` to `.nb-ticker` and `.nb-sticker` in `src/index.css` to enable hardware acceleration (composited animations) and prevent potential jank/CLS during CSS animations.
