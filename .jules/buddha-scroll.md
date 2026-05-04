@@ -338,3 +338,16 @@ Audited the codebase for Core Web Vitals (LCP, CLS, INP), structured data (JSON-
 - **[SEO/SEC]** `dangerouslySetInnerHTML` is correctly sanitized using `safeJSONStringify` in `SEOHead.jsx`.
 - **[PERF/SEO]** Checked `src/components/pages/Projects.jsx`. The project images are loaded using `img` tags. The first 3 project images (LCP candidates) have `loading="eager"` and `fetchPriority="high"`, whereas the rest have `loading="lazy"`. This correctly optimizes LCP while lazy loading the rest. The Hero section relies on text and CSS for rendering.
 - No further optimizations were necessary for these checks as everything aligns with Buddha SEO/GEO practices.
+
+## Date: 2026-05-04
+
+**Agent**: Jules (Buddha Persona)
+
+### Summary
+
+Removed redundant `title` attributes from buttons that already possess clear, visible text labels.
+
+### Changes
+
+1. **[SEO][GEO] Removed Redundant Tooltips:**
+   - Removed `title` attributes from interactive elements in `Projects.jsx` to prevent the undesirable 'double tooltip' effect and avoid redundant metadata since custom UI tooltips or clear textual labels are already implemented.
