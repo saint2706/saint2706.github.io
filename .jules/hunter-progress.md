@@ -134,3 +134,8 @@
 
 - **Fixed Dead Code**: Removed `public/spa-redirect.js` and its import from `index.html`. The script was intended for Single Page Apps on GitHub Pages, but the project is configured to use React Router in hash mode, making this script unnecessary and unused.
 - **Verified**: Build, Lint, and Tests passed cleanly.
+
+## Session 25
+
+- **Fixed Security Vulnerabilities**: Resolved a high severity vulnerability in `basic-ftp` and a moderate vulnerability in `ip-address` by bumping their versions via `pnpm.overrides` in `package.json`.
+- **Verified**: Build, Lint, Tests, and Security tests passed cleanly.
