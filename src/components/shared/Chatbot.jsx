@@ -154,31 +154,32 @@ const Chatbot = React.memo(() => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isChatOpen, isRoastOpen]);
 
+  const handleOpenChatbot = useCallback(() => {
+    lastFocusedRef.current = document.activeElement;
+    setIsChatOpen(true);
+    setIsRoastOpen(false);
+    setIsFabOpen(false);
+  }, []);
+
+  const handleCloseChatbot = useCallback(() => {
+    setIsChatOpen(false);
+    setIsRoastOpen(false);
+    setIsFabOpen(false);
+  }, []);
+
   /**
    * Listen for custom events for programmatic control of the chatbot.
    * This allows other parts of the application to trigger the chatbot.
    * Events: 'openChatbot', 'closeChatbot'
    */
   useEffect(() => {
-    const handleOpenChatbot = () => {
-      lastFocusedRef.current = document.activeElement;
-      setIsChatOpen(true);
-      setIsRoastOpen(false);
-      setIsFabOpen(false);
-    };
-    const handleCloseChatbot = () => {
-      setIsChatOpen(false);
-      setIsRoastOpen(false);
-      setIsFabOpen(false);
-    };
-
     document.addEventListener('openChatbot', handleOpenChatbot);
     document.addEventListener('closeChatbot', handleCloseChatbot);
     return () => {
       document.removeEventListener('openChatbot', handleOpenChatbot);
       document.removeEventListener('closeChatbot', handleCloseChatbot);
     };
-  }, []);
+  }, [handleOpenChatbot, handleCloseChatbot]);
 
   /**
    * Opens the chat interface and closes other dialogs.

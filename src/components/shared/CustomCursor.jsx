@@ -164,16 +164,16 @@ const CustomCursor = ({ enabled }) => {
     return () => root.classList.remove('custom-cursor-enabled');
   }, [isEnabled]);
 
+  const handleMouseDown = useCallback(() => setIsClicking(true), []);
+  const handleMouseUp = useCallback(() => setIsClicking(false), []);
+  const handleMouseLeave = useCallback(() => setHasMouseMoved(false), []);
+  const handleMouseEnter = useCallback(() => setHasMouseMoved(true), []);
+
   // Attach mouse event listeners for cursor behavior
   useEffect(() => {
     if (!isEnabled) {
       return;
     }
-
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeave = () => setHasMouseMoved(false);
-    const handleMouseEnter = () => setHasMouseMoved(true);
 
     window.addEventListener('mousemove', moveCursor);
     window.addEventListener('mouseover', updateCursorVariant);
@@ -190,7 +190,15 @@ const CustomCursor = ({ enabled }) => {
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [isEnabled, moveCursor, updateCursorVariant]);
+  }, [
+    isEnabled,
+    moveCursor,
+    updateCursorVariant,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseLeave,
+    handleMouseEnter,
+  ]);
 
   if (!isVisible || !isEnabled || prefersReducedMotion) return null;
 
