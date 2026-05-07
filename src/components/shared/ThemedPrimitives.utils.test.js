@@ -51,6 +51,16 @@ describe('ThemedPrimitives utils', () => {
       });
     });
 
+    it('handles fallback correctly for unknown tone', () => {
+        const result = getOverlayShell({ tone: 'unknown' });
+        expect(result.className).toContain('bg-card');
+    });
+
+    it('handles fallback correctly for unknown depth', () => {
+        const result = getOverlayShell({ depth: 'unknown' });
+        expect(result.style.boxShadow).toBe('var(--nb-shadow)');
+    });
+
     describe('Liquid theme', () => {
       it('returns correct defaults for liquid theme', () => {
         const result = getOverlayShell({ theme: 'liquid' });
@@ -90,6 +100,16 @@ describe('ThemedPrimitives utils', () => {
       it('handles depth prop for liquid-dark theme', () => {
         const result = getOverlayShell({ theme: 'liquid-dark', depth: 'hover' });
         expect(result.style.boxShadow).toContain('var(--glass-drop-shadow-hover');
+      });
+
+      it('handles liquid fallback correctly for unknown tone', () => {
+        const result = getOverlayShell({ theme: 'liquid', tone: 'unknown' });
+        expect(result.className).toContain('lg-surface-2');
+      });
+
+      it('handles liquid fallback correctly for unknown depth', () => {
+        const result = getOverlayShell({ theme: 'liquid', depth: 'unknown' });
+        expect(result.style.boxShadow).toContain('var(--glass-drop-shadow');
       });
 
       it('does not apply neubrutalism classes for liquid-dark theme', () => {
