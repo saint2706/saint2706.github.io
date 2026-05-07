@@ -44,3 +44,6 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
 - **[SEC-DEP] PostCSS XSS via Unescaped <style> (GHSA-qx2v-qp2m-jg93)**:
   - Discovered a Moderate severity vulnerability in `postcss@8.5.8` via `pnpm audit`.
   - Upgraded `postcss` to `8.5.10` using `pnpm install postcss@8.5.10`.
+- **Dependency Overrides Added:**
+  - Added override for `basic-ftp` to `>=5.3.1` to fix High severity vulnerability allowing a malicious FTP server to cause client-side denial of service via unbounded multiline control response buffering.
+  - Added override for `ip-address` to `>=10.1.1` to fix Moderate severity vulnerability allowing XSS in Address6 HTML-emitting methods.
