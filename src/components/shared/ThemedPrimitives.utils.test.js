@@ -52,13 +52,13 @@ describe('ThemedPrimitives utils', () => {
     });
 
     it('handles fallback correctly for unknown tone', () => {
-        const result = getOverlayShell({ tone: 'unknown' });
-        expect(result.className).toContain('bg-card');
+      const result = getOverlayShell({ tone: 'unknown' });
+      expect(result.className).toContain('bg-card');
     });
 
     it('handles fallback correctly for unknown depth', () => {
-        const result = getOverlayShell({ depth: 'unknown' });
-        expect(result.style.boxShadow).toBe('var(--nb-shadow)');
+      const result = getOverlayShell({ depth: 'unknown' });
+      expect(result.style.boxShadow).toBe('var(--nb-shadow)');
     });
 
     describe('Liquid theme', () => {
