@@ -44,3 +44,8 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
 - **[SEC-DEP] PostCSS XSS via Unescaped <style> (GHSA-qx2v-qp2m-jg93)**:
   - Discovered a Moderate severity vulnerability in `postcss@8.5.8` via `pnpm audit`.
   - Upgraded `postcss` to `8.5.10` using `pnpm install postcss@8.5.10`.
+
+## Dependency Security Vulnerabilities Fixed
+
+- Fixed `basic-ftp` vulnerability (CVE: GHSA-rpmf-866q-6p89) by adding override `"basic-ftp": ">=5.3.1"` to `package.json`.
+- Fixed `ip-address` vulnerability (CVE: GHSA-v2v4-37r5-5v8g) by adding override `"ip-address": ">=10.1.1"` to `package.json`.
