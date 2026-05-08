@@ -134,3 +134,8 @@
 
 - **Fixed Dead Code**: Removed `public/spa-redirect.js` and its import from `index.html`. The script was intended for Single Page Apps on GitHub Pages, but the project is configured to use React Router in hash mode, making this script unnecessary and unused.
 - **Verified**: Build, Lint, and Tests passed cleanly.
+
+## Session 25
+
+- **Fixed Duplicate Code**: Removed redundant `title` attributes from `src/components/layout/Navbar.jsx`, `src/components/pages/Projects.jsx`, `src/components/shared/Chatbot.jsx`, and `src/components/shared/TerminalMode.jsx` since they already had equivalent `aria-label` or visible text content.
+- **Verified**: Build, Lint, and Tests passed cleanly.

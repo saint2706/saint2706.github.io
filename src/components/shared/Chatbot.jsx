@@ -266,7 +266,6 @@ const Chatbot = React.memo(() => {
             )}
             style={mainFabShell.style}
             aria-label="Open chat options"
-            title="Open chat options"
             aria-haspopup="menu"
             aria-expanded={isFabOpen}
             onClick={() => setIsFabOpen(prev => !prev)}
