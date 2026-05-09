@@ -358,7 +358,6 @@ const Navbar = React.memo(({ onOpenSettings }) => {
             aria-expanded={isMenuOpen}
             aria-controls="mobile-nav-menu"
             aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            title={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
             {isMenuOpen ? (
               <X size={20} aria-hidden="true" />
