@@ -89,3 +89,10 @@
 - **[PERF] Extracted static animation variants and style objects in Navbar**: Extracted Framer Motion animation variants (`navInitial`, `navAnimate`, `menuInitial`, etc.) and inline style objects (`navStyle`, `menuGlassBgDark`, `menuGlassBgLight`) outside of the `Navbar` render function in `src/components/layout/Navbar.jsx`. This prevents React from allocating new object references on every render cycle (e.g. when `isScrolled` updates on scroll), eliminating garbage collection overhead and preventing unnecessary deep tree diffing by Framer Motion.
 - **[PERF] Extracted event handlers in CustomCursor and Chatbot:** Extracted inline event handlers (`handleMouseDown`, `handleMouseUp`, `handleMouseLeave`, `handleMouseEnter` in `CustomCursor.jsx` and `handleOpenChatbot`, `handleCloseChatbot` in `Chatbot.jsx`) and wrapped them in `useCallback`. This prevents these function references from being recreated on every render cycle, reducing garbage collection overhead and potential re-renders in dependent hooks.
 - **[SEC] Patched basic-ftp vulnerability:** Updated `pnpm.overrides` for `basic-ftp` to `>=5.3.1` to resolve the high-severity client-side DoS vulnerability (GHSA-rpmf-866q-6p89).
+
+## 2026-05-15 - CLS Optimizations
+
+Fixed Cumulative Layout Shift (CLS) issues identified in Lighthouse audits:
+
+- Added `will-change: transform;` to `.nb-ticker` in `src/index.css` to hardware-accelerate the marquee animation.
+- Added `min-h-[12rem]` to the Suspense container in `src/components/pages/Playground.jsx` to reserve space for lazily loaded code blocks.

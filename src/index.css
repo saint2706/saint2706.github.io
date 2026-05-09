@@ -566,6 +566,7 @@
   display: flex;
   width: max-content;
   animation: nb-ticker-scroll 25s linear infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
