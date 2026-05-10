@@ -426,7 +426,7 @@ const SnippetCard = React.memo(
           </p>
 
           {/* Code Block */}
-          <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64">
+          <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64 min-h-[12rem]">
             <Suspense
               fallback={
                 <div className="h-48 bg-card animate-pulse rounded-nb border-2 border-[color:var(--color-border)]" />
