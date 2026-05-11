@@ -14,8 +14,11 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
-# Google (Gemini / Bard)
+# Google (Gemini / Bard / Search)
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
 Allow: /
 
 # Anthropic (Claude)
