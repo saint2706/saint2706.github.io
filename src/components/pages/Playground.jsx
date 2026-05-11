@@ -287,6 +287,8 @@ const Playground = React.memo(() => {
                 animate="animate"
                 exit="exit"
                 className="col-span-full text-center py-12"
+                role="status"
+                aria-live="polite"
               >
                 <Code2 className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
                 <h2 className="mt-4 text-lg font-heading font-bold text-[color:var(--text-primary)]">

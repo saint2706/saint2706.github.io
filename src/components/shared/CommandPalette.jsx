@@ -324,7 +324,11 @@ const CommandPalette = ({ isOpen, onClose, onOpenTerminal }) => {
                 aria-label="Commands"
               >
                 {filteredCommands.length === 0 ? (
-                  <div className="px-4 py-8 text-center text-secondary font-sans">
+                  <div
+                    className="px-4 py-8 text-center text-secondary font-sans"
+                    role="status"
+                    aria-live="polite"
+                  >
                     No commands found for &ldquo;{query}&rdquo;
                   </div>
                 ) : (
