@@ -7,11 +7,11 @@ import * as themeContext from './theme-context';
 
 // Mock dependencies
 vi.mock('../../services/ai', () => ({
-  roastResume: vi.fn()
+  roastResume: vi.fn(),
 }));
 
 vi.mock('./theme-context', () => ({
-  useTheme: vi.fn()
+  useTheme: vi.fn(),
 }));
 
 // Mock framer-motion to bypass animations in tests
@@ -24,7 +24,7 @@ vi.mock('framer-motion', async () => {
         // eslint-disable-next-line no-unused-vars
         const { initial, animate, exit, ...rest } = props;
         return <div {...rest}>{children}</div>;
-      }
+      },
     },
     useReducedMotion: () => false,
   };
@@ -194,9 +194,11 @@ describe('RoastInterface Component', () => {
 
   it('handles component unmount during API call safely', async () => {
     let resolveApi;
-    aiService.roastResume.mockReturnValue(new Promise(resolve => {
-      resolveApi = resolve;
-    }));
+    aiService.roastResume.mockReturnValue(
+      new Promise(resolve => {
+        resolveApi = resolve;
+      })
+    );
 
     const { unmount } = render(
       <RoastInterface
