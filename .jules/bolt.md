@@ -96,3 +96,5 @@ Fixed Cumulative Layout Shift (CLS) issues identified in Lighthouse audits:
 
 - Added `will-change: transform;` to `.nb-ticker` in `src/index.css` to hardware-accelerate the marquee animation.
 - Added `min-h-[12rem]` to the Suspense container in `src/components/pages/Playground.jsx` to reserve space for lazily loaded code blocks.
+- Wrapped MarqueeTicker in React.memo to prevent unnecessary re-renders.
+- Added min-h-[12rem] to the Suspense fallback in Playground to prevent CLS.

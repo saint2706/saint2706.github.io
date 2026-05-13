@@ -37,45 +37,49 @@ const DEFAULT_ITEMS = [
  * @param {boolean} [props.useBlurBand] - Adds a glassy blur backdrop for liquid variant
  * @param {string} [props.className] - Additional wrapper classes
  */
-const MarqueeTicker = ({
-  items = DEFAULT_ITEMS,
-  bgColor = 'bg-fun-yellow',
-  variant = 'neub',
-  useBlurBand = false,
-  className = '',
-}) => {
-  // Duplicate items for seamless loop
-  const tickerContent = [...items, ...items];
-  const isLiquid = variant === 'liquid';
+const MarqueeTicker = React.memo(
+  ({
+    items = DEFAULT_ITEMS,
+    bgColor = 'bg-fun-yellow',
+    variant = 'neub',
+    useBlurBand = false,
+    className = '',
+  }) => {
+    // Duplicate items for seamless loop
+    const tickerContent = [...items, ...items];
+    const isLiquid = variant === 'liquid';
 
-  const wrapperClasses = isLiquid
-    ? `${useBlurBand ? 'lg-surface-2' : bgColor} border-y border-[color:var(--border-soft)] py-2`
-    : `border-y-[3px] border-black ${bgColor} py-3`;
+    const wrapperClasses = isLiquid
+      ? `${useBlurBand ? 'lg-surface-2' : bgColor} border-y border-[color:var(--border-soft)] py-2`
+      : `border-y-[3px] border-black ${bgColor} py-3`;
 
-  const itemClasses = isLiquid
-    ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--text-secondary)]'
-    : 'whitespace-nowrap px-6 font-heading text-sm font-bold uppercase tracking-widest text-black';
+    const itemClasses = isLiquid
+      ? 'whitespace-nowrap px-6 font-heading text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--text-secondary)]'
+      : 'whitespace-nowrap px-6 font-heading text-sm font-bold uppercase tracking-widest text-black';
 
-  const separatorClasses = isLiquid
-    ? 'mx-4 text-[color:var(--color-text-muted)]'
-    : 'mx-4 text-fun-pink';
+    const separatorClasses = isLiquid
+      ? 'mx-4 text-[color:var(--color-text-muted)]'
+      : 'mx-4 text-fun-pink';
 
-  return (
-    <div
-      className={`w-full overflow-hidden ${wrapperClasses} ${className}`}
-      aria-hidden="true"
-      role="presentation"
-    >
-      <div className="nb-ticker">
-        {tickerContent.map((item, i) => (
-          <span key={`${item}-${i}`} className={itemClasses}>
-            {item}
-            <span className={separatorClasses}>◆</span>
-          </span>
-        ))}
+    return (
+      <div
+        className={`w-full overflow-hidden ${wrapperClasses} ${className}`}
+        aria-hidden="true"
+        role="presentation"
+      >
+        <div className="nb-ticker">
+          {tickerContent.map((item, i) => (
+            <span key={`${item}-${i}`} className={itemClasses}>
+              {item}
+              <span className={separatorClasses}>◆</span>
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+MarqueeTicker.displayName = 'MarqueeTicker';
 
 export default MarqueeTicker;
