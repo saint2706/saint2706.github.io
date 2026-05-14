@@ -40,6 +40,9 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-env
 
+      - name: Run tests
+        run: pnpm run test:run
+
       - name: Build
         run: pnpm run build
         env:

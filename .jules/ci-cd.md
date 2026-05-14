@@ -42,3 +42,5 @@
 
 - **Update**: Added `needs: [lint]` to `test`, `build`, and `security` jobs in `.github/workflows/ci.yml`. Added `needs: [actionlint]` to `workflow-security` job in `.github/workflows/workflow-lint.yml`.
 - **Why**: Enforces a fail-fast mechanism. If linting fails, it prevents subsequent resource-intensive jobs from running, saving compute resources and reducing overall pipeline time on broken code.
+- Optimized the CI test matrix by excluding redundant `windows-latest` and `macos-latest` jobs on older Node.js versions, reducing total jobs from 9 to 5 to save compute resources.
+- Enforced test execution in `deploy.yml` before the build step to ensure production deployments never skip tests.
