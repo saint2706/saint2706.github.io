@@ -313,4 +313,19 @@ describe('Playground Component', () => {
     fireEvent.click(closeButton);
     expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
   });
+
+  it('handles clear filters when no snippets found', async () => {
+    // Override the mock to return empty array for all filters
+    const getSnippetsMock = await import('../../data/snippets');
+    getSnippetsMock.getSnippetsByLanguage.mockImplementation(() => []);
+
+    renderPlayground();
+
+    // Check if the empty state is rendered
+    expect(screen.getByText('No snippets found')).toBeInTheDocument();
+
+    // Click the clear filters button
+    const clearButton = screen.getByText('Clear Filters');
+    fireEvent.click(clearButton);
+  });
 });
