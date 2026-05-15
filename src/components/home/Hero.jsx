@@ -53,6 +53,7 @@ const snippetStickerStyle = { '--sticker-rotate': '-1deg' };
 /**
  * Hero section component for homepage
  * @type {React.NamedExoticComponent}
+ * @returns {JSX.Element} The Hero section component.
  */
 const Hero = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();

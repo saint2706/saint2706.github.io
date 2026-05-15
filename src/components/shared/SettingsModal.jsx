@@ -108,6 +108,7 @@ const ThemeCard = ({ option, isActive, onClick }) => {
  * @param {boolean} props.cursorEnabled - Current cursor state.
  * @param {boolean} props.cursorToggleDisabled - Whether cursor toggle is locked by a11y prefs.
  * @param {Function} props.onToggleCursor - Cursor toggle handler.
+ * @returns {JSX.Element|null} The SettingsModal component or null if closed.
  */
 const SettingsModal = ({
   isOpen,

@@ -116,3 +116,8 @@
 - Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
 - Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
 - Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
+
+## 2026-05-15
+
+- Audited codebase documentation for missing JSDoc/TSDoc comments on exported React components.
+- Added `@returns {JSX.Element}` annotations to the JSDoc blocks of `Hero` (`src/components/home/Hero.jsx`), `SettingsModal` (`src/components/shared/SettingsModal.jsx`), `SEOHead` (`src/components/shared/SEOHead.jsx`), `MarqueeTicker` (`src/components/shared/MarqueeTicker.jsx`), and `ZigzagDivider` (`src/components/shared/ZigzagDivider.jsx`) components to improve documentation completeness.

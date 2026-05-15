@@ -36,6 +36,7 @@ const DEFAULT_ITEMS = [
  * @param {'neub'|'liquid'} [props.variant] - Visual style variant
  * @param {boolean} [props.useBlurBand] - Adds a glassy blur backdrop for liquid variant
  * @param {string} [props.className] - Additional wrapper classes
+ * @returns {JSX.Element} The MarqueeTicker component.
  */
 const MarqueeTicker = ({
   items = DEFAULT_ITEMS,
