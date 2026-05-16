@@ -10,6 +10,12 @@ import {
 
 describe('Security Utils', () => {
   describe('safeJSONStringify', () => {
+    it('escapes \u2028 and \u2029 characters', () => {
+      const input = { key: 'Line\u2028Separator and Paragraph\u2029Separator' };
+      const result = safeJSONStringify(input);
+      expect(result).toContain('Line\\u2028Separator and Paragraph\\u2029Separator');
+    });
+
     it('escapes closing script tag', () => {
       const input = { key: '</script><script>alert(1)</script>' };
       const result = safeJSONStringify(input);
@@ -64,6 +70,8 @@ describe('Security Utils', () => {
 
   describe('isSafeHref', () => {
     const testCases = [
+      { name: 'Invalid encoded URI component', input: 'https://example.com/%C2', expected: true },
+
       { name: 'Valid HTTPS URL', input: 'https://example.com', expected: true },
       { name: 'Valid HTTP URL', input: 'http://example.com', expected: true },
       { name: 'Valid Mailto URL', input: 'mailto:test@example.com', expected: true },
@@ -170,6 +178,8 @@ describe('Security Utils', () => {
 
   describe('isSafeImageSrc', () => {
     const testCases = [
+      { name: 'Invalid encoded URI component in image src', input: 'https://example.com/image.png%C2', expected: true },
+
       { name: 'Valid HTTPS URL', input: 'https://example.com/image.png', expected: true },
       { name: 'Valid HTTP URL', input: 'http://example.com/image.png', expected: true },
       {

@@ -15,6 +15,27 @@ vi.mock('../utils/security', async importOriginal => {
   };
 });
 
+
+
+  describe('getModel missing key (Line 310, etc.)', () => {
+    it('returns missing key error when API_KEY is missing', async () => {
+      vi.useFakeTimers();
+      vi.resetModules();
+      vi.stubEnv('VITE_GEMINI_API_KEY', '');
+
+      const { roastResume } = await import('./ai.js');
+
+      // Advance timers to clear rate limit
+      vi.advanceTimersByTime(3000);
+      const response = await roastResume();
+      expect(response).toBe('My AI circuits are currently offline. Please check the configuration.');
+
+      vi.unstubAllEnvs();
+      vi.useRealTimers();
+    });
+  });
+
+
 describe('AI Service', () => {
   let mockGenerateContent;
   let mockSendMessage;
@@ -59,6 +80,19 @@ describe('AI Service', () => {
   });
 
   describe('chatWithGemini', () => {
+    it('should handle timeout error in chatWithGemini', async () => {
+      // Create a promise that resolves after the timeout (15000ms)
+      mockSendMessage.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 20000)));
+
+      const responsePromise = chatWithGemini('Hello timeout');
+
+      // Fast-forward timers to trigger the timeout
+      vi.advanceTimersByTime(16000);
+
+      const response = await responsePromise;
+      expect(response).toBe("I'm thinking really hard, but my connection seems to be slow. Try asking me again!");
+    });
+
     it('should send message successfully', async () => {
       mockSendMessage.mockResolvedValue({
         response: { text: () => 'AI Response' },
@@ -119,6 +153,17 @@ describe('AI Service', () => {
   });
 
   describe('roastResume', () => {
+    it('should handle timeout in roastResume', async () => {
+      vi.advanceTimersByTime(3000); // clear rate limit
+      mockGenerateContent.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 20000)));
+
+      const responsePromise = roastResume();
+      vi.advanceTimersByTime(16000);
+
+      const response = await responsePromise;
+      expect(response).toBe('I was brewing a really good roast, but it took too long. Try again!');
+    });
+
     it('should generate roast successfully', async () => {
       // Reset rate limit
       vi.advanceTimersByTime(3000);
@@ -184,6 +229,40 @@ describe('AI Service', () => {
   });
 
   describe('sanitizeHistoryForGemini', () => {
+    it('should ignore entry if it is not an object (e.g. array)', () => {
+      const history = [ [] ]; // An array instead of an object
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should ignore entry if it is null', () => {
+      const history = [ null ];
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should ignore entry parts if not an array', () => {
+      const history = [{ role: 'user', parts: 'Not an array' }];
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should handle empty text resulting from sanitizeInput', () => {
+      const history = [{ role: 'user', parts: [{ text: '\u0000' }] }]; // Will become empty string after sanitizeInput
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should handle when budgetedText length is 0 due to remainingBudget', () => {
+      // remainingBudget will be <= 0 if we exceed 60000 chars.
+      // We need multiple parts or entries to trigger remainingBudget <= 0 or budgetedText empty
+      // Max entry is 1 part per entry, 4000 max chars per part, max 30 entries (30 * 4000 = 120000 limit, but total max chars is 60000)
+      const parts = Array.from({ length: 30 }, () => ({ role: 'user', parts: [{ text: 'a'.repeat(4000) }] }));
+      const sanitized = sanitizeHistoryForGemini(parts);
+      // First 15 entries * 4000 chars = 60000. So 16th entry will return empty due to remainingBudget <= 0
+      expect(sanitized.length).toBe(15);
+    });
+
     it('should valid history', () => {
       const history = [
         { role: 'user', parts: [{ text: 'Hello' }] },
