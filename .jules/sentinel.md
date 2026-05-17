@@ -45,3 +45,13 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
   - Discovered a Moderate severity vulnerability in `postcss@8.5.8` via `pnpm audit`.
   - Upgraded `postcss` to `8.5.10` using `pnpm install postcss@8.5.10`.
 - Mitigated a moderate XSS vulnerability in the ip-address dependency by enforcing version >=10.1.1 via pnpm.overrides in package.json.
+
+### Security Improvement: Evaluated Random Number Generators
+
+- **Vulnerability / Warning**: None found.
+- **Action**: Conducted an audit of `Math.random()` usage throughout the codebase, primarily within the `src/components/games/` directory and UI components like `NotFound.jsx` and `Footer.jsx`. Verified that these instances are used strictly for non-cryptographic purposes (e.g., placing mines, shuffling cards, game logic, or cosmetic animations).
+- **Result**: Maintained existing `Math.random()` implementations, as replacing them with `crypto.getRandomValues()` in non-security-critical contexts constitutes "security theater" and introduces unnecessary complexity, adhering to the project's policy against rolling custom cryptography unnecessarily.
+
+### Security Improvement: Dependency Updates
+
+- **Action**: Ran `pnpm install` which automatically resolved dependencies and checked for updates in the workspace.
