@@ -52,6 +52,7 @@ const snippetStickerStyle = { '--sticker-rotate': '-1deg' };
 
 /**
  * Hero section component for homepage
+ * @returns {JSX.Element} The rendered Hero component
  * @type {React.NamedExoticComponent}
  */
 const Hero = React.memo(() => {
@@ -405,6 +406,7 @@ const Hero = React.memo(() => {
 Hero.displayName = 'Hero';
 
 /**
+ * @returns {JSX.Element} The rendered Hero component
  * @type {React.NamedExoticComponent}
  */
 export default Hero;

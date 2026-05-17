@@ -13,6 +13,7 @@ import React from 'react';
  * @param {string} [props.fillColor] - Fill color for the zigzag (default: black)
  * @param {number} [props.height] - Height in pixels (default: 20)
  * @param {string} [props.className] - Additional wrapper classes
+ * @returns {JSX.Element|null} The rendered ZigzagDivider component, or null if variant is "none"
  */
 const ZigzagDivider = ({
   variant = 'zigzag',
