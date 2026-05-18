@@ -45,3 +45,4 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
   - Discovered a Moderate severity vulnerability in `postcss@8.5.8` via `pnpm audit`.
   - Upgraded `postcss` to `8.5.10` using `pnpm install postcss@8.5.10`.
 - Mitigated a moderate XSS vulnerability in the ip-address dependency by enforcing version >=10.1.1 via pnpm.overrides in package.json.
+- **[SEC]** Fixed `brace-expansion` DoS vulnerability by forcing its version to `>=5.0.6` via `pnpm.overrides` in `package.json`.
