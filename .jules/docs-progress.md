@@ -116,3 +116,8 @@
 - Identified false positive broken link `https://play.tailwindcss.com` in `.agents/skills/tailwind-css-patterns/SKILL.md` (returned Status 0 due to network configuration/rate limiting).
 - Manually verified the URL is active and returning HTTP 200. No functional changes were required for this link.
 - Verified workspace passes `pnpm run build`, `pnpm run lint`, and `pnpm run format:check`.
+
+## 2026-05-18
+
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully. No new broken links, unformatted code, or missing JSDocs were found.
+- Fixed a missing `@returns` JSDoc annotation in the `SettingsModal` component (`src/components/shared/SettingsModal.jsx`).
