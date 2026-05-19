@@ -40,6 +40,7 @@ import {
  * @param {Array}   [props.schemas]    — Array of JSON-LD schema objects to inject
  * @param {string}  [props.author]     — Override author name
  * @param {React.ReactNode} [props.children] — Extra <Helmet> children
+ * @returns {JSX.Element}
  */
 const SEOHead = ({
   title,
