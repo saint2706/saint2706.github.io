@@ -352,3 +352,7 @@ Fixed conflicting canonical URLs issue in Lighthouse SEO audit.
 1.  **[SEO] Fixed conflicting canonical URLs**:
     - Removed hardcoded `<link rel="canonical" href="https://saint2706.github.io/" />` from `index.html`.
     - Relying exclusively on `src/components/shared/SEOHead.jsx` to dynamically inject the correct canonical URL per route, fixing the Lighthouse "Document does not have a valid `rel=canonical`" warning.
+
+### GEO & SEO Optimization (index.html)
+
+- Removed hardcoded meta tags in `index.html` to prevent duplicate SEO metadata since `react-helmet` injects them dynamically.
