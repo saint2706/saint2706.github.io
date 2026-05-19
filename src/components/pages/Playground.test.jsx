@@ -256,6 +256,27 @@ describe('Playground Component', () => {
     expect(cssTab).toHaveAttribute('aria-selected', 'true');
   });
 
+  it('shows empty state when no snippets are found and allows clearing filters', async () => {
+    // We need to override the mock for this specific test
+    const { getSnippetsByLanguage } = await import('../../data/snippets');
+    getSnippetsByLanguage.mockReturnValueOnce([]);
+
+    renderPlayground();
+
+    expect(screen.getByText('No snippets found')).toBeInTheDocument();
+
+    const clearFiltersButton = screen.getByText('Clear Filters');
+
+    await act(async () => {
+      fireEvent.click(clearFiltersButton);
+    });
+
+    // Instead of waiting for snippets to appear (which depends on mock implementation details
+    // of how many times it was called), let's just assert the 'All' tab becomes selected.
+    const allTab = screen.getAllByRole('tab').find(t => t.textContent.includes('All'));
+    expect(allTab).toHaveAttribute('aria-selected', 'true');
+  });
+
   it('handles copy to clipboard functionality', async () => {
     vi.useFakeTimers();
     renderPlayground();
