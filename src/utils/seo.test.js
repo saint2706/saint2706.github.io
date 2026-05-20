@@ -318,4 +318,12 @@ describe('seo utils', () => {
       expect(schema.worksFor).toBeUndefined();
     });
   });
+
+  describe('Additional Schemas', () => {
+    it('generates playgroundSchema correctly', () => {
+      const schema = seo.playgroundSchema();
+      expect(schema['@type']).toBe('SoftwareApplication');
+      expect(schema.name).toContain('Python Playground');
+    });
+  });
 });
