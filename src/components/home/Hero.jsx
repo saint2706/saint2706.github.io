@@ -25,6 +25,8 @@ import HeroBackground from './HeroBackground';
 /**
  * Hero section component for homepage
  * Performance optimization: Wrapped in React.memo to prevent unnecessary re-renders
+ *
+ * @returns {JSX.Element}
  */
 // ⚡ Bolt: Extracted static animation objects to prevent re-renders
 const badgeInitial = { opacity: 0, scale: 1.15, rotate: 3 };
