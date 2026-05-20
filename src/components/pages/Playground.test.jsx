@@ -63,9 +63,8 @@ vi.mock('framer-motion', () => {
       article: MotionArticle,
     },
     AnimatePresence: ({ children }) => <>{children}</>,
-    useReducedMotion: () => false,
-  };
-});
+    useReducedMotion: vi.fn(() => false),
+  };});
 
 vi.mock('lucide-react', async () => {
   const ReactLib = await vi.importActual('react');
@@ -156,7 +155,7 @@ vi.mock('../shared/SyntaxHighlighter', () => ({
 }));
 
 vi.mock('../shared/theme-context', () => ({
-  useTheme: () => ({ theme: 'neubrutalism', toggleTheme: vi.fn() }),
+  useTheme: vi.fn(() => ({ theme: 'neubrutalism', toggleTheme: vi.fn() })),
   ThemeProvider: ({ children }) => <div data-testid="theme-provider">{children}</div>,
 }));
 
@@ -220,6 +219,53 @@ const renderPlayground = () => {
 };
 
 describe('Playground Component', () => {
+  it('renders correctly with reduced motion', async () => {
+    const { useReducedMotion } = await import('framer-motion');
+    useReducedMotion.mockReturnValue(true);
+
+    renderPlayground();
+
+    expect(screen.getByText('Code Playground')).toBeInTheDocument();
+
+    useReducedMotion.mockReturnValue(false);
+  });
+
+  it('renders correctly with liquid theme', async () => {
+    const { useTheme } = await import('../shared/theme-context');
+    useTheme.mockReturnValue({ theme: 'liquid', toggleTheme: vi.fn() });
+
+    renderPlayground();
+
+    expect(screen.getByText('Code Playground')).toBeInTheDocument();
+
+    // Check for some liquid specific classes if needed
+    // or just that it renders without error to cover the ternary paths
+
+    useTheme.mockReturnValue({ theme: 'neubrutalism', toggleTheme: vi.fn() });
+  });
+
+  it('handles copy error gracefully', async () => {
+    vi.useFakeTimers();
+    renderPlayground();
+
+    // Mock clipboard writeText to throw an error
+    navigator.clipboard.writeText.mockRejectedValueOnce(new Error('Clipboard error'));
+
+    const copyButtons = screen.getAllByRole('button', { name: /copy .* code/i });
+    expect(copyButtons.length).toBeGreaterThan(0);
+
+    await act(async () => {
+      fireEvent.click(copyButtons[0]);
+    });
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalled();
+
+    // It should not show the 'Copied!' text since it failed
+    expect(screen.queryByText('Copied!')).not.toBeInTheDocument();
+
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
