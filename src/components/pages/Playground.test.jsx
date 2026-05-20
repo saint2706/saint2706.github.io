@@ -64,7 +64,8 @@ vi.mock('framer-motion', () => {
     },
     AnimatePresence: ({ children }) => <>{children}</>,
     useReducedMotion: vi.fn(() => false),
-  };});
+  };
+});
 
 vi.mock('lucide-react', async () => {
   const ReactLib = await vi.importActual('react');
