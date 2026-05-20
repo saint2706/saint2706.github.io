@@ -121,3 +121,4 @@
 
 - Audited documentation for missing JSDoc return types.
 - Added `@returns {JSX.Element}` and `@returns {JSX.Element|null}` annotations to `Hero`, `SettingsModal`, `SEOHead`, `MarqueeTicker`, and `ZigzagDivider` components.
+- Added `@returns` tags to fix invalid JSDoc on constants and missing tags on components

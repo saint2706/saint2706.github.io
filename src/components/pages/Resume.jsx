@@ -28,6 +28,12 @@ import ThemedSectionHeading from '../shared/ThemedSectionHeading';
 import { DoodleDivider } from '../shared/NbDecorative';
 import { useTheme } from '../shared/theme-context';
 
+const SECTION_VARIANTS = {
+  'bg-fun-yellow': 'yellow',
+  'bg-fun-pink': 'pink',
+  'bg-accent': 'accent',
+};
+
 /**
  * Reusable section component with neubrutalist styling
  *
@@ -39,12 +45,6 @@ import { useTheme } from '../shared/theme-context';
  * @param {React.ReactNode} props.children - Section content
  * @returns {JSX.Element} Styled section with header and content
  */
-const SECTION_VARIANTS = {
-  'bg-fun-yellow': 'yellow',
-  'bg-fun-pink': 'pink',
-  'bg-accent': 'accent',
-};
-
 const Section = React.memo(({ title, icon, color = 'bg-fun-yellow', children }) => (
   <div className="mb-12">
     <ThemedSectionHeading
