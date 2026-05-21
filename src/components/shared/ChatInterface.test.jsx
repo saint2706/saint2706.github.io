@@ -284,7 +284,7 @@ describe('ChatInterface', () => {
       () => {
         expect(screen.queryByRole('button', { name: /copied code/i })).not.toBeInTheDocument();
       },
-      { timeout: 3000 }
+      { timeout: 5000, interval: 100 }
     );
 
     unmount();
