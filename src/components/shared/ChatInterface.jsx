@@ -54,9 +54,16 @@ const generateMessageId = () => {
       return crypto.randomUUID();
     }
     if (typeof crypto.getRandomValues === 'function') {
-      const array = new Uint32Array(4);
-      crypto.getRandomValues(array);
-      return Array.from(array, dec => dec.toString(16).padStart(8, '0')).join('-');
+      const bytes = new Uint8Array(16);
+      crypto.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+      return [...bytes]
+        .map((b, i) => {
+          const hex = b.toString(16).padStart(2, '0');
+          return i === 4 || i === 6 || i === 8 || i === 10 ? '-' + hex : hex;
+        })
+        .join('');
     }
   }
 
