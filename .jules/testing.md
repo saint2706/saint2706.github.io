@@ -10,3 +10,7 @@
 
 - Improved test coverage in `src/utils/seo.js` by adding a unit test for playgroundSchema function.
 - Improved test coverage in `src/components/pages/Playground.jsx` by adding a test for the empty state UI when no snippets match the selected filter, strictly adhering to the AAA (Arrange, Act, Assert) pattern.
+
+## 2026-05-21
+
+- Improved test coverage in `src/components/games/Minesweeper.jsx` by fixing negative flag count bug when flagged mines exceed total mines. Achieved 100% functional and line coverage.

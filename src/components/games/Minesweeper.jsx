@@ -412,7 +412,9 @@ const Minesweeper = React.memo(() => {
           <Flag size={16} className="text-fun-pink" aria-hidden="true" />
           <div>
             <div className="text-sm md:text-xs text-secondary font-heading">Mines</div>
-            <div className="text-2xl font-heading font-bold text-fun-pink">{MINES - flagCount}</div>
+            <div className="text-2xl font-heading font-bold text-fun-pink">
+              {Math.max(0, MINES - flagCount)}
+            </div>
           </div>
         </div>
         <div className={ui.separator} />

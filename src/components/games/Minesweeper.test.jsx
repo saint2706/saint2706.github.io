@@ -125,6 +125,20 @@ describe('Minesweeper Game', () => {
     vi.restoreAllMocks();
   });
 
+  it('displays correct flag count when flags exceed MINES', () => {
+    renderWithTheme(<Minesweeper />);
+    const cells = screen.getAllByRole('button', { name: /Row \d+, Column \d+/i });
+
+    // Flag 11 cells (MINES is 10)
+    for (let i = 0; i < 11; i++) {
+      fireEvent.contextMenu(cells[i]);
+    }
+
+    // The rendered flag count shouldn't be negative, it uses Math.max(0, MINES - flagCount)
+    const countContainer = screen.getByText('Mines').nextSibling;
+    expect(countContainer.textContent).toBe('0');
+  });
+
   it('renders initial game state', () => {
     renderWithTheme(<Minesweeper />);
     expect(screen.getByText(/Minesweeper ready/i)).toBeInTheDocument();
@@ -230,6 +244,12 @@ describe('Minesweeper Game', () => {
     await waitFor(() => {
       expect(cells[0]).toHaveFocus();
     });
+
+    // Test default case by pressing an ignored key
+    fireEvent.keyDown(grid, { key: 'x' });
+
+    // Nothing should happen, focus should remain on cells[0]
+    expect(cells[0]).toHaveFocus();
 
     fireEvent.keyDown(grid, { key: 'f' });
 
