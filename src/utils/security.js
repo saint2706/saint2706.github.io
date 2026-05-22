@@ -55,7 +55,10 @@ export const safeJSONStringify = (value, replacer, space) => {
         return '\\u2028'; // Line separator
       case '\u2029':
         return '\\u2029'; // Paragraph separator
+      /* istanbul ignore next */
       default:
+        // The regex /[<>&'\u2028\u2029]/g only matches these explicit characters.
+        // This default case is theoretically unreachable but kept for safety/linting.
         return char;
     }
   });

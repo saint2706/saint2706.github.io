@@ -43,6 +43,14 @@ describe('Security Utils', () => {
       expect(result).toContain('\\u003c');
     });
 
+    it('preserves non-dangerous characters', () => {
+      // This string contains a mix of safe and unsafe characters
+      const input = { text: 'a-z0-9<>\u2028' };
+      const result = safeJSONStringify(input);
+      // 'a', '-', 'z', '0', '9' fall through the default case
+      expect(result).toBe('{"text":"a-z0-9\\u003c\\u003e\\u2028"}');
+    });
+
     it('returns fallback for undefined', () => {
       expect(safeJSONStringify(undefined)).toBe('null');
     });
@@ -101,6 +109,7 @@ describe('Security Utils', () => {
       { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
       // isSafeHref only validates protocol safety, not full URL validity. http:// is safe.
       { name: 'Malformed URL (protocol only)', input: 'http://', expected: true },
+      { name: 'Malformed URI encoding fallback', input: '%', expected: false }, // Fails http/https/mailto regex check
     ];
 
     testCases.forEach(({ name, input, expected }) => {
@@ -228,6 +237,7 @@ describe('Security Utils', () => {
       { name: 'Malformed URL (protocol only)', input: 'http://', expected: false },
       { name: 'Malformed URL (invalid domain)', input: 'https://###invalid', expected: false },
       { name: 'URL with missing slashes (auto-fixed)', input: 'https:example.com', expected: true },
+      { name: 'Malformed URI encoding fallback', input: '%', expected: true }, // URL constructor handles it as relative URL http://example.com/% which matches http/https
     ];
 
     testCases.forEach(({ name, input, expected }) => {
