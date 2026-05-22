@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+
 import React from 'react';
 import Minesweeper from './Minesweeper';
 import { ThemeProvider } from '../shared/ThemeProvider';

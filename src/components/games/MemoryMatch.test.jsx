@@ -1,79 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+
 import MemoryMatch from './MemoryMatch';
 
 // Mock theme context
 vi.mock('../shared/theme-context', () => ({
   useTheme: () => ({ theme: 'neubrutalism' }),
-}));
-
-// Mock framer-motion to bypass animations
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }) => {
-      const domProps = { ...props };
-      [
-        'initial',
-        'animate',
-        'exit',
-        'transition',
-        'whileTap',
-        'whileHover',
-        'variants',
-        'layoutId',
-        'style',
-        'drag',
-        'dragConstraints',
-        'dragElastic',
-        'dragMomentum',
-        'onUpdate',
-      ].forEach(k => delete domProps[k]);
-      return <div {...domProps}>{children}</div>;
-    },
-    button: ({ children, ...props }) => {
-      const domProps = { ...props };
-      [
-        'initial',
-        'animate',
-        'exit',
-        'transition',
-        'whileTap',
-        'whileHover',
-        'variants',
-        'layoutId',
-        'style',
-        'drag',
-        'dragConstraints',
-        'dragElastic',
-        'dragMomentum',
-        'onUpdate',
-      ].forEach(k => delete domProps[k]);
-      return <button {...domProps}>{children}</button>;
-    },
-    span: ({ children, ...props }) => {
-      const domProps = { ...props };
-      [
-        'initial',
-        'animate',
-        'exit',
-        'transition',
-        'whileTap',
-        'whileHover',
-        'variants',
-        'layoutId',
-        'style',
-        'drag',
-        'dragConstraints',
-        'dragElastic',
-        'dragMomentum',
-        'onUpdate',
-      ].forEach(k => delete domProps[k]);
-      return <span {...domProps}>{children}</span>;
-    },
-  },
-  AnimatePresence: ({ children }) => <>{children}</>,
-  useReducedMotion: vi.fn().mockReturnValue(true),
 }));
 
 describe('MemoryMatch', () => {

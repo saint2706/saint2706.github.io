@@ -1,0 +1,1 @@
+{ "ignoreUnimported": ["src/setupTests.js", "src/test-utils/framerMotionMock.jsx"] }

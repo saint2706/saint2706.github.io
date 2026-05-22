@@ -1,14 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import WhackAMole from './WhackAMole';
 
-// Mock theme context
-vi.mock('../shared/theme-context', () => ({
-  useTheme: () => ({ theme: 'neubrutalism' }),
-}));
-
-// Mock framer-motion
+// Mock framer-motion to bypass animations
 vi.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }) => {
@@ -74,6 +68,13 @@ vi.mock('framer-motion', () => ({
   },
   AnimatePresence: ({ children }) => <>{children}</>,
   useReducedMotion: vi.fn().mockReturnValue(true),
+}));
+
+import WhackAMole from './WhackAMole';
+
+// Mock theme context
+vi.mock('../shared/theme-context', () => ({
+  useTheme: () => ({ theme: 'neubrutalism' }),
 }));
 
 describe('WhackAMole', () => {

@@ -139,3 +139,8 @@
 
 - **Fixed Duplicate Code**: Removed redundant `title` attributes from `src/components/layout/Navbar.jsx`, `src/components/pages/Projects.jsx`, `src/components/shared/Chatbot.jsx`, and `src/components/shared/TerminalMode.jsx` since they already had equivalent `aria-label` or visible text content.
 - **Verified**: Build, Lint, and Tests passed cleanly.
+
+## Session 26
+
+- **Fixed Duplicate Code**: Centralized `framer-motion` mock in `src/test-utils/framerMotionMock.jsx` and removed duplicated code from seven test files (`WhackAMole`, `MemoryMatch`, `SimonSays`, `LightsOut`, `Minesweeper`, `SnakeGame`, `TicTacToe`).
+- **Verified**: Build, Lint, and Tests passed cleanly.
