@@ -255,4 +255,7 @@ const PythonRunner = ({ snippet }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default PythonRunner;

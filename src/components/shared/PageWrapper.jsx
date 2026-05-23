@@ -77,4 +77,7 @@ const PageWrapper = ({ children }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default PageWrapper;

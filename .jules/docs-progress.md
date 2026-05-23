@@ -121,3 +121,5 @@
 
 - Audited documentation for missing JSDoc return types.
 - Added `@returns {JSX.Element}` and `@returns {JSX.Element|null}` annotations to `Hero`, `SettingsModal`, `SEOHead`, `MarqueeTicker`, and `ZigzagDivider` components.
+- Added missing JSDoc comments to MemoryMatchCard, MinesweeperCell, and TicTacToeCell.
+- Added type annotations to default exports in games and shared components.

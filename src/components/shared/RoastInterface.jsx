@@ -252,4 +252,7 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default RoastInterface;

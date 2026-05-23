@@ -224,4 +224,7 @@ const SettingsModal = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default SettingsModal;

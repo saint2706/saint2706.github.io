@@ -64,4 +64,7 @@ const ThemedCard = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ThemedCard;

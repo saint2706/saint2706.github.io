@@ -95,4 +95,7 @@ const ThemedButton = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ThemedButton;

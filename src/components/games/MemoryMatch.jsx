@@ -40,6 +40,19 @@ const shuffle = arr => {
 const createDeck = () =>
   shuffle([...ICONS, ...ICONS].map((icon, i) => ({ id: i, icon, matched: false })));
 
+/**
+ * Individual card component for the Memory Match game.
+ * Memoized to prevent re-renders of unaffected cards.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.card - The card data object containing id and icon.
+ * @param {boolean} props.isFlipped - Whether the card is currently flipped face up.
+ * @param {boolean} props.isMatched - Whether the card has been successfully matched.
+ * @param {Function} props.onClick - Handler for when the card is clicked.
+ * @param {boolean} props.isLiquid - Whether the current theme is liquid.
+ * @param {boolean} props.shouldReduceMotion - Whether the user prefers reduced motion.
+ * @returns {React.ReactElement} The MemoryMatchCard component.
+ */
 const MemoryMatchCard = React.memo(
   ({
     card,
@@ -417,4 +430,7 @@ const MemoryMatch = React.memo(() => {
 
 MemoryMatch.displayName = 'MemoryMatch';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default MemoryMatch;

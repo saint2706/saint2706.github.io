@@ -122,4 +122,7 @@ const SEOHead = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default SEOHead;

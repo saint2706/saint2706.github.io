@@ -347,4 +347,7 @@ const Chatbot = React.memo(() => {
 
 Chatbot.displayName = 'Chatbot';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default Chatbot;

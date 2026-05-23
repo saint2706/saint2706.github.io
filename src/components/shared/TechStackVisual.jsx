@@ -326,4 +326,7 @@ const TechStackVisual = () => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default TechStackVisual;

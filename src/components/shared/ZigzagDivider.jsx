@@ -69,4 +69,7 @@ const ZigzagDivider = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ZigzagDivider;

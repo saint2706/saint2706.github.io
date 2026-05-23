@@ -856,4 +856,7 @@ const SnakeGame = React.memo(() => {
 
 SnakeGame.displayName = 'SnakeGame';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default SnakeGame;

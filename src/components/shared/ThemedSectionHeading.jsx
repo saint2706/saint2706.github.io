@@ -35,4 +35,7 @@ const ThemedSectionHeading = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ThemedSectionHeading;

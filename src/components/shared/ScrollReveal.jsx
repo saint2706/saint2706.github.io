@@ -100,4 +100,7 @@ const ScrollReveal = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ScrollReveal;

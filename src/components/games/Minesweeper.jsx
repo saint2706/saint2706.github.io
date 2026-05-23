@@ -105,6 +105,21 @@ const ADJACENT_COLORS = [
   'text-gray-500',
 ];
 
+/**
+ * Individual cell component for the Minesweeper game.
+ * Memoized to prevent re-renders of unaffected cells.
+ *
+ * @param {Object} props - The component props.
+ * @param {number} props.r - The row index of the cell.
+ * @param {number} props.c - The column index of the cell.
+ * @param {Object} props.cell - The state object for the cell (isMine, isRevealed, isFlagged, neighborCount).
+ * @param {Function} props.onClick - Handler for when the cell is left-clicked (reveal).
+ * @param {Function} props.onRightClick - Handler for when the cell is right-clicked (flag).
+ * @param {boolean} props.isGameOver - Whether the game is currently over.
+ * @param {boolean} props.isLiquid - Whether the current theme is liquid.
+ * @param {boolean} props.shouldReduceMotion - Whether the user prefers reduced motion.
+ * @returns {React.ReactElement} The MinesweeperCell component.
+ */
 const MinesweeperCell = React.memo(
   ({
     r,
@@ -589,4 +604,7 @@ const Minesweeper = React.memo(() => {
 
 Minesweeper.displayName = 'Minesweeper';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default Minesweeper;

@@ -412,4 +412,7 @@ const WhackAMole = React.memo(() => {
 
 WhackAMole.displayName = 'WhackAMole';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default WhackAMole;

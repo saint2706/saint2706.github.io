@@ -424,4 +424,7 @@ const CommandItem = React.memo(
 );
 CommandItem.displayName = 'CommandItem';
 
+/**
+ * @type {React.FC}
+ */
 export default CommandPalette;

@@ -32,4 +32,7 @@ const PageLoading = () => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default PageLoading;

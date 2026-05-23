@@ -53,4 +53,7 @@ const SyntaxHighlighter = ({ code, language }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default SyntaxHighlighter;

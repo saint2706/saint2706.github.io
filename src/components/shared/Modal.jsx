@@ -173,4 +173,7 @@ const Modal = React.memo(({ isOpen, onClose, title, children }) => {
 
 Modal.displayName = 'Modal';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default Modal;

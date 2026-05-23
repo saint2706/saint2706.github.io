@@ -156,6 +156,20 @@ const getCellLabel = (index, cell) => {
   return `Row ${row}, Column ${col}, ${state}`;
 };
 
+/**
+ * Individual cell component for the Tic Tac Toe game.
+ * Memoized to prevent re-renders of unaffected cells.
+ *
+ * @param {Object} props - The component props.
+ * @param {string|null} props.cell - The current value of the cell ('X', 'O', or null).
+ * @param {number} props.index - The index of the cell in the board array.
+ * @param {boolean} props.isWinningCell - Whether the cell is part of the winning combination.
+ * @param {boolean} props.disabled - Whether the cell is disabled from interaction.
+ * @param {Function} props.onClick - Handler for when the cell is clicked.
+ * @param {boolean} props.isLiquid - Whether the current theme is liquid.
+ * @param {boolean} props.shouldReduceMotion - Whether the user prefers reduced motion.
+ * @returns {React.ReactElement} The TicTacToeCell component.
+ */
 const TicTacToeCell = React.memo(
   ({
     cell,
@@ -620,4 +634,7 @@ const TicTacToe = React.memo(() => {
 
 TicTacToe.displayName = 'TicTacToe';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default TicTacToe;

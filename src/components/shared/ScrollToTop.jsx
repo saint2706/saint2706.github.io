@@ -89,4 +89,7 @@ const ScrollToTop = React.memo(() => {
 
 ScrollToTop.displayName = 'ScrollToTop';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default ScrollToTop;

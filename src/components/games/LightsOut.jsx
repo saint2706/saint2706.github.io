@@ -404,4 +404,7 @@ const LightsOut = React.memo(() => {
 
 LightsOut.displayName = 'LightsOut';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default LightsOut;

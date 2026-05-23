@@ -403,4 +403,7 @@ Just kidding... but seriously, let's chat!
 
 TerminalMode.displayName = 'TerminalMode';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default TerminalMode;

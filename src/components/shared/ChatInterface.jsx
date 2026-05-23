@@ -772,4 +772,7 @@ const ChatInterface = ({ onClose }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ChatInterface;

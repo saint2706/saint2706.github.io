@@ -78,4 +78,7 @@ const ThemedChip = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default ThemedChip;

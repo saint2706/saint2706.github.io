@@ -79,4 +79,7 @@ const MarqueeTicker = ({
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default MarqueeTicker;

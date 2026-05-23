@@ -370,4 +370,7 @@ const SimonSays = React.memo(() => {
 
 SimonSays.displayName = 'SimonSays';
 
+/**
+ * @type {React.NamedExoticComponent}
+ */
 export default SimonSays;

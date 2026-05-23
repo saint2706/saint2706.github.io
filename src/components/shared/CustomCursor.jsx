@@ -308,4 +308,7 @@ const CustomCursor = ({ enabled }) => {
   );
 };
 
+/**
+ * @type {React.FC}
+ */
 export default CustomCursor;
