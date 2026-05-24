@@ -10,6 +10,23 @@ import {
 
 describe('Security Utils', () => {
   describe('safeJSONStringify', () => {
+    it('handles JSON.stringify throwing an error', () => {
+      const result = safeJSONStringify({ a: 'test' }, () => {
+        throw new Error('test');
+      });
+      expect(result).toBe('null');
+    });
+
+    it('returns "null" when json is not a string', () => {
+      const result = safeJSONStringify(undefined);
+      expect(result).toBe('null');
+    });
+
+    it('does not replace safe characters', () => {
+      const result = safeJSONStringify({ key: 'abc123' });
+      expect(result).toBe('{"key":"abc123"}');
+    });
+
     it('escapes closing script tag', () => {
       const input = { key: '</script><script>alert(1)</script>' };
       const result = safeJSONStringify(input);
@@ -35,6 +52,28 @@ describe('Security Utils', () => {
       const input = { key: '\u2028 \u2029' };
       const result = safeJSONStringify(input);
       expect(result).toContain('\\u2028 \\u2029');
+    });
+
+    it('returns default char when replacing in string', () => {
+      // Create a test string with an arbitrary unexpected character match
+      // to hit the `default` branch in the replacer.
+      // Since our regex /[<>&'\u2028\u2029]/g exactly matches the cases,
+      // the default branch is theoretically unreachable unless regex diverges.
+      // We'll mock the replace call to ensure full coverage.
+      const testObj = { a: 'test' };
+      const originalReplace = String.prototype.replace;
+      try {
+        String.prototype.replace = function (regex, replacer) {
+          if (regex.source === '[<>&\'\\u2028\\u2029]') {
+            return replacer('x');
+          }
+          return originalReplace.call(this, regex, replacer);
+        };
+        const result = safeJSONStringify(testObj);
+        expect(result).toBe('x');
+      } finally {
+        String.prototype.replace = originalReplace;
+      }
     });
 
     it('handles complex objects', () => {
@@ -101,6 +140,7 @@ describe('Security Utils', () => {
       { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
       // isSafeHref only validates protocol safety, not full URL validity. http:// is safe.
       { name: 'Malformed URL (protocol only)', input: 'http://', expected: true },
+      { name: 'Malformed URI encoding', input: 'http://example.com/%E0%A4%A', expected: true },
     ];
 
     testCases.forEach(({ name, input, expected }) => {
@@ -219,6 +259,7 @@ describe('Security Utils', () => {
         input: '%2F%2Fexample.com/image.png',
         expected: false,
       },
+      { name: 'Malformed URI encoding', input: 'http://example.com/%E0%A4%A', expected: true },
       { name: 'Encoded fragment with slashes (safe)', input: '#%2F%2Fevil.com', expected: true },
       {
         name: 'URL with leading whitespace',
