@@ -64,7 +64,7 @@ describe('Security Utils', () => {
       const originalReplace = String.prototype.replace;
       try {
         String.prototype.replace = function (regex, replacer) {
-          if (regex.source === '[<>&\'\\u2028\\u2029]') {
+          if (regex.source === "[<>&'\\u2028\\u2029]") {
             return replacer('x');
           }
           return originalReplace.call(this, regex, replacer);
