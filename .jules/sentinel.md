@@ -46,3 +46,8 @@ Resolved High severity vulnerability in a deep transitive dependency of Lighthou
   - Upgraded `postcss` to `8.5.10` using `pnpm install postcss@8.5.10`.
 - Mitigated a moderate XSS vulnerability in the ip-address dependency by enforcing version >=10.1.1 via pnpm.overrides in package.json.
   \n### 2026-05-19\n\n- **[SEC-DEP] Dependency updates**: Fixed moderate security vulnerabilities in `ws` and `brace-expansion` by overriding their minimum versions to `>=8.20.1` and `>=5.0.6` respectively via `pnpm.overrides` in `package.json`.
+
+### Security Improvement: Fallback UUIDv4 Generation
+
+- **Vulnerability / Warning**: `generateMessageId` in `src/components/shared/ChatInterface.jsx` was returning a pseudo-random hex string instead of a valid UUIDv4 when falling back to `crypto.getRandomValues`.
+- **Fix**: Replaced the arbitrary uint32 serialization with a standard-compliant UUIDv4 generator using `crypto.getRandomValues(new Uint8Array(16))`. Set the version bits to 4 and variant bits to 8/9/A/B, returning a standard 8-4-4-4-12 hex string to avoid potential collisions and ensure RFC 4122 compliance.
