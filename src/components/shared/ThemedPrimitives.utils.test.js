@@ -45,6 +45,12 @@ describe('ThemedPrimitives utils', () => {
         expect(result.style.boxShadow).toBe('var(--nb-shadow-hover)');
       });
 
+      it('handles unknown tone and depth (fallback)', () => {
+        const result = getOverlayShell({ tone: 'unknownTone', depth: 'unknownDepth' });
+        expect(result.className).toContain('bg-card');
+        expect(result.style.boxShadow).toBe('var(--nb-shadow)');
+      });
+
       it('merges custom className', () => {
         const result = getOverlayShell({ className: 'custom-class' });
         expect(result.className).toContain('custom-class');
@@ -64,6 +70,16 @@ describe('ThemedPrimitives utils', () => {
         const result = getOverlayShell({ theme: 'liquid', tone: 'accent' });
         expect(result.className).toContain('lg-surface-2');
         expect(result.className).toContain('lg-tint-blue');
+      });
+
+      it('handles unknown tone and depth for liquid theme (fallback)', () => {
+        const result = getOverlayShell({
+          theme: 'liquid',
+          tone: 'unknownTone',
+          depth: 'unknownDepth',
+        });
+        expect(result.className).toContain('lg-surface-2');
+        expect(result.style.boxShadow).toContain('var(--glass-drop-shadow');
       });
 
       it('handles depth prop for liquid theme', () => {
