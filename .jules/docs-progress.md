@@ -121,3 +121,5 @@
 
 - Audited documentation for missing JSDoc return types.
 - Added `@returns {JSX.Element}` and `@returns {JSX.Element|null}` annotations to `Hero`, `SettingsModal`, `SEOHead`, `MarqueeTicker`, and `ZigzagDivider` components.
+- Audited codebase documentation and verified all `pnpm run lint`, `pnpm run format:check`, and `npx markdown-link-check` passed successfully. No new broken links, unformatted code, or missing JSDocs were found.
+- Added missing JSDoc description for the `CustomCursor` component in `src/components/shared/CustomCursor.jsx`.

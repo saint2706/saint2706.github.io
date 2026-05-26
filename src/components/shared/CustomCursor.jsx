@@ -308,4 +308,9 @@ const CustomCursor = ({ enabled }) => {
   );
 };
 
+/**
+ * Custom cursor component that follows mouse movement with theme-aware styling.
+ * Handles different states like pointer, text, input, and cards.
+ * @type {React.FC<{ enabled: boolean }>}
+ */
 export default CustomCursor;
