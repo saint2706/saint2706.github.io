@@ -99,6 +99,7 @@ describe('Security Utils', () => {
       { name: 'Encoded fragment with slashes (safe)', input: '#%2F%2Fevil.com', expected: true },
       { name: 'URL with leading whitespace', input: ' https://example.com', expected: true },
       { name: 'URL with trailing whitespace', input: 'https://example.com ', expected: true },
+      { name: 'Malformed URI sequence', input: '%E0%A4%A', expected: false },
       // isSafeHref only validates protocol safety, not full URL validity. http:// is safe.
       { name: 'Malformed URL (protocol only)', input: 'http://', expected: true },
     ];
@@ -209,6 +210,7 @@ describe('Security Utils', () => {
       { name: 'Protocol-relative URL', input: '//example.com/image.png', expected: false },
       { name: 'Path-only URL', input: '/images/photo.png', expected: true },
       { name: 'Fragment-only URL', input: '#section', expected: true },
+      { name: 'Malformed URI sequence', input: '%E0%A4%A', expected: false },
       {
         name: 'Encoded slash attack (single encoding)',
         input: '/%2Fexample.com/image.png',

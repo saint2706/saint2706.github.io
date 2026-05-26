@@ -55,6 +55,7 @@ export const safeJSONStringify = (value, replacer, space) => {
         return '\\u2028'; // Line separator
       case '\u2029':
         return '\\u2029'; // Paragraph separator
+      /* istanbul ignore next */
       default:
         return char;
     }
@@ -95,8 +96,8 @@ export const isSafeHref = href => {
     try {
       normalizedHref = decodeURIComponent(normalizedHref).trim();
     } catch {
-      // If decoding fails, stop and use the current value
-      break;
+      // If decoding fails, return false as it's a malformed URL
+      return false;
     }
     iterations++;
   }
@@ -159,8 +160,8 @@ export const isSafeImageSrc = src => {
     try {
       normalizedSrc = decodeURIComponent(normalizedSrc).trim();
     } catch {
-      // If decoding fails, stop and use the current value
-      break;
+      // If decoding fails, return false as it's a malformed URL
+      return false;
     }
     iterations++;
   }
