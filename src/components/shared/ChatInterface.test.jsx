@@ -443,7 +443,7 @@ describe('ChatInterface', () => {
       Object.defineProperty(global, 'crypto', {
         value: {
           getRandomValues: arr => {
-            for (let i = 0; i < arr.length; i++) arr[i] = 12345;
+            for (let i = 0; i < arr.length; i++) arr[i] = 12;
             return arr;
           },
         },
