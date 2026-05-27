@@ -139,3 +139,8 @@
 
 - **Fixed Duplicate Code**: Removed redundant `title` attributes from `src/components/layout/Navbar.jsx`, `src/components/pages/Projects.jsx`, `src/components/shared/Chatbot.jsx`, and `src/components/shared/TerminalMode.jsx` since they already had equivalent `aria-label` or visible text content.
 - **Verified**: Build, Lint, and Tests passed cleanly.
+
+## Session 26
+
+- **Fixed Duplicate Code**: Removed duplicate import of `useTheme` from `./theme-context` in `src/components/shared/Modal.test.jsx`. It was already imported previously on line 4 as `import { ThemeProvider } from './theme-context';` so it was combined.
+- **Verified**: Build, Lint, and Tests passed cleanly.
