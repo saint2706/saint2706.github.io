@@ -59,6 +59,27 @@ describe('AI Service', () => {
   });
 
   describe('chatWithGemini', () => {
+    it('should handle timeout error', async () => {
+      // Advance time to bypass rate limiting
+      vi.advanceTimersByTime(3000);
+
+      // Simulate timeout by never resolving
+      mockSendMessage.mockReturnValue(new Promise(() => {}));
+
+      const chatPromise = chatWithGemini('Hello');
+      vi.advanceTimersByTime(16000);
+
+      const response = await chatPromise;
+      expect(response).toContain("I'm thinking really hard");
+    });
+
+    it('should handle leaked key error', async () => {
+      vi.advanceTimersByTime(3000);
+      mockSendMessage.mockRejectedValue(new Error('API key reported as leaked'));
+      const response = await chatWithGemini('Hello');
+      expect(response).toContain('was detected as leaked');
+    });
+
     it('should send message successfully', async () => {
       mockSendMessage.mockResolvedValue({
         response: { text: () => 'AI Response' },
@@ -119,6 +140,19 @@ describe('AI Service', () => {
   });
 
   describe('roastResume', () => {
+    it('should handle missing API key', async () => {
+      vi.advanceTimersByTime(3000);
+      vi.stubEnv('VITE_GEMINI_API_KEY', '');
+      vi.resetModules();
+
+      const aiModule = await import('./ai');
+      const response = await aiModule.roastResume();
+      expect(response).toContain('My AI circuits are currently offline');
+
+      vi.unstubAllEnvs();
+      vi.resetModules();
+    });
+
     it('should generate roast successfully', async () => {
       // Reset rate limit
       vi.advanceTimersByTime(3000);
@@ -184,6 +218,28 @@ describe('AI Service', () => {
   });
 
   describe('sanitizeHistoryForGemini', () => {
+    it('should handle non-array history', () => {
+      expect(sanitizeHistoryForGemini(null)).toEqual([]);
+    });
+
+    it('should handle empty or whitespace-only sanitized text', () => {
+      const history = [{ role: 'user', parts: [{ text: '   ' }] }];
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized).toEqual([]);
+    });
+
+    it('should handle zero remaining budget', () => {
+      const chunk = 'a'.repeat(4000);
+      const history = Array(20)
+        .fill(null)
+        .map((_, i) => ({
+          role: i % 2 === 0 ? 'user' : 'model',
+          parts: [{ text: chunk }],
+        }));
+      const sanitized = sanitizeHistoryForGemini(history);
+      expect(sanitized.length).toBeLessThan(history.length);
+    });
+
     it('should valid history', () => {
       const history = [
         { role: 'user', parts: [{ text: 'Hello' }] },

@@ -10,6 +10,13 @@ import {
 
 describe('Security Utils', () => {
   describe('safeJSONStringify', () => {
+    it('escapes unhandled characters appropriately', () => {
+      // Just test a normal char to hit default
+      const input = { key: 'a' };
+      const result = safeJSONStringify(input);
+      expect(result).toBe('{"key":"a"}');
+    });
+
     it('escapes closing script tag', () => {
       const input = { key: '</script><script>alert(1)</script>' };
       const result = safeJSONStringify(input);
@@ -64,6 +71,8 @@ describe('Security Utils', () => {
 
   describe('isSafeHref', () => {
     const testCases = [
+      { name: 'Invalid encoded URI component', input: 'https://example.com/%C2', expected: true },
+
       { name: 'Valid HTTPS URL', input: 'https://example.com', expected: true },
       { name: 'Valid HTTP URL', input: 'http://example.com', expected: true },
       { name: 'Valid Mailto URL', input: 'mailto:test@example.com', expected: true },
@@ -170,6 +179,12 @@ describe('Security Utils', () => {
 
   describe('isSafeImageSrc', () => {
     const testCases = [
+      {
+        name: 'Invalid encoded URI component',
+        input: 'https://example.com/image%C2.jpg',
+        expected: true,
+      },
+
       { name: 'Valid HTTPS URL', input: 'https://example.com/image.png', expected: true },
       { name: 'Valid HTTP URL', input: 'http://example.com/image.png', expected: true },
       {

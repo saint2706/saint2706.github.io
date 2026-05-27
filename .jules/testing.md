@@ -10,3 +10,6 @@
 
 - Improved test coverage in `src/utils/seo.js` by adding a unit test for playgroundSchema function.
 - Improved test coverage in `src/components/pages/Playground.jsx` by adding a test for the empty state UI when no snippets match the selected filter, strictly adhering to the AAA (Arrange, Act, Assert) pattern.
+
+- Increased unit test coverage in `src/services/ai.js` by testing error branches (leaked keys, timeout, missing API key) and boundaries.
+- Increased unit test coverage in `src/utils/security.js` by testing malformed URI components and default character switches.
