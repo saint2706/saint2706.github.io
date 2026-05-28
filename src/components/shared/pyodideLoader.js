@@ -58,6 +58,7 @@ export const loadPyodide = async () => {
  * This is primarily used for testing purposes to ensure a clean state between tests.
  *
  * @private
+ * @returns {void}
  */
 export const __resetPyodideLoaderForTests = () => {
   pyodideInstance = null;

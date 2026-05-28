@@ -90,6 +90,7 @@ export const shouldHandleClientNavigationKeydown = event => {
  * @param {TTo} to
  * @param {TOptions} [options]
  * @param {{ disabled?: boolean }} [config]
+ * @returns {void}
  */
 export const viewTransitionNavigate = (navigate, to, options, config = {}) => {
   if (typeof navigate !== 'function') return;

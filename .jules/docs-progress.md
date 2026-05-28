@@ -121,3 +121,8 @@
 
 - Audited documentation for missing JSDoc return types.
 - Added `@returns {JSX.Element}` and `@returns {JSX.Element|null}` annotations to `Hero`, `SettingsModal`, `SEOHead`, `MarqueeTicker`, and `ZigzagDivider` components.
+
+## 2024-04-XX - Add missing JSDoc to exported functions
+
+- Added `@returns` JSDoc annotations to `__resetPyodideLoaderForTests` in `src/components/shared/pyodideLoader.js`.
+- Added `@returns` JSDoc annotations to `viewTransitionNavigate` in `src/navigation/viewTransitionNavigate.ts`.
