@@ -1,9 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Modal from './Modal';
-import { ThemeProvider } from './theme-context';
-
-import { useTheme } from './theme-context';
+import { ThemeProvider, useTheme } from './theme-context';
 
 // Mock theme context since Modal uses it
 vi.mock('./theme-context', async () => {
