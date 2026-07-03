@@ -9,8 +9,8 @@ Welcome to the repository for my personal portfolio website. This project showca
 
 - **Dual Theme System**: Toggle between "Neubrutalism" (bold, high-contrast) and "Liquid" (editorial, translucent) themes.
 - **AI Integration**: Chat with a digital version of myself powered by Google's Gemini AI.
-- **Python Playground**: Run Python code directly in the browser using Pyodide, with standard output capture.
-- **Interactive Games**: Includes implementations of Snake, Minesweeper, Tic-Tac-Toe, Simon Says, Memory Match, Whack-A-Mole, and Lights Out.
+- **Code Playground**: Run Python code directly in the browser using Pyodide (with standard output capture), plus an editable JS/HTML sandbox rendered in a sandboxed iframe with captured console output.
+- **Interactive Games**: Includes implementations of Snake, Minesweeper, Tic-Tac-Toe, Simon Says, Memory Match, Whack-A-Mole, Lights Out, 2048, and Connect Four (with a minimax AI opponent).
 - **Security First**: strict Content Security Policy (CSP), Subresource Integrity (SRI), and input sanitization.
 - **Automated Blog Sync**: Fetches and updates blog posts from RSS feeds automatically.
 

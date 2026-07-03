@@ -1,9 +1,116 @@
 // Curated code snippets for the Playground page
 // Focus: Advanced, impressive one-liners and techniques
 
+// ===== JS/HTML SANDBOX SOURCES =====
+// Defined ahead of the snippets array so the same source can back both the
+// syntax-highlighted card preview and the editable sandbox.
+
+const counterJs = `let count = 0;
+const btn = document.getElementById('counter');
+btn.addEventListener('click', () => {
+  count++;
+  btn.textContent = 'Clicked ' + count + ' times';
+  console.log('Count is now', count);
+});`;
+
+const particlesJs = `const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function spawnBurst(x, y) {
+  for (let i = 0; i < 24; i++) {
+    const angle = (Math.PI * 2 * i) / 24;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * (2 + Math.random() * 2),
+      vy: Math.sin(angle) * (2 + Math.random() * 2),
+      life: 40,
+      hue: Math.floor(Math.random() * 360),
+    });
+  }
+  console.log('Spawned burst with', particles.length, 'active particles');
+}
+
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  spawnBurst(e.clientX - rect.left, e.clientY - rect.top);
+});
+
+function tick() {
+  ctx.fillStyle = 'rgba(17, 17, 17, 0.25)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life -= 1;
+    ctx.fillStyle = 'hsl(' + p.hue + ', 90%, 60%)';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  particles = particles.filter(p => p.life > 0);
+
+  requestAnimationFrame(tick);
+}
+tick();`;
+
+const todoJs = `const form = document.getElementById('todo-form');
+const input = document.getElementById('todo-input');
+const list = document.getElementById('todo-list');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+
+  const item = document.createElement('li');
+  item.innerHTML = '<span></span> <button class="remove">Remove</button>';
+  item.querySelector('span').textContent = text;
+  list.appendChild(item);
+  console.log('Added:', text);
+
+  input.value = '';
+  input.focus();
+});
+
+// Event delegation: one listener handles "Remove" clicks for every item.
+list.addEventListener('click', e => {
+  if (e.target.classList.contains('remove')) {
+    const item = e.target.closest('li');
+    console.log('Removed:', item.querySelector('span').textContent);
+    item.remove();
+  }
+});`;
+
+const colorPaletteJs = `const button = document.getElementById('generate');
+const palette = document.getElementById('palette');
+
+function randomHex() {
+  const n = Math.floor(Math.random() * 0xffffff);
+  return '#' + n.toString(16).padStart(6, '0');
+}
+
+function renderPalette() {
+  palette.innerHTML = '';
+  const colors = Array.from({ length: 5 }, randomHex);
+  colors.forEach(hex => {
+    const swatch = document.createElement('div');
+    swatch.className = 'swatch';
+    swatch.style.background = hex;
+    swatch.textContent = hex;
+    swatch.addEventListener('click', () => console.log('Selected color:', hex));
+    palette.appendChild(swatch);
+  });
+  console.log('Generated palette:', colors.join(', '));
+}
+
+button.addEventListener('click', renderPalette);
+renderPalette();`;
+
 /**
- * Pre-defined code snippets available in the Python Playground and CSS examples.
- * @type {Array<{id: string, title: string, description: string, code: string, language: string, category: string, tags: string[], preview?: {html: string, css: string}}>}
+ * Pre-defined code snippets available in the Python Playground, CSS examples, and JS/HTML sandbox.
+ * @type {Array<{id: string, title: string, description: string, code: string, language: string, category: string, tags: string[], preview?: {html: string, css: string}, interactive?: object}>}
  */
 const snippets = [
   // ===== PYTHON ONE-LINERS =====
@@ -603,6 +710,83 @@ print('\\n'.join([''.join([(name[(x-y) % len(name)] if ((x*0.05)**2+(y*0.1)**2-1
         color: transparent;
         text-align: center;
       }`,
+    },
+  },
+
+  // ===== JS/HTML SANDBOX =====
+  {
+    id: 'js-counter',
+    title: 'Click Counter',
+    description: 'The "hello world" of interactivity — a button that tracks its own clicks.',
+    code: counterJs,
+    language: 'js',
+    category: 'DOM',
+    tags: ['dom', 'events', 'interactive'],
+    interactive: {
+      type: 'web-sandbox',
+      html: '<button id="counter">Clicked 0 times</button>',
+      css: 'button { font: 16px sans-serif; padding: 10px 16px; cursor: pointer; border-radius: 8px; border: 2px solid #333; background: #fff; }',
+      js: counterJs,
+    },
+  },
+  {
+    id: 'js-canvas-particles',
+    title: 'Canvas Particle Burst',
+    description:
+      'Click the canvas to launch an animated particle burst with requestAnimationFrame.',
+    code: particlesJs,
+    language: 'js',
+    category: 'Canvas',
+    tags: ['canvas', 'animation', 'interactive'],
+    interactive: {
+      type: 'web-sandbox',
+      html: '<canvas id="canvas" width="280" height="180"></canvas>',
+      css: 'canvas { display: block; margin: 0 auto; background: #111; border-radius: 8px; cursor: pointer; }',
+      js: particlesJs,
+    },
+  },
+  {
+    id: 'js-todo',
+    title: 'To-Do List',
+    description: 'Add and remove items using DOM APIs and event delegation.',
+    code: todoJs,
+    language: 'js',
+    category: 'DOM',
+    tags: ['dom', 'forms', 'interactive'],
+    interactive: {
+      type: 'web-sandbox',
+      html: `<form id="todo-form">
+  <input id="todo-input" type="text" placeholder="Add a task..." />
+  <button type="submit">Add</button>
+</form>
+<ul id="todo-list"></ul>`,
+      css: `body { font: 14px sans-serif; }
+form { display: flex; gap: 8px; margin-bottom: 12px; }
+input { flex: 1; padding: 6px 8px; border: 2px solid #333; border-radius: 6px; }
+button { padding: 6px 10px; border: 2px solid #333; border-radius: 6px; background: #fff; cursor: pointer; }
+ul { list-style: none; padding: 0; margin: 0; }
+li { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; border-bottom: 1px solid #ddd; }
+.remove { border: none; background: none; color: #c0392b; cursor: pointer; font-size: 12px; }`,
+      js: todoJs,
+    },
+  },
+  {
+    id: 'js-color-palette',
+    title: 'Random Color Palette',
+    description: 'Generate a palette of random hex colors — click a swatch to log its code.',
+    code: colorPaletteJs,
+    language: 'js',
+    category: 'Generative',
+    tags: ['dom', 'color', 'interactive'],
+    interactive: {
+      type: 'web-sandbox',
+      html: `<button id="generate">Generate Palette</button>
+<div id="palette"></div>`,
+      css: `body { font: 13px sans-serif; }
+button { margin-bottom: 12px; padding: 8px 14px; border: 2px solid #333; border-radius: 6px; background: #fff; cursor: pointer; }
+#palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.swatch { height: 60px; border-radius: 6px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); font-size: 11px; cursor: pointer; }`,
+      js: colorPaletteJs,
     },
   },
 ];

@@ -5,13 +5,14 @@
 
 import React, { useState, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Code2, Palette, Copy, Check, Play, Terminal } from 'lucide-react';
+import { Code2, Palette, Braces, Copy, Check, Play, Terminal } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, playgroundSchema, SITE_URL } from '../../utils/seo';
 import { getSnippetsByLanguage } from '../../data/snippets';
 import { loadPyodide } from '../shared/pyodideLoader';
 import PythonRunner from '../shared/PythonRunner';
+import JsHtmlSandbox from '../shared/JsHtmlSandbox';
 import Modal from '../shared/Modal';
 import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
@@ -59,7 +60,7 @@ const Playground = React.memo(() => {
   const shouldReduceMotion = useReducedMotion();
 
   const description =
-    'Explore powerful Python one-liners and creative CSS snippets. Copy, learn, and experiment with advanced code techniques.';
+    'Explore powerful Python one-liners, creative CSS snippets, and an editable JS/HTML sandbox. Copy, learn, and experiment with advanced code techniques.';
   const title = `Code Playground | ${resumeData.basics.name}`;
   const playgroundSchemas = [
     breadcrumbSchema([
@@ -77,6 +78,7 @@ const Playground = React.memo(() => {
       { id: 'all', label: 'All', icon: Code2, color: 'bg-fun-yellow' },
       { id: 'python', label: 'Python', icon: Terminal, color: 'bg-accent' },
       { id: 'css', label: 'CSS', icon: Palette, color: 'bg-fun-pink' },
+      { id: 'js', label: 'JS/HTML', icon: Braces, color: 'bg-emerald-500' },
     ],
     []
   );
@@ -106,6 +108,12 @@ const Playground = React.memo(() => {
   const openRunnerModal = useCallback(snippet => {
     setModalSnippet(snippet);
     setModalType('runner');
+  }, []);
+
+  /** Open JS/HTML sandbox modal */
+  const openSandboxModal = useCallback(snippet => {
+    setModalSnippet(snippet);
+    setModalType('sandbox');
   }, []);
 
   /** Close modal */
@@ -185,8 +193,8 @@ const Playground = React.memo(() => {
             </ThemedCard>
           </h1>
           <p className="text-secondary max-w-2xl mx-auto mt-6 font-sans">
-            Powerful Python one-liners and creative CSS snippets. Copy, learn, and make them your
-            own.
+            Powerful Python one-liners, creative CSS snippets, and an editable JS/HTML sandbox.
+            Copy, learn, and make them your own.
           </p>
         </motion.div>
 
@@ -277,6 +285,7 @@ const Playground = React.memo(() => {
                   onCopy={handleCopy}
                   onOpenPreview={openPreviewModal}
                   onOpenRunner={openRunnerModal}
+                  onOpenSandbox={openSandboxModal}
                   shouldReduceMotion={shouldReduceMotion}
                 />
               ))
@@ -343,8 +352,19 @@ const Playground = React.memo(() => {
         onClose={closeModal}
         title={modalSnippet?.title || 'Python Runner'}
       >
-        {modalSnippet?.interactive && (
+        {modalSnippet?.interactive?.type === 'python-runner' && (
           <PythonRunner snippet={modalSnippet} shouldReduceMotion={shouldReduceMotion} />
+        )}
+      </Modal>
+
+      {/* Modal for JS/HTML Sandbox */}
+      <Modal
+        isOpen={!!modalSnippet && modalType === 'sandbox'}
+        onClose={closeModal}
+        title={modalSnippet?.title || 'JS/HTML Sandbox'}
+      >
+        {modalSnippet?.interactive?.type === 'web-sandbox' && (
+          <JsHtmlSandbox snippet={modalSnippet} />
         )}
       </Modal>
     </>
@@ -365,9 +385,18 @@ Playground.displayName = 'Playground';
  * @param {Function} props.onCopy - Callback to copy code
  * @param {Function} props.onOpenPreview - Callback to open preview modal
  * @param {Function} props.onOpenRunner - Callback to open runner modal
+ * @param {Function} props.onOpenSandbox - Callback to open JS/HTML sandbox modal
  * @param {boolean} props.shouldReduceMotion - Whether to reduce motion
  * @returns {JSX.Element} Snippet card with code and actions
  */
+const LANGUAGE_ICONS = { python: Terminal, css: Palette, js: Braces };
+const LANGUAGE_ICON_COLORS = {
+  python: 'text-accent',
+  css: 'text-fun-pink',
+  js: 'text-emerald-500',
+};
+const LANGUAGE_CHIP_VARIANTS = { python: 'accent', css: 'pink', js: 'yellow' };
+
 const SnippetCard = React.memo(
   ({
     snippet,
@@ -377,12 +406,14 @@ const SnippetCard = React.memo(
     onCopy,
     onOpenPreview,
     onOpenRunner,
+    onOpenSandbox,
     shouldReduceMotion,
   }) => {
     const { theme } = useTheme();
     const isLiquid = theme === 'liquid';
     const hasPreview = !!snippet.preview;
     const hasInteractive = !!snippet.interactive;
+    const LanguageIcon = LANGUAGE_ICONS[snippet.language] || Code2;
     const themeClass = (neubClass, liquidClass) => (isLiquid ? liquidClass : neubClass);
 
     return (
@@ -401,17 +432,17 @@ const SnippetCard = React.memo(
           {/* Header */}
           <div className="flex justify-between items-start mb-3">
             <div className="flex items-center gap-2">
-              {snippet.language === 'python' ? (
-                <Terminal size={18} className="text-accent" aria-hidden="true" />
-              ) : (
-                <Palette size={18} className="text-fun-pink" aria-hidden="true" />
-              )}
+              <LanguageIcon
+                size={18}
+                className={LANGUAGE_ICON_COLORS[snippet.language] || 'text-accent'}
+                aria-hidden="true"
+              />
               <h2 className="text-lg font-heading font-bold text-[color:var(--text-primary)]">
                 {snippet.title}
               </h2>
             </div>
             <ThemedChip
-              variant={snippet.language === 'python' ? 'accent' : 'pink'}
+              variant={LANGUAGE_CHIP_VARIANTS[snippet.language] || 'neutral'}
               className={themeClass(
                 'text-xs font-bold px-2 py-1 rounded-nb nb-sticker text-white',
                 'text-xs font-semibold px-2.5 py-1 rounded-full'
@@ -513,6 +544,22 @@ const SnippetCard = React.memo(
               >
                 <Play size={14} aria-hidden="true" />
                 Try It Live! 🐍
+              </ThemedButton>
+            )}
+
+            {/* JS/HTML Sandbox Button */}
+            {hasInteractive && snippet.interactive.type === 'web-sandbox' && (
+              <ThemedButton
+                onClick={() => onOpenSandbox(snippet)}
+                variant="secondary"
+                className={themeClass(
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 font-heading font-bold text-sm rounded-nb bg-emerald-500 text-white hover:-translate-x-0.5 hover:-translate-y-0.5',
+                  'flex items-center gap-2 flex-1 justify-center px-4 py-2 rounded-full liquid-button-primary border border-[color:var(--border-soft)] text-[color:var(--text-primary)] focus-visible:ring-[color:var(--accent-soft)] focus-visible:ring-offset-0'
+                )}
+                style={isLiquid ? undefined : nbShadowStyle}
+              >
+                <Play size={14} aria-hidden="true" />
+                Open Sandbox
               </ThemedButton>
             )}
           </div>

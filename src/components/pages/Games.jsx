@@ -15,6 +15,8 @@ import {
   Disc,
   Target,
   Lightbulb,
+  Hash,
+  CircleDot,
 } from 'lucide-react';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
@@ -32,6 +34,8 @@ const Minesweeper = lazy(() => import('../games/Minesweeper'));
 const SimonSays = lazy(() => import('../games/SimonSays'));
 const WhackAMole = lazy(() => import('../games/WhackAMole'));
 const LightsOut = lazy(() => import('../games/LightsOut'));
+const Game2048 = lazy(() => import('../games/Game2048'));
+const ConnectFour = lazy(() => import('../games/ConnectFour'));
 
 /**
  * Loading spinner for game components
@@ -126,7 +130,7 @@ const Games = React.memo(() => {
   const isLiquid = theme === 'liquid';
 
   const description =
-    'A secret games easter egg! Play Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.';
+    'A secret games easter egg! Play Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, Lights Out, 2048, and Connect Four.';
   const title = `Games | ${resumeData.basics.name}`;
   const gamesSchemas = [
     breadcrumbSchema([
@@ -146,6 +150,8 @@ const Games = React.memo(() => {
       { id: 'simon', label: 'Simon', icon: Disc, color: 'bg-violet-500' },
       { id: 'whack', label: 'Whack', icon: Target, color: 'bg-orange-500' },
       { id: 'lightsout', label: 'Lights', icon: Lightbulb, color: 'bg-cyan-500' },
+      { id: '2048', label: '2048', icon: Hash, color: 'bg-indigo-500' },
+      { id: 'connectfour', label: 'Connect 4', icon: CircleDot, color: 'bg-teal-500' },
     ],
     []
   );
@@ -271,6 +277,8 @@ const Games = React.memo(() => {
                   {activeGame === 'simon' && <SimonSays />}
                   {activeGame === 'whack' && <WhackAMole />}
                   {activeGame === 'lightsout' && <LightsOut />}
+                  {activeGame === '2048' && <Game2048 />}
+                  {activeGame === 'connectfour' && <ConnectFour />}
                 </Suspense>
               </motion.div>
             </AnimatePresence>
