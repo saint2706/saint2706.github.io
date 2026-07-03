@@ -356,11 +356,51 @@ MessageList.displayName = 'MessageList';
  * @param {Function} props.onClose - Callback to close the chat interface
  * @returns {JSX.Element} Animated chat dialog with full functionality
  */
+/**
+ * Load chat history from localStorage for the initial `messages` state.
+ * This provides continuity across page refreshes and return visits.
+ * Gracefully handles JSON parsing errors and invalid data.
+ */
+const loadStoredMessages = () => {
+  try {
+    const saved = safeGetLocalStorage(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // Security: Validate loaded messages to guard against malformed/oversized data from localStorage
+        // Note: XSS mitigation is handled when rendering via ReactMarkdown and isSafeHref, not by this check
+        const validMessages = parsed.filter(isValidChatMessage);
+
+        // Limit number of messages to prevent rendering DoS (e.g., thousands of small messages)
+        const recentMessages = validMessages.slice(-MAX_STORED_MESSAGES);
+
+        if (recentMessages.length > 0) {
+          return recentMessages.map(message => {
+            const existingId = message.id;
+            const isStringId = typeof existingId === 'string' && existingId.trim() !== '';
+            const isNumberId = typeof existingId === 'number' && Number.isFinite(existingId);
+            const safeId = isStringId || isNumberId ? existingId : generateMessageId();
+
+            return {
+              ...message,
+              id: safeId,
+            };
+          });
+        }
+      }
+    }
+  } catch {
+    // Ignore load errors
+  }
+
+  return [createDefaultMessage()];
+};
+
 const ChatInterface = ({ onClose }) => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   // Chat state: messages array with role ('user' | 'model') and text
-  const [messages, setMessages] = useState([createDefaultMessage()]);
+  const [messages, setMessages] = useState(loadStoredMessages);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false); // AI response loading state
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -378,46 +418,6 @@ const ChatInterface = ({ onClose }) => {
   const titleId = 'chatbot-title';
   const dialogId = 'chatbot-dialog';
   const shell = getOverlayShell({ theme, depth: 'hover' });
-
-  /**
-   * Load chat history from localStorage on component mount.
-   * This provides continuity across page refreshes and return visits.
-   * Gracefully handles JSON parsing errors and invalid data.
-   */
-  useEffect(() => {
-    try {
-      const saved = safeGetLocalStorage(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // Security: Validate loaded messages to guard against malformed/oversized data from localStorage
-          // Note: XSS mitigation is handled when rendering via ReactMarkdown and isSafeHref, not by this check
-          const validMessages = parsed.filter(isValidChatMessage);
-
-          // Limit number of messages to prevent rendering DoS (e.g., thousands of small messages)
-          const recentMessages = validMessages.slice(-MAX_STORED_MESSAGES);
-
-          if (recentMessages.length > 0) {
-            setMessages(
-              recentMessages.map(message => {
-                const existingId = message.id;
-                const isStringId = typeof existingId === 'string' && existingId.trim() !== '';
-                const isNumberId = typeof existingId === 'number' && Number.isFinite(existingId);
-                const safeId = isStringId || isNumberId ? existingId : generateMessageId();
-
-                return {
-                  ...message,
-                  id: safeId,
-                };
-              })
-            );
-          }
-        }
-      }
-    } catch {
-      // Ignore load errors
-    }
-  }, []);
 
   /**
    * Persist chat history to localStorage whenever messages change.
