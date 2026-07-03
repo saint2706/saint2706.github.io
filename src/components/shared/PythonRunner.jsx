@@ -203,7 +203,7 @@ const PythonRunner = ({ snippet }) => {
             aria-label={isRunning ? 'Running Python code' : 'Run Python code'}
             className={`flex items-center gap-2 px-4 py-2 font-heading font-bold text-sm border-2 border-[color:var(--color-border)] rounded-md transition-all ${
               isRunning || !pyodideReady
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                ? 'bg-gray-200 text-gray-700 cursor-not-allowed'
                 : 'bg-accent text-white hover:-translate-x-0.5 hover:-translate-y-0.5'
             }`}
             style={{

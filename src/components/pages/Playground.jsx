@@ -428,7 +428,7 @@ const SnippetCard = React.memo(
           </p>
 
           {/* Code Block */}
-          <div className="relative mb-4 flex-grow nb-scrollbar overflow-auto max-h-64 min-h-[12rem]">
+          <div className="relative mb-4 nb-scrollbar overflow-y-auto overflow-x-hidden max-h-64">
             <Suspense
               fallback={
                 <div className="h-48 bg-card animate-pulse rounded-nb border-2 border-[color:var(--color-border)]" />
@@ -440,8 +440,10 @@ const SnippetCard = React.memo(
             {/* Copy Button */}
             <button
               onClick={() => onCopy(snippet.code, snippet.id)}
-              className={`group absolute top-2 right-2 p-2 rounded-md border-2 border-[color:var(--color-border)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 ${
-                isCopied ? 'bg-green-500 text-white' : 'bg-card text-primary hover:bg-fun-yellow'
+              className={`group absolute top-2 right-2 p-2 rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--focus-ring)] focus-visible:ring-offset-2 ${
+                isCopied
+                  ? 'bg-green-500 border-green-500 text-white'
+                  : 'bg-white/10 border-white/20 text-white/80 backdrop-blur-sm hover:bg-fun-yellow hover:text-primary hover:border-[color:var(--color-border)]'
               }`}
               aria-label={isCopied ? 'Copied!' : `Copy ${snippet.title} code`}
             >
