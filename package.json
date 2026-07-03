@@ -68,7 +68,7 @@
     "prettier": "^3.8.1",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
-    "vite": "^8.0.0",
+    "vite": "^8.0.16",
     "vitest": "4.1.4"
   },
   "pnpm": {
