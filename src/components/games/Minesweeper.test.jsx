@@ -395,7 +395,7 @@ describe('Minesweeper Game', () => {
 
   it('displays the best time from localStorage', async () => {
     localStorageMock.getItem.mockImplementation(key => {
-      if (key === 'minesweeperBest') return '15';
+      if (key === 'minesweeperBest_easy') return '15';
       return null;
     });
     renderWithTheme(<Minesweeper />);

@@ -20,17 +20,26 @@ import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
 import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
-const ROWS = 9;
-const COLS = 9;
-const MINES = 10;
+const DIFFICULTY_SETTINGS = {
+  easy: { label: 'Easy', color: 'bg-fun-yellow', text: 'text-black', rows: 9, cols: 9, mines: 10 },
+  medium: {
+    label: 'Medium',
+    color: 'bg-accent',
+    text: 'text-white',
+    rows: 12,
+    cols: 12,
+    mines: 20,
+  },
+  hard: { label: 'Hard', color: 'bg-fun-pink', text: 'text-white', rows: 16, cols: 16, mines: 40 },
+};
 
 /**
  * Creates an empty board.
  * Each cell: { mine, revealed, flagged, adjacent }
  */
-const createEmptyBoard = () =>
-  Array.from({ length: ROWS }, () =>
-    Array.from({ length: COLS }, () => ({
+const createEmptyBoard = (rows, cols) =>
+  Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => ({
       mine: false,
       revealed: false,
       flagged: false,
@@ -41,27 +50,27 @@ const createEmptyBoard = () =>
 /**
  * Places mines randomly, avoiding the first-click cell and its neighbours.
  */
-const placeMines = (board, safeR, safeC) => {
+const placeMines = (board, safeR, safeC, rows, cols, mines) => {
   const b = board.map(row => row.map(cell => ({ ...cell })));
   let placed = 0;
-  while (placed < MINES) {
-    const r = Math.floor(Math.random() * ROWS);
-    const c = Math.floor(Math.random() * COLS);
+  while (placed < mines) {
+    const r = Math.floor(Math.random() * rows);
+    const c = Math.floor(Math.random() * cols);
     if (b[r][c].mine) continue;
     if (Math.abs(r - safeR) <= 1 && Math.abs(c - safeC) <= 1) continue;
     b[r][c].mine = true;
     placed++;
   }
   // Compute adjacency counts
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
       if (b[r][c].mine) continue;
       let count = 0;
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
           const nr = r + dr;
           const nc = c + dc;
-          if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS && b[nr][nc].mine) count++;
+          if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && b[nr][nc].mine) count++;
         }
       }
       b[r][c].adjacent = count;
@@ -73,12 +82,12 @@ const placeMines = (board, safeR, safeC) => {
 /**
  * Flood-fill reveal for empty cells.
  */
-const floodReveal = (board, r, c) => {
+const floodReveal = (board, r, c, rows, cols) => {
   const b = board.map(row => row.map(cell => ({ ...cell })));
   const stack = [[r, c]];
   while (stack.length) {
     const [cr, cc] = stack.pop();
-    if (cr < 0 || cr >= ROWS || cc < 0 || cc >= COLS) continue;
+    if (cr < 0 || cr >= rows || cc < 0 || cc >= cols) continue;
     if (b[cr][cc].revealed || b[cr][cc].flagged || b[cr][cc].mine) continue;
     b[cr][cc].revealed = true;
     if (b[cr][cc].adjacent === 0) {
@@ -221,28 +230,35 @@ const Minesweeper = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const ui = React.useMemo(() => getGameThemeStyles(isLiquid), [isLiquid]);
+  const [difficulty, setDifficulty] = useState('easy');
+  const { rows, cols, mines } = DIFFICULTY_SETTINGS[difficulty];
   const [gameState, setGameState] = useState('idle'); // idle | playing | won | lost
-  const [board, setBoard] = useState(createEmptyBoard);
+  const [board, setBoard] = useState(() => createEmptyBoard(rows, cols));
   const [firstClick, setFirstClick] = useState(true);
   const [flagCount, setFlagCount] = useState(0);
 
   // Performance Optimization: Moved timer state to TimerDisplay component
-  // to prevent re-rendering the entire 9x9 grid every second.
+  // to prevent re-rendering the entire grid every second.
   const [startTime, setStartTime] = useState(null);
   const [finalTime, setFinalTime] = useState(null);
   const startTimeRef = useRef(null);
 
-  const [bestTime, setBestTime] = useState(() => {
-    const s = safeGetLocalStorage('minesweeperBest');
-    return s ? parseInt(s, 10) : null;
+  const [bestTimes, setBestTimes] = useState(() => {
+    const times = {};
+    Object.keys(DIFFICULTY_SETTINGS).forEach(key => {
+      const s = safeGetLocalStorage(`minesweeperBest_${key}`);
+      times[key] = s ? parseInt(s, 10) : null;
+    });
+    return times;
   });
+  const bestTime = bestTimes[difficulty];
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
 
   const checkWin = useCallback(
     b => {
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
           if (!b[r][c].mine && !b[r][c].revealed) return false;
         }
       }
@@ -251,12 +267,12 @@ const Minesweeper = React.memo(() => {
       setFinalTime(duration);
 
       if (!bestTime || duration < bestTime) {
-        setBestTime(duration);
-        safeSetLocalStorage('minesweeperBest', duration.toString());
+        setBestTimes(prev => ({ ...prev, [difficulty]: duration }));
+        safeSetLocalStorage(`minesweeperBest_${difficulty}`, duration.toString());
       }
       return true;
     },
-    [bestTime]
+    [bestTime, rows, cols, difficulty]
   );
 
   const revealCell = useCallback(
@@ -273,7 +289,7 @@ const Minesweeper = React.memo(() => {
       setBoard(prev => {
         let b = prev;
         if (firstClick) {
-          b = placeMines(prev, r, c);
+          b = placeMines(prev, r, c, rows, cols, mines);
           setFirstClick(false);
           setGameState('playing');
         }
@@ -289,14 +305,14 @@ const Minesweeper = React.memo(() => {
           return lost;
         }
 
-        const newBoard = floodReveal(b, r, c);
+        const newBoard = floodReveal(b, r, c, rows, cols);
         if (checkWin(newBoard)) {
           setGameState('won');
         }
         return newBoard;
       });
     },
-    [gameState, firstClick, checkWin]
+    [gameState, firstClick, checkWin, rows, cols, mines]
   );
 
   const toggleFlag = useCallback(
@@ -315,7 +331,7 @@ const Minesweeper = React.memo(() => {
   );
 
   const startGame = useCallback(() => {
-    setBoard(createEmptyBoard());
+    setBoard(createEmptyBoard(rows, cols));
     setFirstClick(true);
     setFlagCount(0);
 
@@ -329,6 +345,20 @@ const Minesweeper = React.memo(() => {
     setFocusC(0);
     // Transition to a "ready" idle — first click will start
     setTimeout(() => setGameState('idle'), 0);
+  }, [rows, cols]);
+
+  const changeDifficulty = useCallback(newDifficulty => {
+    const newSettings = DIFFICULTY_SETTINGS[newDifficulty];
+    setDifficulty(newDifficulty);
+    setBoard(createEmptyBoard(newSettings.rows, newSettings.cols));
+    setFirstClick(true);
+    setFlagCount(0);
+    setStartTime(null);
+    setFinalTime(null);
+    startTimeRef.current = null;
+    setGameState('idle');
+    setFocusR(0);
+    setFocusC(0);
   }, []);
 
   // Update focus state when a cell is focused via mouse/tab
@@ -348,7 +378,7 @@ const Minesweeper = React.memo(() => {
 
       switch (e.key) {
         case 'ArrowRight':
-          c = Math.min(COLS - 1, c + 1);
+          c = Math.min(cols - 1, c + 1);
           handled = true;
           break;
         case 'ArrowLeft':
@@ -356,7 +386,7 @@ const Minesweeper = React.memo(() => {
           handled = true;
           break;
         case 'ArrowDown':
-          r = Math.min(ROWS - 1, r + 1);
+          r = Math.min(rows - 1, r + 1);
           handled = true;
           break;
         case 'ArrowUp':
@@ -386,7 +416,7 @@ const Minesweeper = React.memo(() => {
         if (nextCell) nextCell.focus();
       }
     },
-    [gameState, focusR, focusC, revealCell, toggleFlag]
+    [gameState, focusR, focusC, revealCell, toggleFlag, rows, cols]
   );
 
   const getAnnouncement = () => {
@@ -395,7 +425,7 @@ const Minesweeper = React.memo(() => {
     const timeToAnnounce = finalTime !== null ? finalTime : 0;
     if (gameState === 'won') return `You won in ${timeToAnnounce} seconds!`;
     if (gameState === 'lost') return 'Game over! You hit a mine.';
-    return `Playing Minesweeper. Flags: ${flagCount}/${MINES}.`;
+    return `Playing Minesweeper. Flags: ${flagCount}/${mines}.`;
   };
 
   const isGameOver = gameState === 'won' || gameState === 'lost';
@@ -406,13 +436,40 @@ const Minesweeper = React.memo(() => {
         {getAnnouncement()}
       </div>
 
+      {/* Difficulty Selector */}
+      <div className="flex gap-2" role="group" aria-label="Select difficulty level">
+        {Object.entries(DIFFICULTY_SETTINGS).map(([id, config]) => (
+          <button
+            key={id}
+            onClick={() => changeDifficulty(id)}
+            aria-pressed={difficulty === id}
+            aria-label={`Set difficulty to ${config.label}`}
+            className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
+              ${
+                difficulty === id
+                  ? `${config.color} ${config.text} ${isLiquid ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
+                  : `${isLiquid ? 'lg-surface-2 rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
+              }`}
+            style={{
+              boxShadow: isLiquid
+                ? undefined
+                : difficulty === id
+                  ? 'var(--nb-shadow-hover)'
+                  : '2px 2px 0 var(--color-border)',
+            }}
+          >
+            {config.label}
+          </button>
+        ))}
+      </div>
+
       {/* Status bar */}
       <div className={ui.scoreboard} style={ui.style.raised}>
         <div className="flex items-center gap-2 px-4">
           <Flag size={16} className="text-fun-pink" aria-hidden="true" />
           <div>
             <div className="text-sm md:text-xs text-secondary font-heading">Mines</div>
-            <div className="text-2xl font-heading font-bold text-fun-pink">{MINES - flagCount}</div>
+            <div className="text-2xl font-heading font-bold text-fun-pink">{mines - flagCount}</div>
           </div>
         </div>
         <div className={ui.separator} />
@@ -446,7 +503,7 @@ const Minesweeper = React.memo(() => {
         >
           <div
             className="grid gap-[2px] outline-none"
-            style={{ gridTemplateColumns: `repeat(${COLS}, 1fr)` }}
+            style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}
             role="grid"
             aria-label="Minesweeper game board"
             onKeyDown={handleKeyDown}
