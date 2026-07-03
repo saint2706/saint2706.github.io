@@ -33,20 +33,22 @@ import { useIsMounted } from './useIsMounted';
 const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
-  const [roastLoading, setRoastLoading] = useState(false);
+  const [roastLoading, setRoastLoading] = useState(() => !roastContent);
   const [isCopied, setIsCopied] = useState(false);
   const roastDialogRef = useRef(null);
   const roastCloseRef = useRef(null);
+  const hasAutoRoastedRef = useRef(false); // Ensures the mount auto-fetch below only ever fires once
   const isMountedRef = useIsMounted(); // Track mount status to prevent state updates after unmount
   const prefersReducedMotion = useReducedMotion();
   const shell = getOverlayShell({ theme, depth: 'hover', tone: 'pink' });
 
   /**
-   * Generate roast using AI service
-   * Only updates state if component is still mounted
+   * Fetch a roast from the AI service and store the result.
+   * Only updates state if component is still mounted. Does not touch the
+   * loading flag itself so it can be safely invoked from the mount effect
+   * without triggering a synchronous setState from within that effect.
    */
-  const handleRoast = useCallback(async () => {
-    setRoastLoading(true);
+  const runRoast = useCallback(async () => {
     try {
       const text = await roastResume();
       if (isMountedRef.current) {
@@ -59,12 +61,22 @@ const RoastInterface = ({ onClose, roastContent, onRoastComplete }) => {
     }
   }, [onRoastComplete, isMountedRef]);
 
-  // Auto-load roast on mount if not provided
+  /**
+   * User-triggered roast regeneration (e.g. "Roast Again" button).
+   */
+  const handleRoast = useCallback(() => {
+    setRoastLoading(true);
+    runRoast();
+  }, [runRoast]);
+
+  // Auto-load roast on mount if not provided. `roastLoading` starts `true`
+  // in that case, so this only needs to kick off the fetch itself, once.
   useEffect(() => {
-    if (!roastContent && !roastLoading) {
-      handleRoast();
+    if (!roastContent && !hasAutoRoastedRef.current) {
+      hasAutoRoastedRef.current = true;
+      runRoast();
     }
-  }, [roastContent, roastLoading, handleRoast]);
+  }, [roastContent, runRoast]);
 
   // Auto-focus close button on mount
   useEffect(() => {
