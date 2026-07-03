@@ -278,7 +278,7 @@ export function gamesSchema() {
       priceCurrency: 'USD',
     },
     description:
-      'A collection of interactive mini-games including Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, and Lights Out.',
+      'A collection of interactive mini-games including Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, Lights Out, 2048, and Connect Four.',
     author: personSchemaCompact(),
   };
 }
@@ -289,13 +289,13 @@ export function gamesSchema() {
  *
  * @example
  * const schema = playgroundSchema();
- * // => { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Python Playground", ... }
+ * // => { "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Code Playground", ... }
  */
 export function playgroundSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Python Playground',
+    name: 'Code Playground',
     operatingSystem: 'Browser',
     applicationCategory: 'DeveloperApplication',
     offers: {
@@ -304,7 +304,7 @@ export function playgroundSchema() {
       priceCurrency: 'USD',
     },
     description:
-      'Interactive Python playground running directly in the browser via Pyodide. Test snippets, visualize algorithms, and learn Python.',
+      'Interactive code playground running directly in the browser: Python via Pyodide, live CSS previews, and an editable sandboxed JS/HTML runner with console output.',
     author: personSchemaCompact(),
   };
 }

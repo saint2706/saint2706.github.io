@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Sandbox</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #fff;
+        color: #1a1a1a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sandbox-root"></div>
+    <script>
+      // This document is served with no Content-Security-Policy so the
+      // JS/HTML Playground sandbox can execute arbitrary user-edited code.
+      // It only ever runs inside a `sandbox="allow-scripts"` iframe (opaque
+      // origin, no allow-same-origin/allow-forms/allow-popups/allow-top-navigation),
+      // so it can't read cookies/storage or reach the parent page. As
+      // defense in depth against a third-party site framing this file
+      // directly (outside our own sandboxed iframe) and trying to inject
+      // code into a *non-opaque* same-origin context, init messages are
+      // only honored when they come from this deployment's own origin.
+      (function () {
+        var styleEl = document.createElement('style');
+        document.head.appendChild(styleEl);
+        var root = document.getElementById('sandbox-root');
+
+        function serialize(arg) {
+          if (arg instanceof Error) return arg.message;
+          if (typeof arg === 'object' && arg !== null) {
+            try {
+              return JSON.stringify(arg);
+            } catch {
+              return String(arg);
+            }
+          }
+          return String(arg);
+        }
+
+        function post(type, args, runId) {
+          try {
+            window.parent.postMessage(
+              { __jsSandbox: true, runId: runId, type: type, args: args.map(serialize) },
+              '*'
+            );
+          } catch {
+            // Ignore postMessage failures (e.g. parent already unmounted).
+          }
+        }
+
+        function runPayload(html, css, js, runId) {
+          styleEl.textContent = css;
+          root.innerHTML = html;
+
+          ['log', 'info', 'warn', 'error'].forEach(function (method) {
+            var original = console[method];
+            console[method] = function () {
+              post(
+                method === 'info' ? 'log' : method,
+                Array.prototype.slice.call(arguments),
+                runId
+              );
+              original.apply(console, arguments);
+            };
+          });
+          window.onerror = function (message) {
+            post('error', [String(message)], runId);
+            return true;
+          };
+          window.addEventListener('unhandledrejection', function (e) {
+            post('error', ['Unhandled promise rejection: ' + serialize(e.reason)], runId);
+          });
+
+          try {
+            new Function(js)();
+          } catch (err) {
+            post('error', [err && err.message ? err.message : String(err)], runId);
+          }
+        }
+
+        window.addEventListener('message', function (event) {
+          if (event.origin !== window.location.origin) return;
+          var data = event.data;
+          if (!data || data.__jsSandboxInit !== true) return;
+          runPayload(data.html || '', data.css || '', data.js || '', data.runId);
+        });
+
+        // Tell the parent we're ready to receive the init payload.
+        window.parent.postMessage({ __jsSandboxReady: true }, '*');
+      })();
+    </script>
+  </body>
+</html>

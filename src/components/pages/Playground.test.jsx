@@ -81,6 +81,7 @@ vi.mock('lucide-react', async () => {
   return {
     Code2: mockIcon('Code2'),
     Palette: mockIcon('Palette'),
+    Braces: mockIcon('Braces'),
     Copy: mockIcon('Copy'),
     Check: mockIcon('Check'),
     Play: mockIcon('Play'),
@@ -98,6 +99,10 @@ vi.mock('../shared/pyodideLoader', () => ({
 
 vi.mock('../shared/PythonRunner', () => ({
   default: () => <div data-testid="python-runner">Python Runner Mock</div>,
+}));
+
+vi.mock('../shared/JsHtmlSandbox', () => ({
+  default: () => <div data-testid="js-html-sandbox">JS/HTML Sandbox Mock</div>,
 }));
 
 vi.mock('../shared/Modal', () => ({
@@ -195,6 +200,20 @@ vi.mock('../../data/snippets', () => ({
         code: '.test { color: red; }',
         tags: ['css', 'test'],
         preview: { html: '<div class="test">Test</div>', css: '.test { color: red; }' },
+      },
+      {
+        id: 'test-js-1',
+        title: 'JS Test',
+        language: 'js',
+        description: 'JS snippet description',
+        code: 'console.log("hi")',
+        tags: ['js', 'test'],
+        interactive: {
+          type: 'web-sandbox',
+          html: '<div></div>',
+          css: '',
+          js: 'console.log("hi")',
+        },
       },
     ];
     if (filter === 'all') return snippets;
@@ -329,6 +348,22 @@ describe('Playground Component', () => {
     fireEvent.click(tryItLiveButton);
 
     expect(screen.getByTestId('modal')).toBeInTheDocument();
+
+    const closeButton = screen.getByTestId('modal-close');
+    fireEvent.click(closeButton);
+    expect(screen.queryByTestId('modal')).not.toBeInTheDocument();
+  });
+
+  it('opens JS/HTML sandbox modal', async () => {
+    renderPlayground();
+
+    const sandboxButtons = screen.getAllByText(/Open Sandbox/i);
+    expect(sandboxButtons.length).toBeGreaterThan(0);
+
+    fireEvent.click(sandboxButtons[0]);
+
+    expect(screen.getByTestId('modal')).toBeInTheDocument();
+    expect(screen.getByTestId('js-html-sandbox')).toBeInTheDocument();
 
     const closeButton = screen.getByTestId('modal-close');
     fireEvent.click(closeButton);

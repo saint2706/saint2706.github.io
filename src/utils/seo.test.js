@@ -203,7 +203,7 @@ describe('seo utils', () => {
     it('returns SoftwareApplication schema for playground', () => {
       const schema = seo.playgroundSchema();
       expect(schema['@type']).toBe('SoftwareApplication');
-      expect(schema.name).toBe('Python Playground');
+      expect(schema.name).toBe('Code Playground');
       expect(schema.author['@type']).toBe('Person');
     });
   });
@@ -323,7 +323,7 @@ describe('seo utils', () => {
     it('generates playgroundSchema correctly', () => {
       const schema = seo.playgroundSchema();
       expect(schema['@type']).toBe('SoftwareApplication');
-      expect(schema.name).toContain('Python Playground');
+      expect(schema.name).toContain('Code Playground');
     });
   });
 });
