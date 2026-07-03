@@ -21,37 +21,61 @@ import { useTheme } from '../shared/theme-context';
 import { getGameThemeStyles } from './gameThemeStyles';
 import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
-const SIZE = 5;
+const DIFFICULTY_SETTINGS = {
+  easy: {
+    label: 'Easy',
+    color: 'bg-fun-yellow',
+    text: 'text-black',
+    size: 4,
+    minToggles: 5,
+    toggleRange: 5, // toggles land in [minToggles, minToggles + toggleRange - 1]
+  },
+  medium: {
+    label: 'Medium',
+    color: 'bg-accent',
+    text: 'text-white',
+    size: 5,
+    minToggles: 8,
+    toggleRange: 8,
+  },
+  hard: {
+    label: 'Hard',
+    color: 'bg-fun-pink',
+    text: 'text-white',
+    size: 6,
+    minToggles: 12,
+    toggleRange: 9,
+  },
+};
 
 /**
  * Creates a solvable puzzle by starting from "all off" and applying random toggles.
  * This guarantees the puzzle is solvable.
  */
-const createPuzzle = () => {
-  const grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(false));
+const createPuzzle = ({ size, minToggles, toggleRange }) => {
+  const grid = Array.from({ length: size }, () => Array(size).fill(false));
 
-  // Apply 8-15 random toggles
-  const toggles = 8 + Math.floor(Math.random() * 8);
+  const toggles = minToggles + Math.floor(Math.random() * toggleRange);
   for (let t = 0; t < toggles; t++) {
-    const r = Math.floor(Math.random() * SIZE);
-    const c = Math.floor(Math.random() * SIZE);
+    const r = Math.floor(Math.random() * size);
+    const c = Math.floor(Math.random() * size);
     // Toggle cell and neighbours
     grid[r][c] = !grid[r][c];
     if (r > 0) grid[r - 1][c] = !grid[r - 1][c];
-    if (r < SIZE - 1) grid[r + 1][c] = !grid[r + 1][c];
+    if (r < size - 1) grid[r + 1][c] = !grid[r + 1][c];
     if (c > 0) grid[r][c - 1] = !grid[r][c - 1];
-    if (c < SIZE - 1) grid[r][c + 1] = !grid[r][c + 1];
+    if (c < size - 1) grid[r][c + 1] = !grid[r][c + 1];
   }
 
   // Ensure at least some lights are on
   if (grid.every(row => row.every(cell => !cell))) {
     // All off already — toggle center
-    const mid = Math.floor(SIZE / 2);
+    const mid = Math.floor(size / 2);
     grid[mid][mid] = true;
     if (mid > 0) grid[mid - 1][mid] = true;
-    if (mid < SIZE - 1) grid[mid + 1][mid] = true;
+    if (mid < size - 1) grid[mid + 1][mid] = true;
     if (mid > 0) grid[mid][mid - 1] = true;
-    if (mid < SIZE - 1) grid[mid][mid + 1] = true;
+    if (mid < size - 1) grid[mid][mid + 1] = true;
   }
 
   return grid;
@@ -109,13 +133,21 @@ const LightsOut = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const ui = getGameThemeStyles(isLiquid);
+  const [difficulty, setDifficulty] = useState('medium');
+  const settings = DIFFICULTY_SETTINGS[difficulty];
+  const size = settings.size;
   const [gameState, setGameState] = useState('idle'); // idle | playing | won
-  const [grid, setGrid] = useState(createPuzzle);
+  const [grid, setGrid] = useState(() => createPuzzle(DIFFICULTY_SETTINGS.medium));
   const [moves, setMoves] = useState(0);
-  const [bestScore, setBestScore] = useState(() => {
-    const s = safeGetLocalStorage('lightsOutBest');
-    return s ? parseInt(s, 10) : null;
+  const [bestScores, setBestScores] = useState(() => {
+    const scores = {};
+    Object.keys(DIFFICULTY_SETTINGS).forEach(key => {
+      const s = safeGetLocalStorage(`lightsOutBest_${key}`);
+      scores[key] = s ? parseInt(s, 10) : null;
+    });
+    return scores;
   });
+  const bestScore = bestScores[difficulty];
   const [focusR, setFocusR] = useState(0);
   const [focusC, setFocusC] = useState(0);
 
@@ -127,9 +159,9 @@ const LightsOut = React.memo(() => {
       const nextGrid = grid.map(row => [...row]);
       nextGrid[r][c] = !nextGrid[r][c];
       if (r > 0) nextGrid[r - 1][c] = !nextGrid[r - 1][c];
-      if (r < SIZE - 1) nextGrid[r + 1][c] = !nextGrid[r + 1][c];
+      if (r < size - 1) nextGrid[r + 1][c] = !nextGrid[r + 1][c];
       if (c > 0) nextGrid[r][c - 1] = !nextGrid[r][c - 1];
-      if (c < SIZE - 1) nextGrid[r][c + 1] = !nextGrid[r][c + 1];
+      if (c < size - 1) nextGrid[r][c + 1] = !nextGrid[r][c + 1];
 
       setGrid(nextGrid);
 
@@ -141,20 +173,30 @@ const LightsOut = React.memo(() => {
       if (allOff) {
         setGameState('won');
         if (!bestScore || newMoves < bestScore) {
-          setBestScore(newMoves);
-          safeSetLocalStorage('lightsOutBest', newMoves.toString());
+          setBestScores(prev => ({ ...prev, [difficulty]: newMoves }));
+          safeSetLocalStorage(`lightsOutBest_${difficulty}`, newMoves.toString());
         }
       }
     },
-    [gameState, grid, moves, bestScore]
+    [gameState, grid, moves, bestScore, size, difficulty]
   );
 
   const startGame = useCallback(() => {
-    setGrid(createPuzzle());
+    setGrid(createPuzzle(settings));
     setMoves(0);
     setFocusR(0);
     setFocusC(0);
     setGameState('playing');
+  }, [settings]);
+
+  const changeDifficulty = useCallback(newDifficulty => {
+    const newSettings = DIFFICULTY_SETTINGS[newDifficulty];
+    setDifficulty(newDifficulty);
+    setGrid(createPuzzle(newSettings));
+    setMoves(0);
+    setFocusR(0);
+    setFocusC(0);
+    setGameState('idle');
   }, []);
 
   // Keyboard navigation
@@ -167,7 +209,7 @@ const LightsOut = React.memo(() => {
 
       switch (e.key) {
         case 'ArrowRight':
-          c = Math.min(SIZE - 1, c + 1);
+          c = Math.min(size - 1, c + 1);
           handled = true;
           break;
         case 'ArrowLeft':
@@ -175,7 +217,7 @@ const LightsOut = React.memo(() => {
           handled = true;
           break;
         case 'ArrowDown':
-          r = Math.min(SIZE - 1, r + 1);
+          r = Math.min(size - 1, r + 1);
           handled = true;
           break;
         case 'ArrowUp':
@@ -198,7 +240,7 @@ const LightsOut = React.memo(() => {
         setFocusC(c);
       }
     },
-    [gameState, focusR, focusC, toggleCell]
+    [gameState, focusR, focusC, toggleCell, size]
   );
 
   const lightsOn = grid.flat().filter(Boolean).length;
@@ -214,6 +256,33 @@ const LightsOut = React.memo(() => {
     <div className="flex flex-col items-center gap-6">
       <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {getAnnouncement()}
+      </div>
+
+      {/* Difficulty Selector */}
+      <div className="flex gap-2" role="group" aria-label="Select difficulty level">
+        {Object.entries(DIFFICULTY_SETTINGS).map(([id, config]) => (
+          <button
+            key={id}
+            onClick={() => changeDifficulty(id)}
+            aria-pressed={difficulty === id}
+            aria-label={`Set difficulty to ${config.label}`}
+            className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
+              ${
+                difficulty === id
+                  ? `${config.color} ${config.text} ${isLiquid ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
+                  : `${isLiquid ? 'lg-surface-2 rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
+              }`}
+            style={{
+              boxShadow: isLiquid
+                ? undefined
+                : difficulty === id
+                  ? 'var(--nb-shadow-hover)'
+                  : '2px 2px 0 var(--color-border)',
+            }}
+          >
+            {config.label}
+          </button>
+        ))}
       </div>
 
       {/* Score board */}
@@ -272,7 +341,7 @@ const LightsOut = React.memo(() => {
         >
           <div
             className="grid gap-2 outline-none"
-            style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)` }}
+            style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
             role="grid"
             aria-label="Lights Out puzzle grid"
             onKeyDown={handleKeyDown}

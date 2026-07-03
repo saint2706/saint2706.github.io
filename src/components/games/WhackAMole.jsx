@@ -22,9 +22,33 @@ import { safeGetLocalStorage, safeSetLocalStorage } from '../../utils/storage';
 
 const GRID_SIZE = 9; // 3×3
 const GAME_DURATION = 30; // seconds
-const INITIAL_MOLE_TIME = 1200; // ms mole stays visible
-const MIN_MOLE_TIME = 400;
-const SPAWN_INTERVAL = 800; // ms between spawns
+
+const DIFFICULTY_SETTINGS = {
+  easy: {
+    label: 'Easy',
+    color: 'bg-fun-yellow',
+    text: 'text-black',
+    moleTime: 1600, // ms mole stays visible
+    minMoleTime: 700,
+    spawnInterval: 1000, // ms between spawns
+  },
+  medium: {
+    label: 'Medium',
+    color: 'bg-accent',
+    text: 'text-white',
+    moleTime: 1200,
+    minMoleTime: 400,
+    spawnInterval: 800,
+  },
+  hard: {
+    label: 'Hard',
+    color: 'bg-fun-pink',
+    text: 'text-white',
+    moleTime: 850,
+    minMoleTime: 300,
+    spawnInterval: 550,
+  },
+};
 
 const MoleHole = React.memo(
   ({ index, isActive, isWhacked, isLiquid, gameState, ui, shouldReduceMotion, onClick }) => {
@@ -93,15 +117,22 @@ const WhackAMole = React.memo(() => {
   const { theme } = useTheme();
   const isLiquid = theme === 'liquid';
   const ui = getGameThemeStyles(isLiquid);
+  const [difficulty, setDifficulty] = useState('medium');
   const [gameState, setGameState] = useState('idle'); // idle | playing | gameOver
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [activeMoles, setActiveMoles] = useState(new Set());
   const [whackedMoles, setWhackedMoles] = useState(new Set()); // brief "hit" feedback
-  const [highScore, setHighScore] = useState(() => {
-    const s = safeGetLocalStorage('whackHighScore');
-    return s ? parseInt(s, 10) : 0;
+  const [highScores, setHighScores] = useState(() => {
+    const scores = {};
+    Object.keys(DIFFICULTY_SETTINGS).forEach(key => {
+      const s = safeGetLocalStorage(`whackHighScore_${key}`);
+      scores[key] = s ? parseInt(s, 10) : 0;
+    });
+    return scores;
   });
+  const highScore = highScores[difficulty];
+  const settings = DIFFICULTY_SETTINGS[difficulty];
   const timerRef = useRef(null);
   const spawnRef = useRef(null);
   const moleTimersRef = useRef({});
@@ -118,12 +149,12 @@ const WhackAMole = React.memo(() => {
     clearAllTimers();
     setActiveMoles(new Set());
     const finalScore = scoreRef.current;
-    if (finalScore > highScore) {
-      setHighScore(finalScore);
-      safeSetLocalStorage('whackHighScore', finalScore.toString());
+    if (finalScore > highScores[difficulty]) {
+      setHighScores(prev => ({ ...prev, [difficulty]: finalScore }));
+      safeSetLocalStorage(`whackHighScore_${difficulty}`, finalScore.toString());
     }
     setGameState('gameOver');
-  }, [clearAllTimers, highScore]);
+  }, [clearAllTimers, highScores, difficulty]);
 
   const spawnMole = useCallback(() => {
     const available = [];
@@ -134,7 +165,7 @@ const WhackAMole = React.memo(() => {
 
     const hole = available[Math.floor(Math.random() * available.length)];
     const elapsed = GAME_DURATION - timeLeft;
-    const moleTime = Math.max(MIN_MOLE_TIME, INITIAL_MOLE_TIME - elapsed * 25);
+    const moleTime = Math.max(settings.minMoleTime, settings.moleTime - elapsed * 25);
 
     setActiveMoles(prev => new Set([...prev, hole]));
 
@@ -146,7 +177,7 @@ const WhackAMole = React.memo(() => {
       });
       delete moleTimersRef.current[hole];
     }, moleTime);
-  }, [activeMoles, timeLeft]);
+  }, [activeMoles, timeLeft, settings]);
 
   const startGame = useCallback(() => {
     clearAllTimers();
@@ -157,6 +188,20 @@ const WhackAMole = React.memo(() => {
     setWhackedMoles(new Set());
     setGameState('playing');
   }, [clearAllTimers]);
+
+  const changeDifficulty = useCallback(
+    newDifficulty => {
+      clearAllTimers();
+      setDifficulty(newDifficulty);
+      setGameState('idle');
+      setScore(0);
+      scoreRef.current = 0;
+      setTimeLeft(GAME_DURATION);
+      setActiveMoles(new Set());
+      setWhackedMoles(new Set());
+    },
+    [clearAllTimers]
+  );
 
   // Timer countdown
   useEffect(() => {
@@ -177,10 +222,10 @@ const WhackAMole = React.memo(() => {
   // Mole spawning
   useEffect(() => {
     if (gameState === 'playing') {
-      spawnRef.current = setInterval(spawnMole, SPAWN_INTERVAL);
+      spawnRef.current = setInterval(spawnMole, settings.spawnInterval);
       return () => clearInterval(spawnRef.current);
     }
-  }, [gameState, spawnMole]);
+  }, [gameState, spawnMole, settings]);
 
   const whackMole = useCallback(
     hole => {
@@ -246,6 +291,33 @@ const WhackAMole = React.memo(() => {
     <div className="flex flex-col items-center gap-6">
       <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {getAnnouncement()}
+      </div>
+
+      {/* Difficulty Selector */}
+      <div className="flex gap-2" role="group" aria-label="Select difficulty level">
+        {Object.entries(DIFFICULTY_SETTINGS).map(([id, config]) => (
+          <button
+            key={id}
+            onClick={() => changeDifficulty(id)}
+            aria-pressed={difficulty === id}
+            aria-label={`Set difficulty to ${config.label}`}
+            className={`px-4 py-2 font-heading font-bold text-sm border-[3px] border-[color:var(--color-border)] cursor-pointer transition-transform motion-reduce:transform-none motion-reduce:transition-none
+              ${
+                difficulty === id
+                  ? `${config.color} ${config.text} ${isLiquid ? 'scale-[1.01] border border-[color:var(--border-soft)] rounded-xl' : '-translate-x-0.5 -translate-y-0.5'}`
+                  : `${isLiquid ? 'lg-surface-2 rounded-xl text-primary hover:brightness-110' : 'bg-card text-primary hover:-translate-x-0.5 hover:-translate-y-0.5'}`
+              }`}
+            style={{
+              boxShadow: isLiquid
+                ? undefined
+                : difficulty === id
+                  ? 'var(--nb-shadow-hover)'
+                  : '2px 2px 0 var(--color-border)',
+            }}
+          >
+            {config.label}
+          </button>
+        ))}
       </div>
 
       {/* Status bar */}

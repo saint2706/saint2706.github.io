@@ -337,7 +337,7 @@ describe('WhackAMole', () => {
     });
 
     // Verify local storage is updated and high score is shown
-    expect(localStorage.getItem('whackHighScore')).toBe('1');
+    expect(localStorage.getItem('whackHighScore_medium')).toBe('1');
     expect(screen.getAllByText(/New High Score!/i).length).toBeGreaterThan(0);
 
     await act(async () => {
@@ -347,7 +347,7 @@ describe('WhackAMole', () => {
 
   it('does not record a new high score if score is not strictly greater', async () => {
     // Preset high score to 10
-    localStorage.setItem('whackHighScore', '10');
+    localStorage.setItem('whackHighScore_medium', '10');
     render(<WhackAMole />);
 
     await act(async () => {
@@ -362,7 +362,7 @@ describe('WhackAMole', () => {
     });
 
     // Local storage should still be 10, not 0
-    expect(localStorage.getItem('whackHighScore')).toBe('10');
+    expect(localStorage.getItem('whackHighScore_medium')).toBe('10');
     expect(screen.queryByText(/New High Score!/i)).not.toBeInTheDocument();
 
     await act(async () => {
