@@ -5,7 +5,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { useTheme } from '../shared/theme-context';
-import { Github, Linkedin, Coffee, Heart } from 'lucide-react';
+import { Coffee, Heart } from 'lucide-react';
+import { Github, Linkedin } from '../shared/BrandIcons';
 import ScrollReveal from '../shared/ScrollReveal';
 import ZigzagDivider from '../shared/ZigzagDivider';
 import MarqueeTicker from '../shared/MarqueeTicker';
