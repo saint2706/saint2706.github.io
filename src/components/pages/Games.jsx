@@ -25,6 +25,7 @@ import ThemedButton from '../shared/ThemedButton';
 import ThemedCard from '../shared/ThemedCard';
 import ThemedChip from '../shared/ThemedChip';
 import { useTheme } from '../shared/theme-context';
+import GameInstructions from '../games/GameInstructions';
 
 // Lazy load game components to reduce initial bundle size
 const TicTacToe = lazy(() => import('../games/TicTacToe'));
@@ -241,6 +242,15 @@ const Games = React.memo(() => {
               />
             ))}
           </div>
+        </motion.div>
+
+        {/* How to Play Instructions */}
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.25 }}
+        >
+          <GameInstructions gameId={activeGame} />
         </motion.div>
 
         {/* Game Container */}
