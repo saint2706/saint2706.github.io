@@ -4,7 +4,8 @@
 
 import React, { useCallback, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Github, ExternalLink, Star, Folder } from 'lucide-react';
+import { ExternalLink, Star, Folder } from 'lucide-react';
+import { Github } from '../shared/BrandIcons';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { isSafeHref, isSafeImageSrc } from '../../utils/security';

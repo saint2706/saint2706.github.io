@@ -5,7 +5,8 @@
 
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, Send, Sparkles, Loader2, CheckCircle } from 'lucide-react';
+import { Mail, MapPin, Send, Sparkles, Loader2, CheckCircle } from 'lucide-react';
+import { Github, Linkedin } from '../shared/BrandIcons';
 import { resumeData } from '../../data/resume';
 import SEOHead from '../shared/SEOHead';
 import { breadcrumbSchema, contactPageSchema, SITE_URL } from '../../utils/seo';
