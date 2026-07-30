@@ -35,13 +35,13 @@
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.2.2",
     "@google/generative-ai": "^0.24.1",
-    "framer-motion": "^12.42.2",
-    "lucide-react": "1.25.0",
+    "framer-motion": "^12.43.0",
+    "lucide-react": "1.28.0",
     "prismjs": "^1.30.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.18.1"
+    "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
