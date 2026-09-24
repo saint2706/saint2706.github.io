@@ -35,8 +35,8 @@
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.2.3",
     "@google/generative-ai": "^0.24.1",
-    "framer-motion": "^12.43.0",
-    "lucide-react": "1.25.0",
+    "framer-motion": "^13.4.0",
+    "lucide-react": "1.47.0",
     "prismjs": "^1.30.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
