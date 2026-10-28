@@ -76,4 +76,4 @@ if (invalidImports.length > 0) {
   process.exit(1);
 }
 
-console.log(`\nPASS: Verified ${inventory.size} files against lucide-react@1.8.0 exports.`);
+console.log(`\nPASS: Verified ${inventory.size} files against installed lucide-react exports.`);

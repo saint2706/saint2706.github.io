@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -33,64 +37,42 @@
     "check:lucide-imports": "node scripts/check-lucide-imports.js"
   },
   "dependencies": {
-    "@dr.pogodin/react-helmet": "^3.2.3",
+    "@dr.pogodin/react-helmet": "^3.3.2",
     "@google/generative-ai": "^0.24.1",
-    "framer-motion": "^12.43.0",
-    "lucide-react": "1.25.0",
+    "framer-motion": "^14.6.0",
+    "lucide-react": "1.61.0",
     "prismjs": "^1.30.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.5",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "6.0.3",
-    "autoprefixer": "^10.6.1",
-    "chrome-launcher": "^1.2.1",
-    "eslint": "^9.39.5",
+    "@vitejs/plugin-react": "6.1.2",
+    "autoprefixer": "^10.6.2",
+    "chrome-launcher": "^1.2.2",
+    "eslint": "^10.13.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "html-to-text": "^10.0.1",
-    "jsdom": "^29.1.1",
-    "lighthouse": "^13.5.0",
-    "lint-staged": "^17.5.1",
-    "playwright": "^1.63.0",
-    "postcss": "^8.5.28",
-    "prettier": "^3.9.8",
+    "jsdom": "^30.1.3",
+    "lighthouse": "~13.5.0",
+    "lint-staged": "^17.6.0",
+    "playwright": "^1.64.1",
+    "postcss": "^8.5.32",
+    "prettier": "^3.9.10",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.3.0",
-    "vitest": "4.1.10"
-  },
-  "pnpm": {
-    "overrides": {
-      "basic-ftp": ">=5.3.1",
-      "ajv": "^6.14.0",
-      "minimatch": ">=10.2.3",
-      "rollup": ">=4.59.0",
-      "flatted": ">=3.4.2",
-      "picomatch@^2": "^2.3.2",
-      "picomatch@^4": "^4.0.4",
-      "yaml": "^2.8.3",
-      "lodash-es": ">=4.18.0",
-      "ip-address": ">=10.1.1",
-      "brace-expansion": ">=5.0.6",
-      "ws": ">=8.20.1",
-      "js-yaml": ">=4.2.0",
-      "esbuild": ">=0.28.1",
-      "@opentelemetry/core": ">=2.8.0"
-    },
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "vite": "^8.3.5",
+    "vitest": "5.0.5"
   }
 }
