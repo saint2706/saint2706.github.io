@@ -205,24 +205,19 @@ const LightsOut = React.memo(() => {
       if (gameState !== 'playing') return;
       let r = focusR;
       let c = focusC;
-      let handled = false;
 
       switch (e.key) {
         case 'ArrowRight':
           c = Math.min(size - 1, c + 1);
-          handled = true;
           break;
         case 'ArrowLeft':
           c = Math.max(0, c - 1);
-          handled = true;
           break;
         case 'ArrowDown':
           r = Math.min(size - 1, r + 1);
-          handled = true;
           break;
         case 'ArrowUp':
           r = Math.max(0, r - 1);
-          handled = true;
           break;
         case 'Enter':
         case ' ':
@@ -233,12 +228,10 @@ const LightsOut = React.memo(() => {
           return;
       }
 
-      if (handled) {
-        e.preventDefault();
-        e.stopPropagation();
-        setFocusR(r);
-        setFocusC(c);
-      }
+      e.preventDefault();
+      e.stopPropagation();
+      setFocusR(r);
+      setFocusC(c);
     },
     [gameState, focusR, focusC, toggleCell, size]
   );

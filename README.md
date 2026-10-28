@@ -18,7 +18,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 
 - **Framework**: React 19 + Vite
 - **Styling**: Tailwind CSS v4 + Framer Motion
-- **Runtime**: Node.js `^20.19.0 || >=22.12.0` (for build/scripts, aligned with Vite 8)
+- **Runtime**: Node.js `^24.15.0 || >=26.0.0` (for build/scripts; CI tests Node 24 and 26)
 - **AI**: Google Generative AI (Gemini)
 - **Python**: Pyodide (WebAssembly)
 - **Testing**: Vitest + React Testing Library
@@ -27,8 +27,8 @@ Welcome to the repository for my personal portfolio website. This project showca
 
 ### Prerequisites
 
-- Node.js `^20.19.0 || >=22.12.0`
-- pnpm 9+ (required package manager for installs, scripts, and lockfile updates)
+- Node.js `^24.15.0 || >=26.0.0`
+- pnpm 12 (pinned via `packageManager`; required package manager for installs, scripts, and lockfile updates)
 
 ### Installation
 
@@ -106,7 +106,7 @@ Security is a core focus of this project. Key measures include:
 - **CSP**: Strict Content Security Policy preventing unauthorized scripts and styles.
 - **SRI**: Subresource Integrity checks for external scripts (like Pyodide).
 - **Input Sanitization**: All user inputs (chat, contact form) are sanitized to prevent XSS.
-- **Dependency Pinning**: Vulnerable transitive dependencies are overridden in `package.json`.
+- **Dependency Pinning**: Vulnerable transitive dependencies are overridden in `pnpm-workspace.yaml`.
 
 For a detailed security report, see [.jules/sentinel.md](.jules/sentinel.md).
 
