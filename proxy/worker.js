@@ -34,7 +34,10 @@ export default {
     });
     return new Response(upstream.body, {
       status: upstream.status,
-      headers: { ...cors, 'content-type': upstream.headers.get('content-type') ?? 'application/json' },
+      headers: {
+        ...cors,
+        'content-type': upstream.headers.get('content-type') ?? 'application/json',
+      },
     });
   },
 };
