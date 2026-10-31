@@ -164,7 +164,7 @@ async function fetchSubstack() {
 
       // Use mapping to convert slug to proper Substack web URL if available
       let postLink = item.link; // Default to RSS link
-      if (slug && substackMapping[slug]) {
+      if (slug && Object.hasOwn(substackMapping, slug)) {
         postLink = `https://substack.com/home/post/p-${substackMapping[slug]}`;
       }
 

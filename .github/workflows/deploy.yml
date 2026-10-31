@@ -35,6 +35,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          persist-credentials: false
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup environment
@@ -43,6 +44,8 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
+          VITE_GEMINI_PROXY_URL: ${{ vars.GEMINI_PROXY_URL }}
+          # TODO: delete once the proxy is live and the key is rotated; Vite inlines this into the public bundle.
           VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
