@@ -51,7 +51,7 @@ const getModel = systemInstruction => {
   // No temperature/top_p/top_k: Gemini 3.x guidance is to leave sampling at defaults.
   const genAI = new GoogleGenerativeAI(PROXY_URL ? 'proxy-managed' : API_KEY);
   return genAI.getGenerativeModel(
-    { model: 'gemini-flash-latest', systemInstruction },
+    { model: 'gemini-flash-lite-latest', systemInstruction },
     PROXY_URL ? { baseUrl: PROXY_URL } : undefined
   );
 };
