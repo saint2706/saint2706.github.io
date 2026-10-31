@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/**
+      - .github/actions/**
 
 permissions:
   contents: read
@@ -23,6 +24,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Cache actionlint
         id: cache-actionlint
@@ -35,7 +38,8 @@ jobs:
         if: steps.cache-actionlint.outputs.cache-hit != 'true'
         run: |
           mkdir -p ~/.local/bin
-          bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.7.12
+          curl -fsSL -o download-actionlint.bash https://raw.githubusercontent.com/rhysd/actionlint/914e7df21a07ef503a81201c76d2b11c789d3fca/scripts/download-actionlint.bash
+          bash download-actionlint.bash 1.7.12
           mv actionlint ~/.local/bin/actionlint
 
       - name: Run actionlint
@@ -49,6 +53,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
@@ -111,6 +117,14 @@ jobs:
                       "Use minimal scoped permissions instead."
                   )
 
+              # PyYAML (YAML 1.1) parses the bare key `on` as boolean True.
+              triggers = data.get('on', data.get(True))
+              if isinstance(triggers, (dict, list, str)) and 'pull_request_target' in triggers:
+                  violations.append(
+                      f"{workflow_path}: uses 'pull_request_target', which runs with secrets "
+                      "on untrusted PR code. Use 'pull_request' unless reviewed explicitly."
+                  )
+
               jobs = data.get('jobs', {})
               if isinstance(jobs, dict):
                   for job_name, job in jobs.items():
@@ -136,8 +150,6 @@ jobs:
                   source_parts = source.split('/')
                   if len(source_parts) < 2:
                       continue
-
-                  owner = source_parts[0].lower()
 
                   if not sha_pattern.fullmatch(ref):
                       violations.append(

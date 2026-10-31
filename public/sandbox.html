@@ -90,7 +90,11 @@
         }
 
         window.addEventListener('message', function (event) {
-          if (event.origin !== window.location.origin) return;
+          // Sandboxed iframe has an opaque origin, so compare the sender window instead.
+          // Refuse to run unless actually sandboxed: a third-party page could otherwise frame this
+          // file without the sandbox attribute and execute code in the site's real origin.
+          if (self.origin !== 'null') return;
+          if (event.source !== window.parent) return;
           var data = event.data;
           if (!data || data.__jsSandboxInit !== true) return;
           runPayload(data.html || '', data.css || '', data.js || '', data.runId);
