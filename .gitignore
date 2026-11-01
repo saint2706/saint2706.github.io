@@ -16,9 +16,10 @@ dist/
 # Logs
 *.log
 
-# Test and lint output
+# Test, lint and audit output (pnpm audit:lighthouse writes the Lighthouse reports)
 coverage/
 .eslintcache
+/docs/audits/lighthouse-*.json
 
 # Package manager policy (pnpm-only)
 package-lock.json

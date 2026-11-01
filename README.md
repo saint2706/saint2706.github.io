@@ -73,7 +73,7 @@ This repository is **pnpm-only**:
 
 ## 📚 Documentation
 
-Project planning, audits and decisions live in `project-system/`; start with `PROJECT_PACK_README.md`.
+Project planning, audits and decisions live in `project-system/`; start with `project-system/PROJECT_PACK_README.md`.
 
 ## 📜 Scripts
 
@@ -108,6 +108,8 @@ Security is a core focus of this project. Key measures include:
 - **Input Sanitization**: All user inputs (chat, contact form) are sanitized to prevent XSS.
 - **Dependency Pinning**: Vulnerable transitive dependencies are overridden in `pnpm-workspace.yaml`.
 
+To report a vulnerability, see [SECURITY.md](./SECURITY.md).
+
 ## 🔄 CI/CD Optimizations
 
 To ensure reliable, fast, and secure software delivery, the following pipeline optimizations are implemented:
@@ -130,6 +132,6 @@ The Python runner executes code in the browser using WebAssembly. It captures st
 
 ## 📄 License
 
-This project is private and proprietary. All rights reserved.
+Released under the [MIT License](./LICENSE).
 
 ---
