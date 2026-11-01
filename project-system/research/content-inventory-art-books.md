@@ -1,27 +1,28 @@
 # Content inventory: art and books (owner-supplied, 2026-11-01)
 
-Source: untracked folder `art and books/` in the repo root (15 MB; 12 images and one ZIP). It is excluded locally via `.git/info/exclude` so it cannot be committed by accident. Nothing here is approved for publication yet.
+Source: untracked folder `art and books/` in the repo root (15 MB; 13 images and one ZIP). It is excluded locally via `.git/info/exclude` so it cannot be committed by accident. Nothing here is approved for publication yet.
 
-## Books: philosophy reading path (12 images)
+## Books: philosophy reading path (13 images)
 
-All 12 images are phone-story graphics (gradient or black backgrounds) listing works by stage. They should be **retyped as accessible text**, not published as images (text-in-image fails accessibility and cannot be searched).
+All 13 images are phone-story graphics (gradient or black backgrounds) listing works by stage. They should be **retyped as accessible text**, not published as images (text-in-image fails accessibility and cannot be searched).
 
-| Image      | Heading                                   | Works listed                                                                                                                                                          |
-| ---------- | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1000113310 | Stage Two                                 | Epictetus Handbook; Aurelius Meditations; Cicero (On the Commonwealth and Laws, On Morals, Letters); Plutarch Moralia; Plotinus Enneads; Proclus Elements of Theology |
-| 1000113311 | Stage Three: The Middle Ages (+ optional) | Augustine (Confessions, City of God); Boethius; Anselm; Aquinas Summa Theologica; Ockham (2); Buridan. Optional: Dionysius; Pearl; Carabine; Eckhart                  |
-| 1000113312 | Stage 4.1: Early Modern Rationalists      | Descartes; Spinoza; Leibniz (Philosophical Essays, Monadology)                                                                                                        |
-| 1000113313 | Stage 4.2: Early Modern Empiricists       | Locke (4); Berkeley; Hume (6)                                                                                                                                         |
-| 1000113314 | Stage 4 (optional)                        | Malebranche (3); Pascal (2); Bacon (2); Montaigne; Bruno (2)                                                                                                          |
-| 1000113315 | Stage 5.1: German Idealism                | Kant (8); Fichte (4)                                                                                                                                                  |
-| 1000113316 | Stage 5.2                                 | Image repeats the Kant and Fichte list of 5.1. Owner states Stage 5.2 is **Hegel and Schelling** (specific works to be supplied; do not guess titles)                 |
-| 1000113317 | Stage 5.3                                 | Boehme (4)                                                                                                                                                            |
-| 1000113318 | Stage Six: Lebensphilosophie              | Schopenhauer (4); Nietzsche (11); Kierkegaard (6)                                                                                                                     |
-| 1000113319 | Stage Seven: Modern Philosophy            | Heidegger (4); Wittgenstein (2)                                                                                                                                       |
-| 1000113320 | Political Philosophy                      | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
-| 1000113321 | French Revolution                         | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
+| Image      | Heading                                       | Works listed                                                                                                                                                          |
+| ---------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1000113330 | Good books to get into philosophy (Stage One) | Homer (Iliad, Odyssey); Plato; Aristotle; Heraclitus; Parmenides; Epicurus (attribution flagged); Aeschylus                                                           |
+| 1000113310 | Stage Two                                     | Epictetus Handbook; Aurelius Meditations; Cicero (On the Commonwealth and Laws, On Morals, Letters); Plutarch Moralia; Plotinus Enneads; Proclus Elements of Theology |
+| 1000113311 | Stage Three: The Middle Ages (+ optional)     | Augustine (Confessions, City of God); Boethius; Anselm; Aquinas Summa Theologica; Ockham (2); Buridan. Optional: Dionysius; Pearl; Carabine; Eckhart                  |
+| 1000113312 | Stage 4.1: Early Modern Rationalists          | Descartes; Spinoza; Leibniz (Philosophical Essays, Monadology)                                                                                                        |
+| 1000113313 | Stage 4.2: Early Modern Empiricists           | Locke (4); Berkeley; Hume (6)                                                                                                                                         |
+| 1000113314 | Stage 4 (optional)                            | Malebranche (3); Pascal (2); Bacon (2); Montaigne; Bruno (2)                                                                                                          |
+| 1000113315 | Stage 5.1: German Idealism                    | Kant (8); Fichte (4)                                                                                                                                                  |
+| 1000113316 | Stage 5.2                                     | Image repeats the Kant and Fichte list of 5.1. Owner states Stage 5.2 is **Hegel and Schelling** and supplied the eight titles (see `books-reading-path.md`)          |
+| 1000113317 | Stage 5.3                                     | Boehme (4)                                                                                                                                                            |
+| 1000113318 | Stage Six: Lebensphilosophie                  | Schopenhauer (4); Nietzsche (11); Kierkegaard (6)                                                                                                                     |
+| 1000113319 | Stage Seven: Modern Philosophy                | Heidegger (4); Wittgenstein (2)                                                                                                                                       |
+| 1000113320 | Political Philosophy                          | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
+| 1000113321 | French Revolution                             | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: no **Stage One** image; Stage 5.2 needs the Hegel and Schelling titles; the owner confirmed the listed works are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: **Stage One** supplied as image 1000113330 (one attribution flagged); Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 
@@ -51,5 +52,5 @@ None of the case-study claims are verified yet; this is repository metadata only
 ## Owner decisions 2026-11-01 (round 2)
 
 - Paintings: leave out _The False Mirror_, _The Human Condition_ and _Slave Market with the Disappearing Bust of Voltaire_. Seven public-domain works may be used after each credit and licence is verified from the deck sources slide.
-- Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 duplicate to be corrected once the real list is provided.
+- Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 titles supplied; full text transcription is in `books-reading-path.md`.
 - Music: out of launch scope.
