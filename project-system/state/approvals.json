@@ -13,7 +13,8 @@
     {
       "phase": "P02",
       "status": "authorized",
-      "scope": "P02-T01 ONLY (visual research). T02/T03 not authorized. Production release excluded. Figma: personal drafts, free tier, user authenticates later. Pack defaults: no paid services, no likeness, palette unapproved. Approved 2026-11-01"
+      "scope": "P02-T01 ONLY (visual research). T02/T03 not authorized. Production release excluded. Figma: personal drafts, free tier, user authenticates later. Pack defaults: no paid services, no likeness, palette unapproved. Approved 2026-11-01",
+      "authorized_tasks": ["P02-T01"]
     },
     {
       "phase": "P03",
@@ -46,6 +47,7 @@
     "A task request must identify exact authorized task IDs.",
     "Production release must be included in the approved task/phase.",
     "Consequential architecture choices require evidence-backed recommendation and approval.",
-    "Silence, prior interest or broad project intent is not approval."
+    "Silence, prior interest or broad project intent is not approval.",
+    "While a phase is authorized, only task IDs listed in its authorized_tasks may be started; the validator enforces this."
   ]
 }
