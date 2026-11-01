@@ -22,8 +22,8 @@ for (let i = 0; i <= 7; i++) {
   const phase = `P${String(i).padStart(2, '0')}`;
   const a = approvals?.approvals?.find(x => x.phase === phase);
   if (!a) errors.push(`Missing approval for ${phase}`);
-  else if (phase === 'P00' ? a.status !== 'authorized' : a.status !== 'pending-approval')
-    errors.push(`Unexpected initial authorization for ${phase}`);
+  else if (!['authorized', 'pending-approval', 'complete'].includes(a.status))
+    errors.push(`Unexpected authorization status for ${phase}`);
 }
 const taskList = tasksState?.tasks || [];
 const ids = new Set(taskList.map(t => t.id));
@@ -69,5 +69,5 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(
-  `Project state validation PASSED: ${taskList.length} tasks; 163 decisions; initial P00 audit-only state.`
+  `Project state validation PASSED: ${taskList.length} tasks; 163 decisions; phase state.`
 );

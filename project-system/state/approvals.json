@@ -2,18 +2,18 @@
   "approvals": [
     {
       "phase": "P00",
-      "status": "authorized",
-      "scope": "audit/preparation only; no website implementation"
+      "status": "complete",
+      "scope": "audit/preparation complete 2026-11-01"
     },
     {
       "phase": "P01",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "complete",
+      "scope": "P01-T01..T04 approved and merged (PR #874) 2026-11-01; ADR-001..004 confirmed same day"
     },
     {
       "phase": "P02",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "authorized",
+      "scope": "P02-T01 ONLY (visual research). T02/T03 not authorized. Production release excluded. Figma: personal drafts, free tier, user authenticates later. Pack defaults: no paid services, no likeness, palette unapproved. Approved 2026-11-01"
     },
     {
       "phase": "P03",

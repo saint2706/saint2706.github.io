@@ -1,6 +1,6 @@
 # ADR-004: Governance, branch protection and release model
 
-- Status: **proposed** (settings changes are a separate user action)
+- Status: **confirmed** 2026-11-01 (ruleset protect-main id 26293963, auto-merge on, github-pages env restricted to main; approval gate on deploys declined)
 - Date: 2026-11-01
 - Related tasks: P01-T04
 
@@ -23,4 +23,4 @@ Not applied. Steps in `runbooks/branch-protection.md` and `runbooks/release-gove
 
 ## User approval
 
-Required for any GitHub settings change. Evidence: none yet.
+Required for any GitHub settings change. Evidence: user answers 2026-11-01.

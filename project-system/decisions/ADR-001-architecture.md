@@ -1,6 +1,6 @@
 # ADR-001: Application and rendering architecture
 
-- Status: **proposed** (awaits user confirmation; no migration performed)
+- Status: **confirmed** 2026-11-01 (user chose Astro + React islands, overriding the prerender recommendation; runner-up and 2-4 week estimate stand; migration needs its own approved task, none authorized yet)
 - Date: 2026-11-01
 - Related tasks: P01-T01 (depends on P00-T04)
 - Evidence: audit reports 02 and 03; docs: Astro (deploy to GitHub Pages, client islands, `client:visible`), Vite SSR guide (client build + `--ssr` server entry build, `renderToString`).
@@ -35,7 +35,7 @@ Estimates are judgment from file counts and code structure; no prototype was bui
 ## User approval
 
 - Required: yes (consequential)
-- Approval evidence: none yet
+- Approval evidence: user answers 2026-11-01
 - Date: n/a
 
 ## Consequences
