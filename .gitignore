@@ -1,10 +1,45 @@
+# Dependencies
 node_modules/
+
+# Build output
 dist/
-legacy_backup/
-.DS_Store
+
+# Regenerated on every build by `prebuild` (scripts/generate-llms.js, scripts/generate-sitemap.js)
+/public/llms.txt
+/public/sitemap.xml
+
+# Environment: commit the template, never real values
 .env
-.env.local
-.vscode
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Test and lint output
+coverage/
+.eslintcache
+
+# Package manager policy (pnpm-only)
+package-lock.json
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Local-only scratch and source material (never published)
+/tmp/
+/legacy_backup/
+/art and books/
+
+# AI agent tooling (not needed to build or deploy)
+/skills/
+skills-lock.json
+.agents/
 .adal/
 .agent/
 .augment/
@@ -34,12 +69,3 @@ legacy_backup/
 .vibe/
 .windsurf/
 .zencoder/
-skills/
-skills-lock.json
-.agents/*
-!.agents/skills/
-coverage/
-.eslintcache
-
-# Package manager policy (pnpm-only)
-package-lock.json

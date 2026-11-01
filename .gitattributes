@@ -1,0 +1,2 @@
+# LF in the repo and in every checkout (Prettier and CI expect LF; Windows defaults to CRLF)
+* text=auto eol=lf
