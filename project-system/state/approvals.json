@@ -13,8 +13,8 @@
     {
       "phase": "P02",
       "status": "authorized",
-      "scope": "P02-T01 ONLY (visual research). T02/T03 not authorized. Production release excluded. Figma: personal drafts, free tier, user authenticates later. Pack defaults: no paid services, no likeness, palette unapproved. Approved 2026-11-01",
-      "authorized_tasks": ["P02-T01"]
+      "scope": "P02-T01 (review) and P02-T02 (Figma file and concept boards) only. T03 not authorized. Production release excluded. Direction chosen for exploration: A Cabinet of Curiosities. Figma: personal drafts, free tier. Approved 2026-11-01.",
+      "authorized_tasks": ["P02-T01", "P02-T02"]
     },
     {
       "phase": "P03",
