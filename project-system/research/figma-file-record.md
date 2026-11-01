@@ -24,4 +24,23 @@
 - Hover and the dissolve transitions are only checked as structure; they were not played in Figma's prototype viewer in this session.
 - The Starter 3-page cap forced prototypes onto the concepts page; splitting needs a paid plan or a second file.
 - Direction A mobile discoverability is untested with users; see risks in `design-directions.md`.
-- Review and feedback: none recorded yet. Record the user's feedback and any rejected concepts here before P02-T03 is authorized.
+- Review and feedback: round 1 recorded below (2026-11-01); further rounds to be appended before P02-T03 is authorized.
+
+## Feedback round 1 (2026-11-01) and revisions
+
+User feedback: lead with **A1 Specimen Field**; mood **playful and curious** (editorial, dark/mythic and clean/technical not selected); main concern **mobile feels cramped**; copy approach **draft and ask targeted questions**.
+
+Revisions in Figma page 02, section E ("v2 after feedback"):
+
+- v2 A1 desktop: Index as a 44px button, talking tags ("poke me", "read me", "half-baked, click anyway"), hover/focus callout, DRAFT headline.
+- v2 mobile (390): bigger labels, 44px targets, bottom bar for Index and Motion, index sheet with 56px rows, reduced-motion static cards.
+- History kept: A2 and A3 renamed "(parked, kept as history)"; v1 mobile and tablet frames renamed "v1 superseded".
+- Section D (interaction notes) moved down to remove an overlap.
+
+Still open: tablet v2 (not redone), prototype wiring for v2 frames, colour and typography (unapproved), real copy (see `draft-copy-register.md`).
+
+## Figma limit reached (2026-11-01)
+
+The Starter plan Figma MCP tool-call limit was reached. Pending edits not yet applied in Figma: dry-voice tag text ("open", "read", "some of this works"; Lab label "Experiments"), a notes-line update, and a v2 tablet frame. No paid upgrade was made. Retry after the limit resets, or apply by hand.
+
+Owner feedback round 1 also: flagships Coding-For-MBA, Programming-Challenges-5, AI Attendance Management System; contact email, GitHub, LinkedIn, Instagram; voice dry; Art and Books spaces supplied (see content-inventory-art-books.md).
