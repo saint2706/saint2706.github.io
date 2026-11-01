@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Task register",
+  "type": "object",
+  "required": ["schema_version", "statuses", "tasks"],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "statuses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "phase",
+          "title",
+          "status",
+          "depends_on",
+          "objective",
+          "scope",
+          "preconditions",
+          "prompt",
+          "acceptance_criteria",
+          "validation_commands",
+          "expected_deliverables",
+          "evidence_required",
+          "no_scope_creep"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^P[0-9]{2}-T[0-9]{2}$"
+          },
+          "phase": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "objective": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "array",
+            "minItems": 1
+          },
+          "preconditions": {
+            "type": "array"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "acceptance_criteria": {
+            "type": "array",
+            "minItems": 1
+          },
+          "validation_commands": {
+            "type": "array"
+          },
+          "expected_deliverables": {
+            "type": "array",
+            "minItems": 1
+          },
+          "evidence_required": {
+            "type": "array",
+            "minItems": 1
+          },
+          "no_scope_creep": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  }
+}

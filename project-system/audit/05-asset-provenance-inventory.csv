@@ -1,0 +1,13 @@
+path,type,source,license,provenance_status,notes
+public/images/projects/attendance-ai.webp,project-thumbnail,resume.js,unknown,unverified,creator and license not recorded
+public/images/projects/coding-for-mba.webp,project-thumbnail,resume.js,unknown,unverified,creator and license not recorded
+public/images/projects/geralt-bot.webp,project-thumbnail,resume.js,unknown,unverified,possible third-party IP (Witcher character); confirm
+public/images/projects/modding-guide.webp,project-thumbnail,resume.js,unknown,unverified,creator and license not recorded
+public/images/projects/python-gim.webp,project-thumbnail,resume.js,unknown,unverified,creator and license not recorded
+public/images/projects/scroll-dharma.webp,project-thumbnail,resume.js,unknown,unverified,creator and license not recorded
+public/images/projects/vit-enhancer.webp,project-thumbnail,resume.js,unknown,unverified,may use VIT branding; confirm
+public/images/projects/vitable.webp,project-thumbnail,resume.js,unknown,unverified,may use VIT branding; confirm
+/vite.svg,favicon,index.html,n/a,missing,referenced but not in public/
+/favicon-32x32.png,favicon,index.html,n/a,missing,referenced but not in public/
+/favicon-16x16.png,favicon,index.html,n/a,missing,referenced but not in public/
+/apple-touch-icon.png,favicon,index.html,n/a,missing,referenced but not in public/

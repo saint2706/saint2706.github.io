@@ -1,0 +1,51 @@
+{
+  "approvals": [
+    {
+      "phase": "P00",
+      "status": "authorized",
+      "scope": "audit/preparation only; no website implementation"
+    },
+    {
+      "phase": "P01",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P02",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P03",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P04",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P05",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P06",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    },
+    {
+      "phase": "P07",
+      "status": "pending-approval",
+      "scope": "not authorized until explicit user approval"
+    }
+  ],
+  "rules": [
+    "One phase at a time; no automatic progression.",
+    "A task request must identify exact authorized task IDs.",
+    "Production release must be included in the approved task/phase.",
+    "Consequential architecture choices require evidence-backed recommendation and approval.",
+    "Silence, prior interest or broad project intent is not approval."
+  ]
+}

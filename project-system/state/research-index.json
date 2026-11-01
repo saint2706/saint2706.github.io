@@ -1,0 +1,141 @@
+{
+  "checked_on": "2026-10-31",
+  "sources": [
+    {
+      "id": "R001",
+      "title": "Claude Code Skills",
+      "url": "https://code.claude.com/docs/en/skills",
+      "authority": "Official Anthropic documentation",
+      "use": "Repo-local skills and invocation",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R002",
+      "title": "Claude Code Subagents",
+      "url": "https://code.claude.com/docs/en/sub-agents",
+      "authority": "Official Anthropic documentation",
+      "use": "Read-only specialists and isolation",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R003",
+      "title": "Claude Code Hooks",
+      "url": "https://code.claude.com/docs/en/hooks-guide",
+      "authority": "Official Anthropic documentation",
+      "use": "PreToolUse hooks",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R004",
+      "title": "Claude Code Plugins",
+      "url": "https://code.claude.com/docs/en/plugins",
+      "authority": "Official Anthropic documentation",
+      "use": "Plugin risk/installation",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R005",
+      "title": "Claude Code Security",
+      "url": "https://code.claude.com/docs/en/security",
+      "authority": "Official Anthropic documentation",
+      "use": "Permissions, sandboxing and prompt injection",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R006",
+      "title": "Claude Code Releases",
+      "url": "https://github.com/anthropics/claude-code/releases",
+      "authority": "Official release feed",
+      "use": "Latest stable release; v2.1.316 shown on snapshot date",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R007",
+      "title": "Anthropic Frontend Design Plugin",
+      "url": "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
+      "authority": "Official Anthropic repository",
+      "use": "Optional frontend design plugin candidate",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R008",
+      "title": "Figma MCP",
+      "url": "https://developers.figma.com/docs/figma-mcp-server/",
+      "authority": "Official Figma docs",
+      "use": "Design read/write workflow",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R009",
+      "title": "Figma Claude Code Setup",
+      "url": "https://help.figma.com/hc/en-us/articles/39888612464151-Claude-Code-and-Figma-Set-up-the-MCP-server",
+      "authority": "Official Figma Help Center",
+      "use": "Remote plugin setup and auth",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R010",
+      "title": "Figma MCP vs Agent",
+      "url": "https://developers.figma.com/docs/figma-mcp-server/mcp-vs-agent/",
+      "authority": "Official Figma docs",
+      "use": "Agent implementation responsibility",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R011",
+      "title": "GitHub Pages Publishing",
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site",
+      "authority": "Official GitHub docs",
+      "use": "Pages deployment behavior",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R012",
+      "title": "GitHub Actions Security",
+      "url": "https://docs.github.com/en/actions/how-tos/secure-your-work",
+      "authority": "Official GitHub docs",
+      "use": "Least privilege, pinned actions, OIDC",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R013",
+      "title": "GitHub Rulesets",
+      "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets",
+      "authority": "Official GitHub docs",
+      "use": "Branch protection",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R014",
+      "title": "WCAG 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "authority": "W3C Recommendation",
+      "use": "Accessibility target",
+      "freshness": "current-standard-recheck"
+    },
+    {
+      "id": "R015",
+      "title": "Playwright Visual Comparisons",
+      "url": "https://playwright.dev/docs/test-snapshots",
+      "authority": "Official Playwright docs",
+      "use": "Visual regression and environment consistency",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R016",
+      "title": "axe-core",
+      "url": "https://github.com/dequelabs/axe-core",
+      "authority": "Deque open-source project",
+      "use": "Automated accessibility checks",
+      "freshness": "recheck"
+    },
+    {
+      "id": "R017",
+      "title": "Atlassian Data Visualization Skill",
+      "url": "https://github.com/atlassian-labs/data-visualization-skill",
+      "authority": "Third-party project",
+      "use": "Optional Plotly research candidate only",
+      "freshness": "review-before-install"
+    }
+  ]
+}

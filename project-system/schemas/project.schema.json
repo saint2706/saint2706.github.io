@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project state",
+  "type": "object",
+  "required": [
+    "pack_name",
+    "pack_version",
+    "repository",
+    "current_phase",
+    "execution_mode",
+    "phase_authorization"
+  ],
+  "properties": {
+    "pack_name": {
+      "type": "string"
+    },
+    "pack_version": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "current_phase": {
+      "type": "string"
+    },
+    "execution_mode": {
+      "type": "string"
+    },
+    "phase_authorization": {
+      "type": "object"
+    }
+  }
+}

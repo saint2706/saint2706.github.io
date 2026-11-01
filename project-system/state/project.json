@@ -1,0 +1,42 @@
+{
+  "pack_name": "Saint2706 Portfolio Claude Code Project System",
+  "pack_version": "1.0.0",
+  "created_on": "2026-10-31",
+  "repository": "saint2706/saint2706.github.io",
+  "primary_domain": "https://saint2706.github.io/",
+  "preferred_model": "Claude Sonnet 5.5",
+  "preferred_effort": "high",
+  "current_phase": "P00",
+  "execution_mode": "audit-only",
+  "phase_authorization": {
+    "P00": "authorized: audit and preparation only",
+    "P01": "pending-approval",
+    "P02": "pending-approval",
+    "P03": "pending-approval",
+    "P04": "pending-approval",
+    "P05": "pending-approval",
+    "P06": "pending-approval",
+    "P07": "pending-approval"
+  },
+  "decision_statuses": [
+    "confirmed",
+    "proposed",
+    "pending-approval",
+    "rejected",
+    "superseded",
+    "blocked",
+    "complete"
+  ],
+  "state_format": "Markdown plus JSON/YAML structured state; validators detect drift",
+  "git_policy": {
+    "branch_per_phase": true,
+    "commit_after_each_verified_task": true,
+    "push_phase_branch": true,
+    "pull_request_after_phase_gate": true,
+    "no_direct_default_branch_commits": true,
+    "preserve_history": true,
+    "no_force_push": true
+  },
+  "hosting": "GitHub Pages; no custom domain migration; serverless only when justified",
+  "primary_authority": "primary Claude Code session; specialist agents advise only"
+}

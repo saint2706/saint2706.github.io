@@ -36,7 +36,7 @@ Welcome to the repository for my personal portfolio website. This project showca
 
    ```bash
    git clone https://github.com/saint2706/saint2706.github.io
-   cd rishabh-portfolio
+   cd saint2706.github.io
    ```
 
 2. Install dependencies:
@@ -46,7 +46,7 @@ Welcome to the repository for my personal portfolio website. This project showca
    ```
 
 3. Set up environment variables:
-   Copy `.env.example` to `.env` and add your API keys (e.g., `VITE_GEMINI_API_KEY`).
+   Copy `.env.example` to `.env`. Set `VITE_GEMINI_PROXY_URL` to your Gemini proxy (see `proxy/README.md`); `VITE_GEMINI_API_KEY` is for local development only and must never be deployed.
 
 ### Development
 
@@ -73,7 +73,7 @@ This repository is **pnpm-only**:
 
 ## 📚 Documentation
 
-Detailed documentation on project architecture, theming, and the games is available in the `.jules/` directory where the agents maintain historical logs and reports.
+Project planning, audits and decisions live in `project-system/`; start with `PROJECT_PACK_README.md`.
 
 ## 📜 Scripts
 
@@ -108,16 +108,13 @@ Security is a core focus of this project. Key measures include:
 - **Input Sanitization**: All user inputs (chat, contact form) are sanitized to prevent XSS.
 - **Dependency Pinning**: Vulnerable transitive dependencies are overridden in `pnpm-workspace.yaml`.
 
-For a detailed security report, see [.jules/sentinel.md](.jules/sentinel.md).
-
 ## 🔄 CI/CD Optimizations
 
 To ensure reliable, fast, and secure software delivery, the following pipeline optimizations are implemented:
 
 - **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are strictly pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
 - **Caching**: The `setup-env` composite action automatically caches the `pnpm` store via `actions/setup-node`, saving bandwidth and speeding up test executions.
-- **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (`[20, 22]`) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
-- **Vite 8 Node Compatibility Matrix**: CI verifies test coverage on all supported Vite 8 Node.js lines: `20.19.0`, `22.12.0`, and `24.x` (recommended current line).
+- **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (Node 24 and 26) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
 - **Cross-Platform Matrix Builds**: The test job uses a matrix strategy to verify the application across multiple operating systems (`ubuntu-latest`, `windows-latest`, `macos-latest`), ensuring broad compatibility and catching platform-specific issues early.
 - **Concurrency control**: Workflow concurrency correctly cancels in-progress jobs for outdated commits on the same branch or PR.
 
@@ -136,5 +133,3 @@ The Python runner executes code in the browser using WebAssembly. It captures st
 This project is private and proprietary. All rights reserved.
 
 ---
-
-_Documentation maintained by [Jules](https://github.com/jules-agent)_

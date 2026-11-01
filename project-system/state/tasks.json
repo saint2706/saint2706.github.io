@@ -1,0 +1,1144 @@
+{
+  "schema_version": "1.0.0",
+  "updated_on": "2026-11-01",
+  "statuses": [
+    "backlog",
+    "ready",
+    "in-progress",
+    "blocked",
+    "review",
+    "complete",
+    "rejected",
+    "deferred"
+  ],
+  "tasks": [
+    {
+      "id": "P00-T01",
+      "phase": "P00",
+      "title": "Capture repository baseline and governance",
+      "status": "complete",
+      "authorization": "pre-authorized-audit-only",
+      "depends_on": [],
+      "objective": "Capture reproducible repository, branch, commit, worktree and GitHub governance evidence.",
+      "context": "GitHub default branch is authoritative. Refresh the current branch and SHA; the pack snapshot is only a starting point.",
+      "scope": [
+        "Inspect remote/default branch/HEAD and worktree",
+        "Inspect branch protection/rulesets and Pages settings where accessible",
+        "Inventory root, source, assets, workflows, scripts and package manager",
+        "Record runtime and dependency baselines"
+      ],
+      "preconditions": [
+        "Run from repository root",
+        "Preserve user changes",
+        "Detect default branch rather than assuming its name"
+      ],
+      "prompt": "Inspect Git and GitHub metadata, current branch, HEAD, tree and status. Verify default-branch protection and available required checks. Record Pages configuration if accessible. Inventory key project files and runtime. Write only `project-system/audit/**`, `project-system/state/repo-baseline.json` and task evidence. Do not touch website code, dependencies, workflows, settings or production.",
+      "acceptance_criteria": [
+        "Exact repo/default branch/HEAD/date captured",
+        "Working-tree state and remotes recorded",
+        "Protection verified rather than assumed",
+        "Major source areas and workflows inventoried",
+        "No website or remote settings changed"
+      ],
+      "validation_commands": [
+        "git status --short",
+        "git rev-parse HEAD",
+        "git branch --show-current",
+        "git remote -v",
+        "git branch -a",
+        "git ls-files",
+        "node --version",
+        "pnpm --version"
+      ],
+      "expected_deliverables": [
+        "project-system/audit/01-repository-inventory.md",
+        "refreshed state/repo-baseline.json"
+      ],
+      "evidence_required": [
+        "HEAD SHA/date",
+        "branch/ruleset evidence",
+        "tree counts and inventory",
+        "before/after git status"
+      ],
+      "no_scope_creep": [
+        "Do not enable branch rulesets in this audit",
+        "Do not push to default",
+        "Do not infer settings from README"
+      ]
+    },
+    {
+      "id": "P00-T02",
+      "phase": "P00",
+      "title": "Audit engineering, architecture and deployment",
+      "status": "complete",
+      "authorization": "pre-authorized-audit-only",
+      "depends_on": ["P00-T01"],
+      "objective": "Map architecture and identify technical, operational, security and deployment risks.",
+      "context": "Snapshot suggests React/Vite SPA, Tailwind, React Router, Framer Motion, Vitest, Playwright dependency and GitHub Pages; verify live repo.",
+      "scope": [
+        "Map entry points/routes/data flow/components",
+        "Inspect tests, build and CI/deploy workflows",
+        "Review security/privacy, CSP, headers, secrets and Worker",
+        "Review performance and accessibility constraints"
+      ],
+      "preconditions": [
+        "Read critical files and representative components",
+        "Run existing safe validation only if environment is ready",
+        "Do not install/update dependencies"
+      ],
+      "prompt": "Audit current application architecture from source and workflow evidence. Map routes, components, state, content, interactive systems, AI/Worker, browser execution, tests, build and deployment. Review privacy, security, CSP/headers, supply-chain and accessibility. Run safe existing checks without modifying repo. Record exact findings, paths, severity, unknowns and test exits.",
+      "acceptance_criteria": [
+        "Architecture map cites actual paths",
+        "Risks linked to evidence and severity",
+        "Current CI/deploy trigger documented",
+        "Architecture options remain open",
+        "No non-audit files changed"
+      ],
+      "validation_commands": [
+        "pnpm run format:check",
+        "pnpm run check:package-manager-policy",
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "pnpm run test:security-full"
+      ],
+      "expected_deliverables": [
+        "project-system/audit/02-technical-architecture-audit.md",
+        "project-system/audit/03-quality-security-deployment-audit.md"
+      ],
+      "evidence_required": [
+        "Commands/results or skipped reason",
+        "File references and workflow evidence",
+        "Final git status"
+      ],
+      "no_scope_creep": [
+        "No code fixes during audit",
+        "No destructive/production/credential operation",
+        "Do not claim tests pass without results"
+      ]
+    },
+    {
+      "id": "P00-T03",
+      "phase": "P00",
+      "title": "Audit content, projects and asset provenance",
+      "status": "complete",
+      "authorization": "pre-authorized-audit-only",
+      "depends_on": ["P00-T01"],
+      "objective": "Assess content, personal claims, candidate projects and image assets for preservation, verification and rights.",
+      "context": "Resume/profile and project data are source material, not blanket approval to publish.",
+      "scope": [
+        "Inventory profile/resume/project/writing/feed content",
+        "Audit flagship repos and evidence",
+        "Inventory images/assets and their provenance",
+        "Classify claims and personal approval needs"
+      ],
+      "preconditions": [
+        "No content publishing or rewriting",
+        "Separate repo facts from personal contribution claims",
+        "Treat rights and privacy conservatively"
+      ],
+      "prompt": "Audit content and media without publishing changes. Examine profile/resume facts, project records, external links and all image assets. Review the candidate flagship repositories and report what evidence supports technical claims. Classify claims as repository-verified, externally-verifiable, user-confirmation-required, stale or unsupported. Capture license uncertainty and missing facts.",
+      "acceptance_criteria": [
+        "All content sources inventoried",
+        "Claim categories and evidence recorded",
+        "Asset provenance/license status recorded",
+        "Flagship evidence gaps documented",
+        "No invented claims or publication"
+      ],
+      "validation_commands": [
+        "git status --short",
+        "git ls-files 'public/**' 'src/data/**' 'src/components/pages/**'"
+      ],
+      "expected_deliverables": [
+        "project-system/audit/04-content-and-claims-audit.md",
+        "project-system/audit/05-asset-provenance-inventory.csv",
+        "project-system/audit/06-flagship-evidence-review.md"
+      ],
+      "evidence_required": [
+        "Source paths/URLs",
+        "Asset path/rights status",
+        "Approval-required claims"
+      ],
+      "no_scope_creep": [
+        "Do not invent outcomes or metrics",
+        "Reject unclear asset licenses",
+        "Do not create any user likeness"
+      ]
+    },
+    {
+      "id": "P00-T04",
+      "phase": "P00",
+      "title": "Synthesize audit and prepare approval brief",
+      "status": "complete",
+      "authorization": "pre-authorized-audit-only",
+      "depends_on": ["P00-T02", "P00-T03"],
+      "objective": "Deliver comprehensive audit dossier, options, risk register and Phase 1 recommendation.",
+      "context": "Closes P00. All later phases require explicit approval.",
+      "scope": [
+        "Synthesize technical/editorial/design/risk findings",
+        "Compare architecture/content/hosting options",
+        "Prioritize roadmap/dependencies",
+        "Prepare user approval decisions"
+      ],
+      "preconditions": [
+        "P00 evidence exists",
+        "Use priority hierarchy",
+        "Separate fact, inference, recommendation"
+      ],
+      "prompt": "Synthesize the audit into a comprehensive dossier and executive summary. Rank findings. Compare viable architecture, content model, routing and deployment alternatives against approved requirements. Recommend an option with trade-offs but do not implement or mark consequential choices confirmed. Address branch-protection and production deployment risk. Produce readiness matrix and ask user to approve P01.",
+      "acceptance_criteria": [
+        "Full evidence-linked dossier complete",
+        "Risks/unknowns prioritized",
+        "Comparative recommendation and alternatives",
+        "P01 remains pending until user approval",
+        "No implementation or deployment"
+      ],
+      "validation_commands": [
+        "node project-system/scripts/validate-project-state.mjs",
+        "git status --short",
+        "git diff --stat"
+      ],
+      "expected_deliverables": [
+        "project-system/audit/00-executive-summary.md",
+        "project-system/audit/07-comprehensive-audit-dossier.md",
+        "project-system/audit/08-recommended-roadmap-and-approval.md"
+      ],
+      "evidence_required": [
+        "Recommendation matrix",
+        "Risk register",
+        "Final diff and approval needed"
+      ],
+      "no_scope_creep": [
+        "Do not begin P01",
+        "Do not modify source or production workflow",
+        "Do not mark unresolved ADR confirmed"
+      ]
+    },
+    {
+      "id": "P01-T01",
+      "phase": "P01",
+      "title": "Evaluate application and rendering architecture",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P00-T04"],
+      "objective": "Compare plausible frontend/rendering architectures against the approved requirements.",
+      "context": "Candidates include retaining/improving React+Vite and static-first Astro/React islands; neither is pre-selected.",
+      "scope": [
+        "Compare SSR/prerender/static output and progressive enhancement",
+        "Routing/404/deep-link behavior on Pages",
+        "Interactions, animation, SEO, a11y, tests",
+        "Migration costs, performance, maintenance and licensing"
+      ],
+      "preconditions": ["P01 explicitly approved", "Use current official docs and repo evidence"],
+      "prompt": "Research current viable architectures. Compare current React+Vite against a static-first option such as Astro with React islands, plus any clearly superior candidate. Build a criteria-based decision matrix. Use disposable isolated prototypes only if they add evidence and are in scope. Recommend, record ADR as proposed and wait for user approval before consequential implementation.",
+      "acceptance_criteria": [
+        "Trade-offs and migration estimates use project evidence",
+        "Official current docs cited",
+        "Recommendation and runner-up explicit",
+        "ADR remains proposed until user confirms",
+        "No production migration"
+      ],
+      "validation_commands": ["node --version", "pnpm --version", "git status --short"],
+      "expected_deliverables": ["ADR-001", "architecture comparison report"],
+      "evidence_required": ["Sources/access dates", "Matrix and risks", "Approval status"],
+      "no_scope_creep": [
+        "Do not preselect any framework",
+        "No removal of working site",
+        "No paid service without approval"
+      ]
+    },
+    {
+      "id": "P01-T02",
+      "phase": "P01",
+      "title": "Decide content model and authoring workflow",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P01-T01"],
+      "objective": "Recommend a Git-friendly content and editorial model.",
+      "context": "The site needs projects, writings, curated collections and spaces; low maintenance; English first; multilingual-ready.",
+      "scope": [
+        "Compare MD/MDX, structured data, CMS and hybrid",
+        "Define schemas and claim provenance",
+        "Publishing lifecycle, assets, SEO and history"
+      ],
+      "preconditions": ["Architecture options available", "No personal content publication"],
+      "prompt": "Compare Markdown/MDX, structured local data, headless CMS and hybrid. Recommend the simplest fit. Define schemas for projects, profile, writing, interests, experiments and assets; include draft/approval states and fact provenance. Keep proposal pending user approval.",
+      "acceptance_criteria": [
+        "All content types supported",
+        "Approval/provenance fields defined",
+        "Asset relationship and alt-text model",
+        "Hosting/Git history compatibility evaluated"
+      ],
+      "validation_commands": ["node project-system/scripts/validate-project-state.mjs"],
+      "expected_deliverables": ["ADR-002", "schema proposal", "publishing workflow"],
+      "evidence_required": ["Alternatives, example records and open questions"],
+      "no_scope_creep": [
+        "No CMS/paid service by default",
+        "No invented personal content",
+        "No empty interest sections"
+      ]
+    },
+    {
+      "id": "P01-T03",
+      "phase": "P01",
+      "title": "Decide information architecture and URL model",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P01-T01", "P01-T02"],
+      "objective": "Define routes, space boundaries, navigation and legacy URL disposition.",
+      "context": "Core navigation with optional discovery paths; deliberate professional/personal gateway; separate laboratory.",
+      "scope": [
+        "Map site hierarchy/routes",
+        "Search/discovery model",
+        "Mobile navigation",
+        "Clean URLs, redirects, 404 and deep links"
+      ],
+      "preconditions": [
+        "Architecture/content proposals available",
+        "Existing routes are audit input only"
+      ],
+      "prompt": "Produce a site map and route proposal. Show core navigation, optional discovery, personal/professional gateway and lab. Map every current route to keep/redesign/redirect/retire. Validate GitHub Pages deep-link behavior and recommend URL conventions. Mark proposal for approval.",
+      "acceptance_criteria": [
+        "Every route has audience/purpose",
+        "Spaces deliberately distinct",
+        "Legacy URL decisions recorded",
+        "No empty categories or route assumptions"
+      ],
+      "validation_commands": ["git status --short"],
+      "expected_deliverables": ["ADR-003", "route inventory", "navigation/transition map"],
+      "evidence_required": ["Route table, references and approval states"],
+      "no_scope_creep": [
+        "Do not retain every old route automatically",
+        "No forced now page",
+        "Do not break valuable indexed routes silently"
+      ]
+    },
+    {
+      "id": "P01-T04",
+      "phase": "P01",
+      "title": "Define governance, branch protection and release model",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P01-T01", "P01-T02", "P01-T03"],
+      "objective": "Translate phase authorization into practical PR, protection, deployment and recovery controls.",
+      "context": "Captured main is unprotected; default branch push triggers Pages deploy after CI, workflow_dispatch also deploys.",
+      "scope": [
+        "Define PR protection and required checks",
+        "Branch per phase, commit per task",
+        "Release authorization/Pages environment",
+        "Backups and rollback"
+      ],
+      "preconditions": ["P01 approved", "Manual GitHub settings access may be required"],
+      "prompt": "Produce governance/runbook. Specify branch rules, PR checks, protection of force-push/deletion, environment deployment protection, explicit release path and rollback. Reconcile current workflow triggers with phase authorization. Do not mutate GitHub settings unless a separate explicit task authorizes it.",
+      "acceptance_criteria": [
+        "Default branch protection policy explicit",
+        "Merge/deploy aligned with release approval",
+        "Current workflow_dispatch risk documented",
+        "Old site remains live during branch development",
+        "Rollback path defined"
+      ],
+      "validation_commands": [
+        "Review .github/workflows/ci.yml",
+        "Review .github/workflows/deploy.yml",
+        "git status --short"
+      ],
+      "expected_deliverables": ["ADR-004", "branch protection runbook", "release governance"],
+      "evidence_required": ["Exact settings checklist and workflow evidence"],
+      "no_scope_creep": [
+        "No production merge/deploy",
+        "Do not claim protection enabled until verified",
+        "Do not rewrite Git history"
+      ]
+    },
+    {
+      "id": "P02-T01",
+      "phase": "P02",
+      "title": "Conduct curated visual research",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P01-T04"],
+      "objective": "Build annotated visual references and several distinct visual directions.",
+      "context": "Figma-first; artistic/eclectic atmosphere; visual-first homepage; distinct personal space.",
+      "scope": [
+        "Research portfolios/editorial/gallery/experimental sites",
+        "Analyze typography, composition, motion, navigation, a11y",
+        "Record original asset/licensing principles",
+        "Propose distinct directions"
+      ],
+      "preconditions": ["P02 approved", "No palette preselection"],
+      "prompt": "Research broadly and curate by design principle/use case. Explain lessons and anti-patterns for each reference. Present genuinely distinct concept directions rather than superficial color variants. Record URL/access date and license limitations.",
+      "acceptance_criteria": [
+        "Annotated useful references",
+        "Concepts materially different",
+        "No asset treated as licensed merely because referenced",
+        "Palette remains unapproved"
+      ],
+      "validation_commands": ["node project-system/scripts/validate-project-state.mjs"],
+      "expected_deliverables": ["design-reference-library.md", "design-directions.md"],
+      "evidence_required": ["Sources/dates, concept matrix and rejected options"],
+      "no_scope_creep": [
+        "No premature palette",
+        "No unlicensed copied art",
+        "Do not compromise usability"
+      ]
+    },
+    {
+      "id": "P02-T02",
+      "phase": "P02",
+      "title": "Create Figma file and visual concepts",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P02-T01"],
+      "objective": "Create dedicated Figma workspace and initial concept boards.",
+      "context": "New Figma file is a later design deliverable; not part of initial ZIP preparation.",
+      "scope": [
+        "Figma file with research/concepts/design system/prototypes pages",
+        "Homepage openings and space transitions",
+        "Responsive samples and interaction notes"
+      ],
+      "preconditions": [
+        "P02 approved",
+        "Figma auth available from user",
+        "No paid usage without approval"
+      ],
+      "prompt": "Using official Figma MCP/plugin only after user authentication, create dedicated Figma file and organized pages. Produce distinct homepage opening concepts and representative gateway/section frames. Record feedback/rejections. Obtain approval before finalizing production tokens.",
+      "acceptance_criteria": [
+        "Figma file and link recorded",
+        "Concepts follow product principles",
+        "No user portrait or likeness",
+        "Rejected options retained as history",
+        "No concept treated as final without approval"
+      ],
+      "validation_commands": [
+        "Verify Figma file link/permissions",
+        "Review mobile/tablet/desktop frames"
+      ],
+      "expected_deliverables": ["Figma file", "concept review", "design references"],
+      "evidence_required": ["Frame/page IDs, link, approval and feedback"],
+      "no_scope_creep": [
+        "No public oversharing",
+        "No production code in this task",
+        "No paid feature without approval"
+      ]
+    },
+    {
+      "id": "P02-T03",
+      "phase": "P02",
+      "title": "Refine approved direction and design system",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P02-T02"],
+      "objective": "Create Figma design system and representative page designs from approved concept.",
+      "context": "Shared foundations plus content-led section systems; important design decisions trace to code.",
+      "scope": [
+        "Typography/color/spacing/grid/motion",
+        "Section-specific systems and components",
+        "Focus/hover/error/reduced-motion states",
+        "Responsive page/prototype designs",
+        "Token/component mapping"
+      ],
+      "preconditions": [
+        "A concept has explicit user approval",
+        "Figma access and feedback available"
+      ],
+      "prompt": "Refine only the approved concept. Define shared tokens and justified section-specific systems. Design responsive states, keyboard/focus, reduced motion and accessible equivalents. Map important Figma variables/components to proposed code tokens/components. Obtain progressive section approvals.",
+      "acceptance_criteria": [
+        "Approved direction documented",
+        "Accessibility states designed",
+        "Figma-code mapping exists",
+        "Unapproved sections marked provisional"
+      ],
+      "validation_commands": [
+        "Inspect Figma components/variables",
+        "Review representative viewport frames"
+      ],
+      "expected_deliverables": ["DESIGN.md revisions", "Figma system", "design records"],
+      "evidence_required": ["Approvals, Figma refs and deviation history"],
+      "no_scope_creep": [
+        "Do not code unapproved directions",
+        "Do not force all spaces into one style",
+        "Do not compromise contrast"
+      ]
+    },
+    {
+      "id": "P03-T01",
+      "phase": "P03",
+      "title": "Implement approved technical and visual foundations",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P01-T04", "P02-T03"],
+      "objective": "Build approved app shell, tokens, routing, core primitives and progressive-enhancement baseline.",
+      "context": "First implementation task; framework/content model must be explicitly approved.",
+      "scope": [
+        "Scaffold/build config",
+        "Design tokens/primitives",
+        "App shell/routes/error/404",
+        "Content validators",
+        "Responsive/accessibility foundation"
+      ],
+      "preconditions": [
+        "P03 explicitly authorized",
+        "Architecture/content/design ADRs approved",
+        "Default branch protections verified or documented approved exception"
+      ],
+      "prompt": "Implement approved foundations only on phase branch. Keep old production site unchanged. Add tests alongside critical behavior. Record file list and run required gates before task-level commit.",
+      "acceptance_criteria": [
+        "Frozen-lockfile install/build passes",
+        "Core content/navigation has fallback where required",
+        "Tokens trace to Figma",
+        "No secrets/tracking",
+        "Pages routes/deep links verified"
+      ],
+      "validation_commands": [
+        "pnpm install --frozen-lockfile",
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright smoke tests when configured"
+      ],
+      "expected_deliverables": ["foundation implementation", "tests", "architecture docs"],
+      "evidence_required": ["Commit SHA, check logs, route screenshots"],
+      "no_scope_creep": [
+        "Do not implement later phase content",
+        "No unapproved architecture change",
+        "No release unless explicitly authorized"
+      ]
+    },
+    {
+      "id": "P03-T02",
+      "phase": "P03",
+      "title": "Implement content pipeline and navigation shell",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P03-T01"],
+      "objective": "Connect validated content to navigation and editorial components.",
+      "context": "Core navigation discoverable without clutter; content types remain modular.",
+      "scope": [
+        "Content schemas",
+        "Professional/personal gateway",
+        "Responsive nav and search foundation",
+        "Project/editorial primitives",
+        "Empty/error/404 states"
+      ],
+      "preconditions": ["Approved information architecture and schemas"],
+      "prompt": "Implement approved navigation and content pipeline. Preserve clear core paths and intentional space transitions. Add schema checks and tests. Do not publish unapproved personal content or empty categories.",
+      "acceptance_criteria": [
+        "Keyboard/touch nav works",
+        "Mobile core content reachable",
+        "Search/empty/error states work",
+        "Content validates",
+        "No placeholder sections"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright keyboard/mobile checks"
+      ],
+      "expected_deliverables": ["Navigation shell", "schema validation", "tests"],
+      "evidence_required": ["Screenshots and keyboard results"],
+      "no_scope_creep": ["No unapproved CMS", "No tracking", "No unapproved personal facts"]
+    },
+    {
+      "id": "P03-T03",
+      "phase": "P03",
+      "title": "Establish SEO, privacy and CI foundations",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P03-T01", "P03-T02"],
+      "objective": "Implement approved metadata, crawlability, privacy defaults and CI checks.",
+      "context": "Existing metadata/sitemap/robots files and GH Pages workflows need architecture-aware review.",
+      "scope": [
+        "SEO metadata and canonical",
+        "Sitemap/robots/404/redirects",
+        "Host-compatible CSP/headers",
+        "Privacy audit",
+        "CI checks"
+      ],
+      "preconditions": ["Hosting/routing ADR approved", "No API secrets in client artifact"],
+      "prompt": "Implement only approved SEO/privacy/CI baseline. Verify actual GitHub Pages behavior; do not rely on unsupported _headers. Keep deploy blocked until explicit release authorization. Validate each published route.",
+      "acceptance_criteria": [
+        "Accurate route metadata/canonical",
+        "Sitemap/robots/404/redirects align",
+        "No client secrets",
+        "Headers/CSP claims reflect host",
+        "CI validates output"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "pnpm run test:security-full",
+        "workflow lint and sitemap checks"
+      ],
+      "expected_deliverables": ["SEO/privacy baseline", "CI changes", "security tests"],
+      "evidence_required": ["Workflow/build artifacts and security results"],
+      "no_scope_creep": [
+        "No unapproved publishing",
+        "No analytics",
+        "No production trigger change outside scope"
+      ]
+    },
+    {
+      "id": "P04-T01",
+      "phase": "P04",
+      "title": "Build flagship case studies",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P03-T02"],
+      "objective": "Create a few evidence-backed editorial case studies.",
+      "context": "Candidates: Coding-For-MBA, Attendance Management System using Face Recognition, Programming-Challenges-5; sequence follows audit evidence.",
+      "scope": [
+        "Inspect repo/docs/demo",
+        "Problem, role, process, technical choices",
+        "Challenges, outcomes, limits",
+        "Visual narrative and source references"
+      ],
+      "preconditions": [
+        "P04 approved",
+        "Facts verified",
+        "Sequence approved",
+        "Personal contribution statements approved"
+      ],
+      "prompt": "Build only sufficiently evidenced case studies. Explain context, constraints, decisions, implementation, outcomes and limitations. Cite repository/public evidence. Request user approval for personal role claims or opinions.",
+      "acceptance_criteria": [
+        "Claims supported",
+        "No fabricated metrics",
+        "Links work",
+        "Responsive/a11y passes",
+        "Order approved"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright route checks"
+      ],
+      "expected_deliverables": ["Case-study content/pages", "evidence index"],
+      "evidence_required": ["Source links, approvals and screenshots"],
+      "no_scope_creep": [
+        "Do not exaggerate role or impact",
+        "Do not infer ownership from commits alone",
+        "No filler projects"
+      ]
+    },
+    {
+      "id": "P04-T02",
+      "phase": "P04",
+      "title": "Build profile, resume and contact",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P03-T02"],
+      "objective": "Present verified professional profile and contact paths.",
+      "context": "Keep minimal background; email, GitHub, LinkedIn, Instagram; select resume format after review.",
+      "scope": [
+        "Profile/education/skills/experience",
+        "Resume display/download choice",
+        "Contact paths/forms and privacy"
+      ],
+      "preconditions": ["Approved facts/contact details", "Resume publication approved"],
+      "prompt": "Implement only approved facts. Verify date-sensitive credentials, role/title/date and contact URLs. Choose most usable resume presentation. Protect forms without adding visitor tracking.",
+      "acceptance_criteria": [
+        "Every personal claim approved/sourced",
+        "No expired certification presented as current",
+        "Contact accurate and intentional",
+        "Accessible responsive behavior"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Manual contact URL/form checks"
+      ],
+      "expected_deliverables": ["Profile/resume/contact content", "claim approvals"],
+      "evidence_required": ["Approved facts, URL results, screenshots"],
+      "no_scope_creep": [
+        "No invented achievements",
+        "No private details without approval",
+        "No needless visitor data"
+      ]
+    },
+    {
+      "id": "P04-T03",
+      "phase": "P04",
+      "title": "Build professional discovery and search",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P04-T01", "P04-T02"],
+      "objective": "Connect case studies, selected projects and writing into useful discovery.",
+      "context": "Few deep case studies; other material lighter; search should not be an exhaustive tag dashboard.",
+      "scope": [
+        "Project index/taxonomy",
+        "Search/filter",
+        "Writing/tutorial links",
+        "External links/previews"
+      ],
+      "preconditions": ["Facts approved and content system stable"],
+      "prompt": "Build professional discovery using approved content. Search/filter must be accessible, helpful and lightweight. Prefer static links/previews over third-party embeds unless value is proven.",
+      "acceptance_criteria": [
+        "Keyboard/screen-reader search",
+        "Accurate project metadata/links",
+        "No thin/unapproved entries",
+        "Mobile usability"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright search tests"
+      ],
+      "expected_deliverables": ["Project index", "search behavior", "taxonomy"],
+      "evidence_required": ["Route screenshots and URL checks"],
+      "no_scope_creep": [
+        "Do not list every old repo automatically",
+        "No tracker embeds",
+        "No exhaustive tool directory"
+      ]
+    },
+    {
+      "id": "P05-T01",
+      "phase": "P05",
+      "title": "Build personal-space gateway and shell",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P03-T02"],
+      "objective": "Implement distinct personal area and intentional transition.",
+      "context": "Personal space public but selectively curated; navigation and art direction differ.",
+      "scope": [
+        "Gateway/transition",
+        "Separate navigation",
+        "Collection patterns",
+        "Accessible shared conventions"
+      ],
+      "preconditions": [
+        "P05 approved",
+        "Personal concept and gateway approved",
+        "Content has sufficient substance"
+      ],
+      "prompt": "Implement approved gateway and personal shell. Maintain distinct navigation and coherent underlying accessibility. Publish only curated, approved material.",
+      "acceptance_criteria": [
+        "Distinct professional/personal experience",
+        "Gateway discoverable by keyboard",
+        "No empty category",
+        "No unapproved personal information"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright keyboard/navigation"
+      ],
+      "expected_deliverables": ["Gateway/shell", "navigation tests"],
+      "evidence_required": ["Figma refs, screenshots, user content approval"],
+      "no_scope_creep": [
+        "No mandatory personal path for professional visitors",
+        "No private draft leakage",
+        "No invented biography"
+      ]
+    },
+    {
+      "id": "P05-T02",
+      "phase": "P05",
+      "title": "Build art, books, music and culture collections",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P05-T01"],
+      "objective": "Create curated content-led cultural collections.",
+      "context": "Presentation adapts to subject; no generic blog/feed; user interpretations are not facts.",
+      "scope": [
+        "Selected artworks/books/music",
+        "Annotations/notes/recommendations",
+        "Source/rights/attribution",
+        "Lightweight accessible media"
+      ],
+      "preconditions": ["Specific entries/opinions approved", "Asset rights verified"],
+      "prompt": "Implement selected collections only after user approves material. Use contextual presentation, verify facts, attribute media and use static links when embeds add little.",
+      "acceptance_criteria": [
+        "Substantive content per launched collection",
+        "External rights documented",
+        "Annotations user-supplied/approved",
+        "No costly/heavy embeds without value"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Asset/link checks"
+      ],
+      "expected_deliverables": ["Collection pages", "attribution register"],
+      "evidence_required": ["User content approvals and source/license links"],
+      "no_scope_creep": [
+        "Do not fabricate reviews/preferences",
+        "Do not reproduce copyrighted work beyond rights",
+        "No empty collections"
+      ]
+    },
+    {
+      "id": "P05-T03",
+      "phase": "P05",
+      "title": "Build selected learning, tech and business collections",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P05-T02"],
+      "objective": "Create meaningful collections only where original/curated content is ready.",
+      "context": "Technical work is already covered by project stories; personal collections should add distinct value.",
+      "scope": [
+        "Learning notes/explainers",
+        "Business/analytics/tech topics",
+        "Diagrams and source references",
+        "Language-ready metadata"
+      ],
+      "preconditions": ["Content approved and claims verified"],
+      "prompt": "Evaluate which interests have enough material. Build modular selected collections, linking to professional projects where useful. English launch; keep schema locale-ready without adding translations.",
+      "acceptance_criteria": [
+        "No duplication without purpose",
+        "Claims sourced or approved",
+        "Substantive content only",
+        "Multilingual-ready content model"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Schema/link validation"
+      ],
+      "expected_deliverables": ["Selected pages", "sources", "future interest backlog"],
+      "evidence_required": ["Approval records and test output"],
+      "no_scope_creep": [
+        "Do not fill all seven areas to satisfy checklist",
+        "No unverified personal opinions",
+        "No unnecessary translation services"
+      ]
+    },
+    {
+      "id": "P06-T01",
+      "phase": "P06",
+      "title": "Build curated experimental laboratory",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P04-T03", "P05-T01"],
+      "objective": "Implement selected prototypes and experiments in a clearly separate lab.",
+      "context": "Curated experimentation, not exhaustive playground; sandbox safety mandatory.",
+      "scope": [
+        "Experiment registry/status",
+        "Selected demos/games/interactive work",
+        "Safe isolation/fallback",
+        "Accessible alternatives"
+      ],
+      "preconditions": ["P06 approved", "Each experiment justified and threat-reviewed"],
+      "prompt": "Select experiments with real explanatory or interaction value. Isolate execution and user input. Provide accessible path for essential content and label experimental status.",
+      "acceptance_criteria": [
+        "Purpose and limitations documented",
+        "Sandbox review passes",
+        "Keyboard/reduced motion works",
+        "Essential content accessible without advanced interaction"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright interactions",
+        "Security tests"
+      ],
+      "expected_deliverables": ["Lab index", "experiment modules", "safety/accessibility notes"],
+      "evidence_required": ["Threat model, test artifacts, screenshots"],
+      "no_scope_creep": [
+        "Do not bulk-import legacy game collection",
+        "Do not expose secrets or execute unsafe untrusted code",
+        "Do not label prototypes production-grade"
+      ]
+    },
+    {
+      "id": "P06-T02",
+      "phase": "P06",
+      "title": "Build justified visualizations and explainers",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P04-T01"],
+      "objective": "Add data-driven experiences only when they improve understanding.",
+      "context": "Visualization optional/context-specific; no charts merely because user works in analytics.",
+      "scope": [
+        "Define user question and intended insight",
+        "Verify data source/license/limitations",
+        "Select chart and annotations",
+        "Accessible table/text alternative",
+        "Responsive performance"
+      ],
+      "preconditions": ["Specific approved use case and data rights"],
+      "prompt": "For each proposed visualization, state the question, provenance, limitations and intended insight. Choose simplest effective rendering method. Provide accessible equivalent and validate responsiveness.",
+      "acceptance_criteria": [
+        "Every chart answers a documented question",
+        "Data provenance/limits visible",
+        "Accessible equivalent present",
+        "Performance cost justified"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright interaction/a11y tests"
+      ],
+      "expected_deliverables": ["Visualization components", "data provenance", "tests"],
+      "evidence_required": ["Source dataset, screenshots, accessibility evidence"],
+      "no_scope_creep": [
+        "No decorative charts",
+        "No unsupported/private data",
+        "No library adoption without comparison"
+      ]
+    },
+    {
+      "id": "P06-T03",
+      "phase": "P06",
+      "title": "Verify progressive enhancement and accessible equivalents",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P06-T01", "P06-T02"],
+      "objective": "Ensure all important experiences have equivalent accessible routes.",
+      "context": "Every significant interaction must retain essential content/functionality access.",
+      "scope": [
+        "No-JS/core-content behavior",
+        "Keyboard/screen reader",
+        "Reduced motion/touch alternatives",
+        "Error/loading/offline states",
+        "Canvas/WebGL alternatives"
+      ],
+      "preconditions": ["Interactive components complete"],
+      "prompt": "Inspect all advanced components. Test keyboard, screen readers, focus, motion, touch and failure. Ensure essential content/functionality is available equivalently. Document remaining limitations.",
+      "acceptance_criteria": [
+        "No critical path depends on inaccessible motion/canvas",
+        "Core content survives missing JS where feasible",
+        "Accessible names/roles/states",
+        "Critical blockers remediated"
+      ],
+      "validation_commands": [
+        "pnpm run lint",
+        "pnpm run test:run",
+        "Playwright + axe",
+        "Manual keyboard/screen reader"
+      ],
+      "expected_deliverables": ["Accessibility equivalence matrix", "remediation work", "tests"],
+      "evidence_required": ["axe reports and manual notes"],
+      "no_scope_creep": [
+        "Do not waive blockers for aesthetic ambition",
+        "Automated pass is not proof of WCAG conformance"
+      ]
+    },
+    {
+      "id": "P07-T01",
+      "phase": "P07",
+      "title": "Complete cross-browser and responsive regression",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P04-T03", "P05-T03", "P06-T03"],
+      "objective": "Verify critical routes/journeys across evergreen browsers and viewport classes.",
+      "context": "Support modern Chrome, Firefox, Safari, Edge across mobile/tablet/desktop representative devices.",
+      "scope": [
+        "Route smoke tests",
+        "Viewport matrix",
+        "Visual screenshots and diffs",
+        "Keyboard/mobile nav",
+        "Browser-specific issues"
+      ],
+      "preconditions": [
+        "Major page/interaction coverage complete",
+        "Approved visual baselines exist"
+      ],
+      "prompt": "Execute browser matrix; compare snapshots against approved Figma baselines. Investigate mismatch before updating goldens. Record browser/OS/viewport and coverage gaps.",
+      "acceptance_criteria": [
+        "Critical routes work directly and in-app",
+        "No P0/P1 regressions",
+        "Diffs reviewed and accepted/fixed",
+        "Responsive user journeys pass"
+      ],
+      "validation_commands": [
+        "pnpm run test:run",
+        "pnpm run build",
+        "Playwright browser matrix",
+        "Screenshot comparison"
+      ],
+      "expected_deliverables": ["Cross-browser report", "visual diff report", "defect register"],
+      "evidence_required": ["Browser versions, traces, screenshots and resolved diffs"],
+      "no_scope_creep": [
+        "Do not update golden blindly",
+        "Do not drop a browser without justification"
+      ]
+    },
+    {
+      "id": "P07-T02",
+      "phase": "P07",
+      "title": "Finalize performance budgets",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P07-T01"],
+      "objective": "Measure representative routes and meet documented budgets.",
+      "context": "Ordinary pages strict lightweight; immersive experiences may have evidence-backed exceptions.",
+      "scope": [
+        "Lighthouse/browser metrics",
+        "bundle/route cost",
+        "images/fonts/scripts/motion",
+        "Core Web Vitals assessment",
+        "exception register"
+      ],
+      "preconditions": ["Release candidate exists"],
+      "prompt": "Measure routes and representative device conditions. Set evidence-based budgets and optimize assets/fonts/scripts/animation. Document immersive exceptions with explicit budget and rationale.",
+      "acceptance_criteria": [
+        "Route-specific budgets measured",
+        "No unexplained large bundle/third-party load",
+        "Regressions block release",
+        "Exceptions approved"
+      ],
+      "validation_commands": [
+        "pnpm run build",
+        "pnpm run audit:lighthouse",
+        "Browser performance checks"
+      ],
+      "expected_deliverables": ["Performance report", "bundle report", "budgets register"],
+      "evidence_required": ["Lighthouse output and network/device assumptions"],
+      "no_scope_creep": [
+        "Do not manipulate scores",
+        "Lab score does not replace real user/field evidence"
+      ]
+    },
+    {
+      "id": "P07-T03",
+      "phase": "P07",
+      "title": "Complete security, privacy and supply-chain review",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P07-T01"],
+      "objective": "Verify release candidate security and privacy posture.",
+      "context": "Security/privacy/factual integrity highest priority; no analytics/tracking; server-side credentials only.",
+      "scope": [
+        "Dependency/vulnerability audit",
+        "Secret scan/build artifact inspection",
+        "CSP/headers/Worker controls",
+        "Input/sandbox security",
+        "Actions permissions/pinning",
+        "External data and privacy inventory"
+      ],
+      "preconditions": ["Release candidate and deploy config stable"],
+      "prompt": "Review dependencies, secrets, Actions, host security headers, Worker, forms, sandbox, input handling and third-party requests. Verify client build contains no API keys. Fix or block severe findings.",
+      "acceptance_criteria": [
+        "No critical/high unmitigated release blocker",
+        "No client secrets",
+        "Least-privilege actions and pinned SHAs",
+        "Privacy inventory clean",
+        "Severe issues block release"
+      ],
+      "validation_commands": [
+        "pnpm run test:security-full",
+        "Secret scan",
+        "Dependency audit",
+        "Workflow lint",
+        "Inspect dist"
+      ],
+      "expected_deliverables": [
+        "Security report",
+        "privacy inventory",
+        "dependency/action register"
+      ],
+      "evidence_required": ["Scan outputs and remediation SHAs"],
+      "no_scope_creep": [
+        "No credential rotation without authorized task",
+        "Do not overclaim GH Pages headers",
+        "No suppression without risk acceptance"
+      ]
+    },
+    {
+      "id": "P07-T04",
+      "phase": "P07",
+      "title": "Complete factual, editorial, SEO and creative review",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P07-T02", "P07-T03"],
+      "objective": "Evaluate content and experience against approved product/design/quality standards.",
+      "context": "Qualitative creative design review complements automation.",
+      "scope": [
+        "Claims and personal approvals",
+        "Editorial completeness",
+        "SEO/canonical/sitemap/redirects",
+        "Asset rights/Figma fidelity",
+        "Originality/story/composition/atmosphere/coherence"
+      ],
+      "preconditions": ["All sections complete", "Personal claims approved", "No P0/P1 defects"],
+      "prompt": "Conduct structured creative/editorial review. Compare pages to Figma, audit claim evidence, asset rights and SEO. Record strengths, defects, deviations, limitations and release blockers.",
+      "acceptance_criteria": [
+        "Every live claim has provenance/approval",
+        "No thin/placeholder section",
+        "Rights/attribution complete",
+        "Creative principles reviewed with evidence",
+        "No critical a11y/security/privacy issue"
+      ],
+      "validation_commands": [
+        "node project-system/scripts/validate-project-state.mjs",
+        "pnpm run lint",
+        "pnpm run test:run",
+        "pnpm run build",
+        "SEO/link checks",
+        "Manual review checklist"
+      ],
+      "expected_deliverables": [
+        "Creative report",
+        "claim ledger",
+        "SEO report",
+        "limitations register"
+      ],
+      "evidence_required": ["Figma refs, route screenshots, source/approval links"],
+      "no_scope_creep": [
+        "Do not hide defects to meet target",
+        "Do not treat creative scores as automated facts",
+        "Do not claim WCAG conformance without comprehensive assessment"
+      ]
+    },
+    {
+      "id": "P07-T05",
+      "phase": "P07",
+      "title": "Release, verify and close project",
+      "status": "planned",
+      "authorization": "pending-user-phase-approval",
+      "depends_on": ["P07-T04"],
+      "objective": "Deploy only authorized scope, verify live production and deliver evidence-based handover.",
+      "context": "Autonomous deployment only within explicit release-authorized scope and after all gates.",
+      "scope": [
+        "PR merge and Pages workflow",
+        "Live routes/SEO/security/interactions",
+        "Rollback readiness",
+        "State/docs/handover synchronization"
+      ],
+      "preconditions": [
+        "Explicit production authorization",
+        "All mandatory gates pass",
+        "Branch protection and PR checks verified"
+      ],
+      "prompt": "Release only the approved scope. Confirm current branch rules, CI and PR. Preserve known-good deployment. Verify Pages workflow and live site, including critical routes, metadata and interactions. Roll back on defined trigger. Synchronize records and close only when accepted.",
+      "acceptance_criteria": [
+        "Commit/PR/deploy are linked",
+        "Live smoke passes",
+        "Rollback target recorded",
+        "Docs/state/handoff synchronized",
+        "Every approved acceptance criterion passed"
+      ],
+      "validation_commands": [
+        "PR checks",
+        "Pages deployment run",
+        "Playwright production smoke",
+        "SEO route checks",
+        "git status --short"
+      ],
+      "expected_deliverables": [
+        "Release record",
+        "deployment evidence",
+        "rollback ref",
+        "final handover/closure report"
+      ],
+      "evidence_required": [
+        "PR/merge SHA, workflow URL, timestamp, screenshots and smoke test results"
+      ],
+      "no_scope_creep": [
+        "No workflow_dispatch unless explicitly authorized",
+        "No unapproved deployment",
+        "No closure while mandatory gates fail"
+      ]
+    }
+  ]
+}

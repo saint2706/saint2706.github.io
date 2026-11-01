@@ -1,0 +1,1 @@
+Store evidence under `project-system/evidence/<TASK-ID>/`. Do not store secrets/tokens or sensitive personal data. Prefer redacted logs, screenshots, traces, source links, commit SHAs and deployment run URLs.
