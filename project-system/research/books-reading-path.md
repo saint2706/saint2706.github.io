@@ -1,6 +1,6 @@
 # Books: reading path (owner-supplied, transcribed 2026-11-01)
 
-Source: the owner's twelve story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished, including the optional lists** (2026-11-01). Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
+Source: the owner's thirteen story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished, including the optional lists** (2026-11-01). Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
 
 Gaps: Stage One was supplied as a graphic on 2026-11-01 (1000113330); Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
 

@@ -1,10 +1,10 @@
 # Content inventory: art and books (owner-supplied, 2026-11-01)
 
-Source: untracked folder `art and books/` in the repo root (15 MB; 12 images and one ZIP). It is excluded locally via `.git/info/exclude` so it cannot be committed by accident. Nothing here is approved for publication yet.
+Source: untracked folder `art and books/` in the repo root (15 MB; 13 images and one ZIP). It is excluded locally via `.git/info/exclude` so it cannot be committed by accident. Nothing here is approved for publication yet.
 
-## Books: philosophy reading path (12 images)
+## Books: philosophy reading path (13 images)
 
-All 12 images are phone-story graphics (gradient or black backgrounds) listing works by stage. They should be **retyped as accessible text**, not published as images (text-in-image fails accessibility and cannot be searched).
+All 13 images are phone-story graphics (gradient or black backgrounds) listing works by stage. They should be **retyped as accessible text**, not published as images (text-in-image fails accessibility and cannot be searched).
 
 | Image      | Heading                                       | Works listed                                                                                                                                                          |
 | ---------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
