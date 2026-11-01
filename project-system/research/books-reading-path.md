@@ -31,7 +31,7 @@ Locke, Concerning Education and Tolerance. Locke, Two Treatises of Government. L
 
 ## Stage 4 (optional)
 
-Malebranche, The Search after Truth. Malebranche, Treatise on Nature and Grace. Malebranche, Treatise on Ethics. Pascal, Pensees. Pascal, Provincial Letters. Bacon, The New Organon. Bacon, Essays. Montaigne, Essays. Bruno, Cause, Principal and Unity. Bruno, Essays on Magic.
+Malebranche, The Search after Truth. Malebranche, Treatise on Nature and Grace. Malebranche, Treatise on Ethics. Pascal, Pensees. Pascal, Provincial Letters. Bacon, The New Organon. Bacon, Essays. Montaigne, Essays. Bruno, Cause, Principle and Unity. Bruno, Essays on Magic.
 
 ## Stage 5.1: German Idealism
 
@@ -77,7 +77,7 @@ Heidegger, Introduction to Metaphysics. Heidegger, Being and Time. Heidegger, Co
 7. Rousseau, Emile
 8. Montesquieu, The Spirit of Laws
 9. Montesquieu, Persian Letters
-10. Voltaire, Candid
+10. Voltaire, Candide
 
 ## French Revolution
 
@@ -91,6 +91,18 @@ Heidegger, Introduction to Metaphysics. Heidegger, Being and Time. Heidegger, Co
 8. Paine, Age of Reason
 9. Paine, The Rights of Man
 10. Maistre, Considerations on France
+
+## Transcription corrections (graphic wording to standard title)
+
+Applied for lookup accuracy; the owner should confirm any edition-specific wording.
+
+| Graphic wording                         | Shown as                               | Where                          |
+| --------------------------------------- | -------------------------------------- | ------------------------------ |
+| Cause, Principal and Unity              | Cause, Principle and Unity             | Stage 4 (optional), Bruno      |
+| Candid                                  | Candide                                | Political Philosophy, Voltaire |
+| The Two Fundamental Problem with Ethics | The Two Fundamental Problems of Ethics | Stage Six, Schopenhauer        |
+
+Other titles are transcribed as shown on the graphics and have not been checked against bibliographic records.
 
 ## Design notes for the Books space (draft, not approved)
 
