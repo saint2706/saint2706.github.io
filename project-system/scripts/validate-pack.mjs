@@ -6,16 +6,16 @@ const required = [
   'CLAUDE.md',
   'PRODUCT.md',
   'DESIGN.md',
-  'ARCHITECTURE.md',
-  'CONTENT.md',
-  'ROADMAP.md',
-  'TASKS.md',
-  'PLUGINS.md',
-  'QUALITY_GATES.md',
-  'DECISIONS.md',
+  'project-system/ARCHITECTURE.md',
+  'project-system/CONTENT.md',
+  'project-system/ROADMAP.md',
+  'project-system/tasks/TASKS.md',
+  'project-system/PLUGINS.md',
+  'project-system/QUALITY_GATES.md',
+  'project-system/decisions/DECISIONS.md',
   'project-system/PROJECT_PACK_README.md',
   'project-system/PACK_INSTALLATION.md',
-  'HANDOFF_GUIDE.md',
+  'project-system/handoffs/HANDOFF_GUIDE.md',
   'project-system/state/project.json',
   'project-system/state/repo-baseline.json',
   'project-system/state/approvals.json',
@@ -72,7 +72,10 @@ for (const f of all.filter(x => x.endsWith('.md'))) {
   let m;
   while ((m = re.exec(content))) {
     // <...> is the CommonMark form for destinations that contain parentheses
-    const href = m[1].replace(/^<(.*)>$/, '$1').split('#')[0].trim();
+    const href = m[1]
+      .replace(/^<(.*)>$/, '$1')
+      .split('#')[0]
+      .trim();
     if (!href || /^(https?:|mailto:|#)/.test(href)) continue;
     const resolved = path.posix.normalize(
       path.posix.join(path.posix.dirname(path.relative(root, f).split(path.sep).join('/')), href)
