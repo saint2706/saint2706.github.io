@@ -11,8 +11,8 @@
   "blob_count": 161,
   "directory_count": 21,
   "pages_enabled": true,
-  "default_branch_protected": false,
-  "branch_protection_evidence": "GitHub branch API returned protected=false and protection.enabled=false at capture time.",
+  "default_branch_protected": true,
+  "branch_protection_evidence": "Ruleset protect-main active; branches/main protected=true on 2026-11-01. Repo allow_auto_merge=true, delete_branch_on_merge=true.",
   "has_claude_md": true,
   "has_agents_md": false,
   "has_claude_directory": true,
@@ -74,7 +74,9 @@
     "https://github.com/saint2706/saint2706.github.io/blob/main/src/data/resume.js"
   ],
   "pages_build_type": "workflow",
-  "rulesets": [],
+  "rulesets": [
+    "protect-main (id 26293963): PR required, squash only, linear history, no force-push/delete, threads resolved, required checks lint/build/security/test x6, no bypass"
+  ],
   "p00_checks": {
     "vitest": "437/437 pass",
     "eslint_repo_code": "clean; 32 errors only in pack files",
