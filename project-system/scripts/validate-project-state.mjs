@@ -24,6 +24,14 @@ for (let i = 0; i <= 7; i++) {
   else if (!['authorized', 'pending-approval', 'complete'].includes(a.status))
     errors.push(`Unexpected authorization status for ${phase}`);
 }
+const cur = project ? Number(project.current_phase.slice(1)) : -1;
+for (const a of approvals?.approvals || []) {
+  const n = Number(a.phase.slice(1));
+  if (a.status === 'complete' && n > cur)
+    errors.push(`${a.phase} is complete but is after current phase`);
+  if (n < cur && a.status !== 'complete')
+    errors.push(`${a.phase} precedes current phase but is not complete`);
+}
 const authorized = (approvals?.approvals || []).filter(x => x.status === 'authorized');
 if (authorized.length > 1) errors.push('Only one phase may be authorized at a time.');
 if (project && authorized.some(x => x.phase !== project.current_phase))

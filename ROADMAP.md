@@ -1,6 +1,6 @@
 # Roadmap and phase authorization
 
-P00 is pre-authorized for audit/preparation only. Every later phase needs explicit user approval. One phase at a time; no auto-progression.
+P00 and P01 are complete; P02-T01 only is authorized as of 2026-11-01 (see `project-system/state/approvals.json`). Every other phase or task needs explicit user approval. One phase at a time; no auto-progression.
 
 | Phase | Purpose                                                                                                | Gate                                                                    |
 | ----- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
