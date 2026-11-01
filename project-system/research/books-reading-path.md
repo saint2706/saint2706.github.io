@@ -1,124 +1,264 @@
-# Books: reading path (owner-supplied, transcribed 2026-11-01)
+# Books: verified reading path
 
-Source: the owner's thirteen story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished, including the optional lists** (2026-11-01). Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
+Source: owner-supplied reading lists (13 graphics plus text on 2026-11-01). The owner confirmed all listed works are **finished, including the optional lists**. Per the owner's instruction, only works that **actually exist** and **can be found online** are kept. Verified 2026-11-01 by research agents (web search and fetch), a lead review and an automated link check. Not approved for publication until the owner reviews it.
 
-Gaps: Stage One was supplied as a graphic on 2026-11-01 (1000113330); Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
+Result: **122 of 124** listed titles kept; 2 removed pending the owner (see "Removed"). 34 kept entries had their author or title corrected to the standard form (see the corrections log).
+
+Access key: **Free** = full text legally free online (usually an older public-domain translation, US public domain unless noted); **Borrow** = Internet Archive lending or a library e-book; **Commercial** = a purchasable edition or e-book exists, no free full text found. Free texts are often older translations than the modern scholarly editions the owner may have read.
 
 ## Stage One: Good books to get into philosophy
 
-1. Homer, Iliad
-2. Homer, Odyssey
-3. Plato, Complete Works
-4. Aristotle, Complete Works
-5. Heraclitus, Fragments
-6. Parmenides, Fragments
-7. Epicurus, On the Nature of Things (as written on the graphic; see flag below)
-8. Aeschylus, Persians and other plays
+| #   | Author     | Work                                                                                              | Access                                                | Link                                                         |
+| --- | ---------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------ |
+| 1   | Homer      | Iliad                                                                                             | Free                                                  | [link](https://www.gutenberg.org/ebooks/2199)                |
+| 2   | Homer      | Odyssey                                                                                           | Free                                                  | [link](https://www.gutenberg.org/ebooks/1727)                |
+| 3   | Plato      | Complete Works (ed. J. M. Cooper, D. S. Hutchinson; Hackett 1997)                                 | Commercial                                            | [link](https://mitpressbookstore.mit.edu/book/9780872203495) |
+| 4   | Aristotle  | The Complete Works of Aristotle, Revised Oxford Translation (ed. Jonathan Barnes; Princeton 1984) | Borrow                                                | [link](https://opac.marmot.org/ExternalEContent/.b59516835)  |
+| 5   | Heraclitus | Fragments                                                                                         | Free                                                  | [link](https://archive.org/details/fragmentsofworko00hera)   |
+| 6   | Parmenides | Fragments                                                                                         | Free                                                  | [link](https://archive.org/details/fragmentsofparme00parm)   |
+| 7   | Lucretius  | On the Nature of Things (De rerum natura)                                                         | Free                                                  | [link](https://www.gutenberg.org/ebooks/785)                 |
+| 8   | Aeschylus  | The Persians and Other Plays                                                                      | Free (partial or different edition, see note in JSON) | [link](https://www.fadedpage.com/books/20110329/html.php)    |
 
 ## Stage Two
 
-Epictetus, Handbook. Aurelius, Meditations. Cicero, On the Commonwealth and Laws. Cicero, On Morals. Cicero, Letters. Plutarch, Moralia. Plotinus, Enneads. Proclus, The Elements of Theology.
+| #   | Author          | Work                                                            | Access                                                | Link                                                                                 |
+| --- | --------------- | --------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| 9   | Epictetus       | Enchiridion (Handbook)                                          | Free                                                  | [link](https://www.gutenberg.org/ebooks/45109)                                       |
+| 10  | Marcus Aurelius | Meditations                                                     | Free                                                  | [link](https://www.gutenberg.org/ebooks/6920)                                        |
+| 11  | Cicero          | On the Commonwealth and On the Laws (De re publica; De legibus) | Free                                                  | [link](https://catalog.perseus.org/catalog/urn:cts:latinLit:phi0474.phi043.opp-eng1) |
+| 12  | Cicero          | On Duties (De Officiis)                                         | Free                                                  | [link](https://gutenberg.org/cache/epub/47001/pg47001-images.html)                   |
+| 13  | Cicero          | Letters                                                         | Free (partial or different edition, see note in JSON) | [link](https://gutenberg.org/cache/epub/21200/pg21200-images.html)                   |
+| 14  | Plutarch        | Moralia (Morals)                                                | Free (partial or different edition, see note in JSON) | [link](https://www.gutenberg.org/ebooks/78134)                                       |
+| 15  | Plotinus        | Enneads                                                         | Free                                                  | [link](<https://en.wikisource.org/wiki/Plotinus_(MacKenna)>)                         |
+| 16  | Proclus         | Elements of Theology                                            | Free                                                  | [link](https://www.gutenberg.org/ebooks/78800)                                       |
 
 ## Stage Three: The Middle Ages
 
-1. Augustine, The Confessions
-2. Augustine, The City of God
-3. Boethius, Consolation of Philosophy
-4. Anselm, Major Works
-5. Aquinas, Summa Theologica
-6. Ockham, Letter to the Friars Minor
-7. Ockham, Theory of Terms
-8. Buridan, Summulae de dialectica
+| #   | Author            | Work                                                                              | Access                                                | Link                                                                                      |
+| --- | ----------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 17  | Augustine         | Confessions                                                                       | Free                                                  | [link](https://gutenberg.org/cache/epub/3296/pg3296-images.html)                          |
+| 18  | Augustine         | City of God (De civitate Dei)                                                     | Free (partial or different edition, see note in JSON) | [link](https://gutenberg.org/cache/epub/45304/pg45304-images.html)                        |
+| 19  | Boethius          | The Consolation of Philosophy                                                     | Free                                                  | [link](https://gutenberg.org/cache/epub/14328/pg14328-images.html)                        |
+| 20  | Anselm            | Major Works (OUP 1998, ed. Davies and Evans)                                      | Free (partial or different edition, see note in JSON) | [link](https://ccel.org/ccel/anselm/basic_works.all.html)                                 |
+| 21  | Thomas Aquinas    | Summa Theologica                                                                  | Free                                                  | [link](https://www.ccel.org/ccel/aquinas/summa/home.html)                                 |
+| 22  | William of Ockham | A Letter to the Friars Minor and Other Writings                                   | Borrow                                                | [link](https://archive.org/details/lettertofriarsmi0000will)                              |
+| 23  | William of Ockham | Ockham's Theory of Terms: Part I of the Summa Logicae (tr. Michael J. Loux, 1974) | Commercial                                            | [link](https://abbeys.com.au/book/ockhams-theory-of-terms-part-i-of-the-summa-logicae.do) |
+| 24  | John Buridan      | Summulae de dialectica                                                            | Free                                                  | [link](https://archive.org/details/summulae-de-dialectica-john-buridan)                   |
 
-Optional: Dionysius, Complete Works. Pearl, Theophany. Carabine, The Unknown God. Eckhart, Complete Works.
+Optional list:
+
+| #   | Author                          | Work                                                                                                         | Access     | Link                                                                         |
+| --- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------- |
+| 25  | Pseudo-Dionysius the Areopagite | Pseudo-Dionysius: The Complete Works (Classics of Western Spirituality, tr. Colm Luibheid, Paulist 1987)     | Commercial | [link](https://byzantine.lib.princeton.edu/byzantine/translation/15300)      |
+| 26  | Eric D. Perl                    | Theophany: The Neoplatonic Philosophy of Dionysius the Areopagite                                            | Commercial | [link](https://sunypress.edu/Books/T/Theophany)                              |
+| 27  | Deirdre Carabine                | The Unknown God: Negative Theology in the Platonic Tradition: Plato to Eriugena (Peeters, 1995)              | Commercial | [link](https://relbib.de/Record/277693721)                                   |
+| 28  | Meister Eckhart                 | The Complete Mystical Works of Meister Eckhart (tr. Maurice O'C. Walshe, ed. Bernard McGinn, Crossroad 2009) | Commercial | [link](https://www.eckhartsociety.org/news/eckhart-complete-mystical-works/) |
 
 ## Stage 4.1: Early Modern Rationalists
 
-Descartes, The Philosophical Writings I, II and III. Spinoza, Complete Works. Leibniz, Philosophical Essays. Leibniz, Monadology.
+| #   | Author                | Work                                                                                                   | Access     | Link                                                              |
+| --- | --------------------- | ------------------------------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------------------- |
+| 29  | René Descartes        | The Philosophical Writings of Descartes (3 vols; Cottingham, Stoothoff, Murdoch, Kenny; CUP 1985-1991) | Borrow     | [link](https://archive.org/details/philosophicalwri0001desc_d0c8) |
+| 30  | Benedictus de Spinoza | Complete Works (tr. Samuel Shirley, ed. Michael L. Morgan, Hackett 2002)                               | Commercial | [link](https://newsouthbooks.com.au/books/spinoza-complete-works) |
+| 31  | G.W. Leibniz          | Philosophical Essays (ed. and tr. Roger Ariew and Daniel Garber, Hackett 1989)                         | Commercial | [link](https://hackettpublishing.com/philosophical-essays)        |
+| 32  | G.W. Leibniz          | Monadology                                                                                             | Borrow     | [link](https://archive.org/details/monadologyotherp0000gott)      |
 
 ## Stage 4.2: Early Modern Empiricists
 
-Locke, Concerning Education and Tolerance. Locke, Two Treatises of Government. Locke, Human Understanding. Locke, Reasonability of Christianity. Berkeley, Philosophical Writings. Hume, A Treatise of Human Nature. Hume, Concerning Human Understanding. Hume, Concerning Natural Religion. Hume, Essays, Moral, Political and Literary. Hume, Natural History of Religion. Hume, Principles of Morals.
+| #   | Author          | Work                                                                      | Access     | Link                                                                                           |
+| --- | --------------- | ------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------- |
+| 33  | John Locke      | Some Thoughts Concerning Education                                        | Free       | [link](https://standardebooks.org/ebooks/john-locke/some-thoughts-concerning-education)        |
+| 34  | John Locke      | Two Treatises of Government                                               | Free       | [link](https://standardebooks.org/ebooks/john-locke/two-treatises-of-government)               |
+| 35  | John Locke      | An Essay Concerning Human Understanding                                   | Free       | [link](https://www.gutenberg.org/ebooks/10615)                                                 |
+| 36  | John Locke      | The Reasonableness of Christianity, as Delivered in the Scriptures        | Free       | [link](https://archive.org/details/lockechristianity)                                          |
+| 37  | George Berkeley | Philosophical Writings (ed. Desmond M. Clarke, Cambridge Texts, CUP 2008) | Commercial | [link](https://www.cambridgebookshop.co.uk/products/berkeley-philosophical-writings)           |
+| 38  | David Hume      | A Treatise of Human Nature                                                | Free       | [link](https://www.gutenberg.org/ebooks/4705)                                                  |
+| 39  | David Hume      | An Enquiry Concerning Human Understanding                                 | Free       | [link](https://standardebooks.org/ebooks/david-hume/an-enquiry-concerning-human-understanding) |
+| 40  | David Hume      | Dialogues Concerning Natural Religion                                     | Free       | [link](https://www.gutenberg.org/ebooks/4583)                                                  |
+| 41  | David Hume      | Essays, Moral, Political, and Literary                                    | Free       | [link](https://www.gutenberg.org/ebooks/36120)                                                 |
+| 42  | David Hume      | The Natural History of Religion                                           | Free       | [link](https://archive.org/details/a-natural-history-of-religion-david-hume)                   |
+| 43  | David Hume      | An Enquiry Concerning the Principles of Morals                            | Free       | [link](https://www.gutenberg.org/ebooks/4320)                                                  |
 
 ## Stage 4 (optional)
 
-Malebranche, The Search after Truth. Malebranche, Treatise on Nature and Grace. Malebranche, Treatise on Ethics. Pascal, Pensees. Pascal, Provincial Letters. Bacon, The New Organon. Bacon, Essays. Montaigne, Essays. Bruno, Cause, Principle and Unity. Bruno, Essays on Magic.
+| #   | Author              | Work                                        | Access                                                | Link                                                                                                                   |
+| --- | ------------------- | ------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 44  | Nicolas Malebranche | The Search after Truth                      | Free                                                  | [link](https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51674)                                      |
+| 45  | Nicolas Malebranche | Treatise on Nature and Grace                | Free                                                  | [link](https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51689)                                      |
+| 46  | Nicolas Malebranche | Treatise on Ethics (Traite de morale, 1684) | Free                                                  | [link](https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51685)                                      |
+| 47  | Blaise Pascal       | Pensees                                     | Free                                                  | [link](https://www.gutenberg.org/ebooks/18269)                                                                         |
+| 48  | Blaise Pascal       | The Provincial Letters                      | Free                                                  | [link](https://www.gutenberg.org/ebooks/73959)                                                                         |
+| 49  | Francis Bacon       | Novum Organum (The New Organon)             | Free                                                  | [link](https://www.gutenberg.org/ebooks/45988)                                                                         |
+| 50  | Francis Bacon       | Essays or Counsels, Civil and Moral         | Free                                                  | [link](https://www.gutenberg.org/ebooks/575)                                                                           |
+| 51  | Michel de Montaigne | Essays                                      | Free (partial or different edition, see note in JSON) | [link](https://www.gutenberg.org/ebooks/3581)                                                                          |
+| 52  | Giordano Bruno      | Cause, Principle and Unity                  | Commercial                                            | [link](https://www.cambridge.org/core/books/giordano-bruno-cause-principle-and-unity/DEBCBA0D9FD125AF8AC2E0413CE086A7) |
+| 53  | Giordano Bruno      | Essays on Magic                             | Commercial                                            | [link](https://www.cambridge.org/core/books/giordano-bruno-cause-principle-and-unity/DEBCBA0D9FD125AF8AC2E0413CE086A7) |
 
 ## Stage 5.1: German Idealism
 
-Kant, Prolegomena to Any Future Metaphysics. Kant, Critique of Pure Reason. Kant, Critique of Practical Reason. Kant, Critique of Judgement. Kant, Groundwork for the Metaphysics of Morals. Kant, Universal Natural History. Kant, Religion within the Limits of Reason. Kant, Argument for God. Fichte, Attempt at a Critique of All Revelation. Fichte, Foundation of Natural Right. Fichte, System of Ethics. Fichte, The Science of Knowing.
+| #   | Author                 | Work                                                                                                                                                                             | Access     | Link                                                                                                              |
+| --- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------- |
+| 54  | Immanuel Kant          | Prolegomena to Any Future Metaphysics                                                                                                                                            | Free       | [link](https://www.gutenberg.org/ebooks/52821)                                                                    |
+| 55  | Immanuel Kant          | Critique of Pure Reason                                                                                                                                                          | Free       | [link](https://www.gutenberg.org/ebooks/4280)                                                                     |
+| 56  | Immanuel Kant          | Critique of Practical Reason                                                                                                                                                     | Free       | [link](https://www.gutenberg.org/ebooks/5683)                                                                     |
+| 57  | Immanuel Kant          | Critique of Judgement                                                                                                                                                            | Free       | [link](https://www.gutenberg.org/ebooks/48433)                                                                    |
+| 58  | Immanuel Kant          | Groundwork of the Metaphysics of Morals                                                                                                                                          | Free       | [link](https://www.gutenberg.org/ebooks/5682)                                                                     |
+| 59  | Immanuel Kant          | Universal Natural History and Theory of the Heavens                                                                                                                              | Free       | [link](https://web.viu.ca/johnstoi/kant/kant2e.htm)                                                               |
+| 60  | Immanuel Kant          | Religion within the Boundaries of Mere Reason, and Other Writings (Wood and di Giovanni, Cambridge; also known as Religion within the Limits of Reason Alone, Greene and Hudson) | Commercial | [link](https://www.cambridgebookshop.co.uk/products/kant-religion-within-the-boundaries-of-mere-reason)           |
+| 61  | Immanuel Kant          | The Only Possible Argument in Support of a Demonstration of the Existence of God                                                                                                 | Commercial | [link](https://resolve.cambridge.org/core/books/theoretical-philosophy-17551770/5DDE1EE90BE36E63788B5C00533DD18A) |
+| 62  | Johann Gottlieb Fichte | Attempt at a Critique of All Revelation                                                                                                                                          | Commercial | [link](https://www.cambridgebookshop.co.uk/products/fichte-attempt-at-a-critique-of-all-revelation)               |
+| 63  | Johann Gottlieb Fichte | Foundations of Natural Right                                                                                                                                                     | Commercial | [link](https://akademika.no/humaniora/filosofi/foundations-natural-right/9780521575911)                           |
+| 64  | Johann Gottlieb Fichte | System of Ethics (Das System der Sittenlehre, 1798)                                                                                                                              | Free       | [link](https://archive.org/details/scienceethicsas00fichgoog)                                                     |
+| 65  | Johann Gottlieb Fichte | The Science of Knowing (J.G. Fichte's 1804 Lectures on the Wissenschaftslehre, tr. Walter E. Wright, SUNY 2005)                                                                  | Commercial | [link](https://sunypress.edu/content/download/900817/7664230/version/1/file/9781438495958_excerpt.pdf)            |
 
 ## Stage 5.2: Hegel and Schelling
 
-Owner-supplied text (2026-11-01):
-
-1. Hegel, Science of Logic
-2. Hegel, Phenomenology of Spirit
-3. Hegel, Elements of the Philosophy of Right
-4. Hegel, Philosophy of Nature
-5. Hegel, Philosophy of Mind
-6. Hegel, Shorter Logic
-7. Schelling, Philosophical Inquiries into the Nature of Human Freedom
-8. Schelling, System of Transcendental Idealism
-
-Authors were assigned from the titles (the owner listed titles only); confirm if any edition-specific title should be shown.
+| #   | Author                             | Work                                                                                                                                 | Access     | Link                                                                         |
+| --- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------- | ---------------------------------------------------------------------------- |
+| 66  | Georg Wilhelm Friedrich Hegel      | Science of Logic (Wissenschaft der Logik, 1812-1816)                                                                                 | Borrow     | [link](https://archive.org/details/scienceoflogic0000hege)                   |
+| 67  | Georg Wilhelm Friedrich Hegel      | Phenomenology of Spirit                                                                                                              | Free       | [link](https://www.marxists.org/reference/archive/hegel/phindex.htm)         |
+| 68  | Georg Wilhelm Friedrich Hegel      | Elements of the Philosophy of Right                                                                                                  | Free       | [link](https://www.canadiana.ca/view/oocihm.50473/1)                         |
+| 69  | Georg Wilhelm Friedrich Hegel      | Philosophy of Nature (Part II of the Encyclopaedia)                                                                                  | Commercial | [link](https://www.marxists.org/reference/archive/hegel/works/na/nature.htm) |
+| 70  | Georg Wilhelm Friedrich Hegel      | Philosophy of Mind (Encyclopaedia Part III)                                                                                          | Free       | [link](https://www.gutenberg.org/ebooks/39064)                               |
+| 71  | Georg Wilhelm Friedrich Hegel      | Encyclopaedia Logic (Part I of the Encyclopaedia; informally "Shorter Logic")                                                        | Free       | [link](https://www.gutenberg.org/ebooks/55108)                               |
+| 72  | Friedrich Wilhelm Joseph Schelling | Philosophical Inquiries into the Nature of Human Freedom (variant: "Philosophical Investigations into the Essence of Human Freedom") | Borrow     | [link](https://archive.org/details/schellingofhuman0000jame)                 |
+| 73  | Friedrich Wilhelm Joseph Schelling | System of Transcendental Idealism (1800)                                                                                             | Borrow     | [link](https://archive.org/details/systemoftranscen0000sche)                 |
 
 ## Stage 5.3
 
-Boehme, Aurora. Boehme, The Supersensual Life. Boehme, The Forty Questions of the Soul. Boehme, Mysterium Magnum.
+| #   | Author      | Work                                                                                    | Access | Link                                                                                                          |
+| --- | ----------- | --------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------- |
+| 74  | Jacob Böhme | Aurora (Morgenroete im Aufgang)                                                         | Free   | [link](https://archive.org/details/bim_early-english-books-1641-1700_aurora-that-is-the-day_bohme-jacob_1656) |
+| 75  | Jacob Böhme | Dialogues on the Supersensual Life (Vom uebersinnlichen Leben, "The Supersensual Life") | Free   | [link](https://www.gutenberg.org/ebooks/33742)                                                                |
+| 76  | Jacob Böhme | Forty Questions of the Soul (Die vierzig Fragen von der Seelen)                         | Free   | [link](https://archive.org/details/fortyquestionsof00bohm)                                                    |
+| 77  | Jacob Böhme | Mysterium Magnum                                                                        | Free   | [link](https://archive.org/details/bim_early-english-books-1475-1640_mysterium-magnum_bhme-jacob_1656)        |
 
 ## Stage Six: Lebensphilosophie
 
-Schopenhauer, Principle of Sufficient Reason. Schopenhauer, The World as Will and Representation. Schopenhauer, The Two Fundamental Problems of Ethics (graphic reads "The Two Fundamental Problem with Ethics"). Schopenhauer, Parerga and Paralipomena. Nietzsche, Untimely Meditations. Nietzsche, Beyond Good and Evil. Nietzsche, Philosophy of the Greeks. Nietzsche, Genealogy of Morals. Nietzsche, On Truth and Lies in a Nonmoral Sense. Nietzsche, The Gay Science. Nietzsche, The Birth of Tragedy. Nietzsche, The Antichrist. Nietzsche, Human, All Too Human. Nietzsche, Thus Spoke Zarathustra. Nietzsche, Ecce Homo. Kierkegaard, Either/Or. Kierkegaard, Fear and Trembling. Kierkegaard, Works of Love. Kierkegaard, The Sickness unto Death. Kierkegaard, Purity of Heart. Kierkegaard, Concluding Unscientific Postscript.
-
-Transcription note: the Schopenhauer ethics title was normalised to the standard English title with the graphic's wording recorded; confirm.
+| #   | Author              | Work                                                                                                                       | Access                                                | Link                                                                                           |
+| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 78  | Arthur Schopenhauer | On the Fourfold Root of the Principle of Sufficient Reason (Ueber die vierfache Wurzel des Satzes vom zureichenden Grunde) | Free                                                  | [link](https://www.gutenberg.org/ebooks/50966)                                                 |
+| 79  | Arthur Schopenhauer | The World as Will and Representation (Haldane & Kemp render it "The World as Will and Idea")                               | Free (partial or different edition, see note in JSON) | [link](https://www.gutenberg.org/ebooks/38427)                                                 |
+| 80  | Arthur Schopenhauer | The Two Fundamental Problems of Ethics (Die beiden Grundprobleme der Ethik)                                                | Free                                                  | [link](https://archive.org/details/arthur-schopenhauer-the-two-fundamental-problems-of-ethics) |
+| 81  | Arthur Schopenhauer | Parerga and Paralipomena (Parerga und Paralipomena, 1851)                                                                  | Free (partial or different edition, see note in JSON) | [link](https://www.gutenberg.org/ebooks/26586)                                                 |
+| 82  | Friedrich Nietzsche | Untimely Meditations (Unzeitgemaesse Betrachtungen; Gutenberg title "Thoughts Out of Season")                              | Free (partial or different edition, see note in JSON) | [link](https://www.gutenberg.org/ebooks/38226)                                                 |
+| 83  | Friedrich Nietzsche | Beyond Good and Evil (Jenseits von Gut und Boese)                                                                          | Free                                                  | [link](https://www.gutenberg.org/ebooks/4363)                                                  |
+| 84  | Friedrich Nietzsche | Philosophy in the Tragic Age of the Greeks (Die Philosophie im tragischen Zeitalter der Griechen)                          | Free                                                  | [link](https://www.gutenberg.org/ebooks/51548)                                                 |
+| 85  | Friedrich Nietzsche | The Genealogy of Morals                                                                                                    | Free                                                  | [link](https://www.gutenberg.org/ebooks/52319)                                                 |
+| 86  | Friedrich Nietzsche | On Truth and Lies in a Nonmoral Sense                                                                                      | Free                                                  | [link](https://www.gutenberg.org/ebooks/51548)                                                 |
+| 87  | Friedrich Nietzsche | The Gay Science                                                                                                            | Free                                                  | [link](https://www.gutenberg.org/ebooks/52881)                                                 |
+| 88  | Friedrich Nietzsche | The Birth of Tragedy                                                                                                       | Free                                                  | [link](https://www.gutenberg.org/ebooks/51356)                                                 |
+| 89  | Friedrich Nietzsche | The Antichrist                                                                                                             | Free                                                  | [link](https://www.gutenberg.org/ebooks/19322)                                                 |
+| 90  | Friedrich Nietzsche | Human, All Too Human                                                                                                       | Free                                                  | [link](https://www.gutenberg.org/ebooks/38145)                                                 |
+| 91  | Friedrich Nietzsche | Thus Spoke Zarathustra                                                                                                     | Free                                                  | [link](https://www.gutenberg.org/ebooks/1998)                                                  |
+| 92  | Friedrich Nietzsche | Ecce Homo                                                                                                                  | Free                                                  | [link](https://www.gutenberg.org/ebooks/52190)                                                 |
+| 93  | Søren Kierkegaard   | Either/Or                                                                                                                  | Borrow                                                | [link](https://archive.org/details/eitheror0001kier)                                           |
+| 94  | Søren Kierkegaard   | Fear and Trembling                                                                                                         | Borrow                                                | [link](https://archive.org/details/feartremblingdia0000skie_r6e3)                              |
+| 95  | Søren Kierkegaard   | Works of Love                                                                                                              | Borrow                                                | [link](https://archive.org/details/worksoflovesomec0000kier)                                   |
+| 96  | Søren Kierkegaard   | The Sickness unto Death                                                                                                    | Borrow                                                | [link](https://archive.org/details/sicknessuntodeat0000kier)                                   |
+| 97  | Søren Kierkegaard   | Purity of Heart Is to Will One Thing                                                                                       | Borrow                                                | [link](https://archive.org/details/purityofheartist0000kier)                                   |
+| 98  | Søren Kierkegaard   | Concluding Unscientific Postscript (to Philosophical Fragments)                                                            | Borrow                                                | [link](https://archive.org/details/kierkegaardsconc0000sren)                                   |
 
 ## Stage Seven: Modern Philosophy
 
-Heidegger, Introduction to Metaphysics. Heidegger, Being and Time. Heidegger, Concerning Technology. Heidegger, On the Essence of Truth. Wittgenstein, Philosophical Investigations. Wittgenstein, Tractatus.
+| #   | Author              | Work                               | Access | Link                                                              |
+| --- | ------------------- | ---------------------------------- | ------ | ----------------------------------------------------------------- |
+| 99  | Martin Heidegger    | Introduction to Metaphysics        | Borrow | [link](https://archive.org/details/introductiontome0000mart_d5y2) |
+| 100 | Martin Heidegger    | Being and Time                     | Borrow | [link](https://archive.org/details/beingtime0000heid)             |
+| 101 | Martin Heidegger    | The Question Concerning Technology | Borrow | [link](https://archive.org/details/questionconcerni00heid)        |
+| 102 | Martin Heidegger    | On the Essence of Truth            | Borrow | [link](https://archive.org/details/basicwritingsfro0000heid)      |
+| 103 | Ludwig Wittgenstein | Philosophical Investigations       | Borrow | [link](https://archive.org/details/philosophicalinv0000ludw)      |
+| 104 | Ludwig Wittgenstein | Tractatus Logico-Philosophicus     | Free   | [link](https://www.gutenberg.org/ebooks/5740)                     |
 
 ## Political Philosophy
 
-1. Machiavelli, Discourses on Livy
-2. Machiavelli, The Prince
-3. Hobbes, Leviathan
-4. Viroli, Rousseau and the Well Ordered Society
-5. Rousseau, A Discourse on the Origin of Inequality
-6. Rousseau, Confessions
-7. Rousseau, Emile
-8. Montesquieu, The Spirit of Laws
-9. Montesquieu, Persian Letters
-10. Voltaire, Candide
+| #   | Author                                    | Work                                                 | Access                                                | Link                                                                                                                                        |
+| --- | ----------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 105 | Niccolò Machiavelli                       | Discourses on Livy                                   | Free                                                  | [link](https://standardebooks.org/ebooks/niccolo-machiavelli/discourses-on-livy/ninian-hill-thomson)                                        |
+| 106 | Niccolò Machiavelli                       | The Prince                                           | Free                                                  | [link](https://www.gutenberg.org/ebooks/1232)                                                                                               |
+| 107 | Thomas Hobbes                             | Leviathan                                            | Free                                                  | [link](https://www.gutenberg.org/ebooks/3207)                                                                                               |
+| 108 | Maurizio Viroli                           | Jean-Jacques Rousseau and the "Well-Ordered Society" | Commercial                                            | [link](https://www.cambridge.org/core/books/jeanjacques-rousseau-and-the-wellordered-society/introduction/59B49C88AC2B354C9497E15B064F7BFE) |
+| 109 | Jean-Jacques Rousseau                     | A Discourse on the Origin of Inequality              | Free                                                  | [link](https://www.gutenberg.org/ebooks/11136)                                                                                              |
+| 110 | Jean-Jacques Rousseau                     | Confessions                                          | Free                                                  | [link](https://www.gutenberg.org/ebooks/3913)                                                                                               |
+| 111 | Jean-Jacques Rousseau                     | Emile                                                | Free                                                  | [link](https://www.gutenberg.org/ebooks/5427)                                                                                               |
+| 112 | Charles de Secondat, baron de Montesquieu | The Spirit of Laws                                   | Free (partial or different edition, see note in JSON) | [link](https://archive.org/details/spiritoflaws01mont)                                                                                      |
+| 113 | Charles de Secondat, baron de Montesquieu | Persian Letters                                      | Free                                                  | [link](https://archive.org/details/persianletters00beaugoog)                                                                                |
+| 114 | Voltaire                                  | Candide                                              | Free                                                  | [link](https://www.gutenberg.org/ebooks/19942)                                                                                              |
 
 ## French Revolution
 
-1. Price, Principal Questions in Morals
-2. Price, Dynamism, Containment and Change
-3. Burke, Origin of Our Ideas of the Sublime and Beautiful
-4. Burke, Pre-Revolutionary Writings
-5. Burke, Reflections on the Revolution
-6. Paine, Common Sense
-7. Paine, Essay on Religion
-8. Paine, Age of Reason
-9. Paine, The Rights of Man
-10. Maistre, Considerations on France
+| #   | Author                        | Work                                                                              | Access     | Link                                                                                                                 |
+| --- | ----------------------------- | --------------------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------- |
+| 115 | Richard Price (1723-1791)     | A Review of the Principal Questions and Difficulties in Morals                    | Free       | [link](https://archive.org/details/bim_eighteenth-century_a-review-of-the-principa_price-richard_1758)               |
+| 117 | Edmund Burke                  | A Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful | Free       | [link](https://archive.org/details/philosophicalen00burk)                                                            |
+| 118 | Edmund Burke (ed. Ian Harris) | Pre-Revolutionary Writings                                                        | Commercial | [link](https://www.cambridge.org/core/books/prerevolutionary-writings/introduction/82403D642D523E6F835CFE04E4D1E1F1) |
+| 119 | Edmund Burke                  | Reflections on the Revolution in France                                           | Free       | [link](https://standardebooks.org/ebooks/edmund-burke/reflections-on-the-revolution-in-france)                       |
+| 120 | Thomas Paine                  | Common Sense                                                                      | Free       | [link](https://www.gutenberg.org/ebooks/147)                                                                         |
+| 122 | Thomas Paine                  | The Age of Reason                                                                 | Free       | [link](https://www.gutenberg.org/ebooks/3743)                                                                        |
+| 123 | Thomas Paine                  | Rights of Man                                                                     | Free       | [link](https://standardebooks.org/ebooks/thomas-paine/the-rights-of-man)                                             |
+| 124 | Joseph de Maistre             | Considerations on France                                                          | Commercial | [link](https://www.cambridgebookshop.co.uk/products/maistre-considerations-on-france)                                |
 
-## Transcription corrections (graphic wording to standard title)
+## Removed (pending the owner)
 
-Applied for lookup accuracy; the owner should confirm any edition-specific wording.
+| #   | As listed                               | Why removed                                                                                                                                                                                | Possible intended work                                                                                                        |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| 116 | Price, Dynamism, Containment and Change | A real book, but by a different Richard Price (a modern historian, British Society, 1680-1880, CUP 1999), not the 18th-century moral philosopher; it does not fit a French Revolution list | Perhaps another work by Richard Price (for example his political writings); owner to say                                      |
+| 121 | Paine, Essay on Religion                | No Paine work with this title was found                                                                                                                                                    | Possibly Paine's essay "Of the Religion of Deism Compared with the Christian Religion" (1804); not verified, owner to confirm |
 
-| Graphic wording                         | Shown as                               | Where                          |
-| --------------------------------------- | -------------------------------------- | ------------------------------ |
-| Cause, Principal and Unity              | Cause, Principle and Unity             | Stage 4 (optional), Bruno      |
-| Candid                                  | Candide                                | Political Philosophy, Voltaire |
-| The Two Fundamental Problem with Ethics | The Two Fundamental Problems of Ethics | Stage Six, Schopenhauer        |
+## Corrections log (as listed to verified form)
 
-Flag for the owner (not changed): _On the Nature of Things_ is the standard English title of Lucretius, _De rerum natura_; Epicurus has no surviving work by that title (his lost major work is _On Nature_). Confirm whether to keep Epicurus, change to Lucretius, or list both.
+Only entries whose author or title changed. Diacritic restoration is not listed.
 
-Other titles are transcribed as shown on the graphics and have not been checked against bibliographic records.
+| #   | As listed                                               | Verified form                                                                                                                                   | Note                                                                                                                                                                                                                         |
+| --- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7   | Epicurus, On the Nature of Things                       | Lucretius, On the Nature of Things (De rerum natura)                                                                                            | Misattribution: Epicurus's work is On Nature (lost except fragments). The poem On the Nature of Things is Lucretius's. Gutenberg #785 is Leonard's verse translation.                                                        |
+| 9   | Epictetus, Handbook                                     | Epictetus, Enchiridion (Handbook)                                                                                                               | Handbook is an English rendering of Enchiridion. Higginson translation, Gutenberg #45109.                                                                                                                                    |
+| 10  | Aurelius, Meditations                                   | Marcus Aurelius, Meditations                                                                                                                    | Author is Marcus Aurelius. George Long translation, Gutenberg #6920.                                                                                                                                                         |
+| 12  | Cicero, On Morals                                       | Cicero, On Duties (De Officiis)                                                                                                                 | On Morals is not a standard title; best match De Officiis, Miller Loeb 1913, Gutenberg #47001. If the reader meant De finibus (On Moral Ends) that is unverified.                                                            |
+| 21  | Aquinas, Summa Theologica                               | Thomas Aquinas, Summa Theologica                                                                                                                | Standard author is Thomas Aquinas. Fathers of the English Dominican Province translation on CCEL; licence to verify before reuse.                                                                                            |
+| 22  | Ockham, Letter to the Friars Minor                      | William of Ockham, A Letter to the Friars Minor and Other Writings                                                                              | Real (Cambridge 1995, ed. McGrade and Kilcullen, tr. Kilcullen); title truncated. IA record access-restricted, borrow status not confirmed.                                                                                  |
+| 23  | Ockham, Theory of Terms                                 | William of Ockham, Ockham's Theory of Terms: Part I of the Summa Logicae (tr. Michael J. Loux, 1974)                                            | Real; "Theory of Terms" is shorthand. Notre Dame 1974, St Augustine's Press 2011. No IA copy found.                                                                                                                          |
+| 25  | Dionysius, Complete Works                               | Pseudo-Dionysius the Areopagite, Pseudo-Dionysius: The Complete Works (Classics of Western Spirituality, tr. Colm Luibheid, Paulist 1987)       | Real standard collection; author should be Pseudo-Dionysius. No free online edition found.                                                                                                                                   |
+| 26  | Pearl, Theophany                                        | Eric D. Perl, Theophany: The Neoplatonic Philosophy of Dionysius the Areopagite                                                                 | Graphic reads "Pearl: Theophany". Verified via a SUNY Press listing (hardcover 2007, paperback 2008).                                                                                                                        |
+| 27  | Carabine, The Unknown God                               | Deirdre Carabine, The Unknown God: Negative Theology in the Platonic Tradition: Plato to Eriugena (Peeters, 1995)                               | Real book. IA item titled The Unknown God is Alfred Noyes (1934), a different work. URL is a catalogue record.                                                                                                               |
+| 28  | Eckhart, Complete Works                                 | Meister Eckhart, The Complete Mystical Works of Meister Eckhart (tr. Maurice O'C. Walshe, ed. Bernard McGinn, Crossroad 2009)                   | Real standard one-volume collection; "Complete Works" is not its title. No free full text found.                                                                                                                             |
+| 29  | Descartes, The Philosophical Writings I, II and III     | René Descartes, The Philosophical Writings of Descartes (3 vols; Cottingham, Stoothoff, Murdoch, Kenny; CUP 1985-1991)                          | Real; "I, II and III" is the three-volume set. IA record access-restricted; borrow status not confirmed.                                                                                                                     |
+| 33  | Locke, Concerning Education and Tolerance               | John Locke, Some Thoughts Concerning Education                                                                                                  | Entry joins two works: Some Thoughts Concerning Education and A Letter Concerning Toleration (free LibriVox audio at https://archive.org/details/letter_concerning_toleration_librivox). Chose the Education title.          |
+| 35  | Locke, Human Understanding                              | John Locke, An Essay Concerning Human Understanding                                                                                             | Real; title truncated. Gutenberg splits it into vol 1 (10615) and vol 2 (10616).                                                                                                                                             |
+| 36  | Locke, Reasonability of Christianity                    | John Locke, The Reasonableness of Christianity, as Delivered in the Scriptures                                                                  | Real (1695); title shortened. IA scan marked Public Domain Mark 1.0.                                                                                                                                                         |
+| 39  | Hume, Concerning Human Understanding                    | David Hume, An Enquiry Concerning Human Understanding                                                                                           | Real (1748); title corrected. Gutenberg also has it (#9662).                                                                                                                                                                 |
+| 40  | Hume, Concerning Natural Religion                       | David Hume, Dialogues Concerning Natural Religion                                                                                               | Real (1779); title corrected.                                                                                                                                                                                                |
+| 42  | Hume, Natural History of Religion                       | David Hume, The Natural History of Religion                                                                                                     | Real (1757); needs "The". IA item is a user-uploaded scan with Public Domain Mark; text not proofed.                                                                                                                         |
+| 43  | Hume, Principles of Morals                              | David Hume, An Enquiry Concerning the Principles of Morals                                                                                      | Real 1751 work; "Principles of Morals" is a truncated title. Gutenberg #4320.                                                                                                                                                |
+| 46  | Malebranche, Treatise on Ethics                         | Nicolas Malebranche, Treatise on Ethics (Traite de morale, 1684)                                                                                | Real. Modern translation Craig Walton (Kluwer 1993, commercial). Free copy is older James Shipton translation "A Treatise of Morality in Two Parts" (OTA; fetch refused, unconfirmed). IGNORE the agent's remark about McCra |
+| 49  | Bacon, The New Organon                                  | Francis Bacon, Novum Organum (The New Organon)                                                                                                  | Real (1620). Gutenberg #45988 titled Novum Organum; New Organon is an alternate English title.                                                                                                                               |
+| 50  | Bacon, Essays                                           | Francis Bacon, Essays or Counsels, Civil and Moral                                                                                              | Real (1597 onward). Bare Essays is ambiguous with Montaigne; Gutenberg #575 uses the full title.                                                                                                                             |
+| 59  | Kant, Universal Natural History                         | Immanuel Kant, Universal Natural History and Theory of the Heavens                                                                              | Real (1755); title as written is truncated. Ian Johnston translation hosted by the translator; page points to a separate copyright page (not checked).                                                                       |
+| 61  | Kant, Argument for God                                  | Immanuel Kant, The Only Possible Argument in Support of a Demonstration of the Existence of God                                                 | Real 1763 essay (Der einzig moegliche Beweisgrund); "Argument for God" is not its title. English in Walford (Cambridge 1992) and Treash (Nebraska 1994); no free full text found.                                            |
+| 63  | Fichte, Foundation of Natural Right                     | Johann Gottlieb Fichte, Foundations of Natural Right                                                                                            | Real (1796). Michael Baur translation (Cambridge 2000, ed. Neuhouser); standard title is plural Foundations. No free copy found.                                                                                             |
+| 71  | Hegel, Shorter Logic                                    | Georg Wilhelm Friedrich Hegel, Encyclopaedia Logic (Part I of the Encyclopaedia; informally "Shorter Logic")                                    | Gutenberg text is William Wallace's "The Logic of Hegel" (2nd ed. 1892). "Shorter Logic" is an informal name, not the standard English title.                                                                                |
+| 78  | Schopenhauer, Principle of Sufficient Reason            | Arthur Schopenhauer, On the Fourfold Root of the Principle of Sufficient Reason (Ueber die vierfache Wurzel des Satzes vom zureichenden Grunde) | Gutenberg 50966 pairs it with "On the Will in Nature". The transcription shortens the title.                                                                                                                                 |
+| 84  | Nietzsche, Philosophy of the Greeks                     | Friedrich Nietzsche, Philosophy in the Tragic Age of the Greeks (Die Philosophie im tragischen Zeitalter der Griechen)                          | Essay (written 1873) in Muegge's translation within "Early Greek Philosophy & Other Essays". "Philosophy of the Greeks" is not a title Nietzsche used.                                                                       |
+| 97  | Kierkegaard, Purity of Heart                            | Søren Kierkegaard, Purity of Heart Is to Will One Thing                                                                                         | Full title Purity of Heart Is to Will One Thing; 1956 Harper (Steere) on IA, lending item.                                                                                                                                   |
+| 101 | Heidegger, Concerning Technology                        | Martin Heidegger, The Question Concerning Technology                                                                                            | Standard title The Question Concerning Technology (Die Frage nach der Technik), in "The Question Concerning Technology and Other Essays" (Lovitt). No English work titled "Concerning Technology" found. IA lending copy.    |
+| 108 | Viroli, Rousseau and the Well Ordered Society           | Maurizio Viroli, Jean-Jacques Rousseau and the "Well-Ordered Society"                                                                           | Real (CUP 1988, tr. Derek Hanson). IA copy access-restricted, borrow button not shown; no free edition found.                                                                                                                |
+| 115 | Price, Principal Questions in Morals                    | Richard Price (1723-1791), A Review of the Principal Questions and Difficulties in Morals                                                       | Real 1758 work. "Principal Questions in Morals" is a shortened form (1787 edition title). IA item lists a full-text download.                                                                                                |
+| 117 | Burke, Origin of Our Ideas of the Sublime and Beautiful | Edmund Burke, A Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful                                                 | Real (1757). Open full text on IA (1844 Harper edition).                                                                                                                                                                     |
+| 119 | Burke, Reflections on the Revolution                    | Edmund Burke, Reflections on the Revolution in France                                                                                           | Real; title was truncated. Standard Ebooks CC0, free in the US; check local law elsewhere.                                                                                                                                   |
 
-## Design notes for the Books space (draft, not approved)
+## Caveats
 
-- Present as text lists grouped by stage, with a short one-line mode label; no text-in-image.
-- Show stage and author as structure (headings), not decoration, so a screen reader can navigate by stage.
-- "Optional" lists marked as such; the owner confirmed finished-status covers the optional lists too.
+- Links that could not be machine-verified (live behind bot protection, or unreachable from the verifying network; each was seen in search results):
+  - #4 Aristotle, The Complete Works of Aristotle, Revised Oxford Translation : bot-blocked (live, not machine-verified)
+  - #31 G.W. Leibniz, Philosophical Essays (ed. and tr. Roger Ariew and Daniel Gar: not reachable from this network (record seen in search results)
+  - #44 Nicolas Malebranche, The Search after Truth: not reachable from this network (record seen in search results)
+  - #45 Nicolas Malebranche, Treatise on Nature and Grace: not reachable from this network (record seen in search results)
+  - #46 Nicolas Malebranche, Treatise on Ethics (Traite de morale, 1684): not reachable from this network (record seen in search results)
+  - #60 Immanuel Kant, Religion within the Boundaries of Mere Reason, and Other Wri: not reachable from this network (record seen in search results)
+  - #63 Johann Gottlieb Fichte, Foundations of Natural Right: bot-blocked (live, not machine-verified)
+- Several free links point to a partial text (for example volume 1 of a multi-volume work, a single play, or a selection); notes in `books-verified.json` say which.
+- The automated check confirms a link loads, not that the page holds the full text.
+- Some Internet Archive "Borrow" items were not opened to confirm they can be borrowed today.
+- Whether the stage scheme comes from a published curriculum is unknown; credit it if so.
+
+Machine-readable data with sources and notes: `books-verified.json`.

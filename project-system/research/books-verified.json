@@ -1,0 +1,2124 @@
+{
+  "verified_on": "2026-11-01",
+  "method": "Six parallel read-only research agents (web search and fetch) checked each of 124 owner-listed titles; the lead merged results, corrected several, ran an automated link check (HTTP status) and a manual recheck of failures.",
+  "access_legend": {
+    "FREE": "full text legally free (usually an older public-domain translation; US public domain unless noted)",
+    "BORROW": "Internet Archive lending or library e-book",
+    "COMMERCIAL": "purchasable edition or e-book; no free full text found"
+  },
+  "counts": {
+    "total": 124,
+    "kept": 122,
+    "removed": 2
+  },
+  "entries": [
+    {
+      "id": 1,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Homer",
+        "title": "Iliad"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Homer",
+      "title": "Iliad",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/2199",
+      "linkState": "loads",
+      "note": "Samuel Butler prose translation, Gutenberg #2199, public domain."
+    },
+    {
+      "id": 2,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Homer",
+        "title": "Odyssey"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Homer",
+      "title": "Odyssey",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/1727",
+      "linkState": "loads",
+      "note": "Butler prose translation, Gutenberg #1727 (agent cited a UPenn Online Books lookup for the same Gutenberg number), public domain."
+    },
+    {
+      "id": 3,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Plato",
+        "title": "Complete Works"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Plato",
+      "title": "Complete Works (ed. J. M. Cooper, D. S. Hutchinson; Hackett 1997)",
+      "access": "COMMERCIAL",
+      "url": "https://mitpressbookstore.mit.edu/book/9780872203495",
+      "linkState": "loads",
+      "note": "Copyrighted Hackett edition; no free or archive.org copy found, only library holdings and bookseller listings."
+    },
+    {
+      "id": 4,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Aristotle",
+        "title": "Complete Works"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Aristotle",
+      "title": "The Complete Works of Aristotle, Revised Oxford Translation (ed. Jonathan Barnes; Princeton 1984)",
+      "access": "BORROW",
+      "url": "https://opac.marmot.org/ExternalEContent/.b59516835",
+      "linkState": "bot-blocked (live, not machine-verified)",
+      "note": "Copyrighted; e-book only through library accounts. Free Aristotle exists only as single works, e.g. Gutenberg #8438 (Chase, Nicomachean Ethics)."
+    },
+    {
+      "id": 5,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Heraclitus",
+        "title": "Fragments"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Heraclitus",
+      "title": "Fragments",
+      "access": "FREE",
+      "url": "https://archive.org/details/fragmentsofworko00hera",
+      "linkState": "loads",
+      "note": "Greek and English 1889 Baltimore edition on archive.org. Kahn (1979) and Haxton (Penguin) are commercial."
+    },
+    {
+      "id": 6,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Parmenides",
+        "title": "Fragments"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Parmenides",
+      "title": "Fragments",
+      "access": "FREE",
+      "url": "https://archive.org/details/fragmentsofparme00parm",
+      "linkState": "loads",
+      "note": "Old English verse translation on archive.org (attribution to Thomas Davidson not checked in full). Gallop's Phoenix edition is commercial."
+    },
+    {
+      "id": 7,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Epicurus",
+        "title": "On the Nature of Things"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Lucretius",
+      "title": "On the Nature of Things (De rerum natura)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/785",
+      "linkState": "loads",
+      "note": "Misattribution: Epicurus's work is On Nature (lost except fragments). The poem On the Nature of Things is Lucretius's. Gutenberg #785 is Leonard's verse translation."
+    },
+    {
+      "id": 8,
+      "stage": "Stage One: Good books to get into philosophy",
+      "optional": false,
+      "original": {
+        "author": "Aeschylus",
+        "title": "Persians and other plays"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Aeschylus",
+      "title": "The Persians and Other Plays",
+      "access": "FREE",
+      "url": "https://www.fadedpage.com/books/20110329/html.php",
+      "linkState": "loads",
+      "note": "Real edition (Collard translation, per catalog). The free text is only Murray's 1939 verse Persians, public domain in Canada (check local law); other plays commercial."
+    },
+    {
+      "id": 9,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Epictetus",
+        "title": "Handbook"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Epictetus",
+      "title": "Enchiridion (Handbook)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/45109",
+      "linkState": "loads",
+      "note": "Handbook is an English rendering of Enchiridion. Higginson translation, Gutenberg #45109."
+    },
+    {
+      "id": 10,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Aurelius",
+        "title": "Meditations"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Marcus Aurelius",
+      "title": "Meditations",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/6920",
+      "linkState": "loads",
+      "note": "Author is Marcus Aurelius. George Long translation, Gutenberg #6920."
+    },
+    {
+      "id": 11,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Cicero",
+        "title": "On the Commonwealth and Laws"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Cicero",
+      "title": "On the Commonwealth and On the Laws (De re publica; De legibus)",
+      "access": "FREE",
+      "url": "https://catalog.perseus.org/catalog/urn:cts:latinLit:phi0474.phi043.opp-eng1",
+      "linkState": "loads",
+      "note": "Keyes Loeb 213 (1928), public domain in the US; Perseus catalog record seen, full text not opened. Rudd (OUP 2008) is commercial."
+    },
+    {
+      "id": 12,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Cicero",
+        "title": "On Morals"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Cicero",
+      "title": "On Duties (De Officiis)",
+      "access": "FREE",
+      "url": "https://gutenberg.org/cache/epub/47001/pg47001-images.html",
+      "linkState": "loads",
+      "note": "On Morals is not a standard title; best match De Officiis, Miller Loeb 1913, Gutenberg #47001. If the reader meant De finibus (On Moral Ends) that is unverified."
+    },
+    {
+      "id": 13,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Cicero",
+        "title": "Letters"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Cicero",
+      "title": "Letters",
+      "access": "FREE",
+      "url": "https://gutenberg.org/cache/epub/21200/pg21200-images.html",
+      "linkState": "loads",
+      "note": "Shuckburgh translation; Gutenberg #21200 is Vol. 1 (other volumes not checked). Winstedt Letters to Atticus also on Gutenberg."
+    },
+    {
+      "id": 14,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Plutarch",
+        "title": "Moralia"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Plutarch",
+      "title": "Moralia (Morals)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/78134",
+      "linkState": "loads",
+      "note": "Goodwin edition of the Morals translation, across Gutenberg vols #78134, #78147, #78851, #79588, #78000. Completeness not checked."
+    },
+    {
+      "id": 15,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Plotinus",
+        "title": "Enneads"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Plotinus",
+      "title": "Enneads",
+      "access": "FREE",
+      "url": "https://en.wikisource.org/wiki/Plotinus_(MacKenna)",
+      "linkState": "loads",
+      "note": "MacKenna translation (rev. B. S. Page), hosted on Wikisource in parts. Translation copyright status varies by country."
+    },
+    {
+      "id": 16,
+      "stage": "Stage Two",
+      "optional": false,
+      "original": {
+        "author": "Proclus",
+        "title": "The Elements of Theology"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Proclus",
+      "title": "Elements of Theology",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/78800",
+      "linkState": "loads",
+      "note": "Thomas Taylor 1816, in Gutenberg vol. 2 of The Six Books of Proclus (#78800)."
+    },
+    {
+      "id": 17,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Augustine",
+        "title": "The Confessions"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Augustine",
+      "title": "Confessions",
+      "access": "FREE",
+      "url": "https://gutenberg.org/cache/epub/3296/pg3296-images.html",
+      "linkState": "loads",
+      "note": "Pusey translation, Gutenberg #3296."
+    },
+    {
+      "id": 18,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Augustine",
+        "title": "The City of God"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Augustine",
+      "title": "City of God (De civitate Dei)",
+      "access": "FREE",
+      "url": "https://gutenberg.org/cache/epub/45304/pg45304-images.html",
+      "linkState": "loads",
+      "note": "Dods translation, Gutenberg #45304 (Vol. I; Vol. II is #45305)."
+    },
+    {
+      "id": 19,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Boethius",
+        "title": "Consolation of Philosophy"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Boethius",
+      "title": "The Consolation of Philosophy",
+      "access": "FREE",
+      "url": "https://gutenberg.org/cache/epub/14328/pg14328-images.html",
+      "linkState": "loads",
+      "note": "H. R. James translation, Gutenberg #14328."
+    },
+    {
+      "id": 20,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Anselm",
+        "title": "Major Works"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Anselm",
+      "title": "Major Works (OUP 1998, ed. Davies and Evans)",
+      "access": "FREE",
+      "url": "https://ccel.org/ccel/anselm/basic_works.all.html",
+      "linkState": "loads",
+      "note": "Major Works is a real but copyrighted OUP collection. The free text is a different collection: Deane's Basic Writings (Proslogium, Monologium, Gaunilo, Cur Deus Homo), public domain per CCEL."
+    },
+    {
+      "id": 21,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Aquinas",
+        "title": "Summa Theologica"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Thomas Aquinas",
+      "title": "Summa Theologica",
+      "access": "FREE",
+      "url": "https://www.ccel.org/ccel/aquinas/summa/home.html",
+      "linkState": "loads",
+      "note": "Standard author is Thomas Aquinas. Fathers of the English Dominican Province translation on CCEL; licence to verify before reuse."
+    },
+    {
+      "id": 22,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Ockham",
+        "title": "Letter to the Friars Minor"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "William of Ockham",
+      "title": "A Letter to the Friars Minor and Other Writings",
+      "access": "BORROW",
+      "url": "https://archive.org/details/lettertofriarsmi0000will",
+      "linkState": "loads",
+      "note": "Real (Cambridge 1995, ed. McGrade and Kilcullen, tr. Kilcullen); title truncated. IA record access-restricted, borrow status not confirmed."
+    },
+    {
+      "id": 23,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Ockham",
+        "title": "Theory of Terms"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "William of Ockham",
+      "title": "Ockham's Theory of Terms: Part I of the Summa Logicae (tr. Michael J. Loux, 1974)",
+      "access": "COMMERCIAL",
+      "url": "https://abbeys.com.au/book/ockhams-theory-of-terms-part-i-of-the-summa-logicae.do",
+      "linkState": "loads",
+      "note": "Real; \"Theory of Terms\" is shorthand. Notre Dame 1974, St Augustine's Press 2011. No IA copy found."
+    },
+    {
+      "id": 24,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": false,
+      "original": {
+        "author": "Buridan",
+        "title": "Summulae de dialectica"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "John Buridan",
+      "title": "Summulae de dialectica",
+      "access": "FREE",
+      "url": "https://archive.org/details/summulae-de-dialectica-john-buridan",
+      "linkState": "loads",
+      "note": "Real (Latin original). IA item is a Latin community upload with Public Domain Mark; edition not checked. English Klima translation (Yale 2001) is commercial."
+    },
+    {
+      "id": 25,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": true,
+      "original": {
+        "author": "Dionysius",
+        "title": "Complete Works"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Pseudo-Dionysius the Areopagite",
+      "title": "Pseudo-Dionysius: The Complete Works (Classics of Western Spirituality, tr. Colm Luibheid, Paulist 1987)",
+      "access": "COMMERCIAL",
+      "url": "https://byzantine.lib.princeton.edu/byzantine/translation/15300",
+      "linkState": "loads",
+      "note": "Real standard collection; author should be Pseudo-Dionysius. No free online edition found."
+    },
+    {
+      "id": 26,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": true,
+      "original": {
+        "author": "Pearl",
+        "title": "Theophany"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Eric D. Perl",
+      "title": "Theophany: The Neoplatonic Philosophy of Dionysius the Areopagite",
+      "access": "COMMERCIAL",
+      "url": "https://sunypress.edu/Books/T/Theophany",
+      "linkState": "loads",
+      "note": "Graphic reads \"Pearl: Theophany\". Verified via a SUNY Press listing (hardcover 2007, paperback 2008)."
+    },
+    {
+      "id": 27,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": true,
+      "original": {
+        "author": "Carabine",
+        "title": "The Unknown God"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Deirdre Carabine",
+      "title": "The Unknown God: Negative Theology in the Platonic Tradition: Plato to Eriugena (Peeters, 1995)",
+      "access": "COMMERCIAL",
+      "url": "https://relbib.de/Record/277693721",
+      "linkState": "loads",
+      "note": "Real book. IA item titled The Unknown God is Alfred Noyes (1934), a different work. URL is a catalogue record."
+    },
+    {
+      "id": 28,
+      "stage": "Stage Three: The Middle Ages",
+      "optional": true,
+      "original": {
+        "author": "Eckhart",
+        "title": "Complete Works"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Meister Eckhart",
+      "title": "The Complete Mystical Works of Meister Eckhart (tr. Maurice O'C. Walshe, ed. Bernard McGinn, Crossroad 2009)",
+      "access": "COMMERCIAL",
+      "url": "https://www.eckhartsociety.org/news/eckhart-complete-mystical-works/",
+      "linkState": "loads",
+      "note": "Real standard one-volume collection; \"Complete Works\" is not its title. No free full text found."
+    },
+    {
+      "id": 29,
+      "stage": "Stage 4.1: Early Modern Rationalists",
+      "optional": false,
+      "original": {
+        "author": "Descartes",
+        "title": "The Philosophical Writings I, II and III"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "René Descartes",
+      "title": "The Philosophical Writings of Descartes (3 vols; Cottingham, Stoothoff, Murdoch, Kenny; CUP 1985-1991)",
+      "access": "BORROW",
+      "url": "https://archive.org/details/philosophicalwri0001desc_d0c8",
+      "linkState": "loads",
+      "note": "Real; \"I, II and III\" is the three-volume set. IA record access-restricted; borrow status not confirmed."
+    },
+    {
+      "id": 30,
+      "stage": "Stage 4.1: Early Modern Rationalists",
+      "optional": false,
+      "original": {
+        "author": "Spinoza",
+        "title": "Complete Works"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Benedictus de Spinoza",
+      "title": "Complete Works (tr. Samuel Shirley, ed. Michael L. Morgan, Hackett 2002)",
+      "access": "COMMERCIAL",
+      "url": "https://newsouthbooks.com.au/books/spinoza-complete-works",
+      "linkState": "loads",
+      "note": "Real standard edition. Open Library lists an IA id but that page 404s."
+    },
+    {
+      "id": 31,
+      "stage": "Stage 4.1: Early Modern Rationalists",
+      "optional": false,
+      "original": {
+        "author": "Leibniz",
+        "title": "Philosophical Essays"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "G.W. Leibniz",
+      "title": "Philosophical Essays (ed. and tr. Roger Ariew and Daniel Garber, Hackett 1989)",
+      "access": "COMMERCIAL",
+      "url": "https://hackettpublishing.com/philosophical-essays",
+      "linkState": "not reachable from this network (record seen in search results)",
+      "note": "Real. IA holds a different 1965 Library of Liberal Arts edition, not this one."
+    },
+    {
+      "id": 32,
+      "stage": "Stage 4.1: Early Modern Rationalists",
+      "optional": false,
+      "original": {
+        "author": "Leibniz",
+        "title": "Monadology"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "G.W. Leibniz",
+      "title": "Monadology",
+      "access": "BORROW",
+      "url": "https://archive.org/details/monadologyotherp0000gott",
+      "linkState": "loads",
+      "note": "Real. IA item is Latta's translation (OUP 1951), access-restricted. French original free on Gutenberg but not the English text."
+    },
+    {
+      "id": 33,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Locke",
+        "title": "Concerning Education and Tolerance"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "John Locke",
+      "title": "Some Thoughts Concerning Education",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/john-locke/some-thoughts-concerning-education",
+      "linkState": "loads",
+      "note": "Entry joins two works: Some Thoughts Concerning Education and A Letter Concerning Toleration (free LibriVox audio at https://archive.org/details/letter_concerning_toleration_librivox). Chose the Education title."
+    },
+    {
+      "id": 34,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Locke",
+        "title": "Two Treatises of Government"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "John Locke",
+      "title": "Two Treatises of Government",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/john-locke/two-treatises-of-government",
+      "linkState": "loads",
+      "note": "Real. Standard Ebooks edition; Gutenberg also has the 1690 text."
+    },
+    {
+      "id": 35,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Locke",
+        "title": "Human Understanding"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "John Locke",
+      "title": "An Essay Concerning Human Understanding",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/10615",
+      "linkState": "loads",
+      "note": "Real; title truncated. Gutenberg splits it into vol 1 (10615) and vol 2 (10616)."
+    },
+    {
+      "id": 36,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Locke",
+        "title": "Reasonability of Christianity"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "John Locke",
+      "title": "The Reasonableness of Christianity, as Delivered in the Scriptures",
+      "access": "FREE",
+      "url": "https://archive.org/details/lockechristianity",
+      "linkState": "loads",
+      "note": "Real (1695); title shortened. IA scan marked Public Domain Mark 1.0."
+    },
+    {
+      "id": 37,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Berkeley",
+        "title": "Philosophical Writings"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "George Berkeley",
+      "title": "Philosophical Writings (ed. Desmond M. Clarke, Cambridge Texts, CUP 2008)",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridgebookshop.co.uk/products/berkeley-philosophical-writings",
+      "linkState": "loads",
+      "note": "Real edited collection. No free copy of this edition; Berkeley's original works are public domain."
+    },
+    {
+      "id": 38,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "A Treatise of Human Nature"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "David Hume",
+      "title": "A Treatise of Human Nature",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/4705",
+      "linkState": "loads",
+      "note": "Real (1739-40). Gutenberg text, public domain in the US."
+    },
+    {
+      "id": 39,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "Concerning Human Understanding"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "David Hume",
+      "title": "An Enquiry Concerning Human Understanding",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/david-hume/an-enquiry-concerning-human-understanding",
+      "linkState": "loads",
+      "note": "Real (1748); title corrected. Gutenberg also has it (#9662)."
+    },
+    {
+      "id": 40,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "Concerning Natural Religion"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "David Hume",
+      "title": "Dialogues Concerning Natural Religion",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/4583",
+      "linkState": "loads",
+      "note": "Real (1779); title corrected."
+    },
+    {
+      "id": 41,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "Essays, Moral, Political and Literary"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "David Hume",
+      "title": "Essays, Moral, Political, and Literary",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/36120",
+      "linkState": "loads",
+      "note": "Real. Gutenberg lists it as \"Essays\" (public domain in the US)."
+    },
+    {
+      "id": 42,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "Natural History of Religion"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "David Hume",
+      "title": "The Natural History of Religion",
+      "access": "FREE",
+      "url": "https://archive.org/details/a-natural-history-of-religion-david-hume",
+      "linkState": "loads",
+      "note": "Real (1757); needs \"The\". IA item is a user-uploaded scan with Public Domain Mark; text not proofed."
+    },
+    {
+      "id": 43,
+      "stage": "Stage 4.2: Early Modern Empiricists",
+      "optional": false,
+      "original": {
+        "author": "Hume",
+        "title": "Principles of Morals"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "David Hume",
+      "title": "An Enquiry Concerning the Principles of Morals",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/4320",
+      "linkState": "loads",
+      "note": "Real 1751 work; \"Principles of Morals\" is a truncated title. Gutenberg #4320."
+    },
+    {
+      "id": 44,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Malebranche",
+        "title": "The Search after Truth"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Nicolas Malebranche",
+      "title": "The Search after Truth",
+      "access": "FREE",
+      "url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51674",
+      "linkState": "not reachable from this network (record seen in search results)",
+      "note": "Real (1674-75). Thomas Taylor 1700 English translation; OTA record said to be CC0 (from search snippet, page not fetched)."
+    },
+    {
+      "id": 45,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Malebranche",
+        "title": "Treatise on Nature and Grace"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Nicolas Malebranche",
+      "title": "Treatise on Nature and Grace",
+      "access": "FREE",
+      "url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51689",
+      "linkState": "not reachable from this network (record seen in search results)",
+      "note": "Real (1680). Free text is an older 1695 English translation on OTA (fetch refused, terms unconfirmed). Modern translation Patrick Riley (Clarendon 1992) is commercial."
+    },
+    {
+      "id": 46,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Malebranche",
+        "title": "Treatise on Ethics"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Nicolas Malebranche",
+      "title": "Treatise on Ethics (Traite de morale, 1684)",
+      "access": "FREE",
+      "url": "https://ota.bodleian.ox.ac.uk/repository/xmlui/handle/20.500.12024/A51685",
+      "linkState": "not reachable from this network (record seen in search results)",
+      "note": "Real. Modern translation Craig Walton (Kluwer 1993, commercial). Free copy is older James Shipton translation \"A Treatise of Morality in Two Parts\" (OTA; fetch refused, unconfirmed). IGNORE the agent's remark about McCracken: that name is not in the owner's list."
+    },
+    {
+      "id": 47,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Pascal",
+        "title": "Pensees"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Blaise Pascal",
+      "title": "Pensees",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/18269",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #18269 with intro by T. S. Eliot; translator not named on the page (Trotter inferred)."
+    },
+    {
+      "id": 48,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Pascal",
+        "title": "Provincial Letters"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Blaise Pascal",
+      "title": "The Provincial Letters",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/73959",
+      "linkState": "loads",
+      "note": "Real (1656-57). Gutenberg #73959, M'Crie translation (1856)."
+    },
+    {
+      "id": 49,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Bacon",
+        "title": "The New Organon"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Francis Bacon",
+      "title": "Novum Organum (The New Organon)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/45988",
+      "linkState": "loads",
+      "note": "Real (1620). Gutenberg #45988 titled Novum Organum; New Organon is an alternate English title."
+    },
+    {
+      "id": 50,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Bacon",
+        "title": "Essays"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Francis Bacon",
+      "title": "Essays or Counsels, Civil and Moral",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/575",
+      "linkState": "loads",
+      "note": "Real (1597 onward). Bare Essays is ambiguous with Montaigne; Gutenberg #575 uses the full title."
+    },
+    {
+      "id": 51,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Montaigne",
+        "title": "Essays"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Michel de Montaigne",
+      "title": "Essays",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/3581",
+      "linkState": "loads",
+      "note": "Real. Gutenberg has Cotton's translation (Hazlitt 1877 ed.) over multiple volumes; #3581 is volume 1."
+    },
+    {
+      "id": 52,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Bruno",
+        "title": "Cause, Principle and Unity"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Giordano Bruno",
+      "title": "Cause, Principle and Unity",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridge.org/core/books/giordano-bruno-cause-principle-and-unity/DEBCBA0D9FD125AF8AC2E0413CE086A7",
+      "linkState": "loads",
+      "note": "Real. Cambridge 1998 translation by Robert de Lucca (Cambridge Core digital purchase). 1962 Jack Lindsay translation also exists; no free copy found."
+    },
+    {
+      "id": 53,
+      "stage": "Stage 4 (optional)",
+      "optional": false,
+      "original": {
+        "author": "Bruno",
+        "title": "Essays on Magic"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Giordano Bruno",
+      "title": "Essays on Magic",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridge.org/core/books/giordano-bruno-cause-principle-and-unity/DEBCBA0D9FD125AF8AC2E0413CE086A7",
+      "linkState": "loads",
+      "note": "Real. Same Cambridge 1998 volume (Richard J. Blackwell), catalogued as \"Cause, Principle, and Unity and Essays on Magic\"; no free copy found."
+    },
+    {
+      "id": 54,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Prolegomena to Any Future Metaphysics"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Prolegomena to Any Future Metaphysics",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/52821",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #52821 (Paul Carus, Open Court 1912 text)."
+    },
+    {
+      "id": 55,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Critique of Pure Reason"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Critique of Pure Reason",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/4280",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #4280 (Meiklejohn)."
+    },
+    {
+      "id": 56,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Critique of Practical Reason"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Critique of Practical Reason",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/5683",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #5683 (Abbott)."
+    },
+    {
+      "id": 57,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Critique of Judgement"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Critique of Judgement",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/48433",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #48433 (J. H. Bernard); Judgement is British spelling, modern standard Judgment."
+    },
+    {
+      "id": 58,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Groundwork for the Metaphysics of Morals"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Groundwork of the Metaphysics of Morals",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/5682",
+      "linkState": "loads",
+      "note": "Real. Gutenberg #5682 files Abbott's translation as \"Fundamental Principles of the Metaphysic of Morals\"."
+    },
+    {
+      "id": 59,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Universal Natural History"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Universal Natural History and Theory of the Heavens",
+      "access": "FREE",
+      "url": "https://web.viu.ca/johnstoi/kant/kant2e.htm",
+      "linkState": "loads",
+      "note": "Real (1755); title as written is truncated. Ian Johnston translation hosted by the translator; page points to a separate copyright page (not checked)."
+    },
+    {
+      "id": 60,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Religion within the Limits of Reason"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "Religion within the Boundaries of Mere Reason, and Other Writings (Wood and di Giovanni, Cambridge; also known as Religion within the Limits of Reason Alone, Greene and Hudson)",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridgebookshop.co.uk/products/kant-religion-within-the-boundaries-of-mere-reason",
+      "linkState": "not reachable from this network (record seen in search results)",
+      "note": "Real. No free English text found; the Cambridge edition is purchasable. Gutenberg #56182 is the German original only."
+    },
+    {
+      "id": 61,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Kant",
+        "title": "Argument for God"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Immanuel Kant",
+      "title": "The Only Possible Argument in Support of a Demonstration of the Existence of God",
+      "access": "COMMERCIAL",
+      "url": "https://resolve.cambridge.org/core/books/theoretical-philosophy-17551770/5DDE1EE90BE36E63788B5C00533DD18A",
+      "linkState": "loads",
+      "note": "Real 1763 essay (Der einzig moegliche Beweisgrund); \"Argument for God\" is not its title. English in Walford (Cambridge 1992) and Treash (Nebraska 1994); no free full text found."
+    },
+    {
+      "id": 62,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Fichte",
+        "title": "Attempt at a Critique of All Revelation"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Johann Gottlieb Fichte",
+      "title": "Attempt at a Critique of All Revelation",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridgebookshop.co.uk/products/fichte-attempt-at-a-critique-of-all-revelation",
+      "linkState": "loads",
+      "note": "Real (1792). Garrett Green translation (Cambridge 1978; 2010). Print only found."
+    },
+    {
+      "id": 63,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Fichte",
+        "title": "Foundation of Natural Right"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Johann Gottlieb Fichte",
+      "title": "Foundations of Natural Right",
+      "access": "COMMERCIAL",
+      "url": "https://akademika.no/humaniora/filosofi/foundations-natural-right/9780521575911",
+      "linkState": "bot-blocked (live, not machine-verified)",
+      "note": "Real (1796). Michael Baur translation (Cambridge 2000, ed. Neuhouser); standard title is plural Foundations. No free copy found."
+    },
+    {
+      "id": 64,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Fichte",
+        "title": "System of Ethics"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Johann Gottlieb Fichte",
+      "title": "System of Ethics (Das System der Sittenlehre, 1798)",
+      "access": "FREE",
+      "url": "https://archive.org/details/scienceethicsas00fichgoog",
+      "linkState": "loads",
+      "note": "Public-domain 1897 English translation \"The Science of Ethics as Based on the Science of Knowledge\"; translator not named in metadata. 2005 Cambridge translation (Breazeale/Zoeller) is COMMERCIAL."
+    },
+    {
+      "id": 65,
+      "stage": "Stage 5.1: German Idealism",
+      "optional": false,
+      "original": {
+        "author": "Fichte",
+        "title": "The Science of Knowing"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Johann Gottlieb Fichte",
+      "title": "The Science of Knowing (J.G. Fichte's 1804 Lectures on the Wissenschaftslehre, tr. Walter E. Wright, SUNY 2005)",
+      "access": "COMMERCIAL",
+      "url": "https://sunypress.edu/content/download/900817/7664230/version/1/file/9781438495958_excerpt.pdf",
+      "linkState": "loads",
+      "note": "Real, in copyright. Only a publisher excerpt found free. No archive.org or Gutenberg copy found."
+    },
+    {
+      "id": 66,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Science of Logic"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Science of Logic (Wissenschaft der Logik, 1812-1816)",
+      "access": "BORROW",
+      "url": "https://archive.org/details/scienceoflogic0000hege",
+      "linkState": "loads",
+      "note": "Cambridge 2010 reissue of A.V. Miller translation, lending-restricted. German original free on Gutenberg (ebook 6729, Band 1)."
+    },
+    {
+      "id": 67,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Phenomenology of Spirit"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Phenomenology of Spirit",
+      "access": "FREE",
+      "url": "https://www.marxists.org/reference/archive/hegel/phindex.htm",
+      "linkState": "loads",
+      "note": "J.B. Baillie 1910 translation (marxists.org titles it \"Phenomenology of Mind\"). Gutenberg has the German original (ebook 6698)."
+    },
+    {
+      "id": 68,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Elements of the Philosophy of Right"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Elements of the Philosophy of Right",
+      "access": "FREE",
+      "url": "https://www.canadiana.ca/view/oocihm.50473/1",
+      "linkState": "loads",
+      "note": "S.W. Dyde 1896 translation (\"Hegel's Philosophy of Right\"), digitized by Canadiana."
+    },
+    {
+      "id": 69,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Philosophy of Nature"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Philosophy of Nature (Part II of the Encyclopaedia)",
+      "access": "COMMERCIAL",
+      "url": "https://www.marxists.org/reference/archive/hegel/works/na/nature.htm",
+      "linkState": "loads",
+      "note": "Standard English is A.V. Miller (OUP 1970). The marxists.org copy names no translator; legal status unverified."
+    },
+    {
+      "id": 70,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Philosophy of Mind"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Philosophy of Mind (Encyclopaedia Part III)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/39064",
+      "linkState": "loads",
+      "note": "William Wallace 1894 translation, public domain. Omits the Zusaetze, which the 2007 Miller edition includes (in copyright)."
+    },
+    {
+      "id": 71,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Hegel",
+        "title": "Shorter Logic"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Georg Wilhelm Friedrich Hegel",
+      "title": "Encyclopaedia Logic (Part I of the Encyclopaedia; informally \"Shorter Logic\")",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/55108",
+      "linkState": "loads",
+      "note": "Gutenberg text is William Wallace's \"The Logic of Hegel\" (2nd ed. 1892). \"Shorter Logic\" is an informal name, not the standard English title."
+    },
+    {
+      "id": 72,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Schelling",
+        "title": "Philosophical Inquiries into the Nature of Human Freedom"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Wilhelm Joseph Schelling",
+      "title": "Philosophical Inquiries into the Nature of Human Freedom (variant: \"Philosophical Investigations into the Essence of Human Freedom\")",
+      "access": "BORROW",
+      "url": "https://archive.org/details/schellingofhuman0000jame",
+      "linkState": "loads",
+      "note": "James Gutmann 1936 translation (\"Of Human Freedom\"), lending-restricted. German 1834 edition free on archive.org (item 10927078)."
+    },
+    {
+      "id": 73,
+      "stage": "Stage 5.2: Hegel and Schelling",
+      "optional": false,
+      "original": {
+        "author": "Schelling",
+        "title": "System of Transcendental Idealism"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Wilhelm Joseph Schelling",
+      "title": "System of Transcendental Idealism (1800)",
+      "access": "BORROW",
+      "url": "https://archive.org/details/systemoftranscen0000sche",
+      "linkState": "loads",
+      "note": "Peter Heath 1978 (UVA) translation, lending-restricted."
+    },
+    {
+      "id": 74,
+      "stage": "Stage 5.3",
+      "optional": false,
+      "original": {
+        "author": "Boehme",
+        "title": "Aurora"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jacob Böhme",
+      "title": "Aurora (Morgenroete im Aufgang)",
+      "access": "FREE",
+      "url": "https://archive.org/details/bim_early-english-books-1641-1700_aurora-that-is-the-day_bohme-jacob_1656",
+      "linkState": "loads",
+      "note": "1656 English edition \"Aurora, that is, the Day-spring\", public-domain scan."
+    },
+    {
+      "id": 75,
+      "stage": "Stage 5.3",
+      "optional": false,
+      "original": {
+        "author": "Boehme",
+        "title": "The Supersensual Life"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jacob Böhme",
+      "title": "Dialogues on the Supersensual Life (Vom uebersinnlichen Leben, \"The Supersensual Life\")",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/33742",
+      "linkState": "loads",
+      "note": "Gutenberg ebook 33742. Translator and date not checked."
+    },
+    {
+      "id": 76,
+      "stage": "Stage 5.3",
+      "optional": false,
+      "original": {
+        "author": "Boehme",
+        "title": "The Forty Questions of the Soul"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jacob Böhme",
+      "title": "Forty Questions of the Soul (Die vierzig Fragen von der Seelen)",
+      "access": "FREE",
+      "url": "https://archive.org/details/fortyquestionsof00bohm",
+      "linkState": "loads",
+      "note": "1665 English edition (London, L. Lloyd), public-domain scan."
+    },
+    {
+      "id": 77,
+      "stage": "Stage 5.3",
+      "optional": false,
+      "original": {
+        "author": "Boehme",
+        "title": "Mysterium Magnum"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jacob Böhme",
+      "title": "Mysterium Magnum",
+      "access": "FREE",
+      "url": "https://archive.org/details/bim_early-english-books-1475-1640_mysterium-magnum_bhme-jacob_1656",
+      "linkState": "loads",
+      "note": "1656 English edition (EEBO-TCP scan) of the 1623 commentary on Genesis. URL from search results, not opened."
+    },
+    {
+      "id": 78,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Schopenhauer",
+        "title": "Principle of Sufficient Reason"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Arthur Schopenhauer",
+      "title": "On the Fourfold Root of the Principle of Sufficient Reason (Ueber die vierfache Wurzel des Satzes vom zureichenden Grunde)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/50966",
+      "linkState": "loads",
+      "note": "Gutenberg 50966 pairs it with \"On the Will in Nature\". The transcription shortens the title."
+    },
+    {
+      "id": 79,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Schopenhauer",
+        "title": "The World as Will and Representation"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Arthur Schopenhauer",
+      "title": "The World as Will and Representation (Haldane & Kemp render it \"The World as Will and Idea\")",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/38427",
+      "linkState": "loads",
+      "note": "Vol. 1 of 3, Haldane & Kemp, public domain. Vols. 2 and 3 are ebooks 40097 and 40868."
+    },
+    {
+      "id": 80,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Schopenhauer",
+        "title": "The Two Fundamental Problems of Ethics"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Arthur Schopenhauer",
+      "title": "The Two Fundamental Problems of Ethics (Die beiden Grundprobleme der Ethik)",
+      "access": "FREE",
+      "url": "https://archive.org/details/arthur-schopenhauer-the-two-fundamental-problems-of-ethics",
+      "linkState": "loads",
+      "note": "Archive copy is English and not lending-restricted. Translator not named and the 1841 date looks wrong. Janaway's Cambridge translation is COMMERCIAL. Verify provenance before linking."
+    },
+    {
+      "id": 81,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Schopenhauer",
+        "title": "Parerga and Paralipomena"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Arthur Schopenhauer",
+      "title": "Parerga and Paralipomena (Parerga und Paralipomena, 1851)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/26586",
+      "linkState": "loads",
+      "note": "Free English is partial only (\"Studies in Pessimism\", Saunders selection, inferred from title; Gutenberg page not opened). Full English translation (Payne, Clarendon) is COMMERCIAL. German 1851 original on archive.org."
+    },
+    {
+      "id": 82,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Untimely Meditations"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Untimely Meditations (Unzeitgemaesse Betrachtungen; Gutenberg title \"Thoughts Out of Season\")",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/38226",
+      "linkState": "loads",
+      "note": "Gutenberg 38226 is \"Thoughts Out of Season, Part II\". Part I not checked."
+    },
+    {
+      "id": 83,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Beyond Good and Evil"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Beyond Good and Evil (Jenseits von Gut und Boese)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/4363",
+      "linkState": "loads",
+      "note": "Zimmern translation, public domain."
+    },
+    {
+      "id": 84,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Philosophy of the Greeks"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Philosophy in the Tragic Age of the Greeks (Die Philosophie im tragischen Zeitalter der Griechen)",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/51548",
+      "linkState": "loads",
+      "note": "Essay (written 1873) in Muegge's translation within \"Early Greek Philosophy & Other Essays\". \"Philosophy of the Greeks\" is not a title Nietzsche used."
+    },
+    {
+      "id": 85,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Genealogy of Morals"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "The Genealogy of Morals",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/52319",
+      "linkState": "loads",
+      "note": "Gutenberg #52319 (Kennedy/Samuel); standard title On the Genealogy of Morality."
+    },
+    {
+      "id": 86,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "On Truth and Lies in a Nonmoral Sense"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "On Truth and Lies in a Nonmoral Sense",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/51548",
+      "linkState": "loads",
+      "note": "Real 1873 essay; Gutenberg #51548 (Mugge, Early Greek Philosophy & Other Essays) prints it as \"On Truth and Falsity in Their Ultramoral Sense\" (search snippet, not opened)."
+    },
+    {
+      "id": 87,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "The Gay Science"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "The Gay Science",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/52881",
+      "linkState": "loads",
+      "note": "Gutenberg #52881 titled The Joyful Wisdom (Common, Cohn, Petre); same work."
+    },
+    {
+      "id": 88,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "The Birth of Tragedy"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "The Birth of Tragedy",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/51356",
+      "linkState": "loads",
+      "note": "Gutenberg #51356 \"The Birth of Tragedy; or, Hellenism and Pessimism\" (Haussmann), PD in USA."
+    },
+    {
+      "id": 89,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "The Antichrist"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "The Antichrist",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/19322",
+      "linkState": "loads",
+      "note": "Gutenberg #19322 (Mencken), PD in USA."
+    },
+    {
+      "id": 90,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Human, All Too Human"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Human, All Too Human",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/38145",
+      "linkState": "loads",
+      "note": "Gutenberg #38145 (Harvey); Part I #51935, Part II #37841."
+    },
+    {
+      "id": 91,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Thus Spoke Zarathustra"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Thus Spoke Zarathustra",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/1998",
+      "linkState": "loads",
+      "note": "Gutenberg #1998 (Common), PD in USA."
+    },
+    {
+      "id": 92,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Nietzsche",
+        "title": "Ecce Homo"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Friedrich Nietzsche",
+      "title": "Ecce Homo",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/52190",
+      "linkState": "loads",
+      "note": "Gutenberg #52190 (Ludovici), PD in USA only."
+    },
+    {
+      "id": 93,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "Either/Or"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "Either/Or",
+      "access": "BORROW",
+      "url": "https://archive.org/details/eitheror0001kier",
+      "linkState": "loads",
+      "note": "Princeton 1971 on Internet Archive; lending item."
+    },
+    {
+      "id": 94,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "Fear and Trembling"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "Fear and Trembling",
+      "access": "BORROW",
+      "url": "https://archive.org/details/feartremblingdia0000skie_r6e3",
+      "linkState": "loads",
+      "note": "Princeton 1945 (Lowrie) on IA; lending item."
+    },
+    {
+      "id": 95,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "Works of Love"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "Works of Love",
+      "access": "BORROW",
+      "url": "https://archive.org/details/worksoflovesomec0000kier",
+      "linkState": "loads",
+      "note": "Harper 1964 (Hong) on IA; lending item."
+    },
+    {
+      "id": 96,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "The Sickness unto Death"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "The Sickness unto Death",
+      "access": "BORROW",
+      "url": "https://archive.org/details/sicknessuntodeat0000kier",
+      "linkState": "loads",
+      "note": "1941 edition on IA; lending item."
+    },
+    {
+      "id": 97,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "Purity of Heart"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "Purity of Heart Is to Will One Thing",
+      "access": "BORROW",
+      "url": "https://archive.org/details/purityofheartist0000kier",
+      "linkState": "loads",
+      "note": "Full title Purity of Heart Is to Will One Thing; 1956 Harper (Steere) on IA, lending item."
+    },
+    {
+      "id": 98,
+      "stage": "Stage Six: Lebensphilosophie",
+      "optional": false,
+      "original": {
+        "author": "Kierkegaard",
+        "title": "Concluding Unscientific Postscript"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Søren Kierkegaard",
+      "title": "Concluding Unscientific Postscript (to Philosophical Fragments)",
+      "access": "BORROW",
+      "url": "https://archive.org/details/kierkegaardsconc0000sren",
+      "linkState": "loads",
+      "note": "Full title adds \"to Philosophical Fragments\"; Swenson 1941 on IA, lending item."
+    },
+    {
+      "id": 99,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Heidegger",
+        "title": "Introduction to Metaphysics"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Martin Heidegger",
+      "title": "Introduction to Metaphysics",
+      "access": "BORROW",
+      "url": "https://archive.org/details/introductiontome0000mart_d5y2",
+      "linkState": "loads",
+      "note": "Lectures 1935, pub. 1953; Manheim 1959 on IA, lending item."
+    },
+    {
+      "id": 100,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Heidegger",
+        "title": "Being and Time"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Martin Heidegger",
+      "title": "Being and Time",
+      "access": "BORROW",
+      "url": "https://archive.org/details/beingtime0000heid",
+      "linkState": "loads",
+      "note": "Macquarrie and Robinson 1962 on IA, lending item."
+    },
+    {
+      "id": 101,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Heidegger",
+        "title": "Concerning Technology"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Martin Heidegger",
+      "title": "The Question Concerning Technology",
+      "access": "BORROW",
+      "url": "https://archive.org/details/questionconcerni00heid",
+      "linkState": "loads",
+      "note": "Standard title The Question Concerning Technology (Die Frage nach der Technik), in \"The Question Concerning Technology and Other Essays\" (Lovitt). No English work titled \"Concerning Technology\" found. IA lending copy."
+    },
+    {
+      "id": 102,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Heidegger",
+        "title": "On the Essence of Truth"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Martin Heidegger",
+      "title": "On the Essence of Truth",
+      "access": "BORROW",
+      "url": "https://archive.org/details/basicwritingsfro0000heid",
+      "linkState": "loads",
+      "note": "Vom Wesen der Wahrheit; included in Krell's Basic Writings (1993 ed.); IA lending item."
+    },
+    {
+      "id": 103,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Wittgenstein",
+        "title": "Philosophical Investigations"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Ludwig Wittgenstein",
+      "title": "Philosophical Investigations",
+      "access": "BORROW",
+      "url": "https://archive.org/details/philosophicalinv0000ludw",
+      "linkState": "loads",
+      "note": "1953 edition on IA, lending item."
+    },
+    {
+      "id": 104,
+      "stage": "Stage Seven: Modern Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Wittgenstein",
+        "title": "Tractatus"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Ludwig Wittgenstein",
+      "title": "Tractatus Logico-Philosophicus",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/5740",
+      "linkState": "loads",
+      "note": "Gutenberg #5740 (Ogden), PD in USA. Transcription is shorthand for the full title."
+    },
+    {
+      "id": 105,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Machiavelli",
+        "title": "Discourses on Livy"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Niccolò Machiavelli",
+      "title": "Discourses on Livy",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/niccolo-machiavelli/discourses-on-livy/ninian-hill-thomson",
+      "linkState": "loads",
+      "note": "Standard Ebooks edition (Thomson); Gutenberg #10827 Discourses on the First Decade of Titus Livius (Thomson), PD in USA."
+    },
+    {
+      "id": 106,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Machiavelli",
+        "title": "The Prince"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Niccolò Machiavelli",
+      "title": "The Prince",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/1232",
+      "linkState": "loads",
+      "note": "Real; Gutenberg title and author confirmed."
+    },
+    {
+      "id": 107,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Hobbes",
+        "title": "Leviathan"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Thomas Hobbes",
+      "title": "Leviathan",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/3207",
+      "linkState": "loads",
+      "note": "Real; Gutenberg title and author confirmed."
+    },
+    {
+      "id": 108,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Viroli",
+        "title": "Rousseau and the Well Ordered Society"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Maurizio Viroli",
+      "title": "Jean-Jacques Rousseau and the \"Well-Ordered Society\"",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridge.org/core/books/jeanjacques-rousseau-and-the-wellordered-society/introduction/59B49C88AC2B354C9497E15B064F7BFE",
+      "linkState": "loads",
+      "note": "Real (CUP 1988, tr. Derek Hanson). IA copy access-restricted, borrow button not shown; no free edition found."
+    },
+    {
+      "id": 109,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Rousseau",
+        "title": "A Discourse on the Origin of Inequality"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jean-Jacques Rousseau",
+      "title": "A Discourse on the Origin of Inequality",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/11136",
+      "linkState": "loads",
+      "note": "Gutenberg title \"A Discourse Upon the Origin and the Foundation of the Inequality Among Mankind\" (Cole tr.); same work."
+    },
+    {
+      "id": 110,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Rousseau",
+        "title": "Confessions"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jean-Jacques Rousseau",
+      "title": "Confessions",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/3913",
+      "linkState": "loads",
+      "note": "Gutenberg title \"The Confessions of Jean Jacques Rousseau - Complete\"."
+    },
+    {
+      "id": 111,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Rousseau",
+        "title": "Emile"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Jean-Jacques Rousseau",
+      "title": "Emile",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/5427",
+      "linkState": "loads",
+      "note": "Gutenberg title and author confirmed."
+    },
+    {
+      "id": 112,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Montesquieu",
+        "title": "The Spirit of Laws"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Charles de Secondat, baron de Montesquieu",
+      "title": "The Spirit of Laws",
+      "access": "FREE",
+      "url": "https://archive.org/details/spiritoflaws01mont",
+      "linkState": "loads",
+      "note": "Real. Only English scan found is the 1896 G. Bell edition, vol. 1 of 2; translator not named on the page; no English Gutenberg text found."
+    },
+    {
+      "id": 113,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Montesquieu",
+        "title": "Persian Letters"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Charles de Secondat, baron de Montesquieu",
+      "title": "Persian Letters",
+      "access": "FREE",
+      "url": "https://archive.org/details/persianletters00beaugoog",
+      "linkState": "loads",
+      "note": "Real (1721). English scan from 1892, translator not identified. Gutenberg has only French editions."
+    },
+    {
+      "id": 114,
+      "stage": "Political Philosophy",
+      "optional": false,
+      "original": {
+        "author": "Voltaire",
+        "title": "Candide"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Voltaire",
+      "title": "Candide",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/19942",
+      "linkState": "loads",
+      "note": "Real; Gutenberg title and author confirmed."
+    },
+    {
+      "id": 115,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Price",
+        "title": "Principal Questions in Morals"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Richard Price (1723-1791)",
+      "title": "A Review of the Principal Questions and Difficulties in Morals",
+      "access": "FREE",
+      "url": "https://archive.org/details/bim_eighteenth-century_a-review-of-the-principa_price-richard_1758",
+      "linkState": "loads",
+      "note": "Real 1758 work. \"Principal Questions in Morals\" is a shortened form (1787 edition title). IA item lists a full-text download."
+    },
+    {
+      "id": 116,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Price",
+        "title": "Dynamism, Containment and Change"
+      },
+      "verdict": "DROP",
+      "kept": false,
+      "author": "Richard Price (historian, b. 1944)",
+      "title": "British Society, 1680-1880: Dynamism, Containment and Change",
+      "access": "COMMERCIAL",
+      "url": "https://archive.org/details/britishsociety160000pric",
+      "linkState": "loads",
+      "note": "Real (CUP 1999) but by a DIFFERENT Richard Price, not the 18th-century philosopher; does not belong in a French Revolution reading list unless intended. IA copy access-restricted."
+    },
+    {
+      "id": 117,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Burke",
+        "title": "Origin of Our Ideas of the Sublime and Beautiful"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Edmund Burke",
+      "title": "A Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful",
+      "access": "FREE",
+      "url": "https://archive.org/details/philosophicalen00burk",
+      "linkState": "loads",
+      "note": "Real (1757). Open full text on IA (1844 Harper edition)."
+    },
+    {
+      "id": 118,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Burke",
+        "title": "Pre-Revolutionary Writings"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Edmund Burke (ed. Ian Harris)",
+      "title": "Pre-Revolutionary Writings",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridge.org/core/books/prerevolutionary-writings/introduction/82403D642D523E6F835CFE04E4D1E1F1",
+      "linkState": "loads",
+      "note": "Real (CUP Cambridge Texts 1993, ISBN 0521368006). IA copy access-restricted; borrow status unconfirmed."
+    },
+    {
+      "id": 119,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Burke",
+        "title": "Reflections on the Revolution"
+      },
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Edmund Burke",
+      "title": "Reflections on the Revolution in France",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/edmund-burke/reflections-on-the-revolution-in-france",
+      "linkState": "loads",
+      "note": "Real; title was truncated. Standard Ebooks CC0, free in the US; check local law elsewhere."
+    },
+    {
+      "id": 120,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Paine",
+        "title": "Common Sense"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Thomas Paine",
+      "title": "Common Sense",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/147",
+      "linkState": "loads",
+      "note": "Real; Gutenberg title and author confirmed."
+    },
+    {
+      "id": 121,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Paine",
+        "title": "Essay on Religion"
+      },
+      "verdict": "DROP",
+      "kept": false,
+      "author": "n/a",
+      "title": "n/a",
+      "access": "NONE",
+      "url": "-",
+      "linkState": "none",
+      "note": "No Paine work titled \"Essay on Religion\" found by the agent. His religious work is The Age of Reason (entry 122). NOTE FROM LEAD: Paine also wrote \"Of the Religion of Deism Compared with the Christian Religion\" (1804), which may be what was meant; unverified, ask owner."
+    },
+    {
+      "id": 122,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Paine",
+        "title": "Age of Reason"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Thomas Paine",
+      "title": "The Age of Reason",
+      "access": "FREE",
+      "url": "https://www.gutenberg.org/ebooks/3743",
+      "linkState": "loads",
+      "note": "Real. Gutenberg 3743 is Conway's Writings of Thomas Paine vol. 4 (Parts I-II), not standalone; title and author correct."
+    },
+    {
+      "id": 123,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Paine",
+        "title": "The Rights of Man"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Thomas Paine",
+      "title": "Rights of Man",
+      "access": "FREE",
+      "url": "https://standardebooks.org/ebooks/thomas-paine/the-rights-of-man",
+      "linkState": "loads",
+      "note": "Real. Standalone Standard Ebooks edition; Gutenberg 3742 is Conway's vol. 2 compilation. Free in the US; check local law."
+    },
+    {
+      "id": 124,
+      "stage": "French Revolution",
+      "optional": false,
+      "original": {
+        "author": "Maistre",
+        "title": "Considerations on France"
+      },
+      "verdict": "KEEP",
+      "kept": true,
+      "author": "Joseph de Maistre",
+      "title": "Considerations on France",
+      "access": "COMMERCIAL",
+      "url": "https://www.cambridgebookshop.co.uk/products/maistre-considerations-on-france",
+      "linkState": "loads",
+      "note": "Real (French 1796; Lebrun tr., McGill-Queen's 1974, CUP 1994, ISBN 9780521466288). IA scan access-restricted. An uploaded AI-assisted English translation on IA is not a vetted edition."
+    }
+  ]
+}
