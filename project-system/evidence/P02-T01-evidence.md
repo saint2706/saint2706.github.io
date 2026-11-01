@@ -1,10 +1,10 @@
 # Task evidence: P02-T01
 
 - Date: 2026-11-01
-- Authorized by: user (P02-T01 only, no production release), recorded in `state/approvals.json`
+- Authorized by: user (P02-T01 at the time, no production release), recorded in `state/approvals.json`
 - Phase/task: P02 / P02-T01 (visual research)
 - Branch/base SHA: `phase/p02` from `main` @ `ecdea28`
-- Result status: review (awaiting user review of directions)
+- Result status: complete (user reviewed on 2026-11-01 and chose Direction A, Cabinet of Curiosities)
 
 ## Changed files
 

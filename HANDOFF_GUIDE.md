@@ -16,7 +16,7 @@ Create dated file under `project-system/handoffs/` using `project-system/templat
 
 ## Example commands
 
-- `Run P00 audit only.` (historical: completed 2026-11-01; check `project-system/state/approvals.json` for what is authorized now, currently P02-T01 only.)
+- `Run P00 audit only.` (historical: completed 2026-11-01; check `project-system/state/approvals.json` for what is authorized now, currently P02-T01 and P02-T02 only.)
 - `Review audit findings and recommend P01; do not implement.`
 - `Approve P01 and execute P01-T01 only.`
 - `Execute P02-T01 through P02-T03; stop at the phase gate.`

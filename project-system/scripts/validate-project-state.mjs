@@ -37,6 +37,12 @@ if (authorized.length > 1) errors.push('Only one phase may be authorized at a ti
 if (project && authorized.some(x => x.phase !== project.current_phase))
   errors.push('Authorized phase must match project.current_phase.');
 const taskList = tasksState?.tasks || [];
+for (const a of authorized)
+  for (const id of a.authorized_tasks || [])
+    if (!String(project?.phase_authorization?.[a.phase] || '').includes(id))
+      errors.push(
+        `${id} is in approvals authorized_tasks but not in project.json phase_authorization`
+      );
 const STARTED = ['ready', 'in-progress', 'review', 'complete'];
 for (const t of taskList) {
   if (!STARTED.includes(t.status)) continue;
