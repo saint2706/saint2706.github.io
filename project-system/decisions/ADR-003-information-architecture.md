@@ -1,6 +1,6 @@
 # ADR-003: Information architecture and URL model
 
-- Status: **proposed**
+- Status: **confirmed** 2026-11-01 (proposed restructure: /about, /projects, /writing, /contact, /lab with redirects; phased after content exists)
 - Date: 2026-11-01
 - Related tasks: P01-T03 (depends on ADR-001, ADR-002)
 
@@ -22,4 +22,4 @@ Keep current flat routes (no churn, no gateway) vs the proposal (clearer spaces,
 
 ## User approval
 
-Required: yes (affects legacy URLs and SEO). Evidence: none yet.
+Required: yes (affects legacy URLs and SEO). Evidence: user answers 2026-11-01.

@@ -1,6 +1,6 @@
 # ADR-002: Content model and authoring workflow
 
-- Status: **proposed**
+- Status: **confirmed** 2026-11-01 (local JSON + Markdown, schema-checked)
 - Date: 2026-11-01
 - Related tasks: P01-T02; no personal content published
 
@@ -23,7 +23,7 @@ Content is mixed JS in `src/data/resume.js` plus script-synced `blogs.json`. Aud
 
 ## User approval
 
-Required: yes. Evidence: none yet.
+Required: yes. Evidence: user answers 2026-11-01.
 
 ## Consequences
 

@@ -25,6 +25,6 @@ This ZIP intentionally excludes root `README.md`, `package.json`, lockfiles, `.g
 
 Never overwrite user changes, local secrets, existing Git configuration or uncommitted work. Preserve existing Git history/remotes. Do not initialize a new repository over the clone. Do not force-push.
 
-The captured default branch was unprotected. Before merging implementation PRs, configure and verify branch protection/rulesets and required checks. The pack cannot change GitHub account/repository settings.
+The default branch was unprotected at the P00 snapshot (2026-10-31); protection was configured on 2026-11-01 (ruleset `protect-main`). Re-verify before merging. Before merging implementation PRs, configure and verify branch protection/rulesets and required checks. The pack cannot change GitHub account/repository settings.
 
-**Installing the pack does not authorize implementation.** P00 audit only is pre-authorized; P01 onward requires explicit phase approval.
+**Installing the pack does not authorize implementation.** P00 audit only was pre-authorized at install (since completed; see `state/approvals.json` for current authorization); P01 onward requires explicit phase approval.

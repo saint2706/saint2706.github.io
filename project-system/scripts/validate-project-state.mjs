@@ -16,16 +16,38 @@ const tasksState = read('project-system/state/tasks.json');
 const decisions = read('project-system/state/decisions.json');
 const baseline = read('project-system/state/repo-baseline.json');
 
-if (project && (project.current_phase !== 'P00' || project.execution_mode !== 'audit-only'))
-  errors.push('Initial state must remain P00 / audit-only.');
+if (project && !/^P0[0-7]$/.test(project.current_phase)) errors.push('Invalid current_phase.');
 for (let i = 0; i <= 7; i++) {
   const phase = `P${String(i).padStart(2, '0')}`;
   const a = approvals?.approvals?.find(x => x.phase === phase);
   if (!a) errors.push(`Missing approval for ${phase}`);
-  else if (phase === 'P00' ? a.status !== 'authorized' : a.status !== 'pending-approval')
-    errors.push(`Unexpected initial authorization for ${phase}`);
+  else if (!['authorized', 'pending-approval', 'complete'].includes(a.status))
+    errors.push(`Unexpected authorization status for ${phase}`);
 }
+const cur = project ? Number(project.current_phase.slice(1)) : -1;
+for (const a of approvals?.approvals || []) {
+  const n = Number(a.phase.slice(1));
+  if (a.status === 'complete' && n > cur)
+    errors.push(`${a.phase} is complete but is after current phase`);
+  if (n < cur && a.status !== 'complete')
+    errors.push(`${a.phase} precedes current phase but is not complete`);
+}
+const authorized = (approvals?.approvals || []).filter(x => x.status === 'authorized');
+if (authorized.length > 1) errors.push('Only one phase may be authorized at a time.');
+if (project && authorized.some(x => x.phase !== project.current_phase))
+  errors.push('Authorized phase must match project.current_phase.');
 const taskList = tasksState?.tasks || [];
+const STARTED = ['ready', 'in-progress', 'review', 'complete'];
+for (const t of taskList) {
+  if (!STARTED.includes(t.status)) continue;
+  const a = approvals?.approvals?.find(x => x.phase === t.phase);
+  if (!t.authorization || /^pending/.test(t.authorization))
+    errors.push(`${t.id} is ${t.status} but authorization is ${t.authorization || 'missing'}`);
+  if (!a || a.status === 'pending-approval')
+    errors.push(`${t.id} is ${t.status} but ${t.phase} is not authorized`);
+  else if (a.status === 'authorized' && !(a.authorized_tasks || []).includes(t.id))
+    errors.push(`${t.id} is ${t.status} but is not in ${t.phase} authorized_tasks`);
+}
 const ids = new Set(taskList.map(t => t.id));
 if (taskList.length !== 28) errors.push(`Expected 28 tasks, found ${taskList.length}`);
 for (const t of taskList) {
@@ -69,5 +91,5 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(
-  `Project state validation PASSED: ${taskList.length} tasks; 163 decisions; initial P00 audit-only state.`
+  `Project state validation PASSED: ${taskList.length} tasks; 163 decisions; phase state.`
 );

@@ -1,8 +1,8 @@
 # Portfolio Rebuild — Claude Code Operating Contract
 
-## Current authorization: P00 audit only
+## Current authorization: P02-T01 only (visual research)
 
-The first Claude Code run is restricted to repository audit, evidence and recommendations. Website implementation is not authorized. P01–P07 are pending explicit user approval. Execute only the exact phase and task IDs named by the user. Never auto-progress.
+As of 2026-11-01 P00 and P01 are complete, and the user authorized P02-T01 only (no production release; T02/T03 and P03–P07 pending explicit approval). Authoritative source: `project-system/state/approvals.json`. Website implementation is not authorized. Execute only the exact phase and task IDs named by the user. Never auto-progress.
 
 Preferred model/effort: Claude Sonnet 5.5, High, when actually available. Verify CLI availability; do not silently substitute.
 
@@ -57,7 +57,7 @@ Refresh the live GitHub default branch, commit, tree, configuration and branch r
 - Detect actual default branch; do not assume `main`.
 - One feature branch per phase; meaningful commit after each independently verified task; push only to phase branch; PR after phase tasks and gates.
 - Never commit/push directly to default branch.
-- Captured `main` was unprotected. Refresh and block merge/release until branch protection/rulesets and required checks are verified, unless user explicitly approves a documented exception.
+- `main` was unprotected at the P00 snapshot; Ruleset `protect-main` (id 26293963) is active since 2026-11-01 (PR required, squash only, 9 required checks, no force-push/delete); verify it is still active before merging. Block merge/release if verification fails, unless user explicitly approves a documented exception.
 - The captured deploy workflow runs after successful CI on a push to main/master and supports workflow_dispatch; default-branch merge can deploy production.
 - Keep the old live site unchanged while new work is built. Merge/deploy only when release is explicitly included in phase authorization.
 - Never run workflow_dispatch as a preview.

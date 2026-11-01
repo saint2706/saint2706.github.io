@@ -16,7 +16,7 @@ This ZIP contains an operational project system, not a website implementation. I
 5. Review the comprehensive audit and architecture recommendations.
 6. Explicitly approve P01 before implementation/architecture commitments.
 
-**P00 is audit-only.** No website implementation is authorized by this ZIP.
+**P00 was audit-only (complete 2026-11-01; see `state/approvals.json` for current authorization).** No website implementation is authorized by this ZIP.
 
 ## Captured repository baseline
 

@@ -1,6 +1,6 @@
 # Branch protection checklist
 
-Captured `main` was unprotected on 2026-10-31. Refresh before use.
+Captured `main` was unprotected on 2026-10-31; ruleset `protect-main` was applied 2026-11-01. Use this checklist to re-verify or recreate it; refresh before use.
 
 1. Confirm current default branch.
 2. In GitHub repository Settings, configure a ruleset/branch-protection rule targeting default.
