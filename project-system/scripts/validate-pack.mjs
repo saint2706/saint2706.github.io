@@ -72,7 +72,10 @@ for (const f of all.filter(x => x.endsWith('.md'))) {
   let m;
   while ((m = re.exec(content))) {
     // <...> is the CommonMark form for destinations that contain parentheses
-    const href = m[1].replace(/^<(.*)>$/, '$1').split('#')[0].trim();
+    const href = m[1]
+      .replace(/^<(.*)>$/, '$1')
+      .split('#')[0]
+      .trim();
     if (!href || /^(https?:|mailto:|#)/.test(href)) continue;
     const resolved = path.posix.normalize(
       path.posix.join(path.posix.dirname(path.relative(root, f).split(path.sep).join('/')), href)
