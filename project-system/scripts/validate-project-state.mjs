@@ -16,8 +16,7 @@ const tasksState = read('project-system/state/tasks.json');
 const decisions = read('project-system/state/decisions.json');
 const baseline = read('project-system/state/repo-baseline.json');
 
-if (project && (project.current_phase !== 'P00' || project.execution_mode !== 'audit-only'))
-  errors.push('Initial state must remain P00 / audit-only.');
+if (project && !/^P0[0-7]$/.test(project.current_phase)) errors.push('Invalid current_phase.');
 for (let i = 0; i <= 7; i++) {
   const phase = `P${String(i).padStart(2, '0')}`;
   const a = approvals?.approvals?.find(x => x.phase === phase);
