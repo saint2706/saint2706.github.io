@@ -24,7 +24,7 @@
 - Hover and the dissolve transitions are only checked as structure; they were not played in Figma's prototype viewer in this session.
 - The Starter 3-page cap forced prototypes onto the concepts page; splitting needs a paid plan or a second file.
 - Direction A mobile discoverability is untested with users; see risks in `design-directions.md`.
-- Review and feedback: none recorded yet. Record the user's feedback and any rejected concepts here before P02-T03 is authorized.
+- Review and feedback: round 1 recorded below (2026-11-01); further rounds to be appended before P02-T03 is authorized.
 
 ## Feedback round 1 (2026-11-01) and revisions
 
