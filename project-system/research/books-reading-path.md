@@ -1,8 +1,8 @@
 # Books: verified reading path
 
-Source: owner-supplied reading lists (13 graphics plus text on 2026-11-01). The owner confirmed all listed works are **finished, including the optional lists**. Per the owner's instruction, only works that **actually exist** and **can be found online** are kept. Verified 2026-11-01 by research agents (web search and fetch), a lead review and an automated link check. Not approved for publication until the owner reviews it.
+Source: owner-supplied reading lists (13 graphics plus text on 2026-11-01). The owner confirmed all listed works are **finished, including the optional lists**. Per the owner's instruction, only works that **actually exist** and **can be found online** are kept. Verified 2026-11-01 by research agents (web search and fetch), a lead review and an automated link check. Owner decisions 2026-11-01: keep commercial-only titles; Paine entry means the Deism essay; remove the Price work. Not approved for publication until the owner reviews it.
 
-Result: **122 of 124** listed titles kept; 2 removed pending the owner (see "Removed"). 34 kept entries had their author or title corrected to the standard form (see the corrections log).
+Result: **123 of 124** listed titles kept; 1 removed by owner decision (see "Removed"). 35 kept entries had their author or title corrected to the standard form (see the corrections log).
 
 Access key: **Free** = full text legally free online (usually an older public-domain translation, US public domain unless noted); **Borrow** = Internet Archive lending or a library e-book; **Commercial** = a purchasable edition or e-book exists, no free full text found. Free texts are often older translations than the modern scholarly editions the owner may have read.
 
@@ -194,16 +194,16 @@ Optional list:
 | 118 | Edmund Burke (ed. Ian Harris) | Pre-Revolutionary Writings                                                        | Commercial | [link](https://www.cambridge.org/core/books/prerevolutionary-writings/introduction/82403D642D523E6F835CFE04E4D1E1F1) |
 | 119 | Edmund Burke                  | Reflections on the Revolution in France                                           | Free       | [link](https://standardebooks.org/ebooks/edmund-burke/reflections-on-the-revolution-in-france)                       |
 | 120 | Thomas Paine                  | Common Sense                                                                      | Free       | [link](https://www.gutenberg.org/ebooks/147)                                                                         |
+| 121 | Thomas Paine                  | Of the Religion of Deism Compared with the Christian Religion                     | Free       | [link](https://sourcebooks.web.fordham.edu/mod/paine-deism.asp)                                                      |
 | 122 | Thomas Paine                  | The Age of Reason                                                                 | Free       | [link](https://www.gutenberg.org/ebooks/3743)                                                                        |
 | 123 | Thomas Paine                  | Rights of Man                                                                     | Free       | [link](https://standardebooks.org/ebooks/thomas-paine/the-rights-of-man)                                             |
 | 124 | Joseph de Maistre             | Considerations on France                                                          | Commercial | [link](https://www.cambridgebookshop.co.uk/products/maistre-considerations-on-france)                                |
 
-## Removed (pending the owner)
+## Removed (owner decision 2026-11-01)
 
-| #   | As listed                               | Why removed                                                                                                                                                                                | Possible intended work                                                                                                        |
-| --- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| 116 | Price, Dynamism, Containment and Change | A real book, but by a different Richard Price (a modern historian, British Society, 1680-1880, CUP 1999), not the 18th-century moral philosopher; it does not fit a French Revolution list | Perhaps another work by Richard Price (for example his political writings); owner to say                                      |
-| 121 | Paine, Essay on Religion                | No Paine work with this title was found                                                                                                                                                    | Possibly Paine's essay "Of the Religion of Deism Compared with the Christian Religion" (1804); not verified, owner to confirm |
+| #   | As listed                               | Why removed                                                                                                                                                                     |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 116 | Price, Dynamism, Containment and Change | A real book, but by a different Richard Price (a modern historian, British Society, 1680-1880, CUP 1999), not the 18th-century moral philosopher. The owner asked to remove it. |
 
 ## Corrections log (as listed to verified form)
 
@@ -245,16 +245,15 @@ Only entries whose author or title changed. Diacritic restoration is not listed.
 | 115 | Price, Principal Questions in Morals                    | Richard Price (1723-1791), A Review of the Principal Questions and Difficulties in Morals                                                       | Real 1758 work. "Principal Questions in Morals" is a shortened form (1787 edition title). IA item lists a full-text download.                                                                                                |
 | 117 | Burke, Origin of Our Ideas of the Sublime and Beautiful | Edmund Burke, A Philosophical Enquiry into the Origin of Our Ideas of the Sublime and Beautiful                                                 | Real (1757). Open full text on IA (1844 Harper edition).                                                                                                                                                                     |
 | 119 | Burke, Reflections on the Revolution                    | Edmund Burke, Reflections on the Revolution in France                                                                                           | Real; title was truncated. Standard Ebooks CC0, free in the US; check local law elsewhere.                                                                                                                                   |
+| 121 | Paine, Essay on Religion                                | Thomas Paine, Of the Religion of Deism Compared with the Christian Religion                                                                     | Graphic reads "Essay on Religion"; owner confirmed (2026-11-01) this essay was meant. Free text at the Fordham Internet History Sourcebooks (page loads and contains the essay); publication year not verified here.         |
 
 ## Caveats
 
 - Links that could not be machine-verified (live behind bot protection, or unreachable from the verifying network; each was seen in search results):
   - #4 Aristotle, The Complete Works of Aristotle, Revised Oxford Translation : bot-blocked (live, not machine-verified)
-  - #31 G.W. Leibniz, Philosophical Essays (ed. and tr. Roger Ariew and Daniel Gar: not reachable from this network (record seen in search results)
   - #44 Nicolas Malebranche, The Search after Truth: not reachable from this network (record seen in search results)
   - #45 Nicolas Malebranche, Treatise on Nature and Grace: not reachable from this network (record seen in search results)
   - #46 Nicolas Malebranche, Treatise on Ethics (Traite de morale, 1684): not reachable from this network (record seen in search results)
-  - #60 Immanuel Kant, Religion within the Boundaries of Mere Reason, and Other Wri: not reachable from this network (record seen in search results)
   - #63 Johann Gottlieb Fichte, Foundations of Natural Right: bot-blocked (live, not machine-verified)
 - Several free links point to a partial text (for example volume 1 of a multi-volume work, a single play, or a selection); notes in `books-verified.json` say which.
 - The automated check confirms a link loads, not that the page holds the full text.
