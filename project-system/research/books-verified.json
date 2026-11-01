@@ -8,8 +8,8 @@
   },
   "counts": {
     "total": 124,
-    "kept": 122,
-    "removed": 2
+    "kept": 123,
+    "removed": 1
   },
   "entries": [
     {
@@ -536,7 +536,7 @@
       "title": "Philosophical Essays (ed. and tr. Roger Ariew and Daniel Garber, Hackett 1989)",
       "access": "COMMERCIAL",
       "url": "https://hackettpublishing.com/philosophical-essays",
-      "linkState": "not reachable from this network (record seen in search results)",
+      "linkState": "loads",
       "note": "Real. IA holds a different 1965 Library of Liberal Arts edition, not this one."
     },
     {
@@ -1029,7 +1029,7 @@
       "title": "Religion within the Boundaries of Mere Reason, and Other Writings (Wood and di Giovanni, Cambridge; also known as Religion within the Limits of Reason Alone, Greene and Hudson)",
       "access": "COMMERCIAL",
       "url": "https://www.cambridgebookshop.co.uk/products/kant-religion-within-the-boundaries-of-mere-reason",
-      "linkState": "not reachable from this network (record seen in search results)",
+      "linkState": "loads",
       "note": "Real. No free English text found; the Cambridge edition is purchasable. Gutenberg #56182 is the German original only."
     },
     {
@@ -2060,14 +2060,14 @@
         "author": "Paine",
         "title": "Essay on Religion"
       },
-      "verdict": "DROP",
-      "kept": false,
-      "author": "n/a",
-      "title": "n/a",
-      "access": "NONE",
-      "url": "-",
-      "linkState": "none",
-      "note": "No Paine work titled \"Essay on Religion\" found by the agent. His religious work is The Age of Reason (entry 122). NOTE FROM LEAD: Paine also wrote \"Of the Religion of Deism Compared with the Christian Religion\" (1804), which may be what was meant; unverified, ask owner."
+      "verdict": "FIX",
+      "kept": true,
+      "author": "Thomas Paine",
+      "title": "Of the Religion of Deism Compared with the Christian Religion",
+      "access": "FREE",
+      "url": "https://sourcebooks.web.fordham.edu/mod/paine-deism.asp",
+      "linkState": "loads",
+      "note": "Graphic reads \"Essay on Religion\"; owner confirmed (2026-11-01) this essay was meant. Free text at the Fordham Internet History Sourcebooks (page loads and contains the essay); publication year not verified here."
     },
     {
       "id": 122,

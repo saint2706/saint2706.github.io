@@ -57,4 +57,4 @@ None of the case-study claims are verified yet; this is repository metadata only
 
 ## Bibliographic verification (2026-11-01)
 
-At the owner's request every listed title was checked for existence and online availability. 122 of 124 entries are kept (34 with corrected author or title); two are removed pending the owner. Full results: `books-reading-path.md` and `books-verified.json`.
+At the owner's request every listed title was checked for existence and online availability. 123 of 124 entries are kept (35 with corrected author or title); the Price work was removed at the owner's request, and the owner confirmed keeping commercial-only titles. Full results: `books-reading-path.md` and `books-verified.json`.
