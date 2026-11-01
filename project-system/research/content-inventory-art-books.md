@@ -8,7 +8,7 @@ All 13 images are phone-story graphics (gradient or black backgrounds) listing w
 
 | Image      | Heading                                       | Works listed                                                                                                                                                          |
 | ---------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1000113330 | Good books to get into philosophy (Stage One) | Homer (Iliad, Odyssey); Plato; Aristotle; Heraclitus; Parmenides; Epicurus (attribution flagged); Aeschylus                                                           |
+| 1000113330 | Good books to get into philosophy (Stage One) | Homer (Iliad, Odyssey); Plato; Aristotle; Heraclitus; Parmenides; Epicurus (corrected to Lucretius after verification); Aeschylus                                     |
 | 1000113310 | Stage Two                                     | Epictetus Handbook; Aurelius Meditations; Cicero (On the Commonwealth and Laws, On Morals, Letters); Plutarch Moralia; Plotinus Enneads; Proclus Elements of Theology |
 | 1000113311 | Stage Three: The Middle Ages (+ optional)     | Augustine (Confessions, City of God); Boethius; Anselm; Aquinas Summa Theologica; Ockham (2); Buridan. Optional: Dionysius; Pearl; Carabine; Eckhart                  |
 | 1000113312 | Stage 4.1: Early Modern Rationalists          | Descartes; Spinoza; Leibniz (Philosophical Essays, Monadology)                                                                                                        |
@@ -22,7 +22,7 @@ All 13 images are phone-story graphics (gradient or black backgrounds) listing w
 | 1000113320 | Political Philosophy                          | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
 | 1000113321 | French Revolution                             | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: **Stage One** supplied as image 1000113330 (one attribution flagged); Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: **Stage One** supplied as image 1000113330; Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 
@@ -54,3 +54,7 @@ None of the case-study claims are verified yet; this is repository metadata only
 - Paintings: leave out _The False Mirror_, _The Human Condition_ and _Slave Market with the Disappearing Bust of Voltaire_. Seven public-domain works may be used after each credit and licence is verified from the deck sources slide.
 - Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 titles supplied; full text transcription is in `books-reading-path.md`.
 - Music: out of launch scope.
+
+## Bibliographic verification (2026-11-01)
+
+At the owner's request every listed title was checked for existence and online availability. 122 of 124 entries are kept (34 with corrected author or title); two are removed pending the owner. Full results: `books-reading-path.md` and `books-verified.json`.
