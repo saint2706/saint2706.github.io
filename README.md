@@ -3,7 +3,7 @@
 [![CI](https://github.com/saint2706/saint2706.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/saint2706/saint2706.github.io/actions/workflows/ci.yml)
 [![Deploy to GitHub Pages](https://github.com/saint2706/saint2706.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/saint2706/saint2706.github.io/actions/workflows/deploy.yml)
 
-Welcome to the repository for my personal portfolio website. This project showcases my skills in frontend development, Python integration, and AI-powered interactions. It is built with modern web technologies and features a unique dual-theme design system.
+This repository holds my personal portfolio website, which demonstrates frontend development, Python integration, and AI-powered interactions. It has a dual-theme design system.
 
 ## 🚀 Features
 
@@ -101,7 +101,7 @@ Project planning, audits and decisions live in `project-system/`; start with `pr
 
 ## 🔒 Security
 
-Security is a core focus of this project. Key measures include:
+Security measures include:
 
 - **CSP**: Strict Content Security Policy preventing unauthorized scripts and styles.
 - **SRI**: Subresource Integrity checks for external scripts (like Pyodide).
@@ -112,13 +112,13 @@ To report a vulnerability, see [SECURITY.md](./SECURITY.md).
 
 ## 🔄 CI/CD Optimizations
 
-To ensure reliable, fast, and secure software delivery, the following pipeline optimizations are implemented:
+The GitHub Actions workflows follow these practices:
 
-- **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are strictly pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
+- **Strict SHA Pinning**: All GitHub Actions (including first-party actions like `actions/checkout`) are pinned to 40-character commit SHAs to prevent malicious updates. The `.github/workflows/workflow-lint.yml` guardrail enforces this policy on every PR.
 - **Caching**: The `setup-env` composite action automatically caches the `pnpm` store via `actions/setup-node`, saving bandwidth and speeding up test executions.
 - **Fail-Fast Parallelism**: The CI workflow tests across multiple Node.js environments (Node 24 and 26) in parallel, using the `fail-fast: true` strategy to immediately stop the build when any environment fails, saving compute resources.
-- **Cross-Platform Matrix Builds**: The test job uses a matrix strategy to verify the application across multiple operating systems (`ubuntu-latest`, `windows-latest`, `macos-latest`), ensuring broad compatibility and catching platform-specific issues early.
-- **Concurrency control**: Workflow concurrency correctly cancels in-progress jobs for outdated commits on the same branch or PR.
+- **Cross-Platform Matrix Builds**: The test job uses a matrix strategy to verify the application across multiple operating systems (`ubuntu-latest`, `windows-latest`, `macos-latest`) and catch platform-specific issues early.
+- **Concurrency control**: Workflows cancel in-progress jobs for outdated commits on the same branch or PR, except on `main`.
 
 ## 🤖 AI & Python Integration
 
