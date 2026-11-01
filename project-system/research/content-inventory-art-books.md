@@ -21,7 +21,7 @@ All 12 images are phone-story graphics (gradient or black backgrounds) listing w
 | 1000113320 | Political Philosophy                      | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
 | 1000113321 | French Revolution                         | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: no **Stage One** image; Stage 5.2 duplicates 5.1; unknown whether this is "read", "reading" or "plan to read", and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: no **Stage One** image; Stage 5.2 needs the Hegel and Schelling titles; the owner confirmed the listed works are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 

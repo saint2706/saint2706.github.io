@@ -25,4 +25,4 @@ Concepts are built as standalone, accessible HTML/CSS pages under `design/concep
 - Faster iteration; no tool-call quotas; the concept code seeds the Astro components.
 - No canvas for the owner to drag things around: review happens by opening the HTML file or screenshots.
 - Prototype pages must stay greyscale/placeholder until a palette is approved, use system fonts and make no external requests.
-- Only Chrome was available for tests; Firefox and Safari checks remain to do.
+- Tests run in Chromium, Firefox and WebKit (browsers installed under the owner's standing tooling permission); screen-reader testing is still to do.

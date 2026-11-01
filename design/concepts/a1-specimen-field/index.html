@@ -179,6 +179,26 @@
         text-decoration: none;
         font-size: 1.125rem;
       }
+      .dests {
+        max-width: 820px;
+        margin: 96px auto 0;
+        padding: 0 48px;
+      }
+      .dest {
+        padding: 24px 0;
+        border-top: 1px solid var(--soft-2);
+      }
+      .dest:target {
+        background: var(--white);
+        outline: 2px solid var(--ink);
+        padding-left: 16px;
+      }
+      .dest a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        color: var(--ink);
+      }
       .bottom {
         display: none;
       }
@@ -276,6 +296,47 @@
         </li>
       </ul>
     </main>
+    <section class="dests" aria-label="Destination placeholders">
+      <section id="work" class="dest" tabindex="-1">
+        <h2>Work</h2>
+        <p>Projects, roles and what I studied. (placeholder destination for this concept.)</p>
+        <a href="#field">Back to the field</a>
+      </section>
+      <section id="writing" class="dest" tabindex="-1">
+        <h2>Writing</h2>
+        <p>Essays and notes. (placeholder destination for this concept.)</p>
+        <a href="#field">Back to the field</a>
+      </section>
+      <section id="art" class="dest" tabindex="-1">
+        <h2>Art and myth</h2>
+        <p>
+          Curated pieces; public-domain works only, each credit verified. (placeholder destination
+          for this concept.)
+        </p>
+        <a href="#field">Back to the field</a>
+      </section>
+      <section id="books" class="dest" tabindex="-1">
+        <h2>Books</h2>
+        <p>
+          Reading list; owner has finished the listed works. (placeholder destination for this
+          concept.)
+        </p>
+        <a href="#field">Back to the field</a>
+      </section>
+      <section id="lab" class="dest" tabindex="-1">
+        <h2>Lab</h2>
+        <p>Experiments. (placeholder destination for this concept.)</p>
+        <a href="#field">Back to the field</a>
+      </section>
+      <section id="contact" class="dest" tabindex="-1">
+        <h2>Contact</h2>
+        <p>
+          Email, GitHub, LinkedIn, Instagram. Phone stays private. (placeholder destination for this
+          concept.)
+        </p>
+        <a href="#field">Back to the field</a>
+      </section>
+    </section>
     <div class="bottom">
       <button class="btn" type="button" data-open-index>Index</button>
       <button class="btn" type="button" data-motion-toggle aria-pressed="true">Motion: on</button>
@@ -311,6 +372,7 @@
       document
         .querySelectorAll('[data-open-index]')
         .forEach(b => b.addEventListener('click', () => dlg.showModal()));
+      dlg.querySelectorAll('a').forEach(a => a.addEventListener('click', () => dlg.close()));
       document.querySelector('[data-close-index]').addEventListener('click', () => dlg.close());
     </script>
   </body>

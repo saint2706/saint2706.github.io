@@ -16,6 +16,6 @@ Targeted questions still to the owner (asked in chat): flagship projects, what e
 ## Owner decisions 2026-11-01 (round 2)
 
 - The three in-copyright paintings (Magritte x2, Dali) are left out; only public-domain works may be shown, each verified.
-- Reading lists: the owner has finished reading them. Stage 5.2 currently repeats Stage 5.1 (Kant, Fichte); the owner asked to fix it, true contents needed.
+- Reading lists: the owner has finished reading them. Stage 5.2 is Hegel and Schelling per the owner; the image repeats Stage 5.1, so the exact titles are still to be supplied.
 - Music space left out of launch scope.
 - Design medium switched to code-first (ADR-005).
