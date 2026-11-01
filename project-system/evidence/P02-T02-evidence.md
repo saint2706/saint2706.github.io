@@ -33,3 +33,7 @@
 ## Limitations and risks
 
 See `research/figma-file-record.md`. Required user decision: review the file, give feedback, then separately authorize P02-T03 only if you want a design system refined from an approved concept.
+
+## Feedback round 1
+
+User chose A1, playful mood, flagged mobile as cramped; v2 frames added in Figma section E, history retained. See research/figma-file-record.md and research/draft-copy-register.md. Status remains review.
