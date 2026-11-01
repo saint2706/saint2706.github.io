@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Discovery decisions",
+  "type": "object",
+  "required": ["schema_version", "confirmed_count", "decisions"],
+  "properties": {
+    "confirmed_count": {
+      "const": 163
+    },
+    "decisions": {
+      "type": "array",
+      "minItems": 163,
+      "maxItems": 163,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "category", "status", "decision", "source"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^D[0-9]{3}$"
+          },
+          "number": {
+            "type": "integer"
+          },
+          "category": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "decision": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1310 @@
+{
+  "schema_version": "1.0.0",
+  "confirmed_count": 163,
+  "decisions": [
+    {
+      "id": "D001",
+      "number": 1,
+      "category": "Product",
+      "status": "confirmed",
+      "decision": "Evolving personal universe spanning professional work, technology, creativity, art, books, music, writing, experiments and future interests.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D002",
+      "number": 2,
+      "category": "Product",
+      "status": "confirmed",
+      "decision": "First impression should create curiosity and invite exploration.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D003",
+      "number": 3,
+      "category": "Navigation",
+      "status": "confirmed",
+      "decision": "Hybrid navigation: intuitive core paths plus optional discovery routes; mobile usability mandatory.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D004",
+      "number": 4,
+      "category": "Design",
+      "status": "confirmed",
+      "decision": "Visual storytelling adapts to the material and purpose of each section.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D005",
+      "number": 5,
+      "category": "Design",
+      "status": "confirmed",
+      "decision": "Approachable core with selected unconventional experiences; never sacrifice usability/mobile support.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D006",
+      "number": 6,
+      "category": "Homepage",
+      "status": "confirmed",
+      "decision": "Distinctive visual opening composition; avoid generic headline/subtitle/button hero.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D007",
+      "number": 7,
+      "category": "Design",
+      "status": "confirmed",
+      "decision": "Artistic, eclectic, gallery-like atmosphere with expressive typography, imagery and unexpected combinations.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D008",
+      "number": 8,
+      "category": "Design",
+      "status": "confirmed",
+      "decision": "Do not choose a palette before concept exploration.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D009",
+      "number": 9,
+      "category": "Motion",
+      "status": "confirmed",
+      "decision": "Purposeful restraint by default; elaborate motion only for storytelling; reduced-motion and mobile performance required.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D010",
+      "number": 10,
+      "category": "Identity",
+      "status": "confirmed",
+      "decision": "Never use actual photos, selfies, portraits or AI-generated likenesses of the user; use typography, symbols, original graphics and artwork.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D011",
+      "number": 11,
+      "category": "Projects",
+      "status": "confirmed",
+      "decision": "Editorial case studies explain context, reasoning, process, implementation, challenges and outcomes; repo links support narrative.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D012",
+      "number": 12,
+      "category": "Content",
+      "status": "confirmed",
+      "decision": "Flexible system for essays, articles, tutorials, technical docs, notes, research and collections; no forced blog format.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D013",
+      "number": 13,
+      "category": "Maintenance",
+      "status": "confirmed",
+      "decision": "Major milestone publishing cadence; low maintenance, no feeds.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D014",
+      "number": 14,
+      "category": "Interaction",
+      "status": "confirmed",
+      "decision": "Curated interactive experiences only when valuable; no exhaustive playground.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D015",
+      "number": 15,
+      "category": "Design",
+      "status": "confirmed",
+      "decision": "Adaptive light/dark and section-specific treatments with coherent transitions.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D016",
+      "number": 16,
+      "category": "Migration",
+      "status": "confirmed",
+      "decision": "Fresh start for code/design; old site is information source only; keep valuable content/assets.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D017",
+      "number": 17,
+      "category": "Spaces",
+      "status": "confirmed",
+      "decision": "Separate professional/public and personal spaces.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D018",
+      "number": 18,
+      "category": "Interests",
+      "status": "confirmed",
+      "decision": "Seven supported areas only when developed: technology, data/analytics, business/strategy, education, art/mythology, books/literature, music/culture.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D019",
+      "number": 19,
+      "category": "AI writing",
+      "status": "confirmed",
+      "decision": "AI may edit supplied writing but not invent personal voice, experiences or opinions; no generic filler.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D020",
+      "number": 20,
+      "category": "Visualization",
+      "status": "confirmed",
+      "decision": "Use data visualization only when it improves the story or understanding.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D021",
+      "number": 21,
+      "category": "Projects",
+      "status": "confirmed",
+      "decision": "Flagship candidates: Coding-For-MBA, Attendance Management System using Face Recognition, Programming-Challenges-5; sequence after audit.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D022",
+      "number": 22,
+      "category": "Contact",
+      "status": "confirmed",
+      "decision": "Minimal channels: email, GitHub, LinkedIn and Instagram.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D023",
+      "number": 23,
+      "category": "Identity",
+      "status": "confirmed",
+      "decision": "Personal name Rishabh Agrawal; no invented brand.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D024",
+      "number": 24,
+      "category": "Content architecture",
+      "status": "confirmed",
+      "decision": "Evaluate Markdown/MDX, CMS and hybrid based on maintenance, GitHub Pages compatibility and flexibility.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D025",
+      "number": 25,
+      "category": "AI features",
+      "status": "confirmed",
+      "decision": "No novelty AI/chatbot; require real value and privacy/security/cost evaluation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D026",
+      "number": 26,
+      "category": "Hosting",
+      "status": "confirmed",
+      "decision": "GitHub Pages static frontend; serverless only when justified; never client-side secrets.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D027",
+      "number": 27,
+      "category": "Privacy",
+      "status": "confirmed",
+      "decision": "No visitor analytics, tracking cookies, profiling or unnecessary third-party tracking.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D028",
+      "number": 28,
+      "category": "Discovery",
+      "status": "confirmed",
+      "decision": "Useful search and optional exploration paths without clutter.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D029",
+      "number": 29,
+      "category": "Resume",
+      "status": "confirmed",
+      "decision": "Professional info easy to find; choose integrated/dedicated/downloadable format after audit.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D030",
+      "number": 30,
+      "category": "Assets",
+      "status": "confirmed",
+      "decision": "Audit existing assets; reuse only if quality, relevance, authenticity and rights meet standards.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D031",
+      "number": 31,
+      "category": "Typography",
+      "status": "confirmed",
+      "decision": "Section-specific typographic treatment within a coherent readable system.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D032",
+      "number": 32,
+      "category": "Technical ambition",
+      "status": "confirmed",
+      "decision": "Lightweight ordinary pages; advanced WebGL/canvas only for justified dedicated experiences.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D033",
+      "number": 33,
+      "category": "Accessibility",
+      "status": "confirmed",
+      "decision": "WCAG 2.2 AA target; keyboard/screen reader, contrast, reduced motion and progressive enhancement.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D034",
+      "number": 34,
+      "category": "Architecture",
+      "status": "confirmed",
+      "decision": "Modular and extensible; independently add, expand, reorganize or retire sections.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D035",
+      "number": 35,
+      "category": "Delivery",
+      "status": "confirmed",
+      "decision": "Design full architecture first; implement/release in verified phases.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D036",
+      "number": 36,
+      "category": "Skills",
+      "status": "confirmed",
+      "decision": "Research a specialist toolkit. Impeccable and Anti-Slop already installed. Never recommend Unslop.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D037",
+      "number": 37,
+      "category": "Autonomy",
+      "status": "confirmed",
+      "decision": "Full autonomy within explicit task scope including changes, installs, tests, commits and pushes; no out-of-scope actions.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D038",
+      "number": 38,
+      "category": "Git",
+      "status": "confirmed",
+      "decision": "Feature branches + PRs; preserve history; strict release gates; version tags only when useful.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D039",
+      "number": 39,
+      "category": "Governance",
+      "status": "confirmed",
+      "decision": "Ask before significant choices when ambiguity has several viable approaches; routine implementation autonomous after approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D040",
+      "number": 40,
+      "category": "Research",
+      "status": "confirmed",
+      "decision": "Continuous research before design and during implementation; benchmark finished work against documented principles.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D041",
+      "number": 41,
+      "category": "SEO",
+      "status": "confirmed",
+      "decision": "Comprehensive natural SEO; semantic content, metadata and structured data; no keyword stuffing or fabrication.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D042",
+      "number": 42,
+      "category": "Language",
+      "status": "confirmed",
+      "decision": "English launch; multilingual-ready architecture, no translation implementation now.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D043",
+      "number": 43,
+      "category": "Integrations",
+      "status": "confirmed",
+      "decision": "Evaluate external integrations individually; prefer links/static previews over heavy or trackable embeds.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D044",
+      "number": 44,
+      "category": "Experiments",
+      "status": "confirmed",
+      "decision": "Curate selected unfinished/abandoned work only when genuinely interesting.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D045",
+      "number": 45,
+      "category": "Content",
+      "status": "confirmed",
+      "decision": "Minimal timeline/current-status material; no frequent now page.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D046",
+      "number": 46,
+      "category": "Culture",
+      "status": "confirmed",
+      "decision": "Adaptive visual collections/notes/recommendations for books, music and culture.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D047",
+      "number": 47,
+      "category": "Learning",
+      "status": "confirmed",
+      "decision": "Add demos/explainers only when they improve understanding; no general playground by default.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D048",
+      "number": 48,
+      "category": "Imagery",
+      "status": "confirmed",
+      "decision": "Content-dependent imagery; no user portrait/likeness.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D049",
+      "number": 49,
+      "category": "Security",
+      "status": "confirmed",
+      "decision": "Strict dependency, vulnerability, CSP/header, secret, input and supply-chain controls.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D050",
+      "number": 50,
+      "category": "Pack",
+      "status": "confirmed",
+      "decision": "Deliver a complete operational Claude Code project pack.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D051",
+      "number": 51,
+      "category": "Source of truth",
+      "status": "confirmed",
+      "decision": "Latest live GitHub repo/default branch authoritative; old ZIP is not.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D052",
+      "number": 52,
+      "category": "Design process",
+      "status": "confirmed",
+      "decision": "Progressively explore distinct visual concepts, then refine; no premature palette.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D053",
+      "number": 53,
+      "category": "Design approval",
+      "status": "confirmed",
+      "decision": "Figma-first; browser prototypes for responsive/interaction validation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D054",
+      "number": 54,
+      "category": "Content migration",
+      "status": "confirmed",
+      "decision": "Audit, curate and rewrite; retain valuable material, verify facts, remove irrelevant legacy.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D055",
+      "number": 55,
+      "category": "Production",
+      "status": "confirmed",
+      "decision": "Autonomous merge/deploy/live verification only inside explicitly authorized phase and after gates.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D056",
+      "number": 56,
+      "category": "Factual integrity",
+      "status": "confirmed",
+      "decision": "Every claim supported by repo evidence, reliable public source or explicit user approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D057",
+      "number": 57,
+      "category": "AI imagery",
+      "status": "confirmed",
+      "decision": "Prefer original/code-generated art; AI images only when justified; never a user likeness.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D058",
+      "number": 58,
+      "category": "Browser",
+      "status": "confirmed",
+      "decision": "Current evergreen Chrome/Firefox/Safari/Edge; mobile/tablet/desktop.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D059",
+      "number": 59,
+      "category": "Recovery",
+      "status": "confirmed",
+      "decision": "Protect branch/history, reproducible builds, deployment history, backups and tested rollback.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D060",
+      "number": 60,
+      "category": "Missing facts",
+      "status": "confirmed",
+      "decision": "Research first; require user verification for personal claims.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D061",
+      "number": 61,
+      "category": "Credentials",
+      "status": "confirmed",
+      "decision": "Guide user through permissions/authentication; pause for manual sensitive configuration; never expose secrets.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D062",
+      "number": 62,
+      "category": "Packaging",
+      "status": "confirmed",
+      "decision": "Self-contained Claude workspace copied to repo root.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D063",
+      "number": 63,
+      "category": "First run",
+      "status": "confirmed",
+      "decision": "Audit/preparation only; no implementation until separate approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D064",
+      "number": 64,
+      "category": "Concepts",
+      "status": "confirmed",
+      "decision": "Research-led and sufficiently distinct; no arbitrary number.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D065",
+      "number": 65,
+      "category": "Design history",
+      "status": "confirmed",
+      "decision": "Record concepts, references, feedback, rejected directions, revisions, rationale, approvals and Figma refs.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D066",
+      "number": 66,
+      "category": "Scope changes",
+      "status": "confirmed",
+      "decision": "Minor within-vision changes autonomous; major scope/architecture changes require approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D067",
+      "number": 67,
+      "category": "Design/quality",
+      "status": "confirmed",
+      "decision": "Visual experience first, but accessibility/usability/performance remain mandatory.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D068",
+      "number": 68,
+      "category": "Approvals",
+      "status": "confirmed",
+      "decision": "Adaptive design checkpoints by risk; material decisions need approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D069",
+      "number": 69,
+      "category": "Research",
+      "status": "confirmed",
+      "decision": "Broad research then curated analysis by principles, interaction, composition and UX.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D070",
+      "number": 70,
+      "category": "Dependencies",
+      "status": "confirmed",
+      "decision": "Prefer mature maintained documented secure ecosystem; evaluate licensing and suitability.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D071",
+      "number": 71,
+      "category": "Deployment",
+      "status": "confirmed",
+      "decision": "Simple GitHub Pages + GitHub Actions; no extra preview hosting unless justified.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D072",
+      "number": 72,
+      "category": "Success",
+      "status": "confirmed",
+      "decision": "Holistic success: originality, story, content, usability, accessibility, technical quality, authenticity.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D073",
+      "number": 73,
+      "category": "Maintenance",
+      "status": "confirmed",
+      "decision": "Automate trustworthy updates/scans/checks with safeguards and failure handling.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D074",
+      "number": 74,
+      "category": "Publishing",
+      "status": "confirmed",
+      "decision": "Simplest workflow per content type while preserving Git history and validation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D075",
+      "number": 75,
+      "category": "Legacy features",
+      "status": "confirmed",
+      "decision": "Retain/redesign/remove only after value, cost, privacy, performance and fit evaluation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D076",
+      "number": 76,
+      "category": "Conflict",
+      "status": "confirmed",
+      "decision": "Use explicit priority hierarchy to resolve routine conflicts; document rationale.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D077",
+      "number": 77,
+      "category": "Handoff",
+      "status": "confirmed",
+      "decision": "Complete guide with summary, prerequisites, task/dependency map, approvals, risks, launch/handoff templates.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D078",
+      "number": 78,
+      "category": "Decision status",
+      "status": "confirmed",
+      "decision": "Record confirmed/proposed/pending/rejected/superseded and history.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D079",
+      "number": 79,
+      "category": "Research",
+      "status": "confirmed",
+      "decision": "Annotated source library with dates, authority, relevance, evidence-linked decisions, freshness.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D080",
+      "number": 80,
+      "category": "Fidelity",
+      "status": "confirmed",
+      "decision": "Preserve approved principles/key compositions; adapt responsively; document deviations.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D081",
+      "number": 81,
+      "category": "Figma",
+      "status": "confirmed",
+      "decision": "New dedicated Figma file for concepts, design system, page designs and prototypes.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D082",
+      "number": 82,
+      "category": "Spaces",
+      "status": "confirmed",
+      "decision": "Distinct professional/personal navigation with intentional transition.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D083",
+      "number": 83,
+      "category": "Personal privacy",
+      "status": "confirmed",
+      "decision": "Public personal area, but publish only deliberately curated content.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D084",
+      "number": 84,
+      "category": "Personal design",
+      "status": "confirmed",
+      "decision": "Content-led visual identity with varied treatments and shared foundations.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D085",
+      "number": 85,
+      "category": "Launch",
+      "status": "confirmed",
+      "decision": "Only well-developed interest collections at launch; no thin sections.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D086",
+      "number": 86,
+      "category": "Homepage",
+      "status": "confirmed",
+      "decision": "Visual experience first; deeper discovery of identity/projects/interests.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D087",
+      "number": 87,
+      "category": "Navigation",
+      "status": "confirmed",
+      "decision": "Clear core plus contextual section adjustments and discovery paths.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D088",
+      "number": 88,
+      "category": "Loading",
+      "status": "confirmed",
+      "decision": "Ordinary pages load immediately/progressively; immersive intro only if valuable.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D089",
+      "number": 89,
+      "category": "Consistency",
+      "status": "confirmed",
+      "decision": "Layered consistency: common foundation, section-specific systems and deliberate departures.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D090",
+      "number": 90,
+      "category": "Accessible interaction",
+      "status": "confirmed",
+      "decision": "Equivalent accessible path for essential content/functionality in significant interactions.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D091",
+      "number": 91,
+      "category": "Lab",
+      "status": "confirmed",
+      "decision": "Dedicated curated lab for experiments, separate from professional portfolio.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D092",
+      "number": 92,
+      "category": "Transition",
+      "status": "confirmed",
+      "decision": "Intentional gateway between professional and personal spaces.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D093",
+      "number": 93,
+      "category": "Priority",
+      "status": "confirmed",
+      "decision": "Priority: security/privacy/factual integrity; accessibility/usability; authenticity/content; visual storytelling; performance; maintainability.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D094",
+      "number": 94,
+      "category": "Tooling",
+      "status": "confirmed",
+      "decision": "Comprehensive but selective specialist toolkit for design, engineering, research, testing, a11y, performance and security.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D095",
+      "number": 95,
+      "category": "Configuration",
+      "status": "confirmed",
+      "decision": "Complete repo-local config: instructions, agents, skills, hooks, permission guidance, settings and commands; safe vs approval defaults.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D096",
+      "number": 96,
+      "category": "Progress",
+      "status": "confirmed",
+      "decision": "Adaptive reporting frequency/detail; more for architecture/security/deployment.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D097",
+      "number": 97,
+      "category": "Assets/content",
+      "status": "confirmed",
+      "decision": "Structured metadata, licensing, attribution, optimization, alt text and editorial validation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D098",
+      "number": 98,
+      "category": "Visual QA",
+      "status": "confirmed",
+      "decision": "Playwright screenshots, visual regression and responsive checks against Figma.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D099",
+      "number": 99,
+      "category": "Launch",
+      "status": "confirmed",
+      "decision": "Quality-gated sections; no arbitrary page counts or placeholders.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D100",
+      "number": 100,
+      "category": "Decision review",
+      "status": "confirmed",
+      "decision": "Reconsider approved decisions when evidence supports; document old/new choices, alternatives, rationale and impact.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D101",
+      "number": 101,
+      "category": "Pack maintenance",
+      "status": "confirmed",
+      "decision": "Keep task, decision, architecture, docs, handoff state synchronized with implementation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D102",
+      "number": 102,
+      "category": "Flagships",
+      "status": "confirmed",
+      "decision": "Choose project sequence only after repo audit and evidence-based review; recommend for approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D103",
+      "number": 103,
+      "category": "Domain",
+      "status": "confirmed",
+      "decision": "Keep saint2706.github.io; no custom domain migration.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D104",
+      "number": 104,
+      "category": "Embeds",
+      "status": "confirmed",
+      "decision": "Only when value justifies privacy/accessibility/performance/design cost.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D105",
+      "number": 105,
+      "category": "Acceptance",
+      "status": "confirmed",
+      "decision": "Final handover with evidence, pass/fail checklist, deployment state, maintenance, rollback, limitations and roadmap.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D106",
+      "number": 106,
+      "category": "Sequencing",
+      "status": "confirmed",
+      "decision": "Dependency/risk-driven sequencing; parallelize only when independence is verified.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D107",
+      "number": 107,
+      "category": "Effort",
+      "status": "confirmed",
+      "decision": "Value-driven scope; no arbitrary time limit.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D108",
+      "number": 108,
+      "category": "Backlog",
+      "status": "confirmed",
+      "decision": "Centralized future-ideas backlog; don't disrupt current tasks.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D109",
+      "number": 109,
+      "category": "Debt",
+      "status": "confirmed",
+      "decision": "Prevent and address meaningful technical debt continuously.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D110",
+      "number": 110,
+      "category": "Research governance",
+      "status": "confirmed",
+      "decision": "Balance vision and evidence; explore alternatives; document trade-offs.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D111",
+      "number": 111,
+      "category": "Costs",
+      "status": "confirmed",
+      "decision": "Free-tier first; recurring/paid costs require explicit approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D112",
+      "number": 112,
+      "category": "Authorization",
+      "status": "confirmed",
+      "decision": "Explicit phase authorization, one phase at a time; no auto-progression.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D113",
+      "number": 113,
+      "category": "Design approval",
+      "status": "confirmed",
+      "decision": "Approve design progressively by component/section; unapproved areas remain provisional.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D114",
+      "number": 114,
+      "category": "Iteration",
+      "status": "confirmed",
+      "decision": "Autonomous browser-evidence refinements within approved direction; document major deviations.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D115",
+      "number": 115,
+      "category": "Content owner",
+      "status": "confirmed",
+      "decision": "Technical facts may be published when verified; new personal claims/opinions/experiences require explicit approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D116",
+      "number": 116,
+      "category": "Research freshness",
+      "status": "confirmed",
+      "decision": "Record date/version/authority; recheck volatile facts before implementation/release.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D117",
+      "number": 117,
+      "category": "Asset rights",
+      "status": "confirmed",
+      "decision": "Every external asset needs clear ownership/source/license/attribution/modification rights; reject unclear.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D118",
+      "number": 118,
+      "category": "Preservation",
+      "status": "confirmed",
+      "decision": "Preserve and back up writing, research, designs, assets, docs and config; verify recovery.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D119",
+      "number": 119,
+      "category": "Legacy cleanup",
+      "status": "confirmed",
+      "decision": "Clean-slate code/features; preserve only valuable content/assets after quality/license review.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D120",
+      "number": 120,
+      "category": "Git history",
+      "status": "confirmed",
+      "decision": "Preserve complete existing Git history; no rewrite/force push.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D121",
+      "number": 121,
+      "category": "Branches",
+      "status": "confirmed",
+      "decision": "Protect default branch; feature branches and PRs only.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D122",
+      "number": 122,
+      "category": "Production",
+      "status": "confirmed",
+      "decision": "Old site stays live during rebuild; replace only via approved verified phase deployments.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D123",
+      "number": 123,
+      "category": "URLs",
+      "status": "confirmed",
+      "decision": "Clean new URL structure; map old routes; redirect only valuable routes; document retired routes.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D124",
+      "number": 124,
+      "category": "SEO",
+      "status": "confirmed",
+      "decision": "Every production release validates metadata, canonical, structured data, sitemap, robots, redirects and indexability.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D125",
+      "number": 125,
+      "category": "Responsive",
+      "status": "confirmed",
+      "decision": "Choose strategy per experience; full usability/accessibility across mobile/tablet/desktop.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D126",
+      "number": 126,
+      "category": "Performance",
+      "status": "confirmed",
+      "decision": "Experience-specific budgets; strict for ordinary pages, justified exception for immersive.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D127",
+      "number": 127,
+      "category": "Security testing",
+      "status": "confirmed",
+      "decision": "Continuous local + CI audits/secret scan/static analysis; serious issues block release.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D128",
+      "number": 128,
+      "category": "Visual quality",
+      "status": "confirmed",
+      "decision": "Automated measurable checks plus structured qualitative design review.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D129",
+      "number": 129,
+      "category": "Dependencies",
+      "status": "confirmed",
+      "decision": "Automated dependency PRs with CI; scrutinize breaking/major/security updates.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D130",
+      "number": 130,
+      "category": "Technical docs",
+      "status": "confirmed",
+      "decision": "Document architecture, components, tokens, schemas, interactions, APIs, tests, deployment, maintenance, decisions.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D131",
+      "number": 131,
+      "category": "Docs QA",
+      "status": "confirmed",
+      "decision": "Automated link/schema/example/metadata/consistency checks plus human editorial review.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D132",
+      "number": 132,
+      "category": "A11y testing",
+      "status": "confirmed",
+      "decision": "axe-core/equivalent in Playwright/CI; failures block; WCAG 2.2 AA.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D133",
+      "number": 133,
+      "category": "Coverage",
+      "status": "confirmed",
+      "decision": "Risk-based tests for critical logic/interactions/content/security/errors; no meaningless coverage target.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D134",
+      "number": 134,
+      "category": "Incidents",
+      "status": "confirmed",
+      "decision": "Classify, preserve diagnostics, tested rollback; avoid destructive data loss.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D135",
+      "number": 135,
+      "category": "Monitoring",
+      "status": "confirmed",
+      "decision": "Minimal GitHub Actions/deploy/manual checks; no analytics or trackers.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D136",
+      "number": 136,
+      "category": "Transition",
+      "status": "confirmed",
+      "decision": "Parallel build while old stays live; replace only on approved sections.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D137",
+      "number": 137,
+      "category": "Branding",
+      "status": "confirmed",
+      "decision": "Flexible personal identity; no rigid corporate system or required conventional logo.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D138",
+      "number": 138,
+      "category": "Homepage story",
+      "status": "confirmed",
+      "decision": "Artistic opening with expressive typography/atmosphere/composition and discovery.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D139",
+      "number": 139,
+      "category": "Visual spaces",
+      "status": "confirmed",
+      "decision": "Distinct professional/personal personalities with shared foundations where valuable.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D140",
+      "number": 140,
+      "category": "Research library",
+      "status": "confirmed",
+      "decision": "Integrated with implementation and linked to sources/decisions/tasks.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D141",
+      "number": 141,
+      "category": "Pack version",
+      "status": "confirmed",
+      "decision": "Initial/major ZIP versions with changelog; routine changes via Git.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D142",
+      "number": 142,
+      "category": "Unresolved",
+      "status": "confirmed",
+      "decision": "Research and recommend alternatives; seek approval on material choices; document uncertainty.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D143",
+      "number": 143,
+      "category": "Continuity",
+      "status": "confirmed",
+      "decision": "Structured handoffs with phase/task, progress, files, decisions, blockers, evidence, next steps.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D144",
+      "number": 144,
+      "category": "Task completion",
+      "status": "confirmed",
+      "decision": "Evidence-backed acceptance required; code/claims alone insufficient.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D145",
+      "number": 145,
+      "category": "Agents",
+      "status": "confirmed",
+      "decision": "Use minimal specialist agents only for genuinely independent expertise or parallel execution.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D146",
+      "number": 146,
+      "category": "Agent authority",
+      "status": "confirmed",
+      "decision": "Primary Claude session evaluates specialist recommendations and owns final implementation decision.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D147",
+      "number": 147,
+      "category": "State",
+      "status": "confirmed",
+      "decision": "Hybrid Markdown human docs plus JSON/YAML machine state; scripts detect inconsistencies.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D148",
+      "number": 148,
+      "category": "Audit",
+      "status": "confirmed",
+      "decision": "First run comprehensive audit dossier with evidence across repo/architecture/content/assets/deps/security/a11y/performance/deploy/risks.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D149",
+      "number": 149,
+      "category": "Architecture",
+      "status": "confirmed",
+      "decision": "Research/compare/recommend unresolved architecture; wait for explicit approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D150",
+      "number": 150,
+      "category": "Commits",
+      "status": "confirmed",
+      "decision": "Commit after each independently verified task; push phase branch.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D151",
+      "number": 151,
+      "category": "Branch model",
+      "status": "confirmed",
+      "decision": "One branch per phase, task commits, PR after phase gates.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D152",
+      "number": 152,
+      "category": "Failure",
+      "status": "confirmed",
+      "decision": "Diagnose/fix within scope/retest/document; escalate only when blocked or approval needed.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D153",
+      "number": 153,
+      "category": "Parallel",
+      "status": "confirmed",
+      "decision": "Only isolated parallel work when dependencies/files/resources/integration are independent.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D154",
+      "number": 154,
+      "category": "Cross-phase",
+      "status": "confirmed",
+      "decision": "Adaptive; small safe corrections autonomous; material scope/architecture/security/release changes need approval.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D155",
+      "number": 155,
+      "category": "Pack validation",
+      "status": "confirmed",
+      "decision": "Strict automated check of files, links, schemas, IDs/dependencies, prompts, scripts, ZIP integrity.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D156",
+      "number": 156,
+      "category": "Claude version",
+      "status": "confirmed",
+      "decision": "Target latest stable Claude Code and verify current official documentation.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D157",
+      "number": 157,
+      "category": "Design system",
+      "status": "confirmed",
+      "decision": "Adaptive layered shared foundations and section-specific systems; document Figma relationship.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D158",
+      "number": 158,
+      "category": "Traceability",
+      "status": "confirmed",
+      "decision": "Bidirectional traceability of Figma refs, asset IDs/provenance, token maps and code components.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D159",
+      "number": 159,
+      "category": "Creative review",
+      "status": "confirmed",
+      "decision": "Structured creative design review plus automated reports for originality/story/composition/atmosphere/coherence/authenticity.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D160",
+      "number": 160,
+      "category": "ZIP layout",
+      "status": "confirmed",
+      "decision": "Repo-root-ready pack with install and overwrite policy and Git safeguards.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D161",
+      "number": 161,
+      "category": "Existing files",
+      "status": "confirmed",
+      "decision": "Intelligent file-by-file merge of repository instructions/config; preserve useful content, no blind overwrite.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D162",
+      "number": 162,
+      "category": "Instruction scope",
+      "status": "confirmed",
+      "decision": "Keep all Claude instructions/config repository-local; no global settings required.",
+      "source": "User discovery response"
+    },
+    {
+      "id": "D163",
+      "number": 163,
+      "category": "Closure",
+      "status": "confirmed",
+      "decision": "Evidence-based completion once approved requirements/gates and handover artifacts are ready.",
+      "source": "User discovery response"
+    }
+  ]
+}

@@ -9,7 +9,6 @@ export const resumeData = {
     name: 'Rishabh Agrawal',
     title: 'Data Storyteller & Analytics Strategist',
     email: 'rishabh.agrawal25b@gim.ac.in',
-    phone: '+91-9137095017',
     website: 'https://saint2706.github.io',
     summary:
       "Big Data Analytics postgraduate at Goa Institute of Management with a Computer Science background. I thrive at the intersection of data, technology, and creativity—using analytics, AI, and software development to turn complex challenges into actionable insights. Skilled in Python, SQL, R, AWS, Tableau, Power BI, TensorFlow, and PyTorch. I'm passionate about using data and AI not just to solve problems, but to tell stories, create value, and enable smarter decisions.",
