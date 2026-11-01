@@ -6,7 +6,7 @@
 - Default branch: `main`
 - HEAD: `95a04fb60193c74b20273b01a983de7b1f465182`
 - Tree: 182 entries; 161 blobs; 21 folders
-- Pages enabled; captured default branch protection **disabled**
+- Pages enabled; default branch protection was disabled at capture and enabled 2026-11-01 (ruleset `protect-main`)
 - React `^19.3.1`, Vite `^8.3.5`, Tailwind `^4.3.3`, React Router DOM `^7.18.5`, Framer Motion `^14.8.0`, Vitest `5.0.5`, Playwright `^1.64.1`, Lighthouse `~13.6.0`, pnpm `12.15.0`, Node `^24.15.0 || >=26.0.0`.
 
 Observed system: React/Vite SPA; `src/App.jsx` uses BrowserRouter and lazy routes `/`, `/projects`, `/resume`, `/blog`, `/contact`, `/games`, `/playground`, catch-all. Tailwind v4, Framer Motion, Vitest/Testing Library, Playwright dependency (but no @playwright/test in captured manifest), Gemini service + optional Cloudflare Worker proxy, Pyodide runner, sandboxed JS/HTML playground, security/SEO scripts, GitHub Pages workflows and eight project thumbnails.

@@ -24,6 +24,10 @@ for (let i = 0; i <= 7; i++) {
   else if (!['authorized', 'pending-approval', 'complete'].includes(a.status))
     errors.push(`Unexpected authorization status for ${phase}`);
 }
+const authorized = (approvals?.approvals || []).filter(x => x.status === 'authorized');
+if (authorized.length > 1) errors.push('Only one phase may be authorized at a time.');
+if (project && authorized.some(x => x.phase !== project.current_phase))
+  errors.push('Authorized phase must match project.current_phase.');
 const taskList = tasksState?.tasks || [];
 const ids = new Set(taskList.map(t => t.id));
 if (taskList.length !== 28) errors.push(`Expected 28 tasks, found ${taskList.length}`);

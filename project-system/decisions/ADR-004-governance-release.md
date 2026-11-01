@@ -6,7 +6,7 @@
 
 ## Evidence
 
-`main` unprotected, no rulesets (API 2026-11-01). `ci.yml` jobs: `lint`, `test` (3 OS x Node 24/26), `build`. `deploy.yml` runs via `workflow_run` after successful CI on a push to `main`, or manually via `workflow_dispatch`, with `github-pages` environment.
+At P00 `main` was unprotected with no rulesets (API 2026-11-01); the ruleset below has since been applied. `ci.yml` jobs: `lint`, `test` (3 OS x Node 24/26), `build`. `deploy.yml` runs via `workflow_run` after successful CI on a push to `main`, or manually via `workflow_dispatch`, with `github-pages` environment.
 
 ## Policy
 
@@ -19,7 +19,7 @@
 
 ## Status of settings
 
-Not applied. Steps in `runbooks/branch-protection.md` and `runbooks/release-governance.md`.
+Applied 2026-11-01: ruleset `protect-main` (id 26293963), `allow_auto_merge=true`, `delete_branch_on_merge=true`, `github-pages` environment limited to `main`. Runbooks remain as the verification procedure.
 
 ## User approval
 

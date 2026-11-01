@@ -2,7 +2,7 @@
 
 | ID    | Risk                                   | Evidence/reason                                      | Severity            | Treatment                                    |
 | ----- | -------------------------------------- | ---------------------------------------------------- | ------------------- | -------------------------------------------- |
-| R-001 | Default branch unprotected             | Captured GitHub API: protected=false                 | Critical governance | Refresh; enable/verify ruleset before merge  |
+| R-001 | Default branch protection (mitigated)  | P00: protected=false; 2026-11-01: ruleset active     | Critical governance | Re-verify ruleset before merge               |
 | R-002 | Default-branch push deploys production | Deploy workflow after CI push to main/master         | High                | Phase release approval and deploy protection |
 | R-003 | Architecture unresolved                | Client-only SPA vs progressive enhancement ambitions | High                | Compare and obtain P01 approval              |
 | R-004 | No-JS experience absent                | index.html says JS required                          | High                | Audit and architectural plan                 |
