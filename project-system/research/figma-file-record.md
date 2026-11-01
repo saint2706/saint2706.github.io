@@ -38,3 +38,9 @@ Revisions in Figma page 02, section E ("v2 after feedback"):
 - Section D (interaction notes) moved down to remove an overlap.
 
 Still open: tablet v2 (not redone), prototype wiring for v2 frames, colour and typography (unapproved), real copy (see `draft-copy-register.md`).
+
+## Figma limit reached (2026-11-01)
+
+The Starter plan Figma MCP tool-call limit was reached. Pending edits not yet applied in Figma: dry-voice tag text ("open", "read", "some of this works"; Lab label "Experiments"), a notes-line update, and a v2 tablet frame. No paid upgrade was made. Retry after the limit resets, or apply by hand.
+
+Owner feedback round 1 also: flagships Coding-For-MBA, Programming-Challenges-5, AI Attendance Management System; contact email, GitHub, LinkedIn, Instagram; voice dry; Art and Books spaces supplied (see content-inventory-art-books.md).
