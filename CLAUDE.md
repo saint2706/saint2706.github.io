@@ -14,8 +14,8 @@ The primary Claude Code session owns final decisions. Specialist agents provide 
 
 1. `CLAUDE.md`
 2. `project-system/state/project.json`, `approvals.json`, `repo-baseline.json`
-3. `PRODUCT.md`, `DESIGN.md`, `ARCHITECTURE.md`, `CONTENT.md`
-4. `ROADMAP.md`, `TASKS.md`, `QUALITY_GATES.md`
+3. `PRODUCT.md`, `DESIGN.md`, `project-system/ARCHITECTURE.md`, `project-system/CONTENT.md`
+4. `project-system/ROADMAP.md`, `project-system/tasks/TASKS.md`, `project-system/QUALITY_GATES.md`
 5. Exact authorized task Markdown, related ADRs and research
 6. Current handoff
 

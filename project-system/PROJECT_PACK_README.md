@@ -27,9 +27,9 @@ Prepared against `main` commit `95a04fb60193c74b20273b01a983de7b1f465182` on 31 
 ## Pack content
 
 - `CLAUDE.md`: operating contract
-- `PRODUCT.md`, `DESIGN.md`, `ARCHITECTURE.md`, `CONTENT.md`
-- `ROADMAP.md`, `TASKS.md`, `QUALITY_GATES.md`
-- `DECISIONS.md`, `PLUGINS.md`, `RESEARCH_LIBRARY.md`
+- `PRODUCT.md`, `DESIGN.md`, `project-system/ARCHITECTURE.md`, `project-system/CONTENT.md`
+- `project-system/ROADMAP.md`, `project-system/tasks/TASKS.md`, `project-system/QUALITY_GATES.md`
+- `project-system/decisions/DECISIONS.md`, `project-system/PLUGINS.md`, `project-system/research/RESEARCH_LIBRARY.md`
 - 28 complete task specs across P00–P07
 - Repository-local Claude Code skills, read-only agents and safety hooks under `.claude/`
 - JSON project state, decision register, task register, schemas and validators
