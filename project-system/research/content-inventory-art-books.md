@@ -21,7 +21,7 @@ All 12 images are phone-story graphics (gradient or black backgrounds) listing w
 | 1000113320 | Political Philosophy                      | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
 | 1000113321 | French Revolution                         | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: no **Stage One** image; Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: **Stage One** is "Good books to get into philosophy" (no image; titles still to be supplied); Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 

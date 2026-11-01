@@ -1,8 +1,12 @@
 # Books: reading path (owner-supplied, transcribed 2026-11-01)
 
-Source: the owner's twelve story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished**. Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
+Source: the owner's twelve story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished, including the optional lists** (2026-11-01). Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
 
-Gaps: no Stage One graphic was supplied; Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
+Gaps: Stage One is titled "Good books to get into philosophy" per the owner, but no titles were supplied (none are guessed here); Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
+
+## Stage One: Good books to get into philosophy
+
+Titled by the owner (2026-11-01). **Titles still to be supplied**; none are listed or guessed.
 
 ## Stage Two
 
@@ -108,4 +112,4 @@ Other titles are transcribed as shown on the graphics and have not been checked 
 
 - Present as text lists grouped by stage, with a short one-line mode label; no text-in-image.
 - Show stage and author as structure (headings), not decoration, so a screen reader can navigate by stage.
-- "Optional" lists marked as such; the owner's finished-status applies to the listed works; confirm whether it also covers the optional lists.
+- "Optional" lists marked as such; the owner confirmed finished-status covers the optional lists too.
