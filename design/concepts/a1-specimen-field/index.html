@@ -72,6 +72,9 @@
       main {
         padding: 0 48px 96px;
       }
+      main:focus {
+        outline: none;
+      }
       .field {
         list-style: none;
         margin: 24px auto 0;
@@ -266,7 +269,7 @@
         <button class="btn" type="button" data-open-index>Index</button>
       </div>
     </header>
-    <main id="field">
+    <main id="field" tabindex="-1">
       <h1 class="headline">Data, technology and a bit of creativity, used to tell stories.</h1>
       <p class="draft">
         DRAFT headline adapted from the published resume summary. All copy is a draft pending owner
