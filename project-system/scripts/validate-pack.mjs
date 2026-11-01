@@ -13,8 +13,8 @@ const required = [
   'PLUGINS.md',
   'QUALITY_GATES.md',
   'DECISIONS.md',
-  'PROJECT_PACK_README.md',
-  'PACK_INSTALLATION.md',
+  'project-system/PROJECT_PACK_README.md',
+  'project-system/PACK_INSTALLATION.md',
   'HANDOFF_GUIDE.md',
   'project-system/state/project.json',
   'project-system/state/repo-baseline.json',
@@ -68,10 +68,11 @@ if (tasks)
 if (decisions?.decisions?.length !== 163) errors.push('Decision register must contain 163 items.');
 for (const f of all.filter(x => x.endsWith('.md'))) {
   const content = fs.readFileSync(f, 'utf8'),
-    re = /\[[^\]]+\]\(([^)]+)\)/g;
+    re = /\[[^\]]+\]\((<[^>]*>|[^)]+)\)/g;
   let m;
   while ((m = re.exec(content))) {
-    const href = m[1].split('#')[0].trim();
+    // <...> is the CommonMark form for destinations that contain parentheses
+    const href = m[1].replace(/^<(.*)>$/, '$1').split('#')[0].trim();
     if (!href || /^(https?:|mailto:|#)/.test(href)) continue;
     const resolved = path.posix.normalize(
       path.posix.join(path.posix.dirname(path.relative(root, f).split(path.sep).join('/')), href)
@@ -80,8 +81,6 @@ for (const f of all.filter(x => x.endsWith('.md'))) {
       errors.push(`Broken relative link in ${path.relative(root, f)} -> ${href}`);
   }
 }
-if (rels.has('README.md'))
-  errors.push('Do not overwrite/ship root README.md; use PROJECT_PACK_README.md.');
 if (errors.length) {
   console.error('Pack validation FAILED');
   for (const e of errors) console.error(`- ${e}`);

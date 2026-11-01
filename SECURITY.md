@@ -1,4 +1,19 @@
-# Security and privacy policy
+# Security policy
+
+## Reporting a vulnerability
+
+Please report security issues privately. Do not open a public issue or pull request for them.
+
+- Email: rishabh.agrawal25b@gim.ac.in
+- The same contact is published in [`security.txt`](https://saint2706.github.io/.well-known/security.txt).
+
+Include what you found, where (URL or file) and steps to reproduce. This is a personal project, so reports are handled on a best-effort basis.
+
+## Scope
+
+In scope: the live site at <https://saint2706.github.io/>, the code in this repository and the Gemini proxy Worker in [`proxy/`](./proxy/README.md). Only the current `main` branch is supported.
+
+## Security and privacy principles
 
 - Minimize external services and data collection.
 - No visitor analytics, tracking cookies, profiling or hidden pixels.
