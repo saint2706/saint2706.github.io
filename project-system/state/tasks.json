@@ -354,7 +354,7 @@
       "id": "P02-T01",
       "phase": "P02",
       "title": "Conduct curated visual research",
-      "status": "ready",
+      "status": "review",
       "authorization": "user-approved-2026-11-01",
       "depends_on": ["P01-T04"],
       "objective": "Build annotated visual references and several distinct visual directions.",
