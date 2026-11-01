@@ -5,7 +5,7 @@
 - Current phase: P02
 - Execution mode: phase-gated
 - P00, P01: complete
-- P02: P02-T01 only authorized, no production release
+- P02: P02-T01 complete, P02-T02 in review (both authorized); P02-T03 not authorized; no production release
 - P03–P07: pending explicit approval
 - Discovery decisions: 163 confirmed
 - Task specs: 28
