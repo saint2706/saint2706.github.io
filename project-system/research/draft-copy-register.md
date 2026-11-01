@@ -12,3 +12,10 @@ All copy in the Figma concepts is DRAFT. It uses only facts already published on
 | C-06 | Index rows       | Art and myth, Books, Music                                      | brief names these interests; no content exists yet                                  | scope claim        | needs-user-confirmation: which actually launch |
 
 Targeted questions still to the owner (asked in chat): flagship projects, what exists for art/myth, books and music, and which tags feel on-voice.
+
+## Owner decisions 2026-11-01 (round 2)
+
+- The three in-copyright paintings (Magritte x2, Dali) are left out; only public-domain works may be shown, each verified.
+- Reading lists: the owner has finished reading them. Stage 5.2 currently repeats Stage 5.1 (Kant, Fichte); the owner asked to fix it, true contents needed.
+- Music space left out of launch scope.
+- Design medium switched to code-first (ADR-005).

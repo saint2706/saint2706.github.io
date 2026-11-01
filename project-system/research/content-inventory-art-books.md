@@ -47,3 +47,9 @@ None of the case-study claims are verified yet; this is repository metadata only
 
 - Public: email, GitHub, LinkedIn, Instagram handle `@saintkaprivate` (the handle suggests a private account; confirm intent). Phone stays private.
 - Voice: dry and understated.
+
+## Owner decisions 2026-11-01 (round 2)
+
+- Paintings: leave out _The False Mirror_, _The Human Condition_ and _Slave Market with the Disappearing Bust of Voltaire_. Seven public-domain works may be used after each credit and licence is verified from the deck sources slide.
+- Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 duplicate to be corrected once the real list is provided.
+- Music: out of launch scope.

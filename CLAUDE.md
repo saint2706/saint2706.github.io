@@ -44,7 +44,7 @@ Refresh the live GitHub default branch, commit, tree, configuration and branch r
 
 ## Design and accessibility
 
-- Figma-first, new dedicated Figma file in P02 (not during P00).
+- Design concepts: Figma file exists (history) but ADR-005 (2026-11-01) moved concept work to code-first HTML/CSS under `design/concepts/` because of Figma free-tier limits.
 - Do not choose palette/typography prematurely; research and concept approval first.
 - Shared foundation plus section-specific systems where content warrants.
 - Keep Figma-to-code traceability for important assets, tokens and components.

@@ -13,7 +13,7 @@ No final concept, palette, font pairing, grid or component library has been appr
 - Motion: restrained by default; elaborate only where it improves the story. Respect reduced motion and measure mobile cost.
 - Identity: no photo/selfie/portrait/AI likeness of the user; use symbols, typography, custom graphics, diagrams, objects/places or licensed artwork.
 
-## Figma-first workflow
+## Figma-first workflow (superseded for concept medium by ADR-005: code-first concepts in `design/concepts/`; steps below still apply with HTML/CSS as the canvas)
 
 1. Broad research, curated by principles and use case.
 2. Multiple genuinely distinct concepts, not palette swaps.
