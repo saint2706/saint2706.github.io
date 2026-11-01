@@ -2,11 +2,18 @@
 
 Source: the owner's twelve story graphics (folder `art and books/`, untracked) plus owner statements on 2026-11-01. The owner confirmed all listed works are **finished, including the optional lists** (2026-11-01). Titles are transcribed as shown on the graphics; stage names follow the graphics. No notes, ratings or opinions were supplied, so none are included. Whether the stage scheme comes from a published curriculum is unknown; credit it if it does. Not approved for publication until the owner reviews this text.
 
-Gaps: Stage One is titled "Good books to get into philosophy" per the owner, but no titles were supplied (none are guessed here); Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
+Gaps: Stage One was supplied as a graphic on 2026-11-01 (1000113330); Stage 5.2 was supplied in text on 2026-11-01 (the graphic repeated 5.1); stage numbering is as given, with Political Philosophy and French Revolution as separate unnumbered lists.
 
 ## Stage One: Good books to get into philosophy
 
-Titled by the owner (2026-11-01). **Titles still to be supplied**; none are listed or guessed.
+1. Homer, Iliad
+2. Homer, Odyssey
+3. Plato, Complete Works
+4. Aristotle, Complete Works
+5. Heraclitus, Fragments
+6. Parmenides, Fragments
+7. Epicurus, On the Nature of Things (as written on the graphic; see flag below)
+8. Aeschylus, Persians and other plays
 
 ## Stage Two
 
@@ -105,6 +112,8 @@ Applied for lookup accuracy; the owner should confirm any edition-specific wordi
 | Cause, Principal and Unity              | Cause, Principle and Unity             | Stage 4 (optional), Bruno      |
 | Candid                                  | Candide                                | Political Philosophy, Voltaire |
 | The Two Fundamental Problem with Ethics | The Two Fundamental Problems of Ethics | Stage Six, Schopenhauer        |
+
+Flag for the owner (not changed): _On the Nature of Things_ is the standard English title of Lucretius, _De rerum natura_; Epicurus has no surviving work by that title (his lost major work is _On Nature_). Confirm whether to keep Epicurus, change to Lucretius, or list both.
 
 Other titles are transcribed as shown on the graphics and have not been checked against bibliographic records.
 
