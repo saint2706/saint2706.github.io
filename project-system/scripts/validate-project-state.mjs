@@ -29,6 +29,12 @@ if (authorized.length > 1) errors.push('Only one phase may be authorized at a ti
 if (project && authorized.some(x => x.phase !== project.current_phase))
   errors.push('Authorized phase must match project.current_phase.');
 const taskList = tasksState?.tasks || [];
+for (const t of taskList)
+  if (
+    ['ready', 'in-progress', 'review', 'complete'].includes(t.status) &&
+    /^pending/.test(t.authorization || '')
+  )
+    errors.push(`${t.id} is ${t.status} but authorization is ${t.authorization}`);
 const ids = new Set(taskList.map(t => t.id));
 if (taskList.length !== 28) errors.push(`Expected 28 tasks, found ${taskList.length}`);
 for (const t of taskList) {
