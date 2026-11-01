@@ -14,14 +14,14 @@ All 12 images are phone-story graphics (gradient or black backgrounds) listing w
 | 1000113313 | Stage 4.2: Early Modern Empiricists       | Locke (4); Berkeley; Hume (6)                                                                                                                                         |
 | 1000113314 | Stage 4 (optional)                        | Malebranche (3); Pascal (2); Bacon (2); Montaigne; Bruno (2)                                                                                                          |
 | 1000113315 | Stage 5.1: German Idealism                | Kant (8); Fichte (4)                                                                                                                                                  |
-| 1000113316 | Stage 5.2                                 | Image repeats the Kant and Fichte list of 5.1. Owner states Stage 5.2 is **Hegel and Schelling** (specific works to be supplied; do not guess titles)                 |
+| 1000113316 | Stage 5.2                                 | Image repeats the Kant and Fichte list of 5.1. Owner states Stage 5.2 is **Hegel and Schelling** and supplied the eight titles (see `books-reading-path.md`)          |
 | 1000113317 | Stage 5.3                                 | Boehme (4)                                                                                                                                                            |
 | 1000113318 | Stage Six: Lebensphilosophie              | Schopenhauer (4); Nietzsche (11); Kierkegaard (6)                                                                                                                     |
 | 1000113319 | Stage Seven: Modern Philosophy            | Heidegger (4); Wittgenstein (2)                                                                                                                                       |
 | 1000113320 | Political Philosophy                      | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
 | 1000113321 | French Revolution                         | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: no **Stage One** image; Stage 5.2 needs the Hegel and Schelling titles; the owner confirmed the listed works are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: no **Stage One** image; Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 
@@ -51,5 +51,5 @@ None of the case-study claims are verified yet; this is repository metadata only
 ## Owner decisions 2026-11-01 (round 2)
 
 - Paintings: leave out _The False Mirror_, _The Human Condition_ and _Slave Market with the Disappearing Bust of Voltaire_. Seven public-domain works may be used after each credit and licence is verified from the deck sources slide.
-- Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 duplicate to be corrected once the real list is provided.
+- Books: owner states all listed works are finished. Claim status: user-confirmed (2026-11-01). Stage 5.2 titles supplied; full text transcription is in `books-reading-path.md`.
 - Music: out of launch scope.
