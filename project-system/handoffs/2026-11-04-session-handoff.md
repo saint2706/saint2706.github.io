@@ -30,6 +30,6 @@
 
 ## Exact next steps
 
-1. P02-T03 authorized 2026-11-04. Round 4 is in `design/system/`: the owner chose palette C, Sealing wax, and approved the three self-hosted OFL faces.md now records the platform, primary visitors and first-visit goal (impeccable init). Next: section components, responsive page designs, token-to-component mapping.
+1. P02-T03 authorized 2026-11-04. Round 4 is in `design/system/`: the owner chose palette C, Sealing wax, and approved the three self-hosted OFL faces. PRODUCT.md now records the platform, primary visitors and first-visit goal (impeccable init). Next: section components, responsive page designs, token-to-component mapping.
 2. Owner decides on Draupadi (link vs PD-Art image) and on the Shakuntala title.
 3. Before any image is hosted, re-open each source page and confirm its licence.
