@@ -21,6 +21,7 @@ Checks last run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 
 - No console errors and no external requests.
 - The index dialog opens, closes on Escape and closes when a link is chosen.
 - Reduced motion starts with motion off.
+- No animation runs before `shared.js` applies the motion state, so a saved "off" choice never gets a first-paint run (checked with JavaScript off).
 - A motion choice carries to the next page in all three browsers.
 - Motion (added 2026-11-04 after owner approval) uses opacity and transform only. Field cards, space headings and section blocks rise in a stagger. With motion off, no animations run on any page. With motion on, every element ends fully visible.
 

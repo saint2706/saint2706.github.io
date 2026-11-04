@@ -308,10 +308,8 @@ html[data-motion='on'] .block:nth-of-type(2) {
 html[data-motion='on'] .block:nth-of-type(n + 3) {
   animation-delay: 320ms;
 }
-/* Before shared.js resolves the state, the markup still says "on"; keep reduced-motion
-   visitors still until then. */
-@media (prefers-reduced-motion: reduce) {
-  html:not([data-motion-ready]) * {
-    animation: none !important;
-  }
+/* Before shared.js resolves the state, the markup still says "on"; hold every animation
+   until then so neither reduced motion nor a saved "off" choice gets a first-paint run. */
+html:not([data-motion-ready]) * {
+  animation: none !important;
 }
