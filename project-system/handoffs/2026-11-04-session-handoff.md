@@ -33,3 +33,5 @@
 1. P02-T03 authorized 2026-11-04. Round 4 is in `design/system/`: the owner chose palette C, Sealing wax, and approved the three self-hosted OFL faces. PRODUCT.md now records the platform, primary visitors and first-visit goal (impeccable init). Next: section components, responsive page designs, token-to-component mapping.
 2. Owner decides on Draupadi (link vs PD-Art image) and on the Shakuntala title.
 3. Before any image is hosted, re-open each source page and confirm its licence.
+4. PR #887 (`phase/p02-concept-motion`): the owner asked for auto-merge on 2026-11-04. Ruleset `protect-main` was active and no review threads were open. P02-T03 stays in progress after the merge, so start its next work on a new phase branch from `main`.
+5. The ECC Tools bot posts its audits as PR comments because its GitHub App lacks "Checks: read and write". Granting that is the owner's call. Its "ECC manifest missing" warning was left alone, since it is out of scope.
