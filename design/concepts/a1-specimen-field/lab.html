@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab: A1 Specimen Field (design concept, DRAFT)</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      /* Lab space: the dashed outline from the field card, used as a bench of unfinished trays. */
+      .space-head .mark {
+        background: transparent;
+        border: 2px dashed var(--mid);
+        border-radius: 28px;
+      }
+      .bench {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .bench > li {
+        border: 2px dashed var(--mid);
+        border-radius: 20px;
+        padding: 20px;
+        background: var(--white);
+      }
+      .bench h3 {
+        margin: 0;
+        font-size: 1.125rem;
+      }
+      .bench p {
+        margin: 8px 0 0;
+      }
+      .status {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 4px 12px;
+        border: 1.5px solid var(--ink);
+        border-radius: 999px;
+        font-size: 0.8125rem;
+      }
+      @media (max-width: 1024px) {
+        .bench {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 720px) {
+        .bench {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="bar">
+      <a class="name" href="index.html">RISHABH AGRAWAL</a>
+      <div class="controls">
+        <button class="btn" type="button" data-motion-toggle aria-pressed="true">Motion: on</button>
+        <button class="btn" type="button" data-open-index>Index</button>
+      </div>
+    </header>
+    <main id="content" class="space" tabindex="-1">
+      <div class="space-head">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <h1>Lab</h1>
+          <p>Experiments. Some of this works.</p>
+          <p class="draft">
+            DRAFT. Lab content is not chosen yet; the trays below are features that already exist on
+            the current site, shown as candidates only. Tones are greyscale placeholders.
+          </p>
+        </div>
+      </div>
+
+      <section class="block" id="bench" aria-labelledby="bench-h">
+        <h2 id="bench-h"><span class="num">01</span>On the bench</h2>
+        <ul class="bench">
+          <li>
+            <h3>Nine small games</h3>
+            <p>
+              Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, Lights Out,
+              2048 and Connect Four.
+            </p>
+            <span class="status">candidate</span>
+          </li>
+          <li>
+            <h3>Code playground</h3>
+            <p>
+              Python one-liners run in the browser, CSS snippets and an editable JavaScript and HTML
+              sandbox.
+            </p>
+            <span class="status">candidate</span>
+          </li>
+          <li>
+            <h3>AI chat and resume roast</h3>
+            <p>A Gemini-backed chat assistant and a resume roast.</p>
+            <span class="status">candidate</span>
+          </li>
+        </ul>
+        <p class="note">
+          Each tray would open its own page with a plain description, a keyboard path and a
+          reduced-motion version before it ships.
+        </p>
+      </section>
+
+      <nav class="next" aria-label="Other spaces">
+        <p><a href="professional.html">Back to work</a></p>
+        <p><a href="personal.html">Off the clock: art, myth and books</a></p>
+      </nav>
+    </main>
+    <div class="bottom">
+      <button class="btn" type="button" data-open-index>Index</button>
+      <button class="btn" type="button" data-motion-toggle aria-pressed="true">Motion: on</button>
+    </div>
+    <dialog id="index" aria-labelledby="index-title">
+      <h2 id="index-title">Index</h2>
+      <ul>
+        <li><a href="index.html">Field (home)</a></li>
+        <li><a href="professional.html">Work: projects and roles</a></li>
+        <li><a href="professional.html#writing">Writing and notes</a></li>
+        <li><a href="personal.html#art">Art and myth</a></li>
+        <li><a href="personal.html#books">Books</a></li>
+        <li><a href="lab.html" aria-current="page">Lab: experiments</a></li>
+        <li><a href="professional.html#contact">Contact</a></li>
+      </ul>
+      <button class="btn" type="button" data-close-index>Close</button>
+    </dialog>
+    <script src="shared.js"></script>
+  </body>
+</html>

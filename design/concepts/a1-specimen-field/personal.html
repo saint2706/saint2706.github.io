@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" data-motion="on">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Off the clock: A1 Specimen Field (design concept, DRAFT)</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="shared.css" />
+    <style>
+      /* Personal space: a darker ground and portrait frames, so crossing the gateway reads as a change of room. */
+      body {
+        background: var(--soft);
+      }
+      .space-head .mark {
+        aspect-ratio: 3 / 4;
+        background: var(--ink);
+      }
+      .frames {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        align-items: end;
+      }
+      .frames li {
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        padding: 8px;
+      }
+      .frames li span {
+        display: block;
+        background: var(--soft-2);
+      }
+      .frames li:nth-child(odd) span {
+        aspect-ratio: 3 / 4;
+      }
+      .frames li:nth-child(even) span {
+        aspect-ratio: 4 / 3;
+      }
+      .stages {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .stages > li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--soft-2);
+      }
+      .stages .count {
+        color: var(--mid);
+        white-space: nowrap;
+      }
+      .stages ol {
+        margin: 8px 0 0;
+        padding-left: 20px;
+        color: var(--ink);
+      }
+      .stages ol li {
+        padding: 2px 0;
+      }
+      .stages .open {
+        display: block;
+      }
+      @media (max-width: 1024px) {
+        .frames {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 720px) {
+        .frames {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="bar">
+      <a class="name" href="index.html">RISHABH AGRAWAL</a>
+      <div class="controls">
+        <button class="btn" type="button" data-motion-toggle aria-pressed="true">Motion: on</button>
+        <button class="btn" type="button" data-open-index>Index</button>
+      </div>
+    </header>
+    <main id="content" class="space" tabindex="-1">
+      <div class="space-head">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <h1>Off the clock</h1>
+          <p>Art, myth and the books on the shelf.</p>
+          <p class="draft">
+            DRAFT. No opinions or notes are written for the owner; this space shows structure only.
+            Tones are greyscale placeholders.
+          </p>
+        </div>
+      </div>
+
+      <section class="block" id="art" aria-labelledby="art-h">
+        <h2 id="art-h"><span class="num">01</span>Art and myth</h2>
+        <div>
+          <ul class="frames" aria-label="Seven painting slots, credits pending">
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+            <li><span aria-hidden="true"></span></li>
+          </ul>
+          <p class="note">
+            Seven public-domain paintings go here once each credit and licence is verified. The
+            three in-copyright works are left out.
+          </p>
+          <h3>Essays on myth</h3>
+          <ul class="plain">
+            <li>
+              <a
+                href="https://saint2706.medium.com/the-absent-god-what-if-krishna-was-never-part-of-the-mahabharata-ca62f62b4802"
+                >The Absent God: What if Krishna Was Never Part of the Mahabharata?</a
+              >
+            </li>
+            <li>
+              <a href="https://saint2706.medium.com/beyond-the-myth-2db5dfedce11"
+                >Beyond the Myth</a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="block" id="books" aria-labelledby="books-h">
+        <h2 id="books-h"><span class="num">02</span>Books</h2>
+        <div>
+          <p>A philosophy reading path in thirteen stages, 123 works, all finished.</p>
+          <ol class="stages" aria-label="Reading path stages">
+            <li>
+              <div>
+                <span class="open">Stage One: Good books to get into philosophy</span>
+                <ol>
+                  <li>Homer, <cite>Iliad</cite></li>
+                  <li>Homer, <cite>Odyssey</cite></li>
+                  <li>Plato, <cite>Complete Works</cite></li>
+                  <li>Aristotle, <cite>The Complete Works of Aristotle</cite></li>
+                  <li>Heraclitus, <cite>Fragments</cite></li>
+                  <li>Parmenides, <cite>Fragments</cite></li>
+                  <li>Lucretius, <cite>On the Nature of Things</cite></li>
+                  <li>Aeschylus, <cite>The Persians and Other Plays</cite></li>
+                </ol>
+              </div>
+              <span class="count">8 works</span>
+            </li>
+            <li><span>Stage Two</span><span class="count">8 works</span></li>
+            <li><span>Stage Three: The Middle Ages</span><span class="count">12 works</span></li>
+            <li>
+              <span>Stage 4.1: Early Modern Rationalists</span><span class="count">4 works</span>
+            </li>
+            <li>
+              <span>Stage 4.2: Early Modern Empiricists</span><span class="count">11 works</span>
+            </li>
+            <li><span>Stage 4, optional</span><span class="count">10 works</span></li>
+            <li><span>Stage 5.1: German Idealism</span><span class="count">12 works</span></li>
+            <li><span>Stage 5.2: Hegel and Schelling</span><span class="count">8 works</span></li>
+            <li><span>Stage 5.3</span><span class="count">4 works</span></li>
+            <li><span>Stage Six: Lebensphilosophie</span><span class="count">21 works</span></li>
+            <li><span>Stage Seven: Modern Philosophy</span><span class="count">6 works</span></li>
+            <li><span>Political Philosophy</span><span class="count">10 works</span></li>
+            <li><span>French Revolution</span><span class="count">9 works</span></li>
+          </ol>
+          <p class="note">
+            Only Stage One is expanded in this concept. If the stage scheme comes from a published
+            curriculum, it needs a credit.
+          </p>
+        </div>
+      </section>
+
+      <nav class="next" aria-label="Other spaces">
+        <p><a href="professional.html">Back to work</a></p>
+        <p><a href="lab.html">The lab: experiments</a></p>
+      </nav>
+    </main>
+    <div class="bottom">
+      <button class="btn" type="button" data-open-index>Index</button>
+      <button class="btn" type="button" data-motion-toggle aria-pressed="true">Motion: on</button>
+    </div>
+    <dialog id="index" aria-labelledby="index-title">
+      <h2 id="index-title">Index</h2>
+      <ul>
+        <li><a href="index.html">Field (home)</a></li>
+        <li><a href="professional.html">Work: projects and roles</a></li>
+        <li><a href="professional.html#writing">Writing and notes</a></li>
+        <li><a href="#art" aria-current="page">Art and myth</a></li>
+        <li><a href="#books">Books</a></li>
+        <li><a href="lab.html">Lab: experiments</a></li>
+        <li><a href="professional.html#contact">Contact</a></li>
+      </ul>
+      <button class="btn" type="button" data-close-index>Close</button>
+    </dialog>
+    <script src="shared.js"></script>
+  </body>
+</html>

@@ -19,3 +19,16 @@ Targeted questions still to the owner (asked in chat): flagship projects, what e
 - Reading lists: the owner has finished reading them. Stage 5.2 is Hegel and Schelling per the owner, who supplied the eight titles on 2026-11-01 (see `books-reading-path.md`).
 - Music space left out of launch scope.
 - Design medium switched to code-first (ADR-005).
+
+## Space pages (code-first concept, 2026-11-04)
+
+Copy in `design/concepts/a1-specimen-field/{professional,personal,lab}.html`. Facts are restated from `src/data/resume.js`, `src/data/blogs.json`, `books-verified.json` and owner decisions above. No metrics are shown (the resume's 25% and 1,700+ figures are left out until sourced).
+
+| ID   | Where           | Draft wording                                           | Source of fact                                                       | Type             | Status              |
+| ---- | --------------- | ------------------------------------------------------- | -------------------------------------------------------------------- | ---------------- | ------------------- |
+| C-07 | Work page       | Project, role and study descriptions                    | resume.js, owner's flagship choice                                   | repository fact  | needs-user-approval |
+| C-08 | Work page notes | Archived-repo and face-data privacy notes               | owner decisions 2026-11-01                                           | editorial note   | needs-user-approval |
+| C-09 | Personal page   | Off the clock / Art, myth and the books on the shelf.   | tone only                                                            | tone             | needs-user-approval |
+| C-10 | Personal books  | A philosophy reading path in thirteen stages, 123 works | books-verified.json (123 kept), owner: all finished                  | personal claim   | needs-user-approval |
+| C-11 | Lab page        | Experiments. Some of this works. / candidate trays      | features on the current site (games, playground, Gemini chat, roast) | tone + repo fact | needs-user-approval |
+| C-12 | Gateway link    | Off the clock: art, myth and books                      | tone only                                                            | tone             | needs-user-approval |
