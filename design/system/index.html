@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Design system, round 4</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      /* P02-T03 round 4. The owner chose palette C (Sealing wax) and approved the faces 2026-11-04.
+         Faces are self-hosted from ./fonts (SIL OFL 1.1). No external requests.
+         The script only fills the measured contrast table. */
+      @font-face {
+        font-family: 'Young Serif';
+        src: url('fonts/young-serif-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-400-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-700-normal.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Mono';
+        src: url('fonts/atkinson-hyperlegible-mono-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      :root {
+        --sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+        --serif: 'Young Serif', Georgia, serif;
+        --mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        /* Type scale: 1.25 ratio from 1rem. Display clamps so it never passes 4.5rem. */
+        --step--1: 0.8rem;
+        --step-0: 1rem;
+        --step-1: 1.25rem;
+        --step-2: 1.5625rem;
+        --step-3: 1.953rem;
+        --step-4: 2.441rem;
+        --step-5: clamp(2.441rem, 5vw, 3.815rem);
+        --step-6: clamp(3.052rem, 7vw, 4.5rem);
+        /* Spacing: 4px base. */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 16px;
+        --space-4: 24px;
+        --space-5: 40px;
+        --space-6: 64px;
+        --space-7: 96px;
+        --gutter: 48px;
+
+        /* Palette: Sealing wax. Graphite paper and oxblood; the personal room is aubergine velvet with gold leaf. */
+        --pro-canvas: #f6f6f7;
+        --pro-ink: #141416;
+        --pro-ink-2: #57565e;
+        --pro-rule: #d3d3d8;
+        --pro-accent: #8f1d2c;
+        --per-canvas: #1c1220;
+        --per-ink: #f1e7ef;
+        --per-ink-2: #bba9b8;
+        --per-rule: #3a2a3e;
+        --per-accent: #e7b04f;
+        --lab-canvas: #f2f5f7;
+        --lab-ink: #101820;
+        --lab-ink-2: #4c5864;
+        --lab-rule: #c6d0d8;
+        --lab-accent: #00697f;
+      }
+
+      /* Semantic roles. Each space remaps the same names, so components never name a palette. */
+      body,
+      .pro {
+        --canvas: var(--pro-canvas);
+        --ink: var(--pro-ink);
+        --ink-2: var(--pro-ink-2);
+        --rule: var(--pro-rule);
+        --accent: var(--pro-accent);
+      }
+      .per {
+        --canvas: var(--per-canvas);
+        --ink: var(--per-ink);
+        --ink-2: var(--per-ink-2);
+        --rule: var(--per-rule);
+        --accent: var(--per-accent);
+      }
+      .lab {
+        --canvas: var(--lab-canvas);
+        --ink: var(--lab-ink);
+        --ink-2: var(--lab-ink-2);
+        --rule: var(--lab-rule);
+        --accent: var(--lab-accent);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font: var(--step-0) / 1.5 var(--sans);
+        accent-color: var(--accent);
+        font-synthesis: none;
+        caret-color: var(--accent);
+      }
+      html {
+        scrollbar-color: var(--pro-ink-2) var(--pro-canvas);
+      }
+      ::selection {
+        background: var(--accent);
+        color: var(--canvas);
+      }
+      a {
+        color: var(--accent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.2em;
+        transition: text-decoration-thickness 0.2s var(--ease);
+      }
+      a:hover {
+        text-decoration-thickness: 3px;
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .skip {
+        position: absolute;
+        left: 8px;
+        top: -60px;
+        padding: 12px 16px;
+        background: var(--ink);
+        color: var(--canvas);
+      }
+      .skip:focus {
+        top: 8px;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      header.top {
+        padding: var(--space-5) 0 var(--space-4);
+      }
+      header.top h1 {
+        margin: 0;
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: var(--step-4);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+      }
+      .lede {
+        max-width: 62ch;
+        margin: var(--space-3) 0 0;
+        color: var(--ink-2);
+      }
+      .provisional {
+        display: inline-block;
+        margin-top: var(--space-3);
+        padding: 2px 10px;
+        border: 1.5px solid var(--ink-2);
+        border-radius: 0.75rem;
+        font-size: var(--step--1);
+        color: var(--ink-2);
+      }
+      section {
+        padding-top: var(--space-6);
+      }
+      section > h2 {
+        margin: 0 0 var(--space-2);
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: var(--step-3);
+        line-height: 1.15;
+      }
+      section > p {
+        max-width: 66ch;
+        margin: 0 0 var(--space-4);
+        color: var(--ink-2);
+      }
+
+      /* Three spaces side by side */
+      .spaces {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr 1fr;
+        gap: var(--space-3);
+      }
+      .space {
+        background: var(--canvas);
+        color: var(--ink);
+        padding: var(--space-4);
+        border: 1px solid var(--rule);
+        min-width: 0;
+      }
+      .space.per {
+        border-color: var(--per-canvas);
+      }
+      .space.lab {
+        border: 2px dashed var(--ink-2);
+        border-radius: 20px;
+      }
+      .space h3 {
+        margin: var(--space-2) 0 var(--space-3);
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: var(--step-3);
+        line-height: 1.1;
+      }
+      .space.lab h3 {
+        font-family: var(--sans);
+        letter-spacing: -0.02em;
+      }
+      .space p {
+        margin: 0 0 var(--space-3);
+      }
+      .space .meta {
+        color: var(--ink-2);
+        font-size: 0.9375rem;
+      }
+      .specimen {
+        display: block;
+        height: 120px;
+        margin-bottom: var(--space-4);
+        background: var(--ink);
+      }
+      .pro .specimen {
+        width: 60%;
+        background: var(--accent);
+      }
+      .per .specimen {
+        width: 120px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .lab .specimen {
+        width: 120px;
+        background: transparent;
+        border: 2px dashed var(--accent);
+        border-radius: 24px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        align-items: center;
+        margin-top: var(--space-4);
+      }
+      .btn {
+        min-height: 44px;
+        padding: 0 20px;
+        border: 2px solid var(--ink);
+        border-radius: 22px;
+        background: transparent;
+        color: var(--ink);
+        font: 700 0.9375rem var(--sans);
+        cursor: pointer;
+        transition:
+          background-color 0.2s var(--ease),
+          color 0.2s var(--ease);
+      }
+      .btn:hover {
+        background: var(--ink);
+        color: var(--canvas);
+      }
+      .btn[disabled] {
+        border-style: dashed;
+        border-color: var(--ink-2);
+        color: var(--ink-2);
+        background: transparent;
+        cursor: not-allowed;
+      }
+      .swatch-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--space-1);
+        margin: var(--space-4) 0 0;
+        padding: 0;
+        list-style: none;
+        font: var(--step--1) / 1.3 var(--mono);
+      }
+      .swatch-list li::before {
+        content: '';
+        display: block;
+        height: 28px;
+        margin-bottom: var(--space-1);
+        background: var(--c);
+        border: 1px solid var(--rule);
+      }
+
+      /* Measured contrast */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9375rem;
+      }
+      caption {
+        text-align: left;
+        padding-bottom: var(--space-2);
+        color: var(--ink-2);
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px 10px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      td.num {
+        font-family: var(--mono);
+        font-variant-numeric: tabular-nums;
+      }
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      /* Type scale */
+      .scale {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .scale li {
+        display: grid;
+        grid-template-columns: 9rem 1fr;
+        gap: var(--space-4);
+        align-items: baseline;
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .scale code {
+        font: var(--step--1) var(--mono);
+        color: var(--ink-2);
+      }
+      .scale span {
+        overflow-wrap: anywhere;
+        line-height: 1.1;
+      }
+      .pairing {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+        margin-top: var(--space-5);
+      }
+      .pairing h3 {
+        margin: 0 0 var(--space-2);
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: var(--step-2);
+        line-height: 1.2;
+      }
+      .pairing p {
+        max-width: 65ch;
+        margin: 0 0 var(--space-3);
+      }
+      .pairing .sans h3 {
+        font-family: var(--sans);
+      }
+
+      /* States */
+      .states {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+      }
+      .state {
+        padding: var(--space-4);
+        border: 1px solid var(--rule);
+      }
+      .state h3 {
+        margin: 0 0 var(--space-3);
+        font-size: var(--step-0);
+      }
+      .field label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: var(--space-1);
+      }
+      .field input {
+        width: 100%;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 1.5px solid var(--ink-2);
+        border-radius: 8px;
+        background: var(--canvas);
+        color: var(--ink);
+        font: inherit;
+      }
+      .field input[aria-invalid='true'] {
+        border-width: 2px;
+        border-color: var(--accent);
+      }
+      .field .err {
+        margin: var(--space-1) 0 0;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .rise {
+        display: block;
+        height: 40px;
+        width: 40%;
+        background: var(--accent);
+      }
+      .play .rise {
+        animation: rise 0.8s var(--ease) both;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .play .rise {
+          animation: none;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+      footer {
+        padding: var(--space-7) 0 var(--space-6);
+        color: var(--ink-2);
+        font-size: var(--step--1);
+      }
+
+      @media (max-width: 1024px) {
+        :root {
+          --gutter: 32px;
+        }
+        .spaces,
+        .states {
+          grid-template-columns: 1fr;
+        }
+        .pairing {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        :root {
+          --gutter: 20px;
+        }
+        .scale li {
+          grid-template-columns: 1fr;
+          gap: var(--space-1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <main id="main" tabindex="-1">
+      <div class="wrap">
+        <header class="top">
+          <h1>Design system, round 4</h1>
+          <p class="lede">
+            Sealing wax, the palette you picked, on the approved A1 field with the approved faces, a
+            type scale and the interaction states. The professional space, the personal room and the
+            lab each get their own colours on the same roles, so components never name a colour.
+          </p>
+          <span class="provisional"
+            >Palette and faces approved. Components and pages still to come</span
+          >
+        </header>
+
+        <section aria-labelledby="h-palette">
+          <h2 id="h-palette">Palette: Sealing wax</h2>
+          <div class="spaces">
+            <article class="space pro" aria-labelledby="s-pro">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-pro">Work</h3>
+              <p>Light canvas, one accent kept for links and actions. Serif headings, sans body.</p>
+              <p class="meta">Secondary text uses the space's own ink, never a neutral grey.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Professional tokens">
+                <li style="--c: var(--pro-canvas)">canvas</li>
+                <li style="--c: var(--pro-ink)">ink</li>
+                <li style="--c: var(--pro-ink-2)">ink-2</li>
+                <li style="--c: var(--pro-rule)">rule</li>
+                <li style="--c: var(--pro-accent)">accent</li>
+              </ul>
+            </article>
+
+            <article class="space per" aria-labelledby="s-per">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-per">Off the clock</h3>
+              <p>
+                The darker room. Paintings sit on a deep ground, so their colour carries the page.
+              </p>
+              <p class="meta">A warm accent reads clearly on the dark canvas.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Personal tokens">
+                <li style="--c: var(--per-canvas)">canvas</li>
+                <li style="--c: var(--per-ink)">ink</li>
+                <li style="--c: var(--per-ink-2)">ink-2</li>
+                <li style="--c: var(--per-rule)">rule</li>
+                <li style="--c: var(--per-accent)">accent</li>
+              </ul>
+            </article>
+
+            <article class="space lab" aria-labelledby="s-lab">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-lab">Lab</h3>
+              <p>
+                The A1 dashed outline is kept as the lab's mark. Sans headings, tighter tracking.
+              </p>
+              <p class="meta">A cooler accent sets it apart from Work.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Lab tokens">
+                <li style="--c: var(--lab-canvas)">canvas</li>
+                <li style="--c: var(--lab-ink)">ink</li>
+                <li style="--c: var(--lab-ink-2)">ink-2</li>
+                <li style="--c: var(--lab-rule)">rule</li>
+                <li style="--c: var(--lab-accent)">accent</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-contrast">
+          <h2 id="h-contrast">Measured contrast</h2>
+          <p>
+            Read from the colours on the page, so the table cannot drift from the CSS. AA needs
+            4.5:1 for body text and 3:1 for large text, focus rings and control borders. Rules are
+            decorative separators, so they have no minimum.
+          </p>
+          <div class="table-scroll">
+            <table>
+              <caption id="contrast-caption">
+                Contrast against each space's canvas
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Space</th>
+                  <th scope="col">Ink</th>
+                  <th scope="col">Ink-2</th>
+                  <th scope="col">Accent</th>
+                  <th scope="col">Result</th>
+                </tr>
+              </thead>
+              <tbody id="contrast-body">
+                <tr>
+                  <td colspan="5">
+                    Needs JavaScript. Every pair passed AA when checked on 2026-11-04.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-type">
+          <h2 id="h-type">Type</h2>
+          <p>
+            A 1.25 scale from 16px. Headings: Young Serif, a single-weight face drawn after old
+            specimen and label lettering. Body and interface: Atkinson Hyperlegible Next, designed
+            by the Braille Institute so similar letters stay distinct. Code and data: Atkinson
+            Hyperlegible Mono. All three are SIL Open Font Licence, self-hosted, about 76 KB in
+            total.
+          </p>
+          <ul class="scale">
+            <li>
+              <code>step-6 display</code
+              ><span style="font: 400 var(--step-6) / 1 var(--serif)">Rishabh Agrawal</span>
+            </li>
+            <li>
+              <code>step-5</code
+              ><span style="font: 400 var(--step-5) / 1.05 var(--serif)">Off the clock</span>
+            </li>
+            <li>
+              <code>step-4 page h1</code
+              ><span style="font: 400 var(--step-4) / 1.1 var(--serif)">Work</span>
+            </li>
+            <li>
+              <code>step-3 h2</code
+              ><span style="font: 400 var(--step-3) / 1.15 var(--serif)">Flagship projects</span>
+            </li>
+            <li>
+              <code>step-2 h3</code
+              ><span style="font: 400 var(--step-2) / 1.2 var(--serif)">Reading path</span>
+            </li>
+            <li>
+              <code>step-1 lead</code
+              ><span style="font-size: var(--step-1)"
+                >Larger body text for an opening paragraph.</span
+              >
+            </li>
+            <li><code>step-0 body</code><span>Body text at 16px with 1.5 line height.</span></li>
+            <li>
+              <code>step--1 small</code
+              ><span style="font-size: var(--step--1)"
+                >Credits and captions; <em>titles of works</em> set in italic.</span
+              >
+            </li>
+          </ul>
+          <div class="pairing">
+            <div>
+              <h3>Serif heading, sans body</h3>
+              <p>
+                Used for Work and Off the clock. The serif gives headings an archival feel and the
+                sans keeps long text plain. Body lines stop at about 65 characters.
+              </p>
+            </div>
+            <div class="sans">
+              <h3>Sans throughout</h3>
+              <p>
+                Used for the Lab, where the pages are tools and notes. Monospace is used only for
+                code, data and measurements, never as decoration.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-states">
+          <h2 id="h-states">States</h2>
+          <p>
+            Tab through this section to see focus. Every state has a cue that does not depend on
+            colour.
+          </p>
+          <div class="states">
+            <div class="state">
+              <h3>Focus, hover, disabled</h3>
+              <p><a href="#h-states">Link: underline thickens on hover</a></p>
+              <div class="row">
+                <button class="btn" type="button">Hover fills</button>
+                <button class="btn" type="button" disabled>Disabled</button>
+              </div>
+              <p class="meta" style="margin-top: var(--space-3)">
+                Focus ring: 3px accent outline, offset 3px. Disabled: dashed border, not just paler.
+              </p>
+            </div>
+            <div class="state">
+              <h3>Error</h3>
+              <div class="field">
+                <label for="demo-email">Email</label>
+                <input
+                  id="demo-email"
+                  type="email"
+                  value="name@"
+                  aria-invalid="true"
+                  aria-describedby="demo-email-err"
+                />
+                <p class="err" id="demo-email-err">
+                  Add the part after @, for example name@example.com.
+                </p>
+              </div>
+            </div>
+            <div class="state">
+              <h3>Motion</h3>
+              <p class="meta">
+                One entrance: a 16px rise with an ease-out curve. It is off when the system asks for
+                reduced motion.
+              </p>
+              <div class="row" id="motion-demo">
+                <span class="rise" aria-hidden="true"></span>
+              </div>
+              <div class="row"><button class="btn" type="button" id="replay">Replay</button></div>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          P02-T03 round 4, 2026-11-04. Font licences are in <code>design/system/fonts</code>.
+          Code-first under ADR-005. Builds on the approved A1 concept in
+          <a href="../concepts/a1-specimen-field/index.html">design/concepts/a1-specimen-field</a>.
+        </footer>
+      </div>
+    </main>
+    <script>
+      // Measures the rendered colours, so the table cannot drift from the CSS.
+      (function () {
+        var probe = document.createElement('span');
+        document.body.appendChild(probe);
+        function rgb(value) {
+          probe.style.color = value;
+          return getComputedStyle(probe)
+            .color.match(/[\d.]+/g)
+            .slice(0, 3)
+            .map(Number);
+        }
+        function lum(c) {
+          var v = c.map(function (x) {
+            x /= 255;
+            return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+          });
+          return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+        }
+        function ratio(a, b) {
+          var x = lum(rgb(a)),
+            y = lum(rgb(b));
+          return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+        }
+        function render() {
+          var css = getComputedStyle(document.documentElement);
+          var rows = [
+            ['Work', 'pro'],
+            ['Off the clock', 'per'],
+            ['Lab', 'lab'],
+          ].map(function (s) {
+            var get = function (k) {
+              return css.getPropertyValue('--' + s[1] + '-' + k).trim();
+            };
+            var r = ['ink', 'ink-2', 'accent'].map(function (k) {
+              return ratio(get(k), get('canvas'));
+            });
+            var pass = r[0] >= 4.5 && r[1] >= 4.5 && r[2] >= 4.5;
+            return (
+              '<tr><th scope="row">' +
+              s[0] +
+              '</th>' +
+              r
+                .map(function (n) {
+                  return '<td class="num">' + n.toFixed(2) + ':1</td>';
+                })
+                .join('') +
+              '<td>' +
+              (pass ? 'Passes AA' : 'Fails AA') +
+              '</td></tr>'
+            );
+          });
+          document.getElementById('contrast-body').innerHTML = rows.join('');
+        }
+        render();
+        var demo = document.getElementById('motion-demo');
+        document.getElementById('replay').addEventListener('click', function () {
+          demo.classList.remove('play');
+          void demo.offsetWidth;
+          demo.classList.add('play');
+        });
+      })();
+    </script>
+  </body>
+</html>

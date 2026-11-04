@@ -11,6 +11,7 @@ const readSaved = () => {
 };
 const setMotion = (on, save) => {
   root.dataset.motion = on ? 'on' : 'off';
+  root.dataset.motionReady = '';
   document.querySelectorAll('[data-motion-toggle]').forEach(b => {
     b.setAttribute('aria-pressed', String(on));
     b.textContent = on ? 'Motion: on' : 'Motion: off';

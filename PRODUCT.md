@@ -2,6 +2,20 @@
 
 A personal website centered on Rishabh Agrawal, designed as an evolving personal universe rather than a narrow professional landing page. The experience should make visitors curious enough to explore.
 
+<!-- impeccable:product-schema 1 -->
+
+## Platform
+
+web
+
+## Users
+
+Primary visitors, confirmed by the owner 2026-11-04: recruiters and hiring teams, and peers and collaborators (developers, data people, classmates). Learners and general readers may arrive but are not the first audience.
+
+## Success
+
+The owner's stated first-visit goal (2026-11-04): a visitor comes away with a sense of who Rishabh is beyond work, through the personal space. Judging technical work and reaching him remain supported paths (see Project storytelling and Professional/contact).
+
 ## Spaces
 
 1. **Professional:** identity, selected projects, editorial case studies, verified professional details, relevant writing and contact.

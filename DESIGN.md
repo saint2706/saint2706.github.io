@@ -1,8 +1,14 @@
 # Design direction and governance
 
-## Unresolved at pack creation
+## Approved so far
 
-No final concept, palette, font pairing, grid or component library has been approved. Research and Figma exploration precede these choices.
+- Concept: A1 Specimen Field, approved by the owner 2026-11-04 (`design/concepts/a1-specimen-field/`).
+- Palette: C Sealing wax, chosen by the owner 2026-11-04 (after Vermilion was reopened). Tokens live in `design/system/index.html`; professional, personal and lab each map the same roles to their own colours.
+- Faces: Young Serif (headings), Atkinson Hyperlegible Next (body and interface) and Atkinson Hyperlegible Mono (code and data), approved by the owner 2026-11-04. All SIL OFL 1.1, self-hosted.
+
+## Still provisional
+
+Grid, section components and responsive page designs. None is final until the owner approves it.
 
 ## Principles
 

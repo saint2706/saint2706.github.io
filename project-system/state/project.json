@@ -11,7 +11,7 @@
   "phase_authorization": {
     "P00": "complete",
     "P01": "complete",
-    "P02": "authorized: P02-T01 (complete) and P02-T02 (in review) authorized; P02-T03 and P03–P07 not authorized; no production release",
+    "P02": "authorized: P02-T01 (complete) and P02-T02 (complete, concept approved 2026-11-04) and P02-T03 (in progress, authorized 2026-11-04) authorized; P03–P07 not authorized; no production release",
     "P03": "pending-approval",
     "P04": "pending-approval",
     "P05": "pending-approval",

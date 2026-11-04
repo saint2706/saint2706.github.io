@@ -1,7 +1,7 @@
 # Session handoff: 2026-11-04
 
-- Current phase: P02. Authorized: P02-T01 (complete) and P02-T02 (in review). P02-T03 and P03–P07 are NOT authorized. No production release. Source of truth: `project-system/state/approvals.json`.
-- Phase branch: `phase/p02-concept-spaces`. It changes only `design/` and `project-system/` docs.
+- Current phase: P02. Authorized: P02-T01 (complete), P02-T02 (complete, concept approved 2026-11-04) and P02-T03 (in progress, authorized 2026-11-04). P03–P07 are NOT authorized. No production release. Source of truth: `project-system/state/approvals.json`.
+- Phase branches: `phase/p02-concept-spaces` (merged as PR #886), then `phase/p02-concept-motion`. It changes only `design/` and `project-system/` docs.
 - Previous handoff: `2026-11-01-session-handoff.md`. Its decisions, risks (R1–R5) and "Do not" list still apply.
 
 ## Completed this session
@@ -21,8 +21,17 @@
 - Screenshots were reviewed at 834 and 1440 px.
 - Manual screen-reader testing is not done.
 
+## Owner answers (2026-11-04, later the same day)
+
+- The A1 concept is approved and motion is added: a staggered rise using opacity and transform only, gated by the motion toggle and reduced-motion. P02-T02 is marked complete.
+- Painting credits were read from the deck in the ZIP and recorded in `content-inventory-art-books.md`. Five are fine under PD-Art, Goya's Caprichos 43 is CC0 from the Met, and Kollwitz needs its Städel licence confirmed. Draupadi is the weakest: an Ashmolean photo while the Met restricts reuse, so a link to the Met page is preferred. The live source pages were not re-opened.
+- Instagram `@saintkaprivate` is public and is now in the contact list.
+- The reading-path stage scheme is the owner's own, not from a published curriculum, so the credit note is removed.
+
 ## Exact next steps
 
-1. Get owner feedback on the four concept pages and the open questions from the previous handoff (Instagram, reading-path credit, P02-T03).
-2. Verify the seven public-domain painting credits (step 4 of the previous handoff).
-3. Only after concept approval, ask for explicit P02-T03 authorization.
+1. P02-T03 authorized 2026-11-04. Round 4 is in `design/system/`: the owner chose palette C, Sealing wax, and approved the three self-hosted OFL faces. PRODUCT.md now records the platform, primary visitors and first-visit goal (impeccable init). Next: section components, responsive page designs, token-to-component mapping.
+2. Owner decides on Draupadi (link vs PD-Art image) and on the Shakuntala title.
+3. Before any image is hosted, re-open each source page and confirm its licence.
+4. PR #887 (`phase/p02-concept-motion`): the owner asked for auto-merge on 2026-11-04. Ruleset `protect-main` was active and no review threads were open. P02-T03 stays in progress after the merge, so start its next work on a new phase branch from `main`.
+5. The ECC Tools bot posts its audits as PR comments because its GitHub App lacks "Checks: read and write". Granting that is the owner's call. Its "ECC manifest missing" warning was left alone, since it is out of scope.

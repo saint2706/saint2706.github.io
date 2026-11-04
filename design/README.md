@@ -12,7 +12,7 @@ Code-first design concepts (see `project-system/decisions/ADR-005-design-medium.
 
 Layouts: desktop (≥1025 px), tablet (721–1024 px; space pages drop to one column, the field keeps three) and phone (≤720 px, fixed bottom bar for Index and Motion).
 
-Checks run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 px, across all four pages:
+Checks last run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 px, across all four pages:
 
 - No horizontal overflow.
 - Non-inline targets are at least 44 px tall. Inline text links have at least an 18 px line box.
@@ -21,8 +21,16 @@ Checks run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 p
 - No console errors and no external requests.
 - The index dialog opens, closes on Escape and closes when a link is chosen.
 - Reduced motion starts with motion off.
+- No animation runs before `shared.js` applies the motion state, so a saved "off" choice never gets a first-paint run (checked with JavaScript off).
 - A motion choice carries to the next page in all three browsers.
+- Motion (added 2026-11-04 after owner approval) uses opacity and transform only. Field cards, space headings and section blocks rise in a stagger. With motion off, no animations run on any page. With motion on, every element ends fully visible.
 
 Earlier skip-link result (still applies): focus moves to `main`. WebKit's next-Tab check is inconclusive because Safari skips links when tabbing by default.
 
 Manual screen-reader testing is not done.
+
+## Design system (P02-T03, provisional)
+
+`system/index.html` is round 4. The owner reopened the palette, saw three new options and chose C, Sealing wax, on 2026-11-04; the switcher is gone. The owner approved the faces the same day: Young Serif (headings), Atkinson Hyperlegible Next (body and interface) and Atkinson Hyperlegible Mono (code and data). All three are SIL OFL 1.1 and self-hosted in `system/fonts/` with their licence files, about 76 KB in total. The contrast table is measured from the page's own colours. Checks run on 2026-11-04 in three browsers at three widths: no overflow, one `h1`, targets at least 44 px, every pair passes AA, all five font files load, no console errors or external requests, and no CSS animation runs under reduced motion.
+
+The impeccable detector reports no findings, so the round 2 cream-palette exception is removed from `.impeccable/config.json`.

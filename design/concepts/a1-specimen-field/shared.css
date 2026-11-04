@@ -282,3 +282,34 @@ dialog li a[aria-current='page'] {
     width: 64px;
   }
 }
+
+/* Motion: runs only while data-motion is on (reduced motion starts it off). Opacity and
+   transform only, so nothing shifts layout. */
+@keyframes a1-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+html[data-motion='on'] .space-head .mark,
+html[data-motion='on'] .space-head > div,
+html[data-motion='on'] .block {
+  animation: a1-rise 0.7s var(--ease) both;
+}
+html[data-motion='on'] .space-head > div {
+  animation-delay: 80ms;
+}
+html[data-motion='on'] .block:nth-of-type(1) {
+  animation-delay: 160ms;
+}
+html[data-motion='on'] .block:nth-of-type(2) {
+  animation-delay: 240ms;
+}
+html[data-motion='on'] .block:nth-of-type(n + 3) {
+  animation-delay: 320ms;
+}
+/* Before shared.js resolves the state, the markup still says "on"; hold every animation
+   until then so neither reduced motion nor a saved "off" choice gets a first-paint run. */
+html:not([data-motion-ready]) * {
+  animation: none !important;
+}

@@ -73,6 +73,19 @@
       html[data-motion='on'] .spec:focus-visible .shape {
         transform: translate(6px, -8px);
       }
+      html[data-motion='on'] .field > li,
+      html[data-motion='on'] .headline {
+        animation: a1-rise 0.7s var(--ease) both;
+      }
+      html[data-motion='on'] .field > li:nth-child(2) {
+        animation-delay: 90ms;
+      }
+      html[data-motion='on'] .field > li:nth-child(3) {
+        animation-delay: 180ms;
+      }
+      html[data-motion='on'] .headline {
+        animation-delay: 270ms;
+      }
       .spec:hover .label,
       .spec:focus-visible .label {
         text-decoration: underline;
