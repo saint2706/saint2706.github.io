@@ -2,13 +2,6 @@
   "detector": {
     "ignoreRules": [],
     "ignoreFiles": [],
-    "ignoreValues": [
-      {
-        "rule": "cream-palette",
-        "value": "*",
-        "files": ["design/system/index.html"],
-        "createdAt": "2026-11-04T04:30:46.258Z"
-      }
-    ]
+    "ignoreValues": []
   }
 }
