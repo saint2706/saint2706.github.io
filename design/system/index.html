@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Design system, round 3</title>
+    <title>Design system, round 4</title>
     <meta name="robots" content="noindex" />
     <style>
-      /* P02-T03 round 3. The owner reopened the palette 2026-11-04: three new PROVISIONAL options.
-         The faces are self-hosted from ./fonts (SIL OFL 1.1) and still PROVISIONAL too.
-         No external requests. The script only fills the measured contrast table. */
+      /* P02-T03 round 4. The owner chose palette C (Sealing wax) and approved the faces 2026-11-04.
+         Faces are self-hosted from ./fonts (SIL OFL 1.1). No external requests.
+         The script only fills the measured contrast table. */
       @font-face {
         font-family: 'Young Serif';
         src: url('fonts/young-serif-400-normal.woff2') format('woff2');
@@ -64,44 +64,7 @@
         --space-7: 96px;
         --gutter: 48px;
 
-        /* Palette A: Cyanotype. Blue-white sun print; the personal room is Prussian night under a sodium lamp. */
-        --pro-canvas: #f5f7fa;
-        --pro-ink: #0f1a2b;
-        --pro-ink-2: #4b5872;
-        --pro-rule: #cfd7e3;
-        --pro-accent: #1f4fa0;
-        --per-canvas: #0c1626;
-        --per-ink: #e6edf7;
-        --per-ink-2: #9fb0c8;
-        --per-rule: #22324a;
-        --per-accent: #f2b84b;
-        --lab-canvas: #eef3f1;
-        --lab-ink: #10201b;
-        --lab-ink-2: #475a53;
-        --lab-rule: #c2d1ca;
-        --lab-accent: #0f7356;
-      }
-
-      /* Palette B: Malachite. Chalk and mineral green; the personal room is polished stone with copper. */
-      html:has(#pal-b:checked) {
-        --pro-canvas: #f4f6f4;
-        --pro-ink: #0e1a15;
-        --pro-ink-2: #475a50;
-        --pro-rule: #c9d5cd;
-        --pro-accent: #0b6a4c;
-        --per-canvas: #101a17;
-        --per-ink: #e3efe9;
-        --per-ink-2: #9db5aa;
-        --per-rule: #263a32;
-        --per-accent: #e99a6b;
-        --lab-canvas: #f5f4f8;
-        --lab-ink: #17142a;
-        --lab-ink-2: #55506b;
-        --lab-rule: #d1cde0;
-        --lab-accent: #5b3cc4;
-      }
-      /* Palette C: Sealing wax. Graphite paper and oxblood; the personal room is aubergine velvet with gold leaf. */
-      html:has(#pal-c:checked) {
+        /* Palette: Sealing wax. Graphite paper and oxblood; the personal room is aubergine velvet with gold leaf. */
         --pro-canvas: #f6f6f7;
         --pro-ink: #141416;
         --pro-ink-2: #57565e;
@@ -230,62 +193,6 @@
         max-width: 66ch;
         margin: 0 0 var(--space-4);
         color: var(--ink-2);
-      }
-
-      /* Palette picker */
-      fieldset.picker {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-2);
-        margin: 0 0 var(--space-4);
-        padding: 0;
-        border: 0;
-      }
-      .picker legend {
-        padding: 0;
-        margin-bottom: var(--space-2);
-        font-weight: 700;
-      }
-      .picker label {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
-        min-height: 44px;
-        padding: 0 16px 0 12px;
-        border: 1.5px solid var(--rule);
-        border-radius: 0.75rem;
-        cursor: pointer;
-        transition: border-color 0.2s var(--ease);
-      }
-      .picker label:hover {
-        border-color: var(--ink-2);
-      }
-      .picker label:has(input:checked) {
-        border-color: var(--ink);
-        font-weight: 700;
-      }
-      .picker input {
-        width: 18px;
-        height: 18px;
-        margin: 0;
-      }
-      .picker label:has(input:focus-visible) {
-        outline: 3px solid var(--accent);
-        outline-offset: 3px;
-      }
-      .picker input:focus-visible {
-        outline: none;
-      }
-      .chips {
-        display: inline-flex;
-      }
-      .chips i {
-        width: 14px;
-        height: 22px;
-        border: 1px solid var(--rule);
-      }
-      .chips i + i {
-        margin-left: -1px;
       }
 
       /* Three spaces side by side */
@@ -550,9 +457,6 @@
         :root {
           --gutter: 20px;
         }
-        .picker label {
-          flex: 1 1 100%;
-        }
         .scale li {
           grid-template-columns: 1fr;
           gap: var(--space-1);
@@ -565,48 +469,19 @@
     <main id="main" tabindex="-1">
       <div class="wrap">
         <header class="top">
-          <h1>Design system, round 3</h1>
+          <h1>Design system, round 4</h1>
           <p class="lede">
-            Three new palettes for the A1 field, each taken from one object you might find in a
-            cabinet of curiosities. The professional space, the personal room and the lab get their
-            own colours on the same roles, so components never name a colour. Switch below and pick
-            one, or name what to change.
+            Sealing wax, the palette you picked, on the approved A1 field with the approved faces, a
+            type scale and the interaction states. The professional space, the personal room and the
+            lab each get their own colours on the same roles, so components never name a colour.
           </p>
-          <span class="provisional">Palettes and faces provisional until you approve them</span>
+          <span class="provisional"
+            >Palette and faces approved. Components and pages still to come</span
+          >
         </header>
 
         <section aria-labelledby="h-palette">
-          <h2 id="h-palette">Palette</h2>
-          <fieldset class="picker">
-            <legend>Show palette</legend>
-            <label
-              ><input type="radio" name="palette" id="pal-a" value="a" checked /><span
-                class="chips"
-                aria-hidden="true"
-                ><i style="background: #f5f7fa"></i><i style="background: #1f4fa0"></i
-                ><i style="background: #0c1626"></i><i style="background: #f2b84b"></i
-                ><i style="background: #0f7356"></i></span
-              >A: Cyanotype</label
-            >
-            <label
-              ><input type="radio" name="palette" id="pal-b" value="b" /><span
-                class="chips"
-                aria-hidden="true"
-                ><i style="background: #f4f6f4"></i><i style="background: #0b6a4c"></i
-                ><i style="background: #101a17"></i><i style="background: #e99a6b"></i
-                ><i style="background: #5b3cc4"></i></span
-              >B: Malachite</label
-            >
-            <label
-              ><input type="radio" name="palette" id="pal-c" value="c" /><span
-                class="chips"
-                aria-hidden="true"
-                ><i style="background: #f6f6f7"></i><i style="background: #8f1d2c"></i
-                ><i style="background: #1c1220"></i><i style="background: #e7b04f"></i
-                ><i style="background: #00697f"></i></span
-              >C: Sealing wax</label
-            >
-          </fieldset>
+          <h2 id="h-palette">Palette: Sealing wax</h2>
           <div class="spaces">
             <article class="space pro" aria-labelledby="s-pro">
               <span class="specimen" aria-hidden="true"></span>
@@ -665,7 +540,7 @@
         <section aria-labelledby="h-contrast">
           <h2 id="h-contrast">Measured contrast</h2>
           <p>
-            Read from the colours on the page and recomputed whenever you switch palettes. AA needs
+            Read from the colours on the page, so the table cannot drift from the CSS. AA needs
             4.5:1 for body text and 3:1 for large text, focus rings and control borders. Rules are
             decorative separators, so they have no minimum.
           </p>
@@ -805,7 +680,7 @@
         </section>
 
         <footer>
-          P02-T03 round 3, 2026-11-04. Font licences are in <code>design/system/fonts</code>.
+          P02-T03 round 4, 2026-11-04. Font licences are in <code>design/system/fonts</code>.
           Code-first under ADR-005. Builds on the approved A1 concept in
           <a href="../concepts/a1-specimen-field/index.html">design/concepts/a1-specimen-field</a>.
         </footer>
@@ -866,9 +741,6 @@
           document.getElementById('contrast-body').innerHTML = rows.join('');
         }
         render();
-        document.querySelectorAll('input[name="palette"]').forEach(function (i) {
-          i.addEventListener('change', render);
-        });
         var demo = document.getElementById('motion-demo');
         document.getElementById('replay').addEventListener('click', function () {
           demo.classList.remove('play');

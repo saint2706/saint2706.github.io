@@ -3,12 +3,12 @@
 ## Approved so far
 
 - Concept: A1 Specimen Field, approved by the owner 2026-11-04 (`design/concepts/a1-specimen-field/`).
+- Palette: C Sealing wax, chosen by the owner 2026-11-04 (after Vermilion was reopened). Tokens live in `design/system/index.html`; professional, personal and lab each map the same roles to their own colours.
+- Faces: Young Serif (headings), Atkinson Hyperlegible Next (body and interface) and Atkinson Hyperlegible Mono (code and data), approved by the owner 2026-11-04. All SIL OFL 1.1, self-hosted.
 
 ## Still provisional
 
-Palette: the owner reopened it on 2026-11-04 (Vermilion withdrawn). Round 3 offers A Cyanotype, B Malachite and C Sealing wax in `design/system/index.html`; professional, personal and lab each map the same roles to their own colours.
-
-Font pairing (Young Serif, Atkinson Hyperlegible Next, Atkinson Hyperlegible Mono; all SIL OFL 1.1, self-hosted), grid, section components and responsive page designs. None is final until the owner approves it.
+Grid, section components and responsive page designs. None is final until the owner approves it.
 
 ## Principles
 
