@@ -181,7 +181,8 @@ dialog li a[aria-current='page'] {
 }
 .block > h2 {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 1.5rem;
+  line-height: 1.15;
 }
 .block > h2 .num {
   display: block;
