@@ -1,6 +1,6 @@
 # Session handoff: 2026-11-04
 
-- Current phase: P02. Authorized: P02-T01 (complete) and P02-T02 (complete, concept approved 2026-11-04). P02-T03 and P03–P07 are NOT authorized. No production release. Source of truth: `project-system/state/approvals.json`.
+- Current phase: P02. Authorized: P02-T01 (complete), P02-T02 (complete, concept approved 2026-11-04) and P02-T03 (in progress, authorized 2026-11-04). P03–P07 are NOT authorized. No production release. Source of truth: `project-system/state/approvals.json`.
 - Phase branches: `phase/p02-concept-spaces` (merged as PR #886), then `phase/p02-concept-motion`. It changes only `design/` and `project-system/` docs.
 - Previous handoff: `2026-11-01-session-handoff.md`. Its decisions, risks (R1–R5) and "Do not" list still apply.
 
@@ -30,6 +30,6 @@
 
 ## Exact next steps
 
-1. Ask for explicit P02-T03 authorization (design system: palette, type, tokens).
+1. P02-T03 authorized 2026-11-04. Round 1: palette and type options under `design/system/`, all provisional until the owner picks.
 2. Owner decides on Draupadi (link vs PD-Art image) and on the Shakuntala title.
 3. Before any image is hosted, re-open each source page and confirm its licence.

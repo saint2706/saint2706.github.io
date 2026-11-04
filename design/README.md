@@ -27,3 +27,7 @@ Checks last run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 
 Earlier skip-link result (still applies): focus moves to `main`. WebKit's next-Tab check is inconclusive because Safari skips links when tabbing by default.
 
 Manual screen-reader testing is not done.
+
+## Design system (P02-T03, provisional)
+
+`system/index.html` is round 1: three palettes switched by radio inputs (CSS `:has()`, so no script needed), the type scale and the interaction states. Every value is provisional until the owner picks a palette. The contrast table is measured from the page's own colours. Checks run on 2026-11-04 in three browsers at three widths: no overflow, one `h1`, targets at least 44 px, all palettes pass AA, arrow keys switch palettes, no console errors or external requests, and no CSS animation runs under reduced motion.

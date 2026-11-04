@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Design system, round 1 (PROVISIONAL)</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      /* P02-T03 round 1. Every value here is PROVISIONAL until the owner picks a palette.
+         System fonts only, no external requests. Palettes switch with radio inputs and :has(),
+         so the page works without JavaScript; the script only fills the measured contrast table. */
+      :root {
+        --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Charter, Georgia, serif;
+        --mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        /* Type scale: 1.25 ratio from 1rem. Display clamps so it never passes 4.5rem. */
+        --step--1: 0.8rem;
+        --step-0: 1rem;
+        --step-1: 1.25rem;
+        --step-2: 1.5625rem;
+        --step-3: 1.953rem;
+        --step-4: 2.441rem;
+        --step-5: clamp(2.441rem, 5vw, 3.815rem);
+        --step-6: clamp(3.052rem, 7vw, 4.5rem);
+        /* Spacing: 4px base. */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 16px;
+        --space-4: 24px;
+        --space-5: 40px;
+        --space-6: 64px;
+        --space-7: 96px;
+        --gutter: 48px;
+
+        /* Palette A: Archive. Warm paper, ink blue; the personal room is umber with ochre. */
+        --pro-canvas: #f3eee4;
+        --pro-ink: #1f1a14;
+        --pro-ink-2: #5b5043;
+        --pro-rule: #cfc5b4;
+        --pro-accent: #2a4a7a;
+        --per-canvas: #1b1612;
+        --per-ink: #efe6d8;
+        --per-ink-2: #b9ab97;
+        --per-rule: #3d342b;
+        --per-accent: #e0a84a;
+        --lab-canvas: #ecefe9;
+        --lab-ink: #18201d;
+        --lab-ink-2: #4c5751;
+        --lab-rule: #b9c2bb;
+        --lab-accent: #2d6a5c;
+      }
+      /* Palette B: Herbarium. Cool sage paper, oxblood; the personal room is pressed green with gold. */
+      html:has(#pal-b:checked) {
+        --pro-canvas: #f1f2ec;
+        --pro-ink: #141c18;
+        --pro-ink-2: #4d5650;
+        --pro-rule: #c9cdc2;
+        --pro-accent: #7d2633;
+        --per-canvas: #0f1714;
+        --per-ink: #e4ebe3;
+        --per-ink-2: #a7b5ab;
+        --per-rule: #2a3630;
+        --per-accent: #d4b45c;
+        --lab-canvas: #f1f2ec;
+        --lab-ink: #141c18;
+        --lab-ink-2: #4d5650;
+        --lab-rule: #c9cdc2;
+        --lab-accent: #2747a8;
+      }
+      /* Palette C: Vermilion. Near-white, red-orange; the personal room is night indigo. */
+      html:has(#pal-c:checked) {
+        --pro-canvas: #faf8f4;
+        --pro-ink: #121212;
+        --pro-ink-2: #555250;
+        --pro-rule: #d6d2cb;
+        --pro-accent: #b33a12;
+        --per-canvas: #15172b;
+        --per-ink: #ece9f5;
+        --per-ink-2: #aeabc4;
+        --per-rule: #2f3250;
+        --per-accent: #ff8d63;
+        --lab-canvas: #f4f5f8;
+        --lab-ink: #121420;
+        --lab-ink-2: #4f5363;
+        --lab-rule: #c8cbd6;
+        --lab-accent: #2e3cc7;
+      }
+
+      /* Semantic roles. Each space remaps the same names, so components never name a palette. */
+      body,
+      .pro {
+        --canvas: var(--pro-canvas);
+        --ink: var(--pro-ink);
+        --ink-2: var(--pro-ink-2);
+        --rule: var(--pro-rule);
+        --accent: var(--pro-accent);
+      }
+      .per {
+        --canvas: var(--per-canvas);
+        --ink: var(--per-ink);
+        --ink-2: var(--per-ink-2);
+        --rule: var(--per-rule);
+        --accent: var(--per-accent);
+      }
+      .lab {
+        --canvas: var(--lab-canvas);
+        --ink: var(--lab-ink);
+        --ink-2: var(--lab-ink-2);
+        --rule: var(--lab-rule);
+        --accent: var(--lab-accent);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font: var(--step-0) / 1.5 var(--sans);
+        accent-color: var(--accent);
+      }
+      ::selection {
+        background: var(--accent);
+        color: var(--canvas);
+      }
+      a {
+        color: var(--accent);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 0.2em;
+        transition: text-decoration-thickness 0.2s var(--ease);
+      }
+      a:hover {
+        text-decoration-thickness: 3px;
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .skip {
+        position: absolute;
+        left: 8px;
+        top: -60px;
+        padding: 12px 16px;
+        background: var(--ink);
+        color: var(--canvas);
+      }
+      .skip:focus {
+        top: 8px;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+      }
+      header.top {
+        padding: var(--space-5) 0 var(--space-4);
+      }
+      header.top h1 {
+        margin: 0;
+        font: 600 var(--step-4) / 1.05 var(--serif);
+        letter-spacing: -0.01em;
+      }
+      .lede {
+        max-width: 62ch;
+        margin: var(--space-3) 0 0;
+        color: var(--ink-2);
+      }
+      .provisional {
+        display: inline-block;
+        margin-top: var(--space-3);
+        padding: 2px 10px;
+        border: 1.5px solid var(--ink-2);
+        border-radius: 999px;
+        font-size: var(--step--1);
+        color: var(--ink-2);
+      }
+      section {
+        padding-top: var(--space-6);
+      }
+      section > h2 {
+        margin: 0 0 var(--space-2);
+        font: 600 var(--step-3) / 1.15 var(--serif);
+      }
+      section > p {
+        max-width: 66ch;
+        margin: 0 0 var(--space-4);
+        color: var(--ink-2);
+      }
+
+      /* Palette picker */
+      fieldset.picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      .picker legend {
+        padding: 0;
+        margin-bottom: var(--space-2);
+        font-weight: 600;
+      }
+      .picker label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-height: 44px;
+        padding: 0 18px 0 12px;
+        border: 1.5px solid var(--rule);
+        border-radius: 22px;
+        cursor: pointer;
+        transition: border-color 0.2s var(--ease);
+      }
+      .picker label:hover {
+        border-color: var(--ink-2);
+      }
+      .picker label:has(input:checked) {
+        border-color: var(--ink);
+        font-weight: 600;
+      }
+      .picker input {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+      }
+      .picker label:has(input:focus-visible) {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .picker input:focus-visible {
+        outline: none;
+      }
+      .swatches {
+        display: inline-flex;
+      }
+      .swatches i {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin-left: -4px;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+      }
+
+      /* Three spaces side by side */
+      .spaces {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr 1fr;
+        gap: var(--space-3);
+      }
+      .space {
+        background: var(--canvas);
+        color: var(--ink);
+        padding: var(--space-4);
+        border: 1px solid var(--rule);
+        min-width: 0;
+      }
+      .space.per {
+        border-color: var(--per-canvas);
+      }
+      .space.lab {
+        border: 2px dashed var(--ink-2);
+        border-radius: 20px;
+      }
+      .space h3 {
+        margin: var(--space-2) 0 var(--space-3);
+        font: 600 var(--step-3) / 1.1 var(--serif);
+      }
+      .space.lab h3 {
+        font-family: var(--sans);
+        letter-spacing: -0.02em;
+      }
+      .space p {
+        margin: 0 0 var(--space-3);
+      }
+      .space .meta {
+        color: var(--ink-2);
+        font-size: 0.9375rem;
+      }
+      .specimen {
+        display: block;
+        height: 120px;
+        margin-bottom: var(--space-4);
+        background: var(--ink);
+      }
+      .pro .specimen {
+        width: 60%;
+        background: var(--accent);
+      }
+      .per .specimen {
+        width: 120px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .lab .specimen {
+        width: 120px;
+        background: transparent;
+        border: 2px dashed var(--accent);
+        border-radius: 24px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        align-items: center;
+        margin-top: var(--space-4);
+      }
+      .btn {
+        min-height: 44px;
+        padding: 0 20px;
+        border: 2px solid var(--ink);
+        border-radius: 22px;
+        background: transparent;
+        color: var(--ink);
+        font: 600 0.9375rem var(--sans);
+        cursor: pointer;
+        transition:
+          background-color 0.2s var(--ease),
+          color 0.2s var(--ease);
+      }
+      .btn:hover {
+        background: var(--ink);
+        color: var(--canvas);
+      }
+      .btn[disabled] {
+        border-style: dashed;
+        border-color: var(--ink-2);
+        color: var(--ink-2);
+        background: transparent;
+        cursor: not-allowed;
+      }
+      .swatch-list {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--space-1);
+        margin: var(--space-4) 0 0;
+        padding: 0;
+        list-style: none;
+        font: var(--step--1) / 1.3 var(--mono);
+      }
+      .swatch-list li::before {
+        content: '';
+        display: block;
+        height: 28px;
+        margin-bottom: var(--space-1);
+        background: var(--c);
+        border: 1px solid var(--rule);
+      }
+
+      /* Measured contrast */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9375rem;
+      }
+      caption {
+        text-align: left;
+        padding-bottom: var(--space-2);
+        color: var(--ink-2);
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px 10px 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      td.num {
+        font-family: var(--mono);
+        font-variant-numeric: tabular-nums;
+      }
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      /* Type scale */
+      .scale {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .scale li {
+        display: grid;
+        grid-template-columns: 9rem 1fr;
+        gap: var(--space-4);
+        align-items: baseline;
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .scale code {
+        font: var(--step--1) var(--mono);
+        color: var(--ink-2);
+      }
+      .scale span {
+        overflow-wrap: anywhere;
+        line-height: 1.1;
+      }
+      .pairing {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-5);
+        margin-top: var(--space-5);
+      }
+      .pairing h3 {
+        margin: 0 0 var(--space-2);
+        font: 600 var(--step-2) / 1.2 var(--serif);
+      }
+      .pairing p {
+        max-width: 65ch;
+        margin: 0 0 var(--space-3);
+      }
+      .pairing .sans h3 {
+        font-family: var(--sans);
+      }
+
+      /* States */
+      .states {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+      }
+      .state {
+        padding: var(--space-4);
+        border: 1px solid var(--rule);
+      }
+      .state h3 {
+        margin: 0 0 var(--space-3);
+        font-size: var(--step-0);
+      }
+      .field label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: var(--space-1);
+      }
+      .field input {
+        width: 100%;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 1.5px solid var(--ink-2);
+        border-radius: 8px;
+        background: var(--canvas);
+        color: var(--ink);
+        font: inherit;
+      }
+      .field input[aria-invalid='true'] {
+        border-width: 2px;
+        border-color: var(--accent);
+      }
+      .field .err {
+        margin: var(--space-1) 0 0;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .rise {
+        display: block;
+        height: 40px;
+        width: 40%;
+        background: var(--accent);
+      }
+      .play .rise {
+        animation: rise 0.8s var(--ease) both;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .play .rise {
+          animation: none;
+        }
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+      footer {
+        padding: var(--space-7) 0 var(--space-6);
+        color: var(--ink-2);
+        font-size: var(--step--1);
+      }
+
+      @media (max-width: 1024px) {
+        :root {
+          --gutter: 32px;
+        }
+        .spaces,
+        .states {
+          grid-template-columns: 1fr;
+        }
+        .pairing {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        :root {
+          --gutter: 20px;
+        }
+        .scale li {
+          grid-template-columns: 1fr;
+          gap: var(--space-1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <main id="main" tabindex="-1">
+      <div class="wrap">
+        <header class="top">
+          <h1>Design system, round 1</h1>
+          <p class="lede">
+            Three palettes for the approved A1 field, a type scale and the interaction states. Each
+            palette gives the professional space, the personal room and the lab their own colours on
+            the same roles, so components never name a palette. Pick one, or name what to change.
+          </p>
+          <span class="provisional">Provisional: nothing here is approved</span>
+        </header>
+
+        <section aria-labelledby="h-palette">
+          <h2 id="h-palette">Palette</h2>
+          <fieldset class="picker">
+            <legend>Show palette</legend>
+            <label
+              ><input type="radio" name="palette" id="pal-a" value="a" checked />
+              <span class="swatches" aria-hidden="true"
+                ><i style="background: #f3eee4"></i><i style="background: #2a4a7a"></i
+                ><i style="background: #1b1612"></i><i style="background: #e0a84a"></i></span
+              >A: Archive</label
+            >
+            <label
+              ><input type="radio" name="palette" id="pal-b" value="b" />
+              <span class="swatches" aria-hidden="true"
+                ><i style="background: #f1f2ec"></i><i style="background: #7d2633"></i
+                ><i style="background: #0f1714"></i><i style="background: #d4b45c"></i></span
+              >B: Herbarium</label
+            >
+            <label
+              ><input type="radio" name="palette" id="pal-c" value="c" />
+              <span class="swatches" aria-hidden="true"
+                ><i style="background: #faf8f4"></i><i style="background: #b33a12"></i
+                ><i style="background: #15172b"></i><i style="background: #ff8d63"></i></span
+              >C: Vermilion</label
+            >
+          </fieldset>
+
+          <div class="spaces" style="margin-top: var(--space-4)">
+            <article class="space pro" aria-labelledby="s-pro">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-pro">Work</h3>
+              <p>Light canvas, one accent kept for links and actions. Serif headings, sans body.</p>
+              <p class="meta">Secondary text uses the space's own ink, never a neutral grey.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Professional tokens">
+                <li style="--c: var(--pro-canvas)">canvas</li>
+                <li style="--c: var(--pro-ink)">ink</li>
+                <li style="--c: var(--pro-ink-2)">ink-2</li>
+                <li style="--c: var(--pro-rule)">rule</li>
+                <li style="--c: var(--pro-accent)">accent</li>
+              </ul>
+            </article>
+
+            <article class="space per" aria-labelledby="s-per">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-per">Off the clock</h3>
+              <p>
+                The darker room. Paintings sit on a deep ground, so their colour carries the page.
+              </p>
+              <p class="meta">A warm accent reads clearly on the dark canvas.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Personal tokens">
+                <li style="--c: var(--per-canvas)">canvas</li>
+                <li style="--c: var(--per-ink)">ink</li>
+                <li style="--c: var(--per-ink-2)">ink-2</li>
+                <li style="--c: var(--per-rule)">rule</li>
+                <li style="--c: var(--per-accent)">accent</li>
+              </ul>
+            </article>
+
+            <article class="space lab" aria-labelledby="s-lab">
+              <span class="specimen" aria-hidden="true"></span>
+              <h3 id="s-lab">Lab</h3>
+              <p>
+                The A1 dashed outline is kept as the lab's mark. Sans headings, tighter tracking.
+              </p>
+              <p class="meta">A cooler accent sets it apart from Work.</p>
+              <p><a href="#h-palette">A text link</a></p>
+              <div class="row"><button class="btn" type="button">A button</button></div>
+              <ul class="swatch-list" aria-label="Lab tokens">
+                <li style="--c: var(--lab-canvas)">canvas</li>
+                <li style="--c: var(--lab-ink)">ink</li>
+                <li style="--c: var(--lab-ink-2)">ink-2</li>
+                <li style="--c: var(--lab-rule)">rule</li>
+                <li style="--c: var(--lab-accent)">accent</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-contrast">
+          <h2 id="h-contrast">Measured contrast</h2>
+          <p>
+            Read from the colours on the page and recomputed whenever you switch palettes. AA needs
+            4.5:1 for body text and 3:1 for large text, focus rings and control borders. Rules are
+            decorative separators, so they have no minimum.
+          </p>
+          <div class="table-scroll">
+            <table>
+              <caption id="contrast-caption">
+                Contrast against each space's canvas
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Space</th>
+                  <th scope="col">Ink</th>
+                  <th scope="col">Ink-2</th>
+                  <th scope="col">Accent</th>
+                  <th scope="col">Result</th>
+                </tr>
+              </thead>
+              <tbody id="contrast-body">
+                <tr>
+                  <td colspan="5">
+                    Needs JavaScript. Every pair passed AA when checked on 2026-11-04.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-type">
+          <h2 id="h-type">Type</h2>
+          <p>
+            A 1.25 scale from 16px. The faces below are placeholders: system serif and system sans.
+            Before P03 these should be replaced by self-hosted open-licence faces, after the owner
+            agrees to the download.
+          </p>
+          <ul class="scale">
+            <li>
+              <code>step-6 display</code
+              ><span style="font: 600 var(--step-6) / 1 var(--serif)">Rishabh Agrawal</span>
+            </li>
+            <li>
+              <code>step-5</code
+              ><span style="font: 600 var(--step-5) / 1.05 var(--serif)">Off the clock</span>
+            </li>
+            <li>
+              <code>step-4 page h1</code
+              ><span style="font: 600 var(--step-4) / 1.1 var(--serif)">Work</span>
+            </li>
+            <li>
+              <code>step-3 h2</code
+              ><span style="font: 600 var(--step-3) / 1.15 var(--serif)">Flagship projects</span>
+            </li>
+            <li>
+              <code>step-2 h3</code
+              ><span style="font: 600 var(--step-2) / 1.2 var(--serif)">Reading path</span>
+            </li>
+            <li>
+              <code>step-1 lead</code
+              ><span style="font-size: var(--step-1)"
+                >Larger body text for an opening paragraph.</span
+              >
+            </li>
+            <li><code>step-0 body</code><span>Body text at 16px with 1.5 line height.</span></li>
+            <li>
+              <code>step--1 small</code
+              ><span style="font-size: var(--step--1)">Credits, captions and metadata.</span>
+            </li>
+          </ul>
+          <div class="pairing">
+            <div>
+              <h3>Serif heading, sans body</h3>
+              <p>
+                Used for Work and Off the clock. The serif gives headings an archival feel and the
+                sans keeps long text plain. Body lines stop at about 65 characters.
+              </p>
+            </div>
+            <div class="sans">
+              <h3>Sans throughout</h3>
+              <p>
+                Used for the Lab, where the pages are tools and notes. Monospace is used only for
+                code, data and measurements, never as decoration.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="h-states">
+          <h2 id="h-states">States</h2>
+          <p>
+            Tab through this section to see focus. Every state has a cue that does not depend on
+            colour.
+          </p>
+          <div class="states">
+            <div class="state">
+              <h3>Focus, hover, disabled</h3>
+              <p><a href="#h-states">Link: underline thickens on hover</a></p>
+              <div class="row">
+                <button class="btn" type="button">Hover fills</button>
+                <button class="btn" type="button" disabled>Disabled</button>
+              </div>
+              <p class="meta" style="margin-top: var(--space-3)">
+                Focus ring: 3px accent outline, offset 3px. Disabled: dashed border, not just paler.
+              </p>
+            </div>
+            <div class="state">
+              <h3>Error</h3>
+              <div class="field">
+                <label for="demo-email">Email</label>
+                <input
+                  id="demo-email"
+                  type="email"
+                  value="name@"
+                  aria-invalid="true"
+                  aria-describedby="demo-email-err"
+                />
+                <p class="err" id="demo-email-err">
+                  Add the part after @, for example name@example.com.
+                </p>
+              </div>
+            </div>
+            <div class="state">
+              <h3>Motion</h3>
+              <p class="meta">
+                One entrance: a 16px rise with an ease-out curve. It is off when the system asks for
+                reduced motion.
+              </p>
+              <div class="row" id="motion-demo">
+                <span class="rise" aria-hidden="true"></span>
+              </div>
+              <div class="row"><button class="btn" type="button" id="replay">Replay</button></div>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          P02-T03 round 1, 2026-11-04. Code-first under ADR-005. Builds on the approved A1 concept
+          in
+          <a href="../concepts/a1-specimen-field/index.html">design/concepts/a1-specimen-field</a>.
+        </footer>
+      </div>
+    </main>
+    <script>
+      // Measures the rendered colours, so the table cannot drift from the CSS.
+      (function () {
+        var probe = document.createElement('span');
+        document.body.appendChild(probe);
+        function rgb(value) {
+          probe.style.color = value;
+          return getComputedStyle(probe)
+            .color.match(/[\d.]+/g)
+            .slice(0, 3)
+            .map(Number);
+        }
+        function lum(c) {
+          var v = c.map(function (x) {
+            x /= 255;
+            return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+          });
+          return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+        }
+        function ratio(a, b) {
+          var x = lum(rgb(a)),
+            y = lum(rgb(b));
+          return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+        }
+        function render() {
+          var css = getComputedStyle(document.documentElement);
+          var rows = [
+            ['Work', 'pro'],
+            ['Off the clock', 'per'],
+            ['Lab', 'lab'],
+          ].map(function (s) {
+            var get = function (k) {
+              return css.getPropertyValue('--' + s[1] + '-' + k).trim();
+            };
+            var r = ['ink', 'ink-2', 'accent'].map(function (k) {
+              return ratio(get(k), get('canvas'));
+            });
+            var pass = r[0] >= 4.5 && r[1] >= 4.5 && r[2] >= 4.5;
+            return (
+              '<tr><th scope="row">' +
+              s[0] +
+              '</th>' +
+              r
+                .map(function (n) {
+                  return '<td class="num">' + n.toFixed(2) + ':1</td>';
+                })
+                .join('') +
+              '<td>' +
+              (pass ? 'Passes AA' : 'Fails AA') +
+              '</td></tr>'
+            );
+          });
+          document.getElementById('contrast-body').innerHTML = rows.join('');
+        }
+        render();
+        document.querySelectorAll('input[name="palette"]').forEach(function (i) {
+          i.addEventListener('change', render);
+        });
+        var demo = document.getElementById('motion-demo');
+        document.getElementById('replay').addEventListener('click', function () {
+          demo.classList.remove('play');
+          void demo.offsetWidth;
+          demo.classList.add('play');
+        });
+      })();
+    </script>
+  </body>
+</html>
