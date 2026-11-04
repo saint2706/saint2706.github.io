@@ -3,16 +3,47 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Design system, round 1 (PROVISIONAL)</title>
+    <title>Design system, round 2</title>
     <meta name="robots" content="noindex" />
     <style>
-      /* P02-T03 round 1. Every value here is PROVISIONAL until the owner picks a palette.
-         System fonts only, no external requests. Palettes switch with radio inputs and :has(),
-         so the page works without JavaScript; the script only fills the measured contrast table. */
+      /* P02-T03 round 2. Palette C (Vermilion) chosen by the owner 2026-11-04; the faces are
+         self-hosted from ./fonts (SIL OFL 1.1) and still PROVISIONAL until the owner approves them.
+         No external requests. The script only fills the measured contrast table. */
+      @font-face {
+        font-family: 'Young Serif';
+        src: url('fonts/young-serif-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-400-italic.woff2') format('woff2');
+        font-weight: 400;
+        font-style: italic;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Next';
+        src: url('fonts/atkinson-hyperlegible-next-700-normal.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Atkinson Hyperlegible Mono';
+        src: url('fonts/atkinson-hyperlegible-mono-400-normal.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
       :root {
-        --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-        --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Charter, Georgia, serif;
-        --mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+        --sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+        --serif: 'Young Serif', Georgia, serif;
+        --mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
         /* Type scale: 1.25 ratio from 1rem. Display clamps so it never passes 4.5rem. */
         --step--1: 0.8rem;
@@ -33,43 +64,7 @@
         --space-7: 96px;
         --gutter: 48px;
 
-        /* Palette A: Archive. Warm paper, ink blue; the personal room is umber with ochre. */
-        --pro-canvas: #f3eee4;
-        --pro-ink: #1f1a14;
-        --pro-ink-2: #5b5043;
-        --pro-rule: #cfc5b4;
-        --pro-accent: #2a4a7a;
-        --per-canvas: #1b1612;
-        --per-ink: #efe6d8;
-        --per-ink-2: #b9ab97;
-        --per-rule: #3d342b;
-        --per-accent: #e0a84a;
-        --lab-canvas: #ecefe9;
-        --lab-ink: #18201d;
-        --lab-ink-2: #4c5751;
-        --lab-rule: #b9c2bb;
-        --lab-accent: #2d6a5c;
-      }
-      /* Palette B: Herbarium. Cool sage paper, oxblood; the personal room is pressed green with gold. */
-      html:has(#pal-b:checked) {
-        --pro-canvas: #f1f2ec;
-        --pro-ink: #141c18;
-        --pro-ink-2: #4d5650;
-        --pro-rule: #c9cdc2;
-        --pro-accent: #7d2633;
-        --per-canvas: #0f1714;
-        --per-ink: #e4ebe3;
-        --per-ink-2: #a7b5ab;
-        --per-rule: #2a3630;
-        --per-accent: #d4b45c;
-        --lab-canvas: #f1f2ec;
-        --lab-ink: #141c18;
-        --lab-ink-2: #4d5650;
-        --lab-rule: #c9cdc2;
-        --lab-accent: #2747a8;
-      }
-      /* Palette C: Vermilion. Near-white, red-orange; the personal room is night indigo. */
-      html:has(#pal-c:checked) {
+        /* Palette: Vermilion. Near-white, red-orange; the personal room is night indigo. */
         --pro-canvas: #faf8f4;
         --pro-ink: #121212;
         --pro-ink-2: #555250;
@@ -120,6 +115,7 @@
         color: var(--ink);
         font: var(--step-0) / 1.5 var(--sans);
         accent-color: var(--accent);
+        font-synthesis: none;
       }
       ::selection {
         background: var(--accent);
@@ -160,7 +156,7 @@
       header.top h1 {
         margin: 0;
         font-family: var(--serif);
-        font-weight: 600;
+        font-weight: 400;
         font-size: var(--step-4);
         line-height: 1.05;
         letter-spacing: -0.01em;
@@ -175,7 +171,7 @@
         margin-top: var(--space-3);
         padding: 2px 10px;
         border: 1.5px solid var(--ink-2);
-        border-radius: 999px;
+        border-radius: 0.75rem;
         font-size: var(--step--1);
         color: var(--ink-2);
       }
@@ -185,7 +181,7 @@
       section > h2 {
         margin: 0 0 var(--space-2);
         font-family: var(--serif);
-        font-weight: 600;
+        font-weight: 400;
         font-size: var(--step-3);
         line-height: 1.15;
       }
@@ -193,61 +189,6 @@
         max-width: 66ch;
         margin: 0 0 var(--space-4);
         color: var(--ink-2);
-      }
-
-      /* Palette picker */
-      fieldset.picker {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-3);
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
-      .picker legend {
-        padding: 0;
-        margin-bottom: var(--space-2);
-        font-weight: 600;
-      }
-      .picker label {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
-        min-height: 44px;
-        padding: 0 18px 0 12px;
-        border: 1.5px solid var(--rule);
-        border-radius: 22px;
-        cursor: pointer;
-        transition: border-color 0.2s var(--ease);
-      }
-      .picker label:hover {
-        border-color: var(--ink-2);
-      }
-      .picker label:has(input:checked) {
-        border-color: var(--ink);
-        font-weight: 600;
-      }
-      .picker input {
-        width: 18px;
-        height: 18px;
-        margin: 0;
-      }
-      .picker label:has(input:focus-visible) {
-        outline: 3px solid var(--accent);
-        outline-offset: 3px;
-      }
-      .picker input:focus-visible {
-        outline: none;
-      }
-      .swatches {
-        display: inline-flex;
-      }
-      .swatches i {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        margin-left: -4px;
-        border: 1px solid rgba(0, 0, 0, 0.25);
       }
 
       /* Three spaces side by side */
@@ -273,7 +214,7 @@
       .space h3 {
         margin: var(--space-2) 0 var(--space-3);
         font-family: var(--serif);
-        font-weight: 600;
+        font-weight: 400;
         font-size: var(--step-3);
         line-height: 1.1;
       }
@@ -323,7 +264,7 @@
         border-radius: 22px;
         background: transparent;
         color: var(--ink);
-        font: 600 0.9375rem var(--sans);
+        font: 700 0.9375rem var(--sans);
         cursor: pointer;
         transition:
           background-color 0.2s var(--ease),
@@ -414,7 +355,7 @@
       .pairing h3 {
         margin: 0 0 var(--space-2);
         font-family: var(--serif);
-        font-weight: 600;
+        font-weight: 400;
         font-size: var(--step-2);
         line-height: 1.2;
       }
@@ -442,7 +383,7 @@
       }
       .field label {
         display: block;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: var(--space-1);
       }
       .field input {
@@ -462,7 +403,7 @@
       .field .err {
         margin: var(--space-1) 0 0;
         font-size: 0.9375rem;
-        font-weight: 600;
+        font-weight: 700;
         color: var(--accent);
       }
       .rise {
@@ -524,43 +465,18 @@
     <main id="main" tabindex="-1">
       <div class="wrap">
         <header class="top">
-          <h1>Design system, round 1</h1>
+          <h1>Design system, round 2</h1>
           <p class="lede">
-            Three palettes for the approved A1 field, a type scale and the interaction states. Each
-            palette gives the professional space, the personal room and the lab their own colours on
-            the same roles, so components never name a palette. Pick one, or name what to change.
+            Vermilion, the palette you picked, on the approved A1 field, with self-hosted faces, a
+            type scale and the interaction states. The professional space, the personal room and the
+            lab each get their own colours on the same roles, so components never name a colour.
           </p>
-          <span class="provisional">Provisional: nothing here is approved</span>
+          <span class="provisional">Palette chosen. Faces provisional until you approve them</span>
         </header>
 
         <section aria-labelledby="h-palette">
-          <h2 id="h-palette">Palette</h2>
-          <fieldset class="picker">
-            <legend>Show palette</legend>
-            <label
-              ><input type="radio" name="palette" id="pal-a" value="a" checked />
-              <span class="swatches" aria-hidden="true"
-                ><i style="background: #f3eee4"></i><i style="background: #2a4a7a"></i
-                ><i style="background: #1b1612"></i><i style="background: #e0a84a"></i></span
-              >A: Archive</label
-            >
-            <label
-              ><input type="radio" name="palette" id="pal-b" value="b" />
-              <span class="swatches" aria-hidden="true"
-                ><i style="background: #f1f2ec"></i><i style="background: #7d2633"></i
-                ><i style="background: #0f1714"></i><i style="background: #d4b45c"></i></span
-              >B: Herbarium</label
-            >
-            <label
-              ><input type="radio" name="palette" id="pal-c" value="c" />
-              <span class="swatches" aria-hidden="true"
-                ><i style="background: #faf8f4"></i><i style="background: #b33a12"></i
-                ><i style="background: #15172b"></i><i style="background: #ff8d63"></i></span
-              >C: Vermilion</label
-            >
-          </fieldset>
-
-          <div class="spaces" style="margin-top: var(--space-4)">
+          <h2 id="h-palette">Palette: Vermilion</h2>
+          <div class="spaces">
             <article class="space pro" aria-labelledby="s-pro">
               <span class="specimen" aria-hidden="true"></span>
               <h3 id="s-pro">Work</h3>
@@ -618,7 +534,7 @@
         <section aria-labelledby="h-contrast">
           <h2 id="h-contrast">Measured contrast</h2>
           <p>
-            Read from the colours on the page and recomputed whenever you switch palettes. AA needs
+            Read from the colours on the page, so the table cannot drift from the CSS. AA needs
             4.5:1 for body text and 3:1 for large text, focus rings and control borders. Rules are
             decorative separators, so they have no minimum.
           </p>
@@ -650,30 +566,32 @@
         <section aria-labelledby="h-type">
           <h2 id="h-type">Type</h2>
           <p>
-            A 1.25 scale from 16px. The faces below are placeholders: system serif and system sans.
-            Before P03 these should be replaced by self-hosted open-licence faces, after the owner
-            agrees to the download.
+            A 1.25 scale from 16px. Headings: Young Serif, a single-weight face drawn after old
+            specimen and label lettering. Body and interface: Atkinson Hyperlegible Next, designed
+            by the Braille Institute so similar letters stay distinct. Code and data: Atkinson
+            Hyperlegible Mono. All three are SIL Open Font Licence, self-hosted, about 76 KB in
+            total.
           </p>
           <ul class="scale">
             <li>
               <code>step-6 display</code
-              ><span style="font: 600 var(--step-6) / 1 var(--serif)">Rishabh Agrawal</span>
+              ><span style="font: 400 var(--step-6) / 1 var(--serif)">Rishabh Agrawal</span>
             </li>
             <li>
               <code>step-5</code
-              ><span style="font: 600 var(--step-5) / 1.05 var(--serif)">Off the clock</span>
+              ><span style="font: 400 var(--step-5) / 1.05 var(--serif)">Off the clock</span>
             </li>
             <li>
               <code>step-4 page h1</code
-              ><span style="font: 600 var(--step-4) / 1.1 var(--serif)">Work</span>
+              ><span style="font: 400 var(--step-4) / 1.1 var(--serif)">Work</span>
             </li>
             <li>
               <code>step-3 h2</code
-              ><span style="font: 600 var(--step-3) / 1.15 var(--serif)">Flagship projects</span>
+              ><span style="font: 400 var(--step-3) / 1.15 var(--serif)">Flagship projects</span>
             </li>
             <li>
               <code>step-2 h3</code
-              ><span style="font: 600 var(--step-2) / 1.2 var(--serif)">Reading path</span>
+              ><span style="font: 400 var(--step-2) / 1.2 var(--serif)">Reading path</span>
             </li>
             <li>
               <code>step-1 lead</code
@@ -684,7 +602,9 @@
             <li><code>step-0 body</code><span>Body text at 16px with 1.5 line height.</span></li>
             <li>
               <code>step--1 small</code
-              ><span style="font-size: var(--step--1)">Credits, captions and metadata.</span>
+              ><span style="font-size: var(--step--1)"
+                >Credits and captions; <em>titles of works</em> set in italic.</span
+              >
             </li>
           </ul>
           <div class="pairing">
@@ -754,8 +674,8 @@
         </section>
 
         <footer>
-          P02-T03 round 1, 2026-11-04. Code-first under ADR-005. Builds on the approved A1 concept
-          in
+          P02-T03 round 2, 2026-11-04. Font licences are in <code>design/system/fonts</code>.
+          Code-first under ADR-005. Builds on the approved A1 concept in
           <a href="../concepts/a1-specimen-field/index.html">design/concepts/a1-specimen-field</a>.
         </footer>
       </div>
@@ -815,9 +735,6 @@
           document.getElementById('contrast-body').innerHTML = rows.join('');
         }
         render();
-        document.querySelectorAll('input[name="palette"]').forEach(function (i) {
-          i.addEventListener('change', render);
-        });
         var demo = document.getElementById('motion-demo');
         document.getElementById('replay').addEventListener('click', function () {
           demo.classList.remove('play');
