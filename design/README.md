@@ -12,7 +12,7 @@ Code-first design concepts (see `project-system/decisions/ADR-005-design-medium.
 
 Layouts: desktop (≥1025 px), tablet (721–1024 px; space pages drop to one column, the field keeps three) and phone (≤720 px, fixed bottom bar for Index and Motion).
 
-Checks run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 px, across all four pages:
+Checks last run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 px, across all four pages:
 
 - No horizontal overflow.
 - Non-inline targets are at least 44 px tall. Inline text links have at least an 18 px line box.
@@ -22,6 +22,7 @@ Checks run on 2026-11-04 in Chromium, Firefox and WebKit, at 1440, 834 and 390 p
 - The index dialog opens, closes on Escape and closes when a link is chosen.
 - Reduced motion starts with motion off.
 - A motion choice carries to the next page in all three browsers.
+- Motion (added 2026-11-04 after owner approval) uses opacity and transform only. Field cards, space headings and section blocks rise in a stagger. With motion off, no animations run on any page. With motion on, every element ends fully visible.
 
 Earlier skip-link result (still applies): focus moves to `main`. WebKit's next-Tab check is inconclusive because Safari skips links when tabbing by default.
 

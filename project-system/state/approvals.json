@@ -13,7 +13,7 @@
     {
       "phase": "P02",
       "status": "authorized",
-      "scope": "P02-T01 (review) and P02-T02 (Figma file and concept boards) only. T03 not authorized. Production release excluded. Direction chosen for exploration: A Cabinet of Curiosities. Figma: personal drafts, free tier. Approved 2026-11-01.",
+      "scope": "P02-T01 (complete) and P02-T02 (complete; owner approved the A1 concept and asked for motion 2026-11-04) only. T03 not authorized. Production release excluded. Direction chosen for exploration: A Cabinet of Curiosities. Figma: personal drafts, free tier. Approved 2026-11-01.",
       "authorized_tasks": ["P02-T01", "P02-T02"]
     },
     {

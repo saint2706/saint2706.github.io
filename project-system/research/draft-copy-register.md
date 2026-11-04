@@ -32,3 +32,4 @@ Copy in `design/concepts/a1-specimen-field/{professional,personal,lab}.html`. Fa
 | C-10 | Personal books  | A philosophy reading path in thirteen stages, 123 works | books-verified.json (123 kept), owner: all finished                  | personal claim   | needs-user-approval |
 | C-11 | Lab page        | Experiments. Some of this works. / candidate trays      | features on the current site (games, playground, Gemini chat, roast) | tone + repo fact | needs-user-approval |
 | C-12 | Gateway link    | Off the clock: art, myth and books                      | tone only                                                            | tone             | needs-user-approval |
+| C-13 | Work contact    | Instagram (@saintkaprivate)                             | owner: handle is public (2026-11-04)                                 | contact fact     | user-confirmed      |

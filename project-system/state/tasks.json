@@ -386,7 +386,7 @@
       "id": "P02-T02",
       "phase": "P02",
       "title": "Create Figma file and visual concepts",
-      "status": "review",
+      "status": "complete",
       "authorization": "user-approved-2026-11-01 (no production release)",
       "depends_on": ["P02-T01"],
       "objective": "Create dedicated Figma workspace and initial concept boards.",

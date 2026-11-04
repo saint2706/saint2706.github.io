@@ -2,7 +2,7 @@
 
 ## Current authorization: P02-T01 and P02-T02 (research and Figma concepts)
 
-As of 2026-11-01 P00 and P01 are complete, and the user authorized P02-T01 (complete) and P02-T02 (in review) only (no production release; P02-T03 and P03–P07 pending explicit approval). Authoritative source: `project-system/state/approvals.json`. Website implementation is not authorized. Execute only the exact phase and task IDs named by the user. Never auto-progress.
+As of 2026-11-04 P00 and P01 are complete, and the user authorized P02-T01 (complete) and P02-T02 (complete; A1 concept approved 2026-11-04) only (no production release; P02-T03 and P03–P07 pending explicit approval). Authoritative source: `project-system/state/approvals.json`. Website implementation is not authorized. Execute only the exact phase and task IDs named by the user. Never auto-progress.
 
 Preferred model/effort: Claude Sonnet 5.5, High, when actually available. Verify CLI availability; do not silently substitute.
 

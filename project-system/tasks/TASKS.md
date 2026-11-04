@@ -2,7 +2,7 @@
 
 Authoritative structured registry: `project-system/state/tasks.json`. Every task has a full Markdown specification.
 
-The user must authorize a phase and exact task IDs. P00 and P01 are complete (2026-11-01); only P02-T01 (complete) and P02-T02 (in review) are currently authorized (no production release). Current authorization is in `project-system/state/approvals.json`. No automatic progression.
+The user must authorize a phase and exact task IDs. P00 and P01 are complete (2026-11-01); only P02-T01 (complete) and P02-T02 (complete, concept approved 2026-11-04) are currently authorized (no production release). Current authorization is in `project-system/state/approvals.json`. No automatic progression.
 
 ## P00 — Repository audit and preparation
 

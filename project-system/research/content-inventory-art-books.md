@@ -22,17 +22,33 @@ All 13 images are phone-story graphics (gradient or black backgrounds) listing w
 | 1000113320 | Political Philosophy                          | Machiavelli (2); Hobbes; Viroli; Rousseau (3); Montesquieu (2); Voltaire                                                                                              |
 | 1000113321 | French Revolution                             | Price (2); Burke (3); Paine (4); Maistre                                                                                                                              |
 
-Gaps and questions: **Stage One** supplied as image 1000113330; Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. Source attribution for the stage scheme (it looks like a published curriculum) is unknown and should be credited if it is someone else's.
+Gaps and questions: **Stage One** supplied as image 1000113330; Stage 5.2 titles were supplied in text on 2026-11-01; the owner confirmed the listed works, including the optional lists, are finished (2026-11-01), and no notes or opinions were supplied. Titles are facts; any claim about having read them needs the owner's word. The stage scheme is the owner's own, not taken from a published curriculum (user-confirmed 2026-11-04), so it needs no outside credit.
 
 ## Art: "Ten Paintings, Ten Questions" (ZIP)
 
-A self-contained 90-minute discussion deck for two (HTML, 10 reproductions, a local `serve.py`). **Nothing was extracted or run**; only the file list and README were read.
+A self-contained 90-minute discussion deck for two (HTML, 10 reproductions, a local `serve.py`). On 2026-11-04 the ZIP was extracted to a scratch folder outside the repo and `index.html` was read as text; `serve.py` was not run and no image was copied into the repo.
 
-- README states seven works are public-domain reproductions (credits are on the deck's sources slide, not yet verified here).
+- README states seven works are public-domain reproductions; the credits below come from the deck's `WORKS` and `SRC` data.
 - README states **three works are still in copyright and may not be redistributed or posted**: Magritte, _The False Mirror_; Magritte, _The Human Condition_; Dali, _Slave Market with the Disappearing Bust of Voltaire_.
 - Therefore the deck **must not be published as-is**. Options: (a) publish only the seven public-domain works after verifying each credit and licence; (b) link to museum pages for the three protected works and show no image; (c) publish the questions as text with links only.
 - The deck relies on Google Fonts when online; a published copy would need self-hosted or system fonts (CSP and privacy).
 - Reproduction files are large (up to ~3.8 MB each); they would need resizing and alt text.
+
+### Painting credits from the deck (read 2026-11-04)
+
+The basis for every painting is the artist's death date (all are long out of copyright). For the reproductions it is PD-Art: a faithful photo of a 2D public-domain work gets no new copyright in the US (_Bridgeman v. Corel_) or in the EU (DSM Directive 2019/790, Art. 14). The source pages were not re-opened live; check each one again before hosting.
+
+| #   | Work (deck title)                                                                         | Holder (deck)                                              | Image source and licence (deck)                                               | Assessment                                                                                                                                                                                                                                   |
+| --- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3   | After Pieter Bruegel the Elder (?), _Landscape with the Fall of Icarus_, c. 1560s         | Royal Museums of Fine Arts of Belgium, Brussels, inv. 4030 | Google Arts & Culture capture via Wikimedia Commons, PD-Art                   | OK. Credit the attribution as uncertain, as the deck does                                                                                                                                                                                    |
+| 4   | Francisco de Goya, _The 3rd of May 1808 in Madrid_, 1814                                  | Museo Nacional del Prado, P000749                          | Prado in Google Earth capture via Wikimedia Commons, PD-Art                   | OK                                                                                                                                                                                                                                           |
+| 5   | Käthe Kollwitz, _Woman with Dead Child_, 1903 (Kn 81, state VIII b of X)                  | Städel Museum, Frankfurt, inv. 66346 D                     | Städel Museum, "public domain"; trimmed to plate                              | Kollwitz died 1945, so it is PD in the EU from 2016 and the 1903 publication is PD in the US. Confirm the licence shown on the Städel page                                                                                                   |
+| 6   | Raja Ravi Varma, _Shakuntala_, 1898                                                       | Sree Chitra Art Gallery, Thiruvananthapuram                | Google Arts & Culture capture via Wikimedia Commons, PD-Art                   | OK under PD-Art. Titles differ: the deck says "Shakuntala Looking Back" and GA&C says "Shakuntala Removing a Thorn from Her Foot". Pick one and note the alternative                                                                         |
+| 7   | Artemisia Gentileschi, _Susanna and the Elders_, 1610                                     | Schönborn collection, Schloss Weißenstein, Pommersfelden   | Web Gallery of Art via Wikimedia Commons, PD-Art; secondary reproduction      | OK. The colour is not a museum capture                                                                                                                                                                                                       |
+| 8   | Francisco de Goya, _The sleep of reason produces monsters_ (Caprichos 43), published 1799 | The Met, 18.64(43)                                         | The Met Open Access (CC0); trimmed to plate mark                              | Strongest: CC0 from the holder                                                                                                                                                                                                               |
+| 10  | Attributed to Nainsukh, _The Disrobing of Draupadi_, c. 1760–65                           | The Met, 2022.247                                          | Ashmolean photograph (LI118.9, on loan) via Wikimedia Commons, PD-Art; 800 px | **Weakest.** The deck notes that the Met publishes its own copy with reuse restrictions, and the image is a UK museum photo (the UK is outside the EU Art. 14 rule). Prefer a link to the Met page, or have the owner accept the PD-Art risk |
+
+Each credit line should name the artist, title, date, holder, accession number and image source as above. Where an image is trimmed, say so.
 
 ## Flagship projects (owner choice: Coding-For-MBA, Programming-Challenges-5, AI Attendance Management System)
 
@@ -46,7 +62,7 @@ None of the case-study claims are verified yet; this is repository metadata only
 
 ## Contact and voice decisions (owner)
 
-- Public: email, GitHub, LinkedIn, Instagram handle `@saintkaprivate` (the handle suggests a private account; confirm intent). Phone stays private.
+- Public: email, GitHub, LinkedIn, Instagram handle `@saintkaprivate` (meant to be public, user-confirmed 2026-11-04). Phone stays private.
 - Voice: dry and understated.
 
 ## Owner decisions 2026-11-01 (round 2)
