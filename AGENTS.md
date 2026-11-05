@@ -43,7 +43,7 @@ pnpm test:security-full
 - CSP is the `<meta>` tag in `index.html`; `public/_headers` is not honored by GitHub Pages. Add any new external origin to the CSP and keep `pnpm test:csp` passing.
 - `react/no-danger` is an error. Sanitize user input with `src/utils/security.js`; keep the chat/history limits in `src/services/ai.js`.
 - Pyodide is pinned to v0.24.1 with SRI in `src/components/shared/pyodideLoader.js`. `scripts/verify-sri.js` hard-codes the expected hash — a version bump requires updating both.
-- Prefer `VITE_GEMINI_PROXY_URL`; `VITE_GEMINI_API_KEY` is local-only and must never ship. Only `.env.example` may be read or committed — `.env*` and other lockfiles are hook-blocked.
+- Prefer `VITE_GEMINI_PROXY_URL`; `VITE_GEMINI_API_KEY` is local-only and must never ship. Only `.env.example` may be read or committed. `.env*` and `package-lock.json` are gitignored, and CI fails if `package-lock.json` is present; a Claude Code `Edit|Write` hook also blocks `.env*` and non-pnpm lockfiles. There is no git hook, so never force-add these files.
 - Tailwind v4 is configured through `src/index.css` (`@import 'tailwindcss'; @config "../tailwind.config.js";`), not by auto-detection.
 
 ## Git and release
