@@ -253,35 +253,98 @@ dialog li a[aria-current='page'] {
   }
 }
 
-/* The personal space's own nav, under the site bar: the change of space shows in the chrome too. */
+/* The personal space's own nav, under the site bar: tactile floating pill navigation. */
 .rooms {
-  margin-bottom: var(--space-3);
-  border-bottom: 1px solid var(--color-rule);
+  margin: var(--space-2) 0 var(--space-4);
+  padding: 0 var(--gutter);
 }
-/* Same box as .space, so the room links line up with the page content. */
 .rooms ul {
   list-style: none;
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 4px;
   max-width: 1100px;
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--space-4);
+  align-items: center;
+  gap: 6px;
+  background: rgba(38, 26, 43, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  box-shadow:
+    0 4px 16px -2px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.rooms li {
+  display: flex;
 }
 .rooms a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  color: var(--color-ink);
+  min-height: 38px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: var(--color-ink-2);
+  font-size: 0.875rem;
+  line-height: 1;
   text-decoration: none;
-  border-bottom: 3px solid transparent;
+  border: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s var(--ease-out);
 }
 .rooms li:first-child a {
   font-family: var(--font-display);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
 }
-.rooms a:hover,
-.rooms a[aria-current] {
-  border-bottom-color: var(--color-accent);
+.rooms a:hover {
+  color: #fff;
+  background: rgba(231, 176, 79, 0.14);
+  border-color: rgba(231, 176, 79, 0.35);
+}
+.rooms a[aria-current],
+.rooms a[aria-current]:visited,
+.rooms a[aria-current]:hover,
+.rooms a[aria-current]:focus,
+.rooms a[aria-current]:active,
+.rooms li a[aria-current],
+.rooms li a[aria-current]:visited,
+.rooms li a[aria-current]:hover,
+.rooms li a[aria-current]:focus,
+.rooms li a[aria-current]:active,
+.rooms li:first-child a[aria-current],
+.rooms li:first-child a[aria-current]:visited,
+.rooms li:first-child a[aria-current]:hover,
+.rooms li:first-child a[aria-current]:focus,
+.rooms li:first-child a[aria-current]:active {
+  color: #120916 !important;
+  background: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(231, 176, 79, 0.4);
+}
+.rooms a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+@media (max-width: 720px) {
+  .rooms {
+    padding: 0 var(--space-4);
+  }
+  .rooms ul {
+    border-radius: 12px;
+    padding: 6px;
+    gap: 4px;
+  }
+  .rooms a {
+    min-height: 44px;
+    font-size: 0.8125rem;
+    padding: 6px 10px;
+  }
 }
 
 /* Space pages (professional, personal, lab): numbered rail on the left, content on the right. */
@@ -427,7 +490,7 @@ dialog li a[aria-current='page'] {
 .next {
   margin-top: 72px;
   padding-top: var(--space-4);
-  border-top: 2px solid var(--color-ink);
+  border-top: 1px solid var(--color-rule);
   font-size: 1.0625rem;
 }
 .next p {
