@@ -1,54 +1,54 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "thursday"
-      time: "14:26"
-      timezone: "Asia/Kolkata"
+      interval: 'weekly'
+      day: 'thursday'
+      time: '14:26'
+      timezone: 'Asia/Kolkata'
     open-pull-requests-limit: 20
     # Mirrors pnpm minimumReleaseAge: skip versions published in the last few days
     cooldown:
       default-days: 3
     labels:
-      - "dependencies"
-      - "automated"
+      - 'dependencies'
+      - 'automated'
     commit-message:
-      prefix: "chore(deps)"
+      prefix: 'chore(deps)'
     groups:
       dev-dependencies:
-        dependency-type: "development"
+        dependency-type: 'development'
       runtime-dependencies:
-        dependency-type: "production"
+        dependency-type: 'production'
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "thursday"
-      time: "14:26"
-      timezone: "Asia/Kolkata"
+      interval: 'weekly'
+      day: 'thursday'
+      time: '14:26'
+      timezone: 'Asia/Kolkata'
     open-pull-requests-limit: 10
     labels:
-      - "dependencies"
-      - "automated"
+      - 'dependencies'
+      - 'automated'
     commit-message:
-      prefix: "chore(actions-deps)"
+      prefix: 'chore(actions-deps)'
     groups:
       github-actions:
         patterns:
-          - "*"
+          - '*'
 
-  - package-ecosystem: "pip"
-    directory: "/.github/workflows"
+  - package-ecosystem: 'pip'
+    directory: '/.github/workflows'
     schedule:
-      interval: "weekly"
-      day: "thursday"
-      time: "14:26"
-      timezone: "Asia/Kolkata"
+      interval: 'weekly'
+      day: 'thursday'
+      time: '14:26'
+      timezone: 'Asia/Kolkata'
     labels:
-      - "dependencies"
-      - "automated"
+      - 'dependencies'
+      - 'automated'
     commit-message:
-      prefix: "chore(ci-deps)"
+      prefix: 'chore(ci-deps)'

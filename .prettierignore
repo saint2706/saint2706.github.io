@@ -10,3 +10,4 @@ pnpm-lock.yaml
 *.min.js
 *.min.css
 .remember
+.impeccable

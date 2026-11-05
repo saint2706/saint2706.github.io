@@ -5,9 +5,9 @@ env:
 
 on:
   workflow_run:
-    workflows: [ "CI" ]
-    types: [ completed ]
-    branches: [ "main", "master" ]
+    workflows: ['CI']
+    types: [completed]
+    branches: ['main', 'master']
   workflow_dispatch:
 
 permissions:
