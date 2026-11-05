@@ -48,6 +48,8 @@ CI enforces this policy and will fail if `package-lock.json` exists.
 
 `main` is protected: changes land through a pull request, squash-merged, once all required CI checks pass. Do not push to `main` directly. The repository owner is listed in `.github/CODEOWNERS`.
 
+Codex reviews every PR, and the required `codex-review` status (`.github/workflows/codex-review-gate.yml`) keeps the PR, and any auto-merge, waiting until Codex has finished reviewing the latest commit with no open findings. It re-checks whenever Codex updates its summary comment. If Codex has not started, for example on Dependabot PRs, comment `@codex review`. To re-check by hand, run the workflow from the Actions tab with the PR number.
+
 Merging to `main` deploys the production site, so keep each PR focused and check the old site locally with `pnpm build && pnpm preview:old` first.
 
 ## CI

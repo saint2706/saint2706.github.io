@@ -1,0 +1,82 @@
+name: Codex Review Gate
+
+# Posts the required `codex-review` commit status on a PR's head commit:
+#   pending  until Codex has finished reviewing that exact commit,
+#   failure  if Codex reports unresolved findings,
+#   success  once Codex reviewed it with nothing open.
+# Codex keeps a machine-readable state line in its summary comment and edits that comment as reviews
+# progress, so comment edits by the Codex app re-run this job.
+#
+# pull_request_target runs this file from main with a token that can write statuses, including on
+# Dependabot PRs. That is safe here because the job never checks out or executes PR code.
+
+on:
+  pull_request_target: # zizmor: ignore[dangerous-triggers] no checkout; only the numeric PR number is used, via env
+    types: [opened, reopened, synchronize, ready_for_review]
+  issue_comment: # zizmor: ignore[dangerous-triggers] filtered to the Codex app's comments; body is parsed as data by jq
+    types: [created, edited]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number to re-check
+        required: true
+
+permissions: {}
+
+concurrency:
+  group: codex-review-gate-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.pull_request && github.event.comment.user.login == 'chatgpt-codex-connector[bot]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      statuses: write
+      pull-requests: read
+      issues: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number || github.event.issue.number || inputs.pr }}
+    steps:
+      - name: Report Codex review state for the head commit
+        run: |
+          set -euo pipefail
+          [[ "$PR" =~ ^[0-9]+$ ]] || { echo "::error::Invalid PR number: $PR"; exit 1; }
+
+          read -r pr_state head < <(gh api "repos/$REPO/pulls/$PR" --jq '"\(.state) \(.head.sha)"')
+          if [ "$pr_state" != open ]; then echo "PR #$PR is $pr_state; nothing to report."; exit 0; fi
+
+          # Only the Codex app's own comments count; "[bot]" logins cannot be taken by user accounts.
+          json=$(gh api --paginate "repos/$REPO/issues/$PR/comments" \
+                   --jq '.[] | select(.user.login == "chatgpt-codex-connector[bot]" and .user.type == "Bot") | .body' \
+                 | sed -n 's/^<!-- codex-review-state:v1 \(.*\) -->$/\1/p' | tail -n 1)
+          json=${json:-'{}'}
+          echo "Head $head, Codex state: $json"
+
+          verdict=$(jq -r --arg head "$head" '
+            (.code_review // {}) as $c | (.security_review // {}) as $s |
+            if $c.commit_sha != $head then
+              "pending|Waiting for Codex to review \($head[0:7]). Comment \"@codex review\" if it has not started."
+            elif $c.status != "completed" then
+              "pending|Codex review is \($c.status // "running")."
+            elif $s.commit_sha == $head and $s.status != null and $s.status != "completed" then
+              "pending|Codex security review is \($s.status)."
+            elif $c.has_unresolved_findings == true or ($s.commit_sha == $head and $s.has_unresolved_findings == true) then
+              "failure|Codex has unresolved findings on \($head[0:7]). Fix or resolve them."
+            else
+              "success|Codex reviewed \($head[0:7]) with no open findings."
+            end' <<<"$json")
+
+          state=${verdict%%|*}
+          description=${verdict#*|}
+          echo "$state: $description"
+          gh api --silent "repos/$REPO/statuses/$head" \
+            -f state="$state" \
+            -f context=codex-review \
+            -f description="${description:0:140}" \
+            -f target_url="https://github.com/$REPO/pull/$PR"
