@@ -5,12 +5,12 @@
 - Current phase: P02
 - Execution mode: phase-gated
 - P00, P01: complete
-- P02: P02-T01 complete, P02-T02 in review (both authorized); P02-T03 not authorized; no production release
+- P02: complete 2026-11-05 (P02-T01, P02-T02, P02-T03); no task authorized; no production release
 - P03–P07: pending explicit approval
 - Discovery decisions: 163 confirmed
 - Task specs: 28
 - Architecture: Astro + React islands confirmed (ADR-001); migration not yet authorized
-- Visual palette/concept: unresolved; research and Figma approval required
+- Visual direction: A1 Specimen Field concept, Sealing wax palette and faces approved 2026-11-04; page layouts provisional (`design/system/`)
 - Default branch protection: ruleset `protect-main` active since 2026-11-01
 - Production: old website remains live during branch work; merge/deploy requires explicit release authorization
 
