@@ -18,8 +18,15 @@
     },
     {
       "phase": "P03",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "authorized",
+      "scope": "P03-T01, P03-T02 and P03-T03 authorized by the owner 2026-11-05 to run in one go. Decisions: new Astro site in a separate site/ folder; the deploy workflow keeps publishing the old src/ app, so the live site is unchanged until the P07 release. Routes: / , /work/ hub plus /projects/, /writing/, /about/ (from /resume), /contact/, /personal/, /lab/, with meta-refresh redirects from /blog, /resume, /games, /playground. Page designs and components built as provisional; owner reviews at end of P03. Draft copy C-01..C-12 used as marked drafts pending end-of-phase review. /personal/ ships only filled sections. Search: Pagefind. Games, playground and Gemini features stay in the old app until P06. Owner approved adding new site/ CI jobs to required checks of ruleset protect-main (additions only). JSON-LD Person limited to facts already in src/data/resumeData. Phase PR may squash-merge after green CI, resolved threads and verification that deploy output is unchanged. Production release excluded.",
+      "authorized_tasks": ["P03-T01", "P03-T02", "P03-T03"],
+      "decisions": [
+        "Paintings (owner, 2026-11-05): use the seven public-domain works from the owner-supplied deck Ten Paintings, Ten Questions (Fall of Icarus, Third of May 1808, Woman with Dead Child, Shakuntala Looking Back, Susanna and the Elders, The Sleep of Reason, Disrobing of Draupadi). Exclude The False Mirror, The Human Condition and Slave Market (still in copyright).",
+        "Disrobing of Draupadi: owner chose to host the Wikimedia Commons image (Ashmolean photograph, tagged PD-Art) with full credit; the Ashmolean and the Met assert rights over their photographs. Risk accepted by the owner.",
+        "Raja Ravi Varma work titled Shakuntala Looking Back, with alternative titles noted on the page.",
+        "Gallery: owner asked for a full gallery presentation with detail crops and the deck discussion (readings, questions, sources), text copied from the deck with its evidence labels."
+      ]
     },
     {
       "phase": "P04",

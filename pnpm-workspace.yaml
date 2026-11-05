@@ -1,3 +1,7 @@
+# site/ is the new Astro site (P03). The root package is still the live React app.
+packages:
+  - site
+
 # pnpm 11+ no longer reads settings from the "pnpm" field of package.json.
 overrides:
   basic-ftp: '>=5.3.1'

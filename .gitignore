@@ -3,6 +3,9 @@ node_modules/
 
 # Build output
 dist/
+site/.astro/
+site/test-results/
+site/playwright-report/
 
 # Regenerated on every build by `prebuild` (scripts/generate-llms.js, scripts/generate-sitemap.js)
 /public/llms.txt

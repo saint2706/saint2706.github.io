@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import ProjectRow from '../../components/ProjectRow.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { projects, posts, about, profile, monthYearOf } from '../../lib/content';
+
+const flagships = projects.filter(p => p.flagship);
+const latest = posts.filter(p => !p.myth).slice(0, 3);
+---
+
+<Base title="Work" description="Projects, roles and what Rishabh Agrawal studied.">
+  <SpaceHead title="Work" lede="Projects, roles and what I studied." />
+
+  <Section id="flagships" num={1} title="Flagship projects">
+    <ul class="rows">{flagships.map(p => <ProjectRow project={p} />)}</ul>
+    <p><a href="/projects/">All {projects.length} projects</a></p>
+  </Section>
+
+  <Section id="writing" num={2} title="Writing">
+    <ul class="rows">
+      {
+        latest.map(p => (
+          <li>
+            <h3>
+              <a href={p.link}>{p.title}</a>
+            </h3>
+            <span class="meta">
+              {p.source} · {monthYearOf(p.date)}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/writing/">All writing</a></p>
+  </Section>
+
+  <Section id="roles" num={3} title="Roles and study">
+    <ul class="rows">
+      {
+        [...about.roles, ...about.education].map(e => (
+          <li>
+            <h3>
+              {e.title}, {e.org}
+            </h3>
+            <span class="meta">
+              {e.start} to {e.end}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <p><a href="/about/">About, with certifications and languages</a></p>
+  </Section>
+
+  <Section id="contact" num={4} title="Contact">
+    <ul class="plain">
+      <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      {
+        profile.links.map(l => (
+          <li>
+            <a href={l.url}>{l.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <NextLinks
+    links={[
+      { href: '/personal/', label: 'Off the clock: art, myth and books' },
+      { href: '/lab/', label: 'The lab: experiments' },
+    ]}
+  />
+</Base>

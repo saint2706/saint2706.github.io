@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { profile, about, isExpired } from '../../lib/content';
+
+const sections = [
+  { id: 'roles', title: 'Roles', items: about.roles },
+  { id: 'studied', title: 'What I studied', items: about.education },
+];
+const validity = (expires: string | null) =>
+  expires ? (isExpired(expires) ? ` · expired ${expires}` : ` · valid to ${expires}`) : '';
+---
+
+<Base title="About" description={profile.summary}>
+  <SpaceHead title="About" lede={profile.summary} />
+  {
+    sections.map((s, i) => (
+      <Section id={s.id} num={i + 1} title={s.title}>
+        <ul class="rows">
+          {s.items.map(e => (
+            <li>
+              <h3>
+                {e.title}, {e.org}
+              </h3>
+              <span class="meta">
+                {e.start} to {e.end}
+              </span>
+              <p>{e.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    ))
+  }
+  <Section id="certifications" num={3} title="Certifications">
+    <ul class="rows">
+      {
+        about.certifications.map(c => (
+          <li>
+            <h3>{c.name}</h3>
+            <span class="meta">
+              {c.issuer}
+              {c.date && ` · ${c.date}`}
+              {validity(c.expires)}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+  <Section id="languages" num={4} title="Languages">
+    <ul class="rows">
+      {
+        profile.languages.map(l => (
+          <li>
+            <h3>{l.name}</h3>
+            <span class="meta">{l.level}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+  <NextLinks
+    links={[
+      { href: '/contact/', label: 'Contact' },
+      { href: '/projects/', label: 'Projects' },
+    ]}
+  />
+</Base>

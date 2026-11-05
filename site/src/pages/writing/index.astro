@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { posts, monthYearOf } from '../../lib/content';
+
+const groups = [
+  { id: 'essays', title: 'Essays and notes', items: posts.filter(p => !p.myth) },
+  { id: 'myth', title: 'Essays on myth', items: posts.filter(p => p.myth) },
+];
+---
+
+<Base title="Writing" description="Essays and technical posts by Rishabh Agrawal on Medium and Dev.to.">
+  <SpaceHead title="Writing" lede="Essays and technical posts, published on Medium and Dev.to. Each link opens the post where it was published." />
+  {
+    groups.map((g, i) => (
+      <Section id={g.id} num={i + 1} title={g.title}>
+        <ul class="rows">
+          {g.items.map(p => (
+            <li>
+              <h3>
+                <a href={p.link}>{p.title}</a>
+              </h3>
+              <span class="meta">
+                {p.source} · <time datetime={p.date.toISOString().slice(0, 10)}>{monthYearOf(p.date)}</time>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    ))
+  }
+  <NextLinks
+    links={[
+      { href: '/work/', label: 'Back to work' },
+      { href: '/personal/', label: 'Off the clock: art, myth and books' },
+    ]}
+  />
+</Base>

@@ -1,0 +1,138 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+---
+
+<Base title="Search" description="Search the site." noindex>
+  <SpaceHead title="Search" lede="Find a project, essay, painting or book on this site." />
+  <noscript><p>Search needs JavaScript. Every page is also listed in the site menu at the bottom of the page.</p></noscript>
+  <form class="search" role="search" data-needs-js hidden>
+    <label for="q">Search the site</label>
+    <div class="row">
+      <input id="q" name="q" type="search" autocomplete="off" />
+      <button type="submit">Search</button>
+    </div>
+  </form>
+  <p id="status" class="meta" role="status" aria-live="polite"></p>
+  <ol id="results" class="results"></ol>
+</Base>
+
+<script>
+  type Hit = { url: string; excerpt: string; meta: { title?: string } };
+  type Pagefind = { init(): Promise<void>; search(q: string): Promise<{ results: { data(): Promise<Hit> }[] }> };
+
+  const form = document.querySelector<HTMLFormElement>('form.search')!;
+  const input = form.querySelector<HTMLInputElement>('#q')!;
+  const status = document.getElementById('status')!;
+  const list = document.getElementById('results')!;
+  let engine: Promise<Pagefind> | undefined;
+
+  // The index only exists after `pagefind` runs on the built site, so a dev server lands in the error state.
+  const load = () =>
+    (engine ??= import(/* @vite-ignore */ `${'/pagefind/'}pagefind.js`).then(async (m: Pagefind) => {
+      await m.init();
+      return m;
+    }));
+
+  // Excerpts mark matches with <mark>; rebuild them as text nodes instead of trusting the HTML.
+  const excerpt = (html: string) => {
+    const p = document.createElement('p');
+    html.split(/(<mark>.*?<\/mark>)/).forEach(part => {
+      const hit = part.match(/^<mark>(.*)<\/mark>$/);
+      const text = (hit ? hit[1] : part).replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      if (!text) return;
+      if (hit) {
+        const m = document.createElement('mark');
+        m.textContent = text;
+        p.append(m);
+      } else p.append(text);
+    });
+    return p;
+  };
+
+  async function run(q: string) {
+    list.replaceChildren();
+    if (!q.trim()) {
+      status.textContent = '';
+      return;
+    }
+    status.textContent = 'Searching…';
+    try {
+      const pf = await load();
+      const hits = await Promise.all((await pf.search(q)).results.slice(0, 20).map(r => r.data()));
+      status.textContent = hits.length ? `${hits.length} result${hits.length === 1 ? '' : 's'} for “${q}”.` : `Nothing found for “${q}”. Try a shorter or different word.`;
+      list.replaceChildren(
+        ...hits.map(h => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = h.url;
+          a.textContent = h.meta.title ?? h.url;
+          li.append(a, excerpt(h.excerpt));
+          return li;
+        }),
+      );
+    } catch {
+      status.textContent = 'Search is unavailable right now. Every page is listed in the site menu at the bottom of the page.';
+    }
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    history.replaceState(null, '', `?q=${encodeURIComponent(input.value)}`);
+    run(input.value);
+  });
+  const initial = new URLSearchParams(location.search).get('q');
+  if (initial) {
+    input.value = initial;
+    run(initial);
+  }
+</script>
+
+<style>
+  .search label {
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+  .row {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    max-width: 40rem;
+  }
+  .row input {
+    flex: 1 1 16rem;
+    min-height: 44px;
+    padding: 8px 12px;
+    font: inherit;
+    color: var(--color-ink);
+    background: var(--color-surface);
+    border: 2px solid var(--color-ink);
+  }
+  .row button {
+    min-height: 44px;
+    padding: 8px 20px;
+    font: inherit;
+    color: var(--color-canvas);
+    background: var(--color-ink);
+    border: 2px solid var(--color-ink);
+    cursor: pointer;
+  }
+  .results {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    max-width: 62ch;
+  }
+  .results li {
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-rule);
+  }
+  .results p {
+    margin: var(--space-1) 0 0;
+  }
+  .results :global(mark) {
+    background: none;
+    color: inherit;
+    text-decoration: underline 2px var(--color-accent);
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import { profile } from '../lib/content';
+
+interface Props {
+  title: string;
+  description: string;
+  space?: 'pro' | 'per' | 'lab';
+  /** Pages left out of search and the sitemap (search, 404). */
+  noindex?: boolean;
+  jsonLd?: object;
+}
+const { title, description, space = 'pro', noindex = false, jsonLd } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site);
+const fullTitle = path === '/' ? `${profile.name}: ${profile.jobTitle}` : `${title} · ${profile.name}`;
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/work/', label: 'Work' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/writing/', label: 'Writing' },
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+  { href: '/personal/', label: 'Off the clock: art, myth and books' },
+  { href: '/lab/', label: 'Lab' },
+  { href: '/search/', label: 'Search' },
+];
+const current = (href: string) => (href === path ? 'page' : undefined);
+---
+
+<!doctype html>
+<html lang="en" data-motion="off">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="preload" href="/fonts/atkinson-hyperlegible-next-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body class={space}>
+    <a class="skip" href="#content">Skip to content</a>
+    <header class="bar">
+      <a class="name" href="/">{profile.name.toUpperCase()}</a>
+      <div class="controls" data-needs-js hidden>
+        <button class="btn" type="button" data-motion-toggle aria-pressed="false">Motion: off</button>
+        <button class="btn" type="button" data-open-index>Index</button>
+      </div>
+    </header>
+    <main id="content" tabindex="-1" class:list={[{ space: path !== '/' }]} data-pagefind-body={noindex ? undefined : ''}>
+      <slot />
+    </main>
+    <footer class="site-foot">
+      <nav aria-label="Site">
+        <ul>
+          {nav.map(n => <li><a href={n.href} aria-current={current(n.href)}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <p>No cookies, no analytics. Painting credits are on each painting's page.</p>
+    </footer>
+    <div class="bottom" data-needs-js hidden>
+      <button class="btn" type="button" data-open-index>Index</button>
+      <button class="btn" type="button" data-motion-toggle aria-pressed="false">Motion: off</button>
+    </div>
+    <dialog id="index" aria-labelledby="index-title">
+      <h2 id="index-title">Index</h2>
+      <ul>
+        {nav.map(n => <li><a href={n.href} aria-current={current(n.href)}>{n.label}</a></li>)}
+      </ul>
+      <button class="btn" type="button" data-close-index>Close</button>
+    </dialog>
+    <script src="../scripts/shell.ts"></script>
+  </body>
+</html>

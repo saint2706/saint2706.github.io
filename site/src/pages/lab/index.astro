@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import NextLinks from '../../components/NextLinks.astro';
+
+// These exist on the previous version of the site and move here in a later phase (P06).
+const trays = [
+  {
+    title: 'Nine small games',
+    text: 'Tic Tac Toe, Snake, Memory Match, Minesweeper, Simon Says, Whack-a-Mole, Lights Out, 2048 and Connect Four.',
+  },
+  {
+    title: 'Code playground',
+    text: 'Python one-liners that run in the browser, CSS snippets and an editable JavaScript and HTML sandbox.',
+  },
+  { title: 'AI chat and resume roast', text: 'A chat assistant and a resume roast, both backed by Gemini.' },
+];
+---
+
+<Base title="Lab" description="Experiments by Rishabh Agrawal: small games, a code playground and AI toys." space="lab">
+  <SpaceHead title="Lab" lede="Experiments. Some of this works." />
+  <Section id="bench" num={1} title="On the bench">
+    <ul class="bench">
+      {
+        trays.map(t => (
+          <li>
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+            <span class="status">being rebuilt</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="note">
+      These ran on the previous version of this site. Each one comes back with a plain description, a keyboard
+      path and a reduced-motion version.
+    </p>
+  </Section>
+  <NextLinks
+    links={[
+      { href: '/work/', label: 'Back to work' },
+      { href: '/personal/', label: 'Off the clock: art, myth and books' },
+    ]}
+  />
+</Base>
+
+<style>
+  .bench {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .bench > li {
+    border: 2px dashed var(--color-ink-2);
+    border-radius: 20px;
+    padding: 20px;
+    background: var(--color-surface);
+  }
+  .bench h3 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+  .bench p {
+    margin: 8px 0 0;
+  }
+  .status {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border: 1.5px solid var(--color-ink);
+    border-radius: 999px;
+    font-size: 0.8125rem;
+  }
+  @media (max-width: 1024px) {
+    .bench {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 720px) {
+    .bench {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

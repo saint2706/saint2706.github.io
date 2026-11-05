@@ -1,0 +1,20 @@
+{
+  "name": "Rishabh Agrawal",
+  "jobTitle": "Data Storyteller & Analytics Strategist",
+  "summary": "Big Data Analytics postgraduate at Goa Institute of Management with a Computer Science background, working at the intersection of data, technology and creativity.",
+  "email": "rishabh.agrawal25b@gim.ac.in",
+  "location": "Goa, India",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/saint2706" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/rishabh-agrawal-1807321b9" },
+    { "label": "Instagram (@saintkaprivate)", "url": "https://www.instagram.com/saintkaprivate/" }
+  ],
+  "languages": [
+    { "name": "English", "level": "Native or bilingual" },
+    { "name": "Hindi", "level": "Native or bilingual" },
+    { "name": "Marathi", "level": "Native or bilingual" },
+    { "name": "Marwari", "level": "Native or bilingual" },
+    { "name": "French", "level": "Professional working" }
+  ],
+  "source": "src/data/resume.js (published resume data); Instagram handle user-confirmed 2026-11-04 (C-13)"
+}

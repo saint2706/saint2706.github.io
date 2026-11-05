@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  lede: string;
+}
+const { title, lede } = Astro.props;
+---
+
+<div class="space-head">
+  <span class="mark" aria-hidden="true"></span>
+  <div>
+    <h1>{title}</h1>
+    <p>{lede}</p>
+    <slot />
+  </div>
+</div>

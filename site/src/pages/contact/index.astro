@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { profile } from '../../lib/content';
+---
+
+<Base title="Contact" description="How to reach Rishabh Agrawal: email, GitHub, LinkedIn and Instagram.">
+  <SpaceHead title="Contact" lede={`Email, or any of the profiles below. Based in ${profile.location}.`} />
+  <Section id="reach" num={1} title="Where to find me">
+    <ul class="plain">
+      <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      {
+        profile.links.map(l => (
+          <li>
+            <a href={l.url}>{l.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+  <NextLinks
+    links={[
+      { href: '/work/', label: 'Back to work' },
+      { href: '/about/', label: 'About' },
+    ]}
+  />
+</Base>
