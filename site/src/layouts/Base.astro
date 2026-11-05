@@ -45,7 +45,8 @@ const current = (href: string) => (href === path ? 'page' : undefined);
     <meta property="og:url" content={canonical} />
     <link rel="preload" href="/fonts/atkinson-hyperlegible-next-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    {/* Escaping "<" keeps a "</script>" inside any string from closing the block early. */}
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', `${String.fromCharCode(92)}u003c`)} />}
   </head>
   <body class={space}>
     <a class="skip" href="#content">Skip to content</a>
