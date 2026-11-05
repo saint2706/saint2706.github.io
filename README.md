@@ -77,27 +77,35 @@ Project planning, audits and decisions live in `project-system/`; start with `pr
 
 ## 📜 Scripts
 
-| Script                           | Description                                          |
-| :------------------------------- | :--------------------------------------------------- |
-| `pnpm dev`                       | Start the development server                         |
-| `pnpm build`                     | Build the production bundle                          |
-| `pnpm preview`                   | Preview the production build locally                 |
-| `pnpm lint`                      | Run ESLint checks                                    |
-| `pnpm lint:fix`                  | Run ESLint checks and fix auto-fixable issues        |
-| `pnpm format`                    | Format code with Prettier                            |
-| `pnpm format:check`              | Check code formatting with Prettier                  |
-| `pnpm test`                      | Run unit tests with Vitest (watch mode)              |
-| `pnpm test:run`                  | Run unit tests with Vitest (single run)              |
-| `pnpm test:security`             | Run security utility verification scripts            |
-| `pnpm test:csp`                  | Verify Content Security Policy (CSP) in `index.html` |
-| `pnpm verify:sri`                | Verify Subresource Integrity (SRI) for Pyodide       |
-| `pnpm test:python-runner-stdout` | Verify Python runner standard output capture logic   |
-| `pnpm test:pyodide-loader-retry` | Verify Pyodide loader retry mechanism                |
-| `pnpm test:no-aura`              | Verify no deprecated Aura theme references exist     |
-| `pnpm test:security-full`        | Run comprehensive security checks (CSP, SRI, deps)   |
-| `pnpm generate:llms`             | Generate `public/llms.txt` for AI agents             |
-| `pnpm generate:sitemap`          | Generate `public/sitemap.xml`                        |
-| `pnpm generate:geo`              | Run both `generate:llms` and `generate:sitemap`      |
+| Script                                                      | Description                                                                                            |
+| :---------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                                                  | Start the development server                                                                           |
+| `pnpm build`                                                | Build the production bundle                                                                            |
+| `pnpm preview`                                              | Build the new site (`site/`) and open it with the design concepts at `/design/` (`--help` for options) |
+| `pnpm preview:design`                                       | Same, opening the page designs first                                                                   |
+| `pnpm preview:pick`                                         | Same, choosing from your installed browsers                                                            |
+| `pnpm preview:old`                                          | Preview the old site's production build                                                                |
+| `pnpm site:dev`                                             | Start the new site's Astro dev server                                                                  |
+| `pnpm site:build` / `site:check` / `site:test` / `site:e2e` | Build, type-check, content-test or browser-test the new site                                           |
+| `pnpm verify`                                               | Run the main CI checks locally before a PR                                                             |
+| `pnpm fix`                                                  | Apply ESLint fixes, then Prettier                                                                      |
+| `pnpm clean`                                                | Delete build output and caches                                                                         |
+| `pnpm lint`                                                 | Run ESLint checks                                                                                      |
+| `pnpm lint:fix`                                             | Run ESLint checks and fix auto-fixable issues                                                          |
+| `pnpm format`                                               | Format code with Prettier                                                                              |
+| `pnpm format:check`                                         | Check code formatting with Prettier                                                                    |
+| `pnpm test`                                                 | Run unit tests with Vitest (watch mode)                                                                |
+| `pnpm test:run`                                             | Run unit tests with Vitest (single run)                                                                |
+| `pnpm test:security`                                        | Run security utility verification scripts                                                              |
+| `pnpm test:csp`                                             | Verify Content Security Policy (CSP) in `index.html`                                                   |
+| `pnpm verify:sri`                                           | Verify Subresource Integrity (SRI) for Pyodide                                                         |
+| `pnpm test:python-runner-stdout`                            | Verify Python runner standard output capture logic                                                     |
+| `pnpm test:pyodide-loader-retry`                            | Verify Pyodide loader retry mechanism                                                                  |
+| `pnpm test:no-aura`                                         | Verify no deprecated Aura theme references exist                                                       |
+| `pnpm test:security-full`                                   | Run comprehensive security checks (CSP, SRI, deps)                                                     |
+| `pnpm generate:llms`                                        | Generate `public/llms.txt` for AI agents                                                               |
+| `pnpm generate:sitemap`                                     | Generate `public/sitemap.xml`                                                                          |
+| `pnpm generate:geo`                                         | Run both `generate:llms` and `generate:sitemap`                                                        |
 
 ## 🔒 Security
 

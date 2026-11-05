@@ -23,7 +23,9 @@ Thanks for contributing to this project.
 
 Use pnpm for all scripts in this repository:
 
-- `pnpm dev`
+- `pnpm dev` (old site) or `pnpm site:dev` (new site)
+- `pnpm preview` (builds the new site and opens it with the design concepts; `pnpm preview --help`)
+- `pnpm verify` (format, lint, tests and the new site's checks in one go; `pnpm fix` applies fixes)
 - `pnpm lint`
 - `pnpm format:check` (`pnpm format` to fix)
 - `pnpm test:run`
@@ -46,7 +48,7 @@ CI enforces this policy and will fail if `package-lock.json` exists.
 
 `main` is protected: changes land through a pull request, squash-merged, once all required CI checks pass. Do not push to `main` directly. The repository owner is listed in `.github/CODEOWNERS`.
 
-Merging to `main` deploys the production site, so keep each PR focused and check the preview locally with `pnpm build && pnpm preview` first.
+Merging to `main` deploys the production site, so keep each PR focused and check the old site locally with `pnpm build && pnpm preview:old` first.
 
 ## CI
 
