@@ -50,7 +50,10 @@ import SpaceHead from '../../components/SpaceHead.astro';
     return p;
   };
 
+  // Overlapping searches can finish out of order; only the latest one may update the page.
+  let latest = 0;
   async function run(q: string) {
+    const ticket = ++latest;
     list.replaceChildren();
     if (!q.trim()) {
       status.textContent = '';
@@ -60,6 +63,7 @@ import SpaceHead from '../../components/SpaceHead.astro';
     try {
       const pf = await load();
       const hits = await Promise.all((await pf.search(q)).results.slice(0, 20).map(r => r.data()));
+      if (ticket !== latest) return;
       status.textContent = hits.length ? `${hits.length} result${hits.length === 1 ? '' : 's'} for “${q}”.` : `Nothing found for “${q}”. Try a shorter or different word.`;
       list.replaceChildren(
         ...hits.map(h => {
@@ -72,6 +76,7 @@ import SpaceHead from '../../components/SpaceHead.astro';
         }),
       );
     } catch {
+      if (ticket !== latest) return;
       status.textContent = 'Search is unavailable right now. Every page is listed in the site menu at the bottom of the page.';
     }
   }

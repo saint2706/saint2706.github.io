@@ -71,6 +71,20 @@ test('search reports nothing found', async ({ page }) => {
   await expect(page.getByRole('status')).toContainText('Nothing found');
 });
 
+test('a slower earlier search never overwrites the latest one', async ({ page }) => {
+  await page.goto('/search/');
+  const box = page.getByLabel('Search the site');
+  // The first search also loads the index, so it tends to finish after the second.
+  await box.fill('Icarus');
+  await box.press('Enter');
+  await box.fill('zzqxw');
+  await box.press('Enter');
+  await expect(page.getByRole('status')).toContainText('Nothing found for “zzqxw”');
+  await page.waitForTimeout(500);
+  await expect(page.getByRole('status')).toContainText('zzqxw');
+  await expect(page.locator('#results li')).toHaveCount(0);
+});
+
 test('detail markers show only when asked', async ({ page }) => {
   await page.goto('/personal/art/fall-of-icarus/');
   const marks = page.locator('svg.marks');
