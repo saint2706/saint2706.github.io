@@ -27,6 +27,13 @@ const nav = [
   { href: '/search/', label: 'Search' },
 ];
 const current = (href: string) => (href === path ? 'page' : undefined);
+// Search results show what kind of page each hit is (P04-T03); the URL already says it.
+const kind =
+  /^\/projects\/.+\//.test(path) ? 'Case study'
+  : path.startsWith('/personal/art/') ? 'Painting'
+  : path.startsWith('/personal/') ? 'Off the clock'
+  : path.startsWith('/lab/') ? 'Lab'
+  : 'Work';
 ---
 
 <!doctype html>
@@ -45,6 +52,7 @@ const current = (href: string) => (href === path ? 'page' : undefined);
     <meta property="og:url" content={canonical} />
     <link rel="preload" href="/fonts/atkinson-hyperlegible-next-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta data-pagefind-meta="kind[content]" content={kind} />
     {/* Escaping "<" keeps a "</script>" inside any string from closing the block early. */}
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', `${String.fromCharCode(92)}u003c`)} />}
   </head>

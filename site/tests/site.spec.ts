@@ -5,6 +5,9 @@ const ROUTES = [
   '/',
   '/work/',
   '/projects/',
+  '/projects/programming-challenges-6/',
+  '/projects/coding-for-mba/',
+  '/projects/attendance-face-recognition/',
   '/writing/',
   '/about/',
   '/contact/',
@@ -64,6 +67,33 @@ test('search finds a painting and lists it as a link', async ({ page }) => {
   await page.getByRole('button', { name: 'Search' }).click();
   await expect(page.getByRole('status')).toContainText('for “Icarus”');
   await expect(page.locator('#results a').first()).toHaveAttribute('href', /fall-of-icarus/);
+  await expect(page.locator('#results li').first().locator('.meta')).toHaveText('Painting');
+});
+
+test('search labels a case study by kind', async ({ page }) => {
+  await page.goto('/search/?q=Pyodide');
+  const hit = page.locator('#results li', {
+    has: page.locator('a[href*="/projects/coding-for-mba/"]'),
+  });
+  await expect(hit.locator('.meta')).toHaveText('Case study');
+});
+
+test('flagship rows link to their case studies', async ({ page }) => {
+  await page.goto('/projects/');
+  await page.getByRole('link', { name: 'Read the case study' }).first().click();
+  await expect(page).toHaveURL(/\/projects\/programming-challenges-6\/$/);
+  await expect(page.getByRole('heading', { name: 'Limits' })).toBeVisible();
+});
+
+test('about page prints with contact details and without site chrome', async ({ page }) => {
+  await page.goto('/about/');
+  await expect(page.getByRole('button', { name: 'Print or save as PDF' })).toBeVisible();
+  await expect(page.locator('.print-only')).toBeHidden();
+  await expect(page.getByText(/expired Jul 2026/i)).toBeVisible();
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('.print-only')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Print or save as PDF' })).toBeHidden();
+  await expect(page.locator('.site-foot')).toBeHidden();
 });
 
 test('search reports nothing found', async ({ page }) => {

@@ -18,8 +18,8 @@
     },
     {
       "phase": "P03",
-      "status": "authorized",
-      "scope": "P03-T01, P03-T02 and P03-T03 authorized by the owner 2026-11-05 to run in one go. Decisions: new Astro site in a separate site/ folder; the deploy workflow keeps publishing the old src/ app, so the live site is unchanged until the P07 release. Routes: / , /work/ hub plus /projects/, /writing/, /about/ (from /resume), /contact/, /personal/, /lab/, with meta-refresh redirects from /blog, /resume, /games, /playground. Page designs and components built as provisional; owner reviews at end of P03. Draft copy C-01..C-12 used as marked drafts pending end-of-phase review. /personal/ ships only filled sections. Search: Pagefind. Games, playground and Gemini features stay in the old app until P06. Owner approved adding new site/ CI jobs to required checks of ruleset protect-main (additions only). JSON-LD Person limited to facts already in src/data/resumeData. Phase PR may squash-merge after green CI, resolved threads and verification that deploy output is unchanged. Production release excluded.",
+      "status": "complete",
+      "scope": "Complete 2026-11-05 (PR merged to main; no production release). P03-T01, P03-T02 and P03-T03 authorized by the owner 2026-11-05 to run in one go. Decisions: new Astro site in a separate site/ folder; the deploy workflow keeps publishing the old src/ app, so the live site is unchanged until the P07 release. Routes: / , /work/ hub plus /projects/, /writing/, /about/ (from /resume), /contact/, /personal/, /lab/, with meta-refresh redirects from /blog, /resume, /games, /playground. Page designs and components built as provisional; owner reviews at end of P03. Draft copy C-01..C-12 used as marked drafts pending end-of-phase review. /personal/ ships only filled sections. Search: Pagefind. Games, playground and Gemini features stay in the old app until P06. Owner approved adding new site/ CI jobs to required checks of ruleset protect-main (additions only). JSON-LD Person limited to facts already in src/data/resumeData. Phase PR may squash-merge after green CI, resolved threads and verification that deploy output is unchanged. Production release excluded.",
       "authorized_tasks": ["P03-T01", "P03-T02", "P03-T03"],
       "decisions": [
         "Paintings (owner, 2026-11-05): use the seven public-domain works from the owner-supplied deck Ten Paintings, Ten Questions (Fall of Icarus, Third of May 1808, Woman with Dead Child, Shakuntala Looking Back, Susanna and the Elders, The Sleep of Reason, Disrobing of Draupadi). Exclude The False Mirror, The Human Condition and Slave Market (still in copyright).",
@@ -30,8 +30,23 @@
     },
     {
       "phase": "P04",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "authorized",
+      "scope": "P04-T01, P04-T02 and P04-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p04-professional. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "authorized_tasks": ["P04-T01", "P04-T02", "P04-T03"],
+      "decisions": [
+        "Flagship case studies, in this order: Programming-Challenges-6, Coding-For-MBA, AI Attendance Management System (owner, 2026-11-05).",
+        "Programming-Challenges-6 replaces Programming-Challenges-5 as a flagship; PC5 is archived and its README says it was abandoned for v6.",
+        "Attendance system: credit its origin in Nevil Parmar's 2021 project and describe the owner's later rebuild from repository evidence.",
+        "Case studies do not mention AI coding agents or bot contributors (owner choice).",
+        "Resume: the /about/ page gets a print stylesheet so browsers can print or save it as a PDF; no separate PDF.",
+        "Contact: direct links only (email, GitHub, LinkedIn, Instagram); no form and no third-party form service.",
+        "AWS Certified Cloud Practitioner stays listed, labelled expired Jul 2026.",
+        "Owner supplied a CV PDF (2026-11-05) as a fact source; it must not be committed or offered for download.",
+        "Skills on /about/: the CV Core Competencies as plain names, no self-rated percentages.",
+        "Academic record: degrees with institutions and years only; no CGPA, school marks, phone number or age.",
+        "TheSmartBridge internship stays May 2023 to July 2023 (owner, overriding the CV dates); PGDM stays June 2025 to July 2027; LinkedIn URL confirmed current.",
+        "Case-study role lines approved as written: PC6 and Coding-For-MBA \"Author and maintainer\"; Attendance \"Rebuild author and maintainer since September 2025\" with Nevil Parmar credited for the 2021 original. Candid limits kept (owner, 2026-11-05)."
+      ]
     },
     {
       "phase": "P05",
