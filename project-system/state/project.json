@@ -13,7 +13,7 @@
     "P01": "complete",
     "P02": "complete 2026-11-05: P02-T01, P02-T02 (concept approved 2026-11-04) and P02-T03 (design system; palette and faces approved, layouts provisional) complete; P03–P07 not authorized; no production release",
     "P03": "complete 2026-11-05 on phase/p03-foundations: P03-T01, P03-T02, P03-T03 (new site in site/, not deployed; deploy output verified unchanged); merge allowed after green CI and resolved review threads; no production release; owner review of provisional designs and copy due",
-    "P04": "authorized 2026-11-05: P04-T01, P04-T02, P04-T03 on phase/p04-professional; no production release",
+    "P04": "complete 2026-11-05 on phase/p04-professional (PR #900): P04-T01, P04-T02, P04-T03 (case studies, print-ready About, search labels; not deployed); no production release",
     "P05": "pending-approval",
     "P06": "pending-approval",
     "P07": "pending-approval"

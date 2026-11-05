@@ -30,8 +30,8 @@
     },
     {
       "phase": "P04",
-      "status": "authorized",
-      "scope": "P04-T01, P04-T02 and P04-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p04-professional. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "status": "complete",
+      "scope": "Complete 2026-11-05 (PR #900 squash-merged to main; no production release). P04-T01, P04-T02 and P04-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p04-professional. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
       "authorized_tasks": ["P04-T01", "P04-T02", "P04-T03"],
       "decisions": [
         "Flagship case studies, in this order: Programming-Challenges-6, Coding-For-MBA, AI Attendance Management System (owner, 2026-11-05).",
