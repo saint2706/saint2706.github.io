@@ -5,15 +5,12 @@ name: Codex Review Gate
 #   failure  if Codex reports unresolved findings,
 #   success  once Codex reviewed it with nothing open.
 # Codex keeps a machine-readable state line in its summary comment and edits that comment as reviews
-# progress, so comment edits by the Codex app re-run this job.
-#
-# pull_request_target runs this file from main with a token that can write statuses, including on
-# Dependabot PRs. That is safe here because the job never checks out or executes PR code.
+# progress, so comment edits by the Codex app re-run this job. No PR trigger is needed: a required
+# status that is missing on a new head commit already blocks merging until this job reports on it.
+# issue_comment runs this file from main with a token that can write statuses, Dependabot PRs included.
 
 on:
-  pull_request_target: # zizmor: ignore[dangerous-triggers] no checkout; only the numeric PR number is used, via env
-    types: [opened, reopened, synchronize, ready_for_review]
-  issue_comment: # zizmor: ignore[dangerous-triggers] filtered to the Codex app's comments; body is parsed as data by jq
+  issue_comment: # zizmor: ignore[dangerous-triggers] filtered to the Codex app's comments; no checkout, body parsed as data by jq
     types: [created, edited]
   workflow_dispatch:
     inputs:
@@ -24,7 +21,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: codex-review-gate-${{ github.event.pull_request.number || github.event.issue.number || inputs.pr }}
+  group: codex-review-gate-${{ github.event.issue.number || inputs.pr }}
   cancel-in-progress: true
 
 jobs:
@@ -41,7 +38,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
-      PR: ${{ github.event.pull_request.number || github.event.issue.number || inputs.pr }}
+      PR: ${{ github.event.issue.number || inputs.pr }}
     steps:
       - name: Report Codex review state for the head commit
         run: |
