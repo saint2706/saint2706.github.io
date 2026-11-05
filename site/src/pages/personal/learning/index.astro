@@ -1,0 +1,44 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SpaceHead from '../../../components/SpaceHead.astro';
+import Section from '../../../components/Section.astro';
+import { learning } from '../../../lib/content';
+---
+
+<Base
+  title="Learning path"
+  description="Python, data, a first model, practice and the business view: Rishabh's tutorials and courses in a beginner's order."
+  space="per"
+>
+  <SpaceHead title="Learning path" lede={learning.intro} />
+
+  {
+    learning.steps.map((step, i) => (
+      <Section id={`step-${i + 1}`} num={i + 1} title={step.title}>
+        <p class="why">{step.why}</p>
+        <ul class="rows">
+          {step.items.map(it => (
+            <li>
+              <h3>
+                <a href={it.url}>{it.title}</a>
+              </h3>
+              <p class="meta">{it.kind}</p>
+              {it.note && <p>{it.note}</p>}
+            </li>
+          ))}
+        </ul>
+      </Section>
+    ))
+  }
+</Base>
+
+<style>
+  .why {
+    max-width: 62ch;
+    font-size: 1.0625rem;
+  }
+  .rows p {
+    margin: 4px 0 0;
+    max-width: 62ch;
+  }
+</style>

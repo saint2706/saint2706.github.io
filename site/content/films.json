@@ -1,0 +1,56 @@
+{
+  "lang": "en",
+  "films": [
+    {
+      "slug": "pather-panchali",
+      "title": "Pather Panchali",
+      "year": 1955,
+      "directors": ["Satyajit Ray"],
+      "epigraph": "I used to have dreams. The things I wanted to do...",
+      "note": [
+        "i think why this affected me so much - to the point i almost kept breaking every 5 minutes - was that i've rarely seen hardship, economic, spiritual, and physical, depicted so honestly. what broke the levee for me was seeing a child play in the down pouring rain, spinning and calling to the gods. this is my first ray and i can already tell he has a peerless understanding of weathering daily indignities."
+      ],
+      "poster": {
+        "src": "/films/pather-panchali.webp",
+        "width": 262,
+        "height": 381,
+        "credit": "Poster for the 1955 release, likely issued by the distributor Aurora Film Corporation.",
+        "source": "https://en.wikipedia.org/wiki/File:Pather_panchali_poster_in_color_1.jpg"
+      }
+    },
+    {
+      "slug": "across-the-spider-verse",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "year": 2023,
+      "directors": ["Joaquim Dos Santos", "Kemp Powers", "Justin K. Thompson"],
+      "note": [
+        "The opposite starting points and goals of Miles and Spot in the movie tho.",
+        "Miles thought he was free to make his own choices but he was told that he's been condemned by a narrative he wants nothing to do with so he tries to break free.",
+        "Spot thought he was a part of a grand narrative (being Spider-Man's nemesis) but he was told his narrative is a joke so he tries to make it real"
+      ],
+      "poster": {
+        "src": "/films/across-the-spider-verse.webp",
+        "width": 259,
+        "height": 385,
+        "credit": "Poster © Sony Pictures.",
+        "source": "https://en.wikipedia.org/wiki/File:Spider-Man-_Across_the_Spider-Verse_poster.jpg"
+      }
+    },
+    {
+      "slug": "barbie",
+      "title": "Barbie",
+      "year": 2023,
+      "directors": ["Greta Gerwig"],
+      "note": [
+        "The name of barbie's boyfriend is an allusion to the idea of Kenosis, the self-emptying performed by Jesus. Thus we can see that Ken is to Barbie as Jesus is to God. In this essay I will"
+      ],
+      "poster": {
+        "src": "/films/barbie.webp",
+        "width": 250,
+        "height": 375,
+        "credit": "Poster © Warner Bros. Pictures.",
+        "source": "https://en.wikipedia.org/wiki/File:Barbie_2023_poster.jpg"
+      }
+    }
+  ]
+}

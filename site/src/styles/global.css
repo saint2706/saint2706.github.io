@@ -253,6 +253,37 @@ dialog li a[aria-current='page'] {
   }
 }
 
+/* The personal space's own nav, under the site bar: the change of space shows in the chrome too. */
+.rooms {
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+/* Same box as .space, so the room links line up with the page content. */
+.rooms ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  max-width: 1100px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-4);
+}
+.rooms a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.rooms li:first-child a {
+  font-family: var(--font-display);
+}
+.rooms a:hover,
+.rooms a[aria-current] {
+  border-bottom-color: var(--color-accent);
+}
+
 /* Space pages (professional, personal, lab): numbered rail on the left, content on the right. */
 .space {
   max-width: 1100px;
@@ -389,8 +420,6 @@ dialog li a[aria-current='page'] {
 }
 .note {
   margin: 12px 0 0;
-  padding-left: 12px;
-  border-left: 3px solid var(--color-rule);
   color: var(--color-ink-2);
   font-size: 0.9375rem;
   max-width: 62ch;
@@ -519,6 +548,7 @@ body.lab .space-head .mark {
   }
   .skip,
   .bar,
+  .rooms,
   .bottom,
   .site-foot,
   .next,
