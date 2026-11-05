@@ -6,9 +6,11 @@
 - Palette: C Sealing wax, chosen by the owner 2026-11-04 (after Vermilion was reopened). Tokens live in `design/system/index.html`; professional, personal and lab each map the same roles to their own colours.
 - Faces: Young Serif (headings), Atkinson Hyperlegible Next (body and interface) and Atkinson Hyperlegible Mono (code and data), approved by the owner 2026-11-04. All SIL OFL 1.1, self-hosted.
 
+- Design system record (P02-T03, complete 2026-11-05): specimen `design/system/index.html`, page designs `design/system/pages/` (home, work, personal, lab at desktop, tablet and phone) and the token/component mapping `design/system/mapping.md`.
+
 ## Still provisional
 
-Grid, section components and responsive page designs. None is final until the owner approves it.
+The type and spacing scales, the grid, every section component and the four page designs are designed, built and checked, but the owner has not approved them yet. Each page says "layout provisional", and `mapping.md` marks each token and component approved or provisional. P03 may build only what the owner has approved.
 
 ## Principles
 

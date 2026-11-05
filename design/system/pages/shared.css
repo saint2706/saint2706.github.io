@@ -1,0 +1,451 @@
+/* P02-T03 page designs: the approved A1 layout on the locked Sealing wax tokens and faces.
+   Token values match ../index.html; mapping.md lists where each one goes in the site.
+   Self-hosted faces only: no external requests. */
+@font-face {
+  font-family: 'Young Serif';
+  src: url('../fonts/young-serif-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../fonts/atkinson-hyperlegible-next-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../fonts/atkinson-hyperlegible-next-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../fonts/atkinson-hyperlegible-next-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Mono';
+  src: url('../fonts/atkinson-hyperlegible-mono-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --serif: 'Young Serif', Georgia, serif;
+  --mono: 'Atkinson Hyperlegible Mono', ui-monospace, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5625rem;
+  --step-3: 1.953rem;
+  --step-5: clamp(2.441rem, 5vw, 3.815rem);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --gutter: 48px;
+
+  --pro-canvas: #f6f6f7;
+  --pro-surface: #ffffff;
+  --pro-ink: #141416;
+  --pro-ink-2: #57565e;
+  --pro-rule: #d3d3d8;
+  --pro-accent: #8f1d2c;
+  --per-canvas: #1c1220;
+  --per-surface: #261a2b;
+  --per-ink: #f1e7ef;
+  --per-ink-2: #bba9b8;
+  --per-rule: #3a2a3e;
+  --per-accent: #e7b04f;
+  --lab-canvas: #f2f5f7;
+  --lab-surface: #ffffff;
+  --lab-ink: #101820;
+  --lab-ink-2: #4c5864;
+  --lab-rule: #c6d0d8;
+  --lab-accent: #00697f;
+}
+
+/* Semantic roles. Each space remaps the same names, so components never name a palette. */
+body,
+.pro {
+  --canvas: var(--pro-canvas);
+  --surface: var(--pro-surface);
+  --ink: var(--pro-ink);
+  --ink-2: var(--pro-ink-2);
+  --rule: var(--pro-rule);
+  --accent: var(--pro-accent);
+}
+.per {
+  --canvas: var(--per-canvas);
+  --surface: var(--per-surface);
+  --ink: var(--per-ink);
+  --ink-2: var(--per-ink-2);
+  --rule: var(--per-rule);
+  --accent: var(--per-accent);
+}
+.lab {
+  --canvas: var(--lab-canvas);
+  --surface: var(--lab-surface);
+  --ink: var(--lab-ink);
+  --ink-2: var(--lab-ink-2);
+  --rule: var(--lab-rule);
+  --accent: var(--lab-accent);
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scrollbar-color: var(--pro-ink-2) var(--pro-canvas);
+}
+html:has(body.per) {
+  scrollbar-color: var(--per-ink-2) var(--per-canvas);
+  color-scheme: dark;
+}
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: var(--step-0) / 1.5 var(--sans);
+  font-synthesis: none;
+  accent-color: var(--accent);
+  caret-color: var(--accent);
+}
+::selection {
+  background: var(--accent);
+  color: var(--canvas);
+}
+h1,
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.skip {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  padding: 12px 16px;
+  background: var(--ink);
+  color: var(--canvas);
+  z-index: 10;
+}
+.skip:focus {
+  top: 8px;
+}
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+header.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--gutter);
+}
+.name {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.875rem;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 20px;
+  border: 2px solid var(--ink);
+  border-radius: 22px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 700 0.9375rem var(--sans);
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+.btn:hover {
+  background: var(--ink);
+  color: var(--canvas);
+}
+.controls {
+  display: flex;
+  gap: 12px;
+}
+main:focus {
+  outline: none;
+}
+.draft {
+  color: var(--ink-2);
+  font-size: var(--step--1);
+}
+dialog {
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  padding: var(--space-4);
+  width: min(420px, calc(100vw - 32px));
+  background: var(--surface);
+  color: var(--ink);
+}
+dialog::backdrop {
+  background: rgb(20 20 22 / 0.55);
+}
+dialog h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--step-2);
+}
+dialog ul {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+}
+dialog li a {
+  display: block;
+  padding: 14px 0;
+  min-height: 56px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+dialog li a:hover {
+  color: var(--accent);
+}
+dialog li a[aria-current='page'] {
+  font-weight: 700;
+  color: var(--accent);
+}
+.bottom {
+  display: none;
+}
+@media (max-width: 1024px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (max-width: 720px) {
+  :root {
+    --gutter: 20px;
+  }
+  header.bar {
+    padding: var(--space-3) var(--gutter);
+  }
+  header.bar .controls {
+    display: none;
+  }
+  .bottom {
+    position: fixed;
+    inset: auto 0 0 0;
+    display: flex;
+    gap: var(--space-3);
+    padding: 10px 20px;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+  }
+  .bottom .btn {
+    flex: 1;
+  }
+}
+
+/* Space pages (professional, personal, lab): numbered rail on the left, content on the right. */
+.space {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--gutter) var(--space-7);
+}
+.space-head {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-5);
+  align-items: end;
+  margin-top: 48px;
+}
+.space-head .mark {
+  display: block;
+  width: 160px;
+  aspect-ratio: 1;
+  background: var(--accent);
+}
+.space-head h1 {
+  margin: 0;
+  font-size: var(--step-5);
+  line-height: 1.05;
+}
+.space-head p {
+  margin: 12px 0 0;
+  max-width: 56ch;
+  font-size: 1.0625rem;
+}
+.space-head .draft {
+  font-size: var(--step--1);
+}
+.block {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+.block > h2 {
+  margin: 0;
+  font-size: var(--step-2);
+  line-height: 1.15;
+}
+.block > h2 .num {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--accent);
+  font: var(--step--1) / 1.3 var(--mono);
+  letter-spacing: 0.04em;
+}
+.block:target {
+  outline: 2px solid var(--accent);
+  outline-offset: 12px;
+}
+.block h3 {
+  font-size: var(--step-1);
+  margin: var(--space-4) 0 var(--space-2);
+}
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.rows > li {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.rows > li:first-child {
+  padding-top: 0;
+}
+.rows h3 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+.meta {
+  display: block;
+  color: var(--ink-2);
+  font: 0.875rem / 1.4 var(--mono);
+  margin-top: 2px;
+}
+.rows p {
+  margin: 6px 0 0;
+  max-width: 62ch;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) 20px;
+  margin-top: var(--space-1);
+}
+.space a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-thickness 0.2s var(--ease);
+}
+.space a:hover {
+  text-decoration-thickness: 3px;
+}
+.links a,
+.plain a,
+.next a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.plain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.note {
+  margin: 12px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  max-width: 62ch;
+}
+.next {
+  margin-top: 72px;
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--ink);
+  font-size: 1.0625rem;
+}
+.next p {
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .space-head,
+  .block {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .space-head .mark {
+    width: 96px;
+  }
+  .block {
+    margin-top: 48px;
+  }
+}
+@media (max-width: 720px) {
+  .space {
+    padding-bottom: 120px;
+  }
+  .space-head {
+    margin-top: var(--space-4);
+  }
+  .space-head .mark {
+    width: 64px;
+  }
+}
+
+/* Motion: runs only while data-motion is on (reduced motion starts it off). Opacity and
+   transform only, so nothing shifts layout. */
+@keyframes a1-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+html[data-motion='on'] .space-head .mark,
+html[data-motion='on'] .space-head > div,
+html[data-motion='on'] .block {
+  animation: a1-rise 0.7s var(--ease) both;
+}
+html[data-motion='on'] .space-head > div {
+  animation-delay: 80ms;
+}
+html[data-motion='on'] .block:nth-of-type(1) {
+  animation-delay: 160ms;
+}
+html[data-motion='on'] .block:nth-of-type(2) {
+  animation-delay: 240ms;
+}
+html[data-motion='on'] .block:nth-of-type(n + 3) {
+  animation-delay: 320ms;
+}
+/* Before shared.js resolves the state, the markup still says "on"; hold every animation
+   until then so neither reduced motion nor a saved "off" choice gets a first-paint run. */
+html:not([data-motion-ready]) * {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .space a {
+    transition: none;
+  }
+}

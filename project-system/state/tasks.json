@@ -425,7 +425,7 @@
       "id": "P02-T03",
       "phase": "P02",
       "title": "Refine approved direction and design system",
-      "status": "in-progress",
+      "status": "complete",
       "authorization": "user-approved-2026-11-04 (no production release)",
       "depends_on": ["P02-T02"],
       "objective": "Create the design system and representative page designs from the approved concept, code-first in HTML/CSS under `design/` (ADR-005).",
