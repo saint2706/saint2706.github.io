@@ -25,7 +25,7 @@ const B = Math.round(W / 40);
   description={`${p.title} (${p.date}) by ${p.artist}: details, context, two readings and a question.`}
   space="per"
 >
-  <p class="crumb"><a href="/personal/#art">Art and myth</a> · Room {room.numeral}, {room.name}</p>
+  <p class="crumb"><a href="/personal/art/">Art and myth</a> · Room {room.numeral}, {room.name}</p>
   <header class="head">
     <h1>{p.title}</h1>
     <p class="by">{p.artist}, {p.date}</p>
@@ -240,7 +240,7 @@ const B = Math.round(W / 40);
   <nav class="next" aria-label="Paintings">
     {prev && <a href={`/personal/art/${prev.slug}/`}>Previous: {prev.title}</a>}
     {next && <a href={`/personal/art/${next.slug}/`}>Next: {next.title}</a>}
-    <a href="/personal/#art">All paintings</a>
+    <a href="/personal/art/">All paintings</a>
   </nav>
 </Base>
 

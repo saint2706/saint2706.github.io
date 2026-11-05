@@ -12,6 +12,8 @@ const ROUTES = [
   '/about/',
   '/contact/',
   '/personal/',
+  '/personal/art/',
+  '/personal/books/',
   '/personal/art/fall-of-icarus/',
   '/personal/art/disrobing-of-draupadi/',
   '/personal/art/sleep-of-reason/',
@@ -54,6 +56,41 @@ test('skip link moves focus to the main content', async ({ page, browserName }) 
   await expect(skip).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('main#content')).toBeFocused();
+});
+
+test('the personal space has its own nav, reachable by keyboard', async ({ page }) => {
+  await page.goto('/');
+  // Professional pages never show the personal nav.
+  await expect(page.getByRole('navigation', { name: 'Off the clock' })).toHaveCount(0);
+  const gateway = page.locator('a.per[href="/personal/"]');
+  await gateway.focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/personal\/$/);
+  const rooms = page.getByRole('navigation', { name: 'Off the clock' });
+  await expect(rooms.getByRole('link', { name: 'Off the clock' })).toHaveAttribute(
+    'aria-current',
+    'page'
+  );
+  await rooms.getByRole('link', { name: 'Art and myth' }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/personal\/art\/$/);
+  await page
+    .getByRole('link', { name: /Fall of Icarus/ })
+    .first()
+    .click();
+  // A painting keeps its room marked in the personal nav.
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Off the clock' })
+      .getByRole('link', { name: 'Art and myth' })
+  ).toHaveAttribute('aria-current', 'true');
+});
+
+test('old personal-page anchors land in the new rooms', async ({ page }) => {
+  await page.goto('/personal/#books');
+  await expect(page).toHaveURL(/\/personal\/books\/$/);
+  await page.goto('/personal/#art');
+  await expect(page).toHaveURL(/\/personal\/art\/$/);
 });
 
 test('old SPA paths redirect', async ({ page }) => {
@@ -137,7 +174,7 @@ test('without JavaScript the site menu still works and controls stay hidden', as
 
 test('every painting image loads once scrolled into view', async ({ page }) => {
   for (const r of [
-    '/personal/',
+    '/personal/art/',
     '/personal/art/fall-of-icarus/',
     '/personal/art/disrobing-of-draupadi/',
   ]) {

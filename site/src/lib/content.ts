@@ -226,3 +226,18 @@ export const isExpired = (expires: string | null, now = new Date()) => {
 
 export const monthYearOf = (d: Date) =>
   d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+// Rooms of the personal space, in nav order. A room is listed only once it has content.
+const bookCount = books.stages.reduce((n, s) => n + s.works.length, 0);
+export const rooms = [
+  {
+    href: '/personal/art/',
+    label: 'Art and myth',
+    blurb: `${paintings.length} public-domain paintings with readings and questions, and essays on myth.`,
+  },
+  {
+    href: '/personal/books/',
+    label: 'Books',
+    blurb: `A philosophy reading path: ${books.stages.length} stages, ${bookCount} works.`,
+  },
+];

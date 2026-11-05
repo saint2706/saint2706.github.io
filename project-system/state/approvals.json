@@ -50,8 +50,14 @@
     },
     {
       "phase": "P05",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "authorized",
+      "scope": "P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "authorized_tasks": ["P05-T01", "P05-T02", "P05-T03"],
+      "decisions": [
+        "Shell (owner, 2026-11-05): keep the home-page gateway strip; /personal/ becomes a landing room linking to sub-pages, each with a personal-space nav separate from the work nav; old anchors keep working.",
+        "Music and culture (owner, 2026-11-05): owner supplies the list and notes; T02 waits for that material.",
+        "Learning, tech and business (owner, 2026-11-05): a learning path that orders the owner's existing tutorials, essays and Coding-For-MBA, with a reason for each step; no new opinions."
+      ]
     },
     {
       "phase": "P06",

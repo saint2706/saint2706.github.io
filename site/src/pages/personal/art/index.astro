@@ -1,0 +1,203 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SpaceHead from '../../../components/SpaceHead.astro';
+import Section from '../../../components/Section.astro';
+import { gallery, paintingBySlug, posts } from '../../../lib/content';
+
+const essays = posts.filter(p => p.myth);
+---
+
+<Base
+  title="Art and myth"
+  description="Seven public-domain paintings with readings and questions, and essays on myth."
+  space="per"
+>
+  <SpaceHead title="Art and myth" lede="Seven paintings, each with a question to argue about, and essays on myth." />
+
+  <Section id="gallery" num={1} title="The gallery">
+    <p>
+      Seven paintings from <cite>{gallery.deck}</cite>, a guided discussion for two. Each one has its details, the
+      context, two readings and a question to argue about. The deck has three more works that are still in copyright,
+      so they are left out here.
+    </p>
+    <ol class="rules">
+      {
+        gallery.rules.map(r => (
+          <li>
+            <strong>{r.head}</strong> {r.text}
+          </li>
+        ))
+      }
+    </ol>
+    {
+      gallery.rooms.map(room => (
+        <div class="room">
+          <h3>
+            <span class="num">Room {room.numeral}</span> {room.name}
+          </h3>
+          <p class="meta">{room.sub}</p>
+          <ul class="frames">
+            {room.works.map(s => {
+              const p = paintingBySlug(s);
+              return (
+                <li>
+                  <a href={`/personal/art/${p.slug}/`}>
+                    <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />
+                    <span class="t">{p.title}</span>
+                    <span class="meta">
+                      {p.artist}, {p.date}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    }
+
+    <h3>The paintings answer each other</h3>
+    <ul class="pairs">
+      {
+        gallery.pairs.map(pair => {
+          const [a, b] = [paintingBySlug(pair.a), paintingBySlug(pair.b)];
+          return (
+            <li>
+              <h4>{pair.title}</h4>
+              <p class="meta">
+                <a href={`/personal/art/${a.slug}/`}>{a.title}</a>: {pair.la}
+                <br />
+                <a href={`/personal/art/${b.slug}/`}>{b.title}</a>: {pair.lb}
+              </p>
+              <p class="q">{pair.q}</p>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <h3>How claims are labelled</h3>
+    <dl class="legend">
+      {
+        gallery.legend.map(l => (
+          <div>
+            <dt class={`tag tag-${l.tag}`}>{l.label}</dt>
+            <dd>{l.text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  {
+    essays.length > 0 && (
+      <Section id="myth" num={2} title="Essays on myth">
+        <ul class="plain">
+          {essays.map(e => (
+            <li>
+              <a href={e.link}>{e.title}</a>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+</Base>
+
+<style>
+  .rules {
+    max-width: 62ch;
+    padding-left: 24px;
+  }
+  .rules li {
+    padding: 4px 0;
+  }
+  .room {
+    margin-top: var(--space-5);
+  }
+  .room:first-of-type {
+    margin-top: var(--space-4);
+  }
+  .room h3 {
+    margin-bottom: 0;
+  }
+  .room .num {
+    color: var(--color-accent);
+    font: var(--text-n1) / 1.3 var(--font-mono);
+    letter-spacing: 0.04em;
+    margin-right: 8px;
+  }
+  .frames {
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: end;
+  }
+  .frames a {
+    display: block;
+    border: 2px solid var(--color-ink);
+    background: var(--color-surface);
+    padding: 8px;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .frames img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .frames .t {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--font-display);
+    line-height: 1.25;
+  }
+  .frames a:hover .t,
+  .frames a:focus-visible .t {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+  }
+  .frames .meta {
+    display: block;
+    font-size: var(--text-n1);
+  }
+  .pairs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .pairs h4 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-1);
+  }
+  .pairs .q {
+    font-style: italic;
+    max-width: 60ch;
+  }
+  .legend {
+    margin: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
+  .legend div {
+    display: flex;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+  .legend dd {
+    margin: 0;
+  }
+  @media (max-width: 720px) {
+    .frames {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
