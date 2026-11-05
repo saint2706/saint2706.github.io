@@ -1,0 +1,16 @@
+---
+import type { z } from 'astro/zod';
+import type { ProjectSchema } from '../lib/content';
+interface Props {
+  project: z.infer<typeof ProjectSchema>;
+}
+const { project: p } = Astro.props;
+---
+
+<li>
+  <h3>{p.title}</h3>
+  {p.meta && <span class="meta">{p.meta}</span>}
+  <p>{p.summary}</p>
+  {p.note && <p class="note">{p.note}</p>}
+  <div class="links">{p.links.map(l => <a href={l.url}>{l.label}</a>)}</div>
+</li>

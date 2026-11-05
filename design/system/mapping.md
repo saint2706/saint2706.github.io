@@ -55,6 +55,16 @@ Recurring behaviour becomes a shared component; one-off compositions stay with t
 | Bench trays (`.bench`, `.status`)                         | lab                 | provisional | section-specific, `LabTray.astro`     | candidates only; lab content not chosen                                                           |
 | Contrast table, swatches                                  | specimen only       | —           | none                                  | design record, not a site component                                                               |
 
+### As built in P03 (`site/`)
+
+The P03 build keeps the token names above. It uses fewer files than proposed, and it adds three pieces the page designs did not have.
+
+- Skip link, header, motion toggle, index dialog and bottom bar live in `site/src/layouts/Base.astro`, with the behaviour in `site/src/scripts/shell.ts`. They are not separate components.
+- `SpaceHead`, `Section`, `NextLinks` and `ProjectRow` (the entry rows) are components in `site/src/components/`. Field cards, gateway, frames, reading stages and lab trays stay inside their pages.
+- New: evidence tags (`.tag`, `.tag-doc|sch|deb|pro`) in `site/src/styles/global.css`. The label word carries the meaning and the border style only echoes it.
+- New: painting page `site/src/pages/personal/art/[slug].astro` (framed image, optional SVG detail markers, numbered crops, readings). The frames now hold the seven public-domain works.
+- New: search form and results in `site/src/pages/search/index.astro`, with 44 px controls and a polite live status.
+
 ## States
 
 | State           | Treatment                                                                                                | Where it is shown                                                             |

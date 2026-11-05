@@ -1,0 +1,103 @@
+{
+  "roles": [
+    {
+      "title": "Data Intern",
+      "org": "TheSmartBridge",
+      "start": "May 2023",
+      "end": "July 2023",
+      "summary": "Evaluated SaaS market opportunities and helped align stakeholders on a roadmap for a new analytics product."
+    },
+    {
+      "title": "Indigo Squad Member",
+      "org": "Mood Indigo, IIT Bombay",
+      "start": "July 2022",
+      "end": "December 2022",
+      "summary": "Experiential marketing, partnerships and community engagement for the festival."
+    }
+  ],
+  "education": [
+    {
+      "title": "PGDM, Big Data Analytics",
+      "org": "Goa Institute of Management (GIM)",
+      "start": "June 2025",
+      "end": "July 2027",
+      "summary": "Data-driven decision making and advanced analytics."
+    },
+    {
+      "title": "B.Tech, Computer Science",
+      "org": "Vellore Institute of Technology",
+      "start": "2020",
+      "end": "2024",
+      "summary": "Algorithms, software development and data science."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services (AWS)",
+      "date": "Jul 2023",
+      "expires": "Jul 2026"
+    },
+    {
+      "name": "Data Analytics powered by IBM",
+      "issuer": "SmartInternz",
+      "date": "Jul 2023",
+      "expires": null
+    },
+    {
+      "name": "AWS Academy Graduate - Cloud Foundations",
+      "issuer": "Amazon Web Services (AWS)",
+      "date": "Jun 2023",
+      "expires": null
+    },
+    {
+      "name": "JavaScript Algorithms and Data Structures",
+      "issuer": "freeCodeCamp",
+      "date": "Jan 2023",
+      "expires": null
+    },
+    {
+      "name": "Java Programming: Solving Problems with Software (with Honors)",
+      "issuer": "Coursera",
+      "date": "Nov 2021",
+      "expires": null
+    },
+    {
+      "name": "Programming Foundations with JavaScript, HTML and CSS",
+      "issuer": "Coursera",
+      "date": "Nov 2020",
+      "expires": null
+    },
+    {
+      "name": "Programming for Everybody (Getting Started with Python)",
+      "issuer": "Coursera",
+      "date": "Sep 2020",
+      "expires": null
+    },
+    {
+      "name": "Beginner's Guide to Cyber Security",
+      "issuer": "Udemy",
+      "date": "2022",
+      "expires": null
+    },
+    {
+      "name": "Blockchain Mastery 2022",
+      "issuer": "Udemy",
+      "date": "2022",
+      "expires": null
+    },
+    {
+      "name": "Data Analytics, Storage, Mining & Visual Big Data Technologies",
+      "issuer": "Udemy",
+      "date": null,
+      "expires": null
+    },
+    {
+      "name": "Learn Big Data Basics",
+      "issuer": "Udemy",
+      "date": null,
+      "expires": null
+    }
+  ],
+  "source": "src/data/resume.js (published resume data). Metrics in the resume highlights are left out until sourced. Unsourced superlatives (\"Asia’s largest\") removed."
+}

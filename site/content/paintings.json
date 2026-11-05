@@ -1,0 +1,997 @@
+[
+  {
+    "slug": "fall-of-icarus",
+    "n": 3,
+    "artist": "After Pieter Bruegel the Elder (?)",
+    "title": "Landscape with the Fall of Icarus",
+    "note": "Traditionally attributed to Pieter Bruegel the Elder; now widely considered an early copy of a lost original",
+    "date": "c. 1560s",
+    "medium": "Oil on canvas, probably transferred from panel",
+    "dims": "73.5 × 112 cm",
+    "holder": "Royal Museums of Fine Arts of Belgium, Brussels",
+    "holderRef": "Inv. 4030; bought 1912",
+    "image": {
+      "src": "/art/fall-of-icarus/full.webp",
+      "width": 1600,
+      "height": 1044,
+      "thumb": "/art/fall-of-icarus/thumb.webp",
+      "thumbWidth": 640,
+      "thumbHeight": 417,
+      "credit": "Royal Museums of Fine Arts of Belgium, via Google Arts & Culture / Wikimedia Commons. Public domain (PD-Art).",
+      "source": "commons_icarus"
+    },
+    "look": "What is the most important thing in this picture? Now: how did you decide?",
+    "details": [
+      {
+        "label": "The ploughman",
+        "text": "The largest figure. Eyes on the furrow, back to the sea.",
+        "src": "/art/fall-of-icarus/detail-1.webp",
+        "width": 956,
+        "height": 960,
+        "rect": [30, 48, 26, 40]
+      },
+      {
+        "label": "The shepherd",
+        "text": "He looks up, at the sky rather than the water. Is something still up there?",
+        "src": "/art/fall-of-icarus/detail-2.webp",
+        "width": 538,
+        "height": 551,
+        "rect": [46, 48, 14, 22]
+      },
+      {
+        "label": "The ship",
+        "text": "Sails full, heading out to sea. Is anyone on board looking down?",
+        "src": "/art/fall-of-icarus/detail-3.webp",
+        "width": 960,
+        "height": 835,
+        "rect": [64, 28, 30, 40]
+      },
+      {
+        "label": "Icarus",
+        "text": "Two legs and a few feathers. Measured on this reproduction, he takes up about a tenth of one percent of the picture.",
+        "src": "/art/fall-of-icarus/detail-4.webp",
+        "width": 691,
+        "height": 551,
+        "rect": [76, 66, 18, 22]
+      },
+      {
+        "label": "The angler",
+        "text": "The nearest person to the splash. Back turned, line in the water.",
+        "src": "/art/fall-of-icarus/detail-5.webp",
+        "width": 768,
+        "height": 451,
+        "rect": [78, 82, 20, 18]
+      },
+      {
+        "label": "The bird",
+        "text": "A bird on a branch just above the splash, often identified as a partridge. Ovid follows Icarus’s death with the story of Perdix, turned into a partridge.",
+        "src": "/art/fall-of-icarus/detail-6.webp",
+        "width": 422,
+        "height": 301,
+        "rect": [77, 76, 11, 12]
+      },
+      {
+        "label": "A face in the thicket",
+        "text": "A pale face in the dark trees at the far left. Some viewers read it as a dead man. The painting does not explain it.",
+        "src": "/art/fall-of-icarus/detail-7.webp",
+        "width": 461,
+        "height": 276,
+        "rect": [3, 48, 12, 11]
+      },
+      {
+        "label": "The sun",
+        "text": "Low on the horizon, far from the boy who flew too close to it.",
+        "src": "/art/fall-of-icarus/detail-8.webp",
+        "width": 614,
+        "height": 301,
+        "rect": [52, 20, 16, 12]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Unknown until the Brussels museum bought it in 1912. Canvas, unusual for Bruegel’s oils.",
+        "source": "wp_icarus"
+      },
+      {
+        "tag": "deb",
+        "label": "Debated",
+        "text": "1996–98 technical studies, including radiocarbon dating of the canvas, cast serious doubt on Bruegel’s own hand.",
+        "source": "wp_icarus"
+      },
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "text": "Today it is widely considered an early copy of a lost Bruegel original. A weaker panel version, with Daedalus still in the sky, is in the Van Buuren Museum.",
+        "source": "wp_icarus"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "The world doesn’t stop",
+        "evidence": "Labour fills the foreground; the disaster is a splash in the corner. W. H. Auden’s poem “Musée des Beaux Arts” (1938) made this the classic reading.",
+        "lit": "Suffering happens while others work, sail and look elsewhere.",
+        "open": "It assumes the onlookers know. Nothing shows that they do."
+      },
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "Order and overreach",
+        "evidence": "Ploughing, herding and fishing are steady, humble work. Icarus is the one who ignored his limits. A Flemish proverb says no plough stops for a dying man.",
+        "lit": "A moral about diligence and pride, in a culture of proverbs.",
+        "open": "It makes the boy’s death deserved, and it can’t explain the face in the thicket."
+      }
+    ],
+    "extra": null,
+    "question": "Does the painting criticise human indifference, or accept that ordinary life cannot stop for every tragedy?",
+    "follow": [
+      "Who in the picture could have helped, and who could have known? The angler is closest.",
+      "Without the title, would you call anyone here indifferent?",
+      "Is the painter indifferent too, tucking the boy into a corner?"
+    ],
+    "counter": "The figures may have had no information, no means and no duty: a splash out at sea, a stranger’s son. Our verdict of indifference depends on knowledge only the viewer has.",
+    "now": "A disaster appears in your feed between two ordinary posts. Is scrolling past it the ploughman’s choice?",
+    "focus": {
+      "caption": "The ship, the splash, the angler",
+      "src": "/art/fall-of-icarus/focus.webp",
+      "width": 576,
+      "height": 960,
+      "rect": [74, 40, 23.5, 60]
+    },
+    "sources": [
+      {
+        "id": "commons_icarus",
+        "title": "Wikimedia Commons file (Google Arts & Culture capture, PD-Art)",
+        "url": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Landscape_with_the_Fall_of_Icarus_-_Brussels,_Royal_Museums_of_Fine_Arts_of_Belgium_-_Google_Arts_%26_Culture.jpg"
+      },
+      {
+        "id": "wp_icarus",
+        "title": "Wikipedia, “Landscape with the Fall of Icarus” (attribution history citing Van Strydonck et al. 1998; Currie & Allart 2012; Hagen & Hagen 2001)",
+        "url": "https://en.wikipedia.org/wiki/Landscape_with_the_Fall_of_Icarus"
+      }
+    ]
+  },
+  {
+    "slug": "third-of-may",
+    "n": 4,
+    "artist": "Francisco de Goya",
+    "title": "The 3rd of May 1808 in Madrid, or “The Executions”",
+    "note": "Usually called The Third of May 1808",
+    "date": "1814",
+    "medium": "Oil on canvas",
+    "dims": "268 × 347 cm",
+    "holder": "Museo Nacional del Prado, Madrid",
+    "holderRef": "P000749",
+    "image": {
+      "src": "/art/third-of-may/full.webp",
+      "width": 1600,
+      "height": 1234,
+      "thumb": "/art/third-of-may/thumb.webp",
+      "thumbWidth": 640,
+      "thumbHeight": 493,
+      "credit": "Museo Nacional del Prado, via Wikimedia Commons. Public domain (PD-Art).",
+      "source": "commons_3may"
+    },
+    "look": "Where is the light coming from, and who does it fall on?",
+    "details": [
+      {
+        "label": "The man in white",
+        "text": "Kneeling, arms flung wide, the brightest thing in the painting. Compare his pose with everyone around him.",
+        "src": "/art/third-of-may/detail-1.webp",
+        "width": 960,
+        "height": 932,
+        "rect": [18, 33, 27, 34]
+      },
+      {
+        "label": "His right hand",
+        "text": "A mark on the palm. Many writers compare it with the wounds of the crucified Christ.",
+        "src": "/art/third-of-may/detail-2.webp",
+        "width": 384,
+        "height": 296,
+        "rect": [17, 34, 10, 10]
+      },
+      {
+        "label": "The firing squad",
+        "text": "No faces. Repeated caps, backs and legs, rifles in one level line.",
+        "src": "/art/third-of-may/detail-3.webp",
+        "width": 960,
+        "height": 864,
+        "rect": [52, 36, 48, 56]
+      },
+      {
+        "label": "The lantern",
+        "text": "The only light source: a box lantern on the ground between killers and killed.",
+        "src": "/art/third-of-may/detail-4.webp",
+        "width": 461,
+        "height": 592,
+        "rect": [54, 63, 12, 20]
+      },
+      {
+        "label": "The next in line",
+        "text": "Those still waiting cover their eyes or clench their fists.",
+        "src": "/art/third-of-may/detail-5.webp",
+        "width": 960,
+        "height": 741,
+        "rect": [6, 38, 26, 26]
+      },
+      {
+        "label": "The dead",
+        "text": "Bodies and blood in the foreground, painted without any heroic finish.",
+        "src": "/art/third-of-may/detail-6.webp",
+        "width": 960,
+        "height": 437,
+        "rect": [0, 70, 44, 26]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "2 May 1808: Madrid rose against French troops. Reprisal executions followed through the night and next day.",
+        "source": "prado_3may"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Commissioned by Spain’s Regency Council in 1814, six years later, as the companion of The 2nd of May.",
+        "source": "prado_3may"
+      },
+      {
+        "tag": "deb",
+        "label": "Debated",
+        "text": "The site is uncertain. The Prado suggests the ground outside the Puerta de la Vega rather than the traditional Príncipe Pío hill.",
+        "source": "prado_3may"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "A truth about modern violence",
+        "evidence": "Faceless, mechanical killers against individual, terrified men. Clark called it revolutionary in every sense.",
+        "lit": "How organised state violence works: anonymous, repeatable, impersonal.",
+        "open": "Why should a reconstruction made six years later carry the authority of a witness?"
+      },
+      {
+        "tag": "deb",
+        "label": "Debated",
+        "name": "A commission with a purpose",
+        "evidence": "Paid for by the returning government to commemorate patriotic resistance. French soldiers become faceless; reprisals by Spaniards don’t appear.",
+        "lit": "Commemoration selects. Goya, honoured by the French-installed king in 1811, had reasons to show loyalty in 1814.",
+        "open": "Political usefulness does not make it false. What would make it false?"
+      }
+    ],
+    "extra": null,
+    "question": "Does the composition reveal a moral truth about violence, or persuade us to adopt a moral position?",
+    "follow": [
+      "Can an image be truthful and also selective, emotionally persuasive and politically useful?",
+      "We never see the soldiers’ faces. What would change if we could?",
+      "Where are we standing? Work out who can see whom, including us."
+    ],
+    "counter": "Visual impact proves nothing about what happened. This is a reconstruction for a new government, and it works because it is well designed.",
+    "now": "A photograph of an arrest, cropped two ways for two audiences. Can both crops be true?",
+    "focus": {
+      "caption": "Those about to die, and the dead",
+      "src": "/art/third-of-may/focus.webp",
+      "width": 569,
+      "height": 960,
+      "rect": [14, 28, 32, 70]
+    },
+    "sources": [
+      {
+        "id": "commons_3may",
+        "title": "Wikimedia Commons file (Prado in Google Earth capture, PD-Art)",
+        "url": "https://commons.wikimedia.org/wiki/File:El_Tres_de_Mayo,_by_Francisco_de_Goya,_from_Prado_in_Google_Earth.jpg"
+      },
+      {
+        "id": "prado_3may",
+        "title": "Museo del Prado, The 3rd of May 1808 in Madrid, or “The Executions”, P000749",
+        "url": "https://www.museodelprado.es/en/the-collection/art-work/the-3-of-may-in-madrid-or-the-executions/5e177409-2993-4240-97fb-847a02c6496c"
+      }
+    ]
+  },
+  {
+    "slug": "woman-with-dead-child",
+    "n": 5,
+    "artist": "Käthe Kollwitz",
+    "title": "Woman with Dead Child",
+    "note": "Frau mit totem Kind",
+    "date": "1903",
+    "medium": "Line etching, drypoint, sandpaper and soft ground",
+    "dims": "Plate 42.4 × 48.6 cm",
+    "holder": "Städel Museum, Frankfurt am Main (this impression)",
+    "holderRef": "Inv. 66346 D; Knesebeck 81, state VIII b of X",
+    "image": {
+      "src": "/art/woman-with-dead-child/full.webp",
+      "width": 1587,
+      "height": 1400,
+      "thumb": "/art/woman-with-dead-child/thumb.webp",
+      "thumbWidth": 640,
+      "thumbHeight": 564,
+      "credit": "Städel Museum, Frankfurt am Main. Public domain. Shown trimmed to the plate and signature; the full sheet is on the Städel page.",
+      "source": "staedel_k"
+    },
+    "look": "Find where one body ends and the other begins.",
+    "details": [
+      {
+        "label": "The embrace",
+        "text": "Her face is pressed into the child’s body. We never see her expression.",
+        "src": "/art/woman-with-dead-child/detail-1.webp",
+        "width": 960,
+        "height": 650,
+        "rect": [7, 16.8, 64.8, 49.7]
+      },
+      {
+        "label": "The mother",
+        "text": "Head and shoulders built from dense, dark hatching. She is closed around him.",
+        "src": "/art/woman-with-dead-child/detail-2.webp",
+        "width": 926,
+        "height": 960,
+        "rect": [29.6, 6.8, 42.3, 49.7]
+      },
+      {
+        "label": "Whose limbs?",
+        "text": "Follow the legs and the feet along the floor. Can you tell which belong to whom?",
+        "src": "/art/woman-with-dead-child/detail-3.webp",
+        "width": 960,
+        "height": 304,
+        "rect": [4.2, 61.5, 90.1, 32.3]
+      },
+      {
+        "label": "The pencil signature",
+        "text": "Signed by hand below the plate: a print, one of many impressions, each signed.",
+        "src": "/art/woman-with-dead-child/detail-4.webp",
+        "width": 960,
+        "height": 339,
+        "rect": [69, 86.3, 31, 12.4]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Made in 1903 alongside the Peasants’ War cycle, then published as an independent sheet.",
+        "source": "kollwitz_kn81"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Kollwitz posed for it herself, holding her son Peter, then seven, in front of a mirror.",
+        "source": "kollwitz_kn81"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Peter was killed in the First World War in 1914. Her son Hans later said she felt she had foreseen it.",
+        "source": "kollwitz_kn81"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "A Pietà without a church",
+        "evidence": "The pose recalls Mary holding the dead Christ. There is no setting, no name, no date inside the image.",
+        "lit": "A timeless grief any viewer can enter, which is why the print travels so widely.",
+        "open": "Does universal grief erase this woman’s particular life and circumstances?"
+      },
+      {
+        "tag": "pro",
+        "label": "For discussion",
+        "name": "Grief we are kept from",
+        "evidence": "Her face is buried. The one thing we most want to see is withheld.",
+        "lit": "The print shows grief from outside and refuses to let us consume it.",
+        "open": "It was staged: a living child posed as dead. Does that weaken or deepen it?"
+      }
+    ],
+    "extra": null,
+    "question": "Does the image bring us closer to another person’s grief, or show us the limit of what we can know about it?",
+    "follow": [
+      "Kollwitz hid the mother’s face. What would a visible face add, and what would it take away?",
+      "Knowing the model was her own living son: does that change what you feel?",
+      "Is there a way of looking at this that is consumption? What is the difference?"
+    ],
+    "counter": "Calling it “universal grief” can be a way of not asking who she is, how the child died, and who was responsible.",
+    "now": "Photographs of grieving parents circulate after every war and disaster. When does sharing them honour, and when does it use?",
+    "focus": {
+      "caption": "The embrace",
+      "src": "/art/woman-with-dead-child/focus.webp",
+      "width": 571,
+      "height": 960,
+      "rect": [24, 6, 42, 80]
+    },
+    "sources": [
+      {
+        "id": "staedel_k",
+        "title": "Städel Museum, Frankfurt, Woman with Dead Child, inv. 66346 D",
+        "url": "https://sammlung.staedelmuseum.de/en/work/woman-with-dead-child"
+      },
+      {
+        "id": "kollwitz_kn81",
+        "title": "Käthe Kollwitz Museum Köln, Woman with Dead Child, Kn 81",
+        "url": "https://kollwitz.de/en/woman-with-dead-child-kn-81"
+      }
+    ]
+  },
+  {
+    "slug": "shakuntala-looking-back",
+    "n": 6,
+    "artist": "Raja Ravi Varma",
+    "title": "Shakuntala Looking Back",
+    "note": "Catalogued by the gallery as “Shakuntala Removing a Thorn from Her Foot”; also called “Shakuntala Looking Back to Glimpse Dushyanta”",
+    "date": "1898",
+    "medium": "Oil on canvas",
+    "dims": "c. 181 × 110 cm (h × w)",
+    "holder": "Sree Chitra Art Gallery, Thiruvananthapuram",
+    "holderRef": "Titles vary across sources",
+    "image": {
+      "src": "/art/shakuntala-looking-back/full.webp",
+      "width": 855,
+      "height": 1400,
+      "thumb": "/art/shakuntala-looking-back/thumb.webp",
+      "thumbWidth": 391,
+      "thumbHeight": 640,
+      "credit": "Sree Chitra Art Gallery, via Google Arts & Culture / Wikimedia Commons. Public domain (PD-Art).",
+      "source": "commons_shak"
+    },
+    "look": "What is the woman on the right doing with her body, and what is she doing with her eyes?",
+    "details": [
+      {
+        "label": "The glance",
+        "text": "Her head turns over her shoulder, past us, toward someone outside the frame.",
+        "src": "/art/shakuntala-looking-back/detail-1.webp",
+        "width": 614,
+        "height": 629,
+        "rect": [54, 25, 32, 20]
+      },
+      {
+        "label": "The foot",
+        "text": "Foot raised, hand at the ankle: the gesture of pulling out a thorn.",
+        "src": "/art/shakuntala-looking-back/detail-2.webp",
+        "width": 499,
+        "height": 692,
+        "rect": [60, 55, 26, 22]
+      },
+      {
+        "label": "The friends",
+        "text": "One friend turns to watch her, smiling. Does she believe the thorn?",
+        "src": "/art/shakuntala-looking-back/detail-3.webp",
+        "width": 768,
+        "height": 755,
+        "rect": [20, 28, 40, 24]
+      },
+      {
+        "label": "The figure leaving",
+        "text": "A cloaked figure with a staff walks out of the scene. The painting does not say who.",
+        "src": "/art/shakuntala-looking-back/detail-4.webp",
+        "width": 335,
+        "height": 960,
+        "rect": [0, 36, 24, 42]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Kalidasa’s play Abhijnanashakuntalam, after an episode in the Mahabharata. Leaving the king she has just met, Shakuntala claims a blade of grass has cut her foot, and looks back.",
+        "source": "ryder"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Ravi Varma (1848–1906) painted Indian epic subjects in European academic oil technique; his press later spread them as prints.",
+        "source": "gac_shak"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "Longing, from the text",
+        "evidence": "In Act I she invents the thorn to linger. In Ryder’s 1912 translation she casts a lingering glance at the king as she goes.",
+        "lit": "The painting compresses a whole scene, desire and pretext, into one turn of the head.",
+        "open": "Only the title and the play tell us whom she is looking at. The painting shows nobody."
+      },
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "A woman made to be looked at",
+        "evidence": "Tapati Guha-Thakurta argues the twisting pose pulls the viewer into the story, and that the absent lover’s gaze shapes her into an idealised image.",
+        "lit": "Modesty and display at once: the pose looks private but is built for an audience.",
+        "open": "Does reading against the play impose a modern frame on a painter who meant to illustrate it?"
+      }
+    ],
+    "extra": null,
+    "question": "Are we reading Shakuntala’s intention from the painting, or projecting a story we already know onto her gesture?",
+    "follow": [
+      "Ignore the title. List three other things this glance could mean.",
+      "Count the gazes: hers, her friends’, the absent king’s, ours. Who is looking at whom?",
+      "European technique, Indian heroine, mass-produced prints: did paintings like this shape what “feminine” looked like?"
+    ],
+    "counter": "The play really does say she looks back at Dushyanta. Ignoring the text the painter set out to illustrate is its own kind of projection.",
+    "now": "Think of a posed photograph made to look candid. What makes a gesture read as spontaneous?",
+    "focus": {
+      "caption": "The glance and the raised foot",
+      "src": "/art/shakuntala-looking-back/focus.webp",
+      "width": 525,
+      "height": 960,
+      "rect": [46, 22, 52, 58]
+    },
+    "sources": [
+      {
+        "id": "commons_shak",
+        "title": "Wikimedia Commons file (Google Arts & Culture capture, PD-Art)",
+        "url": "https://commons.wikimedia.org/wiki/File:Raja_Ravi_Varma_-_Mahabharata_-_Shakuntala.jpg"
+      },
+      {
+        "id": "ryder",
+        "title": "Kalidasa, Shakuntala, trans. Arthur W. Ryder (1912), Act I",
+        "url": "https://franpritchett.com/00litlinks/shakuntala_jones/shakuntala_ryder.pdf"
+      },
+      {
+        "id": "gac_shak",
+        "title": "Sree Chitra Art Gallery, Thiruvananthapuram, Shakuntala Removing a Thorn from Her Foot (via Google Arts & Culture)",
+        "url": "https://artsandculture.google.com/asset/shakuntala-removing-a-thorn-from-her-foot-raja-ravi-varma/UgFGr-9kgW8y7g"
+      }
+    ]
+  },
+  {
+    "slug": "susanna-and-the-elders",
+    "n": 7,
+    "artist": "Artemisia Gentileschi",
+    "title": "Susanna and the Elders",
+    "note": null,
+    "date": "1610",
+    "medium": "Oil on canvas",
+    "dims": "170 × 119 cm",
+    "holder": "Schloss Weißenstein, Pommersfelden (Schönborn collection)",
+    "holderRef": "Signed and dated on the step, lower left",
+    "image": {
+      "src": "/art/susanna-and-the-elders/full.webp",
+      "width": 985,
+      "height": 1400,
+      "thumb": "/art/susanna-and-the-elders/thumb.webp",
+      "thumbWidth": 450,
+      "thumbHeight": 640,
+      "credit": "Schönborn collection, Pommersfelden. Image from the Web Gallery of Art via Wikimedia Commons, public domain (PD-Art); colour is a secondary reproduction, not a museum capture.",
+      "source": "commons_sus"
+    },
+    "look": "Follow the hands. Count them. What is each one doing?",
+    "details": [
+      {
+        "label": "The elders",
+        "text": "One whispers into the other’s ear. The older man raises a finger to his lips.",
+        "src": "/art/susanna-and-the-elders/detail-1.webp",
+        "width": 960,
+        "height": 831,
+        "rect": [28, 6, 46, 28]
+      },
+      {
+        "label": "Her face",
+        "text": "Head twisted away, eyes lowered. She is not posing for anyone.",
+        "src": "/art/susanna-and-the-elders/detail-2.webp",
+        "width": 960,
+        "height": 614,
+        "rect": [10, 32, 40, 18]
+      },
+      {
+        "label": "Hands",
+        "text": "Her palms push back toward them. Their hands rest on the wall above her, as if it belongs to them.",
+        "src": "/art/susanna-and-the-elders/detail-3.webp",
+        "width": 960,
+        "height": 454,
+        "rect": [14, 24, 72, 24]
+      },
+      {
+        "label": "The wall between",
+        "text": "A hard stone ledge divides the picture. They lean over it. She has nowhere to go.",
+        "src": "/art/susanna-and-the-elders/detail-4.webp",
+        "width": 960,
+        "height": 682,
+        "rect": [0, 4, 100, 50]
+      },
+      {
+        "label": "The signature",
+        "text": "Painted into the stone step: her name and the date, read as 1610 after X-ray study.",
+        "src": "/art/susanna-and-the-elders/detail-5.webp",
+        "width": 614,
+        "height": 655,
+        "rect": [0, 76, 16, 12]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "From the Book of Daniel (ch. 13). Two elders, judges of the community, threaten to accuse Susanna of adultery unless she submits. She refuses and is condemned. Daniel questions them separately and exposes the lie.",
+        "source": null
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Artemisia was about seventeen. Agostino Tassi raped her in 1611, after this painting; the trial was in 1612.",
+        "source": "wp_susanna"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "Distress made visible",
+        "evidence": "Unlike many versions, Susanna twists away in obvious discomfort. Mary Garrard links this to a young woman’s experience of harassment.",
+        "lit": "The painting refuses the usual invitation to enjoy her body along with the elders.",
+        "open": "Biography is not proof, and the rape came later. How much should we read into her life?"
+      },
+      {
+        "tag": "deb",
+        "label": "Debated",
+        "name": "Ambition within convention",
+        "evidence": "Susanna was a standard subject for showing a nude. Her father Orazio probably guided the young painter; X-rays show compositional changes.",
+        "lit": "A teenager demonstrating she could master the most prestigious task in painting.",
+        "open": "Her chastity and distress were part of the pious story already. So whose view is this?"
+      }
+    ],
+    "extra": null,
+    "question": "Can we condemn the elders while doing what they are doing: looking at her?",
+    "follow": [
+      "Where does the painting place us, above with the elders, or level with Susanna?",
+      "Does showing her distress change the act of looking, or just make it feel more acceptable?",
+      "Who controls the representation of her body here: Susanna, the painter, the patron, or us?"
+    ],
+    "counter": "We may be reading the 1611 assault backwards into a 1610 picture. A gifted seventeen-year-old may simply have painted the story better than anyone.",
+    "now": "A private image is shared “to condemn” whoever leaked it. Is the person sharing it standing where the elders stand?",
+    "focus": {
+      "caption": "The elders, and her raised hand",
+      "src": "/art/susanna-and-the-elders/focus.webp",
+      "width": 483,
+      "height": 960,
+      "rect": [54, 4, 40, 56]
+    },
+    "sources": [
+      {
+        "id": "commons_sus",
+        "title": "Wikimedia Commons file (from the Web Gallery of Art, PD-Art)",
+        "url": "https://commons.wikimedia.org/wiki/File:Susanna_and_the_Elders_(1610),_Artemisia_Gentileschi.jpg"
+      },
+      {
+        "id": "wp_susanna",
+        "title": "Wikipedia, “Susanna and the Elders (Artemisia Gentileschi, Pommersfelden)” (citing Garrard 2001; Christiansen & Mann 2001; Treves 2020)",
+        "url": "https://en.wikipedia.org/wiki/Susanna_and_the_Elders_(Artemisia_Gentileschi,_Pommersfelden)"
+      }
+    ]
+  },
+  {
+    "slug": "sleep-of-reason",
+    "n": 8,
+    "artist": "Francisco de Goya",
+    "title": "The sleep of reason produces monsters",
+    "note": "El sueño de la razon produce monstruos. Plate 43 of Los Caprichos",
+    "date": "Published 1799",
+    "medium": "Etching and aquatint",
+    "dims": "Plate 21.2 × 15.1 cm",
+    "holder": "The Metropolitan Museum of Art, New York",
+    "holderRef": "18.64(43), Gift of M. Knoedler & Co., 1918",
+    "image": {
+      "src": "/art/sleep-of-reason/full.webp",
+      "width": 939,
+      "height": 1400,
+      "thumb": "/art/sleep-of-reason/thumb.webp",
+      "thumbWidth": 429,
+      "thumbHeight": 640,
+      "credit": "The Metropolitan Museum of Art. Public domain (Open Access). Shown trimmed to the plate mark; the full sheet is on the Met page.",
+      "source": "met_cap43"
+    },
+    "look": "Before you read the words on the desk: is this man resting, hiding, or dreaming?",
+    "details": [
+      {
+        "label": "The sleeper",
+        "text": "Head buried in his arms at a desk. We cannot see his face, or know if he is asleep or hiding.",
+        "src": "/art/sleep-of-reason/detail-1.webp",
+        "width": 939,
+        "height": 960,
+        "rect": [9.4, 46.4, 62.5, 42.9]
+      },
+      {
+        "label": "The drawing tool",
+        "text": "A claw grips what looks like a chalk-holder, a draughtsman’s tool, right beside him.",
+        "src": "/art/sleep-of-reason/detail-2.webp",
+        "width": 324,
+        "height": 367,
+        "rect": [7.8, 49.3, 18.8, 14.3]
+      },
+      {
+        "label": "The owls",
+        "text": "Owls can stand for wisdom or for folly. Behind him, a dark cat-like creature stares out.",
+        "src": "/art/sleep-of-reason/detail-3.webp",
+        "width": 537,
+        "height": 734,
+        "rect": [34.4, 35, 31.2, 28.6]
+      },
+      {
+        "label": "The bats",
+        "text": "Bats rise into the dark, thinning out as they climb.",
+        "src": "/art/sleep-of-reason/detail-4.webp",
+        "width": 844,
+        "height": 960,
+        "rect": [34.4, 3.6, 56.2, 42.9]
+      },
+      {
+        "label": "The lynx",
+        "text": "Wide awake, staring straight at us. The Met calls it vigilant.",
+        "src": "/art/sleep-of-reason/detail-5.webp",
+        "width": 430,
+        "height": 623,
+        "rect": [65.6, 60.7, 25, 24.3]
+      },
+      {
+        "label": "The words",
+        "text": "The title is lettered on the side of the desk, inside the picture itself.",
+        "src": "/art/sleep-of-reason/detail-6.webp",
+        "width": 592,
+        "height": 587,
+        "rect": [4.7, 63.6, 34.4, 22.9]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Los Caprichos: 80 etchings with aquatint, published 1799, satirising superstition, vice and folly in Spanish society.",
+        "source": "met_cap43"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "A preparatory drawing in the Prado is inscribed as if for the series’ title page.",
+        "source": "met_cap43"
+      },
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "Spanish sueño means both sleep and dream.",
+        "source": null
+      }
+    ],
+    "quote": {
+      "es": "La fantasía abandonada de la razón produce monstruos imposibles: unida con ella es madre de las artes y origen de sus maravillas.",
+      "en": "Imagination abandoned by reason produces impossible monsters; united with her, she is the mother of the arts and the source of their wonders.",
+      "src": "Manuscript commentary on plate 43, in Goya’s hand or a scribe’s",
+      "cite": "nelson_cap43"
+    },
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "Reason asleep",
+        "evidence": "The series attacks superstition and ignorance. When the guard of reason sleeps, the creatures of folly arrive.",
+        "lit": "The Enlightenment warning built into the title.",
+        "open": "The commentary praises imagination. The creatures are not simply enemies."
+      },
+      {
+        "tag": "deb",
+        "label": "Debated",
+        "name": "The dream of reason",
+        "evidence": "Read sueño as dream: reason itself, dreaming, produces the monsters.",
+        "lit": "Reason’s own certainties and schemes can become nightmares. Twentieth-century readers leaned on this.",
+        "open": "It is a reading of the title Goya’s commentary does not support directly."
+      }
+    ],
+    "extra": null,
+    "question": "Does reason protect us from monsters, or can reason itself become destructive when it shuts out imagination?",
+    "follow": [
+      "The lynx is awake. Guardian, or another monster?",
+      "If the creatures are the artist’s own imagination, why are they frightening?",
+      "How do societies tell legitimate criticism from irrational fear, and who gets to draw that line?"
+    ],
+    "counter": "Read the title as “dream” rather than “sleep”, and the monsters may come from reason itself: its utopias, its certainties, its systems.",
+    "now": "Conspiracy theories often borrow the language of “doing your own research”. Is that reason asleep, or reason dreaming?",
+    "focus": {
+      "caption": "The creatures above the sleeper",
+      "src": "/art/sleep-of-reason/focus.webp",
+      "width": 666,
+      "height": 960,
+      "rect": [34, 4, 60, 58]
+    },
+    "sources": [
+      {
+        "id": "met_cap43",
+        "title": "The Met, Goya, Plate 43 from Los Caprichos, 18.64(43)",
+        "url": "https://www.metmuseum.org/art/collection/search/338473"
+      },
+      {
+        "id": "nelson_cap43",
+        "title": "Nelson-Atkins Museum of Art, The Sleep of Reason Produces Monsters (manuscript commentary, via Google Arts & Culture)",
+        "url": "https://artsandculture.google.com/asset/the-sleep-of-reason-produces-monsters-no-43-from-los-caprichos/FAF4YL0zP9cjHg"
+      }
+    ]
+  },
+  {
+    "slug": "disrobing-of-draupadi",
+    "n": 10,
+    "artist": "Attributed to Nainsukh",
+    "title": "The Disrobing of Draupadi",
+    "note": "Guler, Himachal Pradesh. Figures labelled in Takri script",
+    "date": "c. 1760–65",
+    "medium": "Opaque watercolour and gold on paper",
+    "dims": "Image 24.6 × 34.2 cm",
+    "holder": "The Metropolitan Museum of Art, New York",
+    "holderRef": "2022.247, Howard Hodgkin Collection, acquired 2022",
+    "image": {
+      "src": "/art/disrobing-of-draupadi/full.webp",
+      "width": 800,
+      "height": 583,
+      "thumb": "/art/disrobing-of-draupadi/thumb.webp",
+      "thumbWidth": 640,
+      "thumbHeight": 466,
+      "credit": "Photograph: Ashmolean Museum (object LI118.9, while on loan), via Wikimedia Commons, tagged public domain as a faithful reproduction of a public-domain work (PD-Art). The Met publishes its own copy with reuse restrictions. 800 px wide, so details soften when zoomed.",
+      "source": "commons_draupadi"
+    },
+    "look": "Who has the most power in this room, and who has the least? Judge by height, not size.",
+    "details": [
+      {
+        "label": "The upper arcade",
+        "text": "Three arches above the hall. The blind king Dhritarashtra sits in the centre, with Kaurava nobles on either side.",
+        "src": "/art/disrobing-of-draupadi/detail-1.webp",
+        "width": 704,
+        "height": 268,
+        "rect": [6, 6, 88, 46]
+      },
+      {
+        "label": "Draupadi",
+        "text": "She stands at the left of the hall while Duhshasana pulls at her garment. Find the growing heap of cloth at her feet.",
+        "src": "/art/disrobing-of-draupadi/detail-2.webp",
+        "width": 336,
+        "height": 292,
+        "rect": [2, 46, 42, 50]
+      },
+      {
+        "label": "The low seats",
+        "text": "Across the hall her husbands sit, lower than she stands. One reaches for a weapon; another holds him back.",
+        "src": "/art/disrobing-of-draupadi/detail-3.webp",
+        "width": 320,
+        "height": 268,
+        "rect": [58, 50, 40, 46]
+      },
+      {
+        "label": "The floor",
+        "text": "Three small dice on the rug. Count the dots that face up.",
+        "src": "/art/disrobing-of-draupadi/detail-4.webp",
+        "width": 224,
+        "height": 175,
+        "rect": [36, 62, 28, 30]
+      }
+    ],
+    "context": [
+      {
+        "tag": "doc",
+        "label": "Documented",
+        "text": "The text gives the court a real legal problem and a real chance to answer it.",
+        "source": "wp_draupadi"
+      },
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "text": "The painting renders the miracle as an accumulating heap of textiles and puts three dice at the centre of the floor.",
+        "source": "met_persp"
+      }
+    ],
+    "quote": null,
+    "readings": [
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "Grace when the court fails",
+        "evidence": "In devotional retellings, Draupadi’s surrender to Krishna saves her when every human protector has failed.",
+        "lit": "Human institutions collapse; faith does not. This is how many people know the story.",
+        "open": "The rescue covers her body. Nobody in the hall is judged by it."
+      },
+      {
+        "tag": "sch",
+        "label": "Scholarly",
+        "name": "A question no one will answer",
+        "evidence": "Draupadi asks about the rules. Bhishma calls dharma subtle and stays silent; only Vikarna and Vidura object.",
+        "lit": "The scandal is procedural: men who know better hide inside an open question.",
+        "open": "Was Bhishma’s doubt cowardice, or an honest limit of law?"
+      }
+    ],
+    "extra": {
+      "tag": "pro",
+      "name": "What the painter chose",
+      "text": "No god at the centre: dice and a heap of cloth. The painting makes the game and its consequences the subject, and lowers the husbands below their wife.",
+      "label": "For discussion"
+    },
+    "question": "If powerful people stay silent while injustice unfolds, are they merely witnesses, or participants?",
+    "follow": [
+      "Can obedience to duty become a justification for moral cowardice?",
+      "Is responsibility shared equally among bystanders, or does greater power bring greater obligation?",
+      "When an institution’s own rules produce an unjust result, is reform enough, or must its legitimacy be questioned?",
+      "What does the miracle resolve, and what does it leave for human beings to answer?"
+    ],
+    "counter": "Bhishma’s doubt may be honest. The law really was unclear, and a judge who acts without law becomes another kind of tyrant.",
+    "now": "A board, a committee or a parliament watches a wrong done “by the rules”. Who should resign?",
+    "focus": {
+      "caption": "The king, and Duryodhana leaning out",
+      "src": "/art/disrobing-of-draupadi/focus.webp",
+      "width": 256,
+      "height": 268,
+      "rect": [34, 10, 32, 46]
+    },
+    "story": [
+      {
+        "kind": "text",
+        "text": "At a game of dice, Yudhishthira, eldest of the five Pandava brothers, plays against Shakuni, who plays for his rival Duryodhana."
+      },
+      {
+        "kind": "text",
+        "text": "Yudhishthira stakes and loses his wealth, his kingdom, his brothers, himself, and finally their shared wife, Draupadi."
+      },
+      {
+        "kind": "text",
+        "text": "Dragged into the assembly hall, Draupadi asks a legal question: had he already lost himself when he staked her? If so, could he still stake her?"
+      },
+      {
+        "kind": "text",
+        "text": "Bhishma, the senior elder, says the way of dharma is subtle and he cannot settle it. Vikarna says she was not won. Karna overrules him. Vidura protests."
+      },
+      {
+        "kind": "text",
+        "text": "Duhshasana tries to strip her. Each time a garment is pulled away, another like it appears."
+      },
+      {
+        "kind": "ret",
+        "text": "In many retellings Draupadi prays to Krishna, who saves her. In the Sanskrit critical edition that prayer survives only as later interpolations."
+      },
+      {
+        "kind": "text",
+        "text": "After ill omens, the blind king Dhritarashtra grants Draupadi boons. She uses them to free her husbands."
+      }
+    ],
+    "technical": [
+      "Infrared imaging shows at least two of the Pandavas were first drawn higher, with crowns just below the balcony line. Nainsukh lowered them, so in the finished picture they sit below the standing Draupadi.",
+      "Under the rug’s red and brown strips, infrared reveals a fully painted pachisi board with sixteen pieces, later painted over.",
+      "The three dice left visible show five dots in total; the author links the five to the five brothers.",
+      "The pile of cloth once extended further; it was reduced so attention falls on the dice.",
+      "B. N. Goswamy praised the picture’s restraint; the Met essay quotes his phrase “noble holding back”."
+    ],
+    "technicalNote": "The Met’s description does not identify Krishna among the figures. One crowned figure in the group at lower right has bluish skin. Whether that is meant as Krishna or as one of the brothers is a question to settle against the Takri labels, not to assume. Raise it as an open question.",
+    "ladder": [
+      "Is Dhritarashtra, who presides and could stop it, more or less responsible than Duhshasana, who does it?",
+      "Where does Yudhishthira go? He staked her, and he restrains Bhima from intervening.",
+      "Can “the rules of the game” be responsible? If not, who wrote them and who kept playing?"
+    ],
+    "view": {
+      "label": "View at The Met",
+      "u": "https://www.metmuseum.org/art/collection/search/825669"
+    },
+    "sources": [
+      {
+        "id": "commons_draupadi",
+        "title": "Wikimedia Commons, “Disrobing of Draupadi” (Ashmolean photograph, object LI118.9; tagged PD-Art)",
+        "url": "https://commons.wikimedia.org/wiki/File:Disrobing_of_Draupadi.jpg"
+      },
+      {
+        "id": "wp_draupadi",
+        "title": "Wikipedia, “Draupadi” (dice game section, citing Edgerton, van Buitenen, Hudson 2012)",
+        "url": "https://en.wikipedia.org/wiki/Draupadi"
+      },
+      {
+        "id": "met_persp",
+        "title": "Marina Ruiz Molina, “The Disrobing of Draupadi” (The Met, Perspectives): infrared and Raman study",
+        "url": "https://www.metmuseum.org/perspectives/disrobing-of-draupadi-nainsukh"
+      },
+      {
+        "id": "met_draupadi",
+        "title": "The Met, The Disrobing of Draupadi, attributed to Nainsukh, 2022.247",
+        "url": "https://www.metmuseum.org/art/collection/search/825669"
+      }
+    ]
+  }
+]

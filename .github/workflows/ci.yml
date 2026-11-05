@@ -118,3 +118,41 @@ jobs:
 
       - name: Pyodide loader retry tests
         run: pnpm run test:pyodide-loader-retry
+
+  # The new Astro site (P03). Not deployed: deploy.yml still publishes the root ./dist.
+  site:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-env
+        with:
+          node-version: 24
+
+      - name: Type and template check
+        run: pnpm exec astro check
+        env:
+          ASTRO_TELEMETRY_DISABLED: 1
+
+      - name: Build site and search index
+        run: pnpm run build
+        env:
+          ASTRO_TELEMETRY_DISABLED: 1
+
+      - name: Content and output checks
+        run: pnpm test
+
+      - name: Install Chromium for Playwright
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Browser, keyboard and accessibility tests
+        run: pnpm run test:e2e

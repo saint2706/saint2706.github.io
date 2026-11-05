@@ -1,0 +1,72 @@
+{
+  "source": "Ten Paintings, Ten Questions (owner-supplied discussion deck, read 2026-11-05). Text is copied from the deck; only the seven public-domain works are used.",
+  "deck": "Ten Paintings, Ten Questions",
+  "rules": [
+    {
+      "head": "Look before you speak.",
+      "text": "Each painting opens with a minute of silence. Say what you see before you say what it means."
+    },
+    {
+      "head": "Change your mind out loud.",
+      "text": "A reading that falls apart under a new detail is a good result, not a failure."
+    },
+    {
+      "head": "Argue with the picture.",
+      "text": "Disagree with each other freely, but test every claim against something visible or documented."
+    }
+  ],
+  "legend": [
+    {
+      "tag": "doc",
+      "label": "Documented",
+      "text": "Verifiable from the collection or primary sources."
+    },
+    { "tag": "sch", "label": "Scholarly", "text": "A widely accepted reading by art historians." },
+    { "tag": "deb", "label": "Debated", "text": "Contested, uncertain, or argued both ways." },
+    { "tag": "pro", "label": "For discussion", "text": "Proposed here to start an argument." }
+  ],
+  "rooms": [
+    {
+      "numeral": "I",
+      "name": "The Unreliable Eye",
+      "sub": "Perception and illusion",
+      "works": ["fall-of-icarus"]
+    },
+    {
+      "numeral": "II",
+      "name": "Witness",
+      "sub": "Looking, witnessing and narrative",
+      "works": ["third-of-may", "woman-with-dead-child", "shakuntala-looking-back"]
+    },
+    {
+      "numeral": "III",
+      "name": "The Gaze, the Dream, the Window",
+      "sub": "Imagination, grief and responsibility",
+      "works": ["susanna-and-the-elders", "sleep-of-reason"]
+    },
+    {
+      "numeral": "IV",
+      "name": "The Court",
+      "sub": "Power and collective responsibility",
+      "works": ["disrobing-of-draupadi"]
+    }
+  ],
+  "pairs": [
+    {
+      "title": "The street and the room",
+      "a": "third-of-may",
+      "b": "woman-with-dead-child",
+      "la": "Public · 268 × 347 cm canvas",
+      "lb": "Private · 42 × 49 cm plate",
+      "q": "Goya paints political violence at life size for a nation. Kollwitz etches grief at the size of a page, with no politics visible. Which tells you more about war?"
+    },
+    {
+      "title": "Two women before the court",
+      "a": "susanna-and-the-elders",
+      "b": "disrobing-of-draupadi",
+      "la": "Saved by procedure",
+      "lb": "Saved by a miracle, and a question",
+      "q": "Susanna is saved by procedure: Daniel questions the judges separately. Draupadi is saved by a miracle, and by her own question. Which rescue do our institutions depend on?"
+    }
+  ]
+}

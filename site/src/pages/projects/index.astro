@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import ProjectRow from '../../components/ProjectRow.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { projects } from '../../lib/content';
+---
+
+<Base title="Projects" description="Projects by Rishabh Agrawal, with links to live sites and source code.">
+  <SpaceHead title="Projects" lede="Things I built, with links to the code." />
+  <Section id="flagships" num={1} title="Flagship projects">
+    <ul class="rows">{projects.filter(p => p.flagship).map(p => <ProjectRow project={p} />)}</ul>
+  </Section>
+  <Section id="more" num={2} title="Other projects">
+    <ul class="rows">{projects.filter(p => !p.flagship).map(p => <ProjectRow project={p} />)}</ul>
+  </Section>
+  <NextLinks
+    links={[
+      { href: '/work/', label: 'Back to work' },
+      { href: '/writing/', label: 'Writing' },
+    ]}
+  />
+</Base>

@@ -1,0 +1,9 @@
+---
+interface Props {
+  links: { href: string; label: string }[];
+}
+---
+
+<nav class="next" aria-label="Other spaces">
+  {Astro.props.links.map(l => <p><a href={l.href}>{l.label}</a></p>)}
+</nav>
