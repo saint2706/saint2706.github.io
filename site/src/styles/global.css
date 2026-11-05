@@ -266,6 +266,9 @@ dialog li a[aria-current='page'] {
   align-items: end;
   margin-top: 48px;
 }
+.space-head > div {
+  min-width: 0; /* let slotted grids (case-study facts) shrink to the column on phones */
+}
 .space-head .mark {
   display: block;
   width: 160px;
@@ -505,4 +508,50 @@ body.lab .space-head .mark {
   background: transparent;
   border: 3px dashed var(--color-accent);
   border-radius: 28px;
+}
+/* Print: /about/ doubles as the resume (P04-T02), so printing drops the site chrome and keeps the facts. */
+.print-only {
+  display: none;
+}
+@media print {
+  @page {
+    margin: 16mm;
+  }
+  .skip,
+  .bar,
+  .bottom,
+  .site-foot,
+  .next,
+  .space-head .mark,
+  [data-print] {
+    display: none !important;
+  }
+  .print-only {
+    display: block;
+  }
+  body,
+  .space {
+    background: #fff;
+    color: #000;
+    padding: 0;
+  }
+  .space-head,
+  .block {
+    display: block;
+    margin: 0 0 12pt;
+  }
+  .space-head h1 {
+    font-size: 22pt;
+  }
+  .block h2 {
+    font-size: 13pt;
+    margin: 0 0 6pt;
+  }
+  .rows > li {
+    padding: 4pt 0;
+    break-inside: avoid;
+  }
+  .meta {
+    color: #333;
+  }
 }

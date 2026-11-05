@@ -14,7 +14,14 @@ const validity = (expires: string | null) =>
 ---
 
 <Base title="About" description={profile.summary}>
-  <SpaceHead title="About" lede={profile.summary} />
+  <SpaceHead title="About" lede={profile.summary}>
+    <button class="btn" type="button" data-print data-needs-js hidden>Print or save as PDF</button>
+    {/* A printed resume needs the contact details the site keeps on /contact/. */}
+    <ul class="print-only plain">
+      <li>{profile.email}</li>
+      {profile.links.map(l => <li>{l.label}: {l.url}</li>)}
+    </ul>
+  </SpaceHead>
   {
     sections.map((s, i) => (
       <Section id={s.id} num={i + 1} title={s.title}>
@@ -34,7 +41,19 @@ const validity = (expires: string | null) =>
       </Section>
     ))
   }
-  <Section id="certifications" num={3} title="Certifications">
+  <Section id="skills" num={3} title="Skills">
+    <ul class="rows">
+      {
+        about.skills.map(s => (
+          <li>
+            <h3>{s.group}</h3>
+            <p>{s.items.join(', ')}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+  <Section id="certifications" num={4} title="Certifications">
     <ul class="rows">
       {
         about.certifications.map(c => (
@@ -50,7 +69,7 @@ const validity = (expires: string | null) =>
       }
     </ul>
   </Section>
-  <Section id="languages" num={4} title="Languages">
+  <Section id="languages" num={5} title="Languages">
     <ul class="rows">
       {
         profile.languages.map(l => (
@@ -69,3 +88,7 @@ const validity = (expires: string | null) =>
     ]}
   />
 </Base>
+
+<script>
+  document.querySelector('[data-print]')!.addEventListener('click', () => print());
+</script>

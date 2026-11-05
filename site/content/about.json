@@ -31,6 +31,49 @@
       "summary": "Algorithms, software development and data science."
     }
   ],
+  "skills": [
+    {
+      "group": "Software packages",
+      "items": [
+        "SQL",
+        "Tableau",
+        "Microsoft Power BI",
+        "IBM Watson",
+        "MS Excel",
+        "Git and GitHub Actions",
+        "Vitest",
+        "Playwright"
+      ]
+    },
+    {
+      "group": "Programming and machine learning",
+      "items": [
+        "Python",
+        "R",
+        "PyTorch",
+        "TensorFlow",
+        "Hugging Face",
+        "DeepFace",
+        "Django",
+        "React and TypeScript",
+        "Vite",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "group": "Databases and cloud",
+      "items": [
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "Celery",
+        "Docker",
+        "Kubernetes",
+        "Amazon Web Services (AWS)",
+        "Oracle Cloud"
+      ]
+    }
+  ],
   "certifications": [
     {
       "name": "AWS Certified Cloud Practitioner",
@@ -99,5 +142,5 @@
       "expires": null
     }
   ],
-  "source": "src/data/resume.js (published resume data). Metrics in the resume highlights are left out until sourced. Unsourced superlatives (\"Asia’s largest\") removed."
+  "source": "src/data/resume.js (published resume data). Metrics in the resume highlights are left out until sourced. Unsourced superlatives (\"Asia’s largest\") removed. Skills: Core Competencies from the owner-supplied CV (2026-11-05), names only; self-rated percentages dropped (owner decision)."
 }
