@@ -18,7 +18,7 @@ import SpaceHead from '../../components/SpaceHead.astro';
 </Base>
 
 <script>
-  type Hit = { url: string; excerpt: string; meta: { title?: string } };
+  type Hit = { url: string; excerpt: string; meta: { title?: string; kind?: string } };
   type Pagefind = { init(): Promise<void>; search(q: string): Promise<{ results: { data(): Promise<Hit> }[] }> };
 
   const form = document.querySelector<HTMLFormElement>('form.search')!;
@@ -71,7 +71,10 @@ import SpaceHead from '../../components/SpaceHead.astro';
           const a = document.createElement('a');
           a.href = h.url;
           a.textContent = h.meta.title ?? h.url;
-          li.append(a, excerpt(h.excerpt));
+          const kind = document.createElement('span');
+          kind.className = 'meta';
+          kind.textContent = h.meta.kind ?? '';
+          li.append(a, kind, excerpt(h.excerpt));
           return li;
         }),
       );

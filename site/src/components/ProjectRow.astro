@@ -1,16 +1,21 @@
 ---
 import type { z } from 'astro/zod';
-import type { ProjectSchema } from '../lib/content';
+import { caseStudyOf, postByLink, type ProjectSchema } from '../lib/content';
 interface Props {
   project: z.infer<typeof ProjectSchema>;
 }
 const { project: p } = Astro.props;
+const study = caseStudyOf(p.id);
 ---
 
 <li>
-  <h3>{p.title}</h3>
+  <h3>{study ? <a href={`/projects/${p.id}/`}>{p.title}</a> : p.title}</h3>
   {p.meta && <span class="meta">{p.meta}</span>}
   <p>{p.summary}</p>
   {p.note && <p class="note">{p.note}</p>}
-  <div class="links">{p.links.map(l => <a href={l.url}>{l.label}</a>)}</div>
+  <div class="links">
+    {study && <a href={`/projects/${p.id}/`}>Read the case study</a>}
+    {p.links.map(l => <a href={l.url}>{l.label}</a>)}
+    {(p.writing ?? []).map(w => <a href={w}>Post: {postByLink(w).title}</a>)}
+  </div>
 </li>

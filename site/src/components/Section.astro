@@ -8,6 +8,6 @@ const { id, num, title } = Astro.props;
 ---
 
 <section class="block" id={id} aria-labelledby={`${id}-h`}>
-  <h2 id={`${id}-h`}><span class="num">{String(num).padStart(2, '0')}</span>{title}</h2>
+  <h2 id={`${id}-h`}><span class="num" aria-hidden="true" data-pagefind-ignore>{String(num).padStart(2, '0')}</span>{title}</h2>
   <div><slot /></div>
 </section>

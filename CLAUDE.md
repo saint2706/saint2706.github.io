@@ -1,8 +1,8 @@
 # Portfolio Rebuild — Claude Code Operating Contract
 
-## Current authorization: none (P03 complete 2026-11-05; no production release)
+## Current authorization: none (P04 complete 2026-11-05; no production release)
 
-P00–P02 are complete. On 2026-11-05 the user authorized P03-T01..T03; all three are complete on `phase/p03-foundations` (new Astro site in `site/`, not deployed). No task is authorized now (P04–P07 pending explicit approval). Authoritative source: `project-system/state/approvals.json`. Execute only the exact phase and task IDs named by the user. Never auto-progress.
+P00–P04 are complete. P03 (new Astro site in `site/`) and P04 (case studies, print-ready About, search labels; PR #900) were authorized and completed on 2026-11-05; nothing is deployed. No task is authorized now (P05–P07 pending explicit approval). Authoritative source: `project-system/state/approvals.json`. Execute only the exact phase and task IDs named by the user. Never auto-progress.
 
 Preferred model/effort: Claude Sonnet 5.5, High, when actually available. Verify CLI availability; do not silently substitute.
 
