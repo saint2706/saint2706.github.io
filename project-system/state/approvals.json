@@ -50,13 +50,16 @@
     },
     {
       "phase": "P05",
-      "status": "authorized",
-      "scope": "P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "status": "complete",
+      "scope": "Complete 2026-11-05 on phase/p05-personal (merge after green CI and resolved Codex threads; no production release). P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
       "authorized_tasks": ["P05-T01", "P05-T02", "P05-T03"],
       "decisions": [
         "Shell (owner, 2026-11-05): keep the home-page gateway strip; /personal/ becomes a landing room linking to sub-pages, each with a personal-space nav separate from the work nav; old anchors keep working.",
         "Music and culture (owner, 2026-11-05): owner supplies the list and notes; T02 waits for that material.",
-        "Learning, tech and business (owner, 2026-11-05): a learning path that orders the owner's existing tutorials, essays and Coding-For-MBA, with a reason for each step; no new opinions."
+        "Learning, tech and business (owner, 2026-11-05): a learning path that orders the owner's existing tutorials, essays and Coding-For-MBA, with a reason for each step; no new opinions.",
+        "Films (owner, 2026-11-05): the owner supplied notes on Pather Panchali, Spider-Man: Across the Spider-Verse and Barbie; publish verbatim with lowercase kept, Barbie note unfinished as written, no Letterboxd link. Room is Films; music stays in the backlog.",
+        "Learning path copy approved by the owner 2026-11-05.",
+        "Books (owner, 2026-11-05): title each stage with its key idea; Claude drafted the taglines, owner stage labels kept underneath."
       ]
     },
     {
