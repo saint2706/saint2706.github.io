@@ -4,3 +4,12 @@ compatibility_date = "2026-10-01"
 
 [vars]
 ALLOWED_ORIGINS = "https://saint2706.github.io,http://localhost:5173"
+
+# Per-IP limit (CF-Connecting-IP), counted per Cloudflare location. Period must be 10 or 60 seconds.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
