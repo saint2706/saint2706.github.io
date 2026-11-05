@@ -744,7 +744,7 @@
       "id": "P05-T02",
       "phase": "P05",
       "title": "Build art, books, music and culture collections",
-      "status": "authorized",
+      "status": "complete",
       "authorization": "user-approved-2026-11-05 (no production release)",
       "depends_on": ["P05-T01"],
       "objective": "Create curated content-led cultural collections.",

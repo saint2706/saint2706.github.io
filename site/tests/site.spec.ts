@@ -14,6 +14,7 @@ const ROUTES = [
   '/personal/',
   '/personal/art/',
   '/personal/books/',
+  '/personal/films/',
   '/personal/learning/',
   '/personal/art/fall-of-icarus/',
   '/personal/art/disrobing-of-draupadi/',

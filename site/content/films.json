@@ -1,0 +1,35 @@
+{
+  "lang": "en",
+  "films": [
+    {
+      "slug": "pather-panchali",
+      "title": "Pather Panchali",
+      "year": 1955,
+      "directors": ["Satyajit Ray"],
+      "epigraph": "I used to have dreams. The things I wanted to do...",
+      "note": [
+        "i think why this affected me so much - to the point i almost kept breaking every 5 minutes - was that i've rarely seen hardship, economic, spiritual, and physical, depicted so honestly. what broke the levee for me was seeing a child play in the down pouring rain, spinning and calling to the gods. this is my first ray and i can already tell he has a peerless understanding of weathering daily indignities."
+      ]
+    },
+    {
+      "slug": "across-the-spider-verse",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "year": 2023,
+      "directors": ["Joaquim Dos Santos", "Kemp Powers", "Justin K. Thompson"],
+      "note": [
+        "The opposite starting points and goals of Miles and Spot in the movie tho.",
+        "Miles thought he was free to make his own choices but he was told that he's been condemned by a narrative he wants nothing to do with so he tries to break free.",
+        "Spot thought he was a part of a grand narrative (being Spider-Man's nemesis) but he was told his narrative is a joke so he tries to make it real"
+      ]
+    },
+    {
+      "slug": "barbie",
+      "title": "Barbie",
+      "year": 2023,
+      "directors": ["Greta Gerwig"],
+      "note": [
+        "The name of barbie's boyfriend is an allusion to the idea of Kenosis, the self-emptying performed by Jesus. Thus we can see that Ken is to Barbie as Jesus is to God. In this essay I will"
+      ]
+    }
+  ]
+}

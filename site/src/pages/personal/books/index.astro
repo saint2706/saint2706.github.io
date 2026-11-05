@@ -23,7 +23,10 @@ const ACCESS = { FREE: 'free to read online', BORROW: 'borrow from a library', C
           <li>
             <details open={i === 0}>
               <summary>
-                <span>{stage.name}</span>
+                <span class="stage">
+                  <span class="t">{stage.tagline}</span>
+                  <span class="meta">{stage.name.split(':')[0]}</span>
+                </span>
                 <span class="count">{stage.works.length} works</span>
               </summary>
               <ol>
@@ -63,6 +66,13 @@ const ACCESS = { FREE: 'free to read online', BORROW: 'borrow from a library', C
     padding: 12px 0;
     min-height: 44px;
     cursor: pointer;
+  }
+  .stages .stage {
+    display: grid;
+    gap: 2px;
+  }
+  .stages .t {
+    font: var(--text-1) / 1.25 var(--font-display);
   }
   .stages .count {
     color: var(--color-ink-2);

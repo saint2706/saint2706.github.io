@@ -4,6 +4,7 @@
   "stages": [
     {
       "name": "Stage One: Good books to get into philosophy",
+      "tagline": "The Greek foundations",
       "works": [
         {
           "author": "Homer",
@@ -65,6 +66,7 @@
     },
     {
       "name": "Stage Two",
+      "tagline": "How to live: Stoics, Romans and Neoplatonists",
       "works": [
         {
           "author": "Epictetus",
@@ -126,6 +128,7 @@
     },
     {
       "name": "Stage Three: The Middle Ages",
+      "tagline": "Faith and reason",
       "works": [
         {
           "author": "Augustine",
@@ -215,6 +218,7 @@
     },
     {
       "name": "Stage 4.1: Early Modern Rationalists",
+      "tagline": "Reason first: the rationalists",
       "works": [
         {
           "author": "René Descartes",
@@ -248,6 +252,7 @@
     },
     {
       "name": "Stage 4.2: Early Modern Empiricists",
+      "tagline": "Experience first: the empiricists",
       "works": [
         {
           "author": "John Locke",
@@ -330,6 +335,7 @@
     },
     {
       "name": "Stage 4 (optional)",
+      "tagline": "Side roads of the early modern age",
       "works": [
         {
           "author": "Nicolas Malebranche",
@@ -405,6 +411,7 @@
     },
     {
       "name": "Stage 5.1: German Idealism",
+      "tagline": "The limits of reason: Kant and Fichte",
       "works": [
         {
           "author": "Immanuel Kant",
@@ -494,6 +501,7 @@
     },
     {
       "name": "Stage 5.2: Hegel and Schelling",
+      "tagline": "Spirit and freedom: Hegel and Schelling",
       "works": [
         {
           "author": "Georg Wilhelm Friedrich Hegel",
@@ -555,6 +563,7 @@
     },
     {
       "name": "Stage 5.3",
+      "tagline": "A mystic's detour: Jacob Böhme",
       "works": [
         {
           "author": "Jacob Böhme",
@@ -588,6 +597,7 @@
     },
     {
       "name": "Stage Six: Lebensphilosophie",
+      "tagline": "Will, life and the single individual",
       "works": [
         {
           "author": "Arthur Schopenhauer",
@@ -740,6 +750,7 @@
     },
     {
       "name": "Stage Seven: Modern Philosophy",
+      "tagline": "Being and language",
       "works": [
         {
           "author": "Martin Heidegger",
@@ -787,6 +798,7 @@
     },
     {
       "name": "Political Philosophy",
+      "tagline": "Power and the social contract",
       "works": [
         {
           "author": "Niccolò Machiavelli",
@@ -862,6 +874,7 @@
     },
     {
       "name": "French Revolution",
+      "tagline": "Revolution and its critics",
       "works": [
         {
           "author": "Richard Price (1723-1791)",
