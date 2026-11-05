@@ -6,7 +6,9 @@ const UPSTREAM = 'https://generativelanguage.googleapis.com';
 // Only the model and endpoints the site uses (src/services/ai.js); anything else is refused.
 const ALLOWED_PATH =
   /^\/v1beta\/models\/gemini-flash-lite-latest:(generateContent|streamGenerateContent)$/;
-const MAX_BODY_CHARS = 32_000; // chat input is capped at 1000 chars plus a short history
+// ai.js allows 60,000 chars of history plus a 1,000-char message and the system prompt; this leaves room
+// for JSON escaping while still refusing megabyte-sized bodies.
+const MAX_BODY_CHARS = 128_000;
 const MAX_OUTPUT_TOKENS = 2048;
 
 export default {

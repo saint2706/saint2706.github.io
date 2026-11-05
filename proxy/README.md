@@ -21,6 +21,6 @@ The origin check stops other websites, not scripts that fake an `Origin` header.
 
 - accepts only `gemini-flash-lite-latest` (the model `src/services/ai.js` uses);
 - rate-limits each IP to 10 requests a minute (`[[ratelimits]]` in `wrangler.toml`, counted per Cloudflare location);
-- rejects bodies over 32,000 characters and caps `maxOutputTokens` at 2048.
+- rejects bodies over 128,000 characters (the site sends at most about 64,000 plus JSON escaping) and caps `maxOutputTokens` at 2048.
 
 None of this proves a visitor is human, so the real backstop is on Google's side. Use a key restricted to the Generative Language API, in a Google Cloud project **with billing turned off**. Abuse can then only use up the free quota and never charge you.

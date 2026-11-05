@@ -26,7 +26,7 @@ describe('gemini proxy', () => {
   it('rejects oversized and malformed bodies before calling Google', async () => {
     const upstream = vi.fn();
     vi.stubGlobal('fetch', upstream);
-    expect((await worker.fetch(call(PATH, 'x'.repeat(32_001)), env())).status).toBe(413);
+    expect((await worker.fetch(call(PATH, 'x'.repeat(128_001)), env())).status).toBe(413);
     expect((await worker.fetch(call(PATH, 'not json'), env())).status).toBe(400);
     expect((await worker.fetch(call(PATH, '[1]'), env())).status).toBe(400);
     expect(upstream).not.toHaveBeenCalled();
@@ -37,6 +37,20 @@ describe('gemini proxy', () => {
     const res = await worker.fetch(call(PATH, '{}'), env({ RATE_LIMITER: limiter }));
     expect(res.status).toBe(429);
     expect(limiter.limit).toHaveBeenCalledWith({ key: '1.2.3.4' });
+  });
+
+  it('accepts the largest chat the site can send', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response('{}', { status: 200 }))
+    );
+    const turn = text => ({ role: 'user', parts: [{ text }] });
+    const history = Array.from({ length: 15 }, () => turn('"'.repeat(2000) + 'a'.repeat(2000)));
+    const body = JSON.stringify({
+      contents: [...history, turn('m'.repeat(1000))],
+      systemInstruction: { parts: [{ text: 's'.repeat(2500) }] },
+    });
+    expect((await worker.fetch(call(PATH, body), env())).status).toBe(200);
   });
 
   it('caps output tokens and adds the key server-side', async () => {
