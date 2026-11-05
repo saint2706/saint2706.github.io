@@ -6,10 +6,30 @@ const UPSTREAM = 'https://generativelanguage.googleapis.com';
 // Only the model and endpoints the site uses (src/services/ai.js); anything else is refused.
 const ALLOWED_PATH =
   /^\/v1beta\/models\/gemini-flash-lite-latest:(generateContent|streamGenerateContent)$/;
-// ai.js allows 60,000 chars of history plus a 1,000-char message and the system prompt; this leaves room
-// for JSON escaping while still refusing megabyte-sized bodies.
-const MAX_BODY_CHARS = 128_000;
+// ai.js sends at most ~71k chars (60k history, 1k message, ~10k system prompt with the resume JSON).
+// JSON escaping and UTF-8 can grow that several times, so the cap is generous; it only stops huge bodies.
+const MAX_BODY_BYTES = 512 * 1024;
 const MAX_OUTPUT_TOKENS = 2048;
+
+// Reads the body but gives up (returns null) as soon as it passes `max` bytes, so a huge or
+// unannounced-length body is never buffered whole.
+async function readCapped(stream, max) {
+  if (!stream) return '';
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+  let size = 0;
+  let text = '';
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) return text + decoder.decode();
+    size += value.byteLength;
+    if (size > max) {
+      await reader.cancel();
+      return null;
+    }
+    text += decoder.decode(value, { stream: true });
+  }
+}
 
 export default {
   async fetch(request, env) {
@@ -39,8 +59,11 @@ export default {
       return new Response('Too many requests', { status: 429, headers: cors });
     }
 
-    const text = await request.text();
-    if (text.length > MAX_BODY_CHARS) {
+    const text =
+      Number(request.headers.get('Content-Length')) > MAX_BODY_BYTES
+        ? null
+        : await readCapped(request.body, MAX_BODY_BYTES);
+    if (text === null) {
       return new Response('Request too large', { status: 413, headers: cors });
     }
     let body;

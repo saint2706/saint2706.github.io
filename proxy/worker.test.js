@@ -26,7 +26,10 @@ describe('gemini proxy', () => {
   it('rejects oversized and malformed bodies before calling Google', async () => {
     const upstream = vi.fn();
     vi.stubGlobal('fetch', upstream);
-    expect((await worker.fetch(call(PATH, 'x'.repeat(128_001)), env())).status).toBe(413);
+    expect((await worker.fetch(call(PATH, 'x'.repeat(512 * 1024 + 1)), env())).status).toBe(413);
+    const lying = call(PATH, '{}');
+    lying.headers.set('Content-Length', String(10 ** 9));
+    expect((await worker.fetch(lying, env())).status).toBe(413);
     expect((await worker.fetch(call(PATH, 'not json'), env())).status).toBe(400);
     expect((await worker.fetch(call(PATH, '[1]'), env())).status).toBe(400);
     expect(upstream).not.toHaveBeenCalled();
@@ -45,10 +48,12 @@ describe('gemini proxy', () => {
       vi.fn(async () => new Response('{}', { status: 200 }))
     );
     const turn = text => ({ role: 'user', parts: [{ text }] });
-    const history = Array.from({ length: 15 }, () => turn('"'.repeat(2000) + 'a'.repeat(2000)));
+    // ai.js caps: 30 turns / 60,000 chars of history, a 1,000-char message, ~10k system prompt.
+    // All quotes, so JSON escaping doubles every character.
+    const history = Array.from({ length: 15 }, () => turn('"'.repeat(4000)));
     const body = JSON.stringify({
-      contents: [...history, turn('m'.repeat(1000))],
-      systemInstruction: { parts: [{ text: 's'.repeat(2500) }] },
+      contents: [...history, turn('"'.repeat(1000))],
+      systemInstruction: { parts: [{ text: '"'.repeat(10_000) }] },
     });
     expect((await worker.fetch(call(PATH, body), env())).status).toBe(200);
   });
