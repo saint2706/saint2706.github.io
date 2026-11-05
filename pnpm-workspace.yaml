@@ -23,5 +23,10 @@ overrides:
   source-map-js: '>=1.2.2'
   zod: '>=4.6.6'
 
+# Astro lists sharp as optional; site/ never uses astro:assets (images are pre-built in public/),
+# and sharp's libvips binaries are LGPL-3.0, which dependency review denies.
+ignoredOptionalDependencies:
+  - sharp
+
 allowBuilds:
   esbuild: true

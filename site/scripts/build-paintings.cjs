@@ -1,8 +1,9 @@
 // Turns the owner's deck data (deck.json) + zip images into site/content/paintings.json and webp crops.
-// usage: node build-paintings.cjs <deck.json> <imgDir> <siteDir>
+// usage: NODE_PATH=<folder with sharp installed> node build-paintings.cjs <deck.json> <imgDir> <siteDir>
+// sharp is not a project dependency (its libvips binaries are LGPL-3.0); install it in a scratch folder to rerun.
 const fs = require('fs');
 const path = require('path');
-const sharp = require(path.join(process.argv[4], 'node_modules', 'sharp'));
+const sharp = require('sharp');
 const [deckPath, imgDir, siteDir] = process.argv.slice(2);
 const d = JSON.parse(fs.readFileSync(deckPath, 'utf8'));
 
@@ -16,7 +17,7 @@ const ORDER = [
   ['draupadi', 'disrobing-of-draupadi'],
 ];
 const TAGS = { doc: 'Documented', sch: 'Scholarly', deb: 'Debated', pro: 'For discussion' };
-const strip = s => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const strip = s => s.replace(/<[^>]+>/g, '').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
 const listItems = html => [...html.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => strip(m[1]));
 
 const out = [];

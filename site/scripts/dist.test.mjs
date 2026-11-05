@@ -82,7 +82,7 @@ test('no third-party scripts, styles, fonts, images or frames', { skip: !built }
     const external = [
       ...p.html.matchAll(/<(script|link|img|iframe|source)\b[^>]*\b(?:src|href)="(https?:[^"]+)"/g),
     ]
-      .filter(([, tag, url]) => !(tag === 'link' && url.startsWith(SITE)))
+      .filter(([, tag, url]) => !(tag === 'link' && url.startsWith(SITE + '/')))
       .map(m => m[2]);
     assert.deepEqual(external, [], p.route);
     assert.match(p.html, /http-equiv="content-security-policy"/i, `${p.route}: no CSP`);
