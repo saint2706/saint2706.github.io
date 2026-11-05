@@ -17,7 +17,15 @@ const ORDER = [
   ['draupadi', 'disrobing-of-draupadi'],
 ];
 const TAGS = { doc: 'Documented', sch: 'Scholarly', deb: 'Debated', pro: 'For discussion' };
-const strip = s => s.replace(/<[^>]+>/g, '').replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
+// Repeat until stable so removing one tag cannot join fragments into a new one ("<scr<b>ipt>").
+const strip = s => {
+  let prev;
+  do {
+    prev = s;
+    s = s.replace(/<[^>]*>/g, '');
+  } while (s !== prev);
+  return s.replace(/\s+/g, ' ').trim();
+};
 const listItems = html => [...html.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => strip(m[1]));
 
 const out = [];
