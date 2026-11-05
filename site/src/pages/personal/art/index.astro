@@ -3,7 +3,6 @@ import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
 import Section from '../../../components/Section.astro';
 import { gallery, paintingBySlug, posts } from '../../../lib/content';
-import { STUDIES } from '../../../lib/droste';
 
 const essays = posts.filter(p => p.myth);
 
@@ -24,32 +23,27 @@ const viewer = gallery.rooms.flatMap(room =>
     };
   })
 );
-const studies = STUDIES.map(paintingBySlug);
 ---
 
 <Base
   title="Art and myth"
-  description="A small museum of seven public-domain paintings with readings and questions, an exhibit on Escher's Print Gallery with an infinite zoom, and essays on myth."
+  description="A small museum of seven public-domain paintings with readings and questions, and essays on myth."
   space="per"
 >
-  <SpaceHead title="Art and myth" lede="A small museum: seven paintings, each with a question to argue about, one picture that never ends, and essays on myth." />
+  <SpaceHead title="Art and myth" lede="A small museum: seven paintings, each with a question to argue about, and essays on myth." />
 
   <Section id="gallery" num={1} title="The museum">
     <p>
-      Seven paintings from <cite>{gallery.deck}</cite>, a guided discussion for two. Open any painting to look at it
-      whole, then walk through its details one at a time. Each painting also has its own page with the context, two
-      readings and a question to argue about. The deck has three more works that are still in copyright, so they are
-      left out here.
+      Seven works made across nearly three and a half centuries, from a Flemish landscape of the 1560s to an etching
+      Käthe Kollwitz made in 1903. They come from Flanders, Spain, Italy, Germany, the Punjab Hills and southern India,
+      and none of them was meant to hang beside the others. What joins them is a question each one puts to the viewer:
+      what it means to see something, and what seeing asks of you afterwards.
     </p>
-    <ol class="rules">
-      {
-        gallery.rules.map(r => (
-          <li>
-            <strong>{r.head}</strong> {r.text}
-          </li>
-        ))
-      }
-    </ol>
+    <p>
+      The four rooms move from the eye that misleads, to the witness, to grief and imagining, and finally to the court,
+      where looking becomes judgement. Take each work whole before going in close. On every work's own page, statements
+      are marked by how firmly they stand: documented, accepted scholarship, debated, or offered for discussion.
+    </p>
 
     <div class="museum">
       {
@@ -82,23 +76,6 @@ const studies = STUDIES.map(paintingBySlug);
           </section>
         ))
       }
-      <section class="hall annex" aria-labelledby="room-annex">
-        <h3 id="room-annex"><span class="num">Annex</span> The picture inside itself</h3>
-        <p class="meta">After M. C. Escher's Print Gallery (1956) and the mathematicians who finished it</p>
-        <ul class="wall">
-          <li>
-            <a class="hang" href="/personal/art/print-gallery/">
-              <span class="frame nest" aria-hidden="true">
-                {studies.slice(0, 3).map(p => <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />)}
-              </span>
-              <span class="plate">
-                <span class="t">Print Gallery, without end</span>
-                <span class="meta">Escher's twist on four paintings from this museum, with an infinite zoom</span>
-              </span>
-            </a>
-          </li>
-        </ul>
-      </section>
     </div>
 
     <h3>The paintings answer each other</h3>
@@ -184,13 +161,6 @@ const studies = STUDIES.map(paintingBySlug);
 <script src="../../../scripts/museum.ts"></script>
 
 <style>
-  .rules {
-    max-width: 62ch;
-    padding-left: 24px;
-  }
-  .rules li {
-    padding: 4px 0;
-  }
   .museum {
     margin-top: var(--space-5);
     display: grid;
@@ -272,33 +242,6 @@ const studies = STUDIES.map(paintingBySlug);
     display: block;
     font-size: var(--text-n1);
   }
-  /* Four studies, each hung inside the one before, as in Escher's method. */
-  .nest {
-    position: relative;
-    width: 220px;
-    height: 220px;
-    box-sizing: content-box;
-    overflow: hidden;
-  }
-  .nest img {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    max-height: none;
-    object-fit: cover;
-    outline: 3px solid #b8893a;
-  }
-  .nest img:nth-child(2) {
-    width: 25%;
-    height: 25%;
-  }
-  .nest img:nth-child(3) {
-    width: 6.25%;
-    height: 6.25%;
-  }
   @media (prefers-reduced-motion: reduce) {
     .frame {
       transition: none;
@@ -310,10 +253,6 @@ const studies = STUDIES.map(paintingBySlug);
     }
     .frame img {
       max-height: 150px;
-    }
-    .nest {
-      width: 170px;
-      height: 170px;
     }
   }
 

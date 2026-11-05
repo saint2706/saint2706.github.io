@@ -19,7 +19,6 @@ const ROUTES = [
   '/personal/art/fall-of-icarus/',
   '/personal/art/disrobing-of-draupadi/',
   '/personal/art/sleep-of-reason/',
-  '/personal/art/print-gallery/',
   '/lab/',
   '/search/',
 ];
@@ -207,24 +206,4 @@ test('a museum painting opens the viewer, steps through details and closes back 
   await viewer.getByRole('button', { name: 'Close' }).click();
   await expect(viewer).toBeHidden();
   await expect(link).toBeFocused();
-});
-
-test('the print gallery zooms, or explains why it cannot', async ({ page }) => {
-  await page.goto('/personal/art/print-gallery/');
-  const canvas = page.locator('canvas[data-droste]');
-  const fallback = page.locator('[data-fallback]');
-  const webgl2 = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2'));
-  if (!webgl2) {
-    await expect(fallback).toBeVisible();
-  } else {
-    // The canvas shows once the four paintings have loaded into the texture.
-    await expect(canvas).toBeVisible({ timeout: 15000 });
-    await expect(fallback).toBeHidden();
-    const out = page.locator('[data-out]');
-    await page.getByRole('button', { name: 'Zoom in' }).click();
-    await page.getByRole('button', { name: 'Zoom in' }).click();
-    await page.getByRole('button', { name: 'Zoom in' }).click();
-    await page.getByRole('button', { name: 'Zoom in' }).click();
-    await expect(out).toContainText('1 repeat in');
-  }
 });

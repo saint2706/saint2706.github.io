@@ -178,8 +178,6 @@ const slug = z.string().refine(s => slugs.has(s), 'unknown painting');
 export const GallerySchema = z
   .object({
     source: text,
-    deck: text,
-    rules: z.array(z.object({ head: text, text })),
     legend: z.array(z.object({ tag, label: text, text })),
     rooms: z.array(z.object({ numeral: text, name: text, sub: text, works: z.array(slug).min(1) })),
     pairs: z.array(z.object({ title: text, a: slug, b: slug, la: text, lb: text, q: text })),

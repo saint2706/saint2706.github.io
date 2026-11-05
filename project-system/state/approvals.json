@@ -51,7 +51,7 @@
     {
       "phase": "P05",
       "status": "complete",
-      "scope": "Complete 2026-11-05 on phase/p05-personal (PR #902 left open for owner review (owner, 2026-11-05); no production release). P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-PR #902 left open for owner review (owner, 2026-11-05). Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "scope": "Complete 2026-11-05 on phase/p05-personal; PR #902 squash-merged to main at the owner's request (2026-11-05); no production release. P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
       "authorized_tasks": ["P05-T01", "P05-T02", "P05-T03"],
       "decisions": [
         "Shell (owner, 2026-11-05): keep the home-page gateway strip; /personal/ becomes a landing room linking to sub-pages, each with a personal-space nav separate from the work nav; old anchors keep working.",
@@ -61,8 +61,9 @@
         "Learning path copy approved by the owner 2026-11-05.",
         "Books (owner, 2026-11-05): title each stage with its key idea; Claude drafted the taglines, owner stage labels kept underneath.",
         "Book stage taglines: owner approved all 13 as written, 2026-11-05.",
-        "Owner additions 2026-11-05: film posters (owner hosts small posters and accepts the rights risk), museum viewer on the art room, and the Print Gallery annex with an infinite spiral zoom built from the AMS paper, crediting poster×club; no Escher image hosted.",
-        "Merge (owner, 2026-11-05): leave PR #902 open for owner review; do not merge."
+        "Owner additions 2026-11-05: film posters (owner hosts small posters and accepts the rights risk) and the museum viewer on the art room. A Print Gallery annex (WebGL zoom after de Smit and Lenstra) was built and then removed at the owner's request; no Escher image is hosted and the museum stays at seven works.",
+        "Merge (owner, 2026-11-05): first held open for review, then the owner asked to commit and merge once P05 was complete.",
+        "Art room copy (owner, 2026-11-05): wall text rewritten in a curator's voice; the private source deck is not named on the site or in content files, and its three discussion rules are removed."
       ]
     },
     {
