@@ -19,4 +19,4 @@
 
 1. Owner reviews `design/system/pages/` and approves or revises each page layout. `mapping.md` lists what is still provisional.
 2. Owner decides whether to authorize P03-T01 (implement foundations; ADR-001 Astro + React islands). Build only approved sections.
-3. AGENTS.md (PR #889) still says P02-T03 is in progress. Once both PRs merge, update it to "P02 complete, nothing authorized".
+3. AGENTS.md and `PROJECT_STATE.md` were updated in this PR to "P02 complete, nothing authorized".
