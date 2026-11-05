@@ -40,8 +40,8 @@
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.3.2",
     "@google/generative-ai": "^0.24.1",
-    "framer-motion": "^14.8.0",
-    "lucide-react": "1.65.0",
+    "framer-motion": "^14.9.0",
+    "lucide-react": "1.66.0",
     "prismjs": "^1.30.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
