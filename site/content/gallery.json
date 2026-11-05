@@ -1,29 +1,26 @@
 {
-  "source": "Ten Paintings, Ten Questions (owner-supplied discussion deck, read 2026-11-05). Text is copied from the deck; only the seven public-domain works are used.",
-  "deck": "Ten Paintings, Ten Questions",
-  "rules": [
-    {
-      "head": "Look before you speak.",
-      "text": "Each painting opens with a minute of silence. Say what you see before you say what it means."
-    },
-    {
-      "head": "Change your mind out loud.",
-      "text": "A reading that falls apart under a new detail is a good result, not a failure."
-    },
-    {
-      "head": "Argue with the picture.",
-      "text": "Disagree with each other freely, but test every claim against something visible or documented."
-    }
-  ],
+  "source": "Owner-supplied private discussion notes (read 2026-11-05); not named at the owner's request. Only the seven public-domain works are used.",
   "legend": [
     {
       "tag": "doc",
       "label": "Documented",
       "text": "Verifiable from the collection or primary sources."
     },
-    { "tag": "sch", "label": "Scholarly", "text": "A widely accepted reading by art historians." },
-    { "tag": "deb", "label": "Debated", "text": "Contested, uncertain, or argued both ways." },
-    { "tag": "pro", "label": "For discussion", "text": "Proposed here to start an argument." }
+    {
+      "tag": "sch",
+      "label": "Scholarly",
+      "text": "A widely accepted reading by art historians."
+    },
+    {
+      "tag": "deb",
+      "label": "Debated",
+      "text": "Contested, uncertain, or argued both ways."
+    },
+    {
+      "tag": "pro",
+      "label": "For discussion",
+      "text": "Proposed here to start an argument."
+    }
   ],
   "rooms": [
     {

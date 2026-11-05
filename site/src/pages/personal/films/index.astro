@@ -1,0 +1,106 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SpaceHead from '../../../components/SpaceHead.astro';
+import { films } from '../../../lib/content';
+
+const list = new Intl.ListFormat('en', { type: 'conjunction' });
+---
+
+<Base
+  title="Films"
+  description="Notes on Pather Panchali, Spider-Man: Across the Spider-Verse and Barbie."
+  space="per"
+>
+  <SpaceHead title="Films" lede="Notes on films, published as written." />
+
+  <ol class="reels">
+    {
+      films.films.map(f => (
+        <li id={f.slug}>
+          <article aria-labelledby={`${f.slug}-h`}>
+            <figure class="poster">
+              <img src={f.poster.src} width={f.poster.width} height={f.poster.height} alt={`Poster for ${f.title}`} loading="lazy" decoding="async" />
+              <figcaption>
+                {f.poster.credit} <a href={f.poster.source}>Source</a>
+              </figcaption>
+            </figure>
+            <div class="body">
+              <h2 id={`${f.slug}-h`}>
+                <cite>{f.title}</cite>
+              </h2>
+              <p class="meta">
+                {f.year} · directed by {list.format(f.directors)}
+              </p>
+              {f.epigraph && <blockquote>{f.epigraph}</blockquote>}
+              {f.note.map(p => (
+                <p class="note-text">{p}</p>
+              ))}
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
+
+<style>
+  .reels {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    max-width: 88ch;
+  }
+  .reels article {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .poster {
+    margin: 0;
+  }
+  .poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--color-ink);
+  }
+  .poster figcaption {
+    margin-top: var(--space-1);
+    font-size: var(--text-n1);
+    line-height: 1.35;
+  }
+  @media (max-width: 560px) {
+    .reels article {
+      grid-template-columns: 1fr;
+    }
+    .poster {
+      max-width: 160px;
+    }
+  }
+  .reels > li {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-rule);
+  }
+  .reels h2 {
+    margin: 0;
+    font-size: var(--text-2);
+    line-height: 1.15;
+  }
+  .reels h2 cite {
+    font-style: normal;
+  }
+  .reels .meta {
+    margin: var(--space-1) 0 0;
+  }
+  blockquote {
+    margin: var(--space-4) 0 0;
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--color-accent);
+    font: italic var(--text-1) / 1.4 var(--font-display);
+  }
+  .note-text {
+    margin: var(--space-3) 0 0;
+    font-size: 1.0625rem;
+  }
+</style>

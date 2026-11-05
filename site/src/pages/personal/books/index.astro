@@ -1,0 +1,92 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SpaceHead from '../../../components/SpaceHead.astro';
+import Section from '../../../components/Section.astro';
+import { books } from '../../../lib/content';
+
+const workCount = books.stages.reduce((n, s) => n + s.works.length, 0);
+const ACCESS = { FREE: 'free to read online', BORROW: 'borrow from a library', COMMERCIAL: 'in print' } as const;
+---
+
+<Base
+  title="Books"
+  description="A philosophy reading path in stages, each work with where to find it."
+  space="per"
+>
+  <SpaceHead title="Books" lede="The books on the shelf." />
+
+  <Section id="path" num={1} title="A philosophy reading path">
+    <p>A philosophy reading path in {books.stages.length} stages, {workCount} works, all finished.</p>
+    <ol class="stages">
+      {
+        books.stages.map((stage, i) => (
+          <li>
+            <details open={i === 0}>
+              <summary>
+                <span class="stage">
+                  <span class="t">{stage.tagline}</span>
+                  <span class="meta">{stage.name.split(':')[0]}</span>
+                </span>
+                <span class="count">{stage.works.length} works</span>
+              </summary>
+              <ol>
+                {stage.works.map(w => (
+                  <li>
+                    {w.author}, <a href={w.url}><cite>{w.title}</cite></a>
+                    <span class="access">
+                      {' '}
+                      · {ACCESS[w.access]}
+                      {w.optional && ' · optional'}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </details>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="note">Titles and links were checked on {books.verifiedOn}.</p>
+  </Section>
+</Base>
+
+<style>
+  .stages {
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .stages > li {
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .stages summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    min-height: 44px;
+    cursor: pointer;
+  }
+  .stages .stage {
+    display: grid;
+    gap: 2px;
+  }
+  .stages .t {
+    font: var(--text-1) / 1.25 var(--font-display);
+  }
+  .stages .count {
+    color: var(--color-ink-2);
+    white-space: nowrap;
+  }
+  .stages ol {
+    margin: 0 0 var(--space-3);
+    padding-left: 24px;
+  }
+  .stages ol li {
+    padding: 4px 0;
+  }
+  .access {
+    color: var(--color-ink-2);
+    font-size: var(--text-n1);
+  }
+</style>

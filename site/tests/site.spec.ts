@@ -5,10 +5,17 @@ const ROUTES = [
   '/',
   '/work/',
   '/projects/',
+  '/projects/programming-challenges-6/',
+  '/projects/coding-for-mba/',
+  '/projects/attendance-face-recognition/',
   '/writing/',
   '/about/',
   '/contact/',
   '/personal/',
+  '/personal/art/',
+  '/personal/books/',
+  '/personal/films/',
+  '/personal/learning/',
   '/personal/art/fall-of-icarus/',
   '/personal/art/disrobing-of-draupadi/',
   '/personal/art/sleep-of-reason/',
@@ -53,6 +60,39 @@ test('skip link moves focus to the main content', async ({ page, browserName }) 
   await expect(page.locator('main#content')).toBeFocused();
 });
 
+test('the personal space has its own nav, reachable by keyboard', async ({ page }) => {
+  await page.goto('/');
+  // Professional pages never show the personal nav.
+  await expect(page.getByRole('navigation', { name: 'Off the clock' })).toHaveCount(0);
+  const gateway = page.locator('a.per[href="/personal/"]');
+  await gateway.focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/personal\/$/);
+  const rooms = page.getByRole('navigation', { name: 'Off the clock' });
+  await expect(rooms.getByRole('link', { name: 'Off the clock' })).toHaveAttribute(
+    'aria-current',
+    'page'
+  );
+  await rooms.getByRole('link', { name: 'Art and myth' }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/\/personal\/art\/$/);
+  // A plain click opens the museum viewer, so go to the painting's own page directly.
+  await page.goto('/personal/art/fall-of-icarus/');
+  // A painting keeps its room marked in the personal nav.
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Off the clock' })
+      .getByRole('link', { name: 'Art and myth' })
+  ).toHaveAttribute('aria-current', 'true');
+});
+
+test('old personal-page anchors land in the new rooms', async ({ page }) => {
+  await page.goto('/personal/#books');
+  await expect(page).toHaveURL(/\/personal\/books\/$/);
+  await page.goto('/personal/#art');
+  await expect(page).toHaveURL(/\/personal\/art\/$/);
+});
+
 test('old SPA paths redirect', async ({ page }) => {
   await page.goto('/resume/');
   await expect(page).toHaveURL(/\/about\/$/);
@@ -64,6 +104,33 @@ test('search finds a painting and lists it as a link', async ({ page }) => {
   await page.getByRole('button', { name: 'Search' }).click();
   await expect(page.getByRole('status')).toContainText('for “Icarus”');
   await expect(page.locator('#results a').first()).toHaveAttribute('href', /fall-of-icarus/);
+  await expect(page.locator('#results li').first().locator('.meta')).toHaveText('Painting');
+});
+
+test('search labels a case study by kind', async ({ page }) => {
+  await page.goto('/search/?q=Pyodide');
+  const hit = page.locator('#results li', {
+    has: page.locator('a[href*="/projects/coding-for-mba/"]'),
+  });
+  await expect(hit.locator('.meta')).toHaveText('Case study');
+});
+
+test('flagship rows link to their case studies', async ({ page }) => {
+  await page.goto('/projects/');
+  await page.getByRole('link', { name: 'Read the case study' }).first().click();
+  await expect(page).toHaveURL(/\/projects\/programming-challenges-6\/$/);
+  await expect(page.getByRole('heading', { name: 'Limits' })).toBeVisible();
+});
+
+test('about page prints with contact details and without site chrome', async ({ page }) => {
+  await page.goto('/about/');
+  await expect(page.getByRole('button', { name: 'Print or save as PDF' })).toBeVisible();
+  await expect(page.locator('.print-only')).toBeHidden();
+  await expect(page.getByText(/expired Jul 2026/i)).toBeVisible();
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('.print-only')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Print or save as PDF' })).toBeHidden();
+  await expect(page.locator('.site-foot')).toBeHidden();
 });
 
 test('search reports nothing found', async ({ page }) => {
@@ -107,16 +174,36 @@ test('without JavaScript the site menu still works and controls stay hidden', as
 
 test('every painting image loads once scrolled into view', async ({ page }) => {
   for (const r of [
-    '/personal/',
+    '/personal/art/',
     '/personal/art/fall-of-icarus/',
     '/personal/art/disrobing-of-draupadi/',
   ]) {
     await page.goto(r);
-    for (const img of await page.locator('img').all()) await img.scrollIntoViewIfNeeded();
+    for (const img of await page.locator('img:visible').all()) await img.scrollIntoViewIfNeeded();
     await page.waitForLoadState('networkidle');
+    // The museum viewer's image sits empty in a closed dialog until a painting is opened.
     const broken = await page.evaluate(() =>
-      [...document.images].filter(i => !i.complete || i.naturalWidth === 0).map(i => i.src)
+      [...document.images]
+        .filter(i => !i.closest('dialog:not([open])'))
+        .filter(i => !i.complete || i.naturalWidth === 0)
+        .map(i => i.src)
     );
     expect(broken, r).toEqual([]);
   }
+});
+
+test('a museum painting opens the viewer, steps through details and closes back to it', async ({
+  page,
+}) => {
+  await page.goto('/personal/art/');
+  const link = page.locator('a[data-view="fall-of-icarus"]');
+  await link.click();
+  const viewer = page.getByRole('dialog', { name: 'Landscape with the Fall of Icarus' });
+  await expect(viewer).toBeVisible();
+  await expect(viewer.locator('[data-count]')).toContainText('Whole painting');
+  await page.keyboard.press('ArrowRight');
+  await expect(viewer.locator('[data-count]')).toContainText('Detail 1 of');
+  await viewer.getByRole('button', { name: 'Close' }).click();
+  await expect(viewer).toBeHidden();
+  await expect(link).toBeFocused();
 });

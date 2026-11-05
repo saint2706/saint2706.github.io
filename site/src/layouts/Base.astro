@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { profile } from '../lib/content';
+import { profile, rooms } from '../lib/content';
 
 interface Props {
   title: string;
@@ -22,11 +22,20 @@ const nav = [
   { href: '/writing/', label: 'Writing' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' },
-  { href: '/personal/', label: 'Off the clock: art, myth and books' },
+  { href: '/personal/', label: 'Off the clock: art, books and films' },
   { href: '/lab/', label: 'Lab' },
   { href: '/search/', label: 'Search' },
 ];
 const current = (href: string) => (href === path ? 'page' : undefined);
+// In the personal space a painting page sits inside its room, so the room stays marked.
+const inRoom = (href: string) => current(href) ?? (path.startsWith(href) ? 'true' : undefined);
+// Search results show what kind of page each hit is (P04-T03); the URL already says it.
+const kind =
+  /^\/projects\/.+\//.test(path) ? 'Case study'
+  : /^\/personal\/art\/.+\//.test(path) ? 'Painting'
+  : path.startsWith('/personal/') ? 'Off the clock'
+  : path.startsWith('/lab/') ? 'Lab'
+  : 'Work';
 ---
 
 <!doctype html>
@@ -45,6 +54,7 @@ const current = (href: string) => (href === path ? 'page' : undefined);
     <meta property="og:url" content={canonical} />
     <link rel="preload" href="/fonts/atkinson-hyperlegible-next-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta data-pagefind-meta="kind[content]" content={kind} />
     {/* Escaping "<" keeps a "</script>" inside any string from closing the block early. */}
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replaceAll('<', `${String.fromCharCode(92)}u003c`)} />}
   </head>
@@ -57,6 +67,16 @@ const current = (href: string) => (href === path ? 'page' : undefined);
         <button class="btn" type="button" data-open-index>Index</button>
       </div>
     </header>
+    {
+      space === 'per' && (
+        <nav class="rooms" aria-label="Off the clock">
+          <ul>
+            <li><a href="/personal/" aria-current={current('/personal/')}>Off the clock</a></li>
+            {rooms.map(r => <li><a href={r.href} aria-current={inRoom(r.href)}>{r.label}</a></li>)}
+          </ul>
+        </nav>
+      )
+    }
     <main id="content" tabindex="-1" class:list={[{ space: path !== '/' }]} data-pagefind-body={noindex ? undefined : ''}>
       <slot />
     </main>

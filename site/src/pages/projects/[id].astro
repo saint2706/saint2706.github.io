@@ -1,0 +1,99 @@
+---
+import Base from '../../layouts/Base.astro';
+import SpaceHead from '../../components/SpaceHead.astro';
+import Section from '../../components/Section.astro';
+import NextLinks from '../../components/NextLinks.astro';
+import { caseStudies, projects, postByLink } from '../../lib/content';
+
+export const getStaticPaths = () =>
+  caseStudies.map(study => ({
+    params: { id: study.id },
+    props: { study, project: projects.find(p => p.id === study.id)! },
+  }));
+
+const { study, project } = Astro.props;
+// Flagships read in the owner-approved order (projects.json), so "next" walks that order.
+const order = projects.filter(p => p.flagship);
+const next = order[(order.indexOf(project) + 1) % order.length];
+const n = study.sections.length;
+---
+
+<Base title={`${project.title}: case study`} description={project.summary}>
+  <SpaceHead title={project.title} lede={study.lede}>
+    <dl class="facts">
+      {
+        study.facts.map(f => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <div class="links">{project.links.map(l => <a href={l.url}>{l.label}</a>)}</div>
+  </SpaceHead>
+  {
+    study.sections.map((s, i) => (
+      <Section id={`s${i + 1}`} num={i + 1} title={s.heading}>
+        {s.paras.map(p => <p class="prose">{p}</p>)}
+      </Section>
+    ))
+  }
+  <Section id="limits" num={n + 1} title="Limits">
+    <ul class="prose-list">{study.limits.map(l => <li>{l}</li>)}</ul>
+  </Section>
+  <Section id="sources" num={n + 2} title="Sources">
+    <ol class="prose-list">{study.sources.map(s => <li><a href={s.url}>{s.title}</a></li>)}</ol>
+    {
+      project.writing && (
+        <p class="prose">
+          Related writing:{' '}
+          {project.writing.map((w, i) => (
+            <>
+              {i > 0 && ', '}
+              <a href={w}>{postByLink(w).title}</a>
+            </>
+          ))}
+        </p>
+      )
+    }
+    <p class="meta">Facts checked against these sources on {study.verifiedOn}.</p>
+  </Section>
+  <NextLinks
+    links={[
+      { href: `/projects/${next.id}/`, label: `Next case study: ${next.title}` },
+      { href: '/projects/', label: 'All projects' },
+    ]}
+  />
+</Base>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-3) var(--space-4);
+    margin: var(--space-4) 0 var(--space-2);
+    max-width: 62ch;
+  }
+  .facts dt {
+    color: var(--color-ink-2);
+    font: var(--text-n1) / 1.3 var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+  .facts dd {
+    margin: 2px 0 0;
+    overflow-wrap: anywhere;
+  }
+  .prose {
+    max-width: 62ch;
+    margin: 0 0 var(--space-3);
+  }
+  .prose-list {
+    max-width: 62ch;
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  .prose-list li + li {
+    margin-top: var(--space-2);
+  }
+</style>

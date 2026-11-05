@@ -18,8 +18,8 @@
     },
     {
       "phase": "P03",
-      "status": "authorized",
-      "scope": "P03-T01, P03-T02 and P03-T03 authorized by the owner 2026-11-05 to run in one go. Decisions: new Astro site in a separate site/ folder; the deploy workflow keeps publishing the old src/ app, so the live site is unchanged until the P07 release. Routes: / , /work/ hub plus /projects/, /writing/, /about/ (from /resume), /contact/, /personal/, /lab/, with meta-refresh redirects from /blog, /resume, /games, /playground. Page designs and components built as provisional; owner reviews at end of P03. Draft copy C-01..C-12 used as marked drafts pending end-of-phase review. /personal/ ships only filled sections. Search: Pagefind. Games, playground and Gemini features stay in the old app until P06. Owner approved adding new site/ CI jobs to required checks of ruleset protect-main (additions only). JSON-LD Person limited to facts already in src/data/resumeData. Phase PR may squash-merge after green CI, resolved threads and verification that deploy output is unchanged. Production release excluded.",
+      "status": "complete",
+      "scope": "Complete 2026-11-05 (PR merged to main; no production release). P03-T01, P03-T02 and P03-T03 authorized by the owner 2026-11-05 to run in one go. Decisions: new Astro site in a separate site/ folder; the deploy workflow keeps publishing the old src/ app, so the live site is unchanged until the P07 release. Routes: / , /work/ hub plus /projects/, /writing/, /about/ (from /resume), /contact/, /personal/, /lab/, with meta-refresh redirects from /blog, /resume, /games, /playground. Page designs and components built as provisional; owner reviews at end of P03. Draft copy C-01..C-12 used as marked drafts pending end-of-phase review. /personal/ ships only filled sections. Search: Pagefind. Games, playground and Gemini features stay in the old app until P06. Owner approved adding new site/ CI jobs to required checks of ruleset protect-main (additions only). JSON-LD Person limited to facts already in src/data/resumeData. Phase PR may squash-merge after green CI, resolved threads and verification that deploy output is unchanged. Production release excluded.",
       "authorized_tasks": ["P03-T01", "P03-T02", "P03-T03"],
       "decisions": [
         "Paintings (owner, 2026-11-05): use the seven public-domain works from the owner-supplied deck Ten Paintings, Ten Questions (Fall of Icarus, Third of May 1808, Woman with Dead Child, Shakuntala Looking Back, Susanna and the Elders, The Sleep of Reason, Disrobing of Draupadi). Exclude The False Mirror, The Human Condition and Slave Market (still in copyright).",
@@ -30,13 +30,41 @@
     },
     {
       "phase": "P04",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "complete",
+      "scope": "Complete 2026-11-05 (PR #900 squash-merged to main; no production release). P04-T01, P04-T02 and P04-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p04-professional. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "authorized_tasks": ["P04-T01", "P04-T02", "P04-T03"],
+      "decisions": [
+        "Flagship case studies, in this order: Programming-Challenges-6, Coding-For-MBA, AI Attendance Management System (owner, 2026-11-05).",
+        "Programming-Challenges-6 replaces Programming-Challenges-5 as a flagship; PC5 is archived and its README says it was abandoned for v6.",
+        "Attendance system: credit its origin in Nevil Parmar's 2021 project and describe the owner's later rebuild from repository evidence.",
+        "Case studies do not mention AI coding agents or bot contributors (owner choice).",
+        "Resume: the /about/ page gets a print stylesheet so browsers can print or save it as a PDF; no separate PDF.",
+        "Contact: direct links only (email, GitHub, LinkedIn, Instagram); no form and no third-party form service.",
+        "AWS Certified Cloud Practitioner stays listed, labelled expired Jul 2026.",
+        "Owner supplied a CV PDF (2026-11-05) as a fact source; it must not be committed or offered for download.",
+        "Skills on /about/: the CV Core Competencies as plain names, no self-rated percentages.",
+        "Academic record: degrees with institutions and years only; no CGPA, school marks, phone number or age.",
+        "TheSmartBridge internship stays May 2023 to July 2023 (owner, overriding the CV dates); PGDM stays June 2025 to July 2027; LinkedIn URL confirmed current.",
+        "Case-study role lines approved as written: PC6 and Coding-For-MBA \"Author and maintainer\"; Attendance \"Rebuild author and maintainer since September 2025\" with Nevil Parmar credited for the 2021 original. Candid limits kept (owner, 2026-11-05)."
+      ]
     },
     {
       "phase": "P05",
-      "status": "pending-approval",
-      "scope": "not authorized until explicit user approval"
+      "status": "complete",
+      "scope": "Complete 2026-11-05 on phase/p05-personal; PR #902 squash-merged to main at the owner's request (2026-11-05); no production release. P05-T01, P05-T02 and P05-T03 authorized by the owner 2026-11-05 to run in one go on branch phase/p05-personal. Phase PR may squash-merge after green CI and resolved Codex threads. Production release excluded: the deploy keeps publishing the old src/ app until P07.",
+      "authorized_tasks": ["P05-T01", "P05-T02", "P05-T03"],
+      "decisions": [
+        "Shell (owner, 2026-11-05): keep the home-page gateway strip; /personal/ becomes a landing room linking to sub-pages, each with a personal-space nav separate from the work nav; old anchors keep working.",
+        "Music and culture (owner, 2026-11-05): owner supplies the list and notes; T02 waits for that material.",
+        "Learning, tech and business (owner, 2026-11-05): a learning path that orders the owner's existing tutorials, essays and Coding-For-MBA, with a reason for each step; no new opinions.",
+        "Films (owner, 2026-11-05): the owner supplied notes on Pather Panchali, Spider-Man: Across the Spider-Verse and Barbie; publish verbatim with lowercase kept, Barbie note unfinished as written, no Letterboxd link. Room is Films; music stays in the backlog.",
+        "Learning path copy approved by the owner 2026-11-05.",
+        "Books (owner, 2026-11-05): title each stage with its key idea; Claude drafted the taglines, owner stage labels kept underneath.",
+        "Book stage taglines: owner approved all 13 as written, 2026-11-05.",
+        "Owner additions 2026-11-05: film posters (owner hosts small posters and accepts the rights risk) and the museum viewer on the art room. A Print Gallery annex (WebGL zoom after de Smit and Lenstra) was built and then removed at the owner's request; no Escher image is hosted and the museum stays at seven works.",
+        "Merge (owner, 2026-11-05): first held open for review, then the owner asked to commit and merge once P05 was complete.",
+        "Art room copy (owner, 2026-11-05): wall text rewritten in a curator's voice; the private source deck is not named on the site or in content files, and its three discussion rules are removed."
+      ]
     },
     {
       "phase": "P06",

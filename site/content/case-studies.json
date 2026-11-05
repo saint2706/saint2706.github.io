@@ -1,0 +1,201 @@
+[
+  {
+    "id": "programming-challenges-6",
+    "lede": "The sixth round of a long-running habit: a fixed list of 150 challenges, worked through one at a time, each in its own folder with its own tests.",
+    "verifiedOn": "2026-11-05",
+    "facts": [
+      { "label": "Role", "value": "Author and maintainer" },
+      { "label": "Started", "value": "August 2026" },
+      { "label": "Progress", "value": "103 of 150 implemented, 47 not started" },
+      { "label": "Licence", "value": "Unlicense (public domain)" }
+    ],
+    "sections": [
+      {
+        "heading": "Why a sixth list",
+        "paras": [
+          "The repository's README states the aim: learn new languages, explore paradigms and build a portfolio one solved problem at a time, with a fresh list so nothing repeats Pro-g-rammingChallenges4 or Programming Challenges 5.",
+          "Programming Challenges 5 is archived at 159 of 300. Its README now opens with one line pointing here: \"ABANDONED OUT OF SHAME -> MOVED TO v6\". The new list is half the size."
+        ]
+      },
+      {
+        "heading": "How the list is built",
+        "paras": [
+          "Five categories of 30 challenges each: practical software, algorithms and data structures, web development, data analytics, and applied machine learning. Each category has 7 beginner, 8 intermediate, 8 advanced and 7 expert challenges.",
+          "Each challenge lives in its own folder. Python challenges are uv projects, and CI runs pytest for each one, plus ruff and dprint for linting and formatting. CodeQL and OpenSSF Scorecard also run weekly."
+        ]
+      },
+      {
+        "heading": "Three examples",
+        "paras": [
+          "Batch File Renamer with Regex Preview (beginner, Python): previews regex renames before applying them, with a logged undo.",
+          "Meeting Notes to Action-Items Extractor (advanced, Python): a rule-based extractor evaluated on a hand-written, clearly synthetic corpus. The rules were tuned on a 24-document DEV split, frozen, then run once on a separate 24-document TEST split of 100 action items, scoring F1 0.970. The challenge README also reports that an optional LLM pass matched that F1 but made owner and due-date accuracy worse.",
+          "Order Statistics Tree (advanced, Rust): a B-tree that keeps per-child subtree counts so rank, select and range-count run in O(log n), with benchmarks and tests in the folder."
+        ]
+      }
+    ],
+    "limits": [
+      "47 of the 150 challenges are not started, including 15 of the 30 machine-learning ones.",
+      "The Meeting Notes score comes from a small synthetic corpus, not real meeting transcripts.",
+      "Benchmark figures quoted in the README (for example the Order Statistics Tree speed-ups) were not re-run for this page.",
+      "There is no live demo; everything runs locally from the repository."
+    ],
+    "sources": [
+      {
+        "title": "README with progress table (pinned commit)",
+        "url": "https://github.com/saint2706/Programming-Challenges-6/blob/8c984db876c8535e864f16a86aaa6da457eb7744/README.md"
+      },
+      {
+        "title": "CI workflow",
+        "url": "https://github.com/saint2706/Programming-Challenges-6/blob/8c984db876c8535e864f16a86aaa6da457eb7744/.github/workflows/ci.yml"
+      },
+      {
+        "title": "Meeting Notes to Action-Items Extractor",
+        "url": "https://github.com/saint2706/Programming-Challenges-6/tree/8c984db876c8535e864f16a86aaa6da457eb7744/challenges/Practical%20Software/Meeting%20Notes%20to%20Action-Items%20Extractor"
+      },
+      {
+        "title": "Order Statistics Tree",
+        "url": "https://github.com/saint2706/Programming-Challenges-6/tree/8c984db876c8535e864f16a86aaa6da457eb7744/challenges/Algorithmic%20Challenges/Order%20Statistics%20Tree"
+      },
+      {
+        "title": "Programming Challenges 5 README (archived)",
+        "url": "https://github.com/saint2706/Programming-Challenges-5/blob/5f852745501abda85a18154f6efc2439ee39d8ca/README.md"
+      }
+    ]
+  },
+  {
+    "id": "coding-for-mba",
+    "lede": "Started in 2021 to teach coding to friends, now a 12-phase Python and data curriculum whose code runs in the browser tab.",
+    "verifiedOn": "2026-11-05",
+    "facts": [
+      { "label": "Role", "value": "Author and maintainer" },
+      { "label": "Started", "value": "August 2021" },
+      { "label": "Scope", "value": "12 phases, 145 numbered days plus 17 extra lessons" },
+      { "label": "Live", "value": "saint2706.github.io/Coding-For-MBA" }
+    ],
+    "sections": [
+      {
+        "heading": "What it is",
+        "paras": [
+          "The repository's first description was \"Teach coding to friends.\" It is now a self-paced curriculum for business students: 12 phases running from Python basics to data analysis, with 145 numbered days and 17 lettered extra lessons (for example Day 11B on generators and Day 89B on dbt).",
+          "Alongside the lessons sit 6 projects and 15 business case studies, from retail customer churn to market-entry analysis."
+        ]
+      },
+      {
+        "heading": "Python in the browser",
+        "paras": [
+          "Learners run code without installing anything. Pyodide, Python compiled to WebAssembly, loads at runtime and executes lesson code in the tab. A SQL playground does the same for queries using sql.js.",
+          "Before code runs, a validation layer blocks a list of dangerous modules and functions and keeps code away from Pyodide's internals."
+        ]
+      },
+      {
+        "heading": "How it is built and checked",
+        "paras": [
+          "The site is React 19 with Vite, deployed to GitHub Pages only after CI passes on main. CI checks formatting, lint, types and lesson content, and runs unit tests with a coverage threshold across two operating systems."
+        ]
+      }
+    ],
+    "limits": [
+      "The README counts 162 days; that total includes the 17 lettered lessons, and its own phase ranges end at Day 145.",
+      "Browser end-to-end tests exist but are not part of the CI run; a nightly Playwright smoke test runs only when switched on.",
+      "Lighthouse audits run on pull requests, not on every deploy.",
+      "The repository has no licence file, so it grants no reuse rights beyond reading the public source."
+    ],
+    "sources": [
+      {
+        "title": "README (pinned commit)",
+        "url": "https://github.com/saint2706/Coding-For-MBA/blob/b45b15b20dcad80e65b61410cdfb4b798bd6a926/README.md"
+      },
+      {
+        "title": "Lesson folders",
+        "url": "https://github.com/saint2706/Coding-For-MBA/tree/b45b15b20dcad80e65b61410cdfb4b798bd6a926/content/lessons"
+      },
+      {
+        "title": "Pyodide loader",
+        "url": "https://github.com/saint2706/Coding-For-MBA/blob/b45b15b20dcad80e65b61410cdfb4b798bd6a926/src/hooks/usePyodide.ts"
+      },
+      {
+        "title": "Code validation layer",
+        "url": "https://github.com/saint2706/Coding-For-MBA/blob/b45b15b20dcad80e65b61410cdfb4b798bd6a926/src/utils/codeSecurity.ts"
+      },
+      {
+        "title": "CI workflow",
+        "url": "https://github.com/saint2706/Coding-For-MBA/blob/b45b15b20dcad80e65b61410cdfb4b798bd6a926/.github/workflows/ci.yml"
+      },
+      {
+        "title": "Nightly smoke workflow",
+        "url": "https://github.com/saint2706/Coding-For-MBA/blob/b45b15b20dcad80e65b61410cdfb4b798bd6a926/.github/workflows/nightly-smoke.yml"
+      }
+    ]
+  },
+  {
+    "id": "attendance-face-recognition",
+    "lede": "A 2021 internship proof of concept by Nevil Parmar, rebuilt from 2025 onwards into a Django and React attendance system with liveness checks and encrypted face data.",
+    "verifiedOn": "2026-11-05",
+    "facts": [
+      { "label": "Role", "value": "Rebuild author and maintainer since September 2025" },
+      { "label": "Original", "value": "Nevil Parmar, 2021" },
+      { "label": "Latest release", "value": "1.9.0, April 2026" },
+      { "label": "Licence", "value": "MIT" }
+    ],
+    "sections": [
+      {
+        "heading": "Where it started",
+        "paras": [
+          "Nevil Parmar built the original in April 2021 as a proof of concept during his PS-1 internship at ViitorCloud Technologies, Ahmedabad. It used Django 3.1, dlib's HOG face detector and a linear SVM classifier, and his README says it was tested on data from 25 employees.",
+          "That code and its history are kept in this repository. The changelog records it as version 0.0.1."
+        ]
+      },
+      {
+        "heading": "What the rebuild changed",
+        "paras": [
+          "The rebuild began in September 2025; the changelog calls version 0.1.0 a major modernisation. Recognition moved to DeepFace with the Facenet model and an SSD detector. The backend is Django 5.2 with Django REST Framework and JWT authentication, with Celery and Redis for background work, and the frontend is React 19 with Vite, installable as a PWA.",
+          "Version 1.0.0 followed in November 2025 and 1.9.0 in April 2026. The project ships Docker images, Compose files including a GPU variant, and Kubernetes manifests."
+        ]
+      },
+      {
+        "heading": "Spoofing and privacy",
+        "paras": [
+          "A motion-based liveness gate, with optional DeepFace anti-spoofing behind a feature flag, tries to reject printed photos and phone-screen replays. In the one recorded test, with 4 genuine check-ins and 4 spoof attempts from a single setup, all genuine check-ins passed and 3 of 4 spoofs were rejected; the one that got through was a replay on a high-refresh phone held close to the webcam.",
+          "Cached facial encodings and biometric caches are encrypted with Fernet keys that must be set in production."
+        ]
+      }
+    ],
+    "limits": [
+      "The liveness test covers 8 captures from one setup; it is not a rate.",
+      "The system stores no gender, ethnicity or age, so demographic fairness cannot be measured; its fairness audit uses role, site and lighting proxies only.",
+      "The lighting check is a coarse grayscale average that cannot tell shadows, glare or masks apart.",
+      "It is built for attendance, not high-security access control, and it is not a certified compliance product.",
+      "There is no live demo."
+    ],
+    "sources": [
+      {
+        "title": "2021 original README by Nevil Parmar",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/050ff691a38aaed09027b70d3b31599fd4b0eb88/Attendance-System-Using-Face-Recognition/README.md"
+      },
+      {
+        "title": "First rebuild commit, September 2025",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/commit/ea22c779ac489f60ad2a170af22841b038381939"
+      },
+      {
+        "title": "Changelog (pinned commit)",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/36df91556ae3a3909bccf511a51f29662ca2e6ca/CHANGELOG.md"
+      },
+      {
+        "title": "Recognition settings",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/36df91556ae3a3909bccf511a51f29662ca2e6ca/attendance_system_facial_recognition/settings/base.py"
+      },
+      {
+        "title": "Liveness evaluation",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/36df91556ae3a3909bccf511a51f29662ca2e6ca/docs/liveness_evaluation.md"
+      },
+      {
+        "title": "Security notes",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/36df91556ae3a3909bccf511a51f29662ca2e6ca/docs/security.md"
+      },
+      {
+        "title": "Fairness and limitations",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition/blob/36df91556ae3a3909bccf511a51f29662ca2e6ca/docs/FAIRNESS_AND_LIMITATIONS.md"
+      }
+    ]
+  }
+]

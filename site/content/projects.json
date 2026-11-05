@@ -1,10 +1,27 @@
 [
   {
+    "id": "programming-challenges-6",
+    "title": "Programming-Challenges-6",
+    "flagship": true,
+    "meta": "Python · Unlicense",
+    "summary": "A list of 150 programming challenges across practical software, algorithms, web development, data analytics and applied machine learning, solved one at a time.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Programming-Challenges-6"
+      }
+    ],
+    "tags": ["Python", "Algorithms", "Machine learning"],
+    "writing": [
+      "https://dev.to/saint2706/programming-mastery-solving-diverse-challenges-with-pro-g-rammingchallenges4-1jh5"
+    ]
+  },
+  {
     "id": "coding-for-mba",
     "title": "Coding-For-MBA",
     "flagship": true,
     "meta": "TypeScript · live site",
-    "summary": "A Python coding curriculum for MBA students, from basics to data analysis, in 15 structured lessons.",
+    "summary": "A self-paced Python and data curriculum for business students: 12 phases, 6 projects and 15 case studies, with code that runs in the browser.",
     "links": [
       {
         "label": "Live site",
@@ -18,33 +35,18 @@
     "tags": ["Python", "Education", "Data analytics"]
   },
   {
-    "id": "programming-challenges-5",
-    "title": "Programming-Challenges-5",
-    "flagship": true,
-    "meta": "Python · archived repository · Unlicense",
-    "summary": "Solutions grouped by area: algorithmic, artificial intelligence, emulation and modelling, game development and web development.",
-    "note": "The repository is archived, so it no longer takes changes.",
-    "links": [
-      {
-        "label": "Source on GitHub",
-        "url": "https://github.com/saint2706/Programming-Challenges-5"
-      }
-    ],
-    "tags": ["Python", "Algorithms"]
-  },
-  {
     "id": "attendance-face-recognition",
     "title": "AI Attendance Management System",
     "flagship": true,
     "meta": "Python · MIT licence",
-    "summary": "A full-stack attendance platform using face recognition, with automated check-ins and an analytics dashboard.",
+    "summary": "A face-recognition attendance system rebuilt from a 2021 internship prototype by Nevil Parmar: Django and React, with liveness checks and encrypted face data.",
     "links": [
       {
         "label": "Source on GitHub",
         "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition"
       }
     ],
-    "tags": ["Python", "Computer vision", "OpenCV"]
+    "tags": ["Python", "Computer vision", "Django"]
   },
   {
     "id": "client-modding-guide",
@@ -70,7 +72,10 @@
         "url": "https://github.com/saint2706/scroll-of-dharma"
       }
     ],
-    "tags": ["Python", "Interactive"]
+    "tags": ["Python", "Interactive"],
+    "writing": [
+      "https://dev.to/saint2706/building-the-scroll-of-dharma-a-technical-deep-dive-into-an-interactive-meditation-platform-4bob"
+    ]
   },
   {
     "id": "vitable",
