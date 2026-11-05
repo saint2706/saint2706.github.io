@@ -7,6 +7,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/setupTests.js',
+    // site/ runs its own node:test and Playwright suites.
+    exclude: ['**/node_modules/**', '**/dist/**', 'site/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

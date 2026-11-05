@@ -1,0 +1,127 @@
+[
+  {
+    "id": "coding-for-mba",
+    "title": "Coding-For-MBA",
+    "flagship": true,
+    "meta": "TypeScript · live site",
+    "summary": "A Python coding curriculum for MBA students, from basics to data analysis, in 15 structured lessons.",
+    "links": [
+      {
+        "label": "Live site",
+        "url": "https://saint2706.github.io/Coding-For-MBA/"
+      },
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Coding-For-MBA"
+      }
+    ],
+    "tags": ["Python", "Education", "Data analytics"]
+  },
+  {
+    "id": "programming-challenges-5",
+    "title": "Programming-Challenges-5",
+    "flagship": true,
+    "meta": "Python · archived repository · Unlicense",
+    "summary": "Solutions grouped by area: algorithmic, artificial intelligence, emulation and modelling, game development and web development.",
+    "note": "The repository is archived, so it no longer takes changes.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Programming-Challenges-5"
+      }
+    ],
+    "tags": ["Python", "Algorithms"]
+  },
+  {
+    "id": "attendance-face-recognition",
+    "title": "AI Attendance Management System",
+    "flagship": true,
+    "meta": "Python · MIT licence",
+    "summary": "A full-stack attendance platform using face recognition, with automated check-ins and an analytics dashboard.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Attendance-Management-System-Using-Face-Recognition"
+      }
+    ],
+    "tags": ["Python", "Computer vision", "OpenCV"]
+  },
+  {
+    "id": "client-modding-guide",
+    "title": "Client Modding Guide",
+    "flagship": false,
+    "summary": "A step-by-step guide to Discord client modding.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Client-Modding-Guide"
+      }
+    ],
+    "tags": ["Documentation", "Discord"]
+  },
+  {
+    "id": "scroll-of-dharma",
+    "title": "Scroll of Dharma",
+    "flagship": false,
+    "summary": "An interactive meditation journey that pairs philosophy with software.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/scroll-of-dharma"
+      }
+    ],
+    "tags": ["Python", "Interactive"]
+  },
+  {
+    "id": "vitable",
+    "title": "VITable",
+    "flagship": false,
+    "summary": "A timetable viewer for VIT students, written in Nim.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/vitable"
+      }
+    ],
+    "tags": ["Nim", "Utility"]
+  },
+  {
+    "id": "geralt",
+    "title": "Geralt Discord Bot",
+    "flagship": false,
+    "summary": "A Discord bot with custom commands and moderation tools.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/geralt"
+      }
+    ],
+    "tags": ["Python", "Discord.py"]
+  },
+  {
+    "id": "vit-academics-enhancer",
+    "title": "VIT Academics Enhancer",
+    "flagship": false,
+    "summary": "A Chrome extension that improves the interface of VIT's academics portal.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Enhancer-for-VIT-Vellore-Academics"
+      }
+    ],
+    "tags": ["JavaScript", "Chrome extension"]
+  },
+  {
+    "id": "python-course-gim-bda",
+    "title": "Python Course, GIM BDA",
+    "flagship": false,
+    "summary": "Python course materials in Jupyter notebooks for Big Data Analytics students at GIM.",
+    "links": [
+      {
+        "label": "Source on GitHub",
+        "url": "https://github.com/saint2706/Python-Course-GIM-BDA"
+      }
+    ],
+    "tags": ["Python", "Jupyter"]
+  }
+]

@@ -23,6 +23,8 @@ export default [
       '.agent/**',
       '.agents/**',
       'skills/**',
+      // The Astro site has its own checks (astro check, node --test, Playwright).
+      'site/**',
     ],
   },
   js.configs.recommended,
