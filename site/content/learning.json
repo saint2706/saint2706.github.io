@@ -1,0 +1,82 @@
+{
+  "lang": "en",
+  "intro": "Rishabh's tutorials, courses and essays, put in an order a beginner can follow: Python first, then data, then a first model, then practice, then the business view.",
+  "steps": [
+    {
+      "title": "Python, for business students",
+      "why": "Both are written for business and analytics students.",
+      "items": [
+        {
+          "title": "Coding-For-MBA",
+          "url": "/projects/coding-for-mba/",
+          "kind": "Course",
+          "note": "A self-paced Python and data curriculum: 12 phases, 6 projects and 15 case studies, with code that runs in the browser."
+        },
+        {
+          "title": "Python Course, GIM BDA",
+          "url": "https://github.com/saint2706/Python-Course-GIM-BDA",
+          "kind": "Notebooks",
+          "note": "Python course materials in Jupyter notebooks for Big Data Analytics students at GIM."
+        }
+      ]
+    },
+    {
+      "title": "A first data analysis",
+      "why": "One small dataset, start to finish: load it, look at it, ask it questions, chart the answer.",
+      "items": [
+        {
+          "title": "A Beginner's Guide to Data Analysis with Python: Using Pandas and NumPy",
+          "url": "https://dev.to/saint2706/a-beginners-guide-to-data-analysis-with-python-using-pandas-and-numpy-3gne",
+          "kind": "Tutorial",
+          "note": "Works through the Iris dataset with read_csv, describe, boolean filters and groupby, then plots a bar chart with matplotlib."
+        }
+      ]
+    },
+    {
+      "title": "A first model",
+      "why": "It builds only on Pandas from the step before, and it names its own limit, the cold-start problem.",
+      "items": [
+        {
+          "title": "Build Your First Movie Recommendation Engine in Python",
+          "url": "https://dev.to/saint2706/build-your-first-movie-recommendation-engine-in-python-5585",
+          "kind": "Tutorial",
+          "note": "User-based collaborative filtering on MovieLens 100k: a user-item matrix, Pearson correlation to find similar users, and a weighted average of their ratings."
+        }
+      ]
+    },
+    {
+      "title": "Practice",
+      "why": "Two ways to practise: one small game built from start to finish, then a long list of challenges to pick from.",
+      "items": [
+        {
+          "title": "Python Game Development: Create a Basic 2D Game with Pygame",
+          "url": "https://dev.to/saint2706/python-game-development-create-a-basic-2d-game-with-pygame-118l",
+          "kind": "Tutorial",
+          "note": "Builds Dodge the Blocks! step by step: a player, falling enemies, collision detection, a score and a game-over screen."
+        },
+        {
+          "title": "Programming-Challenges-6",
+          "url": "/projects/programming-challenges-6/",
+          "kind": "Challenges",
+          "note": "150 programming challenges across practical software, algorithms, web development, data analytics and applied machine learning."
+        }
+      ]
+    },
+    {
+      "title": "The business view",
+      "why": "Two essays that step back from code to the ideas behind AI and behind buying decisions.",
+      "items": [
+        {
+          "title": "5 Surprising Ideas That Redefined Artificial Intelligence",
+          "url": "https://saint2706.medium.com/5-surprising-ideas-that-redefined-artificial-intelligence-ba0172469304",
+          "kind": "Essay"
+        },
+        {
+          "title": "6 Counter-Intuitive Marketing Truths That Explain Why We Buy",
+          "url": "https://saint2706.medium.com/6-counter-intuitive-marketing-truths-that-explain-why-we-buy-0b5ecebab9aa",
+          "kind": "Essay"
+        }
+      ]
+    }
+  ]
+}

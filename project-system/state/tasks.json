@@ -781,7 +781,7 @@
       "id": "P05-T03",
       "phase": "P05",
       "title": "Build selected learning, tech and business collections",
-      "status": "authorized",
+      "status": "complete",
       "authorization": "user-approved-2026-11-05 (no production release)",
       "depends_on": ["P05-T02"],
       "objective": "Create meaningful collections only where original/curated content is ready.",
