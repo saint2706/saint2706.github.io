@@ -18,16 +18,24 @@ const list = new Intl.ListFormat('en', { type: 'conjunction' });
       films.films.map(f => (
         <li id={f.slug}>
           <article aria-labelledby={`${f.slug}-h`}>
-            <h2 id={`${f.slug}-h`}>
-              <cite>{f.title}</cite>
-            </h2>
-            <p class="meta">
-              {f.year} · directed by {list.format(f.directors)}
-            </p>
-            {f.epigraph && <blockquote>{f.epigraph}</blockquote>}
-            {f.note.map(p => (
-              <p class="note-text">{p}</p>
-            ))}
+            <figure class="poster">
+              <img src={f.poster.src} width={f.poster.width} height={f.poster.height} alt={`Poster for ${f.title}`} loading="lazy" decoding="async" />
+              <figcaption>
+                {f.poster.credit} <a href={f.poster.source}>Source</a>
+              </figcaption>
+            </figure>
+            <div class="body">
+              <h2 id={`${f.slug}-h`}>
+                <cite>{f.title}</cite>
+              </h2>
+              <p class="meta">
+                {f.year} · directed by {list.format(f.directors)}
+              </p>
+              {f.epigraph && <blockquote>{f.epigraph}</blockquote>}
+              {f.note.map(p => (
+                <p class="note-text">{p}</p>
+              ))}
+            </div>
           </article>
         </li>
       ))
@@ -40,7 +48,35 @@ const list = new Intl.ListFormat('en', { type: 'conjunction' });
     list-style: none;
     margin: var(--space-6) 0 0;
     padding: 0;
-    max-width: 68ch;
+    max-width: 88ch;
+  }
+  .reels article {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .poster {
+    margin: 0;
+  }
+  .poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 2px solid var(--color-ink);
+  }
+  .poster figcaption {
+    margin-top: var(--space-1);
+    font-size: var(--text-n1);
+    line-height: 1.35;
+  }
+  @media (max-width: 560px) {
+    .reels article {
+      grid-template-columns: 1fr;
+    }
+    .poster {
+      max-width: 160px;
+    }
   }
   .reels > li {
     padding: var(--space-5) 0;

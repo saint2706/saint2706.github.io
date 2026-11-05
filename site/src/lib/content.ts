@@ -272,6 +272,14 @@ export const FilmsSchema = z.object({
         directors: z.array(z.string()).min(1),
         epigraph: z.string().optional(),
         note: z.array(z.string()).min(1),
+        // Low-resolution poster, credited on the page; rights noted in the P05 attribution register.
+        poster: z.object({
+          src: z.string().startsWith('/films/'),
+          width: z.number().int(),
+          height: z.number().int(),
+          credit: z.string(),
+          source: url,
+        }),
       })
     )
     .min(1),

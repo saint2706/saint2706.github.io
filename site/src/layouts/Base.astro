@@ -32,7 +32,7 @@ const inRoom = (href: string) => current(href) ?? (path.startsWith(href) ? 'true
 // Search results show what kind of page each hit is (P04-T03); the URL already says it.
 const kind =
   /^\/projects\/.+\//.test(path) ? 'Case study'
-  : /^\/personal\/art\/.+\//.test(path) ? 'Painting'
+  : /^\/personal\/art\/(?!print-gallery\/).+\//.test(path) ? 'Painting'
   : path.startsWith('/personal/') ? 'Off the clock'
   : path.startsWith('/lab/') ? 'Lab'
   : 'Work';

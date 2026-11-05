@@ -3,22 +3,43 @@ import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
 import Section from '../../../components/Section.astro';
 import { gallery, paintingBySlug, posts } from '../../../lib/content';
+import { STUDIES } from '../../../lib/droste';
 
 const essays = posts.filter(p => p.myth);
+
+// What the viewer needs per painting; the full page keeps everything else.
+const viewer = gallery.rooms.flatMap(room =>
+  room.works.map(s => {
+    const p = paintingBySlug(s);
+    return {
+      slug: p.slug,
+      title: p.title,
+      by: `${p.artist}, ${p.date}`,
+      room: `Room ${room.numeral}, ${room.name}`,
+      look: p.look,
+      src: p.image.src,
+      w: p.image.width,
+      h: p.image.height,
+      details: p.details.map(d => ({ label: d.label, text: d.text, rect: d.rect })),
+    };
+  })
+);
+const studies = STUDIES.map(paintingBySlug);
 ---
 
 <Base
   title="Art and myth"
-  description="Seven public-domain paintings with readings and questions, and essays on myth."
+  description="A small museum of seven public-domain paintings with readings and questions, an exhibit on Escher's Print Gallery with an infinite zoom, and essays on myth."
   space="per"
 >
-  <SpaceHead title="Art and myth" lede="Seven paintings, each with a question to argue about, and essays on myth." />
+  <SpaceHead title="Art and myth" lede="A small museum: seven paintings, each with a question to argue about, one picture that never ends, and essays on myth." />
 
-  <Section id="gallery" num={1} title="The gallery">
+  <Section id="gallery" num={1} title="The museum">
     <p>
-      Seven paintings from <cite>{gallery.deck}</cite>, a guided discussion for two. Each one has its details, the
-      context, two readings and a question to argue about. The deck has three more works that are still in copyright,
-      so they are left out here.
+      Seven paintings from <cite>{gallery.deck}</cite>, a guided discussion for two. Open any painting to look at it
+      whole, then walk through its details one at a time. Each painting also has its own page with the context, two
+      readings and a question to argue about. The deck has three more works that are still in copyright, so they are
+      left out here.
     </p>
     <ol class="rules">
       {
@@ -29,32 +50,56 @@ const essays = posts.filter(p => p.myth);
         ))
       }
     </ol>
-    {
-      gallery.rooms.map(room => (
-        <div class="room">
-          <h3>
-            <span class="num">Room {room.numeral}</span> {room.name}
-          </h3>
-          <p class="meta">{room.sub}</p>
-          <ul class="frames">
-            {room.works.map(s => {
-              const p = paintingBySlug(s);
-              return (
-                <li>
-                  <a href={`/personal/art/${p.slug}/`}>
-                    <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />
-                    <span class="t">{p.title}</span>
-                    <span class="meta">
-                      {p.artist}, {p.date}
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))
-    }
+
+    <div class="museum">
+      {
+        gallery.rooms.map(room => (
+          <section class="hall" aria-labelledby={`room-${room.numeral}`}>
+            <h3 id={`room-${room.numeral}`}>
+              <span class="num">Room {room.numeral}</span> {room.name}
+            </h3>
+            <p class="meta">{room.sub}</p>
+            <ul class="wall">
+              {room.works.map(s => {
+                const p = paintingBySlug(s);
+                return (
+                  <li>
+                    <a class="hang" href={`/personal/art/${p.slug}/`} data-view={p.slug}>
+                      <span class="frame">
+                        <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />
+                      </span>
+                      <span class="plate">
+                        <span class="t">{p.title}</span>
+                        <span class="meta">
+                          {p.artist}, {p.date}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))
+      }
+      <section class="hall annex" aria-labelledby="room-annex">
+        <h3 id="room-annex"><span class="num">Annex</span> The picture inside itself</h3>
+        <p class="meta">After M. C. Escher's Print Gallery (1956) and the mathematicians who finished it</p>
+        <ul class="wall">
+          <li>
+            <a class="hang" href="/personal/art/print-gallery/">
+              <span class="frame nest" aria-hidden="true">
+                {studies.slice(0, 3).map(p => <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />)}
+              </span>
+              <span class="plate">
+                <span class="t">Print Gallery, without end</span>
+                <span class="meta">Escher's twist on four paintings from this museum, with an infinite zoom</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
 
     <h3>The paintings answer each other</h3>
     <ul class="pairs">
@@ -102,7 +147,41 @@ const essays = posts.filter(p => p.myth);
       </Section>
     )
   }
+
+  <dialog id="viewer" class="viewer" aria-labelledby="v-title">
+    <div class="v-stage" data-stage>
+      <div class="v-canvas" data-canvas>
+        <div class="v-marks" data-marks></div>
+      </div>
+    </div>
+    <div class="v-panel">
+      <p class="meta" data-room></p>
+      <h2 id="v-title" data-title></h2>
+      <p class="meta" data-by></p>
+      <div class="v-step" aria-live="polite">
+        <p class="v-count" data-count></p>
+        <h3 data-label></h3>
+        <p data-text></p>
+      </div>
+      <div class="v-tools">
+        <button class="btn" type="button" data-step="-1">Previous detail</button>
+        <button class="btn" type="button" data-step="1">Next detail</button>
+        <button class="btn" type="button" data-whole>Whole painting</button>
+      </div>
+      <p class="meta v-keys">Arrow keys step through the details; 0 shows the whole painting.</p>
+      <a class="v-more" data-more href="/personal/art/">Context, two readings and the question</a>
+      <div class="v-tools">
+        <button class="btn" type="button" data-paint="-1">Previous painting</button>
+        <button class="btn" type="button" data-paint="1">Next painting</button>
+        <button class="btn" type="button" data-close>Close</button>
+      </div>
+    </div>
+  </dialog>
+  {/* Data only, never run; "<" is escaped so no string can close the block. */}
+  <script type="application/json" id="museum-data" is:inline set:html={JSON.stringify(viewer).replaceAll('<', '\\u003c')} />
 </Base>
+
+<script src="../../../scripts/museum.ts"></script>
 
 <style>
   .rules {
@@ -112,58 +191,132 @@ const essays = posts.filter(p => p.myth);
   .rules li {
     padding: 4px 0;
   }
-  .room {
+  .museum {
     margin-top: var(--space-5);
+    display: grid;
+    gap: var(--space-5);
   }
-  .room:first-of-type {
-    margin-top: var(--space-4);
+  .hall h3 {
+    margin: 0;
   }
-  .room h3 {
-    margin-bottom: 0;
-  }
-  .room .num {
+  .hall .num {
     color: var(--color-accent);
     font: var(--text-n1) / 1.3 var(--font-mono);
     letter-spacing: 0.04em;
     margin-right: 8px;
   }
-  .frames {
+  /* The wall: a lit strip with paintings hung on one line, labels underneath like museum plates. */
+  .wall {
     list-style: none;
     margin: var(--space-3) 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    align-items: end;
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: var(--space-5) var(--space-6);
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 0%, rgb(255 236 200 / 0.09), transparent 70%),
+      var(--color-surface);
+    border-bottom: 6px solid var(--color-rule);
   }
-  .frames a {
-    display: block;
-    border: 2px solid var(--color-ink);
-    background: var(--color-surface);
-    padding: 8px;
+  .hang {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
     color: var(--color-ink);
     text-decoration: none;
+    max-width: 100%;
   }
-  .frames img {
+  .frame {
     display: block;
-    width: 100%;
+    padding: 10px;
+    background: #1a120f;
+    border: 3px solid #b8893a;
+    box-shadow:
+      inset 0 0 0 2px #6e4f22,
+      0 14px 24px rgb(0 0 0 / 0.45);
+    transition: transform 0.25s var(--ease-out);
+  }
+  /* Same height on the wall, natural width; a wide painting shrinks instead of letterboxing. */
+  .frame img {
+    display: block;
+    width: auto;
     height: auto;
+    max-height: 200px;
+    max-width: 100%;
   }
-  .frames .t {
+  .hang:hover .frame,
+  .hang:focus-visible .frame {
+    transform: translateY(-4px);
+  }
+  .plate {
     display: block;
-    margin-top: 8px;
+    padding: 6px 10px;
+    background: var(--color-canvas);
+    border: 1px solid var(--color-rule);
+    text-align: center;
+  }
+  .plate .t {
+    display: block;
     font-family: var(--font-display);
     line-height: 1.25;
   }
-  .frames a:hover .t,
-  .frames a:focus-visible .t {
+  .hang:hover .t,
+  .hang:focus-visible .t {
     text-decoration: underline;
     text-decoration-color: var(--color-accent);
   }
-  .frames .meta {
+  .plate .meta {
     display: block;
     font-size: var(--text-n1);
   }
+  /* Four studies, each hung inside the one before, as in Escher's method. */
+  .nest {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    box-sizing: content-box;
+    overflow: hidden;
+  }
+  .nest img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    outline: 3px solid #b8893a;
+  }
+  .nest img:nth-child(2) {
+    width: 25%;
+    height: 25%;
+  }
+  .nest img:nth-child(3) {
+    width: 6.25%;
+    height: 6.25%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .frame {
+      transition: none;
+    }
+  }
+  @media (max-width: 560px) {
+    .wall {
+      padding-inline: var(--space-3);
+    }
+    .frame img {
+      max-height: 150px;
+    }
+    .nest {
+      width: 170px;
+      height: 170px;
+    }
+  }
+
   .pairs {
     list-style: none;
     margin: 0;
@@ -194,10 +347,114 @@ const essays = posts.filter(p => p.myth);
   .legend dd {
     margin: 0;
   }
-  @media (max-width: 720px) {
-    .frames {
-      grid-template-columns: repeat(2, 1fr);
+
+  /* Viewer: the painting fills the room; the panel walks through it. */
+  .viewer {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: #120c14;
+  }
+  .viewer[open] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+  .v-stage {
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .v-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+  }
+  :global(html[data-motion='on']) .v-canvas {
+    transition: transform 0.8s var(--ease-out);
+  }
+  .v-canvas img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .v-marks :global(button) {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    margin: -4px 0 0 -4px;
+    transform-origin: 0 0;
+    transform: scale(var(--inv, 1));
+    border-radius: 50%;
+    border: 2px solid #120c14;
+    background: #f1e7ef;
+    color: #120c14;
+    font: 700 15px / 1 var(--font-body);
+    cursor: zoom-in;
+  }
+  .v-marks :global(button:focus-visible) {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .viewer[data-zoomed] .v-marks {
+    visibility: hidden;
+  }
+  .v-panel {
+    overflow-y: auto;
+    padding: var(--space-4);
+    border-left: 1px solid var(--color-rule);
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .v-panel h2 {
+    margin: 0;
+    font-size: var(--text-2);
+    line-height: 1.15;
+  }
+  .v-panel p {
+    margin: 0;
+  }
+  .v-step {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-rule);
+    min-height: 9rem;
+  }
+  .v-step h3 {
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-1);
+  }
+  .v-count {
+    font: var(--text-n1) / 1.3 var(--font-mono);
+    color: var(--color-accent);
+  }
+  .v-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+  .v-more {
+    margin-top: var(--space-2);
+  }
+  @media (max-width: 760px) {
+    .viewer[open] {
+      grid-template-columns: 1fr;
+      grid-template-rows: 52dvh minmax(0, 1fr);
+    }
+    .v-panel {
+      border-left: 0;
+      border-top: 1px solid var(--color-rule);
+    }
+    .v-keys {
+      display: none;
     }
   }
 </style>
-

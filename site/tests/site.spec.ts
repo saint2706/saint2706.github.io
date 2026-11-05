@@ -19,6 +19,7 @@ const ROUTES = [
   '/personal/art/fall-of-icarus/',
   '/personal/art/disrobing-of-draupadi/',
   '/personal/art/sleep-of-reason/',
+  '/personal/art/print-gallery/',
   '/lab/',
   '/search/',
 ];
@@ -76,10 +77,8 @@ test('the personal space has its own nav, reachable by keyboard', async ({ page 
   await rooms.getByRole('link', { name: 'Art and myth' }).focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/personal\/art\/$/);
-  await page
-    .getByRole('link', { name: /Fall of Icarus/ })
-    .first()
-    .click();
+  // A plain click opens the museum viewer, so go to the painting's own page directly.
+  await page.goto('/personal/art/fall-of-icarus/');
   // A painting keeps its room marked in the personal nav.
   await expect(
     page
@@ -181,11 +180,51 @@ test('every painting image loads once scrolled into view', async ({ page }) => {
     '/personal/art/disrobing-of-draupadi/',
   ]) {
     await page.goto(r);
-    for (const img of await page.locator('img').all()) await img.scrollIntoViewIfNeeded();
+    for (const img of await page.locator('img:visible').all()) await img.scrollIntoViewIfNeeded();
     await page.waitForLoadState('networkidle');
+    // The museum viewer's image sits empty in a closed dialog until a painting is opened.
     const broken = await page.evaluate(() =>
-      [...document.images].filter(i => !i.complete || i.naturalWidth === 0).map(i => i.src)
+      [...document.images]
+        .filter(i => !i.closest('dialog:not([open])'))
+        .filter(i => !i.complete || i.naturalWidth === 0)
+        .map(i => i.src)
     );
     expect(broken, r).toEqual([]);
+  }
+});
+
+test('a museum painting opens the viewer, steps through details and closes back to it', async ({
+  page,
+}) => {
+  await page.goto('/personal/art/');
+  const link = page.locator('a[data-view="fall-of-icarus"]');
+  await link.click();
+  const viewer = page.getByRole('dialog', { name: 'Landscape with the Fall of Icarus' });
+  await expect(viewer).toBeVisible();
+  await expect(viewer.locator('[data-count]')).toContainText('Whole painting');
+  await page.keyboard.press('ArrowRight');
+  await expect(viewer.locator('[data-count]')).toContainText('Detail 1 of');
+  await viewer.getByRole('button', { name: 'Close' }).click();
+  await expect(viewer).toBeHidden();
+  await expect(link).toBeFocused();
+});
+
+test('the print gallery zooms, or explains why it cannot', async ({ page }) => {
+  await page.goto('/personal/art/print-gallery/');
+  const canvas = page.locator('canvas[data-droste]');
+  const fallback = page.locator('[data-fallback]');
+  const webgl2 = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2'));
+  if (!webgl2) {
+    await expect(fallback).toBeVisible();
+  } else {
+    // The canvas shows once the four paintings have loaded into the texture.
+    await expect(canvas).toBeVisible({ timeout: 15000 });
+    await expect(fallback).toBeHidden();
+    const out = page.locator('[data-out]');
+    await page.getByRole('button', { name: 'Zoom in' }).click();
+    await page.getByRole('button', { name: 'Zoom in' }).click();
+    await page.getByRole('button', { name: 'Zoom in' }).click();
+    await page.getByRole('button', { name: 'Zoom in' }).click();
+    await expect(out).toContainText('1 repeat in');
   }
 });

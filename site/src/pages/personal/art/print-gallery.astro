@@ -1,0 +1,249 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { paintingBySlug } from '../../../lib/content';
+import { STUDIES, PERIOD, selfSimilarity } from '../../../lib/droste';
+
+const studies = STUDIES.map(paintingBySlug);
+const { scale, turn } = selfSimilarity();
+const PAPER = 'https://www.ams.org/notices/200304/fea-escher.pdf';
+const POSTERX = 'https://posterxclub.com/escher';
+---
+
+<Base
+  title="Print Gallery, without end"
+  description="Escher's Print Gallery left a hole in the middle. Two mathematicians worked out how to fill it. Zoom forever into the same twist, applied to four paintings from this museum."
+  space="per"
+>
+  <p class="crumb"><a href="/personal/art/">Art and myth</a> · Annex, the picture inside itself</p>
+  <header class="head">
+    <h1>Print Gallery, without end</h1>
+    <p class="by">After M. C. Escher, <cite>Prentententoonstelling</cite> (Print Gallery), 1956, and B. de Smit and H. W. Lenstra Jr., 2003</p>
+  </header>
+
+  <figure class="exhibit">
+    <div class="stage">
+      <canvas
+        data-droste
+        data-studies={studies.map(p => p.image.src).join(' ')}
+        tabindex="0"
+        role="img"
+        aria-label={`An endless spiral zoom. ${studies.map(p => p.title).join(', ')} hang one inside the next, twisted the way Escher twisted his print.`}
+        aria-describedby="zoom-help"
+        hidden></canvas>
+      <div class="fallback" data-fallback>
+        <span class="nest" aria-hidden="true">
+          {studies.slice(0, 3).map(p => <img src={p.image.thumb} width={p.image.thumbWidth} height={p.image.thumbHeight} alt="" loading="lazy" decoding="async" />)}
+        </span>
+        <p>The zoom needs JavaScript and WebGL 2. Without them, this is the straight picture: each painting hangs inside the one before, a quarter of its size.</p>
+      </div>
+    </div>
+    <div class="zoom-controls" data-controls hidden>
+      <button class="btn" type="button" data-zoom="-0.25">Zoom out</button>
+      <button class="btn" type="button" data-zoom="0.25">Zoom in</button>
+      <button class="btn" type="button" data-play aria-pressed="false">Play</button>
+      <button class="btn" type="button" data-twist aria-pressed="true">Escher's twist</button>
+      <output class="meta" data-out>0 repeats in</output>
+    </div>
+    <figcaption id="zoom-help">
+      Scroll, drag up or down, or use the buttons. With the picture focused, + and − zoom and P plays or pauses. Turn off
+      “Escher's twist” to see the straight picture he started from. The paintings are cropped to squares.
+    </figcaption>
+  </figure>
+
+  <section class="part" aria-labelledby="hole">
+    <h2 id="hole">The hole in the middle</h2>
+    <p>
+      In 1956 Escher made a lithograph of a young man in an exhibition gallery, looking at a print of a Mediterranean
+      seaport. As his eyes follow the buildings on the quay from left to right and then down, he finds among them the
+      gallery he is standing in. In the middle of the print is a round white patch with Escher's monogram and signature.
+    </p>
+  </section>
+
+  <section class="part" aria-labelledby="method">
+    <h2 id="method">Escher's method: four studies and a curved grid</h2>
+    <p>
+      Escher wanted “a cyclic expansion … without beginning or end”. He tried straight lines first, then curved ones, and
+      ended with a grid whose squares grow by 4 in each direction from one corner to the next. Going once clockwise round
+      the centre, the grid folds back onto itself, expanded by 4<sup>4</sup> = {PERIOD}.
+    </p>
+    <p>
+      He also drew an ordinary, undistorted scene: the gallery, the print, the seaport, and the gallery again, {PERIOD}
+      times smaller. To keep enough detail at every size he made four studies, each showing part of the one before,
+      blown up by 4. Then he copied the straight squares of the studies onto the curved grid, square by square.
+    </p>
+    <p>
+      The zoom above does the same with four paintings from this museum, one from each room: each hangs inside the one
+      before at a quarter of its size, so after four the picture repeats at {PERIOD} times smaller. Turn off the twist to
+      see these straight studies.
+    </p>
+  </section>
+
+  <section class="part" aria-labelledby="maths">
+    <h2 id="maths">What the mathematicians found</h2>
+    <p>
+      Bart de Smit and Hendrik Lenstra, at Leiden, treated the picture as drawn on the complex plane. The straight
+      picture <var>f</var> repeats when you scale it by {PERIOD}: <var>f</var>(256<var>z</var>) = <var>f</var>(<var>z</var>).
+      They showed that Escher's distorted picture can be seen as drawn on an elliptic curve over the complex numbers, and
+      that his grid is, almost exactly, the map
+    </p>
+    <p class="formula">
+      <var>h</var>(<var>w</var>) = <var>w</var><sup><var>α</var></sup>, with <var>α</var> = (2π<var>i</var> + log 256) / (2π<var>i</var>)
+    </p>
+    <p>
+      One loop round the centre of the finished print has to land one loop round and {PERIOD} times larger in the
+      straight picture; that one condition fixes <var>α</var>. It follows that an idealised Print Gallery contains a copy
+      of itself, turned clockwise by about {turn.toFixed(1)} degrees and shrunk by a factor of about {scale.toFixed(2)}.
+      Both numbers on this page are computed from the formula when the site is built.
+    </p>
+    <p>
+      Their central square comes out smaller than Escher's, because 22.58 is larger than the factor measured in his
+      grid. Escher had stopped short of the middle; the formula tells you what goes there.
+    </p>
+  </section>
+
+  <section class="part" aria-labelledby="filled">
+    <h2 id="filled">Filling it in</h2>
+    <p>
+      To fill the hole, they first rebuilt Escher's straight studies from the grid and the lithograph by running his
+      procedure backwards, with software written by Joost Batenburg, then a mathematics student at Leiden. The blank spot
+      became an empty spiral. The Dutch artists Hans Richter and Jacqueline Hofstra completed and adjusted the drawings,
+      and Hofstra added the grey tones. Mapping the straight picture through <var>h</var> then gave the completed print.
+    </p>
+    <p>
+      Escher's own picture and the Leiden completion are not shown here: Escher's work is in copyright, held by the M.C.
+      Escher Company. Everything you see in the zoom is a public-domain painting from this museum, bent by the same
+      formula in your browser.
+    </p>
+  </section>
+
+  <section class="part" aria-labelledby="credits">
+    <h2 id="credits">Sources and credit</h2>
+    <ul class="plain">
+      <li>
+        B. de Smit and H. W. Lenstra Jr., <a href={PAPER}>“The Mathematical Structure of Escher's Print Gallery”</a>,
+        <cite>Notices of the AMS</cite> 50(4), April 2003, pp. 446–451. The facts, quotations and numbers on this page
+        come from it; the Escher quotations are from Bruno Ernst, <cite>The Magic Mirror of M. C. Escher</cite> (1976), as
+        quoted there.
+      </li>
+      <li>
+        The idea for this exhibit comes from <a href={POSTERX}>poster×club's zoom into the Leiden Print Gallery</a>,
+        which shows Escher's picture itself. Go there to see the real thing.
+      </li>
+      <li>Paintings: credits are on each painting's page, linked from <a href="/personal/art/">the museum</a>.</li>
+    </ul>
+  </section>
+</Base>
+
+<script src="../../../scripts/droste.ts"></script>
+
+<style>
+  .crumb {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-n1);
+  }
+  .head h1 {
+    margin: 0;
+    font: var(--text-5) / 1.05 var(--font-display);
+  }
+  .head .by {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-1);
+    max-width: 60ch;
+  }
+  .exhibit {
+    margin: var(--space-5) 0 0;
+  }
+  .stage {
+    position: relative;
+    width: min(100%, 720px);
+    aspect-ratio: 1;
+    background: #120c14;
+    border: 3px solid #b8893a;
+    box-shadow: inset 0 0 0 2px #6e4f22;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    cursor: ns-resize;
+  }
+  canvas:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    text-align: center;
+  }
+  .fallback p {
+    margin: 0;
+    max-width: 44ch;
+    color: #f1e7ef;
+  }
+  .nest {
+    position: relative;
+    width: 60%;
+    aspect-ratio: 1;
+  }
+  .nest img {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    outline: 3px solid #b8893a;
+  }
+  .nest img:nth-child(2) {
+    width: 25%;
+    height: 25%;
+  }
+  .nest img:nth-child(3) {
+    width: 6.25%;
+    height: 6.25%;
+  }
+  .zoom-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .zoom-controls .btn[aria-pressed='true'] {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+  .zoom-controls output {
+    margin-left: var(--space-2);
+    font-family: var(--font-mono);
+  }
+  figcaption {
+    margin-top: var(--space-2);
+    max-width: 70ch;
+    font-size: var(--text-n1);
+    color: var(--color-ink-2);
+  }
+  .part {
+    margin-top: var(--space-6);
+    max-width: 70ch;
+  }
+  .part h2 {
+    font: var(--text-2) / 1.2 var(--font-display);
+    margin: 0 0 var(--space-3);
+  }
+  .formula {
+    font: var(--text-1) / 1.5 var(--font-display);
+    padding: var(--space-3) var(--space-4);
+    text-align: center;
+    border: 1px solid var(--color-rule);
+    background: var(--color-surface);
+    overflow-x: auto;
+  }
+</style>
