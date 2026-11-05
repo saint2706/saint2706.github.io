@@ -7,22 +7,21 @@ import {
 } from './viewTransitionNavigate';
 
 describe('viewTransitionNavigate helpers', () => {
-
-const mockMatchMedia = matcher => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: vi.fn().mockImplementation(query => ({
-      matches: matcher(query),
-      media: query,
-      onchange: null,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    })),
-  });
-};
+  const mockMatchMedia = matcher => {
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation(query => ({
+        matches: matcher(query),
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+  };
 
   beforeEach(() => {
     vi.restoreAllMocks();
@@ -116,7 +115,12 @@ const mockMatchMedia = matcher => {
     expect(shouldHandleClientNavigationClick({ button: 0, ctrlKey: true })).toBe(false);
     expect(shouldHandleClientNavigationClick({ button: 0, shiftKey: true })).toBe(false);
     expect(shouldHandleClientNavigationClick({ button: 0, currentTarget: {} })).toBe(true);
-    expect(shouldHandleClientNavigationClick({ button: 0, currentTarget: { getAttribute: () => '_blank' } })).toBe(false);
+    expect(
+      shouldHandleClientNavigationClick({
+        button: 0,
+        currentTarget: { getAttribute: () => '_blank' },
+      })
+    ).toBe(false);
   });
 
   it('handles disabled config or non-function navigate', () => {
