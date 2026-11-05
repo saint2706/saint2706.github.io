@@ -75,7 +75,7 @@
   ],
   "pages_build_type": "workflow",
   "rulesets": [
-    "protect-main (id 26293963): PR required, squash only, linear history, no force-push/delete, threads resolved, required checks lint/build/security/test x6, no bypass"
+    "protect-main (id 26293963): PR required, squash only, linear history, no force-push/delete, threads resolved, required checks lint/build/security/test x6/site/codex-review (codex-review added 2026-11-05 with .github/workflows/codex-review-gate.yml), no bypass"
   ],
   "p00_checks": {
     "vitest": "437/437 pass",
