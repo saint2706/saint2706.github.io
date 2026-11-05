@@ -374,7 +374,7 @@ dialog li a[aria-current='page'] {
 .note {
   margin: 12px 0 0;
   padding-left: 12px;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--rule);
   color: var(--ink-2);
   font-size: 0.9375rem;
   max-width: 62ch;

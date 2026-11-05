@@ -48,7 +48,7 @@ Recurring behaviour becomes a shared component; one-off compositions stay with t
 | Space head (`.space-head`, `.mark`)                       | space pages         | provisional | `SpaceHead.astro`                     | mark shape differs per space                                                                      |
 | Numbered block (`.block`, `.num`)                         | space pages         | provisional | `Section.astro`                       | mono numeral in accent; `:target` outline                                                         |
 | Entry rows (`.rows`, `.meta`, `.links`)                   | work                | provisional | `EntryList.astro`                     | meta in mono                                                                                      |
-| Note (`.note`)                                            | space pages         | provisional | `Note.astro`                          | accent rule on the left                                                                           |
+| Note (`.note`)                                            | space pages         | provisional | `Note.astro`                          | neutral `--rule` on the left                                                                      |
 | Next links (`.next`)                                      | space pages         | provisional | `NextLinks.astro`                     |                                                                                                   |
 | Frames (`.frames`)                                        | personal (`#art`)   | provisional | section-specific, `ArtFrames.astro`   | slots stay empty until each licence is confirmed                                                  |
 | Reading stages (`.stages`)                                | personal (`#books`) | provisional | section-specific, `ReadingPath.astro` | only Stage One expanded                                                                           |
@@ -72,4 +72,4 @@ Recurring behaviour becomes a shared component; one-off compositions stay with t
 - Greyscale placeholders are replaced by Sealing wax roles; the layout, copy and markup are otherwise unchanged from `design/concepts/a1-specimen-field/`.
 - Headings use Young Serif; numerals and meta lines use the mono face.
 - The home gateway changed from a plain text link to a strip in the personal palette, so crossing into the personal space shows before the click.
-- Field shapes, space marks and note rules take the accent of the space they lead to or belong to.
+- Field shapes and space marks take the accent of the space they lead to or belong to.
