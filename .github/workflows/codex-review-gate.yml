@@ -8,27 +8,21 @@ name: Codex Review Gate
 # progress, so comment edits by the Codex app re-run this job. No PR trigger is needed: a required
 # status that is missing on a new head commit already blocks merging until this job reports on it.
 # issue_comment runs this file from main with a token that can write statuses, Dependabot PRs included.
+# No workflow_dispatch on purpose: it would run the copy on whatever branch is picked, PR branches included.
 
 on:
   issue_comment: # zizmor: ignore[dangerous-triggers] filtered to the Codex app's comments; no checkout, body parsed as data by jq
     types: [created, edited]
-  workflow_dispatch:
-    inputs:
-      pr:
-        description: Pull request number to re-check
-        required: true
 
 permissions: {}
 
 concurrency:
-  group: codex-review-gate-${{ github.event.issue.number || inputs.pr }}
+  group: codex-review-gate-${{ github.event.issue.number }}
   cancel-in-progress: true
 
 jobs:
   gate:
-    if: >-
-      github.event_name != 'issue_comment' ||
-      (github.event.issue.pull_request && github.event.comment.user.login == 'chatgpt-codex-connector[bot]')
+    if: github.event.issue.pull_request && github.event.comment.user.login == 'chatgpt-codex-connector[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -38,7 +32,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
-      PR: ${{ github.event.issue.number || inputs.pr }}
+      PR: ${{ github.event.issue.number }}
     steps:
       - name: Report Codex review state for the head commit
         run: |
