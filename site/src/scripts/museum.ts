@@ -74,7 +74,8 @@ if (dataEl && dialog) {
   function open(i: number) {
     w = (i + works.length) % works.length;
     const work = works[w];
-    img.src = work.src;
+    // encodeURI, not per-segment: dev image URLs carry `C:` and `?query` that must survive.
+    img.src = encodeURI(work.src);
     img.width = work.w;
     img.height = work.h;
     canvas.style.width = `${work.w}px`;
@@ -82,7 +83,7 @@ if (dataEl && dialog) {
     set('[data-room]', work.room);
     set('[data-title]', work.title);
     set('[data-by]', work.by);
-    q<HTMLAnchorElement>('[data-more]').href = `/personal/art/${work.slug}/`;
+    q<HTMLAnchorElement>('[data-more]').href = `/personal/art/${encodeURIComponent(work.slug)}/`;
     marks.replaceChildren(
       ...work.details.map((d, n) => {
         const b = document.createElement('button');
