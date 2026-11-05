@@ -16,6 +16,10 @@ updates:
       - 'automated'
     commit-message:
       prefix: 'chore(deps)'
+    # astro check refuses TypeScript 7; drop this once Astro supports it
+    ignore:
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
     groups:
       dev-dependencies:
         dependency-type: 'development'
