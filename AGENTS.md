@@ -34,7 +34,9 @@ The Astro 7 rebuild lives in `site/`, a pnpm workspace package. It is **not depl
 
 ```bash
 pnpm install
-pnpm dev                 # http://localhost:5173
+pnpm dev                 # old site, http://localhost:5173
+pnpm preview             # build site/, serve it + design/ at :4400, open a browser (--help)
+pnpm verify              # format:check, lint, test:run, site check/build/test
 pnpm test:run            # CI form; `pnpm test` is watch mode
 pnpm exec vitest run src/utils/security.test.js   # one file
 pnpm lint                # ESLint + lucide icon-export check
