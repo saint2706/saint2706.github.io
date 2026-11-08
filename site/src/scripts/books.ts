@@ -1,5 +1,5 @@
 // Interactive client script for /personal/books/
-// Handles the book inspection modal dialog, keyboard stepping, and access filtering.
+// Handles the book inspection modal dialog with real book covers, keyboard stepping, and access filtering.
 
 export {};
 
@@ -14,7 +14,8 @@ interface BookItem {
   access: 'FREE' | 'BORROW' | 'COMMERCIAL';
   accessLabel: string;
   url: string;
-  tone: string;
+  cover: string;
+  publisher: string;
 }
 
 const booksDataEl = document.getElementById('books-data');
@@ -27,14 +28,11 @@ if (booksDataEl && booksDialog) {
 
   const q = <T extends Element>(sel: string) => booksDialog.querySelector(sel) as T;
 
-  const coverEl = q<HTMLElement>('[data-cover]');
-  const coverTitle = q<HTMLElement>('[data-cover-title]');
-  const coverAuthor = q<HTMLElement>('[data-cover-author]');
-  const coverEra = q<HTMLElement>('[data-cover-era]');
-
+  const coverImg = q<HTMLImageElement>('[data-modal-cover-img]');
   const eraTag = q<HTMLElement>('[data-modal-era]');
   const titleEl = q<HTMLElement>('[data-modal-title]');
   const authorEl = q<HTMLElement>('[data-modal-author]');
+  const publisherEl = q<HTMLElement>('[data-modal-publisher]');
   const noteEl = q<HTMLElement>('[data-modal-note]');
   const linkEl = q<HTMLAnchorElement>('[data-modal-link]');
   const accessPill = q<HTMLElement>('[data-modal-access-pill]');
@@ -44,24 +42,31 @@ if (booksDataEl && booksDialog) {
     currentIndex = (index + books.length) % books.length;
     const b = books[currentIndex];
 
-    // Update modal cover
-    coverEl.className = `modal-cover-art tone-${b.tone}`;
-    coverTitle.textContent = b.title;
-    coverAuthor.textContent = b.author;
-    coverEra.textContent = `ERA ${b.eraRoman} · ${b.eraName.toUpperCase()}`;
+    // Update real book cover image
+    if (coverImg) {
+      coverImg.src = b.cover;
+      coverImg.alt = `${b.title} by ${b.author}`;
+    }
 
     // Update details panel
-    eraTag.textContent = `ERA ${b.eraRoman} · ${b.eraName}`;
-    titleEl.textContent = b.title;
-    authorEl.textContent = b.author;
-    noteEl.textContent = `“${b.note}”`;
-    counterEl.textContent = `VOLUME ${String(currentIndex + 1).padStart(2, '0')} OF ${String(books.length).padStart(2, '0')}`;
+    if (eraTag) eraTag.textContent = `ERA ${b.eraRoman} · ${b.eraName}`;
+    if (titleEl) titleEl.textContent = b.title;
+    if (authorEl) authorEl.textContent = b.author;
+    if (publisherEl) publisherEl.textContent = `Edition imprint: ${b.publisher}`;
+    if (noteEl) noteEl.textContent = `“${b.note}”`;
+    if (counterEl) {
+      counterEl.textContent = `VOLUME ${String(currentIndex + 1).padStart(2, '0')} OF ${String(books.length).padStart(2, '0')}`;
+    }
 
-    linkEl.href = b.url;
-    linkEl.textContent = `Read ${b.title} (${b.accessLabel}) ↗`;
+    if (linkEl) {
+      linkEl.href = b.url;
+      linkEl.textContent = `Read ${b.title} (${b.accessLabel}) ↗`;
+    }
 
-    accessPill.textContent = b.accessLabel.toUpperCase();
-    accessPill.className = `modal-pill access-${b.access.toLowerCase()}`;
+    if (accessPill) {
+      accessPill.textContent = b.accessLabel.toUpperCase();
+      accessPill.className = `modal-pill access-${b.access.toLowerCase()}`;
+    }
   }
 
   function openBook(id: string, trigger?: HTMLElement) {
@@ -142,5 +147,3 @@ if (booksDataEl && booksDialog) {
     });
   });
 }
-
-export {};

@@ -2,300 +2,283 @@
 /**
  * ArtGlyph.astro
  *
- * An interactive Camera Obscura / Optical Loupe header glyph replacing the
- * flat rectangular .mark on the "Art and myth" museum space heading.
+ * "The Boundless Cloth" (अक्षय वस्त्र)
+ * An interactive Pahari silk & gold zari textile simulation replacing the
+ * header mark on the "Art and myth" museum space.
  *
- * Metaphor: The act of deliberate looking. Hall I opens with:
- * "What is the most important thing in this picture? Now: how did you decide?"
+ * Cultural & Mythic Context:
+ * Room IV climax: Nainsukh of Guler's "Draupadi Humiliated in the Assembly" (c. 1765).
+ * When Dushasana attempts to disrobe Draupadi before the paralyzed Kuru court,
+ * divine grace causes her garment to unfold endlessly—an infinite, cascading
+ * river of crimson silk and golden zari brocade that no injustice can exhaust.
  *
  * Features:
- * - 160x213px antique arch-cased brass optical apparatus (3:4 ratio matching SpaceHead).
- * - Knurled focus thumbwheel, suspension crest, and double-beveled gold casing.
- * - Engraved Camera Obscura aperture diaphragm with overlapping iris blades & focal scales.
- * - 4 Cardinal Hall Markers at I, II, III, IV corresponding to the 4 museum halls.
- * - Kinetic Optical Loupe with illuminated crosshairs, sight ring, and central target pip.
- * - Responsive magnetic cursor tracking that smoothly glides the sight loupe and gallery spotlight.
- * - In-place gold illumination on hall markers without transforms (zero jump/popout bug).
- * - Live archival cartouche readout updating curatorial hall coordinates.
- * - WCAG compliant, self-contained SVG, zero inline style="" attributes (CSP safe).
+ * - 160x213px antique Pahari wasli paper folio mount with gold hashiya rules.
+ * - Dynamic 6-point Catmull-Rom spline simulating fluid 3D silk cloth folds.
+ * - Shimmering gold zari (gota kinari) brocade border with fine embroidery stitching.
+ * - Luminous saffron-gold underside lining where the cloth twists in space.
+ * - 5 dangling golden hem tassels (jhumkas) that sway with natural pendulum physics.
+ * - Interactive cursor wind: moving across the silk creates undulating ripples with spring damping.
+ * - Continuous ambient silk breathing wave when idle.
+ * - Traditional archival cartouche with Devanagari calligraphy ("अक्षय वस्त्र").
+ * - Fully accessible, zero inline style="" attributes (strict CSP compliance).
  */
 ---
 
 <div
-  class="art-loupe-widget"
-  id="art-loupe"
+  class="silk-widget"
+  id="akshaya-vastra"
   role="img"
-  aria-label="Interactive Camera Obscura Loupe. Move cursor over the lens to examine exhibition halls."
+  aria-label="Interactive Pahari Silk artwork: The Boundless Cloth from Room IV. Move cursor to create fluid wind ripples in the silk."
 >
-  <div class="art-loupe-face">
+  <div class="silk-frame">
     <svg
       viewBox="0 0 160 213"
       width="160"
       height="213"
-      class="art-loupe-svg"
+      class="silk-svg"
       aria-hidden="true"
     >
       <defs>
-        <!-- Gold Bevel Gradient -->
-        <linearGradient id="art-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#fdf1c8" />
-          <stop offset="40%" stop-color="#e7b04f" />
-          <stop offset="85%" stop-color="#9a6c1e" />
-          <stop offset="100%" stop-color="#64430e" />
+        <!-- Pahari Gold Leaf (Zari) Gradient -->
+        <linearGradient id="zari-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fff5d4" />
+          <stop offset="25%" stop-color="#e7b04f" />
+          <stop offset="65%" stop-color="#ab7722" />
+          <stop offset="100%" stop-color="#6a450c" />
         </linearGradient>
 
-        <!-- Obsidian Dial Face Gradient -->
-        <radialGradient id="art-lens-back" cx="50%" cy="45%" r="65%">
-          <stop offset="0%" stop-color="#2a1830" />
-          <stop offset="65%" stop-color="#190d20" />
-          <stop offset="100%" stop-color="#0e0513" />
+        <!-- Rich Pahari Crimson Silk Gradient -->
+        <linearGradient id="silk-crimson" x1="15%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%" stop-color="#e8384f" />
+          <stop offset="35%" stop-color="#bd182d" />
+          <stop offset="75%" stop-color="#7d0c1b" />
+          <stop offset="100%" stop-color="#4e0610" />
+        </linearGradient>
+
+        <!-- Saffron Lining Underside Gradient -->
+        <linearGradient id="saffron-lining" x1="0%" y1="0%" x2="100%" y2="80%">
+          <stop offset="0%" stop-color="#fcd881" />
+          <stop offset="40%" stop-color="#e5a435" />
+          <stop offset="85%" stop-color="#946313" />
+          <stop offset="100%" stop-color="#5a3804" />
+        </linearGradient>
+
+        <!-- Sialkoti Wasli Paper Background Gradient -->
+        <radialGradient id="wasli-paper" cx="50%" cy="45%" r="70%">
+          <stop offset="0%" stop-color="#24102c" />
+          <stop offset="60%" stop-color="#16081b" />
+          <stop offset="100%" stop-color="#0c040f" />
         </radialGradient>
 
-        <!-- Glass Lens Sheen -->
-        <linearGradient id="art-glass-sheen" x1="20%" y1="0%" x2="80%" y2="100%">
-          <stop offset="0%" stop-color="rgba(253, 241, 200, 0.28)" />
-          <stop offset="35%" stop-color="rgba(231, 176, 79, 0.12)" />
-          <stop offset="70%" stop-color="rgba(24, 12, 30, 0.45)" />
-          <stop offset="100%" stop-color="rgba(14, 6, 19, 0.85)" />
-        </linearGradient>
-
-        <!-- Dynamic Gallery Spotlight Gradient -->
-        <radialGradient id="art-spotlight" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="rgba(253, 241, 200, 0.35)" />
-          <stop offset="45%" stop-color="rgba(231, 176, 79, 0.18)" />
-          <stop offset="80%" stop-color="rgba(231, 176, 79, 0.04)" />
+        <!-- Dynamic Specular Silk Sheen -->
+        <linearGradient id="silk-sheen" x1="0%" y1="0%" x2="100%" y2="50%">
+          <stop offset="0%" stop-color="rgba(255, 255, 255, 0.45)" />
+          <stop offset="50%" stop-color="rgba(253, 226, 160, 0.2)" />
           <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
-        </radialGradient>
+        </linearGradient>
       </defs>
 
-      <!-- Focus Thumbwheel & Knurled Finial Mount -->
-      <g class="focus-mount">
-        <!-- Suspension Loop -->
-        <circle cx="80" cy="9" r="6" fill="none" stroke="url(#art-gold)" stroke-width="2.2" />
-        <circle cx="80" cy="9" r="3" fill="#130716" stroke="rgba(231,176,79,0.3)" stroke-width="0.8" />
-        <!-- Knurled Adjustment Wheel -->
-        <rect x="68" y="15" width="24" height="6" rx="1.5" fill="url(#art-gold)" />
-        <line x1="72" y1="16" x2="72" y2="20" stroke="#5b3d0d" stroke-width="1" />
-        <line x1="76" y1="16" x2="76" y2="20" stroke="#5b3d0d" stroke-width="1" />
-        <line x1="80" y1="16" x2="80" y2="20" stroke="#5b3d0d" stroke-width="1" />
-        <line x1="84" y1="16" x2="84" y2="20" stroke="#5b3d0d" stroke-width="1" />
-        <line x1="88" y1="16" x2="88" y2="20" stroke="#5b3d0d" stroke-width="1" />
-        <!-- Bracket Flange -->
-        <path d="M 64,21 L 96,21 L 91,24 L 69,24 Z" fill="url(#art-gold)" />
-      </g>
-
-      <!-- Outer Arch Casing -->
-      <path
-        d="M 10,92 A 70,70 0 0,1 150,92 L 150,195 A 14,14 0 0,1 136,209 L 24,209 A 14,14 0 0,1 10,195 Z"
-        fill="url(#art-lens-back)"
-        stroke="url(#art-gold)"
-        stroke-width="2.5"
-        class="casing-path"
+      <!-- Antique Wasli Folio Paper Mount -->
+      <rect
+        x="3"
+        y="3"
+        width="154"
+        height="207"
+        rx="3"
+        fill="url(#wasli-paper)"
+        stroke="rgba(231, 176, 79, 0.45)"
+        stroke-width="1.2"
+        class="folio-mount"
       />
 
-      <!-- Dial Inner Inset Border -->
-      <path
-        d="M 16,92 A 64,64 0 0,1 144,92 L 144,192 A 8,8 0 0,1 136,200 L 24,200 A 8,8 0 0,1 16,192 Z"
+      <!-- Pahari Hashiya (Traditional Double Gold Miniature Margin) -->
+      <rect
+        x="8"
+        y="8"
+        width="144"
+        height="197"
+        rx="2"
         fill="none"
         stroke="rgba(231, 176, 79, 0.2)"
-        stroke-width="1"
+        stroke-width="0.8"
+      />
+      <rect
+        x="11"
+        y="11"
+        width="138"
+        height="191"
+        rx="1"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.12)"
+        stroke-width="0.6"
+        stroke-dasharray="2 3"
       />
 
-      <!-- Concentric Optical Calibrations & Reticle Scales (Center at 80, 92) -->
-      <g class="optical-calibrations">
-        <!-- Outer Reticle Ring -->
-        <circle cx="80" cy="92" r="56" fill="none" stroke="rgba(231, 176, 79, 0.3)" stroke-width="1.2" />
-        <!-- Dashed Precision Track -->
-        <circle cx="80" cy="92" r="53" fill="none" stroke="rgba(231, 176, 79, 0.16)" stroke-dasharray="2 3" stroke-width="0.8" />
-        <!-- Intermediate Track -->
-        <circle cx="80" cy="92" r="48" fill="none" stroke="rgba(231, 176, 79, 0.22)" stroke-width="0.8" />
-
-        <!-- 12-Division Radial Calibrations -->
-        <g stroke="rgba(231, 176, 79, 0.45)" stroke-width="1">
-          <!-- 12 o'clock -->
-          <line x1="80" y1="36" x2="80" y2="41" />
-          <!-- 1 o'clock -->
-          <line x1="108" y1="43.5" x2="105.5" y2="47.5" />
-          <!-- 2 o'clock -->
-          <line x1="128.5" y1="64" x2="124.5" y2="66.5" />
-          <!-- 3 o'clock -->
-          <line x1="136" y1="92" x2="131" y2="92" />
-          <!-- 4 o'clock -->
-          <line x1="128.5" y1="120" x2="124.5" y2="117.5" />
-          <!-- 5 o'clock -->
-          <line x1="108" y1="140.5" x2="105.5" y2="136.5" />
-          <!-- 6 o'clock -->
-          <line x1="80" y1="148" x2="80" y2="143" />
-          <!-- 7 o'clock -->
-          <line x1="52" y1="140.5" x2="54.5" y2="136.5" />
-          <!-- 8 o'clock -->
-          <line x1="31.5" y1="120" x2="35.5" y2="117.5" />
-          <!-- 9 o'clock -->
-          <line x1="24" y1="92" x2="29" y2="92" />
-          <!-- 10 o'clock -->
-          <line x1="31.5" y1="64" x2="35.5" y2="66.5" />
-          <!-- 11 o'clock -->
-          <line x1="52" y1="43.5" x2="54.5" y2="47.5" />
-        </g>
-
-        <!-- Golden Ratio Perspective Sightlines (Subtle aesthetic arcs) -->
-        <g stroke="rgba(231, 176, 79, 0.12)" stroke-width="0.8" fill="none">
-          <path d="M 38,92 A 42,42 0 0,1 122,92" />
-          <path d="M 80,50 A 42,42 0 0,1 80,134" />
-          <path d="M 50,62 L 110,122" stroke-dasharray="3 4" />
-          <path d="M 110,62 L 50,122" stroke-dasharray="3 4" />
-        </g>
+      <!-- Corner Lotus Rosettes (4 Corners) -->
+      <g fill="url(#zari-gold)">
+        <!-- Top-Left -->
+        <circle cx="8" cy="8" r="1.5" />
+        <!-- Top-Right -->
+        <circle cx="152" cy="8" r="1.5" />
+        <!-- Bottom-Left -->
+        <circle cx="8" cy="205" r="1.5" />
+        <!-- Bottom-Right -->
+        <circle cx="152" cy="205" r="1.5" />
       </g>
 
-      <!-- Camera Obscura Mechanical Aperture (8 Overlapping Iris Diaphragm Blades) -->
-      <g class="iris-diaphragm">
-        <!-- Chiaroscuro Aperture Well -->
-        <circle cx="80" cy="92" r="36" fill="#130717" stroke="rgba(231, 176, 79, 0.3)" stroke-width="1" />
-        <!-- 8 Curved Iris Blades (Tangent to inner f-stop aperture r=14) -->
-        <g stroke="rgba(231, 176, 79, 0.4)" stroke-width="0.9" fill="rgba(33, 17, 39, 0.65)">
-          <path d="M 80,56 C 96,56 110,70 110,86 L 98,92 C 98,82 88,72 80,72 Z" />
-          <path d="M 105.5,66.5 C 117,78 117,98 105.5,110 L 96,101 C 103,94 103,84 96,77 Z" />
-          <path d="M 116,92 C 116,108 102,122 86,122 L 80,110 C 90,110 100,100 100,92 Z" />
-          <path d="M 105.5,117.5 C 94,129 74,129 62.5,117.5 L 71.5,108 C 79,115 89,115 96,108 Z" />
-          <path d="M 80,128 C 64,128 50,114 50,98 L 62,92 C 62,102 72,112 80,112 Z" />
-          <path d="M 54.5,117.5 C 43,106 43,86 54.5,74 L 64,83 C 57,90 57,100 64,107 Z" />
-          <path d="M 44,92 C 44,76 58,62 74,62 L 80,74 C 70,74 60,84 60,92 Z" />
-          <path d="M 54.5,66.5 C 66,55 86,55 97.5,66.5 L 88.5,76 C 81,69 71,69 64,76 Z" />
-        </g>
+      <!-- Archival Top Header Tag -->
+      <text
+        x="80"
+        y="21"
+        text-anchor="middle"
+        class="folio-curatorial-tag"
+      >
+        NAINSUKH OF GULER · C. 1765
+      </text>
+
+      <!-- Ambient Floating Gold Foil Flakes (Swarna Bhasma) -->
+      <g class="gold-flakes" fill="url(#zari-gold)" opacity="0.75">
+        <polygon points="26,45 28,47 26,49 24,47" class="flake f1" />
+        <polygon points="135,38 137,40 135,42 133,40" class="flake f2" />
+        <polygon points="20,110 22,112 20,114 18,112" class="flake f3" />
+        <polygon points="142,125 144,127 142,129 140,127" class="flake f4" />
+        <polygon points="32,160 34,162 32,164 30,162" class="flake f5" />
+        <polygon points="132,168 134,170 132,172 130,170" class="flake f6" />
       </g>
 
-      <!-- 4 Cardinal Hall Roman Numerals (Interactive Indicators) -->
-      <!-- Hall I: Top (Perception / Icarus) -->
-      <g class="hall-marker" id="marker-hall-1">
-        <circle cx="80" cy="48" r="7" class="marker-halo" />
-        <text x="80" y="51" text-anchor="middle" class="marker-text">I</text>
-      </g>
-      <!-- Hall II: Right (The Witness / Third of May) -->
-      <g class="hall-marker" id="marker-hall-2">
-        <circle cx="124" cy="92" r="7" class="marker-halo" />
-        <text x="124" y="95" text-anchor="middle" class="marker-text">II</text>
-      </g>
-      <!-- Hall IV: Bottom (The Court / Sleep of Reason & Draupadi) -->
-      <g class="hall-marker" id="marker-hall-4">
-        <circle cx="80" cy="136" r="7" class="marker-halo" />
-        <text x="80" y="139" text-anchor="middle" class="marker-text">IV</text>
-      </g>
-      <!-- Hall III: Left (The Gaze / Shakuntala & Susanna) -->
-      <g class="hall-marker" id="marker-hall-3">
-        <circle cx="36" cy="92" r="7" class="marker-halo" />
-        <text x="36" y="95" text-anchor="middle" class="marker-text">III</text>
-      </g>
-
-      <!-- Mobile Gallery Spotlight (Tracks Cursor) -->
-      <g id="art-spotlight-group" transform="translate(80, 92)">
-        <circle cx="0" cy="0" r="44" fill="url(#art-spotlight)" class="spotlight-circle" />
-      </g>
-
-      <!-- Kinetic Optical Loupe & Sight Reticle (Tracks Cursor Smoothly) -->
-      <g id="art-loupe-group" transform="translate(80, 92)" class="optical-loupe">
-        <!-- Lens Glass Disc with Chiaroscuro Sheen -->
-        <circle cx="0" cy="0" r="20" fill="url(#art-glass-sheen)" />
-
-        <!-- Outer Brass Bezel of the Sight Loupe -->
-        <circle cx="0" cy="0" r="20" fill="none" stroke="url(#art-gold)" stroke-width="1.8" />
-        <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(253, 241, 200, 0.4)" stroke-width="0.6" />
-
-        <!-- Optical Crosshairs with Center Gap for Viewing -->
-        <g stroke="var(--color-accent)" stroke-width="0.9" opacity="0.85">
-          <!-- Horizontal Axis -->
-          <line x1="-20" y1="0" x2="-6" y2="0" />
-          <line x1="6" y1="0" x2="20" y2="0" />
-          <!-- Vertical Axis -->
-          <line x1="0" y1="-20" x2="0" y2="-6" />
-          <line x1="0" y1="6" x2="0" y2="20" />
-          <!-- Fine Micrometer Ticks -->
-          <line x1="-13" y1="-2.5" x2="-13" y2="2.5" stroke-width="0.7" />
-          <line x1="13" y1="-2.5" x2="13" y2="2.5" stroke-width="0.7" />
-          <line x1="-2.5" y1="-13" x2="2.5" y2="-13" stroke-width="0.7" />
-          <line x1="-2.5" y1="13" x2="2.5" y2="13" stroke-width="0.7" />
-        </g>
-
-        <!-- Inner Sight Ring -->
-        <circle cx="0" cy="0" r="11" fill="none" stroke="rgba(231, 176, 79, 0.5)" stroke-width="0.7" stroke-dasharray="1.5 2.5" />
-        <!-- Pinpoint Target Pip -->
-        <circle cx="0" cy="0" r="2.2" fill="url(#art-gold)" />
-        <circle cx="0" cy="0" r="0.8" fill="#ffffff" />
-
-        <!-- Specular Highlight Curve (Simulates Curved Convex Lens) -->
+      <!-- The Boundless Cloth: Silk River Layers -->
+      <g class="silk-river">
+        <!-- 1. Underside Golden Twist Folds (Back Layer) -->
         <path
-          d="M -13,-10 A 16,16 0 0,1 11,-12"
+          id="silk-under-1"
+          d="M 68,26 C 88,26 122,46 118,58 C 112,66 90,64 74,56 Z"
+          fill="url(#saffron-lining)"
+          opacity="0.9"
+        />
+        <path
+          id="silk-under-2"
+          d="M 44,92 C 54,92 128,122 124,136 C 116,144 88,140 68,128 Z"
+          fill="url(#saffron-lining)"
+          opacity="0.85"
+        />
+
+        <!-- 2. Primary Crimson Silk Body (Front Cascading Wave) -->
+        <path
+          id="silk-body"
+          d="M 62,35 C 70,38 98,42 94,52 C 88,62 32,79 33,92 C 34,105 97,118 98,129 C 99,141 42,154 44,166 C 46,177 75,183 76,188 L 88,192 C 86,186 58,179 56,168 C 54,157 114,142 113,127 C 112,112 47,100 46,88 C 45,76 106,64 108,48 C 109,38 78,28 72,25 Z"
+          fill="url(#silk-crimson)"
+          class="silk-body-path"
+        />
+
+        <!-- 3. Dynamic Specular Silk Sheen Ridge -->
+        <path
+          id="silk-sheen-path"
+          d="M 66,30 C 96,40 40,86 102,126 C 54,162 78,186 78,188"
           fill="none"
-          stroke="rgba(255, 255, 255, 0.55)"
-          stroke-width="1.2"
+          stroke="url(#silk-sheen)"
+          stroke-width="3"
           stroke-linecap="round"
+          class="sheen-ridge"
         />
+
+        <!-- 4. Gota Kinari / Golden Zari Outer Border -->
+        <path
+          id="silk-zari-outer"
+          d="M 72,25 C 78,28 109,38 108,48 C 106,64 45,76 46,88 C 47,100 112,112 113,127 C 114,142 54,157 56,168 C 58,179 86,186 88,192"
+          fill="none"
+          stroke="url(#zari-gold)"
+          stroke-width="3.5"
+          stroke-linecap="round"
+          class="zari-outer"
+        />
+        <!-- Delicate Zari Embroidery Stitch Line -->
+        <path
+          id="silk-zari-stitch"
+          d="M 72,25 C 78,28 109,38 108,48 C 106,64 45,76 46,88 C 47,100 112,112 113,127 C 114,142 54,157 56,168 C 58,179 86,186 88,192"
+          fill="none"
+          stroke="#fff8e7"
+          stroke-width="0.8"
+          stroke-dasharray="2 3"
+          class="zari-stitch"
+        />
+
+        <!-- 5. Dangling Golden Tassels (Jhumkas) at Pallu Hem -->
+        <g id="silk-tassels" class="tassels-group">
+          <!-- Tassel 1 -->
+          <g transform="translate(68, 186)" class="tassel-node" id="tassel-1">
+            <line x1="0" y1="0" x2="0" y2="7" stroke="url(#zari-gold)" stroke-width="1" />
+            <circle cx="0" cy="8" r="1.8" fill="url(#zari-gold)" />
+          </g>
+          <!-- Tassel 2 -->
+          <g transform="translate(74, 188)" class="tassel-node" id="tassel-2">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="url(#zari-gold)" stroke-width="1" />
+            <circle cx="0" cy="9.5" r="2.2" fill="url(#zari-gold)" />
+          </g>
+          <!-- Tassel 3 (Center) -->
+          <g transform="translate(80, 190)" class="tassel-node" id="tassel-3">
+            <line x1="0" y1="0" x2="0" y2="9" stroke="url(#zari-gold)" stroke-width="1.2" />
+            <circle cx="0" cy="11" r="2.5" fill="url(#zari-gold)" />
+            <circle cx="0" cy="11" r="1" fill="#ffffff" />
+          </g>
+          <!-- Tassel 4 -->
+          <g transform="translate(85, 191)" class="tassel-node" id="tassel-4">
+            <line x1="0" y1="0" x2="0" y2="8" stroke="url(#zari-gold)" stroke-width="1" />
+            <circle cx="0" cy="9.5" r="2.2" fill="url(#zari-gold)" />
+          </g>
+          <!-- Tassel 5 -->
+          <g transform="translate(90, 192)" class="tassel-node" id="tassel-5">
+            <line x1="0" y1="0" x2="0" y2="7" stroke="url(#zari-gold)" stroke-width="1" />
+            <circle cx="0" cy="8" r="1.8" fill="url(#zari-gold)" />
+          </g>
+        </g>
       </g>
 
-      <!-- Calibrated Vernier Aperture Scale (Between Dial and Cartouche) -->
-      <g class="vernier-scale">
-        <line x1="38" y1="156" x2="122" y2="156" stroke="rgba(231, 176, 79, 0.3)" stroke-width="0.9" />
-        <!-- Subdivisions -->
-        <line x1="42" y1="154" x2="42" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
-        <line x1="51.5" y1="154.5" x2="51.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
-        <line x1="61" y1="154" x2="61" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
-        <line x1="70.5" y1="154.5" x2="70.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
-        <line x1="80" y1="153" x2="80" y2="159" stroke="var(--color-accent)" stroke-width="1.2" />
-        <line x1="89.5" y1="154.5" x2="89.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
-        <line x1="99" y1="154" x2="99" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
-        <line x1="108.5" y1="154.5" x2="108.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
-        <line x1="118" y1="154" x2="118" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
-        <!-- Pip Indicator -->
-        <polygon points="80,152 77,149 83,149" fill="var(--color-accent)" />
-        <text x="80" y="165" font-size="6.5" text-anchor="middle" class="vernier-text">
-          FOV · CAMERA OBSCURA · f/2.8
-        </text>
-      </g>
-
-      <!-- Archival Brass Plaque / Curatorial Accession Cartouche -->
-      <g class="curatorial-plaque">
-        <!-- Recessed Plaque Border -->
+      <!-- Archival Bottom Cartouche (Devanagari Calligraphy & Subtitle) -->
+      <g class="cartouche-mount">
+        <!-- Recessed Plaque Backing -->
         <rect
-          x="18"
-          y="171"
-          width="124"
-          height="32"
+          x="16"
+          y="172"
+          width="128"
+          height="31"
           rx="3"
-          class="plaque-bg"
+          class="cartouche-bg"
         />
         <rect
-          x="20.5"
-          y="173.5"
-          width="119"
-          height="27"
+          x="18.5"
+          y="174.5"
+          width="123"
+          height="26"
           rx="2"
           fill="none"
-          stroke="rgba(231, 176, 79, 0.2)"
-          stroke-width="0.7"
+          stroke="rgba(231, 176, 79, 0.22)"
+          stroke-width="0.8"
         />
-        <!-- 4 Corner Screws -->
-        <circle cx="23" cy="176" r="1.3" fill="url(#art-gold)" />
-        <circle cx="137" cy="176" r="1.3" fill="url(#art-gold)" />
-        <circle cx="23" cy="198" r="1.3" fill="url(#art-gold)" />
-        <circle cx="137" cy="198" r="1.3" fill="url(#art-gold)" />
+        <!-- 4 Corner Gold Screws/Florets -->
+        <circle cx="21" cy="177" r="1.2" fill="url(#zari-gold)" />
+        <circle cx="139" cy="177" r="1.2" fill="url(#zari-gold)" />
+        <circle cx="21" cy="198" r="1.2" fill="url(#zari-gold)" />
+        <circle cx="139" cy="198" r="1.2" fill="url(#zari-gold)" />
 
-        <!-- Curatorial Plaque Dynamic Readout -->
+        <!-- Title in Devanagari & English -->
         <text
-          id="art-status-title"
+          id="silk-title"
           x="80"
-          y="184"
+          y="185"
           text-anchor="middle"
-          class="cartouche-title"
+          class="cartouche-devanagari"
         >
-          CAMERA OBSCURA
+          अक्षय वस्त्र
         </text>
         <text
-          id="art-status-sub"
+          id="silk-sub"
           x="80"
-          y="195"
+          y="196"
           text-anchor="middle"
           class="cartouche-sub"
         >
-          VII WORKS · IV HALLS
+          THE BOUNDLESS CLOTH · 1765
         </text>
       </g>
     </svg>
@@ -303,205 +286,276 @@
 </div>
 
 <script>
-  // Interactive Camera Obscura Optical Loupe Controller
-  const container = document.getElementById('art-loupe');
-  const loupeGroup = document.getElementById('art-loupe-group');
-  const spotlightGroup = document.getElementById('art-spotlight-group');
-  const statusTitle = document.getElementById('art-status-title');
-  const statusSub = document.getElementById('art-status-sub');
+  // Interactive Fluid Silk & Zari Cloth Controller (Pahari Miniature Simulation)
+  const widget = document.getElementById('akshaya-vastra');
+  const silkBody = document.getElementById('silk-body');
+  const silkZariOuter = document.getElementById('silk-zari-outer');
+  const silkZariStitch = document.getElementById('silk-zari-stitch');
+  const silkSheen = document.getElementById('silk-sheen-path');
+  const silkUnder1 = document.getElementById('silk-under-1');
+  const silkUnder2 = document.getElementById('silk-under-2');
+  const silkTitle = document.getElementById('silk-title');
+  const silkSub = document.getElementById('silk-sub');
 
-  if (container && loupeGroup && spotlightGroup && statusTitle && statusSub) {
-    const activeLoupe = loupeGroup;
-    const activeSpotlight = spotlightGroup;
-    const titleEl = statusTitle;
-    const subEl = statusSub;
+  const tassels = [
+    document.getElementById('tassel-1'),
+    document.getElementById('tassel-2'),
+    document.getElementById('tassel-3'),
+    document.getElementById('tassel-4'),
+    document.getElementById('tassel-5'),
+  ];
 
-    const markers: Record<string, HTMLElement | null> = {
-      1: document.getElementById('marker-hall-1'),
-      2: document.getElementById('marker-hall-2'),
-      3: document.getElementById('marker-hall-3'),
-      4: document.getElementById('marker-hall-4'),
-    };
+  if (
+    widget &&
+    silkBody &&
+    silkZariOuter &&
+    silkZariStitch &&
+    silkSheen &&
+    silkUnder1 &&
+    silkUnder2 &&
+    silkTitle &&
+    silkSub
+  ) {
+    const elBody = silkBody;
+    const elZariOuter = silkZariOuter;
+    const elZariStitch = silkZariStitch;
+    const elSheen = silkSheen;
+    const elUnder1 = silkUnder1;
+    const elUnder2 = silkUnder2;
+    const elTitle = silkTitle;
+    const elSub = silkSub;
 
-    const hallDetails: Record<string, { title: string; sub: string }> = {
-      1: { title: 'HALL I · PERCEPTION', sub: 'LOOK CLOSELY · ICARUS' },
-      2: { title: 'HALL II · THE WITNESS', sub: 'SPECTACLE & WHISPER' },
-      3: { title: 'HALL III · THE GAZE', sub: 'PRETEXT & VULNERABILITY' },
-      4: { title: 'HALL IV · THE COURT', sub: 'REASON & RESPONSIBILITY' },
-    };
+    // 6 Control spine nodes representing the draped silk ribbon
+    interface SpineNode {
+      baseX: number;
+      baseY: number;
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      width: number;
+      phase: number;
+    }
 
-    // Center in SVG coordinates: (80, 92)
-    const CENTER_X = 80;
-    const CENTER_Y = 92;
-    const MAX_RADIUS = 26; // Maximum loupe displacement from optical axis
+    const nodes: SpineNode[] = [
+      { baseX: 72, baseY: 28, x: 72, y: 28, vx: 0, vy: 0, width: 22, phase: 0 },
+      { baseX: 108, baseY: 58, x: 108, y: 58, vx: 0, vy: 0, width: 28, phase: 1.1 },
+      { baseX: 48, baseY: 92, x: 48, y: 92, vx: 0, vy: 0, width: 30, phase: 2.2 },
+      { baseX: 114, baseY: 130, x: 114, y: 130, vx: 0, vy: 0, width: 32, phase: 3.3 },
+      { baseX: 54, baseY: 165, x: 54, y: 165, vx: 0, vy: 0, width: 28, phase: 4.4 },
+      { baseX: 82, baseY: 190, x: 82, y: 190, vx: 0, vy: 0, width: 24, phase: 5.5 },
+    ];
 
-    let currentX = 0;
-    let currentY = 0;
-    let targetX = 0;
-    let targetY = 0;
+    let mouseX = -999;
+    let mouseY = -999;
     let isHovering = false;
-    let idlePhase = 0;
+    let time = 0;
 
-    function highlightMarker(hall: string | null) {
-      Object.entries(markers).forEach(([h, el]) => {
-        if (!el) return;
-        if (h === hall) {
-          el.classList.add('active');
-        } else {
-          el.classList.remove('active');
-        }
+    // Catmull-Rom spline to cubic Bezier curve converter
+    interface Point2D {
+      x: number;
+      y: number;
+    }
+
+    function catmullRomToBezier(points: Point2D[]): string {
+      let d = `M ${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p0 = i > 0 ? points[i - 1] : points[i];
+        const p1 = points[i];
+        const p2 = points[i + 1];
+        const p3 = i < points.length - 2 ? points[i + 2] : p2;
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+        d += ` C ${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+      }
+      return d;
+    }
+
+    // Build the filled silk polygon and zari border paths
+    function updateSilkGeometry() {
+      const left: Point2D[] = [];
+      const right: Point2D[] = [];
+
+      for (let i = 0; i < nodes.length; i++) {
+        const prev = i > 0 ? nodes[i - 1] : nodes[i];
+        const next = i < nodes.length - 1 ? nodes[i + 1] : nodes[i];
+        const dx = next.x - prev.x;
+        const dy = next.y - prev.y;
+        const len = Math.hypot(dx, dy) || 1;
+        // Normal vector (-dy, dx)
+        const nx = -dy / len;
+        const ny = dx / len;
+        const halfW = nodes[i].width / 2;
+
+        left.push({
+          x: nodes[i].x + nx * halfW,
+          y: nodes[i].y + ny * halfW,
+        });
+        right.push({
+          x: nodes[i].x - nx * halfW,
+          y: nodes[i].y - ny * halfW,
+        });
+      }
+
+      // Generate forward left curve and backward right curve
+      const leftBezier = catmullRomToBezier(left);
+      const rightRev = [...right].reverse();
+      let rightBezier = '';
+      for (let i = 0; i < rightRev.length - 1; i++) {
+        const p0 = i > 0 ? rightRev[i - 1] : rightRev[i];
+        const p1 = rightRev[i];
+        const p2 = rightRev[i + 1];
+        const p3 = i < rightRev.length - 2 ? rightRev[i + 2] : p2;
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+        rightBezier += ` C ${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+      }
+
+      const fullRibbon = `${leftBezier} L ${rightRev[0].x.toFixed(1)},${rightRev[0].y.toFixed(1)}${rightBezier} Z`;
+      const zariPath = catmullRomToBezier(right);
+      const sheenPath = catmullRomToBezier(
+        nodes.map(n => ({ x: n.x, y: n.y }))
+      );
+
+      elBody.setAttribute('d', fullRibbon);
+      elZariOuter.setAttribute('d', zariPath);
+      elZariStitch.setAttribute('d', zariPath);
+      elSheen.setAttribute('d', sheenPath);
+
+      // Underside folds follow crest nodes 1 and 3
+      const u1x = nodes[1].x;
+      const u1y = nodes[1].y;
+      elUnder1.setAttribute(
+        'd',
+        `M ${u1x - 30},${u1y - 32} C ${u1x - 10},${u1y - 32} ${u1x + 14},${u1y - 12} ${u1x + 10},${u1y} C ${u1x + 4},${u1y + 8} ${u1x - 18},${u1y + 6} ${u1x - 34},${u1y - 2} Z`
+      );
+
+      const u2x = nodes[3].x;
+      const u2y = nodes[3].y;
+      elUnder2.setAttribute(
+        'd',
+        `M ${u2x - 70},${u2y - 38} C ${u2x - 60},${u2y - 38} ${u2x + 14},${u2y - 8} ${u2x + 10},${u2y + 6} C ${u2x + 2},${u2y + 14} ${u2x - 26},${u2y + 10} ${u2x - 46},${u2y - 2} Z`
+      );
+
+      // Tassels sway at the hem (node 5)
+      const hem = nodes[5];
+      const tasselOffsets = [-14, -7, 0, 7, 14];
+      tassels.forEach((tassel, idx) => {
+        if (!tassel) return;
+        const ox = tasselOffsets[idx];
+        const sway = Math.sin(time * 2.5 + idx * 0.7) * 2.5;
+        tassel.setAttribute(
+          'transform',
+          `translate(${hem.x + ox + sway * 0.4}, ${hem.y}) rotate(${sway * 3})`
+        );
       });
     }
 
-    function determineActiveHall(x: number, y: number): string | null {
-      const dist = Math.hypot(x, y);
-      if (dist < 6) return null; // Dead center shows default title
-
-      // Calculate angle in degrees: 0 is Right, 90 is Down, 180 is Left, -90 is Up
-      const angle = (Math.atan2(y, x) * 180) / Math.PI;
-
-      // Hall 1 (Top): -135 to -45
-      if (angle >= -135 && angle < -45) return '1';
-      // Hall 2 (Right): -45 to 45
-      if (angle >= -45 && angle < 45) return '2';
-      // Hall 4 (Bottom): 45 to 135
-      if (angle >= 45 && angle < 135) return '4';
-      // Hall 3 (Left): > 135 or < -135
-      return '3';
-    }
-
-    function updateCartouche(hall: string | null) {
-      if (!hall || !hallDetails[hall]) {
-        titleEl.textContent = 'CAMERA OBSCURA';
-        subEl.textContent = 'VII WORKS · IV HALLS';
-      } else {
-        titleEl.textContent = hallDetails[hall].title;
-        subEl.textContent = hallDetails[hall].sub;
-      }
-    }
-
-    // Animation loop with smooth inertia
+    // Main animation loop: spring physics + harmonic breeze
     function animate() {
-      if (isHovering) {
-        // Eased interpolation toward target cursor offset
-        currentX += (targetX - currentX) * 0.16;
-        currentY += (targetY - currentY) * 0.16;
+      time += 0.035;
 
-        activeLoupe.setAttribute(
-          'transform',
-          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
-        );
-        activeSpotlight.setAttribute(
-          'transform',
-          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
-        );
+      nodes.forEach((node, i) => {
+        // Ambient wind flutter (organic harmonic wave)
+        const windX = Math.sin(time * 1.5 + node.phase) * (4 + i * 1.5);
+        const windY = Math.cos(time * 1.2 + node.phase) * (1.5 + i * 0.4);
 
-        const activeHall = determineActiveHall(currentX, currentY);
-        highlightMarker(activeHall);
-        updateCartouche(activeHall);
-      } else {
-        // Ambient organic drift when idle
-        idlePhase += 0.02;
-        const driftX = Math.sin(idlePhase * 0.8) * 1.8;
-        const driftY = Math.cos(idlePhase * 0.6) * 1.5;
+        let targetX = node.baseX + windX;
+        let targetY = node.baseY + windY;
 
-        currentX += (driftX - currentX) * 0.06;
-        currentY += (driftY - currentY) * 0.06;
+        // Interactive mouse wind displacement
+        if (isHovering) {
+          const dx = node.x - mouseX;
+          const dy = node.y - mouseY;
+          const dist = Math.hypot(dx, dy);
+          const maxInfluence = 55;
 
-        activeLoupe.setAttribute(
-          'transform',
-          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
-        );
-        activeSpotlight.setAttribute(
-          'transform',
-          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
-        );
+          if (dist < maxInfluence) {
+            const force = (1 - dist / maxInfluence) * 22;
+            const pushAngle = Math.atan2(dy, dx);
+            targetX += Math.cos(pushAngle) * force;
+            targetY += Math.sin(pushAngle) * force;
+          }
+        }
 
-        highlightMarker(null);
-        updateCartouche(null);
-      }
+        // Spring acceleration towards target
+        const ax = (targetX - node.x) * 0.12;
+        const ay = (targetY - node.y) * 0.12;
 
+        node.vx = (node.vx + ax) * 0.78; // Damping
+        node.vy = (node.vy + ay) * 0.78;
+
+        node.x += node.vx;
+        node.y += node.vy;
+      });
+
+      updateSilkGeometry();
       requestAnimationFrame(animate);
     }
 
     requestAnimationFrame(animate);
 
-    // Mouse Tracking across widget
-    container.addEventListener('mouseenter', () => {
+    // Mouse Tracking across folio
+    widget.addEventListener('mouseenter', () => {
       isHovering = true;
+      elTitle.textContent = 'अक्षय वस्त्र';
+      elSub.textContent = 'ROOM IV · NAINSUKH C. 1765';
     });
 
-    container.addEventListener('mousemove', (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      // Normalized coordinates from center [-1, 1]
-      const relX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const relY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-
-      // Project into SVG displacement space
-      const px = relX * MAX_RADIUS * 1.3;
-      const py = relY * MAX_RADIUS * 1.3;
-
-      // Clamp to MAX_RADIUS
-      const dist = Math.hypot(px, py);
-      if (dist > MAX_RADIUS) {
-        targetX = (px / dist) * MAX_RADIUS;
-        targetY = (py / dist) * MAX_RADIUS;
-      } else {
-        targetX = px;
-        targetY = py;
-      }
+    widget.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = widget.getBoundingClientRect();
+      mouseX = ((e.clientX - rect.left) / rect.width) * 160;
+      mouseY = ((e.clientY - rect.top) / rect.height) * 213;
     });
 
-    container.addEventListener('mouseleave', () => {
+    widget.addEventListener('mouseleave', () => {
       isHovering = false;
-      targetX = 0;
-      targetY = 0;
+      mouseX = -999;
+      mouseY = -999;
+      elTitle.textContent = 'अक्षय वस्त्र';
+      elSub.textContent = 'THE BOUNDLESS CLOTH · 1765';
     });
 
-    // Touch Support for mobile screens
-    container.addEventListener(
+    // Touch Support for mobile interaction
+    widget.addEventListener(
       'touchmove',
       (e: TouchEvent) => {
         if (!e.touches.length) return;
         const touch = e.touches[0];
-        const rect = container.getBoundingClientRect();
-        const relX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-        const relY = ((touch.clientY - rect.top) / rect.height) * 2 - 1;
-
-        const px = relX * MAX_RADIUS * 1.3;
-        const py = relY * MAX_RADIUS * 1.3;
-
-        const dist = Math.hypot(px, py);
-        if (dist > MAX_RADIUS) {
-          targetX = (px / dist) * MAX_RADIUS;
-          targetY = (py / dist) * MAX_RADIUS;
-        } else {
-          targetX = px;
-          targetY = py;
-        }
+        const rect = widget.getBoundingClientRect();
+        mouseX = ((touch.clientX - rect.left) / rect.width) * 160;
+        mouseY = ((touch.clientY - rect.top) / rect.height) * 213;
         isHovering = true;
       },
       { passive: true }
     );
 
-    container.addEventListener('touchend', () => {
+    widget.addEventListener('touchend', () => {
       isHovering = false;
-      targetX = 0;
-      targetY = 0;
+      mouseX = -999;
+      mouseY = -999;
     });
   }
 </script>
 
 <style>
-  .art-loupe-widget {
+  .silk-widget {
     position: relative;
     width: 160px;
     height: 213px;
     user-select: none;
-    cursor: crosshair;
+    cursor: grab;
   }
 
-  .art-loupe-face {
+  .silk-widget:active {
+    cursor: grabbing;
+  }
+
+  .silk-frame {
     width: 100%;
     height: 100%;
     display: flex;
@@ -509,7 +563,7 @@
     justify-content: center;
   }
 
-  .art-loupe-svg {
+  .silk-svg {
     display: block;
     width: 100%;
     height: 100%;
@@ -517,102 +571,115 @@
   }
 
   @media (max-width: 1024px) {
-    .art-loupe-widget {
+    .silk-widget {
       width: 120px;
       height: 160px;
     }
   }
 
   @media (max-width: 720px) {
-    .art-loupe-widget {
+    .silk-widget {
       width: 88px;
       height: 117px;
     }
   }
 
-  .casing-path {
-    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65));
+  .folio-mount {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.75));
     transition: stroke 0.3s ease;
   }
 
-  .art-loupe-widget:hover .casing-path {
+  .silk-widget:hover .folio-mount {
     stroke: #ffda79;
   }
 
-  /* Hall Markers: In-place highlighting without transforms (prevents top-left jumping) */
-  .hall-marker {
-    pointer-events: none;
-  }
-
-  .marker-halo {
-    fill: rgba(18, 7, 23, 0.7);
-    stroke: rgba(231, 176, 79, 0.35);
-    stroke-width: 1;
-    transition:
-      stroke 0.2s ease,
-      fill 0.2s ease,
-      filter 0.2s ease;
-  }
-
-  .marker-text {
-    font-family: var(--font-display, serif);
-    font-size: 8px;
+  /* Archival Header Tag */
+  .folio-curatorial-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 6px;
     font-weight: 700;
     fill: rgba(231, 176, 79, 0.65);
-    transition:
-      fill 0.2s ease,
-      filter 0.2s ease;
+    letter-spacing: 0.12em;
   }
 
-  /* Active Hall Marker Highlight */
-  .hall-marker.active .marker-halo {
-    fill: rgba(231, 176, 79, 0.35);
-    stroke: #ffffff;
-    stroke-width: 1.5;
-    filter: drop-shadow(0 0 6px rgba(231, 176, 79, 0.9));
+  /* Silk Body Shading & Depth */
+  .silk-body-path {
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.85));
+    transition: filter 0.2s ease;
   }
 
-  .hall-marker.active .marker-text {
-    fill: #ffffff;
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  .silk-widget:hover .silk-body-path {
+    filter: drop-shadow(0 8px 18px rgba(189, 24, 45, 0.45));
   }
 
-  /* Vernier Calibration Text */
-  .vernier-text {
-    font-family: var(--font-mono, monospace);
-    fill: rgba(231, 176, 79, 0.7);
-    letter-spacing: 0.08em;
+  .zari-outer {
+    filter: drop-shadow(0 0 4px rgba(231, 176, 79, 0.6));
+  }
+
+  /* Gold Flakes Floating Animation */
+  .gold-flakes .flake {
+    animation: flakeDrift 4s ease-in-out infinite alternate;
+  }
+
+  .gold-flakes .f1 {
+    animation-delay: 0s;
+  }
+  .gold-flakes .f2 {
+    animation-delay: 0.8s;
+  }
+  .gold-flakes .f3 {
+    animation-delay: 1.6s;
+  }
+  .gold-flakes .f4 {
+    animation-delay: 2.4s;
+  }
+  .gold-flakes .f5 {
+    animation-delay: 3.2s;
+  }
+  .gold-flakes .f6 {
+    animation-delay: 1.2s;
+  }
+
+  @keyframes flakeDrift {
+    0% {
+      transform: translateY(0px) scale(0.9);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translateY(-5px) scale(1.15);
+      opacity: 0.95;
+    }
   }
 
   /* Archival Plaque Typography */
-  .plaque-bg {
-    fill: #0d0411;
-    stroke: rgba(231, 176, 79, 0.38);
+  .cartouche-bg {
+    fill: #0c040f;
+    stroke: rgba(231, 176, 79, 0.45);
     stroke-width: 1.2;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.7);
   }
 
-  .cartouche-title {
-    font-family: var(--font-mono, monospace);
-    font-size: 8.5px;
+  .cartouche-devanagari {
+    font-family: var(--font-display, serif);
+    font-size: 10px;
     font-weight: 700;
     fill: var(--color-accent);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
   }
 
   .cartouche-sub {
     font-family: var(--font-mono, monospace);
-    font-size: 7px;
+    font-size: 6.5px;
     fill: #ded0dc;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .art-loupe-widget {
+    .silk-widget {
       cursor: default;
     }
-    .optical-loupe,
-    .spotlight-circle {
-      transition: none !important;
+    .gold-flakes .flake {
+      animation: none !important;
     }
   }
 </style>
