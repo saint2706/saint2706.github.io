@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
 import Section from '../../../components/Section.astro';
+import BookGlyph from '../../../components/personal/BookGlyph.astro';
 import { books as booksContent } from '../../../lib/content';
 
 interface BookItem {
@@ -584,6 +585,7 @@ const getImprintSizeClass = (imprint: string) => {
     title="Books"
     lede="Twenty-five books that stayed with me: from Homer to Wittgenstein."
   >
+    <BookGlyph slot="mark" />
     <p class="curator-letter">
       These are twenty-five books I’ve loved and kept returning to. Some made me rethink how I live,
       others argued with me for months, and a few are just extraordinary writing. If you’re curious about

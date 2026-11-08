@@ -1,0 +1,780 @@
+---
+/**
+ * BookGlyph.astro
+ *
+ * "The Nocturne Codex & Library Lamp" (Bibliotheca Aeterna)
+ * An interactive antique parchment folio and brass reading lamp glyph
+ * replacing the flat rectangular mark on the "Books" library space.
+ *
+ * Visual & Mythic Context:
+ * Represents the intimate personal library: 25 volumes read and lived with
+ * across 5 historical eras, from Homer to Wittgenstein. In the quiet of night,
+ * an articulated brass lamp casts warm golden light across an open leatherbound
+ * codex with deckled parchment leaves, a swaying silk bookmark ribbon, and five
+ * embossed era seals around the reading desk.
+ *
+ * Features:
+ * - 160x213px antique dark morocco & oak archival mount matching the 3:4 personal space mark.
+ * - Articulated brass library lamp with incandescent breathing filament and light cone.
+ * - Open illuminated codex with parchment curvature, gutter shadow, gold drop-cap, and text rules.
+ * - Kinetic silk ribbon bookmark with damped pendulum physics responding to cursor movement.
+ * - 5 interactive era roundels (Eras I to V) around the folio perimeter.
+ * - Dynamic light-beam steering that tracks cursor position smoothly across the pages.
+ * - Live engraved brass ledger cartouche updating with era dates and author spans.
+ * - Keyboard accessible (Tab & Enter to jump directly to bookcase shelf tiers).
+ * - Fully accessible, zero inline style="" attributes (strict CSP compliance).
+ */
+---
+
+<div
+  class="book-glyph-widget"
+  id="library-codex"
+  role="region"
+  aria-label="Interactive Philosophy Codex & Reading Lamp: Explore the 5 historical eras from Homer to Wittgenstein."
+>
+  <div class="codex-frame">
+    <svg
+      viewBox="0 0 160 213"
+      width="160"
+      height="213"
+      class="codex-svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <!-- Polished Brass / Gold Foil Gradient -->
+        <linearGradient id="bk-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fff4d0" />
+          <stop offset="35%" stop-color="#e7b04f" />
+          <stop offset="75%" stop-color="#ab7722" />
+          <stop offset="100%" stop-color="#6a450c" />
+        </linearGradient>
+
+        <!-- Antique Parchment Page Gradient (Left Page) -->
+        <linearGradient id="bk-parchment-left" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2a2016" />
+          <stop offset="25%" stop-color="#3d2e1f" />
+          <stop offset="85%" stop-color="#4a3928" />
+          <stop offset="100%" stop-color="#23190e" />
+        </linearGradient>
+
+        <!-- Antique Parchment Page Gradient (Right Page) -->
+        <linearGradient id="bk-parchment-right" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#23190e" />
+          <stop offset="15%" stop-color="#4a3928" />
+          <stop offset="75%" stop-color="#3d2e1f" />
+          <stop offset="100%" stop-color="#2a2016" />
+        </linearGradient>
+
+        <!-- Dark Morocco Leather Binding -->
+        <linearGradient id="bk-leather" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#42141a" />
+          <stop offset="50%" stop-color="#2c0c11" />
+          <stop offset="100%" stop-color="#190609" />
+        </linearGradient>
+
+        <!-- Dark Oak Wood Panel Background -->
+        <radialGradient id="bk-oak-backing" cx="50%" cy="40%" r="70%">
+          <stop offset="0%" stop-color="#21150f" />
+          <stop offset="60%" stop-color="#150c08" />
+          <stop offset="100%" stop-color="#0a0503" />
+        </radialGradient>
+
+        <!-- Reading Lamp Amber Light Beam Gradient -->
+        <radialGradient id="bk-lamp-beam" cx="50%" cy="15%" r="75%">
+          <stop offset="0%" stop-color="rgba(253, 226, 155, 0.28)" />
+          <stop offset="45%" stop-color="rgba(231, 176, 79, 0.14)" />
+          <stop offset="80%" stop-color="rgba(231, 176, 79, 0.04)" />
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
+        </radialGradient>
+
+        <!-- Silk Bookmark Ribbon Gradient -->
+        <linearGradient id="bk-ribbon" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#9a6c1e" />
+          <stop offset="50%" stop-color="#f5ce7b" />
+          <stop offset="100%" stop-color="#7a4e0c" />
+        </linearGradient>
+      </defs>
+
+      <!-- Archival Mount Outer Casing -->
+      <rect
+        x="3"
+        y="3"
+        width="154"
+        height="207"
+        rx="4"
+        fill="url(#bk-oak-backing)"
+        stroke="url(#bk-gold)"
+        stroke-width="1.4"
+        class="codex-mount"
+      />
+
+      <!-- Double Inset Filigree Border -->
+      <rect
+        x="7"
+        y="7"
+        width="146"
+        height="199"
+        rx="2"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.22)"
+        stroke-width="0.8"
+      />
+      <rect
+        x="10"
+        y="10"
+        width="140"
+        height="193"
+        rx="1"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.12)"
+        stroke-width="0.6"
+        stroke-dasharray="2 3"
+      />
+
+      <!-- Corner Brass Studs (4 Corners) -->
+      <g fill="url(#bk-gold)">
+        <circle cx="8" cy="8" r="1.5" />
+        <circle cx="152" cy="8" r="1.5" />
+        <circle cx="8" cy="205" r="1.5" />
+        <circle cx="152" cy="205" r="1.5" />
+      </g>
+
+      <!-- Archival Top Header Tag -->
+      <text
+        x="80"
+        y="21"
+        text-anchor="middle"
+        class="codex-curatorial-tag"
+      >
+        EX LIBRIS · XXV VOLUMINA
+      </text>
+
+      <!-- Reading Lamp Amber Light Beam (Interactive Dynamic Polygon) -->
+      <polygon
+        id="bk-light-cone"
+        points="80,30 18,175 142,175"
+        fill="url(#bk-lamp-beam)"
+        class="light-cone"
+      />
+
+      <!-- Floating Amber Dust Motes in Lamp Beam -->
+      <g class="dust-motes" fill="#f7ca75" opacity="0.65">
+        <circle cx="72" cy="55" r="0.9" class="mote m1" />
+        <circle cx="88" cy="70" r="0.7" class="mote m2" />
+        <circle cx="60" cy="95" r="0.8" class="mote m3" />
+        <circle cx="102" cy="110" r="0.6" class="mote m4" />
+        <circle cx="76" cy="125" r="0.8" class="mote m5" />
+      </g>
+
+      <!-- The Antique Open Codex (Resting on Lectern) -->
+      <g id="codex-book-group" class="codex-tome" transform="translate(0, 0)">
+        <!-- Leather Binding Edge / Trim Under Pages -->
+        <path
+          d="M 22,148 Q 50,154 78,149 L 78,74 Q 50,78 22,72 Z"
+          fill="url(#bk-leather)"
+          stroke="rgba(0, 0, 0, 0.6)"
+          stroke-width="1"
+        />
+        <path
+          d="M 138,148 Q 110,154 82,149 L 82,74 Q 110,78 138,72 Z"
+          fill="url(#bk-leather)"
+          stroke="rgba(0, 0, 0, 0.6)"
+          stroke-width="1"
+        />
+
+        <!-- Left Parchment Leaf -->
+        <path
+          d="M 25,145 Q 52,151 79,147 L 79,77 Q 52,81 25,75 Z"
+          fill="url(#bk-parchment-left)"
+          stroke="#b8893a"
+          stroke-width="0.75"
+          class="page-leaf left"
+        />
+
+        <!-- Right Parchment Leaf -->
+        <path
+          d="M 135,145 Q 108,151 81,147 L 81,77 Q 108,81 135,75 Z"
+          fill="url(#bk-parchment-right)"
+          stroke="#b8893a"
+          stroke-width="0.75"
+          class="page-leaf right"
+        />
+
+        <!-- Center Gutter Fold Shadow -->
+        <line
+          x1="80"
+          y1="75"
+          x2="80"
+          y2="148"
+          stroke="#0f0704"
+          stroke-width="2.5"
+        />
+        <line
+          x1="80"
+          y1="75"
+          x2="80"
+          y2="148"
+          stroke="rgba(231, 176, 79, 0.3)"
+          stroke-width="0.75"
+        />
+
+        <!-- Left Page Illuminated Marginalia & Text Lines -->
+        <g class="page-content left" stroke="rgba(247, 202, 117, 0.35)" stroke-width="0.75">
+          <!-- Gilded Drop Cap "Φ" (Philosophy) -->
+          <circle cx="36" cy="88" r="4.5" fill="none" stroke="url(#bk-gold)" stroke-width="1" />
+          <line x1="36" y1="81" x2="36" y2="95" stroke="url(#bk-gold)" stroke-width="1" />
+
+          <!-- Miniature Text Lines -->
+          <line x1="44" y1="86" x2="72" y2="86" />
+          <line x1="44" y1="91" x2="72" y2="91" />
+          <line x1="32" y1="100" x2="72" y2="100" />
+          <line x1="32" y1="106" x2="72" y2="106" />
+          <line x1="32" y1="112" x2="72" y2="112" />
+          <line x1="32" y1="118" x2="72" y2="118" />
+          <line x1="32" y1="124" x2="68" y2="124" />
+          <line x1="32" y1="130" x2="60" y2="130" />
+          <line x1="32" y1="136" x2="52" y2="136" />
+        </g>
+
+        <!-- Right Page Marginalia & Text Lines -->
+        <g class="page-content right" stroke="rgba(247, 202, 117, 0.35)" stroke-width="0.75">
+          <line x1="88" y1="86" x2="128" y2="86" />
+          <line x1="88" y1="91" x2="128" y2="91" />
+          <line x1="88" y1="100" x2="128" y2="100" />
+          <line x1="88" y1="106" x2="128" y2="106" />
+          <line x1="88" y1="112" x2="128" y2="112" />
+          <line x1="88" y1="118" x2="128" y2="118" />
+          <line x1="88" y1="124" x2="124" y2="124" />
+          <line x1="88" y1="130" x2="116" y2="130" />
+          <line x1="88" y1="136" x2="104" y2="136" />
+        </g>
+
+        <!-- Dynamic Silk Ribbon Bookmark (Cascading from Gutter) -->
+        <path
+          id="bk-ribbon-path"
+          d="M 80,76 Q 78,110 80,140 Q 82,156 80,165"
+          fill="none"
+          stroke="url(#bk-ribbon)"
+          stroke-width="3"
+          stroke-linecap="square"
+          class="silk-bookmark"
+        />
+        <!-- Gilded Chevron Tail of Ribbon -->
+        <polygon
+          id="bk-ribbon-tail"
+          points="78.5,164 80,168 81.5,164"
+          fill="#e7b04f"
+        />
+      </g>
+
+      <!-- Five Interactive Era Seals (Surrounding the Codex) -->
+      <!-- Era I: Antiquity (Top-Left) -->
+      <g
+        class="era-seal"
+        id="seal-era-1"
+        data-era="1"
+        data-tier="#tier-1"
+        tabindex="0"
+        role="button"
+        aria-label="Era I: Antiquity (800 BCE – 200 CE). Click to jump to Shelf Tier 1."
+      >
+        <circle cx="21" cy="62" r="9" class="seal-hit" />
+        <circle cx="21" cy="62" r="7.5" class="seal-ring" />
+        <text x="21" y="65" text-anchor="middle" class="seal-text">I</text>
+      </g>
+
+      <!-- Era II: Middle Ages & Renaissance (Mid-Left) -->
+      <g
+        class="era-seal"
+        id="seal-era-2"
+        data-era="2"
+        data-tier="#tier-2"
+        tabindex="0"
+        role="button"
+        aria-label="Era II: Middle Ages & Renaissance (400 – 1600 CE). Click to jump to Shelf Tier 2."
+      >
+        <circle cx="16" cy="116" r="9" class="seal-hit" />
+        <circle cx="16" cy="116" r="7.5" class="seal-ring" />
+        <text x="16" y="119" text-anchor="middle" class="seal-text">II</text>
+      </g>
+
+      <!-- Era III: Early Modernity & Enlightenment (Bottom-Center) -->
+      <g
+        class="era-seal"
+        id="seal-era-3"
+        data-era="3"
+        data-tier="#tier-3"
+        tabindex="0"
+        role="button"
+        aria-label="Era III: Early Modernity & Enlightenment (1630 – 1780 CE). Click to jump to Shelf Tier 3."
+      >
+        <circle cx="80" cy="154" r="9" class="seal-hit" />
+        <circle cx="80" cy="154" r="7.5" class="seal-ring" />
+        <text x="80" y="157" text-anchor="middle" class="seal-text">III</text>
+      </g>
+
+      <!-- Era IV: Idealism & 19th Century (Mid-Right) -->
+      <g
+        class="era-seal"
+        id="seal-era-4"
+        data-era="4"
+        data-tier="#tier-4"
+        tabindex="0"
+        role="button"
+        aria-label="Era IV: Idealism & The 19th Century (1780 – 1900 CE). Click to jump to Shelf Tier 4."
+      >
+        <circle cx="144" cy="116" r="9" class="seal-hit" />
+        <circle cx="144" cy="116" r="7.5" class="seal-ring" />
+        <text x="144" y="119" text-anchor="middle" class="seal-text">IV</text>
+      </g>
+
+      <!-- Era V: Society, Language & Modernity (Top-Right) -->
+      <g
+        class="era-seal"
+        id="seal-era-5"
+        data-era="5"
+        data-tier="#tier-5"
+        tabindex="0"
+        role="button"
+        aria-label="Era V: Society, Language & Modernity (1770 – 1955 CE). Click to jump to Shelf Tier 5."
+      >
+        <circle cx="139" cy="62" r="9" class="seal-hit" />
+        <circle cx="139" cy="62" r="7.5" class="seal-ring" />
+        <text x="139" y="65" text-anchor="middle" class="seal-text">V</text>
+      </g>
+
+      <!-- Articulated Brass Library Lamp (At Top of Arch) -->
+      <g class="library-lamp" id="bk-lamp-assembly">
+        <!-- Wall Mount & Articulated Arm -->
+        <rect x="76" y="24" width="8" height="4" rx="1" fill="url(#bk-gold)" />
+        <path
+          d="M 80,24 L 80,31"
+          stroke="url(#bk-gold)"
+          stroke-width="2.5"
+          stroke-linecap="round"
+        />
+
+        <!-- Brass Lamp Hood / Curved Shade -->
+        <path
+          d="M 64,34 Q 80,28 96,34 L 98,39 Q 80,36 62,39 Z"
+          fill="url(#bk-gold)"
+          stroke="#422906"
+          stroke-width="0.8"
+          class="lamp-hood"
+        />
+
+        <!-- Incandescent Filament Glow -->
+        <ellipse
+          cx="80"
+          cy="37"
+          rx="6"
+          ry="2"
+          fill="#fff"
+          class="lamp-filament"
+        />
+        <ellipse
+          cx="80"
+          cy="37"
+          rx="10"
+          ry="3.5"
+          fill="rgba(253, 226, 155, 0.65)"
+          class="lamp-halo"
+        />
+      </g>
+
+      <!-- Archival Brass Plaque Cartouche (Live Readout at Base) -->
+      <g class="codex-cartouche" id="bk-cartouche">
+        <rect
+          x="14"
+          y="178"
+          width="132"
+          height="24"
+          rx="2"
+          fill="#1c1109"
+          stroke="url(#bk-gold)"
+          stroke-width="1.2"
+        />
+        <circle cx="18" cy="190" r="1.5" fill="url(#bk-gold)" />
+        <circle cx="142" cy="190" r="1.5" fill="url(#bk-gold)" />
+
+        <text
+          x="80"
+          y="188"
+          text-anchor="middle"
+          id="bk-cartouche-title"
+          class="cartouche-title"
+        >
+          XXV VOLUMES
+        </text>
+        <text
+          x="80"
+          y="197"
+          text-anchor="middle"
+          id="bk-cartouche-sub"
+          class="cartouche-sub"
+        >
+          HOMER TO WITTGENSTEIN
+        </text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+  export {};
+
+  const widget = document.getElementById('library-codex');
+  const lightCone = document.getElementById('bk-light-cone');
+  const ribbonPath = document.getElementById('bk-ribbon-path');
+  const ribbonTail = document.getElementById('bk-ribbon-tail');
+  const cartoucheTitle = document.getElementById('bk-cartouche-title');
+  const cartoucheSub = document.getElementById('bk-cartouche-sub');
+
+  if (widget && lightCone && ribbonPath && ribbonTail && cartoucheTitle && cartoucheSub) {
+    const elLightCone = lightCone;
+    const elRibbonPath = ribbonPath;
+    const elRibbonTail = ribbonTail;
+    const elTitle = cartoucheTitle;
+    const elSub = cartoucheSub;
+
+    const seals: Record<number, SVGElement | null> = {
+      1: document.getElementById('seal-era-1') as unknown as SVGElement,
+      2: document.getElementById('seal-era-2') as unknown as SVGElement,
+      3: document.getElementById('seal-era-3') as unknown as SVGElement,
+      4: document.getElementById('seal-era-4') as unknown as SVGElement,
+      5: document.getElementById('seal-era-5') as unknown as SVGElement,
+    };
+
+    const eraInfo: Record<number, { title: string; sub: string }> = {
+      1: { title: 'ERA I · ANTIQUITY', sub: 'HOMER — M. AURELIUS' },
+      2: { title: 'ERA II · RENAISSANCE', sub: 'AUGUSTINE — MONTAIGNE' },
+      3: { title: 'ERA III · ENLIGHTENMENT', sub: 'DESCARTES — ROUSSEAU' },
+      4: { title: 'ERA IV · 19TH CENTURY', sub: 'KANT — NIETZSCHE' },
+      5: { title: 'ERA V · MODERNITY', sub: 'BURKE — WITTGENSTEIN' },
+    };
+
+    let activeEra: number | null = null;
+    let isHovered = false;
+
+    // Physics parameters for silk bookmark pendulum
+    let ribbonPos = 80;
+    let ribbonVelocity = 0;
+    let targetRibbonPos = 80;
+
+    // Light beam angle parameters
+    let beamLeft = 18;
+    let beamRight = 142;
+    let targetBeamLeft = 18;
+    let targetBeamRight = 142;
+
+    function setEra(eraNum: number | null) {
+      activeEra = eraNum;
+      Object.entries(seals).forEach(([numStr, el]) => {
+        if (!el) return;
+        const n = parseInt(numStr, 10);
+        if (n === eraNum) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+
+      if (eraNum && eraInfo[eraNum]) {
+        elTitle.textContent = eraInfo[eraNum].title;
+        elSub.textContent = eraInfo[eraNum].sub;
+      } else {
+        elTitle.textContent = 'XXV VOLUMES';
+        elSub.textContent = 'HOMER TO WITTGENSTEIN';
+      }
+    }
+
+    // Interactive mousemove across widget
+    widget.addEventListener('mousemove', (e: MouseEvent) => {
+      isHovered = true;
+      const rect = widget.getBoundingClientRect();
+      const normX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const normY = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+
+      // Steer lamp light cone towards cursor
+      const beamOffset = (normX - 0.5) * 24;
+      targetBeamLeft = 18 + beamOffset;
+      targetBeamRight = 142 + beamOffset;
+
+      // Bookmark ribbon reacts to horizontal movement
+      targetRibbonPos = 80 + (normX - 0.5) * 16;
+
+      // Check proximity to the 5 era seals if none directly hovered
+      const svgX = normX * 160;
+      const svgY = normY * 213;
+
+      const sealCoords: Record<number, { x: number; y: number }> = {
+        1: { x: 21, y: 62 },
+        2: { x: 16, y: 116 },
+        3: { x: 80, y: 154 },
+        4: { x: 144, y: 116 },
+        5: { x: 139, y: 62 },
+      };
+
+      let closestEra: number | null = null;
+      let minDist = 32; // activation radius
+      for (const [eraNum, coords] of Object.entries(sealCoords)) {
+        const num = parseInt(eraNum, 10);
+        const dist = Math.hypot(svgX - coords.x, svgY - coords.y);
+        if (dist < minDist) {
+          minDist = dist;
+          closestEra = num;
+        }
+      }
+
+      if (closestEra !== activeEra) {
+        setEra(closestEra);
+      }
+    });
+
+    widget.addEventListener('mouseleave', () => {
+      isHovered = false;
+      targetBeamLeft = 18;
+      targetBeamRight = 142;
+      targetRibbonPos = 80;
+      setEra(null);
+    });
+
+    // Wire click on seals to jump to bookcase shelf tier
+    Object.entries(seals).forEach(([, el]) => {
+      if (!el) return;
+      const tierId = el.getAttribute('data-tier');
+      el.addEventListener('click', () => {
+        if (tierId) {
+          const targetSection = document.querySelector(tierId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      });
+      el.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (tierId) {
+            const targetSection = document.querySelector(tierId);
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        }
+      });
+    });
+
+    // Animation Loop for fluid spring damping
+    let idleTick = 0;
+    function animate() {
+      // Spring physics for bookmark ribbon
+      const force = (targetRibbonPos - ribbonPos) * 0.12;
+      ribbonVelocity = ribbonVelocity * 0.82 + force;
+      ribbonPos += ribbonVelocity;
+
+      // Smooth interpolation for light beam
+      beamLeft += (targetBeamLeft - beamLeft) * 0.1;
+      beamRight += (targetBeamRight - beamRight) * 0.1;
+
+      // Apply light cone coordinates
+      elLightCone.setAttribute('points', `80,32 ${beamLeft.toFixed(1)},175 ${beamRight.toFixed(1)},175`);
+
+      // Idle gentle breeze on ribbon if not hovered
+      if (!isHovered) {
+        idleTick += 0.035;
+        const idleWave = Math.sin(idleTick) * 3;
+        const currentMidX = 80 + idleWave * 0.6;
+        const currentEndX = 80 + idleWave;
+        elRibbonPath.setAttribute(
+          'd',
+          `M 80,76 Q ${currentMidX.toFixed(1)},110 80,140 Q ${(80 - idleWave * 0.4).toFixed(1)},156 ${currentEndX.toFixed(1)},165`
+        );
+        elRibbonTail.setAttribute(
+          'points',
+          `${(currentEndX - 1.5).toFixed(1)},164 ${currentEndX.toFixed(1)},168 ${(currentEndX + 1.5).toFixed(1)},164`
+        );
+      } else {
+        const midX = (80 + ribbonPos) / 2;
+        elRibbonPath.setAttribute(
+          'd',
+          `M 80,76 Q ${midX.toFixed(1)},110 80,140 Q ${ribbonPos.toFixed(1)},156 ${ribbonPos.toFixed(1)},165`
+        );
+        elRibbonTail.setAttribute(
+          'points',
+          `${(ribbonPos - 1.5).toFixed(1)},164 ${ribbonPos.toFixed(1)},168 ${(ribbonPos + 1.5).toFixed(1)},164`
+        );
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  }
+</script>
+
+<style>
+  .book-glyph-widget {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+    max-width: 100%;
+    aspect-ratio: 160 / 213;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+  }
+
+  .codex-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    transition: filter 0.25s var(--ease-out);
+  }
+
+  .book-glyph-widget:hover .codex-frame {
+    filter: drop-shadow(0 8px 24px rgba(231, 176, 79, 0.28));
+  }
+
+  .codex-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+
+  /* Curatorial Top Tag */
+  .codex-curatorial-tag {
+    font-family: var(--font-mono);
+    font-size: 6px;
+    font-weight: 700;
+    fill: #e7b04f;
+    letter-spacing: 0.12em;
+    opacity: 0.85;
+  }
+
+  /* Light Cone */
+  .light-cone {
+    mix-blend-mode: screen;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Floating Dust Motes */
+  .dust-motes .mote {
+    animation: mote-float 4s infinite ease-in-out;
+  }
+  .dust-motes .m1 { animation-delay: 0s; }
+  .dust-motes .m2 { animation-delay: 0.8s; }
+  .dust-motes .m3 { animation-delay: 1.6s; }
+  .dust-motes .m4 { animation-delay: 2.4s; }
+  .dust-motes .m5 { animation-delay: 3.2s; }
+
+  @keyframes mote-float {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translateY(-5px);
+      opacity: 0.75;
+    }
+  }
+
+  /* Lamp Filament Breathing */
+  .lamp-filament {
+    animation: filament-glow 3s infinite ease-in-out;
+  }
+  .lamp-halo {
+    animation: halo-pulse 3s infinite ease-in-out;
+  }
+
+  @keyframes filament-glow {
+    0%, 100% {
+      fill: #ffffff;
+      opacity: 0.85;
+    }
+    50% {
+      fill: #fff7d9;
+      opacity: 1;
+    }
+  }
+
+  @keyframes halo-pulse {
+    0%, 100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+
+  /* Five Interactive Era Seals */
+  .era-seal {
+    cursor: pointer;
+    outline: none;
+  }
+  .seal-hit {
+    fill: transparent;
+  }
+  .seal-ring {
+    fill: #190d07;
+    stroke: rgba(231, 176, 79, 0.4);
+    stroke-width: 1;
+    transition: stroke 0.2s, fill 0.2s, transform 0.2s;
+  }
+  .seal-text {
+    font-family: var(--font-display);
+    font-size: 7.5px;
+    font-weight: 700;
+    fill: #f5edd8;
+    transition: fill 0.2s;
+    pointer-events: none;
+  }
+
+  .era-seal:hover .seal-ring,
+  .era-seal:focus-visible .seal-ring,
+  .era-seal.active .seal-ring {
+    fill: #3b220d;
+    stroke: #f7ca75;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 4px rgba(247, 202, 117, 0.6));
+  }
+  .era-seal:hover .seal-text,
+  .era-seal:focus-visible .seal-text,
+  .era-seal.active .seal-text {
+    fill: #ffd885;
+  }
+
+  /* Cartouche Base Plaque */
+  .cartouche-title {
+    font-family: var(--font-mono);
+    font-size: 6.5px;
+    font-weight: 700;
+    fill: #f7ca75;
+    letter-spacing: 0.08em;
+  }
+  .cartouche-sub {
+    font-family: var(--font-mono);
+    font-size: 5px;
+    font-weight: 700;
+    fill: #bda886;
+    letter-spacing: 0.05em;
+  }
+
+  /* Reduced Motion Mode */
+  @media (prefers-reduced-motion: reduce) {
+    .dust-motes .mote,
+    .lamp-filament,
+    .lamp-halo {
+      animation: none;
+    }
+  }
+  :global([data-motion='off']) .dust-motes .mote,
+  :global([data-motion='off']) .lamp-filament,
+  :global([data-motion='off']) .lamp-halo {
+    animation: none;
+  }
+</style>
