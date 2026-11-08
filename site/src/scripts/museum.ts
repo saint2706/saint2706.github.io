@@ -100,13 +100,13 @@ if (dataEl && dialog) {
     show(0);
   }
 
-  document.querySelectorAll<HTMLAnchorElement>('a[data-view]').forEach(a =>
-    a.addEventListener('click', e => {
+  document.querySelectorAll<HTMLElement>('[data-view]').forEach(el =>
+    el.addEventListener('click', e => {
       // Let modified clicks open the full page in a new tab as usual.
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
-      opener = a;
-      open(works.findIndex(x => x.slug === a.dataset.view));
+      opener = el;
+      open(works.findIndex(x => x.slug === el.dataset.view));
     })
   );
 

@@ -13,8 +13,11 @@ const bySlug = (s: string | undefined) => paintings.find(x => x.slug === s);
 const prev = bySlug(order[i - 1]);
 const next = bySlug(order[i + 1]);
 const room = gallery.rooms.find(r => r.works.includes(p.slug))!;
+const prevRoom = prev ? gallery.rooms.find(r => r.works.includes(prev.slug)) : null;
+const nextRoom = next ? gallery.rooms.find(r => r.works.includes(next.slug)) : null;
 const source = (id: string | null | undefined) => p.sources.find(s => s.id === id);
 const imgSource = source(p.image.source);
+
 // Marker overlay in image pixels, so badge text keeps its shape (inline style attributes would break the CSP).
 const [W, H] = [p.image.width, p.image.height];
 const B = Math.round(W / 40);
@@ -25,76 +28,214 @@ const B = Math.round(W / 40);
   description={`${p.title} (${p.date}) by ${p.artist}: details, context, two readings and a question.`}
   space="per"
 >
-  <p class="crumb"><a href="/personal/art/">Art and myth</a> · Room {room.numeral}, {room.name}</p>
-  <header class="head">
-    <h1>{p.title}</h1>
-    <p class="by">{p.artist}, {p.date}</p>
-    {p.note && <p class="meta">{p.note}</p>}
+  <!-- Architectural Room Breadcrumb -->
+  <nav class="monograph-crumb" aria-label="Curatorial Breadcrumb">
+    <a href="/personal/art/" class="crumb-link">Art and myth</a>
+    <span class="crumb-sep" aria-hidden="true">/</span>
+    <span class="crumb-room">Hall {room.numeral}: {room.name}</span>
+    <span class="crumb-sep" aria-hidden="true">/</span>
+    <span class="crumb-acc">Cat. {String(p.n).padStart(2, '0')}</span>
+  </nav>
+
+  <!-- Editorial Monograph Header -->
+  <header class="monograph-head">
+    <div class="head-eyebrow">
+      <span class="hall-tag">ROOM {room.numeral} · {room.name.toUpperCase()}</span>
+      <span class="date-tag">{p.date}</span>
+    </div>
+    <h1 class="monograph-title">{p.title}</h1>
+    <p class="monograph-by">{p.artist}</p>
+    {p.note && <div class="curatorial-attribution-note">{p.note}</div>}
   </header>
 
-  <figure class="work">
-    <div class="frame">
-      <img src={p.image.src} width={p.image.width} height={p.image.height} alt={`${p.title}, ${p.artist}`} />
-      <svg class="marks" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
-        {
-          p.details.map((d, n) => {
-            const [x, y, w, h] = [(d.rect[0] * W) / 100, (d.rect[1] * H) / 100, (d.rect[2] * W) / 100, (d.rect[3] * H) / 100];
-            return (
-              <g>
-                <rect x={x} y={y} width={w} height={h} />
-                <rect class="badge" x={x} y={y} width={B * 1.4} height={B * 1.4} />
-                <text x={x + B * 0.7} y={y + B} text-anchor="middle" font-size={B}>
-                  {n + 1}
-                </text>
-              </g>
-            );
-          })
-        }
-      </svg>
+  <!-- Physical Picture Frame with Track Lighting -->
+  <figure class="monograph-stage">
+    <div class="frame-spotlight">
+      <div class="frame-outer">
+        <div class="frame-fillet">
+          <div class="frame-mat">
+            <div class="frame-canvas">
+              <img
+                src={p.image.src}
+                width={p.image.width}
+                height={p.image.height}
+                alt={`${p.title}, by ${p.artist}`}
+                loading="eager"
+                decoding="async"
+              />
+              <svg class="marks" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+                {
+                  p.details.map((d, n) => {
+                    const [x, y, w, h] = [(d.rect[0] * W) / 100, (d.rect[1] * H) / 100, (d.rect[2] * W) / 100, (d.rect[3] * H) / 100];
+                    return (
+                      <g class="mark-group">
+                        <rect class="mark-box" x={x} y={y} width={w} height={h} rx={4} />
+                        <rect class="mark-badge" x={x} y={y} width={B * 1.5} height={B * 1.5} rx={3} />
+                        <text x={x + B * 0.75} y={y + B * 1.08} text-anchor="middle" font-size={B}>
+                          {n + 1}
+                        </text>
+                      </g>
+                    );
+                  })
+                }
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <label class="toggle"><input type="checkbox" /> Show where the details are</label>
-    <figcaption>
-      {p.artist}, <cite>{p.title}</cite>, {p.date}. {p.medium}, {p.dims}. {p.holder}, {p.holderRef}.
-      <span class="credit">
-        {p.image.credit}
-        {imgSource && <a href={imgSource.url}>Image source</a>}
-      </span>
-    </figcaption>
+
+    <!-- Hotspot Toggle Control -->
+    <div class="stage-toolbar">
+      <label class="hotspot-toggle">
+        <input type="checkbox" id="hotspot-switch" />
+        <span class="toggle-track"></span>
+        <span class="toggle-label">Show detail coordinates & focal rectangles</span>
+      </label>
+      <span class="stage-dims-note">{p.dims} (original scale)</span>
+    </div>
+
+    <!-- Interactive Detail Crop Ribbon -->
+    <nav class="detail-ribbon" aria-label="Painting focal details ribbon">
+      <div class="ribbon-summary">
+        <span class="ribbon-count">{p.details.length}</span>
+        <span class="ribbon-label">Details</span>
+      </div>
+      <div class="ribbon-scroll">
+        {
+          p.details.map((d, idx) => (
+            <a href={`#detail-${idx + 1}`} class="ribbon-chip" title={`Examine Detail ${idx + 1}: ${d.label}`}>
+              <span class="chip-frame">
+                <img src={d.src} width={d.width} height={d.height} alt="" loading="lazy" decoding="async" />
+              </span>
+              <div class="chip-info">
+                <span class="chip-badge">0{idx + 1}</span>
+                <span class="chip-title">{d.label}</span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    <!-- Museum Accession Wall Plaque (Cartellino) -->
+    <div class="accession-plaque" aria-label="Museum accession record">
+      <div class="plaque-frieze">
+        <span class="plaque-stamp">CURATORIAL ACCESSION RECORD</span>
+        <span class="plaque-hall">HALL {room.numeral}: {room.name} · CAT. {String(p.n).padStart(2, '0')}</span>
+      </div>
+
+      <div class="plaque-body">
+        <div class="plaque-meta-grid">
+          <div class="plaque-item">
+            <span class="plaque-k">ARTIST</span>
+            <span class="plaque-v">{p.artist}</span>
+          </div>
+          <div class="plaque-item">
+            <span class="plaque-k">DATE</span>
+            <span class="plaque-v">{p.date}</span>
+          </div>
+          <div class="plaque-item">
+            <span class="plaque-k">MEDIUM</span>
+            <span class="plaque-v">{p.medium}</span>
+          </div>
+          <div class="plaque-item">
+            <span class="plaque-k">DIMENSIONS</span>
+            <span class="plaque-v">{p.dims}</span>
+          </div>
+        </div>
+
+        <div class="plaque-holder-row">
+          <span class="plaque-k">CURRENT REPOSITORY</span>
+          <span class="plaque-v-bold">{p.holder} — <span class="plaque-ref">{p.holderRef}</span></span>
+        </div>
+
+        <div class="plaque-provenance">
+          <p class="plaque-credit">{p.image.credit}</p>
+          <div class="plaque-links">
+            {imgSource && (
+              <a href={imgSource.url} class="plaque-link" target="_blank" rel="noopener noreferrer">
+                Official Image Repository ↗
+              </a>
+            )}
+            {p.view && (
+              <a href={p.view.u} class="plaque-link" target="_blank" rel="noopener noreferrer">
+                {p.view.label} ↗
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   </figure>
 
-  <section class="part" aria-labelledby="look">
-    <h2 id="look">Look first</h2>
-    <p class="lead">{p.look}</p>
+  <!-- Look First Section -->
+  <section class="monograph-section look-section" aria-labelledby="look">
+    <div class="section-tag-row">
+      <span class="section-pill">INVITATION TO SEE</span>
+      <span class="section-rule" aria-hidden="true"></span>
+    </div>
+    <h2 id="look" class="section-heading">Look first</h2>
+    <p class="look-lead">{p.look}</p>
+    <p class="look-hint">
+      Before consulting the historical scholarship or readings below, take in the whole visual plane.
+      Notice where your gaze travels first—and what was made quiet.
+    </p>
   </section>
 
-  <section class="part" aria-labelledby="details">
-    <h2 id="details">Details</h2>
-    <ol class="details">
+  <!-- Curated Details Deep-Dive -->
+  <section class="monograph-section" aria-labelledby="details">
+    <div class="section-tag-row">
+      <span class="section-pill">MICROSCOPIC EXAMINATION</span>
+      <span class="section-count">{p.details.length} focal points catalogued</span>
+    </div>
+    <h2 id="details" class="section-heading">Details under the loupe</h2>
+    <p class="section-lead">
+      Move through the composition in high resolution. Each numbered crop highlights a deliberate
+      decision in framing, light, peripheral presence, or symbolic subversion.
+    </p>
+
+    <div class="details-dossier">
       {
-        p.details.map(d => (
-          <li>
-            <img src={d.src} width={d.width} height={d.height} alt="" loading="lazy" decoding="async" />
-            <h3>{d.label}</h3>
-            <p>{d.text}</p>
-          </li>
+        p.details.map((d, idx) => (
+          <article id={`detail-${idx + 1}`} class="detail-card">
+            <div class="detail-crop-stage">
+              <div class="detail-crop-frame">
+                <img src={d.src} width={d.width} height={d.height} alt={d.label} loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div class="detail-narrative">
+              <div class="detail-meta-bar">
+                <span class="detail-num-badge">DETAIL 0{idx + 1}</span>
+                <span class="detail-rect-spec">COORDINATES: [{d.rect.join(', ')}]</span>
+              </div>
+              <h3 class="detail-title">{d.label}</h3>
+              <p class="detail-text">{d.text}</p>
+            </div>
+          </article>
         ))
       }
-    </ol>
+    </div>
   </section>
 
+  <!-- Chronicle / Story (e.g. Sabhaparvan in Draupadi) -->
   {
     p.story && (
-      <section class="part" aria-labelledby="story">
-        <h2 id="story">The dice hall</h2>
-        <p>
+      <section class="monograph-section story-section" aria-labelledby="story">
+        <div class="section-tag-row">
+          <span class="section-pill">TEXTUAL CHRONICLE</span>
+          <span class="section-count">Sabhaparvan Narrative</span>
+        </div>
+        <h2 id="story" class="section-heading">The dice hall</h2>
+        <p class="section-lead">
           From the Sabhaparvan, the second book of the Mahabharata. Steps marked <strong>Later retellings</strong> come
           from outside the critical edition of the Sanskrit text.
         </p>
-        <ol class="story">
+        <ol class="story-chronicle">
           {p.story.map(s => (
             <li class={s.kind}>
-              {s.kind === 'ret' && <strong class="rt">Later retellings</strong>}
-              {s.text}
+              {s.kind === 'ret' && <span class="story-ret-badge">LATER RETELLINGS</span>}
+              <p class="story-text">{s.text}</p>
             </li>
           ))}
         </ol>
@@ -102,173 +243,361 @@ const B = Math.round(W / 40);
     )
   }
 
-  <section class="part" aria-labelledby="context">
-    <h2 id="context">Context</h2>
-    <ul class="claims">
+  <!-- Historical Context & Documentary Evidence -->
+  <section class="monograph-section" aria-labelledby="context">
+    <div class="section-tag-row">
+      <span class="section-pill">ARCHIVAL EVIDENCE</span>
+      <span class="section-count">{p.context.length} contextual records</span>
+    </div>
+    <h2 id="context" class="section-heading">Context</h2>
+    <ul class="claims-list">
       {
         p.context.map(c => {
           const s = source(c.source);
           return (
-            <li>
-              <span class={`tag tag-${c.tag}`}>{c.label}</span>
-              <p>
-                {c.text}
+            <li class="claim-item">
+              <div class="claim-tag-row">
+                <span class={`tag tag-${c.tag}`}>{c.label}</span>
                 {s && (
-                  <>
-                    {' '}
-                    <a class="src" href={s.url}>
-                      Source
-                    </a>
-                  </>
+                  <a class="claim-src" href={s.url} target="_blank" rel="noopener noreferrer">
+                    Verified Citation ↗
+                  </a>
                 )}
-              </p>
+              </div>
+              <p class="claim-text">{c.text}</p>
             </li>
           );
         })
       }
     </ul>
+
     {
       p.quote && (
-        <blockquote>
-          <p lang="es">{p.quote.es}</p>
-          <p>{p.quote.en}</p>
-          <footer class="meta">{p.quote.cite}</footer>
+        <blockquote class="archival-quote">
+          <p class="quote-es" lang="es">“{p.quote.es}”</p>
+          <p class="quote-en">“{p.quote.en}”</p>
+          <footer class="quote-footer">
+            <cite class="quote-cite">{p.quote.cite}</cite>
+          </footer>
         </blockquote>
       )
     }
   </section>
 
-  <section class="part" aria-labelledby="readings">
-    <h2 id="readings">Two readings</h2>
-    <div class="readings">
+  <!-- Two Readings (The Central Debate) -->
+  <section class="monograph-section readings-section" aria-labelledby="readings">
+    <div class="section-tag-row">
+      <span class="section-pill">COMPETING HISTORIOGRAPHY</span>
+      <span class="section-count">Two Readings</span>
+    </div>
+    <h2 id="readings" class="section-heading">Two readings</h2>
+    <p class="section-lead">
+      Art historical scholarship is not a single consensus. Below are two competing interpretations of this work,
+      grounded in physical and documentary evidence.
+    </p>
+
+    <div class="readings-grid">
       {
-        p.readings.map(r => (
-          <article>
-            <span class={`tag tag-${r.tag}`}>{r.label}</span>
-            <h3>{r.name}</h3>
-            <dl>
-              <dt>Evidence</dt>
-              <dd>{r.evidence}</dd>
-              <dt>What it shows</dt>
-              <dd>{r.lit}</dd>
-              <dt>What it leaves open</dt>
-              <dd>{r.open}</dd>
+        p.readings.map((r, idx) => (
+          <article class="reading-card">
+            <div class="reading-header">
+              <span class={`tag tag-${r.tag}`}>{r.label}</span>
+              <span class="reading-letter">READING {idx === 0 ? 'A' : 'B'}</span>
+            </div>
+            <h3 class="reading-name">{r.name}</h3>
+
+            <dl class="reading-dl">
+              <div class="reading-row">
+                <dt>Physical & Archival Evidence</dt>
+                <dd>{r.evidence}</dd>
+              </div>
+              <div class="reading-row">
+                <dt>What this reading reveals</dt>
+                <dd>{r.lit}</dd>
+              </div>
+              <div class="reading-row open-field">
+                <dt>What it leaves open / unanswered</dt>
+                <dd>{r.open}</dd>
+              </div>
             </dl>
           </article>
         ))
       }
     </div>
+
     {
       p.extra && (
-        <article class="extra">
-          <span class={`tag tag-${p.extra.tag}`}>{p.extra.label}</span>
-          <h3>{p.extra.name}</h3>
-          <p>{p.extra.text}</p>
+        <article class="extra-card">
+          <div class="reading-header">
+            <span class={`tag tag-${p.extra.tag}`}>{p.extra.label}</span>
+            <span class="reading-letter">SCHOLARLY ADDENDUM</span>
+          </div>
+          <h3 class="reading-name">{p.extra.name}</h3>
+          <p class="extra-text">{p.extra.text}</p>
         </article>
       )
     }
   </section>
 
+  <!-- Under the Paint (Technical Examination) -->
   {
     p.technical && (
-      <section class="part" aria-labelledby="technical">
-        <h2 id="technical">Under the paint</h2>
-        <ul class="plain-list">
+      <section class="monograph-section" aria-labelledby="technical">
+        <div class="section-tag-row">
+          <span class="section-pill">FORENSIC CONSERVATION</span>
+          <span class="section-count">Material Analysis</span>
+        </div>
+        <h2 id="technical" class="section-heading">Under the paint</h2>
+        <ul class="technical-list">
           {p.technical.map(t => (
             <li>{t}</li>
           ))}
         </ul>
-        {p.technicalNote && <p class="aside">{p.technicalNote}</p>}
+        {p.technicalNote && <p class="technical-aside">{p.technicalNote}</p>}
       </section>
     )
   }
 
-  <section class="part question" aria-labelledby="question">
-    <h2 id="question">The question</h2>
-    <p class="q">{p.question}</p>
+  <!-- The Climactic Question -->
+  <section class="monograph-section question-section" aria-labelledby="question">
+    <div class="question-banner">
+      <span class="question-pill">THE QUESTION TO ARGUE ABOUT</span>
+      <h2 id="question" class="question-heading">{p.question}</h2>
+    </div>
+
     {
       p.follow.length > 0 && (
-        <ul class="plain-list">
-          {p.follow.map(f => (
-            <li>{f}</li>
-          ))}
-        </ul>
+        <div class="question-follow">
+          <h3 class="sub-heading">Follow-up inquiries</h3>
+          <ul class="inquiry-list">
+            {p.follow.map(f => (
+              <li>{f}</li>
+            ))}
+          </ul>
+        </div>
       )
     }
+
     {
       p.ladder && (
-        <>
-          <h3>Who is responsible?</h3>
-          <ol class="plain-list">
-            {p.ladder.map(l => (
-              <li>{l}</li>
+        <div class="question-ladder">
+          <h3 class="sub-heading">Who is responsible? (The Moral Ladder)</h3>
+          <ol class="ladder-list">
+            {p.ladder.map((l, idx) => (
+              <li class="ladder-item">
+                <span class="ladder-rank">{String(idx + 1).padStart(2, '0')}</span>
+                <span class="ladder-text">{l}</span>
+              </li>
             ))}
           </ol>
-        </>
+        </div>
       )
     }
-    <h3>Push back</h3>
-    <p>{p.counter}</p>
-    <h3>Now</h3>
-    <p>{p.now}</p>
-    <figure class="focus">
-      <img src={p.focus.src} width={p.focus.width} height={p.focus.height} alt="" loading="lazy" decoding="async" />
-      <figcaption>{p.focus.caption}</figcaption>
+
+    <div class="dialectic-grid">
+      <div class="dialectic-card pushback">
+        <h3 class="sub-heading">Push back</h3>
+        <p class="dialectic-text">{p.counter}</p>
+      </div>
+
+      <div class="dialectic-card now">
+        <h3 class="sub-heading">Now</h3>
+        <p class="dialectic-text">{p.now}</p>
+      </div>
+    </div>
+
+    <figure class="focus-figure">
+      <div class="focus-frame">
+        <img src={p.focus.src} width={p.focus.width} height={p.focus.height} alt="" loading="lazy" decoding="async" />
+      </div>
+      <figcaption class="focus-caption">{p.focus.caption}</figcaption>
     </figure>
   </section>
 
-  <section class="part" aria-labelledby="sources">
-    <h2 id="sources">Sources</h2>
-    <ul class="plain-list sources">
+  <!-- Sources & Image Provenance -->
+  <section class="monograph-section" aria-labelledby="sources">
+    <div class="section-tag-row">
+      <span class="section-pill">BIBLIOGRAPHY</span>
+      <span class="section-count">Verified Sources</span>
+    </div>
+    <h2 id="sources" class="section-heading">Sources</h2>
+    <ul class="sources-list">
       {
         p.sources.map(s => (
           <li>
-            <a href={s.url}>{s.title}</a>
+            <a href={s.url} target="_blank" rel="noopener noreferrer">
+              {s.title}
+              <span class="src-ext" aria-hidden="true"> ↗</span>
+            </a>
           </li>
         ))
       }
       {
         p.view && (
           <li>
-            <a href={p.view.u}>{p.view.label}</a>
+            <a href={p.view.u} target="_blank" rel="noopener noreferrer">
+              {p.view.label}
+              <span class="src-ext" aria-hidden="true"> ↗</span>
+            </a>
           </li>
         )
       }
     </ul>
   </section>
 
-  <nav class="next" aria-label="Paintings">
-    {prev && <a href={`/personal/art/${prev.slug}/`}>Previous: {prev.title}</a>}
-    {next && <a href={`/personal/art/${next.slug}/`}>Next: {next.title}</a>}
-    <a href="/personal/art/">All paintings</a>
+  <!-- Architectural Room Bridges (Navigation) -->
+  <nav class="room-bridge-nav" aria-label="Museum Navigation Bridges">
+    <div class="bridge-grid">
+      {
+        prev ? (
+          <a href={`/personal/art/${prev.slug}/`} class="bridge-card prev">
+            <span class="bridge-dir">‹ PREVIOUS WORK IN HALL {prevRoom?.numeral}</span>
+            <span class="bridge-title">{prev.title}</span>
+            <span class="bridge-artist">{prev.artist}, {prev.date}</span>
+          </a>
+        ) : (
+          <div class="bridge-card terminus">
+            <span class="bridge-dir">COLLECTION OPENING</span>
+            <span class="bridge-title">Room I Entrance</span>
+          </div>
+        )
+      }
+
+      <a href="/personal/art/" class="bridge-card hub">
+        <span class="bridge-dir">EXHIBITION OVERVIEW</span>
+        <span class="bridge-title">All 7 Works on View</span>
+        <span class="bridge-artist">Rooms I – IV</span>
+      </a>
+
+      {
+        next ? (
+          <a href={`/personal/art/${next.slug}/`} class="bridge-card next">
+            <span class="bridge-dir">NEXT WORK IN HALL {nextRoom?.numeral} ›</span>
+            <span class="bridge-title">{next.title}</span>
+            <span class="bridge-artist">{next.artist}, {next.date}</span>
+          </a>
+        ) : (
+          <div class="bridge-card terminus">
+            <span class="bridge-dir">COLLECTION CLIMAX</span>
+            <span class="bridge-title">Room IV Conclusion</span>
+          </div>
+        )
+      }
+    </div>
   </nav>
 </Base>
 
 <style>
-  .crumb {
-    margin: 0 0 var(--space-3);
-    font-size: var(--text-n1);
+  /* Curatorial Breadcrumb */
+  .monograph-crumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 var(--space-4);
+    font: var(--text-n1) / 1.4 var(--font-mono);
+    color: var(--color-ink-2);
   }
-  .head h1 {
+  .crumb-link {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .crumb-link:hover,
+  .crumb-link:focus-visible {
+    text-decoration: underline;
+  }
+  .crumb-sep {
+    color: var(--per-rule);
+    user-select: none;
+  }
+  .crumb-room {
+    color: var(--color-ink);
+  }
+  .crumb-acc {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* Monograph Header */
+  .monograph-head {
+    margin-bottom: var(--space-5);
+    max-width: 78ch;
+  }
+  .head-eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+  .hall-tag {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+  .date-tag {
+    font: 0.75rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .monograph-title {
     margin: 0;
     font: var(--text-5) / 1.05 var(--font-display);
+    color: var(--color-ink);
   }
-  .head .by {
+  .monograph-by {
     margin: var(--space-2) 0 0;
-    font-size: var(--text-1);
+    font: var(--text-1) / 1.4 var(--font-body);
+    color: var(--color-accent);
   }
-  .work {
-    margin: var(--space-5) 0 0;
+  .curatorial-attribution-note {
+    margin-top: var(--space-3);
+    padding: 8px 12px;
+    border-left: 2px solid var(--per-rule);
+    background: var(--per-surface);
+    font: italic var(--text-n1) / 1.45 var(--font-body);
+    color: var(--color-ink-2);
   }
-  .frame {
+
+  /* Physical Picture Frame & Stage */
+  .monograph-stage {
+    margin: var(--space-5) 0 var(--space-6);
+  }
+  .frame-spotlight {
     position: relative;
-    width: fit-content;
-    max-width: 100%;
-    border: 2px solid var(--color-ink);
-    background: var(--color-surface);
-    padding: 12px;
+    padding: var(--space-6) var(--space-4);
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 0%, rgba(231, 176, 79, 0.14), transparent 75%),
+      #120a15;
+    border: 1px solid var(--per-rule);
+    border-bottom: 5px solid #0d060f;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
   }
-  .frame img {
+  .frame-outer {
+    max-width: 100%;
+    background: #140d17;
+    border: 4px solid #2d1e33;
+    padding: 8px;
+    box-shadow:
+      inset 0 0 0 1px #0a040d,
+      0 20px 40px rgba(0, 0, 0, 0.7);
+  }
+  .frame-fillet {
+    border: 2px solid #b8893a;
+    padding: 4px;
+    background: #1d1222;
+  }
+  .frame-mat {
+    padding: 12px;
+    background: #241628;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.7);
+  }
+  .frame-canvas {
+    position: relative;
+    display: block;
+    max-width: 100%;
+  }
+  .frame-canvas img {
     display: block;
     max-width: 100%;
     height: auto;
@@ -278,180 +607,701 @@ const B = Math.round(W / 40);
   .marks {
     display: none;
     position: absolute;
-    top: 12px;
-    left: 12px;
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
-  .work:has(.toggle input:checked) .marks {
+  .monograph-stage:has(#hotspot-switch:checked) .marks {
     display: block;
   }
-  .marks rect {
+  .mark-box {
     fill: none;
     stroke: var(--color-accent);
     stroke-width: 3px;
+    stroke-dasharray: 6 4;
     vector-effect: non-scaling-stroke;
   }
-  .marks .badge {
+  .mark-badge {
     fill: var(--color-accent);
   }
   .marks text {
-    fill: var(--color-canvas);
+    fill: #120c14;
     font-family: var(--font-mono);
+    font-weight: 700;
   }
-  .toggle {
-    display: inline-flex;
-    gap: 8px;
+
+  /* Stage Toolbar & Hotspot Switch */
+  .stage-toolbar {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    min-height: 44px;
-    margin-top: var(--space-2);
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+    padding: 8px var(--space-3);
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+  }
+  .hotspot-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .hotspot-toggle input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-accent);
     cursor: pointer;
   }
-  .toggle input {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--color-accent);
+  .toggle-label {
+    font: 700 0.8rem / 1 var(--font-mono);
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
   }
-  .work figcaption {
-    max-width: 70ch;
-    font-size: var(--text-n1);
+  .stage-dims-note {
+    font: 0.75rem / 1 var(--font-mono);
     color: var(--color-ink-2);
   }
-  .credit {
+
+  /* Interactive Detail Crop Ribbon */
+  .detail-ribbon {
+    margin-top: var(--space-3);
+    border: 1px solid var(--per-rule);
+    background: #19101c;
+    padding: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    overflow: hidden;
+  }
+  .ribbon-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: var(--space-3);
+    border-right: 1px solid var(--per-rule);
+    min-width: 60px;
+  }
+  .ribbon-count {
+    font: 700 1.25rem / 1 var(--font-mono);
+    color: var(--color-accent);
+  }
+  .ribbon-label {
+    font: 0.7rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+  .ribbon-scroll {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+  .ribbon-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+    text-decoration: none;
+    color: var(--color-ink);
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .ribbon-chip:hover,
+  .ribbon-chip:focus-visible {
+    border-color: var(--color-accent);
+    background: rgba(231, 176, 79, 0.08);
+  }
+  .chip-frame {
     display: block;
-    margin-top: var(--space-1);
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b8893a;
+    background: #140d17;
+    overflow: hidden;
+    flex-shrink: 0;
   }
-  .part {
+  .chip-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .chip-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 80px;
+  }
+  .chip-badge {
+    font: 700 0.7rem / 1 var(--font-mono);
+    color: var(--color-accent);
+  }
+  .chip-title {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  /* Museum Accession Wall Plaque */
+  .accession-plaque {
+    margin-top: var(--space-4);
+    border: 1px solid var(--per-rule);
+    border-top: 3px solid #b8893a;
+    background: var(--per-surface);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+  .plaque-frieze {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px var(--space-4);
+    border-bottom: 1px solid var(--per-rule);
+    background: rgba(231, 176, 79, 0.06);
+  }
+  .plaque-stamp {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+  .plaque-hall {
+    font: 0.75rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .plaque-body {
+    padding: var(--space-4);
+  }
+  .plaque-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--per-rule);
+  }
+  .plaque-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .plaque-k {
+    font: 700 0.7rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+    letter-spacing: 0.06em;
+  }
+  .plaque-v {
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    line-height: 1.35;
+  }
+  .plaque-holder-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--space-3);
+  }
+  .plaque-v-bold {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .plaque-ref {
+    font-weight: 400;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-ink-2);
+  }
+  .plaque-provenance {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--per-rule);
+  }
+  .plaque-credit {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-ink-2);
+    max-width: 65ch;
+  }
+  .plaque-links {
+    display: flex;
+    gap: var(--space-3);
+  }
+  .plaque-link {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  /* Monograph Sections */
+  .monograph-section {
     margin-top: var(--space-6);
-    max-width: 70ch;
+    max-width: 76ch;
   }
-  .part h2 {
-    font: var(--text-2) / 1.2 var(--font-display);
+  .section-tag-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+  .section-pill {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+  .section-count {
+    font: 0.75rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .section-heading {
+    margin: 0 0 var(--space-3);
+    font: var(--text-3) / 1.15 var(--font-display);
+    color: var(--color-ink);
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Look First Section */
+  .look-section {
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-5);
+    border-left: 4px solid var(--color-accent);
+  }
+  .look-lead {
+    font: var(--text-2) / 1.35 var(--font-display);
+    color: var(--color-ink);
     margin: 0 0 var(--space-3);
   }
-  .part h3 {
-    font-size: var(--text-1);
-    margin: var(--space-4) 0 var(--space-2);
+  .look-hint {
+    font: italic var(--text-0) / 1.5 var(--font-body);
+    color: var(--color-ink-2);
+    margin: 0;
   }
-  .lead {
-    font-size: var(--text-1);
+
+  /* Details Dossier */
+  .details-dossier {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-4);
   }
-  .details {
+  .detail-card {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-4);
+    scroll-margin-top: 80px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .detail-crop-stage {
+    display: flex;
+    justify-content: center;
+  }
+  .detail-crop-frame {
+    border: 2px solid #b8893a;
+    background: #140d17;
+    padding: 4px;
+    width: 100%;
+  }
+  .detail-crop-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .detail-meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-1);
+  }
+  .detail-num-badge {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+  }
+  .detail-rect-spec {
+    font: 0.7rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .detail-title {
+    margin: 0 0 var(--space-2);
+    font: var(--text-1) / 1.25 var(--font-display);
+    color: var(--color-ink);
+  }
+  .detail-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+  }
+
+  /* Story Chronicle */
+  .story-chronicle {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    border-left: 2px solid var(--per-rule);
+  }
+  .story-chronicle li {
+    position: relative;
+    padding: 0 0 var(--space-3) var(--space-4);
+  }
+  .story-chronicle li::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  .story-chronicle .ret {
+    background: rgba(231, 176, 79, 0.05);
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+    margin: var(--space-2) 0;
+    border: 1px solid var(--per-rule);
+  }
+  .story-ret-badge {
+    display: inline-block;
+    font: 700 0.7rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .story-text {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Claims List */
+  .claims-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
-    gap: var(--space-5);
-    counter-reset: d;
+    border-top: 1px solid var(--per-rule);
   }
-  .details li {
-    counter-increment: d;
+  .claim-item {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--per-rule);
   }
-  .details img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    border: 2px solid var(--color-ink);
+  .claim-tag-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-1);
   }
-  .details h3::before {
-    content: counter(d) '. ';
+  .claim-src {
+    font: 700 0.75rem / 1 var(--font-mono);
     color: var(--color-accent);
-    font-family: var(--font-mono);
+    text-decoration: underline;
   }
-  .story {
-    padding-left: 24px;
+  .claim-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
-  .story li {
-    padding: 4px 0;
+
+  /* Archival Quote */
+  .archival-quote {
+    margin: var(--space-5) 0 0;
+    padding: var(--space-4);
+    border-left: 4px solid var(--color-accent);
+    background: var(--per-surface);
   }
-  .story .ret {
-    background: var(--color-surface);
-    padding: 8px 12px;
+  .quote-es {
+    margin: 0 0 var(--space-2);
+    font: italic var(--text-1) / 1.4 var(--font-display);
+    color: var(--color-ink);
   }
-  .story .rt {
-    display: block;
+  .quote-en {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-0);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+  }
+  .quote-footer {
     font: var(--text-n1) / 1.4 var(--font-mono);
     color: var(--color-accent);
   }
-  .claims {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .claims li {
-    padding: var(--space-3) 0;
-    border-top: 1px solid var(--color-rule);
-  }
-  .claims p {
-    margin: var(--space-2) 0 0;
-  }
-  blockquote {
-    margin: var(--space-4) 0 0;
-    padding-left: var(--space-3);
-    border-left: 4px solid var(--color-accent);
-  }
-  blockquote p {
-    margin: 0 0 var(--space-2);
-    font-family: var(--font-display);
-    font-size: var(--text-1);
-  }
-  .readings {
+
+  /* Two Readings */
+  .readings-grid {
     display: grid;
     gap: var(--space-4);
-  }
-  .readings article,
-  .extra {
-    border: 2px solid var(--color-ink);
-    background: var(--color-surface);
-    padding: var(--space-4);
-  }
-  .extra {
     margin-top: var(--space-4);
   }
-  .readings h3,
-  .extra h3 {
-    margin-top: var(--space-2);
+  .reading-card {
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-4) var(--space-5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
-  dl {
+  .reading-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-2);
+  }
+  .reading-letter {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+  .reading-name {
+    margin: 0 0 var(--space-3);
+    font: var(--text-2) / 1.2 var(--font-display);
+    color: var(--color-ink);
+  }
+  .reading-dl {
     margin: 0;
+    display: grid;
+    gap: var(--space-3);
   }
-  dt {
-    font: var(--text-n1) / 1.3 var(--font-mono);
+  .reading-row {
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--per-rule);
+  }
+  .reading-row dt {
+    font: 700 0.75rem / 1.3 var(--font-mono);
     letter-spacing: 0.04em;
     color: var(--color-ink-2);
-    margin-top: var(--space-3);
+    text-transform: uppercase;
   }
-  dd {
-    margin: var(--space-1) 0 0;
+  .reading-row dd {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-ink);
   }
-  .plain-list {
-    padding-left: 24px;
+  .reading-row.open-field dd {
+    color: var(--color-accent);
+    font-style: italic;
   }
-  .plain-list li {
-    padding: 4px 0;
+  .extra-card {
+    margin-top: var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-4) var(--space-5);
   }
-  .aside {
+  .extra-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* Technical Section */
+  .technical-list {
+    margin: var(--space-3) 0 0;
+    padding-left: var(--space-4);
+    line-height: 1.6;
+  }
+  .technical-aside {
+    margin-top: var(--space-2);
+    font: italic var(--text-n1) / 1.4 var(--font-body);
     color: var(--color-ink-2);
-    font-size: var(--text-n1);
   }
-  .sources li {
-    overflow-wrap: anywhere;
+
+  /* Question Section */
+  .question-section {
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-5);
+    border-top: 4px solid var(--color-accent);
   }
-  .q {
-    font: var(--text-2) / 1.3 var(--font-display);
+  .question-banner {
+    margin-bottom: var(--space-4);
   }
-  .focus {
-    margin: var(--space-4) 0 0;
+  .question-pill {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
   }
-  .focus img {
+  .question-heading {
+    margin: var(--space-2) 0 0;
+    font: var(--text-3) / 1.25 var(--font-display);
+    color: var(--color-ink);
+  }
+  .sub-heading {
+    margin: var(--space-4) 0 var(--space-2);
+    font: var(--text-1) / 1.3 var(--font-display);
+    color: var(--color-ink);
+  }
+  .inquiry-list {
+    margin: 0;
+    padding-left: var(--space-4);
+    line-height: 1.6;
+  }
+  .question-ladder {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--per-rule);
+  }
+  .ladder-list {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .ladder-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: 6px 10px;
+    background: #19101c;
+    border: 1px solid var(--per-rule);
+  }
+  .ladder-rank {
+    font: 700 0.85rem / 1 var(--font-mono);
+    color: var(--color-accent);
+  }
+  .ladder-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  .dialectic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--per-rule);
+  }
+  .dialectic-card {
+    border: 1px solid var(--per-rule);
+    background: #19101c;
+    padding: var(--space-3) var(--space-4);
+  }
+  .dialectic-text {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .focus-figure {
+    margin: var(--space-5) 0 0;
+  }
+  .focus-frame {
+    border: 2px solid #b8893a;
+    background: #140d17;
+    padding: 4px;
+    display: inline-block;
+    max-width: 100%;
+  }
+  .focus-frame img {
     display: block;
     max-width: 100%;
     height: auto;
-    border: 2px solid var(--color-ink);
   }
-  .focus figcaption {
+  .focus-caption {
+    margin-top: var(--space-2);
+    font: italic var(--text-n1) / 1.4 var(--font-body);
+    color: var(--color-ink-2);
+  }
+
+  /* Sources List */
+  .sources-list {
+    margin: 0;
+    padding-left: var(--space-4);
+    line-height: 1.6;
+  }
+  .sources-list a {
+    color: var(--color-ink);
+    text-decoration: underline;
+  }
+  .sources-list a:hover,
+  .sources-list a:focus-visible {
+    color: var(--color-accent);
+  }
+  .src-ext {
+    color: var(--color-accent);
+  }
+
+  /* Architectural Room Bridges Navigation */
+  .room-bridge-nav {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--per-rule);
+  }
+  .bridge-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-3);
+  }
+  .bridge-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    text-decoration: none;
+    color: var(--color-ink);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .bridge-card:hover,
+  .bridge-card:focus-visible {
+    border-color: var(--color-accent);
+    background: rgba(231, 176, 79, 0.08);
+  }
+  .bridge-card.prev {
+    text-align: left;
+  }
+  .bridge-card.next {
+    text-align: right;
+  }
+  .bridge-card.hub {
+    text-align: center;
+    border-top: 3px solid var(--color-accent);
+  }
+  .bridge-card.terminus {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .bridge-dir {
+    font: 700 0.7rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .bridge-title {
+    font: var(--text-0) / 1.25 var(--font-display);
+    color: var(--color-ink);
+  }
+  .bridge-artist {
     font-size: var(--text-n1);
     color: var(--color-ink-2);
-    margin-top: var(--space-1);
+    margin-top: 2px;
+  }
+
+  @media (max-width: 760px) {
+    .detail-card {
+      grid-template-columns: 1fr;
+    }
+    .bridge-grid {
+      grid-template-columns: 1fr;
+    }
+    .bridge-card.prev,
+    .bridge-card.next,
+    .bridge-card.hub {
+      text-align: left;
+    }
   }
 </style>
