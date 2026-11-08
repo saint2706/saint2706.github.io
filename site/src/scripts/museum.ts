@@ -131,3 +131,5 @@ if (dataEl && dialog) {
   dialog.addEventListener('close', () => opener?.focus());
   addEventListener('resize', () => dialog.open && place());
 }
+
+export {};

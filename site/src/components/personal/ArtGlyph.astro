@@ -1,0 +1,618 @@
+---
+/**
+ * ArtGlyph.astro
+ *
+ * An interactive Camera Obscura / Optical Loupe header glyph replacing the
+ * flat rectangular .mark on the "Art and myth" museum space heading.
+ *
+ * Metaphor: The act of deliberate looking. Hall I opens with:
+ * "What is the most important thing in this picture? Now: how did you decide?"
+ *
+ * Features:
+ * - 160x213px antique arch-cased brass optical apparatus (3:4 ratio matching SpaceHead).
+ * - Knurled focus thumbwheel, suspension crest, and double-beveled gold casing.
+ * - Engraved Camera Obscura aperture diaphragm with overlapping iris blades & focal scales.
+ * - 4 Cardinal Hall Markers at I, II, III, IV corresponding to the 4 museum halls.
+ * - Kinetic Optical Loupe with illuminated crosshairs, sight ring, and central target pip.
+ * - Responsive magnetic cursor tracking that smoothly glides the sight loupe and gallery spotlight.
+ * - In-place gold illumination on hall markers without transforms (zero jump/popout bug).
+ * - Live archival cartouche readout updating curatorial hall coordinates.
+ * - WCAG compliant, self-contained SVG, zero inline style="" attributes (CSP safe).
+ */
+---
+
+<div
+  class="art-loupe-widget"
+  id="art-loupe"
+  role="img"
+  aria-label="Interactive Camera Obscura Loupe. Move cursor over the lens to examine exhibition halls."
+>
+  <div class="art-loupe-face">
+    <svg
+      viewBox="0 0 160 213"
+      width="160"
+      height="213"
+      class="art-loupe-svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <!-- Gold Bevel Gradient -->
+        <linearGradient id="art-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fdf1c8" />
+          <stop offset="40%" stop-color="#e7b04f" />
+          <stop offset="85%" stop-color="#9a6c1e" />
+          <stop offset="100%" stop-color="#64430e" />
+        </linearGradient>
+
+        <!-- Obsidian Dial Face Gradient -->
+        <radialGradient id="art-lens-back" cx="50%" cy="45%" r="65%">
+          <stop offset="0%" stop-color="#2a1830" />
+          <stop offset="65%" stop-color="#190d20" />
+          <stop offset="100%" stop-color="#0e0513" />
+        </radialGradient>
+
+        <!-- Glass Lens Sheen -->
+        <linearGradient id="art-glass-sheen" x1="20%" y1="0%" x2="80%" y2="100%">
+          <stop offset="0%" stop-color="rgba(253, 241, 200, 0.28)" />
+          <stop offset="35%" stop-color="rgba(231, 176, 79, 0.12)" />
+          <stop offset="70%" stop-color="rgba(24, 12, 30, 0.45)" />
+          <stop offset="100%" stop-color="rgba(14, 6, 19, 0.85)" />
+        </linearGradient>
+
+        <!-- Dynamic Gallery Spotlight Gradient -->
+        <radialGradient id="art-spotlight" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(253, 241, 200, 0.35)" />
+          <stop offset="45%" stop-color="rgba(231, 176, 79, 0.18)" />
+          <stop offset="80%" stop-color="rgba(231, 176, 79, 0.04)" />
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
+        </radialGradient>
+      </defs>
+
+      <!-- Focus Thumbwheel & Knurled Finial Mount -->
+      <g class="focus-mount">
+        <!-- Suspension Loop -->
+        <circle cx="80" cy="9" r="6" fill="none" stroke="url(#art-gold)" stroke-width="2.2" />
+        <circle cx="80" cy="9" r="3" fill="#130716" stroke="rgba(231,176,79,0.3)" stroke-width="0.8" />
+        <!-- Knurled Adjustment Wheel -->
+        <rect x="68" y="15" width="24" height="6" rx="1.5" fill="url(#art-gold)" />
+        <line x1="72" y1="16" x2="72" y2="20" stroke="#5b3d0d" stroke-width="1" />
+        <line x1="76" y1="16" x2="76" y2="20" stroke="#5b3d0d" stroke-width="1" />
+        <line x1="80" y1="16" x2="80" y2="20" stroke="#5b3d0d" stroke-width="1" />
+        <line x1="84" y1="16" x2="84" y2="20" stroke="#5b3d0d" stroke-width="1" />
+        <line x1="88" y1="16" x2="88" y2="20" stroke="#5b3d0d" stroke-width="1" />
+        <!-- Bracket Flange -->
+        <path d="M 64,21 L 96,21 L 91,24 L 69,24 Z" fill="url(#art-gold)" />
+      </g>
+
+      <!-- Outer Arch Casing -->
+      <path
+        d="M 10,92 A 70,70 0 0,1 150,92 L 150,195 A 14,14 0 0,1 136,209 L 24,209 A 14,14 0 0,1 10,195 Z"
+        fill="url(#art-lens-back)"
+        stroke="url(#art-gold)"
+        stroke-width="2.5"
+        class="casing-path"
+      />
+
+      <!-- Dial Inner Inset Border -->
+      <path
+        d="M 16,92 A 64,64 0 0,1 144,92 L 144,192 A 8,8 0 0,1 136,200 L 24,200 A 8,8 0 0,1 16,192 Z"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.2)"
+        stroke-width="1"
+      />
+
+      <!-- Concentric Optical Calibrations & Reticle Scales (Center at 80, 92) -->
+      <g class="optical-calibrations">
+        <!-- Outer Reticle Ring -->
+        <circle cx="80" cy="92" r="56" fill="none" stroke="rgba(231, 176, 79, 0.3)" stroke-width="1.2" />
+        <!-- Dashed Precision Track -->
+        <circle cx="80" cy="92" r="53" fill="none" stroke="rgba(231, 176, 79, 0.16)" stroke-dasharray="2 3" stroke-width="0.8" />
+        <!-- Intermediate Track -->
+        <circle cx="80" cy="92" r="48" fill="none" stroke="rgba(231, 176, 79, 0.22)" stroke-width="0.8" />
+
+        <!-- 12-Division Radial Calibrations -->
+        <g stroke="rgba(231, 176, 79, 0.45)" stroke-width="1">
+          <!-- 12 o'clock -->
+          <line x1="80" y1="36" x2="80" y2="41" />
+          <!-- 1 o'clock -->
+          <line x1="108" y1="43.5" x2="105.5" y2="47.5" />
+          <!-- 2 o'clock -->
+          <line x1="128.5" y1="64" x2="124.5" y2="66.5" />
+          <!-- 3 o'clock -->
+          <line x1="136" y1="92" x2="131" y2="92" />
+          <!-- 4 o'clock -->
+          <line x1="128.5" y1="120" x2="124.5" y2="117.5" />
+          <!-- 5 o'clock -->
+          <line x1="108" y1="140.5" x2="105.5" y2="136.5" />
+          <!-- 6 o'clock -->
+          <line x1="80" y1="148" x2="80" y2="143" />
+          <!-- 7 o'clock -->
+          <line x1="52" y1="140.5" x2="54.5" y2="136.5" />
+          <!-- 8 o'clock -->
+          <line x1="31.5" y1="120" x2="35.5" y2="117.5" />
+          <!-- 9 o'clock -->
+          <line x1="24" y1="92" x2="29" y2="92" />
+          <!-- 10 o'clock -->
+          <line x1="31.5" y1="64" x2="35.5" y2="66.5" />
+          <!-- 11 o'clock -->
+          <line x1="52" y1="43.5" x2="54.5" y2="47.5" />
+        </g>
+
+        <!-- Golden Ratio Perspective Sightlines (Subtle aesthetic arcs) -->
+        <g stroke="rgba(231, 176, 79, 0.12)" stroke-width="0.8" fill="none">
+          <path d="M 38,92 A 42,42 0 0,1 122,92" />
+          <path d="M 80,50 A 42,42 0 0,1 80,134" />
+          <path d="M 50,62 L 110,122" stroke-dasharray="3 4" />
+          <path d="M 110,62 L 50,122" stroke-dasharray="3 4" />
+        </g>
+      </g>
+
+      <!-- Camera Obscura Mechanical Aperture (8 Overlapping Iris Diaphragm Blades) -->
+      <g class="iris-diaphragm">
+        <!-- Chiaroscuro Aperture Well -->
+        <circle cx="80" cy="92" r="36" fill="#130717" stroke="rgba(231, 176, 79, 0.3)" stroke-width="1" />
+        <!-- 8 Curved Iris Blades (Tangent to inner f-stop aperture r=14) -->
+        <g stroke="rgba(231, 176, 79, 0.4)" stroke-width="0.9" fill="rgba(33, 17, 39, 0.65)">
+          <path d="M 80,56 C 96,56 110,70 110,86 L 98,92 C 98,82 88,72 80,72 Z" />
+          <path d="M 105.5,66.5 C 117,78 117,98 105.5,110 L 96,101 C 103,94 103,84 96,77 Z" />
+          <path d="M 116,92 C 116,108 102,122 86,122 L 80,110 C 90,110 100,100 100,92 Z" />
+          <path d="M 105.5,117.5 C 94,129 74,129 62.5,117.5 L 71.5,108 C 79,115 89,115 96,108 Z" />
+          <path d="M 80,128 C 64,128 50,114 50,98 L 62,92 C 62,102 72,112 80,112 Z" />
+          <path d="M 54.5,117.5 C 43,106 43,86 54.5,74 L 64,83 C 57,90 57,100 64,107 Z" />
+          <path d="M 44,92 C 44,76 58,62 74,62 L 80,74 C 70,74 60,84 60,92 Z" />
+          <path d="M 54.5,66.5 C 66,55 86,55 97.5,66.5 L 88.5,76 C 81,69 71,69 64,76 Z" />
+        </g>
+      </g>
+
+      <!-- 4 Cardinal Hall Roman Numerals (Interactive Indicators) -->
+      <!-- Hall I: Top (Perception / Icarus) -->
+      <g class="hall-marker" id="marker-hall-1">
+        <circle cx="80" cy="48" r="7" class="marker-halo" />
+        <text x="80" y="51" text-anchor="middle" class="marker-text">I</text>
+      </g>
+      <!-- Hall II: Right (The Witness / Third of May) -->
+      <g class="hall-marker" id="marker-hall-2">
+        <circle cx="124" cy="92" r="7" class="marker-halo" />
+        <text x="124" y="95" text-anchor="middle" class="marker-text">II</text>
+      </g>
+      <!-- Hall IV: Bottom (The Court / Sleep of Reason & Draupadi) -->
+      <g class="hall-marker" id="marker-hall-4">
+        <circle cx="80" cy="136" r="7" class="marker-halo" />
+        <text x="80" y="139" text-anchor="middle" class="marker-text">IV</text>
+      </g>
+      <!-- Hall III: Left (The Gaze / Shakuntala & Susanna) -->
+      <g class="hall-marker" id="marker-hall-3">
+        <circle cx="36" cy="92" r="7" class="marker-halo" />
+        <text x="36" y="95" text-anchor="middle" class="marker-text">III</text>
+      </g>
+
+      <!-- Mobile Gallery Spotlight (Tracks Cursor) -->
+      <g id="art-spotlight-group" transform="translate(80, 92)">
+        <circle cx="0" cy="0" r="44" fill="url(#art-spotlight)" class="spotlight-circle" />
+      </g>
+
+      <!-- Kinetic Optical Loupe & Sight Reticle (Tracks Cursor Smoothly) -->
+      <g id="art-loupe-group" transform="translate(80, 92)" class="optical-loupe">
+        <!-- Lens Glass Disc with Chiaroscuro Sheen -->
+        <circle cx="0" cy="0" r="20" fill="url(#art-glass-sheen)" />
+
+        <!-- Outer Brass Bezel of the Sight Loupe -->
+        <circle cx="0" cy="0" r="20" fill="none" stroke="url(#art-gold)" stroke-width="1.8" />
+        <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(253, 241, 200, 0.4)" stroke-width="0.6" />
+
+        <!-- Optical Crosshairs with Center Gap for Viewing -->
+        <g stroke="var(--color-accent)" stroke-width="0.9" opacity="0.85">
+          <!-- Horizontal Axis -->
+          <line x1="-20" y1="0" x2="-6" y2="0" />
+          <line x1="6" y1="0" x2="20" y2="0" />
+          <!-- Vertical Axis -->
+          <line x1="0" y1="-20" x2="0" y2="-6" />
+          <line x1="0" y1="6" x2="0" y2="20" />
+          <!-- Fine Micrometer Ticks -->
+          <line x1="-13" y1="-2.5" x2="-13" y2="2.5" stroke-width="0.7" />
+          <line x1="13" y1="-2.5" x2="13" y2="2.5" stroke-width="0.7" />
+          <line x1="-2.5" y1="-13" x2="2.5" y2="-13" stroke-width="0.7" />
+          <line x1="-2.5" y1="13" x2="2.5" y2="13" stroke-width="0.7" />
+        </g>
+
+        <!-- Inner Sight Ring -->
+        <circle cx="0" cy="0" r="11" fill="none" stroke="rgba(231, 176, 79, 0.5)" stroke-width="0.7" stroke-dasharray="1.5 2.5" />
+        <!-- Pinpoint Target Pip -->
+        <circle cx="0" cy="0" r="2.2" fill="url(#art-gold)" />
+        <circle cx="0" cy="0" r="0.8" fill="#ffffff" />
+
+        <!-- Specular Highlight Curve (Simulates Curved Convex Lens) -->
+        <path
+          d="M -13,-10 A 16,16 0 0,1 11,-12"
+          fill="none"
+          stroke="rgba(255, 255, 255, 0.55)"
+          stroke-width="1.2"
+          stroke-linecap="round"
+        />
+      </g>
+
+      <!-- Calibrated Vernier Aperture Scale (Between Dial and Cartouche) -->
+      <g class="vernier-scale">
+        <line x1="38" y1="156" x2="122" y2="156" stroke="rgba(231, 176, 79, 0.3)" stroke-width="0.9" />
+        <!-- Subdivisions -->
+        <line x1="42" y1="154" x2="42" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
+        <line x1="51.5" y1="154.5" x2="51.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
+        <line x1="61" y1="154" x2="61" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
+        <line x1="70.5" y1="154.5" x2="70.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
+        <line x1="80" y1="153" x2="80" y2="159" stroke="var(--color-accent)" stroke-width="1.2" />
+        <line x1="89.5" y1="154.5" x2="89.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
+        <line x1="99" y1="154" x2="99" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
+        <line x1="108.5" y1="154.5" x2="108.5" y2="157.5" stroke="rgba(231, 176, 79, 0.25)" stroke-width="0.6" />
+        <line x1="118" y1="154" x2="118" y2="158" stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8" />
+        <!-- Pip Indicator -->
+        <polygon points="80,152 77,149 83,149" fill="var(--color-accent)" />
+        <text x="80" y="165" font-size="6.5" text-anchor="middle" class="vernier-text">
+          FOV · CAMERA OBSCURA · f/2.8
+        </text>
+      </g>
+
+      <!-- Archival Brass Plaque / Curatorial Accession Cartouche -->
+      <g class="curatorial-plaque">
+        <!-- Recessed Plaque Border -->
+        <rect
+          x="18"
+          y="171"
+          width="124"
+          height="32"
+          rx="3"
+          class="plaque-bg"
+        />
+        <rect
+          x="20.5"
+          y="173.5"
+          width="119"
+          height="27"
+          rx="2"
+          fill="none"
+          stroke="rgba(231, 176, 79, 0.2)"
+          stroke-width="0.7"
+        />
+        <!-- 4 Corner Screws -->
+        <circle cx="23" cy="176" r="1.3" fill="url(#art-gold)" />
+        <circle cx="137" cy="176" r="1.3" fill="url(#art-gold)" />
+        <circle cx="23" cy="198" r="1.3" fill="url(#art-gold)" />
+        <circle cx="137" cy="198" r="1.3" fill="url(#art-gold)" />
+
+        <!-- Curatorial Plaque Dynamic Readout -->
+        <text
+          id="art-status-title"
+          x="80"
+          y="184"
+          text-anchor="middle"
+          class="cartouche-title"
+        >
+          CAMERA OBSCURA
+        </text>
+        <text
+          id="art-status-sub"
+          x="80"
+          y="195"
+          text-anchor="middle"
+          class="cartouche-sub"
+        >
+          VII WORKS · IV HALLS
+        </text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+  // Interactive Camera Obscura Optical Loupe Controller
+  const container = document.getElementById('art-loupe');
+  const loupeGroup = document.getElementById('art-loupe-group');
+  const spotlightGroup = document.getElementById('art-spotlight-group');
+  const statusTitle = document.getElementById('art-status-title');
+  const statusSub = document.getElementById('art-status-sub');
+
+  if (container && loupeGroup && spotlightGroup && statusTitle && statusSub) {
+    const activeLoupe = loupeGroup;
+    const activeSpotlight = spotlightGroup;
+    const titleEl = statusTitle;
+    const subEl = statusSub;
+
+    const markers: Record<string, HTMLElement | null> = {
+      1: document.getElementById('marker-hall-1'),
+      2: document.getElementById('marker-hall-2'),
+      3: document.getElementById('marker-hall-3'),
+      4: document.getElementById('marker-hall-4'),
+    };
+
+    const hallDetails: Record<string, { title: string; sub: string }> = {
+      1: { title: 'HALL I · PERCEPTION', sub: 'LOOK CLOSELY · ICARUS' },
+      2: { title: 'HALL II · THE WITNESS', sub: 'SPECTACLE & WHISPER' },
+      3: { title: 'HALL III · THE GAZE', sub: 'PRETEXT & VULNERABILITY' },
+      4: { title: 'HALL IV · THE COURT', sub: 'REASON & RESPONSIBILITY' },
+    };
+
+    // Center in SVG coordinates: (80, 92)
+    const CENTER_X = 80;
+    const CENTER_Y = 92;
+    const MAX_RADIUS = 26; // Maximum loupe displacement from optical axis
+
+    let currentX = 0;
+    let currentY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let isHovering = false;
+    let idlePhase = 0;
+
+    function highlightMarker(hall: string | null) {
+      Object.entries(markers).forEach(([h, el]) => {
+        if (!el) return;
+        if (h === hall) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    }
+
+    function determineActiveHall(x: number, y: number): string | null {
+      const dist = Math.hypot(x, y);
+      if (dist < 6) return null; // Dead center shows default title
+
+      // Calculate angle in degrees: 0 is Right, 90 is Down, 180 is Left, -90 is Up
+      const angle = (Math.atan2(y, x) * 180) / Math.PI;
+
+      // Hall 1 (Top): -135 to -45
+      if (angle >= -135 && angle < -45) return '1';
+      // Hall 2 (Right): -45 to 45
+      if (angle >= -45 && angle < 45) return '2';
+      // Hall 4 (Bottom): 45 to 135
+      if (angle >= 45 && angle < 135) return '4';
+      // Hall 3 (Left): > 135 or < -135
+      return '3';
+    }
+
+    function updateCartouche(hall: string | null) {
+      if (!hall || !hallDetails[hall]) {
+        titleEl.textContent = 'CAMERA OBSCURA';
+        subEl.textContent = 'VII WORKS · IV HALLS';
+      } else {
+        titleEl.textContent = hallDetails[hall].title;
+        subEl.textContent = hallDetails[hall].sub;
+      }
+    }
+
+    // Animation loop with smooth inertia
+    function animate() {
+      if (isHovering) {
+        // Eased interpolation toward target cursor offset
+        currentX += (targetX - currentX) * 0.16;
+        currentY += (targetY - currentY) * 0.16;
+
+        activeLoupe.setAttribute(
+          'transform',
+          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
+        );
+        activeSpotlight.setAttribute(
+          'transform',
+          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
+        );
+
+        const activeHall = determineActiveHall(currentX, currentY);
+        highlightMarker(activeHall);
+        updateCartouche(activeHall);
+      } else {
+        // Ambient organic drift when idle
+        idlePhase += 0.02;
+        const driftX = Math.sin(idlePhase * 0.8) * 1.8;
+        const driftY = Math.cos(idlePhase * 0.6) * 1.5;
+
+        currentX += (driftX - currentX) * 0.06;
+        currentY += (driftY - currentY) * 0.06;
+
+        activeLoupe.setAttribute(
+          'transform',
+          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
+        );
+        activeSpotlight.setAttribute(
+          'transform',
+          `translate(${CENTER_X + currentX}, ${CENTER_Y + currentY})`
+        );
+
+        highlightMarker(null);
+        updateCartouche(null);
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    // Mouse Tracking across widget
+    container.addEventListener('mouseenter', () => {
+      isHovering = true;
+    });
+
+    container.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      // Normalized coordinates from center [-1, 1]
+      const relX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const relY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+
+      // Project into SVG displacement space
+      const px = relX * MAX_RADIUS * 1.3;
+      const py = relY * MAX_RADIUS * 1.3;
+
+      // Clamp to MAX_RADIUS
+      const dist = Math.hypot(px, py);
+      if (dist > MAX_RADIUS) {
+        targetX = (px / dist) * MAX_RADIUS;
+        targetY = (py / dist) * MAX_RADIUS;
+      } else {
+        targetX = px;
+        targetY = py;
+      }
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isHovering = false;
+      targetX = 0;
+      targetY = 0;
+    });
+
+    // Touch Support for mobile screens
+    container.addEventListener(
+      'touchmove',
+      (e: TouchEvent) => {
+        if (!e.touches.length) return;
+        const touch = e.touches[0];
+        const rect = container.getBoundingClientRect();
+        const relX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        const relY = ((touch.clientY - rect.top) / rect.height) * 2 - 1;
+
+        const px = relX * MAX_RADIUS * 1.3;
+        const py = relY * MAX_RADIUS * 1.3;
+
+        const dist = Math.hypot(px, py);
+        if (dist > MAX_RADIUS) {
+          targetX = (px / dist) * MAX_RADIUS;
+          targetY = (py / dist) * MAX_RADIUS;
+        } else {
+          targetX = px;
+          targetY = py;
+        }
+        isHovering = true;
+      },
+      { passive: true }
+    );
+
+    container.addEventListener('touchend', () => {
+      isHovering = false;
+      targetX = 0;
+      targetY = 0;
+    });
+  }
+</script>
+
+<style>
+  .art-loupe-widget {
+    position: relative;
+    width: 160px;
+    height: 213px;
+    user-select: none;
+    cursor: crosshair;
+  }
+
+  .art-loupe-face {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .art-loupe-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  @media (max-width: 1024px) {
+    .art-loupe-widget {
+      width: 120px;
+      height: 160px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .art-loupe-widget {
+      width: 88px;
+      height: 117px;
+    }
+  }
+
+  .casing-path {
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65));
+    transition: stroke 0.3s ease;
+  }
+
+  .art-loupe-widget:hover .casing-path {
+    stroke: #ffda79;
+  }
+
+  /* Hall Markers: In-place highlighting without transforms (prevents top-left jumping) */
+  .hall-marker {
+    pointer-events: none;
+  }
+
+  .marker-halo {
+    fill: rgba(18, 7, 23, 0.7);
+    stroke: rgba(231, 176, 79, 0.35);
+    stroke-width: 1;
+    transition:
+      stroke 0.2s ease,
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .marker-text {
+    font-family: var(--font-display, serif);
+    font-size: 8px;
+    font-weight: 700;
+    fill: rgba(231, 176, 79, 0.65);
+    transition:
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  /* Active Hall Marker Highlight */
+  .hall-marker.active .marker-halo {
+    fill: rgba(231, 176, 79, 0.35);
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 6px rgba(231, 176, 79, 0.9));
+  }
+
+  .hall-marker.active .marker-text {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  }
+
+  /* Vernier Calibration Text */
+  .vernier-text {
+    font-family: var(--font-mono, monospace);
+    fill: rgba(231, 176, 79, 0.7);
+    letter-spacing: 0.08em;
+  }
+
+  /* Archival Plaque Typography */
+  .plaque-bg {
+    fill: #0d0411;
+    stroke: rgba(231, 176, 79, 0.38);
+    stroke-width: 1.2;
+  }
+
+  .cartouche-title {
+    font-family: var(--font-mono, monospace);
+    font-size: 8.5px;
+    font-weight: 700;
+    fill: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+
+  .cartouche-sub {
+    font-family: var(--font-mono, monospace);
+    font-size: 7px;
+    fill: #ded0dc;
+    letter-spacing: 0.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .art-loupe-widget {
+      cursor: default;
+    }
+    .optical-loupe,
+    .spotlight-circle {
+      transition: none !important;
+    }
+  }
+</style>

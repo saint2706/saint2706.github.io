@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
+import ArtGlyph from '../../../components/personal/ArtGlyph.astro';
 import Section from '../../../components/Section.astro';
 import { gallery, paintingBySlug, posts } from '../../../lib/content';
 
@@ -47,7 +48,11 @@ const viewer = gallery.rooms.flatMap(room =>
   <SpaceHead
     title="Art and myth"
     lede="A small museum: seven paintings across four halls, each with a question to argue about, and essays on myth."
-  />
+  >
+    <div slot="mark" class="art-mark">
+      <ArtGlyph />
+    </div>
+  </SpaceHead>
 
   <!-- Archival Ledger Summary Bar -->
   <div class="ledger-bar" aria-label="Museum catalog summary">
@@ -327,6 +332,25 @@ const viewer = gallery.rooms.flatMap(room =>
 <script src="../../../scripts/museum.ts"></script>
 
 <style>
+  .art-mark {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 160px;
+  }
+
+  @media (max-width: 1024px) {
+    .art-mark {
+      width: 120px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .art-mark {
+      width: 88px;
+    }
+  }
+
   /* Archival Ledger Bar */
   .ledger-bar {
     display: flex;

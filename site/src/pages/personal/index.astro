@@ -3,9 +3,7 @@ import Base from '../../layouts/Base.astro';
 import SpaceHead from '../../components/SpaceHead.astro';
 import ChronometerGlyph from '../../components/personal/ChronometerGlyph.astro';
 import NextLinks from '../../components/NextLinks.astro';
-import { paintings, books, films, learning } from '../../lib/content';
-
-const workCount = books.stages.reduce((n, s) => n + s.works.length, 0);
+import { paintings, films, learning } from '../../lib/content';
 
 const roomData = [
   {
@@ -21,9 +19,9 @@ const roomData = [
     id: 'books',
     href: '/personal/books/',
     label: 'Books',
-    count: `${books.stages.length} stages · ${workCount} works`,
-    blurb: `A philosophy reading path from the Greeks to Wittgenstein, in ${books.stages.length} stages with verified access links.`,
-    highlights: ['Antiquity & Pre-Socratics', 'Enlightenment & Kant', 'Existentialism', 'Wittgenstein'],
+    count: '25 volumes · 5 eras',
+    blurb: 'Twenty-five books that stayed with me: philosophy from Homer to Wittgenstein, with links to read online.',
+    highlights: ['Antiquity & The Greeks', 'Enlightenment & Kant', '19th-Century Idealism', 'Wittgenstein'],
     action: 'Browse the shelf',
   },
   {
@@ -75,8 +73,8 @@ const roomData = [
     </div>
     <span class="ledger-sep" aria-hidden="true">/</span>
     <div class="ledger-item">
-      <span class="ledger-num">{workCount}</span>
-      <span class="ledger-label">Philosophy Works</span>
+      <span class="ledger-num">25</span>
+      <span class="ledger-label">Books on the Shelf</span>
     </div>
     <span class="ledger-sep" aria-hidden="true">/</span>
     <div class="ledger-item">
@@ -139,7 +137,7 @@ const roomData = [
                       <span class="ribbon" />
                     </div>
                   </div>
-                  <span class="shelf-label">13-STAGE ARCHIVE</span>
+                  <span class="shelf-label">5-ERA ARCHIVE</span>
                 </div>
               )}
 
