@@ -390,7 +390,7 @@ const curatedBooks: BookItem[] = [
     cover: '/books/schopenhauer-world-will.jpg',
     publisher: 'DOVER',
     heightClass: 'h-tall',
-    widthClass: 'w-heavy',
+    widthClass: 'w-tome',
     tone: 'amber',
   },
   {
@@ -525,7 +525,7 @@ const curatedBooks: BookItem[] = [
     cover: '/books/wittgenstein-tractatus.jpg',
     publisher: 'ROUTLEDGE',
     heightClass: 'h-mid',
-    widthClass: 'w-slim',
+    widthClass: 'w-regular',
     tone: 'bone',
   },
   {
@@ -544,7 +544,7 @@ const curatedBooks: BookItem[] = [
     cover: '/books/wittgenstein-investigations.jpg',
     publisher: 'WILEY',
     heightClass: 'h-tall',
-    widthClass: 'w-regular',
+    widthClass: 'w-heavy',
     tone: 'sapphire',
   },
 ];
@@ -552,6 +552,27 @@ const curatedBooks: BookItem[] = [
 const freeCount = curatedBooks.filter(b => b.access === 'FREE').length;
 const borrowCount = curatedBooks.filter(b => b.access === 'BORROW').length;
 const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').length;
+
+const getTitleSizeClass = (title: string) => {
+  const len = title.length;
+  if (len >= 32) return 'title-extra-long';
+  if (len >= 24) return 'title-long';
+  if (len >= 15) return 'title-medium';
+  return 'title-short';
+};
+
+const getAuthorSizeClass = (author: string) => {
+  const len = author.length;
+  if (len >= 11) return 'author-condensed';
+  if (len >= 8) return 'author-compact';
+  return 'author-standard';
+};
+
+const getImprintSizeClass = (imprint: string) => {
+  const len = imprint.length;
+  if (len >= 8) return 'imprint-condensed';
+  return 'imprint-standard';
+};
 ---
 
 <Base
@@ -626,11 +647,15 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
                     >
                       <div class="spine-head">
                         <span class="spine-emboss-rule" aria-hidden="true" />
-                        <span class="spine-author">{b.spineAuthor}</span>
+                        <span class:list={['spine-author', getAuthorSizeClass(b.spineAuthor)]}>
+                          {b.spineAuthor}
+                        </span>
                       </div>
 
                       <div class="spine-body">
-                        <span class="spine-full-title">{b.title}</span>
+                        <span class:list={['spine-full-title', getTitleSizeClass(b.title)]}>
+                          {b.title}
+                        </span>
                       </div>
 
                       <div class="spine-tail">
@@ -638,7 +663,9 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
                           <span class="band" />
                           <span class="band" />
                         </div>
-                        <span class="spine-imprint-text">{b.publisher}</span>
+                        <span class:list={['spine-imprint-text', getImprintSizeClass(b.publisher)]}>
+                          {b.publisher}
+                        </span>
                       </div>
 
                       <span class="spine-ribbon" aria-hidden="true" />
@@ -947,51 +974,56 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
     align-items: flex-end;
     justify-content: center;
     padding: var(--space-4) var(--space-3) 0;
-    min-height: 330px;
-    background: linear-gradient(180deg, rgba(20, 11, 21, 0.25) 0%, rgba(14, 7, 15, 0.95) 100%);
+    min-height: 340px;
+    background:
+      radial-gradient(ellipse 65% 120px at 50% 10%, rgba(247, 202, 117, 0.08) 0%, transparent 80%),
+      linear-gradient(180deg, rgba(22, 12, 8, 0.35) 0%, rgba(14, 7, 5, 0.95) 100%);
   }
 
-  /* Bookends */
+  /* Authentic Cast Bronze & Brass Bookends */
   .bookend {
-    width: 16px;
-    height: 180px;
-    background: #2b180d;
+    width: 20px;
+    height: 220px;
+    background: linear-gradient(90deg, #1f1107 0%, #2e1a0d 60%, #150b05 100%);
     border: 2px solid #5a381f;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
     flex-shrink: 0;
+    position: relative;
   }
   .bookend.left {
     border-radius: 4px 0 0 0;
     margin-right: 8px;
+    border-right: 3px solid #b8893a;
   }
   .bookend.right {
     border-radius: 0 4px 0 0;
     margin-left: 8px;
+    border-left: 3px solid #b8893a;
   }
   .bookend-brass {
     display: block;
     height: 100%;
-    border-right: 3px solid #b8893a;
+    background: linear-gradient(180deg, rgba(184, 137, 58, 0.3) 0%, rgba(247, 202, 117, 0.5) 50%, rgba(184, 137, 58, 0.2) 100%);
   }
 
-  /* Shelf Spines Container */
+  /* Shelf Spines Container: Snug physical shelf row */
   .shelf-books {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     gap: 4px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
-  /* Realistic Physical Book Spine (Zero Ellipses, Full Titles) */
+  /* Realistic Physical Book Spine (Zero Ellipses, Zero Syllable Breaks) */
   .shelf-spine {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 4px 8px;
-    border: 1px solid rgba(0, 0, 0, 0.6);
+    padding: 10px 4px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.65);
     border-radius: 3px 3px 0 0;
     cursor: pointer;
     text-align: center;
@@ -1000,66 +1032,106 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
     transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), filter 0.2s;
     user-select: none;
     box-shadow:
-      inset 2px 0 5px rgba(255, 255, 255, 0.15),
-      inset -2px 0 5px rgba(0, 0, 0, 0.5),
-      0 6px 12px rgba(0, 0, 0, 0.7);
+      inset 3px 0 6px rgba(255, 255, 255, 0.12),
+      inset -3px 0 6px rgba(0, 0, 0, 0.6),
+      0 6px 14px rgba(0, 0, 0, 0.75);
+    overflow: visible;
   }
 
-  /* Authentic Spine Heights */
+  /* Authentic Physical Spine Heights */
   .shelf-spine.h-compact { height: 250px; }
   .shelf-spine.h-mid { height: 275px; }
   .shelf-spine.h-tall { height: 295px; }
   .shelf-spine.h-max { height: 315px; }
 
   /* Authentic Spine Thicknesses */
-  .shelf-spine.w-slim { width: 36px; }
-  .shelf-spine.w-regular { width: 48px; }
-  .shelf-spine.w-heavy { width: 62px; }
-  .shelf-spine.w-tome { width: 74px; }
+  .shelf-spine.w-slim { width: 50px; }
+  .shelf-spine.w-regular { width: 62px; }
+  .shelf-spine.w-heavy { width: 76px; }
+  .shelf-spine.w-tome { width: 92px; }
 
-  /* Spine Anatomy */
+  /* Spine Head: Author in crisp, unbroken horizontal foil caps */
   .spine-head {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     width: 100%;
+    padding: 0 1px;
   }
   .spine-emboss-rule {
     display: block;
-    width: 80%;
+    width: 75%;
     height: 3px;
     border-top: 1px solid #b8893a;
     border-bottom: 1px solid #b8893a;
   }
   .spine-author {
-    font: 700 0.62rem / 1 var(--font-mono);
-    color: #f5edd8;
-    letter-spacing: 0.08em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-    word-break: break-word;
-    max-width: 90%;
+    font-family: var(--font-sans);
+    font-size: 0.46rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #f7ca75;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 98%;
+  }
+  .spine-author.author-compact {
+    font-size: 0.40rem;
+    letter-spacing: 0.025em;
+  }
+  .spine-author.author-condensed {
+    font-size: 0.35rem;
+    letter-spacing: 0.015em;
+  }
+  .shelf-spine.w-slim .spine-author {
+    font-size: 0.34rem;
+    letter-spacing: 0.015em;
   }
 
-  /* Full Vertical Title: Fits the whole title comfortably without cutting off */
+  /* Full Vertical Title: Natural Top-to-Bottom Flow (Standard Library Direction) */
   .spine-body {
     flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 0;
+    padding: 6px 0;
+    overflow: hidden;
   }
   .spine-full-title {
     writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font: 700 0.72rem / 1 var(--font-display);
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.1;
     color: #f7ca75;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.035em;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     white-space: nowrap;
+    text-overflow: clip;
   }
-  .shelf-spine.w-slim .spine-full-title {
-    font-size: 0.64rem;
+
+  /* Proportional Title Sizing Based on Character Length */
+  .spine-full-title.title-short {
+    font-size: 0.74rem;
+    letter-spacing: 0.035em;
+  }
+  .spine-full-title.title-medium {
+    font-size: 0.65rem;
+    letter-spacing: 0.025em;
+  }
+  .spine-full-title.title-long {
+    font-size: 0.56rem;
+    letter-spacing: 0.018em;
+  }
+  .spine-full-title.title-extra-long {
+    font-size: 0.48rem;
+    letter-spacing: 0.012em;
   }
 
   /* Spine Tail & Publisher Imprint */
@@ -1067,8 +1139,9 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     width: 100%;
+    padding: 0 1px;
   }
   .spine-raised-bands {
     display: flex;
@@ -1078,14 +1151,27 @@ const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').leng
   }
   .spine-raised-bands .band {
     display: block;
-    height: 2px;
-    background: #b8893a;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    height: 3px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #b8893a 50%, rgba(0, 0, 0, 0.7) 100%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+    border-radius: 1px;
   }
   .spine-imprint-text {
-    font: 700 0.55rem / 1 var(--font-mono);
+    font-family: var(--font-sans);
+    font-size: 0.42rem;
+    font-weight: 700;
+    line-height: 1;
     color: #e7b04f;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 98%;
+  }
+  .spine-imprint-text.imprint-condensed {
+    font-size: 0.36rem;
+    letter-spacing: 0.025em;
   }
 
   .spine-ribbon {
