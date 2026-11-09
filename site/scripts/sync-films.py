@@ -41,6 +41,12 @@ def clean_review_text(text):
         text = text.split(promo)[0].strip()
     return text.strip()
 
+def is_fragment_of(fresh, old):
+    """True when `fresh` is a truncated or partial copy of `old`, ignoring whitespace."""
+    norm = lambda s: ' '.join(s.split())
+    stem = norm(fresh).rstrip('.…').rstrip()
+    return bool(stem) and stem in norm(old)
+
 def sync():
     print(f"[sync-films] Initiating sync for @{USERNAME} via letterboxdpy...")
     os.makedirs(POSTERS_DIR, exist_ok=True)
@@ -112,12 +118,12 @@ def sync():
             if rev_obj.get('date'):
                 watched_date = rev_obj['date'][:10]
 
-        # Fresh scrape wins, so shortened or deleted reviews update too. The existing entry only
-        # restores a review the scrape cut off with an ellipsis, and fills fields it could not supply.
+        # Fresh scrape wins when the review was rewritten or deleted. The saved review is kept when
+        # the scrape is only a piece of it (cut off with an ellipsis, or a fragment); the scraper
+        # reformats line breaks, so compare with whitespace collapsed.
         if existing_entry and existing_entry.get('review'):
             old = existing_entry['review']
-            stem = review_text.rstrip('.…').rstrip()
-            if review_text != stem and stem and old.startswith(stem) and len(old) > len(review_text):
+            if is_fragment_of(review_text, old):
                 review_text = old
             if not rev_obj:
                 spoilers = existing_entry.get('spoilers', spoilers)
@@ -199,6 +205,13 @@ def sync():
                 "height": 900
             }
         })
+
+    # Every diary card must point at a real local poster; never write a broken path.
+    missing_posters = [d['slug'] for d in diary_entries
+                       if os.path.basename(d['poster']['src']) not in existing_posters]
+    if missing_posters:
+        sys.exit("[sync-films] No local poster for: " + ", ".join(missing_posters)
+                 + ". films.json left untouched; re-run or add the posters to public/films/.")
 
     # 5. Write back to site/content/films.json
     final_output = {
