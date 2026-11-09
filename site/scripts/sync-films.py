@@ -112,11 +112,13 @@ def sync():
             if rev_obj.get('date'):
                 watched_date = rev_obj['date'][:10]
 
-        # Fresh scrape wins; the existing entry only restores a fuller (untruncated) review
-        # and fills fields this scrape could not supply.
+        # Fresh scrape wins, so shortened or deleted reviews update too. The existing entry only
+        # restores a review the scrape cut off with an ellipsis, and fills fields it could not supply.
         if existing_entry and existing_entry.get('review'):
-            if len(existing_entry['review']) > len(review_text):
-                review_text = existing_entry['review']
+            old = existing_entry['review']
+            stem = review_text.rstrip('.…').rstrip()
+            if review_text != stem and stem and old.startswith(stem) and len(old) > len(review_text):
+                review_text = old
             if not rev_obj:
                 spoilers = existing_entry.get('spoilers', spoilers)
                 rewatch = existing_entry.get('rewatch', rewatch)

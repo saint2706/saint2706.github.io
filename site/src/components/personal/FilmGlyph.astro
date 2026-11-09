@@ -679,7 +679,13 @@ const firstFilm = showcase[0];
       // Spring physics for film strip track
       const forceY = (targetY - currentY) * 0.16;
       velocityY = velocityY * 0.74 + forceY;
-      currentY = isMotionOff() && !isLoopingWrap ? targetY : currentY + velocityY;
+      // Motion off: jump straight to the target with no residual spin; a pending wrap then snaps below.
+      if (isMotionOff()) {
+        currentY = targetY;
+        velocityY = 0;
+      } else {
+        currentY += velocityY;
+      }
 
       // Handle seamless infinite wrap teleportation
       if (isLoopingWrap === 'next') {
