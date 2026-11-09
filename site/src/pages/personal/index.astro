@@ -29,7 +29,7 @@ const roomData = [
     href: '/personal/films/',
     label: 'Films',
     count: `${films.diary.length} screenings · Letterboxd diary`,
-    blurb: `${films.diary.length} film reviews and star ratings synced directly from my Letterboxd screening diary.`,
+    blurb: `${films.diary.length} rated films and ${films.diary.filter(d => d.review.trim()).length} written reviews from my Letterboxd screening diary.`,
     highlights: films.diary
       .filter(f => f.rating === 5)
       .slice(0, 3)

@@ -5,7 +5,10 @@ import Section from '../../../components/Section.astro';
 import FilmGlyph from '../../../components/personal/FilmGlyph.astro';
 import { films } from '../../../lib/content';
 
-const totalScreenings = films.diary.length;
+// Newest first, so "Recently logged" (data-log-index order) follows real log dates.
+const diary = [...films.diary].sort((a, b) => b.watchedDate.localeCompare(a.watchedDate));
+const totalScreenings = diary.length;
+const reviewCount = diary.filter(d => d.review.trim()).length;
 const fiveStarCount = films.diary.filter(d => d.rating === 5).length;
 const standoutsCount = films.diary.filter(d => d.rating && d.rating >= 4).length;
 const rewatchCount = films.diary.filter(d => d.rewatch).length;
@@ -13,17 +16,17 @@ const rewatchCount = films.diary.filter(d => d.rewatch).length;
 
 <Base
   title="Films"
-  description={`Screening diary: ${totalScreenings} film reviews and star ratings synced directly from Letterboxd.`}
+  description={`Screening diary: ${totalScreenings} rated films and ${reviewCount} written reviews, synced directly from Letterboxd.`}
   space="per"
 >
   <SpaceHead
     title="Films"
-    lede={`Screening diary: ${totalScreenings} film reviews and star ratings synced directly from Letterboxd.`}
+    lede={`Screening diary: ${totalScreenings} rated films and ${reviewCount} written reviews, synced directly from Letterboxd.`}
   >
     <FilmGlyph slot="mark" />
     <p class="curator-letter">
-      These are {totalScreenings} film reviews pulled directly from my Letterboxd screening diary: authentic, dry,
-      and unfiltered reactions written after viewing. Filter by rating or rewatch, search
+      These are {totalScreenings} films pulled directly from my Letterboxd screening diary, {reviewCount} of them with
+      reviews: authentic, dry, and unfiltered reactions written after viewing. Filter by rating or rewatch, search
       by keyword, and sort across rating, release year, title, or recently logged below.
     </p>
   </SpaceHead>
@@ -149,7 +152,7 @@ const rewatchCount = films.diary.filter(d => d.rewatch).length;
       </div>
 
       <div class="diary-status" aria-live="polite">
-        Showing <span id="diary-visible-count">{films.diary.length}</span> of {films.diary.length} screenings
+        Showing <span id="diary-visible-count">{totalScreenings}</span> of {totalScreenings} screenings
       </div>
     </div>
 
@@ -164,7 +167,7 @@ const rewatchCount = films.diary.filter(d => d.rewatch).length;
     <!-- Letterboxd Diary Cards Grid: Maximum 2 per row -->
     <div class="diary-grid" id="diary-grid">
       {
-        films.diary.map((entry, index) => (
+        diary.map((entry, index) => (
           <article
             class="diary-card"
             id={entry.slug}

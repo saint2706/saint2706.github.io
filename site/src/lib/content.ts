@@ -319,7 +319,7 @@ export const rooms = [
   {
     href: '/personal/films/',
     label: 'Films',
-    blurb: `${films.diary.length} film reviews and star ratings synced from Letterboxd.`,
+    blurb: `${films.diary.length} rated films and ${films.diary.filter(d => d.review.trim()).length} written reviews, synced from Letterboxd.`,
   },
   {
     href: '/personal/learning/',
