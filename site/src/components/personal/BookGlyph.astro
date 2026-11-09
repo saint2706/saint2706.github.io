@@ -420,7 +420,7 @@
 </div>
 
 <script>
-  export {};
+  import { scrollBehavior } from '../../scripts/motion';
 
   const widget = document.getElementById('library-codex');
   const lightCone = document.getElementById('bk-light-cone');
@@ -546,7 +546,7 @@
         if (tierId) {
           const targetSection = document.querySelector(tierId);
           if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetSection.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
           }
         }
       });
@@ -556,7 +556,7 @@
           if (tierId) {
             const targetSection = document.querySelector(tierId);
             if (targetSection) {
-              targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              targetSection.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
             }
           }
         }

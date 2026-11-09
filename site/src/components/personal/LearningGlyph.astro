@@ -423,6 +423,8 @@
 </div>
 
 <script>
+  import { scrollBehavior } from '../../scripts/motion';
+
   interface StepInfo {
     num: number;
     angle: number;
@@ -516,7 +518,7 @@
       if (scrollIntoView) {
         const targetSection = document.getElementById(`step-${stepNum}`);
         if (targetSection) {
-          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          targetSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
         }
       }
     }

@@ -414,7 +414,7 @@ const firstFilm = showcase[0];
 </div>
 
 <script>
-  export {};
+  import { scrollBehavior } from '../../scripts/motion';
 
   interface ReelItem {
     index: number;
@@ -545,7 +545,7 @@ const firstFilm = showcase[0];
       if (cur && cur.slug) {
         const targetEl = document.getElementById(cur.slug);
         if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetEl.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
           targetEl.classList.add('highlight-glow');
           setTimeout(() => {
             targetEl.classList.remove('highlight-glow');
