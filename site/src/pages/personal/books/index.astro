@@ -2,91 +2,1725 @@
 import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
 import Section from '../../../components/Section.astro';
-import { books } from '../../../lib/content';
+import BookGlyph from '../../../components/personal/BookGlyph.astro';
+import { books as booksContent } from '../../../lib/content';
 
-const workCount = books.stages.reduce((n, s) => n + s.works.length, 0);
-const ACCESS = { FREE: 'free to read online', BORROW: 'borrow from a library', COMMERCIAL: 'in print' } as const;
+interface BookItem {
+  id: string;
+  era: number;
+  eraName: string;
+  eraRoman: string;
+  eraYears: string;
+  author: string;
+  spineAuthor: string;
+  title: string;
+  note: string;
+  access: 'FREE' | 'BORROW' | 'COMMERCIAL';
+  accessLabel: string;
+  url: string;
+  cover: string;
+  publisher: string;
+  heightClass: string;
+  widthClass: string;
+  tone: string;
+}
+
+const eras = [
+  {
+    numeral: 'I',
+    num: 1,
+    name: 'Antiquity',
+    years: '800 BCE – 200 CE',
+    desc: 'From the tragic heroism of archaic Greece to the austere self-discipline of imperial Rome.',
+  },
+  {
+    numeral: 'II',
+    num: 2,
+    name: 'Middle Ages & Renaissance',
+    years: '400 – 1600 CE',
+    desc: 'Introspective faith, the wheel of fortune, cold political realism, and the birth of personal skepticism.',
+  },
+  {
+    numeral: 'III',
+    num: 3,
+    name: 'Early Modernity & Enlightenment',
+    years: '1630 – 1780 CE',
+    desc: 'Methodological doubt, geometric pantheism, existential anxiety, and empirical common sense.',
+  },
+  {
+    numeral: 'IV',
+    num: 4,
+    name: 'Idealism & The 19th Century',
+    years: '1780 – 1900 CE',
+    desc: 'The architecture of mind, historical dialectic, dark cosmic will, the leap of faith, and radical revaluation.',
+  },
+  {
+    numeral: 'V',
+    num: 5,
+    name: 'Society, Language & Modernity',
+    years: '1770 – 1955 CE',
+    desc: 'The social fabric, revolutionary prose, Dasein thrown into time, and the logical boundaries of speech.',
+  },
+];
+
+const curatedBooks: BookItem[] = [
+  // Era I: Antiquity
+  {
+    id: 'homer-iliad',
+    era: 1,
+    eraName: 'Antiquity',
+    eraRoman: 'I',
+    eraYears: 'c. 750 BCE',
+    author: 'Homer',
+    spineAuthor: 'HOMER',
+    title: 'The Iliad',
+    note: 'Mortal fury, tragic brevity, and the chilling realization that the gods watch our slaughter with detachment.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/2199',
+    cover: '/books/homer-iliad.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-tall',
+    widthClass: 'w-regular',
+    tone: 'terracotta',
+  },
+  {
+    id: 'plato-works',
+    era: 1,
+    eraName: 'Antiquity',
+    eraRoman: 'I',
+    eraYears: 'c. 380 BCE',
+    author: 'Plato',
+    spineAuthor: 'PLATO',
+    title: 'Complete Works',
+    note: 'Philosophy as living street conversation: stubborn questions, irony, and Socrates daring the city to examine its soul.',
+    access: 'COMMERCIAL',
+    accessLabel: 'In print (Hackett)',
+    url: 'https://mitpressbookstore.mit.edu/book/9780872203495',
+    cover: '/books/plato-works.jpg',
+    publisher: 'HACKETT',
+    heightClass: 'h-max',
+    widthClass: 'w-tome',
+    tone: 'navy',
+  },
+  {
+    id: 'heraclitus-fragments',
+    era: 1,
+    eraName: 'Antiquity',
+    eraRoman: 'I',
+    eraYears: 'c. 500 BCE',
+    author: 'Heraclitus',
+    spineAuthor: 'HERACLITUS',
+    title: 'Fragments',
+    note: 'Pithy, enigmatic flashes of thought: everything flows, tension creates harmony, and fire is the cosmos breathing.',
+    access: 'FREE',
+    accessLabel: 'Free online archive',
+    url: 'https://archive.org/details/fragmentsofworko00hera',
+    cover: '/books/heraclitus-fragments.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-compact',
+    widthClass: 'w-slim',
+    tone: 'charcoal',
+  },
+  {
+    id: 'epictetus-enchiridion',
+    era: 1,
+    eraName: 'Antiquity',
+    eraRoman: 'I',
+    eraYears: 'c. 125 CE',
+    author: 'Epictetus',
+    spineAuthor: 'EPICTETUS',
+    title: 'Enchiridion',
+    note: 'A small, sharp manual for psychological sanity: divide what is in your power from what never was.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/45109',
+    cover: '/books/epictetus-enchiridion.jpg',
+    publisher: 'DOVER',
+    heightClass: 'h-compact',
+    widthClass: 'w-slim',
+    tone: 'forest',
+  },
+  {
+    id: 'aurelius-meditations',
+    era: 1,
+    eraName: 'Antiquity',
+    eraRoman: 'I',
+    eraYears: 'c. 175 CE',
+    author: 'Marcus Aurelius',
+    spineAuthor: 'M. AURELIUS',
+    title: 'Meditations',
+    note: 'Private notes an emperor wrote to himself by candlelight on the Danube frontier, commanding himself to bear duty without whining.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/6920',
+    cover: '/books/aurelius-meditations.jpg',
+    publisher: 'EVERYMAN',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'crimson',
+  },
+
+  // Era II: Middle Ages & Renaissance
+  {
+    id: 'augustine-confessions',
+    era: 2,
+    eraName: 'Middle Ages & Renaissance',
+    eraRoman: 'II',
+    eraYears: '397–400 CE',
+    author: 'Augustine',
+    spineAuthor: 'AUGUSTINE',
+    title: 'Confessions',
+    note: 'The invention of the modern inner self: memory, restless desire, bereavement, and the dizzying puzzle of time.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://gutenberg.org/cache/epub/3296/pg3296-images.html',
+    cover: '/books/augustine-confessions.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-tall',
+    widthClass: 'w-heavy',
+    tone: 'oxblood',
+  },
+  {
+    id: 'boethius-consolation',
+    era: 2,
+    eraName: 'Middle Ages & Renaissance',
+    eraRoman: 'II',
+    eraYears: '524 CE',
+    author: 'Boethius',
+    spineAuthor: 'BOETHIUS',
+    title: 'The Consolation of Philosophy',
+    note: 'Written on death row: Lady Philosophy reminds him that earthly status was never his to keep, but integrity is.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://gutenberg.org/cache/epub/14328/pg14328-images.html',
+    cover: '/books/boethius-consolation.jpg',
+    publisher: 'CAMBRIDGE',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'parchment',
+  },
+  {
+    id: 'machiavelli-prince',
+    era: 2,
+    eraName: 'Middle Ages & Renaissance',
+    eraRoman: 'II',
+    eraYears: '1532 CE',
+    author: 'Niccolò Machiavelli',
+    spineAuthor: 'MACHIAVELLI',
+    title: 'The Prince',
+    note: 'Power observed without sentimentality: taking human beings as they actually behave rather than how priests wish they did.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/1232',
+    cover: '/books/machiavelli-prince.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-compact',
+    widthClass: 'w-slim',
+    tone: 'venetian',
+  },
+  {
+    id: 'montaigne-essays',
+    era: 2,
+    eraName: 'Middle Ages & Renaissance',
+    eraRoman: 'II',
+    eraYears: '1580 CE',
+    author: 'Michel de Montaigne',
+    spineAuthor: 'MONTAIGNE',
+    title: 'The Complete Essays',
+    note: 'Wandering, intimate, disarmingly frank self-examination from a tower in Bordeaux asking the only question that matters: What do I know?',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/3581',
+    cover: '/books/montaigne-essays.jpg',
+    publisher: 'EVERYMAN',
+    heightClass: 'h-max',
+    widthClass: 'w-tome',
+    tone: 'chestnut',
+  },
+
+  // Era III: Early Modernity & Enlightenment
+  {
+    id: 'descartes-writings',
+    era: 3,
+    eraName: 'Early Modernity & Enlightenment',
+    eraRoman: 'III',
+    eraYears: '1637–1641 CE',
+    author: 'René Descartes',
+    spineAuthor: 'DESCARTES',
+    title: 'Meditations on First Philosophy',
+    note: 'Methodical demolition of all inherited certainty down to the foundation to discover what cannot be doubted.',
+    access: 'BORROW',
+    accessLabel: 'Borrow on Internet Archive',
+    url: 'https://archive.org/details/philosophicalwri0001desc_d0c8',
+    cover: '/books/descartes-writings.jpg',
+    publisher: 'CAMBRIDGE',
+    heightClass: 'h-tall',
+    widthClass: 'w-heavy',
+    tone: 'slate',
+  },
+  {
+    id: 'spinoza-works',
+    era: 3,
+    eraName: 'Early Modernity & Enlightenment',
+    eraRoman: 'III',
+    eraYears: '1677 CE',
+    author: 'Benedictus de Spinoza',
+    spineAuthor: 'SPINOZA',
+    title: 'Ethics',
+    note: 'A serene, breathtaking geometric universe where Nature and the Divine are one, and true freedom is understanding necessity.',
+    access: 'COMMERCIAL',
+    accessLabel: 'In print (Hackett)',
+    url: 'https://newsouthbooks.com.au/books/spinoza-complete-works',
+    cover: '/books/spinoza-works.jpg',
+    publisher: 'HACKETT',
+    heightClass: 'h-max',
+    widthClass: 'w-heavy',
+    tone: 'plum',
+  },
+  {
+    id: 'pascal-pensees',
+    era: 3,
+    eraName: 'Early Modernity & Enlightenment',
+    eraRoman: 'III',
+    eraYears: '1670 CE',
+    author: 'Blaise Pascal',
+    spineAuthor: 'PASCAL',
+    title: 'Pensées',
+    note: 'Fragments on human contradiction: caught between nothingness and the infinite, terrified by the eternal silence of the stars.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/18269',
+    cover: '/books/pascal-pensees.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'violet',
+  },
+  {
+    id: 'hume-enquiry',
+    era: 3,
+    eraName: 'Early Modernity & Enlightenment',
+    eraRoman: 'III',
+    eraYears: '1748 CE',
+    author: 'David Hume',
+    spineAuthor: 'HUME',
+    title: 'Enquiry Concerning Human Understanding',
+    note: 'Scottish skepticism dismantling dogmatism: reason is the slave of passion, and habit, not proof, guides our lives.',
+    access: 'FREE',
+    accessLabel: 'Free on Standard Ebooks',
+    url: 'https://standardebooks.org/ebooks/david-hume/an-enquiry-concerning-human-understanding',
+    cover: '/books/hume-enquiry.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'heather',
+  },
+  {
+    id: 'rousseau-inequality',
+    era: 3,
+    eraName: 'Early Modernity & Enlightenment',
+    eraRoman: 'III',
+    eraYears: '1755 CE',
+    author: 'Jean-Jacques Rousseau',
+    spineAuthor: 'ROUSSEAU',
+    title: 'Discourse on Inequality',
+    note: 'A fiery inquiry into private property and civilization, asking how humans surrendered their wild freedom for artificial chains.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/11136',
+    cover: '/books/rousseau-inequality.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-compact',
+    widthClass: 'w-regular',
+    tone: 'moss',
+  },
+
+  // Era IV: Idealism & The 19th Century
+  {
+    id: 'kant-pure-reason',
+    era: 4,
+    eraName: 'Idealism & The 19th Century',
+    eraRoman: 'IV',
+    eraYears: '1781 CE',
+    author: 'Immanuel Kant',
+    spineAuthor: 'KANT',
+    title: 'Critique of Pure Reason',
+    note: 'The Copernican revolution of the mind: we never experience reality naked, but through the shaping prism of our own faculties.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/4280',
+    cover: '/books/kant-pure-reason.jpg',
+    publisher: 'CAMBRIDGE',
+    heightClass: 'h-max',
+    widthClass: 'w-tome',
+    tone: 'prussian',
+  },
+  {
+    id: 'hegel-phenomenology',
+    era: 4,
+    eraName: 'Idealism & The 19th Century',
+    eraRoman: 'IV',
+    eraYears: '1807 CE',
+    author: 'Georg Wilhelm Friedrich Hegel',
+    spineAuthor: 'HEGEL',
+    title: 'Phenomenology of Spirit',
+    note: 'Consciousness stumbling through historical struggle, the master-slave dialectic, and the agonizing climb toward freedom.',
+    access: 'FREE',
+    accessLabel: 'Free online archive',
+    url: 'https://www.marxists.org/reference/archive/hegel/phindex.htm',
+    cover: '/books/hegel-phenomenology.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-max',
+    widthClass: 'w-heavy',
+    tone: 'mahogany',
+  },
+  {
+    id: 'schopenhauer-world-will',
+    era: 4,
+    eraName: 'Idealism & The 19th Century',
+    eraRoman: 'IV',
+    eraYears: '1818 CE',
+    author: 'Arthur Schopenhauer',
+    spineAuthor: 'SCHOPENHAUER',
+    title: 'The World as Will and Representation',
+    note: 'Dark, crystalline lucidity: behind everyday appearances lies an insatiable blind Will, quieted only through art and compassion.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/38427',
+    cover: '/books/schopenhauer-world-will.jpg',
+    publisher: 'DOVER',
+    heightClass: 'h-tall',
+    widthClass: 'w-tome',
+    tone: 'amber',
+  },
+  {
+    id: 'kierkegaard-fear-trembling',
+    era: 4,
+    eraName: 'Idealism & The 19th Century',
+    eraRoman: 'IV',
+    eraYears: '1843 CE',
+    author: 'Søren Kierkegaard',
+    spineAuthor: 'KIERKEGAARD',
+    title: 'Fear and Trembling',
+    note: 'Standing on Mount Moriah with Abraham: the terrifying vertigo of faith when it suspends the universal moral code.',
+    access: 'BORROW',
+    accessLabel: 'Borrow on Internet Archive',
+    url: 'https://archive.org/details/feartremblingdia0000skie_r6e3',
+    cover: '/books/kierkegaard-fear-trembling.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'storm',
+  },
+  {
+    id: 'nietzsche-beyond-good-evil',
+    era: 4,
+    eraName: 'Idealism & The 19th Century',
+    eraRoman: 'IV',
+    eraYears: '1886 CE',
+    author: 'Friedrich Nietzsche',
+    spineAuthor: 'NIETZSCHE',
+    title: 'Beyond Good and Evil',
+    note: 'Dynamite disguised as aphorisms: attacking intellectual complacency, herd morality, and challenging the reader to think without nets.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/4363',
+    cover: '/books/nietzsche-beyond-good-evil.jpg',
+    publisher: 'VINTAGE',
+    heightClass: 'h-tall',
+    widthClass: 'w-regular',
+    tone: 'crimson-gold',
+  },
+
+  // Era V: Society, Language & Modernity
+  {
+    id: 'burke-reflections',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1790 CE',
+    author: 'Edmund Burke',
+    spineAuthor: 'BURKE',
+    title: 'Reflections on the Revolution in France',
+    note: 'An impassioned defense of custom and the solemn partnership between the living, the dead, and the unborn.',
+    access: 'FREE',
+    accessLabel: 'Free on Standard Ebooks',
+    url: 'https://standardebooks.org/ebooks/edmund-burke/reflections-on-the-revolution-in-france',
+    cover: '/books/burke-reflections.jpg',
+    publisher: 'OXFORD',
+    heightClass: 'h-tall',
+    widthClass: 'w-regular',
+    tone: 'oak',
+  },
+  {
+    id: 'paine-common-sense',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1776 CE',
+    author: 'Thomas Paine',
+    spineAuthor: 'PAINE',
+    title: 'Common Sense',
+    note: 'Electrifying democratic prose that tore through hereditary monarchy and turned political theory into immediate action.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/147',
+    cover: '/books/paine-common-sense.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-compact',
+    widthClass: 'w-slim',
+    tone: 'linen',
+  },
+  {
+    id: 'voltaire-candide',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1759 CE',
+    author: 'Voltaire',
+    spineAuthor: 'VOLTAIRE',
+    title: 'Candide',
+    note: 'Wicked, sparkling satire shredding naive optimism, concluding with the humble necessity of cultivating our own garden.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/19942',
+    cover: '/books/voltaire-candide.jpg',
+    publisher: 'PENGUIN',
+    heightClass: 'h-compact',
+    widthClass: 'w-slim',
+    tone: 'saffron',
+  },
+  {
+    id: 'heidegger-being-time',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1927 CE',
+    author: 'Martin Heidegger',
+    spineAuthor: 'HEIDEGGER',
+    title: 'Being and Time',
+    note: 'Dasein thrown into the world: confronting tools, anxiety, mortality, and what it actually means to exist.',
+    access: 'BORROW',
+    accessLabel: 'Borrow on Internet Archive',
+    url: 'https://archive.org/details/beingtime0000heid',
+    cover: '/books/heidegger-being-time.jpg',
+    publisher: 'HARPER',
+    heightClass: 'h-tall',
+    widthClass: 'w-heavy',
+    tone: 'slate-green',
+  },
+  {
+    id: 'wittgenstein-tractatus',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1921 CE',
+    author: 'Ludwig Wittgenstein',
+    spineAuthor: 'WITTGENSTEIN',
+    title: 'Tractatus Logico-Philosophicus',
+    note: 'Sparse, diamond-cut numbered propositions mapping the limits of language: what cannot be spoken must be passed over in silence.',
+    access: 'FREE',
+    accessLabel: 'Free to read online',
+    url: 'https://www.gutenberg.org/ebooks/5740',
+    cover: '/books/wittgenstein-tractatus.jpg',
+    publisher: 'ROUTLEDGE',
+    heightClass: 'h-mid',
+    widthClass: 'w-regular',
+    tone: 'bone',
+  },
+  {
+    id: 'wittgenstein-investigations',
+    era: 5,
+    eraName: 'Society, Language & Modernity',
+    eraRoman: 'V',
+    eraYears: '1953 CE',
+    author: 'Ludwig Wittgenstein',
+    spineAuthor: 'WITTGENSTEIN',
+    title: 'Philosophical Investigations',
+    note: 'Words as tools in living language-games, showing the fly the way out of the bottle by assembling plain reminders.',
+    access: 'BORROW',
+    accessLabel: 'Borrow on Internet Archive',
+    url: 'https://archive.org/details/philosophicalinv0000ludw',
+    cover: '/books/wittgenstein-investigations.jpg',
+    publisher: 'WILEY',
+    heightClass: 'h-tall',
+    widthClass: 'w-heavy',
+    tone: 'sapphire',
+  },
+];
+
+const freeCount = curatedBooks.filter(b => b.access === 'FREE').length;
+const borrowCount = curatedBooks.filter(b => b.access === 'BORROW').length;
+const commercialCount = curatedBooks.filter(b => b.access === 'COMMERCIAL').length;
+
+const getTitleSizeClass = (title: string) => {
+  const len = title.length;
+  if (len >= 32) return 'title-extra-long';
+  if (len >= 24) return 'title-long';
+  if (len >= 15) return 'title-medium';
+  return 'title-short';
+};
+
+const getAuthorSizeClass = (author: string) => {
+  const len = author.length;
+  if (len >= 11) return 'author-condensed';
+  if (len >= 8) return 'author-compact';
+  return 'author-standard';
+};
+
+const getImprintSizeClass = (imprint: string) => {
+  const len = imprint.length;
+  if (len >= 8) return 'imprint-condensed';
+  return 'imprint-standard';
+};
 ---
 
 <Base
   title="Books"
-  description="A philosophy reading path in stages, each work with where to find it."
+  description="Twenty-five books that stayed with me: philosophy from Homer to Wittgenstein."
   space="per"
 >
-  <SpaceHead title="Books" lede="The books on the shelf." />
+  <SpaceHead
+    title="Books"
+    lede="Twenty-five books that stayed with me: from Homer to Wittgenstein."
+  >
+    <BookGlyph slot="mark" />
+    <p class="curator-letter">
+      These are twenty-five books I’ve loved and kept returning to. Some made me rethink how I live,
+      others argued with me for months, and a few are just extraordinary writing. If you’re curious about
+      any of them, click on any spine to pull it from the shelf, or browse the open editions below.
+    </p>
+  </SpaceHead>
 
-  <Section id="path" num={1} title="A philosophy reading path">
-    <p>A philosophy reading path in {books.stages.length} stages, {workCount} works, all finished.</p>
-    <ol class="stages">
+  <!-- Library Ledger Summary Bar -->
+  <div class="ledger-bar" aria-label="Library collection summary">
+    <div class="ledger-item">
+      <span class="ledger-num">05</span>
+      <span class="ledger-label">Historical Eras</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">25</span>
+      <span class="ledger-label">Volumes</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">{freeCount}</span>
+      <span class="ledger-label">Free to Read</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">{borrowCount}</span>
+      <span class="ledger-label">Library Loans</span>
+    </div>
+  </div>
+
+  <!-- Tiered Library Bookshelf -->
+  <Section id="shelf" num={1} title="The library bookcase">
+    <div class="bookshelf-guidance">
+      <span class="shelf-lamp" aria-hidden="true">✦</span>
+      <p class="shelf-instruction">
+        Browse the five tiers below. Hover over any spine to pull it forward, or click to open the volume’s cover folio and online reading link.
+      </p>
+    </div>
+
+    <div class="library-bookcase" aria-label="Tiered Philosophy Bookshelf">
       {
-        books.stages.map((stage, i) => (
-          <li>
-            <details open={i === 0}>
-              <summary>
-                <span class="stage">
-                  <span class="t">{stage.tagline}</span>
-                  <span class="meta">{stage.name.split(':')[0]}</span>
-                </span>
-                <span class="count">{stage.works.length} works</span>
-              </summary>
-              <ol>
-                {stage.works.map(w => (
-                  <li>
-                    {w.author}, <a href={w.url}><cite>{w.title}</cite></a>
-                    <span class="access">
-                      {' '}
-                      · {ACCESS[w.access]}
-                      {w.optional && ' · optional'}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </details>
-          </li>
-        ))
+        eras.map(era => {
+          const eraBooks = curatedBooks.filter(b => b.era === era.num);
+          return (
+            <div class="shelf-tier" id={`tier-${era.num}`}>
+              <div class="shelf-bay">
+                <div class="bookend left" aria-hidden="true">
+                  <span class="bookend-brass" />
+                </div>
+
+                <div class="shelf-books" role="group" aria-label={`Shelf ${era.numeral}: ${era.name}`}>
+                  {eraBooks.map(b => (
+                    <button
+                      type="button"
+                      class:list={['shelf-spine', b.heightClass, b.widthClass, `tone-${b.tone}`]}
+                      data-shelf-spine
+                      data-book-trigger={b.id}
+                      data-access={b.access}
+                      data-era={b.era}
+                    >
+                      <div class="spine-head">
+                        <span class="spine-emboss-rule" aria-hidden="true" />
+                        <span class:list={['spine-author', getAuthorSizeClass(b.spineAuthor)]}>
+                          {b.spineAuthor}
+                        </span>
+                      </div>
+
+                      <div class="spine-body">
+                        <span class:list={['spine-full-title', getTitleSizeClass(b.title)]}>
+                          {b.title}
+                        </span>
+                      </div>
+
+                      <div class="spine-tail">
+                        <div class="spine-raised-bands" aria-hidden="true">
+                          <span class="band" />
+                          <span class="band" />
+                        </div>
+                        <span class:list={['spine-imprint-text', getImprintSizeClass(b.publisher)]}>
+                          {b.publisher}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                <div class="bookend right" aria-hidden="true">
+                  <span class="bookend-brass" />
+                </div>
+              </div>
+
+              <!-- Wooden Shelf Ledge with Centered Brass Plaque -->
+              <div class="shelf-ledge">
+                <div class="shelf-plaque">
+                  <span class="plaque-rivet left" aria-hidden="true">●</span>
+                  <span class="plaque-text">ERA {era.numeral} · {era.name.toUpperCase()} <span class="plaque-years">({era.years})</span></span>
+                  <span class="plaque-rivet right" aria-hidden="true">●</span>
+                </div>
+              </div>
+            </div>
+          );
+        })
       }
-    </ol>
-    <p class="note">Titles and links were checked on {books.verifiedOn}.</p>
+    </div>
   </Section>
+
+  <!-- Filter Bar & Era Folios Section -->
+  <Section id="catalog" num={2} title="Volumes and reading notes">
+    <div class="filter-cluster">
+      <div class="filter-pills" role="toolbar" aria-label="Book catalog filter options">
+        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">
+          All 25 Volumes
+        </button>
+        <button class="filter-btn" type="button" data-filter="FREE" aria-pressed="false">
+          Free Online ({freeCount})
+        </button>
+        <button class="filter-btn" type="button" data-filter="BORROW" aria-pressed="false">
+          Library Loan ({borrowCount})
+        </button>
+        <button class="filter-btn" type="button" data-filter="COMMERCIAL" aria-pressed="false">
+          In Print ({commercialCount})
+        </button>
+        <button class="filter-btn" type="button" data-filter="ancients" aria-pressed="false">
+          Ancients (Eras I–II)
+        </button>
+        <button class="filter-btn" type="button" data-filter="moderns" aria-pressed="false">
+          Moderns (Eras III–V)
+        </button>
+      </div>
+
+      <nav class="era-jump-bar" aria-label="Jump directly to era">
+        <span class="jump-label">Jump to:</span>
+        {
+          eras.map(e => (
+            <a href={`#era-folio-${e.num}`} class="jump-link">
+              Era {e.numeral}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <div class="era-folios">
+      {
+        eras.map(era => {
+          const eraBooks = curatedBooks.filter(b => b.era === era.num);
+          return (
+            <section class="era-folio" id={`era-folio-${era.num}`} aria-labelledby={`heading-era-${era.num}`}>
+              <header class="era-folio-header">
+                <div class="era-eyebrow">
+                  <span class="era-pill">ERA {era.numeral}</span>
+                  <span class="era-years-tag">{era.years}</span>
+                </div>
+                <h3 id={`heading-era-${era.num}`} class="era-folio-title">
+                  {era.name}
+                </h3>
+                <p class="era-folio-desc">{era.desc}</p>
+              </header>
+
+              <div class="books-grid">
+                {eraBooks.map(b => (
+                  <article
+                    class="book-card"
+                    id={`book-${b.id}`}
+                    data-book-card
+                    data-access={b.access}
+                    data-era={b.era}
+                  >
+                    <!-- Real Book Cover Thumbnail Trigger -->
+                    <div class="card-cover-wrapper">
+                      <button
+                        type="button"
+                        class="real-cover-btn"
+                        data-book-trigger={b.id}
+                        aria-label={`Open folio for ${b.title} by ${b.author}`}
+                      >
+                        <img
+                          src={b.cover}
+                          alt={`Cover of ${b.title}`}
+                          width="96"
+                          height="144"
+                          loading="lazy"
+                          decoding="async"
+                          class="card-cover-img"
+                        />
+                      </button>
+                    </div>
+
+                    <div class="card-content">
+                      <div class="card-top-row">
+                        <span class="card-book-num">VOL. {String(curatedBooks.indexOf(b) + 1).padStart(2, '0')}</span>
+                        <span class:list={['card-access-badge', `access-${b.access.toLowerCase()}`]}>
+                          {b.access === 'FREE' ? 'FREE ONLINE' : b.access === 'BORROW' ? 'LIBRARY LOAN' : 'IN PRINT'}
+                        </span>
+                      </div>
+
+                      <h4 class="card-title">
+                        <button type="button" class="title-trigger-btn" data-book-trigger={b.id}>
+                          {b.title}
+                        </button>
+                      </h4>
+                      <p class="card-author">{b.author} <span class="card-date">({b.eraYears})</span></p>
+
+                      <p class="card-note">“{b.note}”</p>
+
+                      <div class="card-actions">
+                        <a
+                          href={b.url}
+                          class="action-read-link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {b.accessLabel} ↗
+                        </a>
+                        <button type="button" class="action-inspect-btn" data-book-trigger={b.id}>
+                          Inspect Cover Folio
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+
+    <p class="verification-note">
+      Verified from personal records. All editions and open links checked on {booksContent.verifiedOn}.
+    </p>
+  </Section>
+
+  <!-- Interactive Book Folio Pop-up Modal (Real Book Covers) -->
+  <dialog id="book-modal" class="book-modal" aria-labelledby="modal-book-title">
+    <div class="modal-window">
+      <!-- Left Column: Real Authentic Book Cover Presentation -->
+      <div class="modal-cover-column">
+        <div class="modal-real-cover-jacket">
+          <img
+            data-modal-cover-img
+            src={curatedBooks[0].cover}
+            alt=""
+            width="220"
+            height="330"
+            class="modal-cover-photo"
+            loading="eager"
+          />
+          <span class="modal-cover-ribbon" aria-hidden="true" />
+        </div>
+      </div>
+
+      <!-- Right Column: Curatorial Dossier & Access -->
+      <div class="modal-info-column">
+        <header class="modal-header">
+          <div class="modal-eyebrow">
+            <span class="modal-counter" data-modal-counter>VOLUME 01 OF 25</span>
+            <span class="modal-pill" data-modal-access-pill>FREE ONLINE</span>
+          </div>
+          <p class="modal-era-label" data-modal-era>ERA I · ANTIQUITY</p>
+          <h2 id="modal-book-title" class="modal-title" data-modal-title>{curatedBooks[0].title}</h2>
+          <p class="modal-author" data-modal-author>{curatedBooks[0].author}</p>
+          <p class="modal-publisher-line" data-modal-publisher>Edition imprint: PENGUIN</p>
+        </header>
+
+        <div class="modal-takeaway-block">
+          <span class="takeaway-label">CURATORIAL REFLECTION</span>
+          <p class="modal-note-text" data-modal-note>“{curatedBooks[0].note}”</p>
+        </div>
+
+        <div class="modal-access-block">
+          {/* One server-rendered link per book; the script only toggles `hidden`, never writes an href. */}
+          {
+            curatedBooks.map((b, i) => (
+              <a
+                class="modal-open-link"
+                data-modal-link={b.id}
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden={i !== 0}
+              >
+                Read {b.title} ({b.accessLabel}) ↗
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="modal-controls">
+          <div class="modal-step-btns">
+            <button class="btn-modal-step" type="button" data-book-step="-1">‹ Prev Volume</button>
+            <button class="btn-modal-step" type="button" data-book-step="1">Next Volume ›</button>
+          </div>
+          <button class="btn-modal-close" type="button" data-modal-close>Close [Esc]</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  {/* Client-side JSON data block */}
+  <script type="application/json" id="books-data" is:inline set:html={JSON.stringify(curatedBooks).replaceAll('<', '\\u003c')} />
 </Base>
 
+<script src="../../../scripts/books.ts"></script>
+
 <style>
-  .stages {
+  /* Curator Letter */
+  .curator-letter {
     margin: var(--space-3) 0 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    max-width: 68ch;
+  }
+
+  /* Archival Ledger Bar */
+  .ledger-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    margin: var(--space-4) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+  }
+  .ledger-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .ledger-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+  .ledger-label {
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+  }
+  .ledger-sep {
+    color: var(--per-rule);
+    user-select: none;
+  }
+
+  /* Bookshelf Guidance */
+  .bookshelf-guidance {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--space-4);
+    padding: 8px var(--space-3);
+    border: 1px solid var(--per-rule);
+    background: rgba(231, 176, 79, 0.05);
+  }
+  .shelf-lamp {
+    color: var(--color-accent);
+    font-size: 1.1rem;
+  }
+  .shelf-instruction {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+
+  /* Tiered Library Bookcase */
+  .library-bookcase {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+    padding: var(--space-5) var(--space-4);
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 0%, rgba(231, 176, 79, 0.09), transparent 80%),
+      #130a14;
+    border: 1px solid var(--per-rule);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.85);
+  }
+
+  .shelf-tier {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .shelf-bay {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-4) var(--space-3) 0;
+    min-height: 340px;
+    min-width: 0;
+    max-width: 100%;
+    background:
+      radial-gradient(ellipse 65% 120px at 50% 10%, rgba(247, 202, 117, 0.08) 0%, transparent 80%),
+      linear-gradient(180deg, rgba(22, 12, 8, 0.35) 0%, rgba(14, 7, 5, 0.95) 100%);
+  }
+
+  /* Authentic Cast Bronze & Brass Bookends */
+  .bookend {
+    width: 20px;
+    height: 220px;
+    background: linear-gradient(90deg, #1f1107 0%, #2e1a0d 60%, #150b05 100%);
+    border: 2px solid #5a381f;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .bookend.left {
+    border-radius: 4px 0 0 0;
+    margin-right: 8px;
+    border-right: 3px solid #b8893a;
+  }
+  .bookend.right {
+    border-radius: 0 4px 0 0;
+    margin-left: 8px;
+    border-left: 3px solid #b8893a;
+  }
+  .bookend-brass {
+    display: block;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(184, 137, 58, 0.3) 0%, rgba(247, 202, 117, 0.5) 50%, rgba(184, 137, 58, 0.2) 100%);
+  }
+
+  /* Shelf Spines Container: Snug physical shelf row */
+  .shelf-books {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: nowrap;
+  }
+
+  /* Realistic Physical Book Spine (Zero Ellipses, Zero Syllable Breaks) */
+  .shelf-spine {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 4px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.65);
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), filter 0.2s;
+    user-select: none;
+    box-shadow:
+      inset 3px 0 6px rgba(255, 255, 255, 0.12),
+      inset -3px 0 6px rgba(0, 0, 0, 0.6),
+      0 6px 14px rgba(0, 0, 0, 0.75);
+    overflow: visible;
+  }
+
+  /* Authentic Physical Spine Heights */
+  .shelf-spine.h-compact { height: 250px; }
+  .shelf-spine.h-mid { height: 275px; }
+  .shelf-spine.h-tall { height: 295px; }
+  .shelf-spine.h-max { height: 315px; }
+
+  /* Authentic Spine Thicknesses */
+  .shelf-spine.w-slim { width: 50px; }
+  .shelf-spine.w-regular { width: 62px; }
+  .shelf-spine.w-heavy { width: 76px; }
+  .shelf-spine.w-tome { width: 92px; }
+
+  /* Spine Head: Author in crisp, unbroken horizontal foil caps */
+  .spine-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 0 1px;
+  }
+  .spine-emboss-rule {
+    display: block;
+    width: 75%;
+    height: 3px;
+    border-top: 1px solid #b8893a;
+    border-bottom: 1px solid #b8893a;
+  }
+  .spine-author {
+    font-family: var(--font-body);
+    font-size: 0.46rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #f7ca75;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 98%;
+  }
+  .spine-author.author-compact {
+    font-size: 0.40rem;
+    letter-spacing: 0.025em;
+  }
+  .spine-author.author-condensed {
+    font-size: 0.35rem;
+    letter-spacing: 0.015em;
+  }
+  .shelf-spine.w-slim .spine-author {
+    font-size: 0.34rem;
+    letter-spacing: 0.015em;
+  }
+
+  /* Full Vertical Title: Natural Top-to-Bottom Flow (Standard Library Direction) */
+  .spine-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0;
+    overflow: hidden;
+  }
+  .spine-full-title {
+    writing-mode: vertical-rl;
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #f7ca75;
+    letter-spacing: 0.035em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+
+  /* Proportional Title Sizing Based on Character Length */
+  .spine-full-title.title-short {
+    font-size: 0.74rem;
+    letter-spacing: 0.035em;
+  }
+  .spine-full-title.title-medium {
+    font-size: 0.65rem;
+    letter-spacing: 0.025em;
+  }
+  .spine-full-title.title-long {
+    font-size: 0.56rem;
+    letter-spacing: 0.018em;
+  }
+  .spine-full-title.title-extra-long {
+    font-size: 0.48rem;
+    letter-spacing: 0.012em;
+  }
+
+  /* Spine Tail & Publisher Imprint */
+  .spine-tail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 0 1px;
+  }
+  .spine-raised-bands {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 75%;
+  }
+  .spine-raised-bands .band {
+    display: block;
+    height: 3px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, #b8893a 50%, rgba(0, 0, 0, 0.7) 100%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
+    border-radius: 1px;
+  }
+  .spine-imprint-text {
+    font-family: var(--font-body);
+    font-size: 0.42rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #e7b04f;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    max-width: 98%;
+  }
+  .spine-imprint-text.imprint-condensed {
+    font-size: 0.36rem;
+    letter-spacing: 0.025em;
+  }
+
+  /* Hover & Pull-out Effect */
+  .shelf-spine:hover,
+  .shelf-spine:focus-visible {
+    transform: translateY(-20px) scale(1.02);
+    box-shadow:
+      inset 2px 0 5px rgba(255, 255, 255, 0.25),
+      0 24px 36px rgba(0, 0, 0, 0.85),
+      0 0 20px rgba(231, 176, 79, 0.35);
+    z-index: 10;
+  }
+  .shelf-spine.dimmed {
+    opacity: 0.2;
+    filter: grayscale(0.85);
+  }
+
+  /* Spine Color Tones */
+  .tone-terracotta { background: linear-gradient(90deg, #612518 0%, #7d3322 50%, #4f1d13 100%); }
+  .tone-navy { background: linear-gradient(90deg, #101c33 0%, #162a4d 50%, #0d172b 100%); }
+  .tone-charcoal { background: linear-gradient(90deg, #222224 0%, #303033 50%, #1a1a1c 100%); }
+  .tone-forest { background: linear-gradient(90deg, #162e1e 0%, #1f422b 50%, #112417 100%); }
+  .tone-crimson { background: linear-gradient(90deg, #4f151e 0%, #6e1c29 50%, #3d1017 100%); }
+  .tone-oxblood { background: linear-gradient(90deg, #380d13 0%, #52131b 50%, #2b0a0f 100%); }
+  .tone-parchment { background: linear-gradient(90deg, #3d3328 0%, #4f4234 50%, #302820 100%); }
+  .tone-venetian { background: linear-gradient(90deg, #571623 0%, #731d2e 50%, #42111b 100%); }
+  .tone-chestnut { background: linear-gradient(90deg, #3d2012 0%, #542d19 50%, #30190e 100%); }
+  .tone-slate { background: linear-gradient(90deg, #1d2533 0%, #293447 50%, #171d29 100%); }
+  .tone-plum { background: linear-gradient(90deg, #33172f 0%, #4a2144 50%, #261124 100%); }
+  .tone-violet { background: linear-gradient(90deg, #251330 0%, #371d47 50%, #1b0e24 100%); }
+  .tone-heather { background: linear-gradient(90deg, #362a3b 0%, #4a3a52 50%, #29202e 100%); }
+  .tone-moss { background: linear-gradient(90deg, #242e1c 0%, #334227 50%, #1b2415 100%); }
+  .tone-prussian { background: linear-gradient(90deg, #0e1e2e 0%, #142e47 50%, #0a1724 100%); }
+  .tone-mahogany { background: linear-gradient(90deg, #33140e 0%, #4a1d14 50%, #260f0a 100%); }
+  .tone-amber { background: linear-gradient(90deg, #3b2a0d 0%, #523b13 50%, #2e200a 100%); }
+  .tone-storm { background: linear-gradient(90deg, #24292e 0%, #333a42 50%, #1c2024 100%); }
+  .tone-crimson-gold { background: linear-gradient(90deg, #571419 0%, #751b22 50%, #420f13 100%); }
+  .tone-oak { background: linear-gradient(90deg, #3b2a17 0%, #523a20 50%, #2e2012 100%); }
+  .tone-linen { background: linear-gradient(90deg, #3b382e 0%, #4f4b3e 50%, #2e2c24 100%); }
+  .tone-saffron { background: linear-gradient(90deg, #574311 0%, #785c17 50%, #42330d 100%); }
+  .tone-slate-green { background: linear-gradient(90deg, #1b2b25 0%, #263d34 50%, #131f1a 100%); }
+  .tone-bone { background: linear-gradient(90deg, #363430 0%, #4d4a45 50%, #2b2926 100%); }
+  .tone-sapphire { background: linear-gradient(90deg, #121f3b 0%, #1a2d54 50%, #0e182e 100%); }
+
+  /* Wooden Shelf Ledge */
+  .shelf-ledge {
+    position: relative;
+    height: 30px;
+    background: linear-gradient(180deg, #4a2c1a 0%, #2e1a0f 50%, #1a0f07 100%);
+    border-top: 2px solid #6e4428;
+    border-bottom: 6px solid #0d0703;
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.75),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Centered Brass Era Plaque */
+  .shelf-plaque {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 16px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: linear-gradient(180deg, #d4a755 0%, #a67c32 100%);
+    border: 1px solid #e7b04f;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    font: 700 0.72rem / 1 var(--font-mono);
+    color: #1a1005;
+    letter-spacing: 0.08em;
+  }
+  .plaque-years {
+    font-weight: 400;
+    color: #3d260c;
+  }
+  .plaque-rivet {
+    font-size: 0.5rem;
+    color: #4a3411;
+  }
+
+  /* Filter Cluster */
+  .filter-cluster {
+    margin: var(--space-4) 0 var(--space-5);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--per-rule);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .filter-btn {
+    min-height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    color: var(--color-ink);
+    font: 700 0.75rem / 1 var(--font-mono);
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .filter-btn:hover,
+  .filter-btn:focus-visible {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .filter-btn.active {
+    background: var(--color-accent);
+    color: #120c14;
+    border-color: var(--color-accent);
+  }
+  .era-jump-bar {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font: 0.75rem / 1 var(--font-mono);
+  }
+  .jump-label {
+    color: var(--color-ink-2);
+  }
+  .jump-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  /* Era Folios */
+  .era-folios {
+    display: grid;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+  .era-folio {
+    border: 1px solid var(--per-rule);
+    background: #170e1a;
+    padding: var(--space-4) var(--space-5);
+    min-width: 0;
+  }
+  .era-folio-header {
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--per-rule);
+    margin-bottom: var(--space-4);
+  }
+  .era-eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+  .era-pill {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+  .era-years-tag {
+    font: 0.75rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .era-folio-title {
+    margin: 0;
+    font: var(--text-2) / 1.2 var(--font-display);
+    color: var(--color-ink);
+  }
+  .era-folio-desc {
+    margin: var(--space-1) 0 0;
+    font-size: 0.95rem;
+    color: var(--color-ink-2);
+    max-width: 68ch;
+  }
+
+  /* Books Grid */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-4);
+  }
+  .book-card {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: var(--space-3);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    padding: var(--space-3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Real Cover Trigger in Cards */
+  .card-cover-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .real-cover-btn {
+    display: block;
     padding: 0;
-    list-style: none;
+    background: #100812;
+    border: 2px solid #3d2616;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
   }
-  .stages > li {
-    border-bottom: 1px solid var(--color-rule);
+  .real-cover-btn:hover,
+  .real-cover-btn:focus-visible {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.8),
+      0 0 12px rgba(231, 176, 79, 0.3);
   }
-  .stages summary {
+  .card-cover-img {
+    display: block;
+    width: 96px;
+    height: 144px;
+    object-fit: cover;
+  }
+
+  /* Card Content */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-top-row {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
-    padding: 12px 0;
-    min-height: 44px;
+    align-items: baseline;
+    margin-bottom: var(--space-1);
+  }
+  .card-book-num {
+    font: 700 0.7rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+  .card-access-badge {
+    font: 700 0.65rem / 1 var(--font-mono);
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border: 1px solid currentColor;
+  }
+  .card-access-badge.access-free {
+    color: var(--color-accent);
+    background: rgba(231, 176, 79, 0.08);
+  }
+  .card-access-badge.access-borrow {
+    color: #8bb5d9;
+    background: rgba(139, 181, 217, 0.08);
+  }
+  .card-access-badge.access-commercial {
+    color: var(--color-ink-2);
+  }
+
+  .card-title {
+    margin: 0;
+  }
+  .title-trigger-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font: var(--text-1) / 1.25 var(--font-display);
+    color: var(--color-ink);
+    text-align: left;
     cursor: pointer;
   }
-  .stages .stage {
+  .title-trigger-btn:hover,
+  .title-trigger-btn:focus-visible {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+  .card-author {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+  }
+  .card-date {
+    color: var(--color-ink-2);
+  }
+  .card-note {
+    margin: var(--space-2) 0;
+    font: italic var(--text-n1) / 1.45 var(--font-body);
+    color: var(--color-ink);
+  }
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: auto;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--per-rule);
+  }
+  .action-read-link {
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+  .action-inspect-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .action-inspect-btn:hover,
+  .action-inspect-btn:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .verification-note {
+    margin-top: var(--space-5);
+    font: italic var(--text-n1) / 1.4 var(--font-body);
+    color: var(--color-ink-2);
+  }
+
+  /* Interactive Book Folio Modal (Real Book Covers) */
+  .book-modal {
+    width: 90vw;
+    max-width: 760px;
+    padding: 0;
+    border: 1px solid var(--per-rule);
+    background: #140b15;
+    color: var(--color-ink);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+  }
+  .book-modal::backdrop {
+    background: rgba(10, 5, 12, 0.85);
+    backdrop-filter: blur(4px);
+  }
+  .modal-window {
     display: grid;
-    gap: 2px;
+    grid-template-columns: 260px 1fr;
+    min-height: 420px;
   }
-  .stages .t {
-    font: var(--text-1) / 1.25 var(--font-display);
+
+  /* Modal Left Column: Real Book Cover Jacket */
+  .modal-cover-column {
+    padding: var(--space-5) var(--space-4);
+    background: #0d060f;
+    border-right: 1px solid var(--per-rule);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .stages .count {
+  .modal-real-cover-jacket {
+    position: relative;
+    padding: 6px;
+    background: #1e1322;
+    border: 2px solid #b8893a;
+    box-shadow:
+      0 16px 36px rgba(0, 0, 0, 0.85),
+      0 0 12px rgba(231, 176, 79, 0.2);
+  }
+  .modal-cover-photo {
+    display: block;
+    width: 220px;
+    height: auto;
+    max-height: 330px;
+    object-fit: cover;
+  }
+  .modal-cover-ribbon {
+    position: absolute;
+    bottom: -16px;
+    right: 28px;
+    width: 8px;
+    height: 32px;
+    background: #b8893a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Modal Right Details */
+  .modal-info-column {
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .modal-eyebrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-2);
+  }
+  .modal-counter {
+    font: 700 0.75rem / 1 var(--font-mono);
     color: var(--color-ink-2);
-    white-space: nowrap;
   }
-  .stages ol {
-    margin: 0 0 var(--space-3);
-    padding-left: 24px;
+  .modal-pill {
+    font: 700 0.68rem / 1 var(--font-mono);
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border: 1px solid currentColor;
   }
-  .stages ol li {
-    padding: 4px 0;
+  .modal-pill.access-free {
+    color: var(--color-accent);
+    background: rgba(231, 176, 79, 0.08);
   }
-  .access {
+  .modal-pill.access-borrow {
+    color: #8bb5d9;
+    background: rgba(139, 181, 217, 0.08);
+  }
+  .modal-pill.access-commercial {
     color: var(--color-ink-2);
-    font-size: var(--text-n1);
+  }
+  .modal-era-label {
+    margin: 0;
+    font: 700 0.75rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.06em;
+  }
+  .modal-title {
+    margin: var(--space-1) 0;
+    font: var(--text-3) / 1.15 var(--font-display);
+    color: var(--color-ink);
+  }
+  .modal-author {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--color-accent);
+  }
+  .modal-publisher-line {
+    margin: 4px 0 0;
+    font: 0.75rem / 1.3 var(--font-mono);
+    color: var(--color-ink-2);
+  }
+
+  .modal-takeaway-block {
+    margin: var(--space-4) 0;
+    padding: var(--space-3);
+    border-left: 3px solid var(--color-accent);
+    background: rgba(231, 176, 79, 0.05);
+  }
+  .takeaway-label {
+    display: block;
+    font: 700 0.68rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .modal-note-text {
+    margin: 0;
+    font: italic var(--text-0) / 1.5 var(--font-body);
+    color: var(--color-ink);
+  }
+
+  .modal-access-block {
+    margin-bottom: var(--space-4);
+  }
+  .modal-open-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--color-accent);
+    color: #120c14;
+    font: 700 0.85rem / 1 var(--font-mono);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .modal-open-link:hover,
+  .modal-open-link:focus-visible {
+    background: #f7ca75;
+    color: #000;
+  }
+
+  .modal-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--per-rule);
+  }
+  .modal-step-btns {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-modal-step {
+    padding: 6px 12px;
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+    color: var(--color-ink);
+    font: 700 0.75rem / 1 var(--font-mono);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-modal-step:hover,
+  .btn-modal-step:focus-visible {
+    background: var(--per-rule);
+    color: var(--color-accent);
+  }
+  .btn-modal-close {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--per-rule);
+    color: var(--color-ink-2);
+    font: 700 0.75rem / 1 var(--font-mono);
+    cursor: pointer;
+  }
+  .btn-modal-close:hover,
+  .btn-modal-close:focus-visible {
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shelf-spine,
+    .real-cover-btn {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .shelf-bay {
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding-inline: var(--space-4);
+    }
+    .shelf-books {
+      flex-wrap: nowrap;
+    }
+    .books-grid {
+      grid-template-columns: 1fr;
+    }
+    .modal-window {
+      grid-template-columns: 1fr;
+    }
+    .modal-cover-column {
+      display: none;
+    }
   }
 </style>

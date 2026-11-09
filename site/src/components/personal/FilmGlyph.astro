@@ -1,0 +1,878 @@
+---
+/**
+ * FilmGlyph.astro
+ *
+ * "The Kinematograph & 35mm Celluloid Gate" (Kinematographia / Celluloid Nocturne)
+ * An interactive 35mm film projector and optical gate simulation for the
+ * "Films" cinema room.
+ *
+ * Dynamic Cinema Integration:
+ * - Dynamically populated from `films.diary` without hardcoded movie lists or counts.
+ * - Always showcases the user's latest 5★ / standout reviews with authentic local poster artwork.
+ * - Tactile brass transport buttons (◀ PREV and NEXT ▶) for effortless 1-click stepping.
+ * - Mouse wheel / trackpad scroll support with mechanical spring damping.
+ * - Click on gate/strip to advance frame; click center slate to jump to review.
+ * - Keyboard navigation (ArrowLeft / ArrowRight to step, Enter to jump).
+ * - Continuous infinite 35mm celluloid loop (loops seamlessly at both ends).
+ * - Strictly zero inline style="" attributes (CSP compliant).
+ */
+import { films as contentFilms } from '../../lib/content';
+
+// Curate showcase films dynamically:
+// Select up to 6 distinct standout / 5-star films from the live Letterboxd diary
+const peakFilms = contentFilms.diary.filter(d => (d.rating ?? 0) >= 5);
+const standoutFilms = contentFilms.diary.filter(d => (d.rating ?? 0) >= 4 && (d.rating ?? 0) < 5);
+const pool = [...peakFilms, ...standoutFilms, ...contentFilms.diary];
+
+const seenTitles = new Set<string>();
+const showcase: (typeof contentFilms.diary)[0][] = [];
+for (const entry of pool) {
+  const normTitle = entry.title.trim().toLowerCase();
+  if (!seenTitles.has(normTitle) && showcase.length < 6) {
+    seenTitles.add(normTitle);
+    showcase.push(entry);
+  }
+}
+
+const TOTAL_FILMS = showcase.length || 1;
+
+// Pitch between frames = 72px (frame height 64px, seam bar 8px)
+// Center alignment formula: Y_strip = 75 - index * 72
+const reelItems = showcase.map((item, idx) => ({
+  index: idx,
+  slug: item.slug,
+  title: item.title.toUpperCase(),
+  sub: `${item.year} · REEL ${String(idx + 1).padStart(2, '0')}/${String(TOTAL_FILMS).padStart(2, '0')} · ${item.ratingStars || '★★★★★'}`,
+  offset: 75 - idx * 72,
+  poster: item.poster.src,
+  year: item.year,
+  displayTitle: item.title,
+}));
+
+const stripHeight = TOTAL_FILMS * 72 + 280;
+const lastFilm = showcase[TOTAL_FILMS - 1];
+const firstFilm = showcase[0];
+---
+
+<div
+  class="film-glyph-widget"
+  id="cinema-gate"
+  role="region"
+  tabindex="0"
+  aria-label="Interactive 35mm Film Projector: Use ◀ ▶ buttons, mouse wheel, or arrow keys to switch film reels."
+>
+  <div class="glyph-frame">
+    <svg
+      viewBox="0 0 160 213"
+      width="160"
+      height="213"
+      class="glyph-svg"
+    >
+      <defs>
+        <!-- Polished Brass / Gold Foil Gradient -->
+        <linearGradient id="fg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fff8df" />
+          <stop offset="30%" stop-color="#e9b354" />
+          <stop offset="70%" stop-color="#ad7924" />
+          <stop offset="100%" stop-color="#5c3c0a" />
+        </linearGradient>
+
+        <!-- Obsidian Projector Housing Gradient -->
+        <radialGradient id="fg-housing" cx="50%" cy="35%" r="75%">
+          <stop offset="0%" stop-color="#1f1127" />
+          <stop offset="60%" stop-color="#120716" />
+          <stop offset="100%" stop-color="#07020a" />
+        </radialGradient>
+
+        <!-- Celluloid Film Stock Dark Gradient -->
+        <linearGradient id="fg-celluloid" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2a1636" />
+          <stop offset="12%" stop-color="#1c0d24" />
+          <stop offset="88%" stop-color="#1c0d24" />
+          <stop offset="100%" stop-color="#2a1636" />
+        </linearGradient>
+
+        <!-- Optical Volumetric Light Cone Gradient -->
+        <radialGradient id="fg-beam" cx="50%" cy="16%" r="80%">
+          <stop offset="0%" stop-color="rgba(255, 245, 205, 0.45)" />
+          <stop offset="35%" stop-color="rgba(233, 179, 84, 0.22)" />
+          <stop offset="70%" stop-color="rgba(233, 179, 84, 0.06)" />
+          <stop offset="100%" stop-color="rgba(0, 0, 0, 0)" />
+        </radialGradient>
+
+        <!-- Lens Glass Anti-Reflective Glare Gradient -->
+        <linearGradient id="fg-lens-glare" x1="15%" y1="15%" x2="85%" y2="85%">
+          <stop offset="0%" stop-color="rgba(145, 225, 255, 0.65)" />
+          <stop offset="45%" stop-color="rgba(240, 195, 110, 0.35)" />
+          <stop offset="100%" stop-color="rgba(80, 20, 100, 0)" />
+        </linearGradient>
+
+        <!-- Scrim gradient for title legibility over poster art -->
+        <linearGradient id="fg-scrim" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="rgba(10, 4, 15, 0)" />
+          <stop offset="45%" stop-color="rgba(10, 4, 15, 0.72)" />
+          <stop offset="100%" stop-color="rgba(10, 4, 15, 0.96)" />
+        </linearGradient>
+
+        <!-- Frame Clip Mask to keep film inside aperture gate -->
+        <clipPath id="fg-gate-clip">
+          <rect x="36" y="52" width="88" height="110" rx="3" />
+        </clipPath>
+
+        <!-- Lens Barrel Radial Gradient -->
+        <radialGradient id="fg-lens-barrel" cx="45%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#5a3d6d" />
+          <stop offset="40%" stop-color="#2a1636" />
+          <stop offset="85%" stop-color="#120716" />
+          <stop offset="100%" stop-color="#09020d" />
+        </radialGradient>
+      </defs>
+
+      <!-- Archival Mount Outer Casing -->
+      <rect
+        x="3"
+        y="3"
+        width="154"
+        height="207"
+        rx="4"
+        fill="url(#fg-housing)"
+        stroke="rgba(233, 179, 84, 0.4)"
+        stroke-width="1.2"
+        class="fg-casing"
+      />
+
+      <!-- Double Gold Rule Border -->
+      <rect
+        x="7"
+        y="7"
+        width="146"
+        height="199"
+        rx="2"
+        fill="none"
+        stroke="rgba(233, 179, 84, 0.18)"
+        stroke-width="0.8"
+      />
+
+      <!-- Mechanical Corner Screws -->
+      <circle cx="10" cy="10" r="1.5" fill="url(#fg-gold)" />
+      <circle cx="150" cy="10" r="1.5" fill="url(#fg-gold)" />
+      <circle cx="10" cy="203" r="1.5" fill="url(#fg-gold)" />
+      <circle cx="150" cy="203" r="1.5" fill="url(#fg-gold)" />
+
+      <!-- Top Projector Head Assembly -->
+      <path
+        d="M 30,12 L 130,12 L 126,24 L 34,24 Z"
+        fill="#180a20"
+        stroke="rgba(233, 179, 84, 0.3)"
+        stroke-width="0.75"
+      />
+      <!-- Upper Film Reel Drive Spindle Ticks -->
+      <line x1="42" y1="18" x2="118" y2="18" stroke="rgba(233, 179, 84, 0.25)" stroke-width="0.75" stroke-dasharray="2,3" />
+
+      <!-- Left & Right Mechanical Sprocket Gears -->
+      <g id="fg-sprocket-left" class="sprocket-wheel" transform="translate(22, 107)">
+        <circle cx="0" cy="0" r="8" fill="#180a20" stroke="url(#fg-gold)" stroke-width="0.75" />
+        <circle cx="0" cy="0" r="3" fill="#2d1738" stroke="url(#fg-gold)" stroke-width="0.5" />
+        <line x1="-7" y1="0" x2="7" y2="0" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="0" y1="-7" x2="0" y2="7" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="-5" y1="5" x2="5" y2="-5" stroke="url(#fg-gold)" stroke-width="0.6" />
+      </g>
+
+      <g id="fg-sprocket-right" class="sprocket-wheel" transform="translate(138, 107)">
+        <circle cx="0" cy="0" r="8" fill="#180a20" stroke="url(#fg-gold)" stroke-width="0.75" />
+        <circle cx="0" cy="0" r="3" fill="#2d1738" stroke="url(#fg-gold)" stroke-width="0.5" />
+        <line x1="-7" y1="0" x2="7" y2="0" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="0" y1="-7" x2="0" y2="7" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="-5" y1="-5" x2="5" y2="5" stroke="url(#fg-gold)" stroke-width="0.6" />
+        <line x1="-5" y1="5" x2="5" y2="-5" stroke="url(#fg-gold)" stroke-width="0.6" />
+      </g>
+
+      <!-- Aperture Plate Outer Bezel (Clickable to advance) -->
+      <rect
+        id="fg-gate-bezel"
+        class="gate-bezel"
+        x="34"
+        y="50"
+        width="92"
+        height="114"
+        rx="4"
+        fill="#0d0411"
+        stroke="rgba(233, 179, 84, 0.45)"
+        stroke-width="1"
+      />
+
+      <!-- 35mm Celluloid Strip (Clipped inside Gate) -->
+      <g clip-path="url(#fg-gate-clip)">
+        <g id="fg-film-strip" class="film-strip-track" transform="translate(0, 75)">
+          <!-- Continuous Celluloid Base Stock -->
+          <rect x="36" y="-130" width="88" height={stripHeight} fill="url(#fg-celluloid)" />
+
+          <!-- Left Sprocket Hole Column (KS-1870 Standard Perforations) -->
+          {
+            Array.from({ length: Math.ceil(stripHeight / 12) + 2 }).map((_, i) => (
+              <rect
+                x="39"
+                y={-120 + i * 12}
+                width="4.5"
+                height="6.5"
+                rx="1"
+                fill="#0a030c"
+                stroke="rgba(233, 179, 84, 0.3)"
+                stroke-width="0.5"
+              />
+            ))
+          }
+
+          <!-- Right Sprocket Hole Column -->
+          {
+            Array.from({ length: Math.ceil(stripHeight / 12) + 2 }).map((_, i) => (
+              <rect
+                x="116.5"
+                y={-120 + i * 12}
+                width="4.5"
+                height="6.5"
+                rx="1"
+                fill="#0a030c"
+                stroke="rgba(233, 179, 84, 0.3)"
+                stroke-width="0.5"
+              />
+            ))
+          }
+
+          <!-- Optical Soundtrack Track (Left Margin Wave) -->
+          <line x1="47.5" y1="-130" x2="47.5" y2={stripHeight - 130} stroke="rgba(233, 179, 84, 0.25)" stroke-width="0.75" stroke-dasharray="1.5,1.5" />
+
+          <!-- ======================================================== -->
+          <!-- CLONE TOP (Last Film Wrapper at y = -72)                 -->
+          <!-- ======================================================== -->
+          {lastFilm && (
+            <g class="film-cell" transform="translate(51, -72)">
+              <rect x="0" y="0" width="62" height="64" rx="2" fill="#130822" stroke="rgba(233, 179, 84, 0.35)" stroke-width="0.75" />
+              <image href={lastFilm.poster.src} x="0" y="0" width="62" height="64" preserveAspectRatio="xMidYMid slice" opacity="0.85" />
+              <rect x="0" y="32" width="62" height="32" fill="url(#fg-scrim)" />
+              <text x="3" y="10" font-size="5" font-family="monospace" font-weight="bold" fill="rgba(255,248,223,0.95)">
+                {String(TOTAL_FILMS).padStart(2, '0')} · {lastFilm.year}
+              </text>
+              <text x="3" y="60" font-size="5" font-family="serif" font-style="italic" fill="#fff5d8">
+                {lastFilm.title.length > 14 ? lastFilm.title.slice(0, 13) + '…' : lastFilm.title}
+              </text>
+            </g>
+          )}
+          <line x1="50" y1="-4" x2="114" y2="-4" stroke="rgba(233, 179, 84, 0.5)" stroke-width="1.2" />
+
+          <!-- ======================================================== -->
+          <!-- LIVE SHOWCASE FRAMES (Dynamically populated from diary)  -->
+          <!-- ======================================================== -->
+          {showcase.map((item, idx) => (
+            <>
+              <g
+                class={`film-cell ${idx === 0 ? 'active' : ''}`}
+                id={`cell-frame-${idx}`}
+                data-index={idx}
+                data-film={item.slug}
+                transform={`translate(51, ${idx * 72})`}
+              >
+                <rect x="0" y="0" width="62" height="64" rx="2" fill="#130822" stroke="rgba(233, 179, 84, 0.45)" stroke-width="0.85" />
+                <image href={item.poster.src} x="0" y="0" width="62" height="64" preserveAspectRatio="xMidYMid slice" opacity="0.85" />
+                <rect x="0" y="32" width="62" height="32" fill="url(#fg-scrim)" />
+                <text x="3" y="10" font-size="5" font-family="monospace" font-weight="bold" fill="rgba(255,248,223,0.95)">
+                  {String(idx + 1).padStart(2, '0')} · {item.year}
+                </text>
+                <text x="3" y="60" font-size="5" font-family="serif" font-style="italic" fill="#fff5d8">
+                  {item.title.length > 14 ? item.title.slice(0, 13) + '…' : item.title}
+                </text>
+              </g>
+              <line x1="50" y1={idx * 72 + 68} x2="114" y2={idx * 72 + 68} stroke="rgba(233, 179, 84, 0.5)" stroke-width="1.2" />
+            </>
+          ))}
+
+          <!-- ======================================================== -->
+          <!-- CLONE BOTTOM (First Film Wrapper at y = TOTAL * 72)      -->
+          <!-- ======================================================== -->
+          {firstFilm && (
+            <g class="film-cell" transform={`translate(51, ${TOTAL_FILMS * 72})`}>
+              <rect x="0" y="0" width="62" height="64" rx="2" fill="#130822" stroke="rgba(233, 179, 84, 0.35)" stroke-width="0.75" />
+              <image href={firstFilm.poster.src} x="0" y="0" width="62" height="64" preserveAspectRatio="xMidYMid slice" opacity="0.85" />
+              <rect x="0" y="32" width="62" height="32" fill="url(#fg-scrim)" />
+              <text x="3" y="10" font-size="5" font-family="monospace" font-weight="bold" fill="rgba(255,248,223,0.95)">
+                01 · {firstFilm.year}
+              </text>
+              <text x="3" y="60" font-size="5" font-family="serif" font-style="italic" fill="#fff5d8">
+                {firstFilm.title.length > 14 ? firstFilm.title.slice(0, 13) + '…' : firstFilm.title}
+              </text>
+            </g>
+          )}
+        </g>
+      </g>
+
+      <!-- Volumetric Projection Light Cone (Emerging from Lens Barrel) -->
+      <polygon
+        id="fg-light-cone"
+        points="80,32 34,166 126,166"
+        fill="url(#fg-beam)"
+        class="projection-beam"
+      />
+
+      <!-- Suspended Silver-Halide Dust Motes (Animated drifting particles) -->
+      <g id="fg-dust-motes" class="dust-motes">
+        <circle id="mote-1" cx="72" cy="74" r="1.1" fill="#fff7db" opacity="0.8" />
+        <circle id="mote-2" cx="88" cy="95" r="0.8" fill="#ffeaa5" opacity="0.6" />
+        <circle id="mote-3" cx="64" cy="118" r="1.2" fill="#fff9eb" opacity="0.75" />
+        <circle id="mote-4" cx="96" cy="134" r="0.9" fill="#ffd875" opacity="0.5" />
+        <circle id="mote-5" cx="78" cy="148" r="1.3" fill="#ffffff" opacity="0.85" />
+      </g>
+
+      <!-- Projector Lens Assembly at Top -->
+      <g id="fg-lens-group" transform="translate(80, 32)">
+        <circle cx="0" cy="0" r="14" fill="url(#fg-lens-barrel)" stroke="url(#fg-gold)" stroke-width="1.4" />
+        <circle cx="0" cy="0" r="10.5" fill="#14071a" stroke="rgba(233, 179, 84, 0.5)" stroke-width="0.8" />
+        <circle cx="0" cy="0" r="7.5" fill="#0b020e" stroke="rgba(145, 225, 255, 0.7)" stroke-width="0.8" />
+        <ellipse cx="-2.5" cy="-2.5" rx="4.5" ry="2.5" transform="rotate(-30)" fill="url(#fg-lens-glare)" />
+        <circle cx="0" cy="0" r="2.2" fill="#fffbee" />
+      </g>
+
+      <!-- ======================================================== -->
+      <!-- ENGRAVED BRASS SLATE & TACTILE TRANSPORT CONTROLS       -->
+      <!-- ======================================================== -->
+      <g id="fg-cartouche" transform="translate(10, 168)">
+        <!-- Outer Slate Mounting Plate -->
+        <rect
+          x="0"
+          y="0"
+          width="140"
+          height="34"
+          rx="3"
+          fill="#14071a"
+          stroke="url(#fg-gold)"
+          stroke-width="0.9"
+        />
+        <rect
+          x="2"
+          y="2"
+          width="136"
+          height="30"
+          rx="1.5"
+          fill="none"
+          stroke="rgba(233, 179, 84, 0.25)"
+          stroke-width="0.5"
+        />
+
+        <!-- Corner Screws -->
+        <circle cx="4.5" cy="4.5" r="1" fill="url(#fg-gold)" />
+        <circle cx="135.5" cy="4.5" r="1" fill="url(#fg-gold)" />
+        <circle cx="4.5" cy="29.5" r="1" fill="url(#fg-gold)" />
+        <circle cx="135.5" cy="29.5" r="1" fill="url(#fg-gold)" />
+
+        <!-- ◀ PREV TRANSPORT BUTTON -->
+        <g id="fg-btn-prev" class="transport-btn" role="button" tabindex="0" aria-label="Previous film reel">
+          <rect x="5" y="5" width="20" height="24" rx="2" fill="#1c0b25" stroke="rgba(233, 179, 84, 0.45)" stroke-width="0.75" class="btn-rect" />
+          <polygon points="17,11 10,17 17,23" fill="url(#fg-gold)" class="btn-arrow" />
+        </g>
+
+        <!-- CENTER DISPLAY SLATE (Clickable to jump to diary card) -->
+        <g id="fg-slate-center" class="slate-center" role="button" tabindex="0">
+          <rect x="28" y="5" width="84" height="24" rx="1.5" fill="#110517" stroke="rgba(233, 179, 84, 0.2)" stroke-width="0.5" class="slate-rect" />
+          <text
+            id="fg-cartouche-title"
+            x="70"
+            y="15"
+            text-anchor="middle"
+            font-family="monospace"
+            font-size="5.5"
+            font-weight="bold"
+            letter-spacing="0.8"
+            fill="#fff5d8"
+          >
+            {reelItems[0]?.title || 'CINEMA REEL'}
+          </text>
+          <text
+            id="fg-cartouche-sub"
+            x="70"
+            y="23.5"
+            text-anchor="middle"
+            font-family="monospace"
+            font-size="4.2"
+            letter-spacing="0.5"
+            fill="#e9b354"
+          >
+            {reelItems[0]?.sub || '50 SCREENINGS'}
+          </text>
+        </g>
+
+        <!-- NEXT ▶ TRANSPORT BUTTON -->
+        <g id="fg-btn-next" class="transport-btn" role="button" tabindex="0" aria-label="Next film reel">
+          <rect x="115" y="5" width="20" height="24" rx="2" fill="#1c0b25" stroke="rgba(233, 179, 84, 0.45)" stroke-width="0.75" class="btn-rect" />
+          <polygon points="123,11 130,17 123,23" fill="url(#fg-gold)" class="btn-arrow" />
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Dynamic Reel Configuration for Client Runtime -->
+  <script type="application/json" id="fg-reel-data" set:html={JSON.stringify(reelItems).replaceAll('<', '\\u003c')} />
+</div>
+
+<script>
+  import { scrollBehavior } from '../../scripts/motion';
+
+  interface ReelItem {
+    index: number;
+    slug: string;
+    title: string;
+    sub: string;
+    offset: number;
+    poster: string;
+    year: number;
+    displayTitle: string;
+  }
+
+  const widget = document.getElementById('cinema-gate');
+  const lightCone = document.getElementById('fg-light-cone');
+  const filmStrip = document.getElementById('fg-film-strip');
+  const gateBezel = document.getElementById('fg-gate-bezel');
+  const sprocketLeft = document.getElementById('fg-sprocket-left');
+  const sprocketRight = document.getElementById('fg-sprocket-right');
+  const cartoucheTitle = document.getElementById('fg-cartouche-title');
+  const cartoucheSub = document.getElementById('fg-cartouche-sub');
+  const btnPrev = document.getElementById('fg-btn-prev');
+  const btnNext = document.getElementById('fg-btn-next');
+  const slateCenter = document.getElementById('fg-slate-center');
+  const dustMotes = document.getElementById('fg-dust-motes');
+  const reelDataEl = document.getElementById('fg-reel-data');
+
+  if (
+    widget &&
+    lightCone &&
+    filmStrip &&
+    sprocketLeft &&
+    sprocketRight &&
+    cartoucheTitle &&
+    cartoucheSub &&
+    btnPrev &&
+    btnNext &&
+    slateCenter
+  ) {
+    const elLightCone = lightCone;
+    const elFilmStrip = filmStrip;
+    const elSprocketLeft = sprocketLeft;
+    const elSprocketRight = sprocketRight;
+    const elTitle = cartoucheTitle;
+    const elSub = cartoucheSub;
+
+    // Parse dynamically generated reel items
+    const films: ReelItem[] = reelDataEl ? JSON.parse(reelDataEl.textContent || '[]') : [];
+    const TOTAL_FILMS = films.length;
+
+    const CLONE_BOTTOM_OFFSET = 75 - TOTAL_FILMS * 72;
+    const CLONE_TOP_OFFSET = 147;
+
+    let activeIdx = 0;
+    let isLoopingWrap: 'next' | 'prev' | null = null;
+
+    // Physics parameters for film strip translation
+    let currentY = 75;
+    let targetY = 75;
+    let velocityY = 0;
+
+    // Light cone coordinates
+    let coneLeft = 34;
+    let coneRight = 126;
+    let targetConeLeft = 34;
+    let targetConeRight = 126;
+
+    // Sprocket angle
+    let sprocketAngle = 0;
+
+    // Throttle for mouse wheel
+    let lastWheelTime = 0;
+
+    function updateActiveCellClasses() {
+      for (let i = 0; i < TOTAL_FILMS; i++) {
+        const cell = document.getElementById(`cell-frame-${i}`);
+        if (cell) {
+          if (i === activeIdx) {
+            cell.classList.add('active');
+          } else {
+            cell.classList.remove('active');
+          }
+        }
+      }
+    }
+
+    function syncSlateText() {
+      const cur = films[activeIdx];
+      if (cur) {
+        elTitle.textContent = cur.title;
+        elSub.textContent = cur.sub;
+      }
+    }
+
+    function stepNext() {
+      if (TOTAL_FILMS <= 1) return;
+      if (activeIdx === TOTAL_FILMS - 1) {
+        // Wrap from last film to Clone 0
+        activeIdx = 0;
+        targetY = CLONE_BOTTOM_OFFSET;
+        isLoopingWrap = 'next';
+      } else {
+        activeIdx += 1;
+        targetY = films[activeIdx].offset;
+        isLoopingWrap = null;
+      }
+      updateActiveCellClasses();
+      syncSlateText();
+    }
+
+    function stepPrev() {
+      if (TOTAL_FILMS <= 1) return;
+      if (activeIdx === 0) {
+        // Wrap from first film to Clone of last film
+        activeIdx = TOTAL_FILMS - 1;
+        targetY = CLONE_TOP_OFFSET;
+        isLoopingWrap = 'prev';
+      } else {
+        activeIdx -= 1;
+        targetY = films[activeIdx].offset;
+        isLoopingWrap = null;
+      }
+      updateActiveCellClasses();
+      syncSlateText();
+    }
+
+    function jumpToActiveFilm() {
+      const cur = films[activeIdx];
+      if (cur && cur.slug) {
+        const targetEl = document.getElementById(cur.slug);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+          targetEl.classList.add('highlight-glow');
+          setTimeout(() => {
+            targetEl.classList.remove('highlight-glow');
+          }, 1800);
+        }
+      }
+    }
+
+    // 1. Button Navigation
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepNext();
+    });
+    btnPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepPrev();
+    });
+
+    // 2. Click Slate Center to scroll to review
+    slateCenter.addEventListener('click', (e) => {
+      e.stopPropagation();
+      jumpToActiveFilm();
+    });
+
+    // 3. Click Gate / Film Strip to advance reel
+    if (gateBezel) {
+      gateBezel.addEventListener('click', () => {
+        stepNext();
+      });
+    }
+    elFilmStrip.addEventListener('click', () => {
+      stepNext();
+    });
+
+    // Click on Left / Right Sprocket gears as Easter eggs
+    elSprocketLeft.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepPrev();
+    });
+    elSprocketRight.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stepNext();
+    });
+
+    // 4. Mouse Wheel / Trackpad Scroll inside widget
+    widget.addEventListener(
+      'wheel',
+      (e: WheelEvent) => {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastWheelTime < 220) return;
+
+        if (Math.abs(e.deltaY) > 8 || Math.abs(e.deltaX) > 8) {
+          lastWheelTime = now;
+          if (e.deltaY > 0 || e.deltaX > 0) {
+            stepNext();
+          } else {
+            stepPrev();
+          }
+        }
+      },
+      { passive: false }
+    );
+
+    // 5. Parallax light cone tracking on mousemove
+    widget.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = widget.getBoundingClientRect();
+      const normX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const beamOffset = (normX - 0.5) * 26;
+      targetConeLeft = 34 + beamOffset;
+      targetConeRight = 126 + beamOffset;
+    });
+
+    widget.addEventListener('mouseleave', () => {
+      targetConeLeft = 34;
+      targetConeRight = 126;
+    });
+
+    // 6. Keyboard Accessibility
+    widget.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        stepNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        stepPrev();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        jumpToActiveFilm();
+      }
+    });
+
+    btnNext.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        stepNext();
+      }
+    });
+
+    btnPrev.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        stepPrev();
+      }
+    });
+
+    slateCenter.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        jumpToActiveFilm();
+      }
+    });
+
+    // Initialize display state
+    updateActiveCellClasses();
+    syncSlateText();
+
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
+    // 7. Animation Loop with spring damping and seamless wrap check
+    let tick = 0;
+    function animate() {
+      // Spring physics for film strip track
+      const forceY = (targetY - currentY) * 0.16;
+      velocityY = velocityY * 0.74 + forceY;
+      // Motion off: jump straight to the target with no residual spin; a pending wrap then snaps below.
+      if (isMotionOff()) {
+        currentY = targetY;
+        velocityY = 0;
+      } else {
+        currentY += velocityY;
+      }
+
+      // Handle seamless infinite wrap teleportation
+      if (isLoopingWrap === 'next') {
+        if (Math.abs(currentY - CLONE_BOTTOM_OFFSET) < 0.8 || isMotionOff()) {
+          currentY = films[0].offset;
+          targetY = films[0].offset;
+          velocityY = 0;
+          isLoopingWrap = null;
+        }
+      } else if (isLoopingWrap === 'prev') {
+        if (Math.abs(currentY - CLONE_TOP_OFFSET) < 0.8 || isMotionOff()) {
+          currentY = films[TOTAL_FILMS - 1].offset;
+          targetY = films[TOTAL_FILMS - 1].offset;
+          velocityY = 0;
+          isLoopingWrap = null;
+        }
+      }
+
+      // Rotate sprockets based on strip movement
+      sprocketAngle += velocityY * 1.8;
+      elSprocketLeft.setAttribute('transform', `translate(22, 107) rotate(${sprocketAngle.toFixed(1)})`);
+      elSprocketRight.setAttribute('transform', `translate(138, 107) rotate(${(-sprocketAngle).toFixed(1)})`);
+
+      // Apply film strip position
+      elFilmStrip.setAttribute('transform', `translate(0, ${currentY.toFixed(2)})`);
+
+      // Smooth light cone interpolation
+      coneLeft += (targetConeLeft - coneLeft) * 0.08;
+      coneRight += (targetConeRight - coneRight) * 0.08;
+      elLightCone.setAttribute('points', `80,32 ${coneLeft.toFixed(1)},166 ${coneRight.toFixed(1)},166`);
+
+      if (!isMotionOff()) {
+        // Ambient idle breathing & drifting motes
+        tick += 0.025;
+        const idleSway = Math.sin(tick) * 1.5;
+        targetConeLeft = 34 + idleSway;
+        targetConeRight = 126 + idleSway;
+
+        // Animate dust motes drift inside projection cone
+        if (dustMotes) {
+          const m1 = document.getElementById('mote-1');
+          const m2 = document.getElementById('mote-2');
+          const m3 = document.getElementById('mote-3');
+          const m4 = document.getElementById('mote-4');
+          const m5 = document.getElementById('mote-5');
+
+          if (m1) m1.setAttribute('cy', (74 + Math.sin(tick * 1.2) * 5).toFixed(1));
+          if (m2) m2.setAttribute('cy', (95 + Math.cos(tick * 1.5) * 6).toFixed(1));
+          if (m3) m3.setAttribute('cy', (118 + Math.sin(tick * 1.1 + 1) * 7).toFixed(1));
+          if (m4) m4.setAttribute('cy', (134 + Math.cos(tick * 1.3 + 2) * 5).toFixed(1));
+          if (m5) m5.setAttribute('cy', (148 + Math.sin(tick * 1.4 + 3) * 6).toFixed(1));
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  }
+</script>
+
+<style>
+  .film-glyph-widget {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 213px;
+    user-select: none;
+    cursor: default;
+    outline: none;
+    border-radius: 4px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  }
+
+  .film-glyph-widget:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-gold, #e9b354);
+  }
+
+  .glyph-frame {
+    position: relative;
+    width: 160px;
+    height: 213px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.45),
+      0 0 12px rgba(233, 179, 84, 0.12);
+  }
+
+  .glyph-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Sprockets & Motion */
+  .sprocket-wheel {
+    transform-origin: 0 0;
+    cursor: pointer;
+  }
+
+  .gate-bezel {
+    cursor: pointer;
+    transition: stroke 0.2s ease;
+  }
+
+  .gate-bezel:hover {
+    stroke: rgba(233, 179, 84, 0.85);
+  }
+
+  .film-strip-track {
+    cursor: pointer;
+  }
+
+  .film-cell {
+    transition: opacity 0.25s ease, filter 0.25s ease;
+    opacity: 0.72;
+  }
+
+  .film-cell:hover,
+  .film-cell.active {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(233, 179, 84, 0.35));
+  }
+
+  /* Transport Buttons & Slate */
+  .transport-btn {
+    cursor: pointer;
+  }
+
+  .transport-btn .btn-rect {
+    transition: fill 0.2s ease, stroke 0.2s ease;
+  }
+
+  .transport-btn:hover .btn-rect,
+  .transport-btn:focus-visible .btn-rect {
+    fill: #2f1340;
+    stroke: rgba(255, 248, 223, 0.9);
+  }
+
+  .transport-btn:active .btn-rect {
+    fill: #451b5e;
+  }
+
+  .transport-btn:focus {
+    outline: none;
+  }
+
+  .slate-center {
+    cursor: pointer;
+  }
+
+  .slate-center .slate-rect {
+    transition: fill 0.2s ease, stroke 0.2s ease;
+  }
+
+  .slate-center:hover .slate-rect,
+  .slate-center:focus-visible .slate-rect {
+    fill: #1a0824;
+    stroke: rgba(233, 179, 84, 0.6);
+  }
+
+  .slate-center:focus {
+    outline: none;
+  }
+
+  .projection-beam {
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  .dust-motes circle {
+    pointer-events: none;
+    filter: drop-shadow(0 0 2px rgba(255, 235, 170, 0.6));
+  }
+
+  /* Highlight glow animation when jumping to card */
+  :global(.diary-card.highlight-glow) {
+    outline: 2px solid var(--color-gold, #e9b354);
+    box-shadow: 0 0 20px rgba(233, 179, 84, 0.35);
+    transition: outline 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .film-glyph-widget {
+      cursor: default;
+    }
+  }
+</style>

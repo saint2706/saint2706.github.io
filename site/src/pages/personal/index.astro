@@ -1,8 +1,51 @@
 ---
 import Base from '../../layouts/Base.astro';
 import SpaceHead from '../../components/SpaceHead.astro';
+import ChronometerGlyph from '../../components/personal/ChronometerGlyph.astro';
 import NextLinks from '../../components/NextLinks.astro';
-import { rooms } from '../../lib/content';
+import { paintings, films, learning } from '../../lib/content';
+
+const roomData = [
+  {
+    id: 'art',
+    href: '/personal/art/',
+    label: 'Art and myth',
+    count: `${paintings.length} works · 4 halls`,
+    blurb: `${paintings.length} public-domain paintings with readings, questions to argue about, and essays on myth.`,
+    highlights: ['Room I: The Eye That Misleads', 'Room II: The Witness', 'Room III: Grief & Imagining', 'Room IV: The Court'],
+    action: 'Enter the gallery',
+  },
+  {
+    id: 'books',
+    href: '/personal/books/',
+    label: 'Books',
+    count: '25 volumes · 5 eras',
+    blurb: 'Twenty-five books that stayed with me: philosophy from Homer to Wittgenstein, with links to read online.',
+    highlights: ['Antiquity & The Greeks', 'Enlightenment & Kant', '19th-Century Idealism', 'Wittgenstein'],
+    action: 'Browse the shelf',
+  },
+  {
+    id: 'films',
+    href: '/personal/films/',
+    label: 'Films',
+    count: `${films.diary.length} screenings · Letterboxd diary`,
+    blurb: `${films.diary.length} rated films and ${films.diary.filter(d => d.review.trim()).length} written reviews from my Letterboxd screening diary.`,
+    highlights: films.diary
+      .filter(f => f.rating === 5)
+      .slice(0, 3)
+      .map(f => `${f.title} (${f.year})`),
+    action: 'Browse screening diary',
+  },
+  {
+    id: 'learning',
+    href: '/personal/learning/',
+    label: 'Learning path',
+    count: `${learning.steps.length} steps · curriculum`,
+    blurb: `${learning.steps.length} steps from first Python to the business view, using Rishabh's own tutorials and courses.`,
+    highlights: ['01 Python Basics', '02 Data & Analysis', '03 First Model', '04 Challenges', '05 MBA View'],
+    action: 'Follow the path',
+  },
+];
 ---
 
 <Base
@@ -10,26 +53,236 @@ import { rooms } from '../../lib/content';
   description="The personal side of the site: art and myth, a philosophy reading path, film notes and a learning path, kept apart from the work pages."
   space="per"
 >
-  <SpaceHead title="Off the clock" lede="Art and myth, books, films and a learning path. Pick a room." />
+  <SpaceHead title="Off the clock" lede="Art and myth, books, films and a learning path. Pick a room.">
+    <div slot="mark" class="chronometer-mark">
+      <ChronometerGlyph />
+    </div>
+    <p class="curator-note">
+      A quiet wing of the portfolio dedicated to close looking, structured reading, and personal study.
+      Everything here is off the clock.
+    </p>
+  </SpaceHead>
 
-  <ul class="room-list">
+  <!-- Archival Ledger: Monospaced summary bar framing the space -->
+  <div class="ledger-bar" aria-label="Personal space catalog summary">
+    <div class="ledger-item">
+      <span class="ledger-num">04</span>
+      <span class="ledger-label">Curated Rooms</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">07</span>
+      <span class="ledger-label">Public Domain Works</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">25</span>
+      <span class="ledger-label">Books on the Shelf</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">05</span>
+      <span class="ledger-label">Learning Steps</span>
+    </div>
+  </div>
+
+  <!-- Primary Room Grid -->
+  <ul class="room-grid" aria-label="Personal rooms">
     {
-      rooms.map((r, i) => (
-        <li>
-          <a href={r.href}>
-            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <span class="t">{r.label}</span>
-            <span class="meta">{r.blurb}</span>
+      roomData.map((r, i) => (
+        <li class="room-item">
+          <a href={r.href} class:list={['room-card', `room-${r.id}`]}>
+            <div class="card-header">
+              <span class="room-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="room-tag">{r.count}</span>
+            </div>
+
+            <!-- Resized & Substantial Visual Motifs -->
+            <div class="room-motif" aria-hidden="true">
+              {r.id === 'art' && (
+                <div class="motif-art">
+                  <div class="frame-outer">
+                    <div
+                      class="frame-inner"
+                      data-art-frame
+                      data-thumbs={JSON.stringify(paintings.map(p => ({ src: p.image.thumb, title: p.title })))}
+                    >
+                      <img
+                        class="art-thumb thumb-base"
+                        src={paintings[0].image.thumb}
+                        alt={paintings[0].title}
+                        width="140"
+                        height="95"
+                        loading="eager"
+                      />
+                      <img
+                        class="art-thumb thumb-fade"
+                        src={paintings[1].image.thumb}
+                        alt=""
+                        width="140"
+                        height="95"
+                        loading="eager"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {r.id === 'books' && (
+                <div class="motif-books">
+                  <div class="shelf-ledge">
+                    <div class="spine-group">
+                      <span class="spine sp-1"><span class="gold-band" /></span>
+                      <span class="spine sp-2"><span class="gold-band" /></span>
+                      <span class="spine sp-3 featured"><span class="gold-band" /></span>
+                      <span class="spine sp-4"><span class="gold-band" /></span>
+                      <span class="spine sp-5"><span class="gold-band" /></span>
+                      <span class="ribbon" />
+                    </div>
+                  </div>
+                  <span class="shelf-label">5-ERA ARCHIVE</span>
+                </div>
+              )}
+
+              {r.id === 'films' && (
+                <div class="motif-films">
+                  <div class="film-strip">
+                    <div class="sprockets top">
+                      <span /><span /><span /><span /><span /><span /><span /><span />
+                    </div>
+                    <div class="frames-view">
+                      <div class="film-frame frame-a">
+                        <span class="frame-id">01A</span>
+                        <span class="frame-cross" />
+                      </div>
+                      <div class="frame-seam" />
+                      <div class="film-frame frame-b">
+                        <span class="frame-id">01B</span>
+                        <span class="frame-cross" />
+                      </div>
+                    </div>
+                    <div class="sprockets bottom">
+                      <span /><span /><span /><span /><span /><span /><span /><span />
+                    </div>
+                  </div>
+                  <span class="film-label">35MM · SCREENINGS</span>
+                </div>
+              )}
+
+              {r.id === 'learning' && (
+                <div class="motif-learning">
+                  <div class="constellation">
+                    <div class="rail-track">
+                      <div class="track-line" aria-hidden="true">
+                        <div class="track-fill" />
+                      </div>
+                      <div class="node-point node-1 active" data-step="1">
+                        <span class="pip">1</span>
+                      </div>
+                      <div class="node-point node-2" data-step="2">
+                        <span class="pip">2</span>
+                      </div>
+                      <div class="node-point node-3" data-step="3">
+                        <span class="pip">3</span>
+                      </div>
+                      <div class="node-point node-4" data-step="4">
+                        <span class="pip">4</span>
+                      </div>
+                      <div class="node-point node-5" data-step="5">
+                        <span class="pip">5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="learning-label">CURATED PROGRESSION · 05 STEPS</span>
+                </div>
+              )}
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="card-body">
+              <h2 class="room-title">
+                <span>{r.label}</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </h2>
+              <p class="room-blurb">{r.blurb}</p>
+
+              <!-- Space-filling Room Highlights -->
+              <div class="room-highlights" aria-label="Room contents">
+                {r.highlights.map(h => (
+                  <span class="highlight-pill">{h}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span class="room-action">
+                {r.action}
+                <span class="action-arrow" aria-hidden="true">→</span>
+              </span>
+            </div>
           </a>
         </li>
       ))
     }
   </ul>
 
+  <!-- Curatorial Manifesto Inscription: Fills page rhythm with authentic editorial context -->
+  <aside class="curator-manifesto" aria-label="Curator reflection">
+    <div class="manifesto-card">
+      <span class="manifesto-mark" aria-hidden="true">“</span>
+      <p class="manifesto-quote">
+        None of these works was meant to hang beside the others. What joins them is a question each one puts
+        to the viewer: what it means to see something, and what seeing asks of you afterwards.
+      </p>
+      <span class="manifesto-origin">Curator's Wall Inscription · The Museum of Seven Works</span>
+    </div>
+  </aside>
+
+  <!-- Gallery Roll: Horizontal miniature preview of the seven works -->
+  <section class="gallery-preview-section" aria-labelledby="gallery-preview-heading">
+    <div class="preview-header">
+      <h2 id="gallery-preview-heading">Works on View in Art & Myth</h2>
+      <a href="/personal/art/" class="preview-view-all">All 7 Paintings →</a>
+    </div>
+    <ul class="preview-roll">
+      {
+        paintings.map(p => (
+          <li class="preview-item">
+            <a href={`/personal/art/${p.slug}/`} class="preview-link">
+              <div class="preview-frame">
+                <img
+                  src={p.image.thumb}
+                  alt={`Thumbnail for ${p.title}`}
+                  width={p.image.thumbWidth}
+                  height={p.image.thumbHeight}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <span class="preview-title">{p.title}</span>
+              <span class="preview-artist">{p.artist.split(',')[0]}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
   <NextLinks
+    eyebrow="Departing Off the clock"
     links={[
-      { href: '/work/', label: 'Back to work' },
-      { href: '/lab/', label: 'The lab: experiments' },
+      {
+        href: '/work/',
+        label: 'Back to work',
+        spaceNum: '01 · Professional',
+        sub: 'Case studies, systems and engineering track record.',
+      },
+      {
+        href: '/lab/',
+        label: 'The lab: experiments',
+        spaceNum: '03 · Experimental',
+        sub: 'Prototypes, live tools and interactive sandboxes.',
+      },
     ]}
   />
 </Base>
@@ -38,41 +291,886 @@ import { rooms } from '../../lib/content';
   // Links from before the rooms split pointed at sections of this page.
   const moved: Record<string, string> = { '#art': '/personal/art/', '#books': '/personal/books/' };
   if (moved[location.hash]) location.replace(moved[location.hash]);
+
+  // Art and myth: smoothly cycle through paintings on hover
+  const artCard = document.querySelector('.room-card.room-art');
+  const frame = document.querySelector('[data-art-frame]');
+  if (artCard && frame) {
+    const rawThumbs = frame.getAttribute('data-thumbs');
+    const thumbs: Array<{ src: string; title: string }> = rawThumbs ? JSON.parse(rawThumbs) : [];
+    if (thumbs.length > 1) {
+      // Preload thumbnails
+      thumbs.forEach(t => {
+        const img = new Image();
+        img.src = t.src;
+      });
+
+      let currentIndex = Math.floor(Math.random() * thumbs.length);
+      const baseImg = frame.querySelector('.thumb-base') as HTMLImageElement | null;
+      const fadeImg = frame.querySelector('.thumb-fade') as HTMLImageElement | null;
+
+      if (baseImg) {
+        baseImg.src = thumbs[currentIndex].src;
+        baseImg.alt = thumbs[currentIndex].title;
+      }
+
+      let isFading = false;
+      artCard.addEventListener('mouseenter', () => {
+        if (isFading || !fadeImg || !baseImg) return;
+        let nextIndex: number;
+        do {
+          nextIndex = Math.floor(Math.random() * thumbs.length);
+        } while (nextIndex === currentIndex && thumbs.length > 1);
+
+        const next = thumbs[nextIndex];
+        isFading = true;
+        fadeImg.src = next.src;
+        fadeImg.alt = next.title;
+
+        const completeFade = () => {
+          fadeImg.classList.add('active');
+          setTimeout(() => {
+            baseImg.src = next.src;
+            baseImg.alt = next.title;
+            fadeImg.classList.remove('active');
+            currentIndex = nextIndex;
+            isFading = false;
+          }, 360);
+        };
+
+        if (fadeImg.complete) {
+          completeFade();
+        } else {
+          fadeImg.onload = completeFade;
+        }
+      });
+    }
+  }
 </script>
 
 <style>
-  .room-list {
+  :global(body.per) {
+    background-image:
+      radial-gradient(circle at 50% -10%, rgba(231, 176, 79, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 100% 30%, rgba(143, 29, 44, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 0% 75%, rgba(231, 176, 79, 0.04) 0%, transparent 45%);
+    background-attachment: fixed;
+  }
+
+  .chronometer-mark {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    width: 160px;
+  }
+
+  @media (max-width: 1024px) {
+    .chronometer-mark {
+      width: 120px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .chronometer-mark {
+      width: 88px;
+    }
+  }
+
+  .curator-note {
+    margin-top: var(--space-3);
+    color: #ded0dc;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.55;
+    max-width: 58ch;
+  }
+
+  /* Archival Ledger Bar */
+  .ledger-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+    padding: 14px var(--space-4);
+    background: rgba(38, 26, 43, 0.55);
+    border: 1px solid var(--color-rule);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .ledger-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .ledger-num {
+    font: 1.125rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .ledger-label {
+    font: 0.8125rem / 1 var(--font-body);
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ledger-sep {
+    color: var(--color-rule);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 720px) {
+    .ledger-bar {
+      gap: 12px;
+      padding: 12px;
+    }
+    .ledger-sep {
+      display: none;
+    }
+  }
+
+  /* Room Grid */
+  .room-grid {
     list-style: none;
-    margin: var(--space-6) 0 0;
+    margin: var(--space-5) 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: var(--space-5);
   }
-  .room-list a {
-    display: grid;
-    gap: var(--space-2);
-    height: 100%;
-    padding: var(--space-4);
-    border: 2px solid var(--color-ink);
-    background: var(--color-surface);
+
+  .room-item {
+    display: flex;
+  }
+
+  .room-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-5);
+    border: 1px solid rgba(231, 176, 79, 0.22);
+    border-top: 3px solid var(--color-accent);
+    border-radius: 6px;
+    background: linear-gradient(180deg, #2b1c31 0%, #231627 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 0 0 1px rgba(0, 0, 0, 0.35),
+      0 6px 20px -2px rgba(0, 0, 0, 0.45);
     color: var(--color-ink);
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.25s var(--ease-out),
+      border-color 0.25s ease,
+      box-shadow 0.25s var(--ease-out),
+      background 0.25s ease;
   }
-  .room-list .num {
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .room-num {
     color: var(--color-accent);
     font: var(--text-n1) / 1.3 var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+
+  .room-tag {
+    color: var(--color-ink);
+    font: 0.75rem / 1 var(--font-mono);
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border: 1px solid rgba(231, 176, 79, 0.35);
+    border-radius: 999px;
+    background: rgba(18, 9, 22, 0.75);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Prominent Resized Visual Motifs */
+  .room-motif {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    margin: var(--space-4) 0;
+    padding: var(--space-3) 0;
+    background: rgba(18, 9, 22, 0.4);
+    border: 1px solid rgba(231, 176, 79, 0.1);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  /* Art: Substantial 140x95 gallery painting frame */
+  .motif-art {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .motif-art .frame-outer {
+    border: 2px solid var(--color-accent);
+    padding: 4px;
+    background: rgba(231, 176, 79, 0.08);
+    border-radius: 3px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s ease;
+  }
+  .motif-art .frame-inner {
+    border: 1px solid var(--color-rule);
+    width: 140px;
+    height: 95px;
+    position: relative;
+    overflow: hidden;
+    background: #110915;
+    border-radius: 1px;
+  }
+  .motif-art .art-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .motif-art .thumb-base {
+    z-index: 1;
+  }
+  .motif-art .thumb-fade {
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out);
+  }
+  .motif-art .thumb-fade.active {
+    opacity: 1;
+  }
+
+  /* Books: Exactly 5 books with middle highlighted, all highlighted on hover */
+  .motif-books {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+  .shelf-ledge {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 2px solid var(--color-rule);
+    padding-bottom: 2px;
+  }
+  .motif-books .spine-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+    height: 82px;
+    position: relative;
+    padding: 0 6px;
+  }
+  .motif-books .spine {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 18px;
+    border: 1px solid var(--color-rule);
+    background: var(--color-canvas);
+    border-radius: 2px 2px 0 0;
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05);
+    transition:
+      transform 0.25s var(--ease-out),
+      border-color 0.25s ease,
+      background 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .motif-books .sp-1 {
+    height: 54px;
+  }
+  .motif-books .sp-2 {
+    height: 64px;
+  }
+  .motif-books .sp-3 {
+    height: 74px;
+  }
+  .motif-books .sp-4 {
+    height: 60px;
+  }
+  .motif-books .sp-5 {
+    height: 50px;
+  }
+
+  .motif-books .gold-band {
+    display: block;
+    width: 10px;
+    height: 2px;
+    background: var(--color-rule);
+    opacity: 0.5;
+    transition:
+      background-color 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  /* Middle book (sp-3) is highlighted at rest */
+  .motif-books .spine.featured {
+    border: 1.5px solid var(--color-accent);
+    background: linear-gradient(180deg, rgba(231, 176, 79, 0.22) 0%, rgba(231, 176, 79, 0.07) 100%);
+    box-shadow:
+      0 0 12px rgba(231, 176, 79, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+  .motif-books .spine.featured .gold-band {
+    background: var(--color-accent);
+    opacity: 1;
+  }
+
+  .motif-books .ribbon {
+    position: absolute;
+    top: 6px;
+    left: 54px;
+    width: 4px;
+    height: 66px;
+    background: var(--color-accent);
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  .shelf-label {
+    font: 0.75rem / 1 var(--font-mono);
+    color: #cfbece;
+    letter-spacing: 0.08em;
+  }
+
+  /* Films: 35mm panoramic film strip */
+  .motif-films {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .film-strip {
+    width: 170px;
+    background: var(--color-canvas);
+    border: 1.5px solid var(--color-rule);
+    border-radius: 3px;
+    padding: 3px 6px;
+    transition: border-color 0.25s ease, transform 0.25s var(--ease-out);
+  }
+  .film-strip .sprockets {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 2px 0;
+  }
+  .film-strip .sprockets span {
+    display: block;
+    width: 6px;
+    height: 4px;
+    background: var(--color-rule);
+    border-radius: 1px;
+  }
+  .frames-view {
+    display: flex;
+    gap: 4px;
+    height: 52px;
+    background: #0d0610;
+    border: 1px solid var(--color-rule);
+    border-radius: 1px;
+    padding: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .film-frame {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(231, 176, 79, 0.04);
+    border: 1px dashed rgba(231, 176, 79, 0.25);
+    padding: 4px;
+  }
+  .frame-id {
+    font: 0.6875rem / 1 var(--font-mono);
+    color: var(--color-accent);
+  }
+  .frame-cross {
+    display: block;
+    width: 14px;
+    height: 1px;
+    background: rgba(231, 176, 79, 0.35);
+  }
+  .frame-seam {
+    width: 2px;
+    background: var(--color-rule);
+  }
+  .film-label {
+    font: 0.75rem / 1 var(--font-mono);
+    color: #cfbece;
+    letter-spacing: 0.08em;
+  }
+
+  /* Learning: Constellation Milestone Rail */
+  .motif-learning {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .constellation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 60px;
+  }
+
+  .rail-track {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 4px;
+  }
+
+  .track-line {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 3px;
+    background: var(--color-rule);
+    border-radius: 999px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .track-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #9a6c1e 0%, var(--color-accent) 60%, #fff 100%);
+    box-shadow: 0 0 8px rgba(231, 176, 79, 0.8);
+    border-radius: 999px;
+    transition: width 0.35s ease;
+  }
+
+  .node-point {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--color-rule);
+    background: var(--color-canvas);
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s ease;
+  }
+
+  .node-point.node-1 {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 8px rgba(231, 176, 79, 0.4);
+  }
+
+  .node-point.node-1 .pip {
+    color: #120916;
+  }
+
+  .pip {
+    font: 0.6875rem / 1 var(--font-mono);
+    color: #cfbece;
+    font-weight: 700;
+    transition: color 0.25s ease;
+  }
+
+  .learning-label {
+    font: 0.75rem / 1 var(--font-mono);
+    color: #cfbece;
+    letter-spacing: 0.08em;
+    transition:
+      color 0.25s ease,
+      letter-spacing 0.25s ease;
+  }
+
+  /* Card Body Content */
+  .card-body {
+    flex-grow: 1;
+    margin-top: var(--space-2);
+  }
+
+  .room-title {
+    margin: 0;
+    font: var(--text-2) / 1.15 var(--font-display);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .room-title .arrow {
+    color: var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    transition: transform 0.25s var(--ease-out);
+    opacity: 0;
+  }
+
+  .room-blurb {
+    margin: var(--space-2) 0 0;
+    color: #d8cbd6;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  /* Room Highlights Pills: Tastefully filling vertical space */
+  .room-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: var(--space-3);
+  }
+
+  .highlight-pill {
+    font: 0.8125rem / 1.35 var(--font-body);
+    color: #ede2ec;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(18, 9, 22, 0.65);
+    border: 1px solid rgba(231, 176, 79, 0.25);
+    letter-spacing: 0.01em;
+  }
+
+  /* Footer action */
+  .card-footer {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .room-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: var(--text-n1) / 1.3 var(--font-mono);
+    color: var(--color-accent);
     letter-spacing: 0.04em;
   }
-  .room-list .t {
-    font: var(--text-2) / 1.15 var(--font-display);
+
+  .action-arrow {
+    display: inline-block;
+    transition: transform 0.25s var(--ease-out);
   }
-  .room-list .meta {
-    color: var(--color-ink-2);
+
+  /* Hover & Focus Interactions */
+  .room-card:hover,
+  .room-card:focus-visible {
+    border-color: var(--color-accent);
+    border-top-color: var(--color-accent);
   }
-  .room-list a:hover .t,
-  .room-list a:focus-visible .t {
+
+  .room-card:hover .room-title,
+  .room-card:focus-visible .room-title {
+    color: #fff;
+  }
+
+  .room-card:hover .room-action,
+  .room-card:focus-visible .room-action {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
+  }
+
+  /* Motion physics: triggered when motion is enabled */
+  html[data-motion='on'] .room-card:hover,
+  html[data-motion='on'] .room-card:focus-visible {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+    background: linear-gradient(180deg, #32213a 0%, #271a2d 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 20px 36px -10px rgba(0, 0, 0, 0.65),
+      0 0 24px -4px rgba(231, 176, 79, 0.28),
+      0 0 0 1px var(--color-accent);
+  }
+
+  html[data-motion='on'] .room-card:hover .room-title .arrow,
+  html[data-motion='on'] .room-card:focus-visible .room-title .arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  html[data-motion='on'] .room-card:hover .action-arrow,
+  html[data-motion='on'] .room-card:focus-visible .action-arrow {
+    transform: translateX(4px);
+  }
+
+  html[data-motion='on'] .room-card:hover .motif-art .frame-outer {
+    transform: scale(1.04);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+  }
+
+  /* Books: on hover, highlight ALL 5 books */
+  .room-card:hover .motif-books .spine,
+  .room-card:focus-visible .motif-books .spine {
+    border-color: var(--color-accent);
+    background: linear-gradient(180deg, rgba(231, 176, 79, 0.24) 0%, rgba(231, 176, 79, 0.08) 100%);
+    box-shadow:
+      0 0 14px rgba(231, 176, 79, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .room-card:hover .motif-books .gold-band,
+  .room-card:focus-visible .motif-books .gold-band {
+    background: var(--color-accent);
+    opacity: 1;
+  }
+
+  html[data-motion='on'] .room-card:hover .motif-books .spine,
+  html[data-motion='on'] .room-card:focus-visible .motif-books .spine {
+    transform: translateY(-4px);
+  }
+  html[data-motion='on'] .room-card:hover .motif-books .sp-3,
+  html[data-motion='on'] .room-card:focus-visible .motif-books .sp-3 {
+    transform: translateY(-7px);
+  }
+  html[data-motion='on'] .room-card:hover .motif-books .ribbon {
+    transform: translateY(4px);
+  }
+
+  html[data-motion='on'] .room-card:hover .film-strip {
+    border-color: var(--color-accent);
+    transform: translateX(-4px);
+  }
+
+  /* Learning progression cascade: filling track and sequential milestone activation */
+  .room-learning:hover .track-fill,
+  .room-learning:focus-visible .track-fill {
+    width: 100%;
+    transition: width 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .room-learning:hover .node-1,
+  .room-learning:focus-visible .node-1 {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(231, 176, 79, 0.6);
+  }
+
+  .room-learning:hover .node-2,
+  .room-learning:focus-visible .node-2 {
+    transition-delay: 0.14s;
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 10px rgba(231, 176, 79, 0.5);
+    transform: scale(1.12);
+  }
+  .room-learning:hover .node-2 .pip,
+  .room-learning:focus-visible .node-2 .pip {
+    transition-delay: 0.14s;
+    color: #120916;
+  }
+
+  .room-learning:hover .node-3,
+  .room-learning:focus-visible .node-3 {
+    transition-delay: 0.28s;
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 10px rgba(231, 176, 79, 0.5);
+    transform: scale(1.12);
+  }
+  .room-learning:hover .node-3 .pip,
+  .room-learning:focus-visible .node-3 .pip {
+    transition-delay: 0.28s;
+    color: #120916;
+  }
+
+  .room-learning:hover .node-4,
+  .room-learning:focus-visible .node-4 {
+    transition-delay: 0.42s;
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    box-shadow: 0 0 10px rgba(231, 176, 79, 0.5);
+    transform: scale(1.12);
+  }
+  .room-learning:hover .node-4 .pip,
+  .room-learning:focus-visible .node-4 .pip {
+    transition-delay: 0.42s;
+    color: #120916;
+  }
+
+  .room-learning:hover .node-5,
+  .room-learning:focus-visible .node-5 {
+    transition-delay: 0.56s;
+    border-color: #fff;
+    background: var(--color-accent);
+    box-shadow:
+      0 0 16px rgba(231, 176, 79, 0.8),
+      0 0 0 2px rgba(255, 255, 255, 0.6);
+    transform: scale(1.2);
+  }
+  .room-learning:hover .node-5 .pip,
+  .room-learning:focus-visible .node-5 .pip {
+    transition-delay: 0.56s;
+    color: #120916;
+  }
+
+  .room-learning:hover .learning-label,
+  .room-learning:focus-visible .learning-label {
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+  }
+
+  /* Curatorial Manifesto Card */
+  .curator-manifesto {
+    margin: var(--space-6) 0 0;
+  }
+  .manifesto-card {
+    padding: var(--space-5);
+    background: rgba(38, 26, 43, 0.45);
+    border: 1px solid var(--color-rule);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 4px;
+    position: relative;
+  }
+  .manifesto-mark {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    font: 3rem / 1 var(--font-display);
+    color: var(--color-accent);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+  .manifesto-quote {
+    margin: 0;
+    font: italic var(--text-1) / 1.5 var(--font-display);
+    color: var(--color-ink);
+    max-width: 65ch;
+  }
+  .manifesto-origin {
+    display: block;
+    margin-top: var(--space-2);
+    font: 0.8125rem / 1 var(--font-mono);
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Gallery Preview Section */
+  .gallery-preview-section {
+    margin: var(--space-6) 0 0;
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--color-rule);
+  }
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: var(--space-4);
+  }
+  .preview-header h2 {
+    margin: 0;
+    font: var(--text-1) / 1.25 var(--font-display);
+    color: var(--color-ink);
+  }
+  .preview-view-all {
+    font: 0.8125rem / 1 var(--font-mono);
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .preview-view-all:hover {
+    text-decoration: underline;
+  }
+  .preview-roll {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: var(--space-3);
+  }
+  .preview-item {
+    display: flex;
+  }
+  .preview-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    gap: 4px;
+  }
+  .preview-frame {
+    border: 1px solid var(--color-rule);
+    background: #110915;
+    padding: 2px;
+    border-radius: 2px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    transition: border-color 0.2s ease, transform 0.2s var(--ease-out);
+  }
+  .preview-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .preview-title {
+    font: 0.8125rem / 1.25 var(--font-display);
+    color: var(--color-ink);
+    margin-top: 4px;
+  }
+  .preview-artist {
+    font: 0.75rem / 1.25 var(--font-mono);
+    color: #cfbece;
+  }
+  .preview-link:hover .preview-frame {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+  .preview-link:hover .preview-title {
+    text-decoration: underline;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .room-card,
+    .room-title .arrow,
+    .action-arrow,
+    .motif-art .frame-outer,
+    .motif-art .thumb-fade,
+    .motif-books .spine,
+    .motif-books .ribbon,
+    .film-strip,
+    .track-fill,
+    .node-point,
+    .pip,
+    .preview-frame {
+      transition: none !important;
+      transform: none !important;
+    }
   }
 </style>

@@ -25,27 +25,27 @@
   "rooms": [
     {
       "numeral": "I",
-      "name": "The Unreliable Eye",
-      "sub": "Perception and illusion",
+      "name": "The Eye That Misleads",
+      "sub": "Perception, illusion and peripheral vision",
       "works": ["fall-of-icarus"]
     },
     {
       "numeral": "II",
-      "name": "Witness",
-      "sub": "Looking, witnessing and narrative",
-      "works": ["third-of-may", "woman-with-dead-child", "shakuntala-looking-back"]
+      "name": "The Witness",
+      "sub": "Looking, witnessing and public vs private grief",
+      "works": ["third-of-may", "woman-with-dead-child"]
     },
     {
       "numeral": "III",
-      "name": "The Gaze, the Dream, the Window",
-      "sub": "Imagination, grief and responsibility",
-      "works": ["susanna-and-the-elders", "sleep-of-reason"]
+      "name": "Grief & Imagining",
+      "sub": "The gaze, pretense and vulnerability",
+      "works": ["shakuntala-looking-back", "susanna-and-the-elders"]
     },
     {
       "numeral": "IV",
       "name": "The Court",
-      "sub": "Power and collective responsibility",
-      "works": ["disrobing-of-draupadi"]
+      "sub": "Reason abandoned and collective responsibility",
+      "works": ["sleep-of-reason", "disrobing-of-draupadi"]
     }
   ],
   "pairs": [

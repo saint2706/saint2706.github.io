@@ -2,17 +2,16 @@
 
 - Pack version: 1.0.0
 - Captured repo baseline: 31 October 2026
-- Current phase: P02
+- Current phase: P05
 - Execution mode: phase-gated
-- P00, P01: complete
-- P02: complete 2026-11-05 (P02-T01, P02-T02, P02-T03); no task authorized; no production release
-- P03–P07: pending explicit approval
+- P00, P01, P02, P03, P04, P05: complete (P05 PR #902 merged 2026-11-05; personal UI upgrades completed 2026-11-09 on `phase/ui-upgrade-personal`)
+- P06–P07: pending explicit approval
 - Discovery decisions: 163 confirmed
 - Task specs: 28
-- Architecture: Astro + React islands confirmed (ADR-001); migration not yet authorized
-- Visual direction: A1 Specimen Field concept, Sealing wax palette and faces approved 2026-11-04; page layouts provisional (`design/system/`)
-- Default branch protection: ruleset `protect-main` active since 2026-11-01
-- Production: old website remains live during branch work; merge/deploy requires explicit release authorization
+- Architecture: Astro + React islands confirmed (ADR-001); new site lives in `site/` (not yet deployed)
+- Visual direction: A1 Specimen Field concept, Sealing wax palette and Atkinson Hyperlegible Next + Young Serif typography; interactive SVG header glyph suite (`ChronometerGlyph`, `ArtGlyph`, `BookGlyph`, `FilmGlyph`, `LearningGlyph`) across all personal spaces
+- Default branch protection: ruleset `protect-main` active since 2026-11-01 (11 required checks)
+- Production: old website remains live during branch work; merge/deploy requires explicit release authorization (P07)
 
 Machine-readable sources:
 

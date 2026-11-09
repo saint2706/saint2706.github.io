@@ -258,6 +258,29 @@ export const LearningSchema = z.object({
 });
 export const learning = LearningSchema.parse(learningJson);
 
+// Letterboxd diary entries synced from RSS
+export const FilmDiaryEntrySchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  year: z.number().int(),
+  rating: z.number().nullable(),
+  ratingStars: z.string(),
+  rewatch: z.boolean(),
+  // null when Letterboxd gives no date (films logged without a review); never a made-up date.
+  watchedDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .nullable(),
+  review: z.string().default(''),
+  spoilers: z.boolean(),
+  link: url,
+  poster: z.object({
+    src: z.string().startsWith('/films/'),
+    width: z.number().int(),
+    height: z.number().int(),
+  }),
+});
+
 // Film notes (P05-T02): the owner's own words, published verbatim (lowercase and all).
 export const FilmsSchema = z.object({
   lang: z.literal('en'),
@@ -281,6 +304,7 @@ export const FilmsSchema = z.object({
       })
     )
     .min(1),
+  diary: z.array(FilmDiaryEntrySchema).default([]),
 });
 export const films = FilmsSchema.parse(filmsJson);
 
@@ -299,7 +323,7 @@ export const rooms = [
   {
     href: '/personal/films/',
     label: 'Films',
-    blurb: `Notes on ${films.films.length} films, from Satyajit Ray to the Spider-Verse.`,
+    blurb: `${films.diary.length} rated films and ${films.diary.filter(d => d.review.trim()).length} written reviews, synced from Letterboxd.`,
   },
   {
     href: '/personal/learning/',

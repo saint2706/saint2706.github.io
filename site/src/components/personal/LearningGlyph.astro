@@ -1,0 +1,1096 @@
+---
+/**
+ * LearningGlyph.astro
+ *
+ * "The Cybernetic Breadboard & Stepped Logic Loom" (Logica Cybernetica)
+ * An interactive circuit breadboard and calibrated galvanometer glyph
+ * replacing the flat mark on the "Learning path" curriculum space.
+ *
+ * Visual & Pedagogical Metaphor:
+ * Represents Rishabh's 5-stage pedagogical journey from first computational
+ * syntax to architectural and executive judgment. A dark obsidian PCB substrate
+ * houses 5 stepped copper milestone runs, micro logic gates, matrix arrays,
+ * recommendation lattices, clock pulses, and a calibrated laboratory
+ * galvanometer needle that pivots to each milestone detent.
+ *
+ * Interactive Features:
+ * - Fluid hover interactions: hovering any terminal, trace, or dial detent previews
+ *   that milestone, rotates the galvanometer needle, illuminates copper traces, and updates
+ *   the cartouche in real time without jumping the page.
+ * - Dynamic cursor beacon: moving the pointer across the PCB tracks the cursor with an
+ *   amber electron proximity glow, and sweeping over the meter dial rotates the needle continuously.
+ * - Confirmed click navigation: clicking any terminal, dial detent, or stepping button commits
+ *   the milestone and smoothly scrolls to that section on the page.
+ * - Reversion on mouseleave: leaving the glyph smoothly restores the pinned active milestone
+ *   reflecting the user's current reading location in the document.
+ * - Bidirectional scroll sync: scrolling the page automatically syncs the pinned milestone.
+ * - Full keyboard accessibility (Tab, Enter, Space, ArrowLeft, ArrowRight).
+ * - Strictly zero inline style="" attributes (strict CSP compliance).
+ */
+---
+
+<div
+  class="learning-glyph-widget"
+  id="curriculum-loom"
+  role="region"
+  tabindex="0"
+  aria-label="Interactive Curriculum Circuit Loom: Explore the 5 pedagogical milestones from Python basics to executive strategy."
+>
+  <div class="loom-frame">
+    <svg
+      viewBox="0 0 160 213"
+      width="160"
+      height="213"
+      class="loom-svg"
+    >
+      <defs>
+        <!-- Polished Brass & Gold Foil Gradient -->
+        <linearGradient id="lg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fff6d9" />
+          <stop offset="30%" stop-color="#e7b04f" />
+          <stop offset="70%" stop-color="#ab7722" />
+          <stop offset="100%" stop-color="#6a450c" />
+        </linearGradient>
+
+        <!-- Etched Copper Trace Gradient -->
+        <linearGradient id="lg-copper" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffd9b8" />
+          <stop offset="40%" stop-color="#e07a38" />
+          <stop offset="85%" stop-color="#a04414" />
+          <stop offset="100%" stop-color="#592006" />
+        </linearGradient>
+
+        <!-- Dark Obsidian PCB Substrate -->
+        <radialGradient id="lg-pcb" cx="50%" cy="45%" r="70%">
+          <stop offset="0%" stop-color="#24132b" />
+          <stop offset="60%" stop-color="#160a1c" />
+          <stop offset="100%" stop-color="#0c040f" />
+        </radialGradient>
+
+        <!-- Galvanometer Dial Bevel -->
+        <radialGradient id="lg-meter" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="#2c1733" />
+          <stop offset="70%" stop-color="#180b1d" />
+          <stop offset="100%" stop-color="#0d0411" />
+        </radialGradient>
+
+        <!-- Active Amber LED Emitter Glow -->
+        <radialGradient id="lg-led-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="35%" stop-color="#ffe49e" />
+          <stop offset="75%" stop-color="#e7b04f" />
+          <stop offset="100%" stop-color="rgba(231,176,79,0)" />
+        </radialGradient>
+
+        <!-- Cursor Proximity Electron Beacon Glow -->
+        <radialGradient id="lg-cursor-beam" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.4" />
+          <stop offset="35%" stop-color="#ffe49e" stop-opacity="0.25" />
+          <stop offset="70%" stop-color="#e7b04f" stop-opacity="0.1" />
+          <stop offset="100%" stop-color="rgba(231,176,79,0)" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+
+      <!-- Archival PCB Outer Mount -->
+      <rect
+        x="3"
+        y="3"
+        width="154"
+        height="207"
+        rx="4"
+        fill="url(#lg-pcb)"
+        stroke="url(#lg-gold)"
+        stroke-width="1.2"
+        class="pcb-mount"
+      />
+
+      <!-- Gold Margin Hashiya Rules -->
+      <rect
+        x="7"
+        y="7"
+        width="146"
+        height="199"
+        rx="2"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.24)"
+        stroke-width="0.8"
+      />
+
+      <!-- Cursor Proximity Electron Beacon -->
+      <circle
+        id="lg-cursor-beacon"
+        cx="80"
+        cy="100"
+        r="28"
+        fill="url(#lg-cursor-beam)"
+        opacity="0"
+        pointer-events="none"
+        class="cursor-beacon"
+      />
+
+      <!-- PCB Calibration Crosshair Fiducials -->
+      <g stroke="rgba(231, 176, 79, 0.45)" stroke-width="0.8">
+        <line x1="10" y1="12" x2="14" y2="12" />
+        <line x1="12" y1="10" x2="12" y2="14" />
+        <line x1="146" y1="12" x2="150" y2="12" />
+        <line x1="148" y1="10" x2="148" y2="14" />
+        <line x1="10" y1="201" x2="14" y2="201" />
+        <line x1="12" y1="199" x2="12" y2="203" />
+        <line x1="146" y1="201" x2="150" y2="201" />
+        <line x1="148" y1="199" x2="148" y2="203" />
+      </g>
+
+      <!-- ========================================== -->
+      <!-- TOP: CALIBRATED VERNIER GALVANOMETER DIAL -->
+      <!-- ========================================== -->
+      <g class="galvanometer-section">
+        <!-- Arched Bezel Chamber -->
+        <path
+          d="M 24,54 A 58,40 0 0,1 136,54 L 132,58 L 28,58 Z"
+          fill="url(#lg-meter)"
+          stroke="rgba(231, 176, 79, 0.45)"
+          stroke-width="1"
+        />
+
+        <!-- Calibrated Scale Arc -->
+        <path
+          d="M 54.3,31.5 A 32,32 0 0,1 105.7,31.5"
+          fill="none"
+          stroke="rgba(231, 176, 79, 0.35)"
+          stroke-width="0.8"
+          stroke-dasharray="1 2.5"
+        />
+
+        <!-- Detent Calibration Ticks (-40°, -20°, 0°, +20°, +40°) -->
+        <g stroke="rgba(231, 176, 79, 0.7)" stroke-width="1.1" stroke-linecap="round">
+          <!-- Detent 1 (-40°) -->
+          <line x1="60.7" y1="33" x2="59.4" y2="31.4" class="meter-tick tick-1 active" data-step="1" />
+          <!-- Detent 2 (-20°) -->
+          <line x1="69.7" y1="27.8" x2="69" y2="25.9" class="meter-tick tick-2" data-step="2" />
+          <!-- Detent 3 (0°) -->
+          <line x1="80" y1="26" x2="80" y2="24" class="meter-tick tick-3" data-step="3" />
+          <!-- Detent 4 (+20°) -->
+          <line x1="90.3" y1="27.8" x2="91" y2="25.9" class="meter-tick tick-4" data-step="4" />
+          <!-- Detent 5 (+40°) -->
+          <line x1="99.3" y1="33" x2="100.6" y2="31.4" class="meter-tick tick-5" data-step="5" />
+        </g>
+
+        <!-- Detent Numerals (1 to 5) -->
+        <g class="meter-numerals">
+          <text x="57" y="27" text-anchor="middle" class="meter-num num-1 active" data-step="1">1</text>
+          <text x="68" y="22" text-anchor="middle" class="meter-num num-2" data-step="2">2</text>
+          <text x="80" y="20" text-anchor="middle" class="meter-num num-3" data-step="3">3</text>
+          <text x="92" y="22" text-anchor="middle" class="meter-num num-4" data-step="4">4</text>
+          <text x="103" y="27" text-anchor="middle" class="meter-num num-5" data-step="5">5</text>
+        </g>
+
+        <!-- Meter Technical Dial Label -->
+        <text x="80" y="47" text-anchor="middle" class="meter-gauge-label">
+          PEDAGOGICAL GALVANOMETER
+        </text>
+
+        <!-- Pivoting Pointer Needle (Blade & Counterweight) -->
+        <g id="lg-needle-group" class="meter-needle-group" transform="rotate(-40, 80, 56)">
+          <!-- Needle Blade -->
+          <line x1="80" y1="56" x2="80" y2="23" class="needle-blade" />
+          <circle cx="80" cy="23" r="1" fill="#fff5d4" />
+          <!-- Counterweight Tail -->
+          <line x1="80" y1="56" x2="80" y2="60" stroke="#ab7722" stroke-width="2" stroke-linecap="round" />
+        </g>
+
+        <!-- Stationary Brass Pivot Hub (Firmly anchored at center 80, 56) -->
+        <g class="meter-pivot-hub" pointer-events="none">
+          <circle cx="80" cy="56" r="3.6" fill="url(#lg-gold)" stroke="#1a0b1f" stroke-width="0.8" />
+          <circle cx="80" cy="56" r="1.4" fill="#ffffff" />
+        </g>
+      </g>
+
+      <!-- ========================================== -->
+      <!-- MIDDLE: STEPPED PEDAGOGICAL CIRCUIT LOOM   -->
+      <!-- ========================================== -->
+      <g class="circuit-loom-section">
+        <!-- Central Bus Backbone (Dual Copper Traces with Vias) -->
+        <line x1="78" y1="58" x2="78" y2="152" class="bus-spine" />
+        <line x1="82" y1="58" x2="82" y2="152" class="bus-spine" />
+
+        <!-- Bus Spine Vias -->
+        <circle cx="80" cy="65" r="1.5" class="bus-via" />
+        <circle cx="80" cy="85" r="1.5" class="bus-via" />
+        <circle cx="80" cy="105" r="1.5" class="bus-via" />
+        <circle cx="80" cy="125" r="1.5" class="bus-via" />
+        <circle cx="80" cy="145" r="1.5" class="bus-via" />
+
+        <!-- STEP 01 CIRCUIT RUN (Left, y = 78) -->
+        <g class="step-trace-group trace-group-1 active" data-step="1">
+          <!-- Connecting Trace -->
+          <path d="M 78,78 L 44,78" class="circuit-trace trace-1" />
+          <!-- Logic AND Gate Symbol (Foundational Code Logic) -->
+          <path d="M 50,73 L 56,73 A 5,5 0 0,1 56,83 L 50,83 Z" class="micro-symbol gate-symbol" />
+          <line x1="47" y1="75" x2="50" y2="75" class="micro-trace" />
+          <line x1="47" y1="81" x2="50" y2="81" class="micro-trace" />
+          <line x1="61" y1="78" x2="64" y2="78" class="micro-trace" />
+        </g>
+
+        <!-- STEP 02 CIRCUIT RUN (Right, y = 98) -->
+        <g class="step-trace-group trace-group-2" data-step="2">
+          <!-- Connecting Trace -->
+          <path d="M 82,98 L 116,98" class="circuit-trace trace-2" />
+          <!-- 2D Matrix Array Grid (Pandas/Data Analysis) -->
+          <g class="micro-symbol matrix-symbol">
+            <rect x="94" y="92" width="12" height="12" rx="1" class="matrix-box" />
+            <line x1="100" y1="92" x2="100" y2="104" class="matrix-grid-line" />
+            <line x1="94" y1="98" x2="106" y2="98" class="matrix-grid-line" />
+            <circle cx="97" cy="95" r="0.8" class="matrix-dot" />
+            <circle cx="103" cy="101" r="0.8" class="matrix-dot" />
+          </g>
+        </g>
+
+        <!-- STEP 03 CIRCUIT RUN (Left, y = 118) -->
+        <g class="step-trace-group trace-group-3" data-step="3">
+          <!-- Connecting Trace -->
+          <path d="M 78,118 L 44,118" class="circuit-trace trace-3" />
+          <!-- Collaborative Filtering / Bipartite Graph (First Model) -->
+          <g class="micro-symbol graph-symbol">
+            <circle cx="50" cy="113" r="1.6" class="graph-node" />
+            <circle cx="50" cy="123" r="1.6" class="graph-node" />
+            <circle cx="62" cy="118" r="1.6" class="graph-node" />
+            <line x1="50" y1="113" x2="62" y2="118" class="graph-edge" />
+            <line x1="50" y1="123" x2="62" y2="118" class="graph-edge" />
+          </g>
+        </g>
+
+        <!-- STEP 04 CIRCUIT RUN (Right, y = 138) -->
+        <g class="step-trace-group trace-group-4" data-step="4">
+          <!-- Connecting Trace -->
+          <path d="M 82,138 L 116,138" class="circuit-trace trace-4" />
+          <!-- Digital Clock Pulse & Challenge Matrix (Pygame/Challenges) -->
+          <g class="micro-symbol clock-symbol">
+            <path d="M 94,141 L 97,141 L 97,135 L 101,135 L 101,141 L 104,141 L 104,135 L 107,135" class="clock-wave" />
+          </g>
+        </g>
+
+        <!-- STEP 05 CIRCUIT RUN (Center Apex, y = 156) -->
+        <g class="step-trace-group trace-group-5" data-step="5">
+          <!-- Connecting Dual Traces to Center -->
+          <path d="M 40,156 L 70,156" class="circuit-trace trace-5-left" />
+          <path d="M 120,156 L 90,156" class="circuit-trace trace-5-right" />
+          <!-- Decision Bell Curve / Equilibrium Wave (Business View) -->
+          <g class="micro-symbol market-symbol">
+            <path d="M 50,156 Q 60,147 68,156" class="market-wave" />
+            <path d="M 92,156 Q 100,147 110,156" class="market-wave" />
+          </g>
+        </g>
+
+        <!-- ========================================== -->
+        <!-- INTERACTIVE MILESTONE TERMINAL PADS        -->
+        <!-- ========================================== -->
+        <!-- Terminal 01: Python for MBA (Left, 30, 78) -->
+        <g
+          class="circuit-terminal term-1 active"
+          data-step="1"
+          tabindex="0"
+          role="button"
+          aria-label="Milestone 01: Python for business students. Hover to preview, click to navigate."
+        >
+          <circle cx="30" cy="78" r="13" class="term-hit" />
+          <circle cx="30" cy="78" r="9.5" class="term-ring" />
+          <circle cx="30" cy="78" r="7" class="term-pad" />
+          <circle cx="30" cy="78" r="4.2" class="term-led" />
+          <text x="30" y="80.5" text-anchor="middle" class="term-num">01</text>
+        </g>
+
+        <!-- Terminal 02: A First Data Analysis (Right, 130, 98) -->
+        <g
+          class="circuit-terminal term-2"
+          data-step="2"
+          tabindex="0"
+          role="button"
+          aria-label="Milestone 02: A first data analysis. Hover to preview, click to navigate."
+        >
+          <circle cx="130" cy="98" r="13" class="term-hit" />
+          <circle cx="130" cy="98" r="9.5" class="term-ring" />
+          <circle cx="130" cy="98" r="7" class="term-pad" />
+          <circle cx="130" cy="98" r="4.2" class="term-led" />
+          <text x="130" y="100.5" text-anchor="middle" class="term-num">02</text>
+        </g>
+
+        <!-- Terminal 03: A First Model (Left, 30, 118) -->
+        <g
+          class="circuit-terminal term-3"
+          data-step="3"
+          tabindex="0"
+          role="button"
+          aria-label="Milestone 03: A first model. Hover to preview, click to navigate."
+        >
+          <circle cx="30" cy="118" r="13" class="term-hit" />
+          <circle cx="30" cy="118" r="9.5" class="term-ring" />
+          <circle cx="30" cy="118" r="7" class="term-pad" />
+          <circle cx="30" cy="118" r="4.2" class="term-led" />
+          <text x="30" y="120.5" text-anchor="middle" class="term-num">03</text>
+        </g>
+
+        <!-- Terminal 04: Practice & Games (Right, 130, 138) -->
+        <g
+          class="circuit-terminal term-4"
+          data-step="4"
+          tabindex="0"
+          role="button"
+          aria-label="Milestone 04: Practice. Hover to preview, click to navigate."
+        >
+          <circle cx="130" cy="138" r="13" class="term-hit" />
+          <circle cx="130" cy="138" r="9.5" class="term-ring" />
+          <circle cx="130" cy="138" r="7" class="term-pad" />
+          <circle cx="130" cy="138" r="4.2" class="term-led" />
+          <text x="130" y="140.5" text-anchor="middle" class="term-num">04</text>
+        </g>
+
+        <!-- Terminal 05: The Business View (Center, 80, 156) -->
+        <g
+          class="circuit-terminal term-5"
+          data-step="5"
+          tabindex="0"
+          role="button"
+          aria-label="Milestone 05: The business view. Hover to preview, click to navigate."
+        >
+          <circle cx="80" cy="156" r="13" class="term-hit" />
+          <circle cx="80" cy="156" r="9.5" class="term-ring" />
+          <circle cx="80" cy="156" r="7" class="term-pad" />
+          <circle cx="80" cy="156" r="4.2" class="term-led" />
+          <text x="80" y="158.5" text-anchor="middle" class="term-num">05</text>
+        </g>
+      </g>
+
+      <!-- ========================================== -->
+      <!-- BOTTOM: ARCHIVAL CARTOUCHE & STEP CONTROLS -->
+      <!-- ========================================== -->
+      <g class="cartouche-section">
+        <!-- Engraved Brass Base Plate -->
+        <rect
+          x="12"
+          y="172"
+          width="136"
+          height="32"
+          rx="3"
+          fill="#0f0513"
+          stroke="rgba(231, 176, 79, 0.42)"
+          stroke-width="1.1"
+          class="cartouche-plate"
+        />
+
+        <!-- Brass Rivets at 4 Corners -->
+        <circle cx="15.5" cy="175.5" r="1.1" fill="url(#lg-gold)" />
+        <circle cx="144.5" cy="175.5" r="1.1" fill="url(#lg-gold)" />
+        <circle cx="15.5" cy="200.5" r="1.1" fill="url(#lg-gold)" />
+        <circle cx="144.5" cy="200.5" r="1.1" fill="url(#lg-gold)" />
+
+        <!-- Micro Step Button: PREV [◀] -->
+        <g
+          class="glyph-step-btn btn-prev"
+          role="button"
+          tabindex="0"
+          aria-label="Previous milestone step"
+        >
+          <rect x="17" y="177" width="16" height="22" rx="2" class="step-btn-rect" />
+          <path d="M 27,183 L 21,188 L 27,193 Z" class="step-btn-arrow" />
+        </g>
+
+        <!-- Dynamic Cartouche Readouts -->
+        <g class="cartouche-readouts">
+          <text id="lg-cartouche-phase" x="80" y="181" text-anchor="middle" class="cartouche-phase">
+            MILESTONE 01 / 05
+          </text>
+          <text id="lg-cartouche-title" x="80" y="191" text-anchor="middle" class="cartouche-title">
+            PYTHON FOR MBA
+          </text>
+          <text id="lg-cartouche-sub" x="80" y="199" text-anchor="middle" class="cartouche-sub">
+            FOUNDATIONAL LOGIC
+          </text>
+        </g>
+
+        <!-- Micro Step Button: NEXT [▶] -->
+        <g
+          class="glyph-step-btn btn-next"
+          role="button"
+          tabindex="0"
+          aria-label="Next milestone step"
+        >
+          <rect x="127" y="177" width="16" height="22" rx="2" class="step-btn-rect" />
+          <path d="M 133,183 L 139,188 L 133,193 Z" class="step-btn-arrow" />
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+  import { scrollBehavior } from '../../scripts/motion';
+
+  interface StepInfo {
+    num: number;
+    angle: number;
+    phase: string;
+    title: string;
+    sub: string;
+  }
+
+  const STEPS: StepInfo[] = [
+    { num: 1, angle: -40, phase: 'MILESTONE 01 / 05', title: 'PYTHON FOR MBA', sub: 'FOUNDATIONAL LOGIC' },
+    { num: 2, angle: -20, phase: 'MILESTONE 02 / 05', title: 'A FIRST DATA ANALYSIS', sub: 'PANDAS & NUMPY' },
+    { num: 3, angle: 0, phase: 'MILESTONE 03 / 05', title: 'A FIRST MODEL', sub: 'RECOMMENDER ENGINE' },
+    { num: 4, angle: 20, phase: 'MILESTONE 04 / 05', title: 'PRACTICE & CHALLENGES', sub: 'GAME & 150 TASKS' },
+    { num: 5, angle: 40, phase: 'MILESTONE 05 / 05', title: 'THE BUSINESS VIEW', sub: 'EXECUTIVE SYNTHESIS' },
+  ];
+
+  function initLearningGlyph() {
+    const root = document.getElementById('curriculum-loom');
+    if (!root) return;
+
+    const needleGroup = root.querySelector<SVGGElement>('#lg-needle-group');
+    const phaseEl = root.querySelector<SVGTextElement>('#lg-cartouche-phase');
+    const titleEl = root.querySelector<SVGTextElement>('#lg-cartouche-title');
+    const subEl = root.querySelector<SVGTextElement>('#lg-cartouche-sub');
+    const terminals = root.querySelectorAll<SVGGElement>('.circuit-terminal');
+    const traceGroups = root.querySelectorAll<SVGGElement>('.step-trace-group');
+    const meterTicks = root.querySelectorAll<SVGLineElement>('.meter-tick');
+    const meterNums = root.querySelectorAll<SVGTextElement>('.meter-num');
+    const btnPrev = root.querySelector<SVGGElement>('.btn-prev');
+    const btnNext = root.querySelector<SVGGElement>('.btn-next');
+    const cursorBeacon = root.querySelector<SVGCircleElement>('#lg-cursor-beacon');
+
+    // State management: pinnedStep tracks where the user is on the page,
+    // while renderedStep reflects the live previewed step on hover.
+    let pinnedStep = 1;
+    let isHovering = false;
+
+    function renderVisualState(stepNum: number, customAngle?: number) {
+      if (stepNum < 1 || stepNum > 5) return;
+      const data = STEPS[stepNum - 1];
+      const targetAngle = typeof customAngle === 'number' ? customAngle : data.angle;
+
+      // Update Needle pivot rotation: center at (80, 56)
+      if (needleGroup) {
+        needleGroup.setAttribute('transform', `rotate(${targetAngle.toFixed(1)}, 80, 56)`);
+      }
+
+      // Update Cartouche Text
+      if (phaseEl) phaseEl.textContent = data.phase;
+      if (titleEl) titleEl.textContent = data.title;
+      if (subEl) subEl.textContent = data.sub;
+
+      // Update Terminal Pads active state
+      terminals.forEach(term => {
+        const s = parseInt(term.getAttribute('data-step') || '0', 10);
+        term.classList.toggle('active', s === stepNum);
+      });
+
+      // Update Traces
+      traceGroups.forEach(tg => {
+        const s = parseInt(tg.getAttribute('data-step') || '0', 10);
+        tg.classList.toggle('active', s === stepNum);
+      });
+
+      // Update Meter Ticks & Numerals
+      meterTicks.forEach((t, i) => {
+        t.classList.toggle('active', i + 1 === stepNum);
+      });
+      meterNums.forEach((n, i) => {
+        n.classList.toggle('active', i + 1 === stepNum);
+      });
+    }
+
+    // Hover Preview (never scrolls page)
+    function previewStep(stepNum: number, customAngle?: number) {
+      isHovering = true;
+      renderVisualState(stepNum, customAngle);
+    }
+
+    // Revert to pinned step when unhovering
+    function restorePinned() {
+      isHovering = false;
+      renderVisualState(pinnedStep);
+    }
+
+    // Commit step (clicks lock new pinned step and smoothly scroll to target)
+    function commitStep(stepNum: number, scrollIntoView = false) {
+      pinnedStep = stepNum;
+      renderVisualState(stepNum);
+
+      if (scrollIntoView) {
+        const targetSection = document.getElementById(`step-${stepNum}`);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+        }
+      }
+    }
+
+    // 1. Direct Terminal Pad Hover & Click Handlers
+    terminals.forEach(term => {
+      const stepNum = parseInt(term.getAttribute('data-step') || '1', 10);
+
+      term.addEventListener('pointerenter', () => {
+        previewStep(stepNum);
+      });
+
+      term.addEventListener('click', e => {
+        e.stopPropagation();
+        commitStep(stepNum, true);
+      });
+
+      term.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          commitStep(stepNum, true);
+        }
+      });
+    });
+
+    // 2. Circuit Trace Groups Hover & Click Handlers
+    traceGroups.forEach(tg => {
+      const stepNum = parseInt(tg.getAttribute('data-step') || '1', 10);
+
+      tg.addEventListener('pointerenter', () => {
+        previewStep(stepNum);
+      });
+
+      tg.addEventListener('click', e => {
+        e.stopPropagation();
+        commitStep(stepNum, true);
+      });
+    });
+
+    // 3. Galvanometer Numerals & Ticks Hover & Click Handlers
+    meterNums.forEach(mn => {
+      const stepNum = parseInt(mn.getAttribute('data-step') || '1', 10);
+      mn.addEventListener('pointerenter', () => previewStep(stepNum));
+      mn.addEventListener('click', e => {
+        e.stopPropagation();
+        commitStep(stepNum, true);
+      });
+    });
+
+    meterTicks.forEach(mt => {
+      const stepNum = parseInt(mt.getAttribute('data-step') || '1', 10);
+      mt.addEventListener('pointerenter', () => previewStep(stepNum));
+      mt.addEventListener('click', e => {
+        e.stopPropagation();
+        commitStep(stepNum, true);
+      });
+    });
+
+    // 4. Pointer-move across entire glyph breadboard:
+    // Tracks proximity, illuminates beacon, and sweeps needle smoothly
+    root.addEventListener('pointerenter', () => {
+      isHovering = true;
+      if (cursorBeacon) cursorBeacon.setAttribute('opacity', '0.45');
+    });
+
+    root.addEventListener('pointerleave', () => {
+      if (cursorBeacon) cursorBeacon.setAttribute('opacity', '0');
+      restorePinned();
+    });
+
+    root.addEventListener('pointermove', (e: PointerEvent) => {
+      const rect = root.getBoundingClientRect();
+      const normX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const normY = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+      const svgX = normX * 160;
+      const svgY = normY * 213;
+
+      if (cursorBeacon) {
+        cursorBeacon.setAttribute('cx', svgX.toFixed(1));
+        cursorBeacon.setAttribute('cy', svgY.toFixed(1));
+        cursorBeacon.setAttribute('opacity', '0.45');
+      }
+
+      // If hovering near meter arc (y < 62): dynamic needle sweep
+      if (svgY <= 62 && svgY >= 14 && svgX >= 35 && svgX <= 125) {
+        const normMeterX = Math.max(0, Math.min(1, (svgX - 54) / (106 - 54)));
+        const sweepAngle = -40 + normMeterX * 80;
+        const nearestStep = Math.max(1, Math.min(5, Math.round(normMeterX * 4) + 1));
+        previewStep(nearestStep, sweepAngle);
+        return;
+      }
+
+      // If in the circuit loom rows (62 < y <= 170): map Y coordinate bands
+      if (svgY > 62 && svgY <= 170) {
+        let hoverStep = 1;
+        if (svgY < 88) hoverStep = 1;
+        else if (svgY < 108) hoverStep = 2;
+        else if (svgY < 128) hoverStep = 3;
+        else if (svgY < 147) hoverStep = 4;
+        else hoverStep = 5;
+
+        previewStep(hoverStep);
+      }
+    });
+
+    // 5. Tactile Step Buttons (Prev / Next)
+    btnPrev?.addEventListener('click', e => {
+      e.stopPropagation();
+      const prev = pinnedStep > 1 ? pinnedStep - 1 : 5;
+      commitStep(prev, true);
+    });
+    btnPrev?.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        const prev = pinnedStep > 1 ? pinnedStep - 1 : 5;
+        commitStep(prev, true);
+      }
+    });
+
+    btnNext?.addEventListener('click', e => {
+      e.stopPropagation();
+      const next = pinnedStep < 5 ? pinnedStep + 1 : 1;
+      commitStep(next, true);
+    });
+    btnNext?.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        const next = pinnedStep < 5 ? pinnedStep + 1 : 1;
+        commitStep(next, true);
+      }
+    });
+
+    // 6. Root Keyboard navigation (ArrowLeft / ArrowRight)
+    root.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prev = pinnedStep > 1 ? pinnedStep - 1 : 5;
+        commitStep(prev, true);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const next = pinnedStep < 5 ? pinnedStep + 1 : 1;
+        commitStep(next, true);
+      }
+    });
+
+    // 7. External preview synchronization (from transit bar hover if dispatched)
+    window.addEventListener('preview-learning-step', ((e: CustomEvent<{ step: number }>) => {
+      if (e.detail && e.detail.step) {
+        previewStep(e.detail.step);
+      }
+    }) as EventListener);
+
+    window.addEventListener('restore-learning-step', () => {
+      restorePinned();
+    });
+
+    // 8. IntersectionObserver to sync glyph with page scroll
+    if ('IntersectionObserver' in window) {
+      const stepElements = [1, 2, 3, 4, 5]
+        .map(n => document.getElementById(`step-${n}`))
+        .filter((el): el is HTMLElement => el !== null);
+
+      if (stepElements.length > 0) {
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const id = entry.target.id;
+                const match = id.match(/step-(\d+)/);
+                if (match) {
+                  const s = parseInt(match[1], 10);
+                  pinnedStep = s;
+                  if (!isHovering) {
+                    renderVisualState(s);
+                  }
+                }
+              }
+            });
+          },
+          {
+            rootMargin: '-20% 0px -55% 0px',
+            threshold: 0.1,
+          }
+        );
+
+        stepElements.forEach(el => observer.observe(el));
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLearningGlyph);
+  } else {
+    initLearningGlyph();
+  }
+</script>
+
+<style>
+  .learning-glyph-widget {
+    display: inline-block;
+    width: 160px;
+    height: 213px;
+    outline: none;
+    user-select: none;
+    cursor: default;
+  }
+
+  .learning-glyph-widget:focus-visible .pcb-mount {
+    stroke: #ffffff;
+    stroke-width: 1.8;
+    filter: drop-shadow(0 0 6px rgba(231, 176, 79, 0.7));
+  }
+
+  .loom-frame {
+    position: relative;
+    width: 160px;
+    height: 213px;
+  }
+
+  .loom-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Cursor Proximity Electron Beacon */
+  .cursor-beacon {
+    transition: opacity 0.2s ease;
+    mix-blend-mode: screen;
+  }
+
+  /* Meter Styling */
+  .meter-gauge-label {
+    font-family: var(--font-mono);
+    font-size: 5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    fill: rgba(231, 176, 79, 0.65);
+    pointer-events: none;
+  }
+
+  .meter-tick {
+    stroke: rgba(231, 176, 79, 0.35);
+    cursor: pointer;
+    transition:
+      stroke 0.2s ease,
+      stroke-width 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .meter-tick:hover {
+    stroke: #ffffff;
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 4px rgba(231, 176, 79, 0.95));
+  }
+
+  .meter-tick.active {
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 3px rgba(231, 176, 79, 0.9));
+  }
+
+  .meter-num {
+    font-family: var(--font-mono);
+    font-size: 5.5px;
+    font-weight: 700;
+    fill: rgba(231, 176, 79, 0.45);
+    cursor: pointer;
+    transition:
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .meter-num:hover {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(231, 176, 79, 0.95));
+  }
+
+  .meter-num.active {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 3px rgba(231, 176, 79, 0.8));
+  }
+
+  /* Needle */
+  .meter-needle-group {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .needle-blade {
+    stroke: url(#lg-gold);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 2px rgba(231, 176, 79, 0.6));
+  }
+
+  /* Bus Spine */
+  .bus-spine {
+    stroke: rgba(231, 176, 79, 0.22);
+    stroke-width: 0.9;
+    pointer-events: none;
+  }
+
+  .bus-via {
+    fill: #0c040f;
+    stroke: rgba(231, 176, 79, 0.4);
+    stroke-width: 0.8;
+    pointer-events: none;
+  }
+
+  /* Circuit Traces */
+  .step-trace-group {
+    cursor: pointer;
+  }
+
+  .circuit-trace {
+    fill: none;
+    stroke: rgba(231, 176, 79, 0.28);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition:
+      stroke 0.2s ease,
+      stroke-width 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .step-trace-group:hover .circuit-trace {
+    stroke: #ffd494;
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 5px rgba(231, 176, 79, 0.95));
+  }
+
+  .step-trace-group.active .circuit-trace {
+    stroke: #ffd494;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 4px rgba(231, 176, 79, 0.9));
+  }
+
+  /* Micro Circuit Symbols */
+  .micro-symbol {
+    opacity: 0.35;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .step-trace-group:hover .micro-symbol,
+  .step-trace-group.active .micro-symbol {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 3px rgba(231, 176, 79, 0.8));
+  }
+
+  .gate-symbol {
+    fill: none;
+    stroke: #e7b04f;
+    stroke-width: 0.8;
+  }
+
+  .micro-trace {
+    stroke: #e7b04f;
+    stroke-width: 0.8;
+  }
+
+  .matrix-box {
+    fill: none;
+    stroke: #e7b04f;
+    stroke-width: 0.8;
+  }
+
+  .matrix-grid-line {
+    stroke: #e7b04f;
+    stroke-width: 0.6;
+    stroke-dasharray: 0.8 0.8;
+  }
+
+  .matrix-dot {
+    fill: #e7b04f;
+  }
+
+  .graph-node {
+    fill: #e7b04f;
+  }
+
+  .graph-edge {
+    stroke: #e7b04f;
+    stroke-width: 0.7;
+    stroke-dasharray: 1 1;
+  }
+
+  .clock-wave {
+    fill: none;
+    stroke: #e7b04f;
+    stroke-width: 0.8;
+  }
+
+  .market-wave {
+    fill: none;
+    stroke: #e7b04f;
+    stroke-width: 0.8;
+    stroke-dasharray: 1.2 1.2;
+  }
+
+  /* Terminal Pads */
+  .circuit-terminal {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .term-hit {
+    fill: transparent;
+  }
+
+  .term-ring {
+    fill: #190b1e;
+    stroke: rgba(231, 176, 79, 0.45);
+    stroke-width: 1;
+    transition:
+      stroke 0.2s ease,
+      stroke-width 0.2s ease,
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .term-pad {
+    fill: #0c040f;
+    stroke: rgba(231, 176, 79, 0.3);
+    stroke-width: 0.8;
+    pointer-events: none;
+  }
+
+  .term-led {
+    fill: rgba(231, 176, 79, 0.2);
+    pointer-events: none;
+    transition:
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .term-num {
+    font-family: var(--font-mono);
+    font-size: 5.5px;
+    font-weight: 700;
+    fill: rgba(231, 176, 79, 0.6);
+    user-select: none;
+    pointer-events: none;
+    transition:
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  /* Terminal Hover State (Preview) */
+  .circuit-terminal:hover .term-ring,
+  .circuit-terminal:focus-visible .term-ring {
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    fill: #2c1437;
+    filter: drop-shadow(0 0 6px rgba(231, 176, 79, 0.95));
+  }
+
+  .circuit-terminal:hover .term-led,
+  .circuit-terminal:focus-visible .term-led {
+    fill: url(#lg-led-glow);
+    filter: drop-shadow(0 0 5px rgba(255, 230, 150, 0.95));
+  }
+
+  .circuit-terminal:hover .term-num,
+  .circuit-terminal:focus-visible .term-num {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+  }
+
+  /* Terminal Active State (Committed or Previewed) */
+  .circuit-terminal.active .term-ring {
+    stroke: #ffffff;
+    stroke-width: 1.4;
+    filter: drop-shadow(0 0 5px rgba(231, 176, 79, 0.95));
+  }
+
+  .circuit-terminal.active .term-led {
+    fill: url(#lg-led-glow);
+    filter: drop-shadow(0 0 4px rgba(255, 230, 150, 0.95));
+  }
+
+  .circuit-terminal.active .term-num {
+    fill: #ffffff;
+    font-weight: 700;
+  }
+
+  /* Cartouche Section */
+  .cartouche-plate {
+    pointer-events: none;
+  }
+
+  .cartouche-readouts {
+    pointer-events: none;
+  }
+
+  .cartouche-phase {
+    font-family: var(--font-mono);
+    font-size: 5px;
+    font-weight: 700;
+    fill: var(--color-accent);
+    letter-spacing: 0.08em;
+    transition: fill 0.2s ease;
+  }
+
+  .cartouche-title {
+    font-family: var(--font-mono);
+    font-size: 6px;
+    font-weight: 700;
+    fill: #ffffff;
+    letter-spacing: 0.06em;
+    transition: fill 0.2s ease;
+  }
+
+  .cartouche-sub {
+    font-family: var(--font-mono);
+    font-size: 4.8px;
+    fill: #bba9b8;
+    letter-spacing: 0.04em;
+    transition: fill 0.2s ease;
+  }
+
+  /* Step Buttons */
+  .glyph-step-btn {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .step-btn-rect {
+    fill: #1a0b1f;
+    stroke: rgba(231, 176, 79, 0.35);
+    stroke-width: 0.8;
+    transition:
+      fill 0.2s ease,
+      stroke 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .step-btn-arrow {
+    fill: rgba(231, 176, 79, 0.7);
+    pointer-events: none;
+    transition: fill 0.2s ease;
+  }
+
+  .glyph-step-btn:hover .step-btn-rect,
+  .glyph-step-btn:focus-visible .step-btn-rect {
+    fill: #2d1437;
+    stroke: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(231, 176, 79, 0.85));
+  }
+
+  .glyph-step-btn:hover .step-btn-arrow,
+  .glyph-step-btn:focus-visible .step-btn-arrow {
+    fill: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .meter-needle-group,
+    .circuit-trace,
+    .term-ring,
+    .term-led,
+    .term-num,
+    .meter-tick,
+    .meter-num,
+    .cursor-beacon {
+      transition: none !important;
+    }
+  }
+</style>

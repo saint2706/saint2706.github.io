@@ -2,7 +2,86 @@
 import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
 import Section from '../../../components/Section.astro';
+import LearningGlyph from '../../../components/personal/LearningGlyph.astro';
+import NextLinks from '../../../components/NextLinks.astro';
 import { learning } from '../../../lib/content';
+
+interface ResourceMeta {
+  tags: string[];
+  cta: string;
+  platform: 'internal' | 'devto' | 'github' | 'medium';
+  platformLabel: string;
+  note?: string;
+}
+
+const resourceMetaMap: Record<string, ResourceMeta> = {
+  'Coding-For-MBA': {
+    tags: ['12 Phases', '6 Projects', '15 Case Studies', 'Pyodide In-Browser'],
+    cta: 'Launch Interactive Course',
+    platform: 'internal',
+    platformLabel: 'Portfolio Module · In-Browser REPL',
+  },
+  'Python Course, GIM BDA': {
+    tags: ['Jupyter Notebooks', 'Big Data Analytics', 'Classroom Tested'],
+    cta: 'Inspect GitHub Repo',
+    platform: 'github',
+    platformLabel: 'GitHub Repository ↗',
+  },
+  "A Beginner's Guide to Data Analysis with Python: Using Pandas and NumPy": {
+    tags: ['Iris Dataset', 'Pandas DataFrame', 'NumPy Vectors', 'Matplotlib'],
+    cta: 'Read Tutorial on Dev.to',
+    platform: 'devto',
+    platformLabel: 'Dev.to Publication ↗',
+  },
+  'Build Your First Movie Recommendation Engine in Python': {
+    tags: ['MovieLens 100k', 'Collaborative Filtering', 'Pearson Correlation', 'Cold-Start'],
+    cta: 'Read Tutorial on Dev.to',
+    platform: 'devto',
+    platformLabel: 'Dev.to Publication ↗',
+  },
+  'Python Game Development: Create a Basic 2D Game with Pygame': {
+    tags: ['Pygame 2D', 'Game Event Loop', 'Collision Detection', 'Sprite Physics'],
+    cta: 'Read Tutorial on Dev.to',
+    platform: 'devto',
+    platformLabel: 'Dev.to Publication ↗',
+  },
+  'Programming-Challenges-6': {
+    tags: ['150 Challenges', 'Algorithms', 'Web Development', 'Applied ML'],
+    cta: 'Explore Problem Catalog',
+    platform: 'internal',
+    platformLabel: 'Curated Workbench · 150 Tasks',
+  },
+  '5 Surprising Ideas That Redefined Artificial Intelligence': {
+    tags: ['AI Paradigms', 'Representation Learning', 'Executive Strategy'],
+    cta: 'Read Essay on Medium',
+    platform: 'medium',
+    platformLabel: 'Medium Essay ↗',
+    note: 'A strategic examination of defining paradigm shifts in AI—from symbolic rules and expert systems to deep representation learning—exploring why statistical intelligence demands a fundamental rethink of product architecture.',
+  },
+  '6 Counter-Intuitive Marketing Truths That Explain Why We Buy': {
+    tags: ['Behavioral Economics', 'Costly Signaling', 'Consumer Psychology'],
+    cta: 'Read Essay on Medium',
+    platform: 'medium',
+    platformLabel: 'Medium Essay ↗',
+    note: 'An investigation into behavioral economics, costly signaling, and the psychological mechanisms behind consumer decision-making that defy classical rational choice theory.',
+  },
+};
+
+const tracks = [
+  'Track A: Computational & Data Logic',
+  'Track A: Computational & Data Logic',
+  'Track A: Statistical Modeling & Applied Craft',
+  'Track A: Statistical Modeling & Applied Craft',
+  'Track B: Strategic & Executive Synthesis',
+];
+
+const transitSteps = [
+  { num: '01', title: 'Python Basics', subtitle: 'Coding for MBA', id: 'step-1' },
+  { num: '02', title: 'Data Analysis', subtitle: 'Pandas & NumPy', id: 'step-2' },
+  { num: '03', title: 'First Model', subtitle: 'Recommender System', id: 'step-3' },
+  { num: '04', title: 'Practice', subtitle: 'Pygame & 150 Tasks', id: 'step-4' },
+  { num: '05', title: 'Business View', subtitle: 'AI & Consumer Truths', id: 'step-5' },
+];
 ---
 
 <Base
@@ -10,35 +89,800 @@ import { learning } from '../../../lib/content';
   description="Python, data, a first model, practice and the business view: Rishabh's tutorials and courses in a beginner's order."
   space="per"
 >
-  <SpaceHead title="Learning path" lede={learning.intro} />
+  <SpaceHead title="Learning path" lede={learning.intro}>
+    <div slot="mark" class="learning-mark">
+      <LearningGlyph />
+    </div>
+    <p class="curator-letter">
+      A structured five-milestone progression from first syntax to architectural and executive judgment.
+      Designed for business leaders, analysts, and self-directed builders who want to understand code
+      from the metal up to executive decision-making: each step builds directly upon the limits of the previous one.
+    </p>
+  </SpaceHead>
 
-  {
-    learning.steps.map((step, i) => (
-      <Section id={`step-${i + 1}`} num={i + 1} title={step.title}>
-        <p class="why">{step.why}</p>
-        <ul class="rows">
-          {step.items.map(it => (
-            <li>
-              <h3>
-                <a href={it.url}>{it.title}</a>
-              </h3>
-              <p class="meta">{it.kind}</p>
-              {it.note && <p>{it.note}</p>}
-            </li>
-          ))}
-        </ul>
-      </Section>
-    ))
-  }
+  <!-- Archival Ledger Summary Bar -->
+  <div class="ledger-bar" aria-label="Curriculum ledger summary">
+    <div class="ledger-item">
+      <span class="ledger-num">05</span>
+      <span class="ledger-label">Curriculum Milestones</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">08</span>
+      <span class="ledger-label">Primary Resources</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">02</span>
+      <span class="ledger-label">Foundational Tracks</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">150+</span>
+      <span class="ledger-label">Practice Exercises</span>
+    </div>
+  </div>
+
+  <!-- Pedagogical Transit Line / Circuit Track Navigator -->
+  <nav class="transit-navigator" aria-label="Curriculum milestone transit line">
+    <div class="transit-header">
+      <span class="transit-eyebrow">PEDAGOGICAL TRANSIT LINE · 5 DETENTS</span>
+      <span class="transit-caption">Click any detent to jump to that milestone</span>
+    </div>
+    <ol class="transit-track" role="list">
+      {
+        transitSteps.map((st, idx) => (
+          <li class="transit-stop">
+            <a href={`#${st.id}`} class:list={['transit-btn', { active: idx === 0 }]} data-transit-step={idx + 1}>
+              <div class="transit-node-wrap">
+                <span class="transit-node" aria-hidden="true">
+                  <span class="node-pip">{st.num}</span>
+                </span>
+                {idx < transitSteps.length - 1 && <span class="transit-segment" aria-hidden="true" />}
+              </div>
+              <div class="transit-info">
+                <span class="transit-title">{st.title}</span>
+                <span class="transit-sub">{st.subtitle}</span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+
+  <!-- Milestone Sections (Steps 01 to 05) -->
+  <div class="milestones-container">
+    {
+      learning.steps.map((step, i) => {
+        const stepNum = i + 1;
+        const trackLabel = tracks[i];
+        return (
+          <Section id={`step-${stepNum}`} num={stepNum} title={step.title}>
+            <div class="milestone-header-meta">
+              <span class="track-tag">{trackLabel}</span>
+            </div>
+
+            <!-- Archival Curatorial Rationale Callout -->
+            <div class="rationale-callout">
+              <span class="callout-glyph" aria-hidden="true">✦</span>
+              <div class="callout-body">
+                <span class="callout-eyebrow">CURATORIAL RATIONALE · WHY THIS STEP COMES HERE</span>
+                <p class="callout-text">{step.why}</p>
+              </div>
+            </div>
+
+            <!-- Resource Cards Grid -->
+            <div class="resource-grid" role="list" aria-label={`Resources for ${step.title}`}>
+              {step.items.map(it => {
+                const meta = resourceMetaMap[it.title] || {
+                  tags: [it.kind],
+                  cta: 'Open Resource',
+                  platform: it.url.startsWith('/') ? 'internal' : 'devto',
+                  platformLabel: it.url.startsWith('/') ? 'Portfolio Module' : 'External Dispatch ↗',
+                };
+                const noteText = it.note || meta.note;
+                const isInternal = it.url.startsWith('/');
+
+                return (
+                  <article class:list={['resource-card', `card-${meta.platform}`]} role="listitem">
+                    <div class="card-top-row">
+                      <span class:list={['kind-pill', `pill-${it.kind.toLowerCase()}`]}>{it.kind}</span>
+                      <span class:list={['platform-badge', `badge-${meta.platform}`]}>
+                        {meta.platformLabel}
+                      </span>
+                    </div>
+
+                    <h3 class="card-title">
+                      <a href={it.url} class="card-title-link">
+                        <span>{it.title}</span>
+                        <span class="title-arrow" aria-hidden="true">
+                          {isInternal ? '→' : '↗'}
+                        </span>
+                      </a>
+                    </h3>
+
+                    {noteText && <p class="card-note">{noteText}</p>}
+
+                    <div class="tag-row" aria-label="Key topics and technical focus">
+                      {meta.tags.map(t => (
+                        <span class="topic-tag">{t}</span>
+                      ))}
+                    </div>
+
+                    <div class="card-footer">
+                      <a href={it.url} class="action-link">
+                        <span>{meta.cta}</span>
+                        <span class="action-arrow" aria-hidden="true">
+                          {isInternal ? '→' : '↗'}
+                        </span>
+                      </a>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </Section>
+        );
+      })
+    }
+  </div>
+
+  <!-- Curator's Pedagogical Manifesto -->
+  <aside class="curator-manifesto" aria-label="Curator reflection">
+    <div class="manifesto-card">
+      <span class="manifesto-mark" aria-hidden="true">“</span>
+      <p class="manifesto-quote">
+        Technical literacy in leadership is not about replacing engineers; it is about demystifying the black box.
+        When an executive grasps how data structures fail and why statistical models encounter the cold-start problem,
+        they stop managing by faith and begin leading with quantitative precision.
+      </p>
+      <span class="manifesto-origin">Pedagogical Philosophy · Curriculum Architecture</span>
+    </div>
+  </aside>
+
+  <!-- Cross-Wing Navigation Links -->
+  <NextLinks
+    eyebrow="Explore other rooms"
+    links={[
+      {
+        href: '/personal/art/',
+        label: 'Art and myth',
+        spaceNum: '01',
+        sub: 'Seven public-domain paintings across four halls with questions to argue about.',
+      },
+      {
+        href: '/personal/books/',
+        label: 'Books',
+        spaceNum: '02',
+        sub: 'Twenty-five books that stayed with me: philosophy from Homer to Wittgenstein.',
+      },
+      {
+        href: '/personal/films/',
+        label: 'Films',
+        spaceNum: '03',
+        sub: 'Screening diary, reviews, and star ratings synced from Letterboxd.',
+      },
+      {
+        href: '/personal/',
+        label: 'Off the clock',
+        spaceNum: '00',
+        sub: 'Return to the personal wing foyer and astrolabe chronometer.',
+      },
+    ]}
+  />
 </Base>
 
-<style>
-  .why {
-    max-width: 62ch;
-    font-size: 1.0625rem;
+<script>
+  import { scrollBehavior } from '../../../scripts/motion';
+
+  function initTransitTracker() {
+    const transitLinks = document.querySelectorAll<HTMLAnchorElement>('.transit-btn');
+    if (transitLinks.length === 0) return;
+
+    // Smooth scroll navigation and hover preview dispatch
+    transitLinks.forEach(link => {
+      const stepNum = parseInt(link.getAttribute('data-transit-step') || '0', 10);
+
+      link.addEventListener('pointerenter', () => {
+        if (stepNum > 0) {
+          window.dispatchEvent(new CustomEvent('preview-learning-step', { detail: { step: stepNum } }));
+        }
+      });
+
+      link.addEventListener('pointerleave', () => {
+        window.dispatchEvent(new CustomEvent('restore-learning-step'));
+      });
+
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+            history.pushState(null, '', href);
+          }
+        }
+      });
+    });
+
+    // IntersectionObserver to sync transit track active state with page scroll
+    if ('IntersectionObserver' in window) {
+      const stepSections = [1, 2, 3, 4, 5]
+        .map(n => document.getElementById(`step-${n}`))
+        .filter((el): el is HTMLElement => el !== null);
+
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              const match = id.match(/step-(\d+)/);
+              if (match) {
+                const stepNum = parseInt(match[1], 10);
+                transitLinks.forEach(link => {
+                  const s = parseInt(link.getAttribute('data-transit-step') || '0', 10);
+                  link.classList.toggle('active', s === stepNum);
+                });
+              }
+            }
+          });
+        },
+        {
+          rootMargin: '-20% 0px -55% 0px',
+          threshold: 0.1,
+        }
+      );
+
+      stepSections.forEach(sec => observer.observe(sec));
+    }
   }
-  .rows p {
-    margin: 4px 0 0;
-    max-width: 62ch;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTransitTracker);
+  } else {
+    initTransitTracker();
+  }
+</script>
+
+<style>
+  /* SpaceHead Mark Integration */
+  .learning-mark {
+    display: inline-block;
+  }
+
+  .curator-letter {
+    max-width: 65ch;
+    margin: var(--space-3) 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+
+  /* Archival Ledger Summary Bar */
+  .ledger-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    margin: var(--space-4) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+  }
+
+  .ledger-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .ledger-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .ledger-label {
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+  }
+
+  .ledger-sep {
+    color: var(--per-rule);
+    user-select: none;
+  }
+
+  /* Pedagogical Transit Line / Circuit Track */
+  .transit-navigator {
+    margin: var(--space-5) 0 var(--space-6);
+    padding: var(--space-4);
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+    border-radius: 4px;
+  }
+
+  .transit-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid rgba(231, 176, 79, 0.18);
+  }
+
+  .transit-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .transit-caption {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-2);
+  }
+
+  .transit-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-2);
+  }
+
+  @media (max-width: 860px) {
+    .transit-track {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .transit-track {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .transit-stop {
+    display: flex;
+  }
+
+  .transit-btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    background: rgba(18, 9, 22, 0.45);
+    border: 1px solid var(--per-rule);
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--color-ink);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s var(--ease-out);
+  }
+
+  .transit-node-wrap {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 6px;
+  }
+
+  .transit-node {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #140818;
+    border: 1.5px solid rgba(231, 176, 79, 0.4);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .node-pip {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: rgba(231, 176, 79, 0.75);
+    transition: color 0.2s ease;
+  }
+
+  .transit-segment {
+    flex: 1;
+    height: 1px;
+    background: rgba(231, 176, 79, 0.2);
+    margin-left: 8px;
+  }
+
+  .transit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .transit-title {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-ink);
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+  }
+
+  .transit-sub {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-ink-2);
+  }
+
+  /* Transit Button Hover & Active States */
+  .transit-btn:hover {
+    border-color: var(--color-accent);
+    background: rgba(38, 26, 43, 0.85);
+  }
+
+  .transit-btn:hover .transit-node {
+    border-color: #ffffff;
+    filter: drop-shadow(0 0 3px rgba(231, 176, 79, 0.8));
+  }
+
+  .transit-btn:hover .node-pip,
+  .transit-btn:hover .transit-title {
+    color: #ffffff;
+  }
+
+  .transit-btn.active {
+    border-color: var(--color-accent);
+    background: rgba(45, 27, 51, 0.95);
+    box-shadow:
+      0 0 0 1px var(--color-accent),
+      0 4px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  .transit-btn.active .transit-node {
+    border-color: #ffffff;
+    background: #e7b04f;
+    filter: drop-shadow(0 0 5px rgba(231, 176, 79, 0.95));
+  }
+
+  .transit-btn.active .node-pip {
+    color: #140818;
+    font-weight: 700;
+  }
+
+  .transit-btn.active .transit-title {
+    color: var(--color-accent);
+  }
+
+  /* Milestone Containers & Sections */
+  .milestones-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .milestone-header-meta {
+    margin: -4px 0 var(--space-3);
+  }
+
+  .track-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    padding: 3px 8px;
+    background: rgba(231, 176, 79, 0.1);
+    border: 1px solid rgba(231, 176, 79, 0.25);
+    border-radius: 2px;
+  }
+
+  /* Curatorial Rationale Callout */
+  .rationale-callout {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin: var(--space-3) 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(24, 12, 28, 0.6);
+    border: 1px solid var(--per-rule);
+    border-left: 3px solid var(--color-accent);
+    border-radius: 2px;
+  }
+
+  .callout-glyph {
+    color: var(--color-accent);
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    user-select: none;
+  }
+
+  .callout-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .callout-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+  }
+
+  .callout-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+    max-width: 65ch;
+  }
+
+  /* Resource Grid & Cards */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .resource-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-4);
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
+  }
+
+  .resource-card:hover {
+    border-color: var(--color-accent);
+    box-shadow:
+      0 8px 24px -4px rgba(0, 0, 0, 0.45),
+      0 0 0 1px var(--color-accent);
+  }
+
+  html[data-motion='on'] .resource-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-top-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-3);
+  }
+
+  /* Kind Pills */
+  .kind-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+  }
+
+  .pill-course {
+    background: rgba(231, 176, 79, 0.16);
+    border-color: rgba(231, 176, 79, 0.4);
+    color: var(--color-accent);
+  }
+
+  .pill-notebooks {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: #7dd3fc;
+  }
+
+  .pill-tutorial {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.35);
+    color: #6ee7b7;
+  }
+
+  .pill-challenges {
+    background: rgba(168, 85, 247, 0.12);
+    border-color: rgba(168, 85, 247, 0.35);
+    color: #d8b4fe;
+  }
+
+  .pill-essay {
+    background: rgba(251, 146, 60, 0.12);
+    border-color: rgba(251, 146, 60, 0.35);
+    color: #fdba74;
+  }
+
+  /* Platform Badges */
+  .platform-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-ink-2);
+  }
+
+  .badge-internal {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* Resource Card Title */
+  .card-title {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.35;
+    font-weight: 400;
+  }
+
+  .card-title-link {
+    text-decoration: none;
+    color: var(--color-ink);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    transition: color 0.2s ease;
+  }
+
+  .title-arrow {
+    font-size: 1.1rem;
+    color: var(--color-accent);
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .resource-card:hover .card-title-link {
+    color: #ffffff;
+  }
+
+  .resource-card:hover .title-arrow {
+    transform: translateX(3px);
+  }
+
+  .card-note {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    flex-grow: 1;
+  }
+
+  /* Tag Row */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-4);
+  }
+
+  .topic-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-ink-2);
+    background: rgba(18, 9, 22, 0.55);
+    border: 1px solid var(--per-rule);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  /* Card Action Footer */
+  .card-footer {
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(231, 176, 79, 0.12);
+  }
+
+  .action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .action-arrow {
+    font-size: 1rem;
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .resource-card:hover .action-link {
+    color: #ffffff;
+  }
+
+  .resource-card:hover .action-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Curator's Pedagogical Manifesto Inscription */
+  .curator-manifesto {
+    margin: var(--space-7) 0 var(--space-5);
+  }
+
+  .manifesto-card {
+    position: relative;
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    background: #140818;
+    border: 1px solid var(--per-rule);
+    border-top: 2px solid var(--color-accent);
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  .manifesto-mark {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(231, 176, 79, 0.18);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .manifesto-quote {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    max-width: 68ch;
+  }
+
+  .manifesto-origin {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .resource-card,
+    .title-arrow,
+    .action-arrow,
+    .transit-btn,
+    .transit-node {
+      transition: none !important;
+      transform: none !important;
+    }
   }
 </style>

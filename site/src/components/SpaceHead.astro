@@ -7,7 +7,9 @@ const { title, lede } = Astro.props;
 ---
 
 <div class="space-head">
-  <span class="mark" aria-hidden="true"></span>
+  <slot name="mark">
+    <span class="mark" aria-hidden="true"></span>
+  </slot>
   <div>
     <h1>{title}</h1>
     <p>{lede}</p>

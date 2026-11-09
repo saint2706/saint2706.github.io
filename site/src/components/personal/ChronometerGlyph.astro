@@ -1,0 +1,450 @@
+---
+import { films } from '../../lib/content';
+---
+
+<div
+  class="chronometer-widget"
+  id="otc-chronometer"
+  data-films-count={films.diary.length}
+  role="img"
+  aria-label="Interactive Off the Clock Astrolabe. Move cursor over the dial to explore rooms."
+>
+  <div class="chronometer-face">
+    <svg
+      viewBox="0 0 160 213"
+      width="160"
+      height="213"
+      class="chronometer-svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <!-- Gold Bevel Gradient -->
+        <linearGradient id="otc-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fdf1c8" />
+          <stop offset="45%" stop-color="#e7b04f" />
+          <stop offset="100%" stop-color="#9a6c1e" />
+        </linearGradient>
+
+        <!-- Dial Face Radial Gradient -->
+        <radialGradient id="otc-lens" cx="50%" cy="45%" r="65%">
+          <stop offset="0%" stop-color="#2d1c33" />
+          <stop offset="70%" stop-color="#1c0f21" />
+          <stop offset="100%" stop-color="#110714" />
+        </radialGradient>
+      </defs>
+
+      <!-- Suspension Ring -->
+      <g class="suspension-ring">
+        <circle cx="80" cy="12" r="9" fill="none" stroke="url(#otc-gold)" stroke-width="2.5" />
+        <circle cx="80" cy="12" r="5" fill="#140817" stroke="rgba(231,176,79,0.35)" stroke-width="1" />
+        <!-- Winding Crown -->
+        <rect x="73" y="19" width="14" height="6" rx="1.5" fill="url(#otc-gold)" />
+        <line x1="77" y1="20" x2="77" y2="24" stroke="#684510" stroke-width="1" />
+        <line x1="80" y1="20" x2="80" y2="24" stroke="#684510" stroke-width="1" />
+        <line x1="83" y1="20" x2="83" y2="24" stroke="#684510" stroke-width="1" />
+      </g>
+
+      <!-- Arch Casing -->
+      <path
+        d="M 10,92 A 70,70 0 0,1 150,92 L 150,195 A 14,14 0 0,1 136,209 L 24,209 A 14,14 0 0,1 10,195 Z"
+        fill="url(#otc-lens)"
+        stroke="url(#otc-gold)"
+        stroke-width="2.5"
+        class="casing-path"
+      />
+
+      <!-- Dial Inner Inset Border -->
+      <path
+        d="M 16,92 A 64,64 0 0,1 144,92 L 144,192 A 8,8 0 0,1 136,200 L 24,200 A 8,8 0 0,1 16,192 Z"
+        fill="none"
+        stroke="rgba(231, 176, 79, 0.18)"
+        stroke-width="1"
+      />
+
+      <!-- Concentric Astrolabe Rings (Center at 80, 92) -->
+      <g class="astrolabe-rings">
+        <!-- Outer Minute Track -->
+        <circle cx="80" cy="92" r="56" fill="none" stroke="rgba(231, 176, 79, 0.28)" stroke-width="1" />
+        <circle cx="80" cy="92" r="53" fill="none" stroke="rgba(231, 176, 79, 0.12)" stroke-dasharray="1.5 4" stroke-width="1" />
+
+        <!-- 12-Hour Radial Tick Marks -->
+        <g stroke="rgba(231, 176, 79, 0.5)" stroke-width="1.2">
+          <!-- 12 o'clock -->
+          <line x1="80" y1="36" x2="80" y2="40" />
+          <!-- 1 o'clock -->
+          <line x1="108" y1="43.5" x2="106" y2="47" />
+          <!-- 2 o'clock -->
+          <line x1="128.5" y1="64" x2="125" y2="66" />
+          <!-- 3 o'clock -->
+          <line x1="136" y1="92" x2="132" y2="92" />
+          <!-- 4 o'clock -->
+          <line x1="128.5" y1="120" x2="125" y2="118" />
+          <!-- 5 o'clock -->
+          <line x1="108" y1="140.5" x2="106" y2="137" />
+          <!-- 6 o'clock -->
+          <line x1="80" y1="148" x2="80" y2="144" />
+          <!-- 7 o'clock -->
+          <line x1="52" y1="140.5" x2="54" y2="137" />
+          <!-- 8 o'clock -->
+          <line x1="31.5" y1="120" x2="35" y2="118" />
+          <!-- 9 o'clock -->
+          <line x1="24" y1="92" x2="28" y2="92" />
+          <!-- 10 o'clock -->
+          <line x1="31.5" y1="64" x2="35" y2="66" />
+          <!-- 11 o'clock -->
+          <line x1="52" y1="43.5" x2="54" y2="47" />
+        </g>
+
+        <!-- Inner Celestial Ring -->
+        <circle cx="80" cy="92" r="38" fill="none" stroke="rgba(231, 176, 79, 0.22)" stroke-dasharray="3 3" stroke-width="1" />
+        <circle cx="80" cy="92" r="22" fill="none" stroke="rgba(231, 176, 79, 0.15)" stroke-width="1" />
+      </g>
+
+      <!-- 4 Cardinal Room Emblems (Fixed in place, stroke & fill highlight on hover) -->
+      <!-- Room I: Art & Myth (Top / 12 o'clock, x=80, y=48) -->
+      <g class="quadrant-emblem" id="emblem-art" data-room="art" transform="translate(80, 48)">
+        <circle cx="0" cy="0" r="10" class="emblem-hit" />
+        <!-- Eye of Vision / Temple Pediment -->
+        <path d="M -7,0 Q 0,-6 7,0 Q 0,6 -7,0 Z" class="emblem-shape" />
+        <circle cx="0" cy="0" r="2.2" class="emblem-pupil" />
+      </g>
+
+      <!-- Room II: Books (Right / 3 o'clock, x=124, y=92) -->
+      <g class="quadrant-emblem" id="emblem-books" data-room="books" transform="translate(124, 92)">
+        <circle cx="0" cy="0" r="10" class="emblem-hit" />
+        <!-- Open Folio -->
+        <path d="M 0,3 L -6,-2 L -6,-7 L 0,-4 L 6,-7 L 6,-2 Z" class="emblem-shape" />
+        <line x1="0" y1="-4" x2="0" y2="3" class="emblem-spine" />
+      </g>
+
+      <!-- Room III: Films (Bottom / 6 o'clock, x=80, y=136) -->
+      <g class="quadrant-emblem" id="emblem-films" data-room="films" transform="translate(80, 136)">
+        <circle cx="0" cy="0" r="10" class="emblem-hit" />
+        <!-- 35mm Cell Frame -->
+        <rect x="-6" y="-5" width="12" height="10" rx="1" class="emblem-shape" />
+        <circle cx="-3.5" cy="-2.5" r="0.8" class="emblem-dot" />
+        <circle cx="3.5" cy="-2.5" r="0.8" class="emblem-dot" />
+        <circle cx="-3.5" cy="2.5" r="0.8" class="emblem-dot" />
+        <circle cx="3.5" cy="2.5" r="0.8" class="emblem-dot" />
+      </g>
+
+      <!-- Room IV: Learning Path (Left / 9 o'clock, x=36, y=92) -->
+      <g class="quadrant-emblem" id="emblem-learning" data-room="learning" transform="translate(36, 92)">
+        <circle cx="0" cy="0" r="10" class="emblem-hit" />
+        <!-- 4-Point Compass Star -->
+        <path d="M 0,-7 L 2,-2 L 7,0 L 2,2 L 0,7 L -2,2 L -7,0 L -2,-2 Z" class="emblem-shape" />
+      </g>
+
+      <!-- Kinetic Celestial Needle (Rotates around center 80, 92) -->
+      <g id="otc-needle-group" transform="translate(80, 92) rotate(0)">
+        <!-- Counterbalance Tail: Crescent Moon -->
+        <g class="needle-tail">
+          <line x1="0" y1="0" x2="0" y2="20" stroke="rgba(231, 176, 79, 0.75)" stroke-width="1.5" />
+          <path d="M -5,24 A 6,6 0 1,0 5,24 A 4.5,4.5 0 0,1 -5,24 Z" fill="url(#otc-gold)" />
+        </g>
+
+        <!-- Main Pointer: Tapered Sunburst Arrow -->
+        <g class="needle-pointer">
+          <line x1="0" y1="0" x2="0" y2="-38" stroke="url(#otc-gold)" stroke-width="2" />
+          <!-- Arrowhead Diamond -->
+          <polygon points="0,-48 -4,-37 0,-34 4,-37" fill="url(#otc-gold)" stroke="#fff" stroke-width="0.5" />
+          <circle cx="0" cy="-24" r="1.5" fill="#fdf1c8" />
+        </g>
+
+        <!-- Center Bearing Pivot -->
+        <circle cx="0" cy="0" r="7" fill="#140817" stroke="url(#otc-gold)" stroke-width="2" />
+        <circle cx="0" cy="0" r="3" fill="#e7b04f" />
+        <circle cx="0" cy="0" r="1" fill="#fff" />
+      </g>
+
+      <!-- Archival Cartouche / Plaque (Bottom Display) -->
+      <g class="archival-cartouche" transform="translate(15, 162)">
+        <!-- Plaque Frame -->
+        <rect
+          x="0"
+          y="0"
+          width="130"
+          height="37"
+          rx="4"
+          class="plaque-bg"
+        />
+        <rect
+          x="2"
+          y="2"
+          width="126"
+          height="33"
+          rx="3"
+          fill="none"
+          stroke="rgba(231, 176, 79, 0.2)"
+          stroke-width="1"
+        />
+        <!-- Fastener Rivets -->
+        <circle cx="5" cy="5" r="1" fill="var(--color-accent)" opacity="0.6" />
+        <circle cx="125" cy="5" r="1" fill="var(--color-accent)" opacity="0.6" />
+        <circle cx="5" cy="32" r="1" fill="var(--color-accent)" opacity="0.6" />
+        <circle cx="125" cy="32" r="1" fill="var(--color-accent)" opacity="0.6" />
+
+        <!-- Dynamic Readout Typography -->
+        <text x="65" y="16" text-anchor="middle" class="cartouche-title" id="otc-status-title">OFF THE CLOCK</text>
+        <text x="65" y="28" text-anchor="middle" class="cartouche-sub" id="otc-status-sub">4 CURATED ROOMS</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+  // Interactive Astrolabe / Unwound Chronometer Hover Controller
+  const container = document.getElementById('otc-chronometer');
+  const needle = document.getElementById('otc-needle-group');
+  const statusTitle = document.getElementById('otc-status-title');
+  const statusSub = document.getElementById('otc-status-sub');
+
+  if (container && needle && statusTitle && statusSub) {
+    const activeNeedle = needle;
+    const titleEl = statusTitle;
+    const subEl = statusSub;
+
+    const emblems: Record<string, HTMLElement | null> = {
+      art: document.getElementById('emblem-art'),
+      books: document.getElementById('emblem-books'),
+      films: document.getElementById('emblem-films'),
+      learning: document.getElementById('emblem-learning'),
+    };
+
+    const filmsCount = container.dataset.filmsCount || '91';
+    const roomDetails: Record<string, { title: string; sub: string }> = {
+      art: { title: 'I · ART & MYTH', sub: '7 PUBLIC DOMAIN WORKS' },
+      books: { title: 'II · BOOKS', sub: '25 VOLUMES · 5 ERAS' },
+      films: { title: 'III · FILMS', sub: `${filmsCount} LETTERBOXD LOGS` },
+      learning: { title: 'IV · LEARNING', sub: '5 MILESTONE STEPS' },
+    };
+
+    let currentAngle = 0;
+    let targetAngle = 0;
+    let isHovering = false;
+    let idleAngle = 0;
+
+    // Center of rotation in SVG coordinate space: (80, 92) within (160, 213)
+    const centerNormX = 80 / 160;
+    const centerNormY = 92 / 213;
+
+    function highlightEmblem(room: string | null) {
+      Object.entries(emblems).forEach(([r, el]) => {
+        if (!el) return;
+        if (r === room) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+    }
+
+    function determineQuadrant(deg: number): string {
+      // Normalize angle to [0, 360)
+      const norm = ((deg % 360) + 360) % 360;
+      // Hand points straight UP at 0 deg:
+      // Art: 315 to 45 deg
+      // Books: 45 to 135 deg
+      // Films: 135 to 225 deg
+      // Learning: 225 to 315 deg
+      if (norm >= 315 || norm < 45) return 'art';
+      if (norm >= 45 && norm < 135) return 'books';
+      if (norm >= 135 && norm < 225) return 'films';
+      return 'learning';
+    }
+
+    function updatePlaque(room: string | null) {
+      if (!room) {
+        titleEl.textContent = 'OFF THE CLOCK';
+        subEl.textContent = '4 CURATED ROOMS';
+      } else if (roomDetails[room]) {
+        titleEl.textContent = roomDetails[room].title;
+        subEl.textContent = roomDetails[room].sub;
+      }
+    }
+
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
+    // Animation Loop with smooth inertia
+    function animate() {
+      if (isHovering) {
+        // Smoothly interpolate towards targetAngle from cursor
+        let diff = targetAngle - currentAngle;
+        // Find shortest angular distance
+        diff = ((diff + 180) % 360) - 180;
+        currentAngle += isMotionOff() ? diff : diff * 0.15;
+        activeNeedle.setAttribute('transform', `translate(80, 92) rotate(${currentAngle})`);
+        const activeRoom = determineQuadrant(currentAngle);
+        highlightEmblem(activeRoom);
+        updatePlaque(activeRoom);
+      } else if (!isMotionOff()) {
+        // Idle gentle breathing sway (if motion is allowed)
+        idleAngle += 0.025;
+        const sway = Math.sin(idleAngle) * 12;
+        // Smoothly settle back toward idle sway
+        currentAngle += (sway - currentAngle) * 0.05;
+        activeNeedle.setAttribute('transform', `translate(80, 92) rotate(${currentAngle})`);
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    // Mouse Tracking across widget
+    container.addEventListener('mousemove', (e: MouseEvent) => {
+      isHovering = true;
+      const rect = container.getBoundingClientRect();
+      const originX = rect.left + rect.width * centerNormX;
+      const originY = rect.top + rect.height * centerNormY;
+      const dx = e.clientX - originX;
+      const dy = e.clientY - originY;
+
+      // In SVG: 0 deg points UP (negative Y)
+      // Math.atan2(dy, dx) returns angle from positive X (right)
+      // So convert: deg = Math.atan2(dy, dx) * 180 / Math.PI + 90
+      const deg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+      targetAngle = deg;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isHovering = false;
+      highlightEmblem(null);
+      updatePlaque(null);
+    });
+  }
+</script>
+
+<style>
+  .chronometer-widget {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+    max-width: 100%;
+    aspect-ratio: 160 / 213;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+  }
+
+  .chronometer-face {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    transition: filter 0.25s ease;
+  }
+
+  .chronometer-widget:hover .chronometer-face {
+    filter: drop-shadow(0 8px 24px rgba(231, 176, 79, 0.22));
+  }
+
+  .chronometer-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  @media (max-width: 1024px) {
+    .chronometer-widget {
+      width: 120px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .chronometer-widget {
+      width: 88px;
+    }
+  }
+
+  .casing-path {
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.65));
+    transition: stroke 0.3s ease;
+  }
+
+  .chronometer-widget:hover .casing-path {
+    stroke: #ffda79;
+  }
+
+  /* Cardinal Emblems: In-place highlighting without transforms to prevent popout */
+  .quadrant-emblem {
+    pointer-events: none;
+  }
+
+  .emblem-hit {
+    fill: transparent;
+  }
+
+  .emblem-shape {
+    fill: none;
+    stroke: rgba(231, 176, 79, 0.5);
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    transition:
+      stroke 0.2s ease,
+      fill 0.2s ease,
+      filter 0.2s ease;
+  }
+
+  .emblem-pupil,
+  .emblem-dot {
+    fill: rgba(231, 176, 79, 0.65);
+    transition: fill 0.2s ease;
+  }
+
+  .emblem-spine {
+    stroke: rgba(231, 176, 79, 0.65);
+    stroke-width: 1;
+  }
+
+  /* Active Quadrant Highlight (triggered when needle points to this room) */
+  .quadrant-emblem.active .emblem-shape {
+    stroke: #ffffff;
+    stroke-width: 1.6;
+    fill: rgba(231, 176, 79, 0.35);
+    filter: drop-shadow(0 0 6px rgba(231, 176, 79, 0.9));
+  }
+
+  .quadrant-emblem.active .emblem-pupil,
+  .quadrant-emblem.active .emblem-dot,
+  .quadrant-emblem.active .emblem-spine {
+    fill: #ffffff;
+    stroke: #ffffff;
+  }
+
+  /* Archival Plaque Typography */
+  .plaque-bg {
+    fill: #0e0511;
+    stroke: rgba(231, 176, 79, 0.38);
+    stroke-width: 1.2;
+  }
+
+  .cartouche-title {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    font-weight: 700;
+    fill: var(--color-accent);
+    letter-spacing: 0.08em;
+  }
+
+  .cartouche-sub {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    fill: #ded0dc;
+    letter-spacing: 0.05em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chronometer-face {
+      transition: none !important;
+      filter: none !important;
+    }
+  }
+</style>
