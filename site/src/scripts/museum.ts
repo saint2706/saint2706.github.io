@@ -104,9 +104,11 @@ if (dataEl && dialog) {
     el.addEventListener('click', e => {
       // Let modified clicks open the full page in a new tab as usual.
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      const i = works.findIndex(x => x.slug === el.dataset.view);
+      if (i < 0) return;
       e.preventDefault();
       opener = el;
-      open(works.findIndex(x => x.slug === el.dataset.view));
+      open(i);
     })
   );
 

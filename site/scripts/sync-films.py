@@ -1,3 +1,6 @@
+# /// script
+# dependencies = ["curl_cffi", "beautifulsoup4", "letterboxdpy"]
+# ///
 """
 Letterboxd Sync Pipeline (letterboxdpy + curl_cffi)
 Fetches all logged films and written reviews from https://letterboxd.com/saint2706/,
@@ -6,6 +9,8 @@ and updates site/content/films.json while preserving long-form essays.
 """
 
 import os
+import re
+import sys
 import json
 import time
 import html
@@ -46,6 +51,9 @@ def sync():
     films_data = uf.get_films()
     movies = films_data.get('movies', {})
     print(f"[sync-films] Found {len(movies)} total films logged.")
+    if not movies:
+        # A failed or blocked scrape must not wipe the committed diary.
+        sys.exit("[sync-films] No films returned; leaving films.json untouched.")
 
     # 2. Fetch all reviews via letterboxdpy
     print(f"[sync-films] Fetching all user reviews...")
@@ -56,7 +64,7 @@ def sync():
 
     # Group reviews by movie slug (prefer newest/highest log_no)
     reviews_by_slug = {}
-    for r_id, r in reviews.items():
+    for r in reviews.values():
         slug = r['movie']['slug']
         if slug not in reviews_by_slug or r.get('no', 0) > reviews_by_slug[slug].get('no', 0):
             reviews_by_slug[slug] = r
@@ -80,9 +88,8 @@ def sync():
     headers = {'Referer': f'https://letterboxd.com/{USERNAME}/films/'}
 
     diary_entries = []
-    used_slugs = set()
 
-    for idx, (slug, m) in enumerate(movies.items(), start=1):
+    for slug, m in movies.items():
         title = m['name']
         year = m['year']
         rating = m.get('rating')
@@ -105,18 +112,16 @@ def sync():
             if rev_obj.get('date'):
                 watched_date = rev_obj['date'][:10]
 
-        # If review is truncated with ellipsis and we have a fuller version in existing, keep that
+        # Fresh scrape wins; the existing entry only restores a fuller (untruncated) review
+        # and fills fields this scrape could not supply.
         if existing_entry and existing_entry.get('review'):
             if len(existing_entry['review']) > len(review_text):
                 review_text = existing_entry['review']
-            if existing_entry.get('spoilers'):
-                spoilers = True
-            if existing_entry.get('rewatch'):
-                rewatch = True
-            if existing_entry.get('watchedDate'):
-                watched_date = existing_entry['watchedDate']
-            if existing_entry.get('link'):
-                link = existing_entry['link']
+            if not rev_obj:
+                spoilers = existing_entry.get('spoilers', spoilers)
+                rewatch = existing_entry.get('rewatch', rewatch)
+                watched_date = existing_entry.get('watchedDate', watched_date)
+                link = existing_entry.get('link', link)
 
         # If still truncated with ellipsis, fetch individual review page
         if review_text.endswith('…') or review_text.endswith('...'):
@@ -139,7 +144,8 @@ def sync():
 
         # Poster handling
         poster_filename = f"{slug}.jpg"
-        clean_slug = slug.rsplit('-', 1)[0]
+        # Letterboxd disambiguates remakes with a year suffix ("the-odyssey-2026"); only strip that.
+        clean_slug = re.sub(r'-\d{4}$', '', slug)
         
         has_poster = (poster_filename in existing_posters) or (f"{clean_slug}.jpg" in existing_posters)
         actual_poster_filename = poster_filename if poster_filename in existing_posters else f"{clean_slug}.jpg"
@@ -174,15 +180,8 @@ def sync():
             except Exception as e:
                 print(f"[sync-films] Warning: Failed downloading poster for {slug}: {e}")
 
-        unique_slug = slug
-        counter = 2
-        while unique_slug in used_slugs:
-            unique_slug = f"{slug}-{counter}"
-            counter += 1
-        used_slugs.add(unique_slug)
-
         diary_entries.append({
-            "slug": unique_slug,
+            "slug": slug,
             "title": title,
             "year": year,
             "rating": rating,

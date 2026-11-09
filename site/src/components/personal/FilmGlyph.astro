@@ -410,7 +410,7 @@ const firstFilm = showcase[0];
   </div>
 
   <!-- Dynamic Reel Configuration for Client Runtime -->
-  <script type="application/json" id="fg-reel-data" set:html={JSON.stringify(reelItems)} />
+  <script type="application/json" id="fg-reel-data" set:html={JSON.stringify(reelItems).replaceAll('<', '\\u003c')} />
 </div>
 
 <script>

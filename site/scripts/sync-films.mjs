@@ -11,7 +11,7 @@
  *   node site/scripts/sync-films.mjs
  */
 
-import { execSync } from 'node:child_process';
+import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -22,9 +22,8 @@ const pythonScript = path.resolve(__dirname, 'sync-films.py');
 console.log(`[sync-films] Running python sync pipeline (${pythonScript})...`);
 
 try {
-  execSync(`python "${pythonScript}"`, {
-    stdio: 'inherit',
-  });
+  // uv reads the script's inline dependency block, so nothing is installed globally.
+  execFileSync('uv', ['run', pythonScript], { stdio: 'inherit' });
   console.log('[sync-films] Synchronization completed successfully.');
 } catch (error) {
   console.error('[sync-films] Synchronization failed:', error.message);

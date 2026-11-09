@@ -122,28 +122,14 @@ if (booksDataEl && booksDialog) {
       btn.setAttribute('aria-pressed', 'true');
 
       const filter = btn.dataset.filter || 'all';
+      const matches = ({ access, era = '' }: DOMStringMap) =>
+        filter === 'all' ||
+        filter === access ||
+        (filter === 'ancients' && ['1', '2'].includes(era)) ||
+        (filter === 'moderns' && ['3', '4', '5'].includes(era));
 
-      bookCards.forEach(card => {
-        const access = card.dataset.access;
-        const era = card.dataset.era;
-        const matches =
-          filter === 'all' ||
-          filter === access ||
-          (filter === 'ancients' && (era === '1' || era === '2')) ||
-          (filter === 'moderns' && (era === '3' || era === '4' || era === '5'));
-        card.hidden = !matches;
-      });
-
-      shelfSpines.forEach(spine => {
-        const access = spine.dataset.access;
-        const era = spine.dataset.era;
-        const matches =
-          filter === 'all' ||
-          filter === access ||
-          (filter === 'ancients' && (era === '1' || era === '2')) ||
-          (filter === 'moderns' && (era === '3' || era === '4' || era === '5'));
-        spine.classList.toggle('dimmed', !matches);
-      });
+      bookCards.forEach(card => (card.hidden = !matches(card.dataset)));
+      shelfSpines.forEach(spine => spine.classList.toggle('dimmed', !matches(spine.dataset)));
     });
   });
 }
