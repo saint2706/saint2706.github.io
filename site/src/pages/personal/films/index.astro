@@ -5,8 +5,9 @@ import Section from '../../../components/Section.astro';
 import FilmGlyph from '../../../components/personal/FilmGlyph.astro';
 import { films } from '../../../lib/content';
 
-// Newest first, so "Recently logged" (data-log-index order) follows real log dates.
-const diary = [...films.diary].sort((a, b) => b.watchedDate.localeCompare(a.watchedDate));
+// Newest first, so "Recently logged" (data-log-index order) follows real log dates;
+// undated entries ('' sorts lowest) go last, in their Letterboxd order.
+const diary = [...films.diary].sort((a, b) => (b.watchedDate ?? '').localeCompare(a.watchedDate ?? ''));
 const totalScreenings = diary.length;
 const reviewCount = diary.filter(d => d.review.trim()).length;
 const fiveStarCount = films.diary.filter(d => d.rating === 5).length;

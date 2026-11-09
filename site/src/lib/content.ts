@@ -266,7 +266,11 @@ export const FilmDiaryEntrySchema = z.object({
   rating: z.number().nullable(),
   ratingStars: z.string(),
   rewatch: z.boolean(),
-  watchedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  // null when Letterboxd gives no date (films logged without a review); never a made-up date.
+  watchedDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .nullable(),
   review: z.string().default(''),
   spoilers: z.boolean(),
   link: url,

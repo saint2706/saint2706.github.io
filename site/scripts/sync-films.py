@@ -102,7 +102,7 @@ def sync():
         spoilers = False
         rewatch = False
         link = f"https://letterboxd.com/{USERNAME}/film/{slug}/"
-        watched_date = "2023-01-01"
+        watched_date = None  # unknown without a review; never invent a date
 
         if rev_obj:
             review_text = clean_review_text(rev_obj['review']['content'])
