@@ -228,6 +228,19 @@ const transitSteps = [
     }
   </div>
 
+  <!-- Curator's Pedagogical Manifesto -->
+  <aside class="curator-manifesto" aria-label="Curator reflection">
+    <div class="manifesto-card">
+      <span class="manifesto-mark" aria-hidden="true">“</span>
+      <p class="manifesto-quote">
+        Technical literacy in leadership is not about replacing engineers; it is about demystifying the black box.
+        When an executive grasps how data structures fail and why statistical models encounter the cold-start problem,
+        they stop managing by faith and begin leading with quantitative precision.
+      </p>
+      <span class="manifesto-origin">Pedagogical Philosophy · Curriculum Architecture</span>
+    </div>
+  </aside>
+
   <!-- Cross-Wing Navigation Links -->
   <NextLinks
     eyebrow="Explore other rooms"
@@ -811,6 +824,53 @@ const transitSteps = [
 
   .resource-card:hover .action-arrow {
     transform: translateX(4px);
+  }
+
+  /* Curator's Pedagogical Manifesto Inscription */
+  .curator-manifesto {
+    margin: var(--space-7) 0 var(--space-5);
+  }
+
+  .manifesto-card {
+    position: relative;
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    background: #140818;
+    border: 1px solid var(--per-rule);
+    border-top: 2px solid var(--color-accent);
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  .manifesto-mark {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(231, 176, 79, 0.18);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .manifesto-quote {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    max-width: 68ch;
+  }
+
+  .manifesto-origin {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   @media (prefers-reduced-motion: reduce) {
