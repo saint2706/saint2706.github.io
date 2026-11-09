@@ -43,7 +43,8 @@ if (booksDataEl && booksDialog) {
     const b = books[currentIndex];
 
     // Update real book cover image
-    if (coverImg) {
+    // Data comes from parsed DOM text: only accept local covers and https links.
+    if (coverImg && /^\/books\/[\w-]+\.jpg$/.test(b.cover)) {
       coverImg.src = b.cover;
       coverImg.alt = `${b.title} by ${b.author}`;
     }
@@ -58,7 +59,7 @@ if (booksDataEl && booksDialog) {
       counterEl.textContent = `VOLUME ${String(currentIndex + 1).padStart(2, '0')} OF ${String(books.length).padStart(2, '0')}`;
     }
 
-    if (linkEl) {
+    if (linkEl && /^https:\/\/[^\s"<>]+$/.test(b.url)) {
       linkEl.href = b.url;
       linkEl.textContent = `Read ${b.title} (${b.accessLabel}) ↗`;
     }
