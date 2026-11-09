@@ -36,7 +36,7 @@
 - `site/src/pages/personal/art/index.astro` & `site/src/pages/personal/art/[slug].astro` — Art gallery halls overhaul, full-bleed painting monographs with curatorial notes and detail loupe.
 - `site/src/pages/personal/books/index.astro` — Curated 25-book shelf across 5 eras with physical spines, HD covers modal dialog, and publisher imprint alignment.
 - `site/src/pages/personal/films/index.astro` — Cinema screening diary with max 2 cards per row, generous review reading space, and 7-mode sorting.
-- `site/src/pages/personal/learning/index.astro` — Interactive 7-station pedagogical transit roadmap.
+- `site/src/pages/personal/learning/index.astro` — Interactive 5-milestone pedagogical transit roadmap.
 - `site/content/films.json` — 91 films and 70 reviews synced from Letterboxd profile `saint2706`.
 - `site/scripts/sync-films.py` & `site/scripts/sync-films.mjs` — Letterboxd sync pipeline via `letterboxdpy`.
 - `site/public/books/*.jpg` — 25 self-hosted book cover images.
@@ -52,7 +52,7 @@
   2. Art & Myth: Approved _Akshaya Vastra_ Pahari silk simulation header mark and 4-hall gallery architecture.
   3. Books Room: Approved pruning 123-book syllabus down to 25 curated standout volumes across 5 eras; approved tiered physical bookcase with authentic leather/buckram spines and HD covers modal; approved Nocturne Codex & Library Lamp glyph; approved removing spine ribbon bookmark to eliminate publisher imprint overlap.
   4. Films Room: Approved full sync of 91 films and 70 reviews from Letterboxd profile `saint2706`; approved self-hosting all posters locally under zero-external-host CSP; approved Kinematograph 35mm optical gate glyph; approved max 2-card screening diary layout with ample review space and 7-mode sorting; approved removal of technical sync metrics and "Watched on" dates.
-  5. Learning Room: Approved Cybernetic Breadboard interactive SVG header glyph with hover states; approved pedagogical transit roadmap with 7 transit stations.
+  5. Learning Room: Approved Cybernetic Breadboard interactive SVG header glyph with hover states; approved pedagogical transit roadmap with 5 transit milestones.
 - Pending questions: None.
 
 ## Validation/evidence

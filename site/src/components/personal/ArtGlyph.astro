@@ -455,14 +455,25 @@
       });
     }
 
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
     // Main animation loop: spring physics + harmonic breeze
     function animate() {
+      if (isMotionOff() && !isHovering) {
+        requestAnimationFrame(animate);
+        return;
+      }
       time += 0.035;
 
       nodes.forEach((node, i) => {
         // Ambient wind flutter (organic harmonic wave)
-        const windX = Math.sin(time * 1.5 + node.phase) * (4 + i * 1.5);
-        const windY = Math.cos(time * 1.2 + node.phase) * (1.5 + i * 0.4);
+        const windX = isMotionOff() ? 0 : Math.sin(time * 1.5 + node.phase) * (4 + i * 1.5);
+        const windY = isMotionOff() ? 0 : Math.cos(time * 1.2 + node.phase) * (1.5 + i * 0.4);
 
         let targetX = node.baseX + windX;
         let targetY = node.baseY + windY;

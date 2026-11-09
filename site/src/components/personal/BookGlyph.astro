@@ -38,7 +38,6 @@
       width="160"
       height="213"
       class="codex-svg"
-      aria-hidden="true"
     >
       <defs>
         <!-- Polished Brass / Gold Foil Gradient -->
@@ -564,9 +563,20 @@
       });
     });
 
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
     // Animation Loop for fluid spring damping
     let idleTick = 0;
     function animate() {
+      if (isMotionOff() && !isHovered) {
+        requestAnimationFrame(animate);
+        return;
+      }
       // Spring physics for bookmark ribbon
       const force = (targetRibbonPos - ribbonPos) * 0.12;
       ribbonVelocity = ribbonVelocity * 0.82 + force;
@@ -582,7 +592,7 @@
       // Idle gentle breeze on ribbon if not hovered
       if (!isHovered) {
         idleTick += 0.035;
-        const idleWave = Math.sin(idleTick) * 3;
+        const idleWave = isMotionOff() ? 0 : Math.sin(idleTick) * 3;
         const currentMidX = 80 + idleWave * 0.6;
         const currentEndX = 80 + idleWave;
         elRibbonPath.setAttribute(

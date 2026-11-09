@@ -90,7 +90,7 @@ const B = Math.round(W / 40);
       <label class="hotspot-toggle">
         <input type="checkbox" id="hotspot-switch" />
         <span class="toggle-track"></span>
-        <span class="toggle-label">Show detail coordinates & focal rectangles</span>
+        <span class="toggle-label">Show where the details are</span>
       </label>
       <span class="stage-dims-note">{p.dims} (original scale)</span>
     </div>
@@ -1272,8 +1272,12 @@ const B = Math.round(W / 40);
     border-top: 3px solid var(--color-accent);
   }
   .bridge-card.terminus {
-    opacity: 0.5;
+    background: #170e1a;
+    border-style: dashed;
     pointer-events: none;
+  }
+  .bridge-card.terminus .bridge-title {
+    color: var(--color-ink-2);
   }
   .bridge-dir {
     font: 700 0.7rem / 1 var(--font-mono);

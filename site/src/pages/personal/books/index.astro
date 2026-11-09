@@ -636,7 +636,7 @@ const getImprintSizeClass = (imprint: string) => {
                   <span class="bookend-brass" />
                 </div>
 
-                <div class="shelf-books" role="list" aria-label={`Shelf ${era.numeral}: ${era.name}`}>
+                <div class="shelf-books" role="group" aria-label={`Shelf ${era.numeral}: ${era.name}`}>
                   {eraBooks.map(b => (
                     <button
                       type="button"
@@ -647,7 +647,7 @@ const getImprintSizeClass = (imprint: string) => {
                       data-era={b.era}
                       aria-label={`${b.title} by ${b.author}. Click to open book folio.`}
                     >
-                      <div class="spine-head">
+                      <div class="spine-head" aria-hidden="true">
                         <span class="spine-emboss-rule" aria-hidden="true" />
                         <span class:list={['spine-author', getAuthorSizeClass(b.spineAuthor)]}>
                           {b.spineAuthor}
@@ -660,7 +660,7 @@ const getImprintSizeClass = (imprint: string) => {
                         </span>
                       </div>
 
-                      <div class="spine-tail">
+                      <div class="spine-tail" aria-hidden="true">
                         <div class="spine-raised-bands" aria-hidden="true">
                           <span class="band" />
                           <span class="band" />
@@ -1067,7 +1067,7 @@ const getImprintSizeClass = (imprint: string) => {
     border-bottom: 1px solid #b8893a;
   }
   .spine-author {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-size: 0.46rem;
     font-weight: 700;
     line-height: 1.1;
@@ -1157,7 +1157,7 @@ const getImprintSizeClass = (imprint: string) => {
     border-radius: 1px;
   }
   .spine-imprint-text {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-size: 0.42rem;
     font-weight: 700;
     line-height: 1;

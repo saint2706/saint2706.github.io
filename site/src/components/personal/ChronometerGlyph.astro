@@ -263,6 +263,13 @@ import { films } from '../../lib/content';
       }
     }
 
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
     // Animation Loop with smooth inertia
     function animate() {
       if (isHovering) {
@@ -270,12 +277,12 @@ import { films } from '../../lib/content';
         let diff = targetAngle - currentAngle;
         // Find shortest angular distance
         diff = ((diff + 180) % 360) - 180;
-        currentAngle += diff * 0.15;
+        currentAngle += isMotionOff() ? diff : diff * 0.15;
         activeNeedle.setAttribute('transform', `translate(80, 92) rotate(${currentAngle})`);
         const activeRoom = determineQuadrant(currentAngle);
         highlightEmblem(activeRoom);
         updatePlaque(activeRoom);
-      } else {
+      } else if (!isMotionOff()) {
         // Idle gentle breathing sway (if motion is allowed)
         idleAngle += 0.025;
         const sway = Math.sin(idleAngle) * 12;

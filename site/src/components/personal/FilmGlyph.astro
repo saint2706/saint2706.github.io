@@ -67,7 +67,6 @@ const firstFilm = showcase[0];
       width="160"
       height="213"
       class="glyph-svg"
-      aria-hidden="true"
     >
       <defs>
         <!-- Polished Brass / Gold Foil Gradient -->
@@ -667,24 +666,31 @@ const firstFilm = showcase[0];
     updateActiveCellClasses();
     syncSlateText();
 
+    function isMotionOff() {
+      return (
+        document.documentElement.dataset.motion === 'off' ||
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      );
+    }
+
     // 7. Animation Loop with spring damping and seamless wrap check
     let tick = 0;
     function animate() {
       // Spring physics for film strip track
       const forceY = (targetY - currentY) * 0.16;
       velocityY = velocityY * 0.74 + forceY;
-      currentY += velocityY;
+      currentY = isMotionOff() && !isLoopingWrap ? targetY : currentY + velocityY;
 
       // Handle seamless infinite wrap teleportation
       if (isLoopingWrap === 'next') {
-        if (Math.abs(currentY - CLONE_BOTTOM_OFFSET) < 0.8) {
+        if (Math.abs(currentY - CLONE_BOTTOM_OFFSET) < 0.8 || isMotionOff()) {
           currentY = films[0].offset;
           targetY = films[0].offset;
           velocityY = 0;
           isLoopingWrap = null;
         }
       } else if (isLoopingWrap === 'prev') {
-        if (Math.abs(currentY - CLONE_TOP_OFFSET) < 0.8) {
+        if (Math.abs(currentY - CLONE_TOP_OFFSET) < 0.8 || isMotionOff()) {
           currentY = films[TOTAL_FILMS - 1].offset;
           targetY = films[TOTAL_FILMS - 1].offset;
           velocityY = 0;
@@ -705,25 +711,27 @@ const firstFilm = showcase[0];
       coneRight += (targetConeRight - coneRight) * 0.08;
       elLightCone.setAttribute('points', `80,32 ${coneLeft.toFixed(1)},166 ${coneRight.toFixed(1)},166`);
 
-      // Ambient idle breathing & drifting motes
-      tick += 0.025;
-      const idleSway = Math.sin(tick) * 1.5;
-      targetConeLeft = 34 + idleSway;
-      targetConeRight = 126 + idleSway;
+      if (!isMotionOff()) {
+        // Ambient idle breathing & drifting motes
+        tick += 0.025;
+        const idleSway = Math.sin(tick) * 1.5;
+        targetConeLeft = 34 + idleSway;
+        targetConeRight = 126 + idleSway;
 
-      // Animate dust motes drift inside projection cone
-      if (dustMotes) {
-        const m1 = document.getElementById('mote-1');
-        const m2 = document.getElementById('mote-2');
-        const m3 = document.getElementById('mote-3');
-        const m4 = document.getElementById('mote-4');
-        const m5 = document.getElementById('mote-5');
+        // Animate dust motes drift inside projection cone
+        if (dustMotes) {
+          const m1 = document.getElementById('mote-1');
+          const m2 = document.getElementById('mote-2');
+          const m3 = document.getElementById('mote-3');
+          const m4 = document.getElementById('mote-4');
+          const m5 = document.getElementById('mote-5');
 
-        if (m1) m1.setAttribute('cy', (74 + Math.sin(tick * 1.2) * 5).toFixed(1));
-        if (m2) m2.setAttribute('cy', (95 + Math.cos(tick * 1.5) * 6).toFixed(1));
-        if (m3) m3.setAttribute('cy', (118 + Math.sin(tick * 1.1 + 1) * 7).toFixed(1));
-        if (m4) m4.setAttribute('cy', (134 + Math.cos(tick * 1.3 + 2) * 5).toFixed(1));
-        if (m5) m5.setAttribute('cy', (148 + Math.sin(tick * 1.4 + 3) * 6).toFixed(1));
+          if (m1) m1.setAttribute('cy', (74 + Math.sin(tick * 1.2) * 5).toFixed(1));
+          if (m2) m2.setAttribute('cy', (95 + Math.cos(tick * 1.5) * 6).toFixed(1));
+          if (m3) m3.setAttribute('cy', (118 + Math.sin(tick * 1.1 + 1) * 7).toFixed(1));
+          if (m4) m4.setAttribute('cy', (134 + Math.cos(tick * 1.3 + 2) * 5).toFixed(1));
+          if (m5) m5.setAttribute('cy', (148 + Math.sin(tick * 1.4 + 3) * 6).toFixed(1));
+        }
       }
 
       requestAnimationFrame(animate);
