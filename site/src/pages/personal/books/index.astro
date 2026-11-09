@@ -857,15 +857,21 @@ const getImprintSizeClass = (imprint: string) => {
         </div>
 
         <div class="modal-access-block">
-          <a
-            class="modal-open-link"
-            data-modal-link
-            href={curatedBooks[0].url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read Online Now ↗
-          </a>
+          {/* One server-rendered link per book; the script only toggles `hidden`, never writes an href. */}
+          {
+            curatedBooks.map((b, i) => (
+              <a
+                class="modal-open-link"
+                data-modal-link={b.id}
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                hidden={i !== 0}
+              >
+                Read {b.title} ({b.accessLabel}) ↗
+              </a>
+            ))
+          }
         </div>
 
         <div class="modal-controls">

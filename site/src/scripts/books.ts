@@ -34,7 +34,7 @@ if (booksDataEl && booksDialog) {
   const authorEl = q<HTMLElement>('[data-modal-author]');
   const publisherEl = q<HTMLElement>('[data-modal-publisher]');
   const noteEl = q<HTMLElement>('[data-modal-note]');
-  const linkEl = q<HTMLAnchorElement>('[data-modal-link]');
+  const linkEls = booksDialog.querySelectorAll<HTMLAnchorElement>('[data-modal-link]');
   const accessPill = q<HTMLElement>('[data-modal-access-pill]');
   const counterEl = q<HTMLElement>('[data-modal-counter]');
 
@@ -59,10 +59,7 @@ if (booksDataEl && booksDialog) {
       counterEl.textContent = `VOLUME ${String(currentIndex + 1).padStart(2, '0')} OF ${String(books.length).padStart(2, '0')}`;
     }
 
-    if (linkEl && /^https:\/\/[^\s"<>]+$/.test(b.url)) {
-      linkEl.href = b.url;
-      linkEl.textContent = `Read ${b.title} (${b.accessLabel}) ↗`;
-    }
+    linkEls.forEach(a => (a.hidden = a.dataset.modalLink !== b.id));
 
     if (accessPill) {
       accessPill.textContent = b.accessLabel.toUpperCase();
