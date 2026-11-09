@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test scripts/*.test.mjs",
+    "sync:films": "node scripts/sync-films.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:report": "playwright show-report"

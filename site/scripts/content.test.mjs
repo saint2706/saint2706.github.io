@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { paintings, gallery, posts, isExpired } from '../src/lib/content.ts';
+import { paintings, gallery, posts, isExpired, films } from '../src/lib/content.ts';
 
 const pub = p => fileURLToPath(new URL(`../public${p}`, import.meta.url));
 
@@ -12,6 +12,16 @@ test('every painting image file exists', () => {
     for (const src of [p.image.src, p.image.thumb, p.focus.src, ...p.details.map(d => d.src)]) {
       assert.ok(existsSync(pub(src)), `${p.slug}: missing ${src}`);
     }
+  }
+});
+
+test('every film and diary poster file exists', () => {
+  for (const f of films.films) {
+    assert.ok(existsSync(pub(f.poster.src)), `${f.slug}: missing poster ${f.poster.src}`);
+  }
+  assert.ok(films.diary.length > 0, 'diary should have entries');
+  for (const d of films.diary) {
+    assert.ok(existsSync(pub(d.poster.src)), `${d.slug}: missing diary poster ${d.poster.src}`);
   }
 });
 

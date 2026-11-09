@@ -65,5 +65,19 @@ The diary exhibits sharp, dry, irreverent personal commentary:
   3. Downloads each poster image locally to `site/public/films/<slug>.webp` (with fallback to `.jpg`).
   4. Writes sanitized, structured data to `site/content/films.json`.
 - **Content Partitioning**:
-  - **Tier 1 (Featured Essays)**: 3 long-form dispatches (_Pather Panchali_, _Across the Spider-Verse_, _Barbie_), keeping lowercase text and unfinished punchlines verbatim.
-  - **Tier 2 (Cinema Diary)**: Letterboxd diary entries with ratings (★), dates, and micro-reviews.
+  - **Screening Diary (Flagship View)**: Maximum 2 films per row with compact 120px posters, ample reading width, ratings (★), dates, micro-reviews, spoiler concealment, interactive multi-dimensional sorting (by date, rating, release year, title), and live keyword search.
+  - **The Kinematograph Glyph**: 35mm endless film loop featuring 6 curated peak screenings (12 Angry Men, Pyaasa, Shawshank Redemption, Spider-Verse, Barbie, Past Lives) with tactile brass transport buttons (◀ PREV and NEXT ▶), mouse wheel/trackpad scrolling, click-to-advance, and infinite wrap-around.
+
+---
+
+## 4. Completed Implementation & Verification
+
+- **Sync Pipeline**: `site/scripts/sync-films.mjs` and `site/scripts/sync-films.py` (powered by `letterboxdpy` and `curl_cffi`) scrape and synchronize all 91 films across the entire Letterboxd profile, bypassing the 50-item RSS ceiling, downloading local `.jpg` posters into `site/public/films/` (100% self-hosted CSP compliance).
+- **Content Model**: `site/src/lib/content.ts` updated with `FilmDiaryEntrySchema` and validated `site/content/films.json` for all 91 screenings (70 written reviews, 21 rating-only entries, 18 five-star peaks, 35 standouts, 20 rewatches).
+- **Header Glyph**: `site/src/components/personal/FilmGlyph.astro` built with 35mm celluloid film strip, rotating brass sprockets, volumetric projection cone, optical scrim gradient, real poster artwork, tactile ◀ PREV / NEXT ▶ brass transport buttons, mouse wheel support, and seamless infinite looping.
+- **Films Room Redesign**: `site/src/pages/personal/films/index.astro` rebuilt with archival cinema ledger bar (visitor-focused metrics: Screenings, Peaks, Standouts, Rewatches; zero technical sync noise), 2-card max row grid, generous reading space, category filter pills, keyword search, and 7-mode sorting (recently logged default, rating desc/asc, release year desc/asc, title A-Z/Z-A).
+- **Verification**:
+  - `pnpm -F site check`: 0 errors, 0 warnings across all files.
+  - `node --test site/scripts/*.test.mjs`: 12/12 tests pass (including zero-external-host CSP test and poster existence assertions).
+  - `pnpm format:check`: 100% Prettier compliant.
+  - `pnpm -F site build`: Static build + Pagefind search index generated cleanly.

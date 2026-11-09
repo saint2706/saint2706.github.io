@@ -1,23 +1,14 @@
 ---
-/**
- * ChronometerGlyph.astro
- *
- * An interactive celestial astrolabe / chronometer glyph replacing the
- * flat rectangular .mark on the "Off the clock" space heading.
- *
- * Features:
- * - 160x213px antique arch-cased astronomical dial matching the 3:4 personal space mark.
- * - Suspension ring and winding crown at top.
- * - 4 Cardinal Room Glyphs at 12, 3, 6, 9 o'clock (Art, Books, Films, Learning).
- * - Kinetic dual-ended celestial needle (sunburst pointer + crescent moon counterbalance).
- * - Responsive magnetic cursor tracking that smoothly follows the user's cursor.
- * - Pure SVG in-place illumination (zero transforms on SVG groups to prevent popout).
- * - Live archival cartouche readout of the targeted room.
- * - WCAG compliant, self-contained SVG, zero inline style="" attributes (CSP safe).
- */
+import { films } from '../../lib/content';
 ---
 
-<div class="chronometer-widget" id="otc-chronometer" role="img" aria-label="Interactive Off the Clock Astrolabe. Move cursor over the dial to explore rooms.">
+<div
+  class="chronometer-widget"
+  id="otc-chronometer"
+  data-films-count={films.diary.length}
+  role="img"
+  aria-label="Interactive Off the Clock Astrolabe. Move cursor over the dial to explore rooms."
+>
   <div class="chronometer-face">
     <svg
       viewBox="0 0 160 213"
@@ -220,10 +211,11 @@
       learning: document.getElementById('emblem-learning'),
     };
 
+    const filmsCount = container.dataset.filmsCount || '91';
     const roomDetails: Record<string, { title: string; sub: string }> = {
       art: { title: 'I · ART & MYTH', sub: '7 PUBLIC DOMAIN WORKS' },
       books: { title: 'II · BOOKS', sub: '25 VOLUMES · 5 ERAS' },
-      films: { title: 'III · FILMS', sub: '3 CINEMA DISPATCHES' },
+      films: { title: 'III · FILMS', sub: `${filmsCount} LETTERBOXD LOGS` },
       learning: { title: 'IV · LEARNING', sub: '5 MILESTONE STEPS' },
     };
 

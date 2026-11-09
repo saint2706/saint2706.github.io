@@ -1,106 +1,914 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import SpaceHead from '../../../components/SpaceHead.astro';
+import Section from '../../../components/Section.astro';
+import FilmGlyph from '../../../components/personal/FilmGlyph.astro';
 import { films } from '../../../lib/content';
 
-const list = new Intl.ListFormat('en', { type: 'conjunction' });
+const totalScreenings = films.diary.length;
+const fiveStarCount = films.diary.filter(d => d.rating === 5).length;
+const standoutsCount = films.diary.filter(d => d.rating && d.rating >= 4).length;
+const rewatchCount = films.diary.filter(d => d.rewatch).length;
 ---
 
 <Base
   title="Films"
-  description="Notes on Pather Panchali, Spider-Man: Across the Spider-Verse and Barbie."
+  description={`Screening diary: ${totalScreenings} film reviews and star ratings synced directly from Letterboxd.`}
   space="per"
 >
-  <SpaceHead title="Films" lede="Notes on films, published as written." />
+  <SpaceHead
+    title="Films"
+    lede={`Screening diary: ${totalScreenings} film reviews and star ratings synced directly from Letterboxd.`}
+  >
+    <FilmGlyph slot="mark" />
+    <p class="curator-letter">
+      These are {totalScreenings} film reviews pulled directly from my Letterboxd screening diary: authentic, dry,
+      and unfiltered reactions written after viewing. Filter by rating or rewatch, search
+      by keyword, and sort across rating, release year, title, or recently logged below.
+    </p>
+  </SpaceHead>
 
-  <ol class="reels">
-    {
-      films.films.map(f => (
-        <li id={f.slug}>
-          <article aria-labelledby={`${f.slug}-h`}>
-            <figure class="poster">
-              <img src={f.poster.src} width={f.poster.width} height={f.poster.height} alt={`Poster for ${f.title}`} loading="lazy" decoding="async" />
-              <figcaption>
-                {f.poster.credit} <a href={f.poster.source}>Source</a>
-              </figcaption>
-            </figure>
-            <div class="body">
-              <h2 id={`${f.slug}-h`}>
-                <cite>{f.title}</cite>
-              </h2>
-              <p class="meta">
-                {f.year} · directed by {list.format(f.directors)}
-              </p>
-              {f.epigraph && <blockquote>{f.epigraph}</blockquote>}
-              {f.note.map(p => (
-                <p class="note-text">{p}</p>
-              ))}
+  <!-- Cinema Archival Ledger Summary Bar -->
+  <div class="ledger-bar" aria-label="Cinema archive summary">
+    <div class="ledger-item">
+      <span class="ledger-num">{String(totalScreenings).padStart(2, '0')}</span>
+      <span class="ledger-label">Letterboxd Screenings</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">{String(fiveStarCount).padStart(2, '0')}</span>
+      <span class="ledger-label">Five-Star Peaks</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">{String(standoutsCount).padStart(2, '0')}</span>
+      <span class="ledger-label">Standouts (4★+)</span>
+    </div>
+    <span class="ledger-sep" aria-hidden="true">/</span>
+    <div class="ledger-item">
+      <span class="ledger-num">{String(rewatchCount).padStart(2, '0')}</span>
+      <span class="ledger-label">Rewatches</span>
+    </div>
+  </div>
+
+  <!-- LETTERBOXD SCREENING DIARY -->
+  <Section id="screening-diary" num={1} title="Letterboxd screening diary">
+    <div class="diary-header-wrap">
+      <p class="section-lede">
+        {totalScreenings} dispatches presented with interactive sorting and filtering. Each card couples a compact
+        archival poster frame with generous space for the uncensored review.
+      </p>
+
+      <a
+        href="https://letterboxd.com/saint2706/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="letterboxd-profile-link"
+      >
+        <span class="lb-logo" aria-hidden="true">●●●</span>
+        <span>Follow @saint2706 on Letterboxd ↗</span>
+      </a>
+    </div>
+
+    <!-- Interactive Filtering, Search & Sorting Bar -->
+    <div class="diary-controls" role="search" aria-label="Filter and sort Letterboxd screenings">
+      <!-- Row 1: Category Filter Pills -->
+      <div class="filter-pills" role="tablist" aria-label="Filter by category">
+        <button
+          type="button"
+          class="filter-pill active"
+          data-filter="all"
+          role="tab"
+          aria-selected="true"
+        >
+          All ({totalScreenings})
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          data-filter="peak"
+          role="tab"
+          aria-selected="false"
+        >
+          ★★★★★ Peak ({fiveStarCount})
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          data-filter="standout"
+          role="tab"
+          aria-selected="false"
+        >
+          ★★★★+ Standouts ({standoutsCount})
+        </button>
+        <button
+          type="button"
+          class="filter-pill"
+          data-filter="rewatch"
+          role="tab"
+          aria-selected="false"
+        >
+          ↺ Rewatches ({rewatchCount})
+        </button>
+      </div>
+
+      <!-- Row 2: Search Input + Sorting Dropdown -->
+      <div class="controls-action-row">
+        <div class="search-input-wrap">
+          <span class="search-glyph" aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            id="diary-search"
+            placeholder="Filter by title, year, or review text..."
+            aria-label="Filter screenings by keyword"
+          />
+        </div>
+
+        <div class="sort-control-wrap">
+          <label for="diary-sort" class="sort-label">
+            <span class="sort-icon" aria-hidden="true">⇅</span>
+            <span>Sort:</span>
+          </label>
+          <div class="select-wrapper">
+            <select id="diary-sort" class="sort-select" aria-label="Sort screenings">
+              <option value="recent">Recently Logged (default)</option>
+              <option value="rating-desc">Rating: Highest first (★ 5.0 → 0.5)</option>
+              <option value="rating-asc">Rating: Lowest first (★ 0.5 → 5.0)</option>
+              <option value="year-desc">Release Year: Newest first</option>
+              <option value="year-asc">Release Year: Oldest first</option>
+              <option value="title-asc">Title: A → Z</option>
+              <option value="title-desc">Title: Z → A</option>
+            </select>
+            <span class="select-caret" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="diary-status" aria-live="polite">
+        Showing <span id="diary-visible-count">{films.diary.length}</span> of {films.diary.length} screenings
+      </div>
+    </div>
+
+    <!-- Empty Filter Notice -->
+    <div id="diary-empty" class="diary-empty-state" hidden>
+      <p>No screenings match your current filter or search criteria.</p>
+      <button type="button" id="diary-reset-btn" class="reset-filter-btn">
+        Reset filters
+      </button>
+    </div>
+
+    <!-- Letterboxd Diary Cards Grid: Maximum 2 per row -->
+    <div class="diary-grid" id="diary-grid">
+      {
+        films.diary.map((entry, index) => (
+          <article
+            class="diary-card"
+            id={entry.slug}
+            data-rating={entry.rating ?? 0}
+            data-rewatch={entry.rewatch ? 'true' : 'false'}
+            data-title={entry.title.toLowerCase()}
+            data-year={entry.year}
+            data-log-index={index}
+            data-review={entry.review.toLowerCase()}
+            aria-labelledby={`${entry.slug}-title`}
+          >
+            <!-- Compact poster frame: does not dominate or distract -->
+            <div class="card-poster-wrap">
+              <img
+                src={entry.poster.src}
+                width={entry.poster.width}
+                height={entry.poster.height}
+                alt={`Poster for ${entry.title}`}
+                loading="lazy"
+                decoding="async"
+                class="card-poster-img"
+              />
+            </div>
+
+            <!-- Content body: ample space to read review -->
+            <div class="card-body">
+              <div class="card-header-row">
+                <div class="badges-group">
+                  {entry.ratingStars && (
+                    <span class="rating-stars" aria-label={`Rated ${entry.rating} out of 5 stars`}>
+                      {entry.ratingStars}
+                    </span>
+                  )}
+                  {entry.rewatch && (
+                    <span class="rewatch-pill" title="Repeat viewing">
+                      ↺ REWATCH
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <h3 id={`${entry.slug}-title`} class="card-title">
+                <cite>
+                  <a
+                    href={entry.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="card-title-link"
+                  >
+                    {entry.title}
+                  </a>
+                </cite>
+                <span class="card-year">({entry.year})</span>
+              </h3>
+
+              {entry.spoilers ? (
+                <details class="spoiler-box">
+                  <summary class="spoiler-summary">
+                    <span class="spoiler-pill">⚠️ Spoilers</span>
+                    <span class="spoiler-prompt">Tap to reveal review</span>
+                  </summary>
+                  <p class="card-review review-text">{entry.review}</p>
+                </details>
+              ) : (
+                entry.review && <p class="card-review review-text">{entry.review}</p>
+              )}
+
+              <div class="card-footer">
+                <a
+                  href={entry.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="card-lb-link"
+                  aria-label={`View review for ${entry.title} on Letterboxd`}
+                >
+                  <span>Letterboxd log</span>
+                  <span class="arrow" aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </article>
-        </li>
-      ))
-    }
-  </ol>
+        ))
+      }
+    </div>
+  </Section>
 </Base>
 
-<style>
-  .reels {
-    list-style: none;
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    max-width: 88ch;
+<script>
+  export {};
+
+  const searchInput = document.getElementById('diary-search') as HTMLInputElement | null;
+  const sortSelect = document.getElementById('diary-sort') as HTMLSelectElement | null;
+  const countEl = document.getElementById('diary-visible-count');
+  const emptyNotice = document.getElementById('diary-empty');
+  const resetBtn = document.getElementById('diary-reset-btn');
+  const filterPills = Array.from(document.querySelectorAll('.filter-pill'));
+  const grid = document.getElementById('diary-grid');
+  const cards = Array.from(document.querySelectorAll('.diary-card')) as HTMLElement[];
+
+  if (cards.length > 0 && grid) {
+    let currentFilter = 'all';
+    let currentQuery = '';
+
+    function sortCards() {
+      if (!grid) return;
+      const sortValue = sortSelect ? sortSelect.value : 'recent';
+
+      cards.sort((a, b) => {
+        const ratingA = parseFloat(a.getAttribute('data-rating') || '0');
+        const ratingB = parseFloat(b.getAttribute('data-rating') || '0');
+        const logIndexA = parseInt(a.getAttribute('data-log-index') || '0', 10);
+        const logIndexB = parseInt(b.getAttribute('data-log-index') || '0', 10);
+        const yearA = parseInt(a.getAttribute('data-year') || '0', 10);
+        const yearB = parseInt(b.getAttribute('data-year') || '0', 10);
+        const titleA = a.getAttribute('data-title') || '';
+        const titleB = b.getAttribute('data-title') || '';
+
+        switch (sortValue) {
+          case 'rating-desc':
+            if (ratingB !== ratingA) return ratingB - ratingA;
+            return logIndexA - logIndexB;
+          case 'rating-asc':
+            if (ratingA !== ratingB) return ratingA - ratingB;
+            return logIndexA - logIndexB;
+          case 'year-desc':
+            if (yearB !== yearA) return yearB - yearA;
+            return titleA.localeCompare(titleB);
+          case 'year-asc':
+            if (yearA !== yearB) return yearA - yearB;
+            return titleA.localeCompare(titleB);
+          case 'title-asc':
+            return titleA.localeCompare(titleB);
+          case 'title-desc':
+            return titleB.localeCompare(titleA);
+          case 'recent':
+          default:
+            return logIndexA - logIndexB;
+        }
+      });
+
+      // Moving existing DOM nodes in-place preserves state and scroll
+      cards.forEach(card => grid.appendChild(card));
+    }
+
+    function applyFilters() {
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const rating = parseFloat(card.getAttribute('data-rating') || '0');
+        const isRewatch = card.getAttribute('data-rewatch') === 'true';
+        const title = card.getAttribute('data-title') || '';
+        const year = card.getAttribute('data-year') || '';
+        const review = card.getAttribute('data-review') || '';
+
+        // Category filter matching
+        let matchesCategory = true;
+        if (currentFilter === 'peak') {
+          matchesCategory = rating === 5;
+        } else if (currentFilter === 'standout') {
+          matchesCategory = rating >= 4;
+        } else if (currentFilter === 'rewatch') {
+          matchesCategory = isRewatch;
+        }
+
+        // Search query matching
+        let matchesQuery = true;
+        if (currentQuery) {
+          const q = currentQuery.toLowerCase();
+          matchesQuery = title.includes(q) || year.includes(q) || review.includes(q);
+        }
+
+        if (matchesCategory && matchesQuery) {
+          card.classList.remove('is-hidden');
+          card.removeAttribute('hidden');
+          visibleCount += 1;
+        } else {
+          card.classList.add('is-hidden');
+          card.setAttribute('hidden', '');
+        }
+      });
+
+      if (countEl) {
+        countEl.textContent = String(visibleCount);
+      }
+
+      if (emptyNotice) {
+        if (visibleCount === 0) {
+          emptyNotice.removeAttribute('hidden');
+        } else {
+          emptyNotice.setAttribute('hidden', '');
+        }
+      }
+    }
+
+    // Filter pill events
+    filterPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        filterPills.forEach(p => {
+          p.classList.remove('active');
+          p.setAttribute('aria-selected', 'false');
+        });
+        pill.classList.add('active');
+        pill.setAttribute('aria-selected', 'true');
+        currentFilter = pill.getAttribute('data-filter') || 'all';
+        applyFilters();
+      });
+    });
+
+    // Search input events
+    if (searchInput) {
+      searchInput.addEventListener('input', e => {
+        currentQuery = (e.target as HTMLInputElement).value.trim();
+        applyFilters();
+      });
+    }
+
+    // Sorting change events
+    if (sortSelect) {
+      sortSelect.addEventListener('change', () => {
+        sortCards();
+        applyFilters();
+      });
+    }
+
+    // Reset button
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        currentFilter = 'all';
+        currentQuery = '';
+        if (searchInput) searchInput.value = '';
+        if (sortSelect) sortSelect.value = 'recent';
+        sortCards();
+        filterPills.forEach(p => {
+          const isAll = p.getAttribute('data-filter') === 'all';
+          p.classList.toggle('active', isAll);
+          p.setAttribute('aria-selected', isAll ? 'true' : 'false');
+        });
+        applyFilters();
+      });
+    }
   }
-  .reels article {
+</script>
+
+<style>
+  /* Header curator letter */
+  .curator-letter {
+    margin-top: var(--space-3);
+    max-width: 68ch;
+    font-size: var(--text-0);
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+
+  /* Archival Ledger Summary Bar */
+  .ledger-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
+    margin: var(--space-4) 0 var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+  }
+
+  .ledger-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .ledger-num {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .ledger-label {
+    color: var(--color-ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+  }
+
+  .ledger-sep {
+    color: var(--per-rule);
+    user-select: none;
+  }
+
+  /* Section Lede */
+  .section-lede {
+    max-width: 72ch;
+    margin: 0 0 var(--space-4);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+
+  .diary-header-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .letterboxd-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid rgba(233, 179, 84, 0.35);
+    background: rgba(233, 179, 84, 0.08);
+    color: var(--color-accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+
+  .letterboxd-profile-link:hover {
+    background: rgba(233, 179, 84, 0.18);
+    border-color: var(--color-accent);
+  }
+
+  .lb-logo {
+    letter-spacing: -2px;
+    font-size: 0.9rem;
+  }
+
+  /* Interactive Controls */
+  .diary-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    padding: var(--space-4);
+    background: var(--per-surface);
+    border: 1px solid var(--per-rule);
+    border-radius: 4px;
+  }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .filter-pill {
+    padding: 6px 14px;
+    border: 1px solid var(--per-rule);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--color-ink-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-pill:hover {
+    border-color: rgba(233, 179, 84, 0.5);
+    color: var(--color-ink);
+  }
+
+  .filter-pill.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #120716;
+    font-weight: 700;
+  }
+
+  /* Action Row: Search Input + Sorting Dropdown */
+  .controls-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .search-input-wrap {
+    position: relative;
+    flex: 1 1 280px;
+    max-width: 440px;
+  }
+
+  .search-glyph {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-ink-2);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+
+  .search-input-wrap input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    background: #0f0614;
+    border: 1px solid var(--per-rule);
+    border-radius: 3px;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .search-input-wrap input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(233, 179, 84, 0.2);
+  }
+
+  /* Sort Control */
+  .sort-control-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .sort-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+    color: var(--color-ink-2);
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .sort-icon {
+    color: var(--color-accent);
+    font-size: 0.95rem;
+  }
+
+  .select-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .sort-select {
+    padding: 8px 32px 8px 12px;
+    background: #0f0614;
+    border: 1px solid var(--per-rule);
+    border-radius: 3px;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .sort-select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(233, 179, 84, 0.2);
+  }
+
+  .sort-select:hover {
+    border-color: rgba(233, 179, 84, 0.5);
+  }
+
+  .sort-select option {
+    background: #1c1220;
+    color: #f1e7ef;
+  }
+
+  .select-caret {
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+  }
+
+  .diary-status {
+    font-family: var(--font-mono);
+    font-size: var(--text-n1);
+    color: var(--color-ink-2);
+  }
+
+  /* Empty State */
+  .diary-empty-state {
+    padding: var(--space-5);
+    text-align: center;
+    border: 1px dashed var(--per-rule);
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin: var(--space-5) 0;
+  }
+
+  .diary-empty-state p {
+    color: var(--color-ink-2);
+    font-size: 1.05rem;
+    margin: 0 0 var(--space-3);
+  }
+
+  .reset-filter-btn {
+    padding: 6px 16px;
+    background: var(--color-accent);
+    color: #120716;
+    border: none;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Diary Grid Layout: Maximum 2 cards per row with ample reading room */
+  .diary-grid {
     display: grid;
-    grid-template-columns: 160px minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  /* Card Styled Like Featured Dispatches: Horizontal Split */
+  .diary-card {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
     gap: var(--space-4);
     align-items: start;
+    padding: var(--space-4);
+    border: 1px solid var(--per-rule);
+    background: var(--per-surface);
+    border-radius: 4px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s var(--ease-out), border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
   }
-  .poster {
-    margin: 0;
+
+  .diary-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(233, 179, 84, 0.45);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   }
-  .poster img {
-    display: block;
+
+  .diary-card.is-hidden {
+    display: none !important;
+  }
+
+  /* Compact Poster Frame: Subtle & Non-intrusive */
+  .card-poster-wrap {
+    position: relative;
+    width: 120px;
+    aspect-ratio: 2 / 3;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #0d0411;
+    border: 1.5px solid rgba(233, 179, 84, 0.3);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    flex-shrink: 0;
+  }
+
+  .card-poster-img {
     width: 100%;
-    height: auto;
-    border: 2px solid var(--color-ink);
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
-  .poster figcaption {
-    margin-top: var(--space-1);
-    font-size: var(--text-n1);
-    line-height: 1.35;
+
+  /* Card Content Column: Generous space to read reviews */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
-  @media (max-width: 560px) {
-    .reels article {
-      grid-template-columns: 1fr;
-    }
-    .poster {
-      max-width: 160px;
-    }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
   }
-  .reels > li {
-    padding: var(--space-5) 0;
-    border-top: 1px solid var(--color-rule);
+
+  .badges-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .reels h2 {
-    margin: 0;
-    font-size: var(--text-2);
-    line-height: 1.15;
+
+  .rating-stars {
+    color: #ffdf88;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    font-weight: 700;
   }
-  .reels h2 cite {
+
+  .rewatch-pill {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid rgba(233, 179, 84, 0.4);
+    background: rgba(233, 179, 84, 0.12);
+    border-radius: 2px;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .card-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-ink-2);
+  }
+
+  .card-title {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .card-title cite {
     font-style: normal;
   }
-  .reels .meta {
-    margin: var(--space-1) 0 0;
+
+  .card-title-link {
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: color 0.15s ease;
   }
-  blockquote {
-    margin: var(--space-4) 0 0;
-    padding-left: var(--space-3);
-    border-left: 3px solid var(--color-accent);
-    font: italic var(--text-1) / 1.4 var(--font-display);
+
+  .card-title-link:hover {
+    color: var(--color-accent);
   }
-  .note-text {
-    margin: var(--space-3) 0 0;
-    font-size: 1.0625rem;
+
+  .card-year {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: var(--color-ink-2);
+    margin-left: 4px;
+  }
+
+  /* Review Typography: Ample Space and Line Height */
+  .card-review {
+    margin: 0 0 var(--space-4);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+    white-space: pre-line;
+  }
+
+  /* Spoilers Disclosure Box */
+  .spoiler-box {
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px dashed rgba(233, 179, 84, 0.35);
+    border-radius: 3px;
+  }
+
+  .spoiler-summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-2);
+    user-select: none;
+  }
+
+  .spoiler-summary:hover {
+    color: var(--color-accent);
+  }
+
+  .spoiler-pill {
+    display: inline-block;
+    padding: 1px 5px;
+    background: rgba(220, 50, 50, 0.2);
+    border: 1px solid rgba(220, 50, 50, 0.5);
+    color: #ff9999;
+    border-radius: 2px;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .spoiler-box[open] {
+    border-style: solid;
+    border-color: rgba(233, 179, 84, 0.5);
+  }
+
+  .spoiler-box[open] .spoiler-prompt {
+    display: none;
+  }
+
+  .spoiler-box[open] .card-review {
+    margin-top: var(--space-2);
+  }
+
+  /* Card Footer */
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--per-rule);
+  }
+
+  .card-lb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: gap 0.2s ease;
+  }
+
+  .card-lb-link:hover {
+    gap: 8px;
+    text-decoration: underline;
+  }
+
+  /* Responsive Adjustments: Maximum 2 columns down to 1 column */
+  @media (max-width: 960px) {
+    .diary-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .diary-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .card-poster-wrap {
+      width: 110px;
+    }
   }
 </style>

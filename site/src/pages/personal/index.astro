@@ -28,10 +28,13 @@ const roomData = [
     id: 'films',
     href: '/personal/films/',
     label: 'Films',
-    count: `${films.films.length} films · notes & posters`,
-    blurb: `Personal notes on ${films.films.length} films, from Satyajit Ray to the Spider-Verse, published verbatim.`,
-    highlights: ['Pather Panchali (1955)', 'Across the Spider-Verse (2023)', 'Barbie (2023)'],
-    action: 'Read film notes',
+    count: `${films.diary.length} screenings · Letterboxd diary`,
+    blurb: `${films.diary.length} film reviews and star ratings synced directly from my Letterboxd screening diary.`,
+    highlights: films.diary
+      .filter(f => f.rating === 5)
+      .slice(0, 3)
+      .map(f => `${f.title} (${f.year})`),
+    action: 'Browse screening diary',
   },
   {
     id: 'learning',
@@ -162,7 +165,7 @@ const roomData = [
                       <span /><span /><span /><span /><span /><span /><span /><span />
                     </div>
                   </div>
-                  <span class="film-label">35MM · ESSAY LOGS</span>
+                  <span class="film-label">35MM · SCREENINGS</span>
                 </div>
               )}
 
