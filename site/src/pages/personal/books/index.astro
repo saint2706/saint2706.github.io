@@ -645,9 +645,8 @@ const getImprintSizeClass = (imprint: string) => {
                       data-book-trigger={b.id}
                       data-access={b.access}
                       data-era={b.era}
-                      aria-label={`${b.title} by ${b.author}. Click to open book folio.`}
                     >
-                      <div class="spine-head" aria-hidden="true">
+                      <div class="spine-head">
                         <span class="spine-emboss-rule" aria-hidden="true" />
                         <span class:list={['spine-author', getAuthorSizeClass(b.spineAuthor)]}>
                           {b.spineAuthor}
@@ -660,7 +659,7 @@ const getImprintSizeClass = (imprint: string) => {
                         </span>
                       </div>
 
-                      <div class="spine-tail" aria-hidden="true">
+                      <div class="spine-tail">
                         <div class="spine-raised-bands" aria-hidden="true">
                           <span class="band" />
                           <span class="band" />
@@ -956,6 +955,9 @@ const getImprintSizeClass = (imprint: string) => {
     gap: var(--space-6);
     margin-top: var(--space-4);
     padding: var(--space-5) var(--space-4);
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
     background:
       radial-gradient(ellipse 70% 60% at 50% 0%, rgba(231, 176, 79, 0.09), transparent 80%),
       #130a14;
@@ -966,6 +968,8 @@ const getImprintSizeClass = (imprint: string) => {
   .shelf-tier {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .shelf-bay {
@@ -975,6 +979,8 @@ const getImprintSizeClass = (imprint: string) => {
     justify-content: center;
     padding: var(--space-4) var(--space-3) 0;
     min-height: 340px;
+    min-width: 0;
+    max-width: 100%;
     background:
       radial-gradient(ellipse 65% 120px at 50% 10%, rgba(247, 202, 117, 0.08) 0%, transparent 80%),
       linear-gradient(180deg, rgba(22, 12, 8, 0.35) 0%, rgba(14, 7, 5, 0.95) 100%);
@@ -1237,6 +1243,10 @@ const getImprintSizeClass = (imprint: string) => {
     align-items: center;
     gap: 8px;
     padding: 3px 16px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     background: linear-gradient(180deg, #d4a755 0%, #a67c32 100%);
     border: 1px solid #e7b04f;
     box-shadow:
@@ -1310,11 +1320,13 @@ const getImprintSizeClass = (imprint: string) => {
   .era-folios {
     display: grid;
     gap: var(--space-6);
+    min-width: 0;
   }
   .era-folio {
     border: 1px solid var(--per-rule);
     background: #170e1a;
     padding: var(--space-4) var(--space-5);
+    min-width: 0;
   }
   .era-folio-header {
     padding-bottom: var(--space-3);
