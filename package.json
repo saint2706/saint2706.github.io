@@ -49,15 +49,15 @@
     "check:lucide-imports": "node scripts/check-lucide-imports.js"
   },
   "dependencies": {
-    "@dr.pogodin/react-helmet": "^3.3.2",
+    "@dr.pogodin/react-helmet": "^3.3.3",
     "@google/generative-ai": "^0.24.1",
-    "framer-motion": "^14.9.0",
-    "lucide-react": "1.66.0",
+    "framer-motion": "^14.14.0",
+    "lucide-react": "1.78.0",
     "prismjs": "^1.30.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.18.5"
+    "react-router-dom": "^7.18.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
